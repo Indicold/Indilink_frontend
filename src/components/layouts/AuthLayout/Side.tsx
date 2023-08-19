@@ -1,57 +1,56 @@
-import { cloneElement } from 'react'
+import React, { cloneElement, useEffect, useState } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Logo from '@/components/template/Logo'
 import { APP_NAME } from '@/constants/app.constant'
 import type { CommonProps } from '@/@types/common'
+import Loading from '@/components/shared/Loading'
+import { useSelector } from 'react-redux'
 
 interface SideProps extends CommonProps {
     content?: React.ReactNode
 }
 
 const Side = ({ children, content, ...rest }: SideProps) => {
+const AuthResponse=useSelector((state:any)=>state?.auth)    
+console.log("GGGGGGG",AuthResponse?.apiLoginPostReducer?.loading);
+
     return (
-        <div className="grid lg:grid-cols-3 h-full">
+        <div className="grid lg:grid-cols-6 w-full h-full">
             <div
-                className="bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
+                className="col-span-3 bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
                 style={{
-                    backgroundImage: `url('/img/others/auth-side-bg.jpg')`,
+                    // backgroundImage: `url('/img/others/auth-side-bg.jpg')`,
+                    backgroundColor:"#3f8cfec2"
                 }}
             >
-                <Logo mode="dark" />
-                <div>
-                    <div className="mb-6 flex items-center gap-4">
-                        <Avatar
-                            className="border-2 border-white"
-                            shape="circle"
-                            src="/img/avatars/thumb-10.jpg"
-                        />
-                        <div className="text-white">
-                            <div className="font-semibold text-base">
-                                Brittany Hale
-                            </div>
-                            <span className="opacity-80">CTO, Onward</span>
-                        </div>
-                    </div>
-                    <p className="text-lg text-white opacity-80">
-                        Elstar comes with a complete set of UI components
-                        crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
-                    </p>
-                </div>
-                <span className="text-white">
-                    Copyright &copy; {`${new Date().getFullYear()}`}{' '}
-                    <span className="font-semibold">{`${APP_NAME}`}</span>{' '}
-                </span>
+<section className="text-gray-600 body-font">
+  <div className="container mx-auto flex px-5  items-center justify-center flex-col">
+    <img className="lg:w-1/6 md:w-3/6 w-5/6 mb-4 object-cover object-center rounded-[35%] shadow-[10px_10px_20px_rgba(240,_46,_170,_5)]" alt="hero" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7KU4QTwIUiuSGMwBq_B6p2B3C-1DK_t_n4Q&usqp=CAU" />
+    <div className="text-center w-full">
+      <h6 className="title-font sm:text-lg text-lg mb-0 font-normal text-white">Lorem ipsum dolor sit</h6>
+      <div className="flex justify-center">
+      <img src="./img/images/scanerboy.png" className='w-[500px] mr-5' alt="" />
+      </div>
+    </div>
+  </div>
+</section>
             </div>
-            <div className="col-span-2 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
-                <div className="xl:min-w-[450px] px-8">
-                    <div className="mb-8">{content}</div>
-                    {children
-                        ? cloneElement(children as React.ReactElement, {
-                              ...rest,
-                          })
-                        : null}
-                </div>
+            <div className="col-span-3 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
+            <div className="xl:min-w-[450px] px-8">
+  {AuthResponse?.apiLoginPostReducer?.loading ? (
+    <Loading loading={true} />
+  ) : (
+    <div className="mb-8">
+      {content}
+      {children
+        ? React.cloneElement(children as React.ReactElement, {
+            ...rest,
+          })
+        : null}
+    </div>
+  )}
+</div>
+
             </div>
         </div>
     )

@@ -39,13 +39,16 @@ function useAuth() {
                 dispatch(signInSuccess(token))
                 if (resp.data.user) {
                     dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            }
+                        setUser({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_number: '',
+        password: '',
+        confirm_password:'',
+        gst: '',
+        term_condition:''
+      }
                         )
                     )
                 }
@@ -72,6 +75,8 @@ function useAuth() {
             const resp = await apiSignUp(values)
             if (resp.data) {
                 const { token } = resp.data
+                console.log("5656565",resp.data);
+                
                 dispatch(signInSuccess(token))
                 if (resp.data.user) {
                     dispatch(
@@ -86,9 +91,10 @@ function useAuth() {
                     )
                 }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
-                navigate(
-                    redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
-                )
+                // navigate(
+                //     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
+                // )
+                navigate('/basic-information')
                 return {
                     status: 'success',
                     message: '',
