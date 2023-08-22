@@ -9,6 +9,12 @@ const authRoute: Routes = [
         authority: [],
     },
     {
+        key: 'loginwithotp',
+        path: `/sign-in-otp`,
+        component: lazy(() => import('@/views/auth/LoginWithOTP')),
+        authority: [],
+    },
+    {
         key: 'signUp',
         path: `/sign-up`,
         component: lazy(() => import('@/views/auth/SignUp')),
@@ -18,6 +24,12 @@ const authRoute: Routes = [
         key: 'forgotPassword',
         path: `/forgot-password`,
         component: lazy(() => import('@/views/auth/ForgotPassword')),
+        authority: [],
+    },
+    {
+        key: 'VerfyOtp',
+        path: `/VerfyOtp`,
+        component: lazy(() => import('@/views/auth/VerifyOTP')),
         authority: [],
     },
     {

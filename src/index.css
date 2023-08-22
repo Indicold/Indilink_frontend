@@ -24,6 +24,8 @@
 
 }
 
+.otp-modal { display: flex; backdrop-filter: blur(5px); height: 100%; } .otp-modal > * { margin-left: auto; margin-right: auto; }
+
 
 
 .form-item>* {

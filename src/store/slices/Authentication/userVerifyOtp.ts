@@ -1,5 +1,6 @@
 import { userverifyOTPPostApi } from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const userPostverifyOtpSlice = createSlice({
   name: 'dataname',
@@ -17,11 +18,38 @@ const userPostverifyOtpSlice = createSlice({
       })
       .addCase(userverifyOTPPostApi.fulfilled, (state:any, action) => {
         console.log("HHHHHHH122",action.payload);
+        toast.success('OTP Verified Successfully !', {
+          position: 'top-right', // Position of the toast
+          autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          style: {
+              background: '#6aa5fc', 
+              color:"#fff"// Set the background color here
+            },
+        });
         
         state.loading = false;
         state.responseData = action.payload;
+        window.location.href="/sign-in"
       })
       .addCase(userverifyOTPPostApi.rejected, (state:any, action) => {
+        toast.success('OTP Verified failed !', {
+          position: 'top-right', // Position of the toast
+          autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          style: {
+              background: '#6aa5fc', 
+              color:"#fff"// Set the background color here
+            },
+        });
         console.log("HHHHHHH1",action);
         state.loading = false;
         state.error = action.error.message;

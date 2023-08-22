@@ -10,7 +10,8 @@ import { useNavigate } from 'react-router-dom'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
-import type { AxiosError } from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ResetPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -19,12 +20,12 @@ interface ResetPasswordFormProps extends CommonProps {
 
 type ResetPasswordFormSchema = {
     password: string
-    confirmPassword: string
+    confirm_password: string
 }
 
 const validationSchema = Yup.object().shape({
     password: Yup.string().required('Please enter your password'),
-    confirmPassword: Yup.string().oneOf(
+    confirm_password: Yup.string().oneOf(
         [Yup.ref('password')],
         'Your passwords do not match'
     ),
@@ -38,34 +39,51 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
     const [message, setMessage] = useTimeOutMessage()
 
     const navigate = useNavigate()
-
+    const emailId=localStorage.getItem("email");
     const onSubmit = async (
         values: ResetPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
         const { password } = values
         setSubmitting(true)
-        try {
-            const resp = await apiResetPassword({ password })
-            if (resp.data) {
-                setSubmitting(false)
-                setResetComplete(true)
-            }
-        } catch (errors) {
-            setMessage(
-                (errors as AxiosError<{ message: string }>)?.response?.data
-                    ?.message || (errors as Error).toString()
-            )
-            setSubmitting(false)
-        }
+        apiResetPassword({...values,email:emailId},messageView)
+        // try {
+        //     const resp = await apiResetPassword({ password })
+        //     if (resp.data) {
+        //         setSubmitting(false)
+        //         setResetComplete(true)
+        //     }
+        // } catch (errors) {
+        //     setMessage(
+        //         (errors as AxiosError<{ message: string }>)?.response?.data
+        //             ?.message || (errors as Error).toString()
+        //     )
+        //     setSubmitting(false)
+        // }
     }
 
     const onContinue = () => {
         navigate('/sign-in')
     }
+    const messageView=(messagevalue:any)=>{
+        toast.success(messagevalue, {
+            position: 'top-right', // Position of the toast
+            autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {
+                background: '#6aa5fc',
+                color: "#fff"// Set the background color here
+            },
+        });
+    }
 
     return (
         <div className={className}>
+                  <ToastContainer />
             <div className="mb-6">
                 {resetComplete ? (
                     <>
@@ -88,8 +106,8 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             )}
             <Formik
                 initialValues={{
-                    password: '123Qwe1',
-                    confirmPassword: '123Qwe1',
+                    password: null,
+                    confirm_password: null,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -122,14 +140,14 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                     <FormItem
                                         label="Confirm Password"
                                         invalid={
-                                            errors.confirmPassword &&
-                                            touched.confirmPassword
+                                            errors.confirm_password &&
+                                            touched.confirm_password
                                         }
-                                        errorMessage={errors.confirmPassword}
+                                        errorMessage={errors.confirm_password}
                                     >
                                         <Field
                                             autoComplete="off"
-                                            name="confirmPassword"
+                                            name="confirm_password"
                                             placeholder="Confirm Password"
                                             component={PasswordInput}
                                         />

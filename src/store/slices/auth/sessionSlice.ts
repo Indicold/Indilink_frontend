@@ -22,6 +22,8 @@ const sessionSlice = createSlice({
         signOutSuccess(state) {
             state.signedIn = false
             state.token = null
+            sessionStorage.removeItem('access_token');
+            localStorage.removeItem('admin');
         },
     },
 })

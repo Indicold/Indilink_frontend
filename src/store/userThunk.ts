@@ -20,7 +20,7 @@ export const userRegisterPostApi = createAsyncThunk(
 );
 export const usergetOTPPostApi = createAsyncThunk(
   'api/postData',
-  async (formData,setOtpModal) => {
+  async (formData) => {
     const response = await fetch(`${API_URL}/auth/getOTP`, {
       method: 'POST',
       headers: {
@@ -59,6 +59,7 @@ export const userLoginApiPost = createAsyncThunk(
       body: JSON.stringify(formData),
     });
     const data = await response.json();
+    if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
     return data;
   }
 );

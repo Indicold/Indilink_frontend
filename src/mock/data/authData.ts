@@ -4,7 +4,7 @@ export const signInUserData = [
         avatar: '/img/avatars/thumb-1.jpg',
         userName: 'Carolyn Perkins',
         email: 'carolyn.p@elstar.com',
-        authority: ['admin', 'user'],
+        authority: ['*'],
         password: '123Qwe',
         accountUserName: 'admin',
     },

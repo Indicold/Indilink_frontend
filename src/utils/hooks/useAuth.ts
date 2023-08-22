@@ -128,7 +128,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: token && signedIn,
+        authenticated: sessionStorage.getItem('access_token'),
         signIn,
         signUp,
         signOut,

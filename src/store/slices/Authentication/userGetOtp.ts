@@ -2,11 +2,12 @@ import { usergetOTPPostApi } from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
 
 const userPostgetAuthOtpSlice = createSlice({
-  name: 'dataname/api',
+  name: 'dataname/apidfdfgdgf',
   initialState: {
     loading: false,
     error: null,
-    responseData: null,
+    responseDataOTP: null,
+    modal:false
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -14,12 +15,14 @@ const userPostgetAuthOtpSlice = createSlice({
       .addCase(usergetOTPPostApi.pending, (state:any) => {
         state.loading = true;
         state.error = null;
+        
       })
       .addCase(usergetOTPPostApi.fulfilled, (state:any, action) => {
         console.log("HHHHHHH122",action.payload);
         
         state.loading = false;
-        state.responseData = action.payload;
+        state.modal=true
+        state.responseDataOTP = action.payload;
       })
       .addCase(usergetOTPPostApi.rejected, (state:any, action) => {
         console.log("HHHHHHH1",action);
@@ -29,4 +32,4 @@ const userPostgetAuthOtpSlice = createSlice({
   },
 });
 
-export const {actions:apiActions,reducer: apiGetAuthOtpReducer}=userPostgetAuthOtpSlice
+export const {actions:apiActionsdatat,reducer: apiGetAuthOtpDataReducer}=userPostgetAuthOtpSlice

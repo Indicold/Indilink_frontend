@@ -16,6 +16,9 @@ import { useState } from 'react'
 import { error } from 'console'
 import { updateFormData } from '@/store/slices/Authentication/userDetails'
 import usePostApi from '@/store/customeHook/postApi'
+import { REDIRECT_URL_KEY } from '@/constants/app.constant'
+import useQuery from '@/utils/hooks/useQuery'
+import appConfig from '@/configs/app.config'
 
 interface SignUpFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -29,7 +32,7 @@ type SignUpFormSchema = {
     confirm_password: string
     email: string
     phone_number: string
-    term_condition:String
+    term_condition:Boolean
     gst:String
 }
 
@@ -46,7 +49,7 @@ const validationSchema = Yup.object().shape({
 })
 
 const SignUpForm = (props: SignUpFormProps) => {
-    const { result, loading, sendPostRequest } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/check_email');
+    // const { result, loading, sendPostRequest } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/check-email');
     const { disableSubmit = true, className, signInUrl = '/sign-in' } = props
     const selector=useSelector((state:any)=>state)
     const [error, setError] = useState({ first_name: '',
@@ -56,22 +59,21 @@ const SignUpForm = (props: SignUpFormProps) => {
     password: '',
     confirm_password:''});
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        first_name: "",
+        last_name: "",
         email: '',
         phone_number: '',
         password: '',
-        confirm_password:'',
+        confirm_password: '',
         gst: '',
-        term_condition:''
+        term_condition: false,
       });
     const [isSubmitting,setSubmitting]=useState<Boolean>(false)
     const dispatch=useDispatch()
-
-
-    const navigate = useNavigate()
+    const navigate=useNavigate()
 
     const handleChange=(e:any)=>{
+      
 const newData:any={...formData};
 newData[e.target.name]=e.target.value;
 setFormData(newData);
@@ -83,6 +85,14 @@ setFormData(newData);
             console.log("formData.password !== formData.confirm_password",formData.password,formData.confirm_password);
             
             errorss.password='Passwords do not match';
+        }
+        if (!formData.password) {
+            
+            errorss.password='Password required';
+        }
+        if (!formData.term_condition) {
+            
+            errorss.term_condition='Please Accept Term & condition';
         }
       
         // Add more specific validation rules for each field
@@ -100,13 +110,13 @@ setFormData(newData);
             errorss.email='Invalid email address';
         }
         if (/\S+@\S+\.\S+/.test(formData.email)) {
-            sendPostRequest({email:formData?.email})
+            // sendPostRequest({email:formData?.email})
                 // errorss.email='Not Found email address';
 
         }
       
         if (!/^[0-9+\-]+$/.test(formData.phone_number)) {
-            errorss.phone_number='Invalid phone number';
+            errorss.phone_number='Atleast 10 digit number';
         }
       console.log(errorss);
       
@@ -115,7 +125,7 @@ setFormData(newData);
         return Object.keys(errorss).length==0; // Empty string indicates no validation errors
       };
 
-      console.log("result",result);
+    //   console.log("result",result);
       
  const handlesubmit=(e:any)=>{
     e.preventDefault();
@@ -166,10 +176,7 @@ console.log("selector",selector?.auth?.details);
                             <div className="flex">
                                 <FormItem
                                     label="First Name"
-                                    // invalid="hello"
-                                    // {error && error.field === 'first_name' && error.message}
-                                      errorMessage="hello"
-                                    className='me-auto'
+                                       className='me-auto'
                                 >
                                     <Field
                                         type="text"
@@ -180,12 +187,10 @@ console.log("selector",selector?.auth?.details);
                                         onChange={(e:any)=>handleChange(e)}
                                         className=''
                                     />
-                                    <p className='text-red'>{error && error.first_name}</p>
+                                    <p className='text-[red]'>{error && error.first_name}</p>
                                 </FormItem>
                                 <FormItem
                                     label="Last name"
-                                    // invalid={errors.email && touched.email}
-                                    // errorMessage={errors.email}
                                     className='me-auto'
                                 >
                                     <Field
@@ -197,7 +202,7 @@ console.log("selector",selector?.auth?.details);
                                         onChange={(e:any)=>handleChange(e)}
                                         className=''
                                     />
-      <p className='text-red'>{error && error.last_name}</p>
+      <p className='text-[red]'>{error && error.last_name}</p>
 
                                 </FormItem>
                             </div>
@@ -205,8 +210,7 @@ console.log("selector",selector?.auth?.details);
                             <div className="flex">
                                 <FormItem
                                     label="Email address"
-                                    // invalid={errors.userName && touched.userName}
-                                    // errorMessage={errors.userName}
+                                    
                                     className='me-auto'
                                 >
                                     <Field
@@ -218,12 +222,11 @@ console.log("selector",selector?.auth?.details);
                                         onChange={(e:any)=>handleChange(e)}
                                         className=''
                                     />
-                                    <p className='text-red'>{error && error.email}</p>
+                                    <p className='text-[red]'>{error && error.email}</p>
                                 </FormItem>
                                 <FormItem
                                     label="Phone number"
-                                    // invalid={errors.email && touched.email}
-                                    // errorMessage={errors.email}
+                                 
                                     className='me-auto'
                                 >
                                     <Field
@@ -235,15 +238,14 @@ console.log("selector",selector?.auth?.details);
                                         onChange={(e:any)=>handleChange(e)}
                                         className=''
                                     />
-                                     <p className='text-red'>{error && error.phone_number}</p>
+                                     <p className='text-[red]'>{error && error.phone_number}</p>
                                 </FormItem>
                             </div>
                             
                             <div className='flex'>
                                 <FormItem
                                     label="Password"
-                                    // invalid={errors.password && touched.password}
-                                    // errorMessage={errors.password}
+                                    
                                     className='me-auto'
                                 >
                                     <Field
@@ -254,16 +256,12 @@ console.log("selector",selector?.auth?.details);
                                         onChange={(e:any)=>handleChange(e)}
                                         className='w-5/6'
                                     />
- <p className='text-red'>{error && error.password}</p>
+ <p className='text-[red]'>{error && error.password}</p>
 
                                 </FormItem>
                                 <FormItem
                                     label="Confirm Password"
-                                    // invalid={
-                                    //     errors.confirmPassword &&
-                                    //     touched.confirmPassword
-                                    // }
-                                    // errorMessage={errors.confirmPassword}
+                                    
                                     className='me-auto'
                                 >
                                     <Field
@@ -274,7 +272,7 @@ console.log("selector",selector?.auth?.details);
                                         component={PasswordInput}
                                         className='w-5/6'
                                     />
-                                     <p className='text-red'>{error && error.password}</p>
+                                     <p className='text-[red]'>{error && error.password}</p>
                                 </FormItem>
                             </div>
 
@@ -285,14 +283,15 @@ console.log("selector",selector?.auth?.details);
                                 <span>agreement or </span>
                                 <ActionLink to={signInUrl}><big><u>Privacy Policy</u></big></ActionLink></p>
                             </div>
+                            <p className='text-[red]'>{error && error.term_condition}</p>
 
-                            <div className='flex'>
+                            <div className='flex '>
                                 <Button
                                     block
                                     // loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className='signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
+                                    className=' w-[30%] mx-auto rounded-xl px-4 shadow-lg'
                                 >
                                     {isSubmitting
                                         ? 'Creating Account...'

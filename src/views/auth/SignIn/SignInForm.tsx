@@ -12,6 +12,7 @@ import type { CommonProps } from '@/@types/common'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLoginApiPost } from '@/store'
+import { NavLink } from 'react-router-dom'
 
 interface SignInFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -85,11 +86,15 @@ const handlechange=(e:any)=>{
         }
     return (
         <div className={className}>
-            {LoginResponse?.responseData?.message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    <>{LoginResponse?.responseData?.message}</>
-                </Alert>
-            )}
+         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && (
+
+<Alert showIcon className="mb-4" type="danger">
+
+    <>{LoginResponse?.responseData?.message}</>
+
+</Alert>
+
+)}
             <Formik
                
             
@@ -146,12 +151,14 @@ const handlechange=(e:any)=>{
 
                             </div>
                             <div className='w-full flex'>
-                                <label
+                                <NavLink to="/sign-in-otp" className='w-full flex'>
+                                <label role='button'
                                     style={{ borderRadius: "13px" }}
                                     className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with OTP'}
                                 </label>
+                                </NavLink>
                             </div>
                             <div className="mt-4 text-center text-[#3f8cfe]">
                                 <span>{`Not a member yet?`} </span>

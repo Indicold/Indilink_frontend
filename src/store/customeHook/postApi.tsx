@@ -40,11 +40,13 @@ function postRequest(url: string, data: PostData): Promise<ApiResult> {
       return response.json();
     })
     .then(responseData => {
+      console.log("responseData",responseData);
+      
       // Assuming you have a certain way to determine success or failure
-      if (responseData.success) {
+      if (responseData) {
         return responseData as ApiResponse;
       } else {
-        throw new Error(responseData.message);
+        throw new Error(responseData.user_id);
       }
     })
     .catch(error => {

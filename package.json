@@ -1,6 +1,7 @@
 {
   "name": "elstar-lite",
   "private": true,
+  "homepage": "https://v4.vector3.digital",
   "version": "2.0.0",
   "scripts": {
     "start": "vite",
@@ -50,6 +51,7 @@
     "react-select": "^5.7.2",
     "react-simple-maps": "^3.0.0",
     "react-syntax-highlighter": "^15.5.0",
+    "react-toastify": "^9.1.3",
     "react-tooltip": "^5.11.1",
     "redux-persist": "^6.0.0",
     "twin.macro": "^3.3.0",

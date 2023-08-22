@@ -1,5 +1,6 @@
 import { userRegisterPostApi } from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const userPostOtpSlice = createSlice({
   name: 'dataname',
@@ -20,6 +21,19 @@ const userPostOtpSlice = createSlice({
         
         state.loading = false;
         state.responseData = action.payload;
+        toast.success('OTP Verified Successfully !', {
+          position: 'top-right', // Position of the toast
+          autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          style: {
+              background: '#6aa5fc', 
+              color:"#fff"// Set the background color here
+            },
+        });
       })
       .addCase(userRegisterPostApi.rejected, (state:any, action) => {
         console.log("HHHHHHH1",action);

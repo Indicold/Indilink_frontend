@@ -10,6 +10,8 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import type { AxiosError } from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ForgotPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -31,28 +33,51 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
 
     const [message, setMessage] = useTimeOutMessage()
 
-    const onSendMail = async (
+    const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        setSubmitting(true)
-        try {
-            const resp = await apiForgotPassword(values)
-            if (resp.data) {
-                setSubmitting(false)
-                setEmailSent(true)
-            }
-        } catch (errors) {
-            setMessage(
-                (errors as AxiosError<{ message: string }>)?.response?.data
-                    ?.message || (errors as Error).toString()
-            )
-            setSubmitting(false)
-        }
+        setSubmitting(true);
+        const {email }=values;
+    localStorage.setItem("email",email)
+        apiForgotPassword(values,messageView)
+            // .then((resp) => {
+            //     console.log("hhhhh", resp);
+    
+            //     if (resp && resp.data) {
+            //         setSubmitting(false);
+            //         setEmailSent(true);
+            //     }
+            // })
+            // .catch((errors) => {
+            //     console.log("errors", errors);
+            //     setMessage(
+            //         (errors as AxiosError<{ message: string }>)?.response?.data
+            //             ?.message || (errors as Error).toString()
+            //     );
+            //     setSubmitting(false);
+            // });
+    };
+    const messageView=(messagevalue:any)=>{
+        toast.success(messagevalue, {
+            position: 'top-right', // Position of the toast
+            autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {
+                background: '#6aa5fc',
+                color: "#fff"// Set the background color here
+            },
+        });
     }
+    
 
     return (
         <div className={className}>
+             <ToastContainer />
             <div className="mb-6">
                 {emailSent ? (
                     <>
@@ -79,7 +104,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
             )}
             <Formik
                 initialValues={{
-                    email: 'admin@mail.com',
+                    email: null,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
