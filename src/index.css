@@ -2,6 +2,19 @@
 
 
 
+:root {
+
+ 
+
+    --indicold-first-color: #ffb017;
+
+ 
+
+    --indicold-second-color: #10338c;
+
+ 
+
+}
 .cin-number label {
 
     width: fit-content;
@@ -31,5 +44,18 @@
 .form-item>* {
 
     width: 95%;
+
+}
+.indigo-btn{
+
+    background-color: var(--indicold-first-color);
+
+}
+
+ 
+
+.indigo-btn:hover{
+
+    background-color: var(--indicold-second-color)!important;
 
 }

@@ -93,11 +93,11 @@ const emailId=localStorage.getItem("email");
                     </>
                 )}
             </div>
-            {message && (
+            {/* {message && (
                 <Alert showIcon className="mb-4" type="danger">
                     {message}
                 </Alert>
-            )}
+            )} */}
             <Formik
                 initialValues={{
                     email: emailId || null,
@@ -146,6 +146,7 @@ const emailId=localStorage.getItem("email");
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
+                                className='indigo-btn'
                             >
                                 {emailSent ? 'Resend Email' : 'Send Email'}
                             </Button>

@@ -97,11 +97,11 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 )}
             </div>
-            {message && (
+            {/* {message && (
                 <Alert showIcon className="mb-4" type="danger">
                     {message}
                 </Alert>
-            )}
+            )} */}
             <Formik
                 initialValues={{
                     email: null,
@@ -137,6 +137,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
+                                className='indigo-btn'
                             >
                                 {emailSent ? 'Resend Email' : 'Send Email'}
                             </Button>

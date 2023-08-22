@@ -152,7 +152,7 @@ const handlechange=(e:any)=>{
                                     loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className='bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]'
+                                    className='bg-[#3f8cfe] indigo-btn  w-[40%] mx-auto rounded-[30px]'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in'}
                                 </Button>
@@ -163,7 +163,7 @@ const handlechange=(e:any)=>{
                                 <label
                                 role='button'
                                     style={{ borderRadius: "13px" }}
-                                    className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
+                                    className='text-[#3f8cfe]  mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with Password'}
                                 </label>

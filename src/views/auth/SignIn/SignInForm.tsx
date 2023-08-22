@@ -86,7 +86,7 @@ const handlechange=(e:any)=>{
         }
     return (
         <div className={className}>
-         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && (
+         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && false && (
 
 <Alert showIcon className="mb-4" type="danger">
 
@@ -144,7 +144,7 @@ const handlechange=(e:any)=>{
                                     loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className='bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]'
+                                    className='bg-[#ffb017] indigo-btn w-[40%] mx-auto rounded-[30px]'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in'}
                                 </Button>

@@ -276,7 +276,7 @@ console.log("selector",selector?.auth?.details);
                                 </FormItem>
                             </div>
 
-                            <div className="flex mb-4 w-4/5 mx-auto">
+                            <div className="flex  w-4/5">
                                 <input type='checkbox' className='me-2 w-5'  name="term_condition"   onChange={(e:any)=>handleChange(e)} />
                                 <p><span>I agree to </span>
                                 <ActionLink to={signInUrl}><big><u>Terms and Conditions</u></big> </ActionLink>
@@ -285,13 +285,13 @@ console.log("selector",selector?.auth?.details);
                             </div>
                             <p className='text-[red]'>{error && error.term_condition}</p>
 
-                            <div className='flex '>
+                            <div className='flex w-[80%] mx-auto '>
                                 <Button
                                     block
                                     // loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className=' w-[30%] mx-auto rounded-xl px-4 shadow-lg'
+                                    className='indigo-btn w-[30%] mx-auto rounded-xl px-4 shadow-lg'
                                 >
                                     {isSubmitting
                                         ? 'Creating Account...'
