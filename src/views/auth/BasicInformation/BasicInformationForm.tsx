@@ -1,21 +1,15 @@
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Alert from '@/components/ui/Alert'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import useAuth from '@/utils/hooks/useAuth'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateFormData } from '@/store/slices/Authentication/userDetails'
-import { userRegisterPostApi, usergetOTPPostApi, userverifyOTPPostApi } from '@/store'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Spinner } from '@/components/ui'
 import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
 
@@ -24,16 +18,7 @@ interface BasicInformationFormProps extends CommonProps {
     signInUrl?: string
 }
 
-type BasicInformationFormSchema = {
-    first_name: string
-    last_name: string
-    password: string
-    confirm_password: string
-    email: string
-    phone_number: string
-    term_condition: String
-    gst: String
-}
+
 
 
 const validationSchema = Yup.object().shape({
@@ -61,13 +46,15 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const autoFilldata = GSTResponse?.message;
+    const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false)
 
 
 
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
+        console.log("OTPPostDetails",OTPPostDetails);
+        
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
             PostOTPDetails(obj)
@@ -75,23 +62,44 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     }
 
 
+  
     const handleChange = (e: any) => {
-        const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
-        setFormData(newData);
-        if (newData?.gst?.length == 16) {
-            setDisabled(false)
-            dispatch(updateFormData(formData));
-            FetchGSTDetails(formData)
+        const newGst = e.target.value;
+    
+        if (newGst.length <= 15) {
+          const newData = { ...formData, gst: newGst };
+          setFormData(newData);
+    
+          if (newGst.length === 15) {
+            setDisabled(false);
+            dispatch(updateFormData(newData)); // Dispatch your Redux action with the new data
+            FetchGSTDetails(newData); // Call your API function
+          } else {
+            setDisabled(true);
+          }
         }
-
-
-    }
-    const handlesubmit = () => {
-         formData.gst=formData?.gst?.split(" ").join("");        
+      };
+    const handlesubmit = () => {   
+        let ObjectData:any={
+            first_name:formData?.first_name,
+            last_name:formData?.last_name,
+            email: formData?.email,
+            phone_number:formData?.phone_number,
+            password:formData?.password,
+            country: "India",
+            panNo:autoFilldata?.taxpayerInfo?.panNo,
+            gstNo:autoFilldata?.taxpayerInfo?.gstin,
+            userDesignation: autoFilldata?.taxpayerInfo?.ctb,
+            firmType:autoFilldata?.taxpayerInfo?.ctb,
+            firmName: autoFilldata?.taxpayerInfo?.tradeNam,
+            pincode: autoFilldata?.taxpayerInfo?.pradr?.addr?.pncd,
+            state: autoFilldata?.taxpayerInfo?.pradr?.addr?.stcd,
+            city: autoFilldata?.taxpayerInfo?.pradr?.addr?.dst,
+            address: autoFilldata?.taxpayerInfo?.pradr?.addr?.bno
+          }    
         setSubmitting(true)
         setOtpModal(true)
-        sendPostRequest(formData);
+        sendPostRequest(ObjectData);
         setSubmitting(false)
 
     }

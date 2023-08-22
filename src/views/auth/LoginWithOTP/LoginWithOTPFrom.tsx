@@ -114,13 +114,13 @@ const handlechange=(e:any)=>{
                                     onChange={handlechange}
                                     component={Input}
                                 />
-                                  <label
+                                  {/* <label
                                 role='button'
                                     style={{ borderRadius: "13px" }}
                                     className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with Password'}
-                                </label>
+                                </label> */}
                             </FormItem>
                             <FormItem
                                 label="Enter OTP"

@@ -48,7 +48,7 @@
 }
 .indigo-btn{
 
-    background-color: var(--indicold-first-color);
+    background-color: #FFB017;
 
 }
 
@@ -56,6 +56,6 @@
 
 .indigo-btn:hover{
 
-    background-color: var(--indicold-second-color)!important;
+    background-color: #CA7D11!important;
 
 }
