@@ -66,8 +66,11 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
       };
       
       fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-gen-otp', requestOptions)
-        .then(response => {
+        .then((response:any )=> {
+          console.log("hhhh",JSON.parse(response?._bodyInit));
+
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -83,6 +86,8 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
           
         })
         .catch(error => {
+          console.log("HHHH",error);
+          
           console.log(error);
         });
       
@@ -106,8 +111,9 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
       };
       
       fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-verify-otp', requestOptions)
-        .then(response => {
+        .then((response:any )=> {
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
