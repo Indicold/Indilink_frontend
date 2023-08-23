@@ -107,31 +107,31 @@ const SignUpForm = (props: SignUpFormProps) => {
                         <div className="flex">
                             <FormItem
                                 label="First Name"
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="first_name"
                                     placeholder="First Name"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
-                                    className=''
                                 />
                                 <p className='text-[red]'>{error && error.first_name}</p>
                             </FormItem>
                             <FormItem
-                                label="Last name"
-                                className='me-auto'
+                                label="Last Name"
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="last_name"
                                     placeholder="Last Name"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
-                                    className=''
                                 />
                                 <p className='text-[red]'>{error && error.last_name}</p>
 
@@ -140,36 +140,36 @@ const SignUpForm = (props: SignUpFormProps) => {
 
                         <div className="flex">
                             <FormItem
-                                label="Email address"
+                                label="Email Address"
 
-                                className='me-auto'
+                                className='me-auto text-label-title '
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="email"
                                     placeholder="Email Address"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
-                                    className=''
                                 />
-                                <p className='text-[red]'>{isEmailValid ? isEmailValid : error?.email}</p>
+                                <p className='text-[red] email-msg-text'>{isEmailValid ? isEmailValid : error?.email}</p>
                             </FormItem>
                             <FormItem
-                                label="Phone number"
+                                label="Phone Number"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="phone_number"
                                     placeholder="Phone number"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
-                                    className=''
                                 />
-                                <p className='text-[red]'>{isMobileValid ? isMobileValid : error.phone_number}</p>
+                                <p className='text-[red] email-msg-text'>{isMobileValid ? isMobileValid : error.phone_number}</p>
                             </FormItem>
                         </div>
 
@@ -177,15 +177,15 @@ const SignUpForm = (props: SignUpFormProps) => {
                             <FormItem
                                 label="Password"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="password"
                                     placeholder="Password"
                                     component={PasswordInput}
                                     onChange={(e: any) => handleChange(e)}
-                                    className='w-5/6'
                                 />
                                 <p className='text-[red]'>{error && error.password}</p>
 
@@ -193,31 +193,33 @@ const SignUpForm = (props: SignUpFormProps) => {
                             <FormItem
                                 label="Confirm Password"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     autoComplete="off"
+                                    className="rounded-[13px]"
                                     name="confirm_password"
                                     placeholder="Confirm Password"
                                     onChange={(e: any) => handleChange(e)}
                                     component={PasswordInput}
-                                    className='w-5/6'
+                                  
                                 />
                                 <p className='text-[red]'>{error && error.password}</p>
                             </FormItem>
                         </div>
 
-                        <div className="flex  w-4/5">
-                            <input type='checkbox' className='me-2 w-5' name="term_condition" onChange={(e: any) => handleChange(e)} />
-                            <p><span>I agree to </span>
-                                <ActionLink to={signInUrl}><big><u>Terms and Conditions</u></big> </ActionLink>
-                                <span>agreement or </span>
-                                <ActionLink to={signInUrl}><big><u>Privacy Policy</u></big></ActionLink></p>
+                        <div className="flex  w-[95%]">
+                            <input type='checkbox' className='me-1 w-5' name="term_condition" onChange={(e: any) => handleChange(e)} />
+                            <p className='m-1'><span>I agree to </span>
+                                <ActionLink to={signInUrl}><big><u className='!text-[#103492] text-sm'>Terms and Conditions</u></big> </ActionLink>
+                                
+                              </p>
                         </div>
                         <p className='text-[red]'>{error && error.term_condition}</p>
 
                         <div className='flex w-[80%] mx-auto '>
                             <Button
+                             style={{ borderRadius: "13px" }}
                                 block
                                 variant="solid"
                                 type="submit"
@@ -228,9 +230,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     : 'Sign Up'}
                             </Button>
                         </div>
-                        <div className="mt-4 text-center">
-                            <span className='me-4'>Already have an account? </span>
-                            <ActionLink to={signInUrl}><Button className='login-btn-signupform'>Login</Button></ActionLink>
+                        <div className="mt-4 text-center text-[#103492]">
+                            <span className=''>Already have an account? </span>
+                            <ActionLink to={signInUrl} className=' !indigo-btn:hover text-bold decoration-none rounded-lg !text-[#103492]'>Login</ActionLink>
                         </div>
                     </FormContainer>
                 </Form>

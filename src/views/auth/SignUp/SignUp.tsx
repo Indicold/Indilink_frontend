@@ -3,9 +3,8 @@ import SignUpForm from './SignUpForm'
 const SignUp = () => {
     return (
         <>
-            <div className="mb-8">
-                <h3 className="mb-1 text-[#0f3492]">Sign Up</h3>
-                <p className='text-[#0f3492]'>And lets get started with your free trial</p>
+            <div className="mb-4">
+                <h4 className="text-head-title text-center">Sign Up</h4>
             </div>
             <SignUpForm disableSubmit={false} />
         </>

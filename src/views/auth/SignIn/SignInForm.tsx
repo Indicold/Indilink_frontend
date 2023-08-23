@@ -122,7 +122,7 @@ const handlechange=(e:any)=>{
             >
                     <Form onSubmit={handlesubmit}>
                         <FormContainer>
-                            <FormItem
+                            <FormItem className='!text-[#103492]'
                                 label="Username"
                                 
                             >
@@ -138,6 +138,7 @@ const handlechange=(e:any)=>{
                                  <p className='text-[red]'>{error && error.username}</p>
                             </FormItem>
                             <FormItem
+                            className='!text-[#103492]'
                                 label="Password"
 
                                 
@@ -155,9 +156,9 @@ const handlechange=(e:any)=>{
                             <div className='flex justify-between'>
                                 <div className="flex items-center mb-4">
                                     <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-[#979da8] dark:text-[#979da8]">Remember me</label>
+                                    <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-[#103492] dark:text-[#103492]">Remember me</label>
                                 </div>
-                                <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium text-[#103492] dark:text-[#979da8]">Forgot Password?</ActionLink>
+                                <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]">Forgot Password?</ActionLink>
 
                             </div>
                             <div className='w-full flex'>
@@ -174,18 +175,16 @@ const handlechange=(e:any)=>{
 
                             </div>
                             <div className='w-full flex'>
-                                <NavLink to="/sign-in-otp" className='w-full flex'>
-                                <label role='button'
-                                    style={{ borderRadius: "13px" }}
-                                    className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
+                                <NavLink  to="/sign-in-otp" role='button'
+                                    style={{ borderRadius: "13px",textDecoration:"auto" }}
+                                    className='!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with OTP'}
-                                </label>
                                 </NavLink>
                             </div>
-                            <div className="mt-4 text-center text-[#3f8cfe]">
+                            <div className="mt-4 text-center text-[#103492]">
                                 <span>{`Not a member yet?`} </span>
-                                <ActionLink className='text-bold decoration-none p-2 pl-4 pr-4 rounded-lg border border-[black] ml-5' to={signUpUrl}>Sign up</ActionLink>
+                                <ActionLink className='text-bold decoration-none rounded-lg !text-[#103492]' to={signUpUrl}>Sign up</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>

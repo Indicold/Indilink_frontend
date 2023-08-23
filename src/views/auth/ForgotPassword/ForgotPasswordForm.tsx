@@ -68,7 +68,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
             draggable: true,
             progress: undefined,
             style: {
-                background: '#6aa5fc',
+                background: '#FFB017',fontSize:"bold",
                 color: "#fff"// Set the background color here
             },
         });
@@ -89,8 +89,8 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 ) : (
                     <>
-                        <h3 className="mb-1">Forgot Password</h3>
-                        <p>
+                        <h4 className="mb-1 text-head-title">Forgot Password</h4>
+                        <p className='!text-[#103492]'>
                             Please enter your email address to receive a
                             verification code
                         </p>
@@ -132,16 +132,19 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                     />
                                 </FormItem>
                             </div>
+                            <div className='flex'>
                             <Button
                                 block
+                                style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className='indigo-btn'
+                                className='indigo-btn w-[94%]'
                             >
                                 {emailSent ? 'Resend Email' : 'Send Email'}
                             </Button>
-                            <div className="mt-4 text-center">
+                            </div>
+                            <div className="mt-4 text-center !text-[#103492]">
                                 <span>Back to </span>
                                 <ActionLink to={signInUrl}>Sign in</ActionLink>
                             </div>

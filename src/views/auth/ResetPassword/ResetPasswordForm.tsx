@@ -75,7 +75,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             draggable: true,
             progress: undefined,
             style: {
-                background: '#6aa5fc',
+                background: '#FFB017',fontSize:"bold",
                 color: "#fff"// Set the background color here
             },
         });

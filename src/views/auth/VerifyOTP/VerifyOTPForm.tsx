@@ -66,7 +66,7 @@ const emailId=localStorage.getItem("email");
             draggable: true,
             progress: undefined,
             style: {
-                background: '#6aa5fc',
+                background: '#FFB017',fontSize:"bold",
                 color: "#fff"// Set the background color here
             },
         });
@@ -86,7 +86,7 @@ const emailId=localStorage.getItem("email");
                     </>
                 ) : (
                     <>
-                        <h3 className="mb-1">Verify OTP</h3>
+                        <h3 className="mb-1 text-head-title">Verify OTP</h3>
                         <p>
                             Please enter your verification code
                         </p>

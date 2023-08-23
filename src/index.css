@@ -19,11 +19,9 @@
 
     width: fit-content;
 
-    font-size: 18px;
 
     letter-spacing: 3px;
 
-    margin-left: auto;
 
     margin-right: auto;
 
@@ -58,4 +56,29 @@
 
     background-color: #CA7D11!important;
 
+}
+.text-head-title{
+    color: #0f3492 !important;
+}
+.text-label-title{
+    color:#103492 !important
+}
+.hyper-link-color{
+    color: #103492 !important;
+}
+.hyper-link-color:hover{
+
+    background-color: #CA7D11!important;
+
+}
+.input-wrapper,
+.input-md {
+border-radius: 13px !important;
+padding-right: 0px !important;
+}
+.email-msg-text{
+    width: 180px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
 }
