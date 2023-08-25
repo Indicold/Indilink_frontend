@@ -9,7 +9,7 @@ import useAuth from '@/utils/hooks/useAuth'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLoginApiPost } from '@/store'
 import { NavLink } from 'react-router-dom'
@@ -57,28 +57,9 @@ const SignInForm = (props: SignInFormProps) => {
         signUpUrl = '/sign-up',
     } = props
 
-    const [message, setMessage] = useTimeOutMessage()
 
-    const { signIn } = useAuth()
 
-    const onSignIn = async (
-        values: SignInFormSchema,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
-        const { email, password } = values
-console.log("hhhhhhhhhhhhhhhhhhh");
-
-        setSubmitting(true)
-
-        const result = await signIn({ email, password })
-        console.log("HHHHH", result);
-
-        if (result?.status === 'failed') {
-            setMessage(result.message)
-        }
-
-        setSubmitting(false)
-    }
+  
 const handlesubmit=(e:any)=>{
     e.preventDefault();
     console.log("HGFFGDFGD",validateForm({user_id:formData?.username,passwordlGN:formData?.password},setError));
@@ -105,6 +86,9 @@ const handlechange=(e:any)=>{
     setFormData(newData);
     
         }
+        useEffect(()=>{
+            localStorage.setItem("access_token",LoginResponse?.responseData?.message?.accessToken)
+        },[LoginResponse?.responseData?.message])
     return (
         <div className={className}>
          {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && false && (

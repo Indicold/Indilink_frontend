@@ -54,4 +54,76 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+
+        key: 'partner',
+        path: `/partner-registration`,
+        component: lazy(() => import('@/views/auth/Partner/StoreRegistration')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investor',
+        path: `/investor-registration`,
+        component: lazy(() => import('@/views/auth/Investor/NewMultistep')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-move`,
+        component: lazy(() => import('@/views/auth/Investor/InvestorBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-store`,
+        component: lazy(() => import('@/views/auth/InvestorBussinessTypeStore')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-prepare`,
+        component: lazy(() => import('@/views/auth/Investor/InvestorBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-move`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-prepare`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-compliance`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeCompliances')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-additional`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeAdditional')),
+        authority: [],
+
+    },
 ]

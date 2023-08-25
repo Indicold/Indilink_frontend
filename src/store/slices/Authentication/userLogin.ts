@@ -21,6 +21,11 @@ const userPostLoginSlice = createSlice({
         
         state.loading = false;
         state.responseData = action.payload;
+        if(action.payload.accessToken){
+          localStorage.setItem("Access_Token",action.payload.accessToken)
+
+        }
+        
       })
       .addCase(userLoginApiPost.rejected, (state:any, action) => {
         console.log("HHHHHHH1",action);

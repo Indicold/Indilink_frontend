@@ -2,17 +2,24 @@ import { Button, FormContainer, FormItem, Input } from "@/components/ui"
 import { Field, Form, Formik } from "formik"
 import { useState } from "react"
 import MajorityHolderModal from "./MajorityHolderModal";
+import KeyTeamModal from "./KeyTeamModal";
+import useApiFetch from "@/store/customeHook/useApiFetch";
+import { getToken } from "@/store/customeHook/token";
 interface Props {
     additionalLocations: number;
   }
 const Step1 = (props:any) => {
-    const [modal,setModal]=useState<any>(false)
-    const [isSubmitting, setSubmitting] = useState(false);
+    const {token}:any=getToken();
+    
+    const [modal,setModal]=useState<any>(false);
+    const { data, loading, error } = useApiFetch<any>('master/partner/store/type-of-cold-storage', token);
+    const [num,setNum]=useState<any>(1)
+    const [modalTeam,setModalTeam]=useState<any>(false);
+    const [Holder,setHolder]=useState(1);
+    const [Team,setTeam]=useState<any>(null);
     const [formData, setFormData] = useState({
     });
-    const handleSaveData = () => {
-        // update values
-    }
+ 
     const handlechange=(e:any)=>{
 const newData:any={...formData};
 newData[e.target.name]=e.target.value;
@@ -20,12 +27,19 @@ if(e.target.name==='Number_of_Additional'){
     setAdditionalLocations(e.target.value);
 }
 setFormData(newData);
-console.log("hhhh5555",formData)
     }
     const [additionalLocations, setAdditionalLocations] = useState(0);
-    const handleAdditionalLocations = (e:any) => {
-        setAdditionalLocations(e.target.value);
+  
+    const handleHolder=(value:any)=>{
+        setHolder(value)
+        setModal(true)
     }
+    const handleTeam =(value:any)=>{
+        setTeam(value);
+        setModalTeam(true)
+    }
+    console.log("data",data?.data,error);
+    
     return (
         <div >
             <h4 className=" mb-2 text-head-title text-center">Basic Details (Section A)</h4>
@@ -37,14 +51,15 @@ console.log("hhhh5555",formData)
 
                 {({ handleSubmit }) => (
                 <Form className="py-2 partner-details-container">
-       <MajorityHolderModal modal={modal} setModal={setModal} />
+       <MajorityHolderModal modal={modal} setModal={setModal} Holder={Holder}/>
+       <KeyTeamModal modal={modalTeam} setModal={setModalTeam} Team={Team} />
 
                     <FormContainer>
                         <FormItem
                             label="Cold Storage Name"
                             className='mx-auto text-label-title'
                         >
-                            <Field
+                            {/* <Field
                                 type="text"
                                 autoComplete="off"
                                 name="Cold_Storage_Name"
@@ -52,6 +67,27 @@ console.log("hhhh5555",formData)
                                 placeholder="Cold Storage Name"
                                 component={Input}
                             />
+                              <FormItem
+                            label="Product Category"
+                            className='mx-auto text-label-title'
+                        > */}
+  
+  <select
+    id="countries"
+    name="Cold_Storage_Name"
+    onChange={(e:any)=>handlechange(e)}
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  >
+    <option selected>Choose Cold Storage</option>
+    {/* {dat} */}
+    {data && data?.data.map((item:any,index:any)=>(
+    <option value={item?.type}>{item?.type}</option>
+
+    )
+
+    )}
+  
+  </select>
                         </FormItem>
                         <FormItem
                             label="Company Name"
@@ -216,34 +252,27 @@ console.log("hhhh5555",formData)
                         </FormItem>
                         <h4 className="mb-2 text-head-title">MANAGEMENT TEAM DETAILS - For a Private Limited Company</h4>
                         <div className="flex ">
-                        <Button
+                        {Array.apply(null, { length:num }).map((val, index) => {
+                            return (
+                                <Button type="button" className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg' onClick={() => handleHolder(index + 1)}>
+                                    {` Majority Holder${index + 1}`}
+                                </Button>
+                            )
+                        })}
+                      
+                      <Button
                         type="button"
                             block
                             variant="solid"
-                            className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
-                           onClick={()=>setModal(true)}
+                            disabled={num==3}
+                            className='w-[40px] indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
+                           onClick={()=>num<3 && setNum(num+1)}
                         >
-                          Majority Holder 1
+                         +
                         </Button>
-                        <Button
-                         type="button"
-                            block
-                            variant="solid"
-                            onClick={()=>setModal(true)}
-                            className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
-                        >
-                          Majority Holder 2
-                        </Button>
-                        <Button
-                         type="button"
-                            block
-                            onClick={()=>setModal(true)}
-                            variant="solid"
-                            className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
-                        >
-                          Majority Holder 3
-                        </Button>
+                       
                         </div>
+                       
                         <h4 className="mb-2 text-head-title mt-4">KEY MANAGEMENT TEAM Member Details</h4>
                         <div className="flex ">
                         <Button
@@ -251,13 +280,14 @@ console.log("hhhh5555",formData)
                             block
                             variant="solid"
                             className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
-                           onClick={()=>console.log("hello")}
+                           onClick={()=>handleTeam('plant-manger')}
                         >
                      Plant Manager
                         </Button>
                         <Button
                          type="button"
                             block
+                            onClick={()=>handleTeam('quality-head')}
                             variant="solid"
                             className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
                         >
@@ -267,6 +297,7 @@ console.log("hhhh5555",formData)
                          type="button"
                             block
                             variant="solid"
+                            onClick={()=>handleTeam('marketing-Head')}
                             className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
                         >
                           Marketing Head

@@ -54,6 +54,14 @@ const authRoute: Routes = [
         authority: [],
 
     },
+    {
+
+        key: 'investor',
+        path: `/investor-registration`,
+        component: lazy(() => import('@/views/auth/Investor/NewMultistep')),
+        authority: [],
+
+    },
 ]
 
 export default authRoute

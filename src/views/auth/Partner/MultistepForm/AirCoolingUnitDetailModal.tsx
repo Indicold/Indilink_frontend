@@ -1,47 +1,40 @@
 import { Button, FormItem, Input } from "@/components/ui";
 import { Field } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 interface MajorityHolderModalProps {
     modal: boolean;
-    Team:any;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
   }
-const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team}) => {
+const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps>  = ({modal,setModal}) => {
     const [data,setData]=useState({
-        Team:Team
-       });
-       console.log("Team",Team);
-       
-       const handleChange=(e:any)=>{
-        const newData:any={...data};
-        newData[e.target.name]=e.target.value;
+    });
+    const handleChange=(e:any)=>{
+     const newData:any={...data};
+     newData[e.target.name]=e.target.value;
+  
+     setData(newData);
+     console.log("newData",newData);
      
-        setData(newData);
-        console.log("newData",newData);
-        
-            }
-            const handlesave = () => {
-                let getData: any[] = JSON.parse(localStorage.getItem('Team_List') || '[]');
-            
-                if (localStorage.getItem('Team_List')) {
-                    getData.push(data);
-                    localStorage.setItem('Team_List', JSON.stringify(getData));
-                }
-                
-                if (!localStorage.getItem('Team_List')) {
-                    localStorage.setItem('Team_List', JSON.stringify([data]));
-                }
-                console.log("gggggg");
-                
-            };
-        useEffect(()=>{
-            setData({
-                Team:Team
-               });
-        },[data.Team])
+         }
+         const handlesave = () => {
+             // let getData: any[] = JSON.parse(localStorage.getItem('airCooling_List') || '[]');
+         
+             // if (localStorage.getItem('airCooling_List')) {
+             //     getData.push(data);
+             //     localStorage.setItem('airCooling_List', JSON.stringify(getData));
+             // }
+             
+             if (!localStorage.getItem('airCooling_List')) {
+                 localStorage.setItem('airCooling_List', JSON.stringify(data));
+             }
+             setModal(false)
+
+             console.log("gggggg");
+             
+         };
     return (
-       <>
-    {modal &&    <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <> 
+       {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button onClick={()=>setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
@@ -51,10 +44,10 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6 className="text-center">{Team}</h6>
+                                <h6>Air Cooling Unit Details</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Full Name"
+                                        label="ACU Make and Model no."
                                         className='mx-auto'
                                     >
                                         <Field
@@ -62,12 +55,12 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
                                             autoComplete="off"
                                             name="fullName"
                                             onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Full name"
+                                            placeholder="ACU Make and Model no."
                                             component={Input}
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Contact (Mobile)"
+                                        label="ACU Capacity"
                                         className='mx-auto'
                                     >
                                         <Field
@@ -75,14 +68,14 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
                                             autoComplete="off"
                                             name="mobile"
                                             onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Contact (Mobile)"
+                                            placeholder="ACU Capacity"
                                             component={Input}
                                         />
                                     </FormItem>
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Contact (Landline)"
+                                        label="ACU CFM"
                                         className='mx-auto'
                                     >
                                         <Field
@@ -90,57 +83,52 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
                                             autoComplete="off"
                                             name="phone"
                                             onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Contact (Landline)"
+                                            placeholder="ACU CFM"
                                             component={Input}
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Email ID"
+                                        label="ACU Defrosting"
                                         className='mx-auto'
                                     >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="email"
-                                            onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Email ID"
-                                            component={Input}
-                                        />
+                                     <select
+    id="ttt"
+    name="acu_defrost"
+    onChange={(e: any) => handleChange(e)}
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  >
+    <option selected value="Water">Water</option>
+    <option  value="Hot Gas">Hot Gas</option>
+    <option  value="Heating cable">Heating cable</option>
+  
+  
+  </select>
+                                        
                                     </FormItem>
                                 </div>                                
                                 <div className="flex">
                                     <FormItem
-                                        label="Designation"
+                                        label="ACU Outlet Pipe Make"
                                         className='mx-auto'
                                     >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="designation"
-                                            onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Designation"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                    <FormItem
-                                        label="Reporting Manager"
-                                        className='mx-auto'
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="rm"
-                                            onChange={(e:any)=>handleChange(e)}
-                                            placeholder="Reporting Manager"
-                                            component={Input}
-                                        />
+                                                                      <select
+    id="ttt"
+    name="acu_defrost"
+    onChange={(e: any) => handleChange(e)}
+    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  >
+    <option selected value="PVC">PVC</option>
+    <option  value="GI">GI</option>
+  
+  
+  </select>
                                     </FormItem>
                                 </div>
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block
-                                    onClick={handlesave}
                                     variant="solid"
+                                    onClick={handlesave}
                                     type="button"
                                     className='bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]'
                                 >
@@ -154,4 +142,4 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
     )
 }
 
-export default KeyTeamModal;
+export default AirCoolingUnitDetailModal;
