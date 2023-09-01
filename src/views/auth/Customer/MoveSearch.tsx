@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     Dropdown,
@@ -10,15 +10,19 @@ import { Field, Form, Formik } from 'formik'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { useNavigate } from 'react-router-dom'
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'
 
 const MoveSearch = () => {
+    const [modal, setModal] = useState(false)
     const handleRoute = () => {
         console.log('clicked!')
+        setModal(true)
     }
   return (
         <div>
+              {modal && <ThankYouModal/>}
             <div className="bg-white">
-                <h4 className=" mb-2 text-head-title text-center">Move</h4>
+                <h4 className=" mb-2 text-head-title pl-[22px] text-center">Move</h4>
                 <div>
                     <Formik
                         initialValues={{ field: true }}
@@ -28,7 +32,7 @@ const MoveSearch = () => {
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <h6 className=" mb-2 text-head-title text-start">Origin Location</h6>
+                                <h6 className=" mb-2 pl-[22px] text-head-title text-start">Origin Location</h6>
                                 <div className="flex">
                                     <FormItem
                                         label="Country"
@@ -81,7 +85,7 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 text-head-title text-start">Destination Location</h6>
+                                <h6 className=" mb-2 text-head-title pl-[22px] text-start">Destination Location</h6>
                                 <div className="flex">
                                     <FormItem
                                         label="Country"

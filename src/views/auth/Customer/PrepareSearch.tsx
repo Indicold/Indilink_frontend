@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Button,
     Dropdown,
@@ -10,13 +10,17 @@ import { Field, Form, Formik } from 'formik'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { useNavigate } from 'react-router-dom'
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'
 
 const PrepareSearch = () => {
+    const [modal, setModal] = useState(false)
     const handleRoute = () => {
         console.log('clicked!')
+        setModal(true)
     }
   return (
         <div>
+                  {modal && <ThankYouModal/>}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title text-center">Prepare</h4>
                 <div>

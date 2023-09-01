@@ -28,7 +28,7 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 
 const StoreRegistration = () => {
     const { token }: any = getToken();
-    const AssetsId:any='INDI01AAAA7' || localStorage.getItem('assets_list_id');
+    const AssetsId:any=localStorage.getItem('assets_list_id');
     const { data: ColdStorageType, loading, error } = useApiFetch<any>('master/partner/store/type-of-cold-storage', token);
     const { data: StorageType, loading: Sloading, error: Serror } = useApiFetch<any>('master/partner/store/get-store-type', token);
     const { data: DocksType, loading: Dockloading, error: DockSerror } = useApiFetch<any>('master/partner/store/type-of-docks', token);
@@ -62,44 +62,41 @@ const StoreRegistration = () => {
     const [SEShow, setSEShow] = useState<any>(false);
     const [SEModal, setSEModal] = useState<any>(false);
     let payload = {
-        chamber_ids: [
-            3
-        ],
-        weight_bridge_id: "1",
-        city_id: "6",
-        address: "ghghg",
-        total_tonnage: "45",
+        city_id: "14",
+        address: "FARIDABAD",
+        total_tonnage: "23",
         store_type_id: "3",
         cold_storage_type_id: "1",
-        no_of_chambers: "5",
-        ante_room_area: "6",
-        total_number_of_docks: "7676",
-        total_office_space: "7676",
-        type_of_dock_id: "3",
-        processing_area: "65656",
-        parking_area: "5665",
+        no_of_chambers: "34",
+        ante_room_area: "347",
+        total_number_of_docks: "5",
+        total_office_space: "566",
+        type_of_dock_id: "2",
+        processing_area: "6565",
+        parking_area: "566",
         type_of_refrigeration_id: "3",
         installation_year: "2023",
-        facility_manager_name: "jhhg",
-        facility_manager_contact: "76766677",
-        internet: "false",
-        wifi: "false",
-        cctv: "false",
-        driver_area_food_resting: "false",
+        facility_manager_name: "AMRIT",
+        facility_manager_contact: "8287059939",
+        internet: "true",
+        wifi: "true",
+        cctv: "true",
+        driver_area_food_resting: "true",
+        weight_bridge_id: "2",
         road_condition_id: "1",
-        ca_equipment_ids: [3],
-        compressor_ids: [2],
-        acu_ids: [2],
-        condensor_ids: [2],
-        amc_ids: [1],
-        iot_devices_ids: [1, 2, 5],
-        it_devices_ids: [1],
-        generator_ids: [1],
-        mhe_ids: [1],
-        solar_invertor_ids: [1],
-        asset_id: 'INDI01AAAA7' || 'INDI01AAAA9'
-
-    }
+        asset_id:localStorage.getItem('assets_list_id'),
+         ca_equipment_ids: [3],
+              compressor_ids: [2],
+              acu_ids: [2],
+              condensor_ids: [2],
+              amc_ids: [1],
+              iot_devices_ids: [1, 2, 5],
+              it_devices_ids: [1],
+              generator_ids: [1],
+              mhe_ids: [1],
+              solar_invertor_ids: [1],
+                chamber_ids: [3],
+      }
     let payload1 = {
         chamber_ids: [],
         weight_bridge_id: "",
@@ -151,7 +148,7 @@ console.log("dataa55555",dataa);
         
         if (validateStorePartnerForm(dataa, setErrors)) {
             try {
-                // dataa.asset_id=localStorage.getItem('AssetsId');
+                dataa.asset_id=localStorage.getItem('assets_list_id');
 
                 const config = {
                     method: 'post',
@@ -275,15 +272,16 @@ if(fetchDetails?.data!==null){
                                     label="Total tonnage"
                                     className='w-1/2 text-label-title'
                                 >
-                                    <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input disabled={location?.state} className='w-2/3 border-0' name='total_tonnage' value={dataa?.total_tonnage} onChange={(e: any) => handlechange(e)} type='text' placeholder='Enter value' />
-                                        <select
-                                        disabled={location?.state}
-                                         className='border-0'>
-                                            <option>Metric ton</option>
-                                            <option>B</option>
-                                        </select>
-                                    </div>
+                                        <Field 
+                                    disabled={location?.state}
+                                        type="text"
+                                        autoComplete="off"
+                                        name='total_tonnage' value={dataa?.total_tonnage}
+                                        onChange={(e: any) => handlechange(e)}
+                                        placeholder="Enter Value"
+                                        component={Input}
+                                    />
+                              
                                     <p className='text-[red]'>{errors && errors.total_tonnage}</p>
                                 </FormItem>
                                 <FormItem

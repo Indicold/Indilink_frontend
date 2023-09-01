@@ -119,3 +119,6 @@ padding-right: 0px !important;
 .go2150698616:before {
     bottom: -4.2rem !important;
 }
+.input:disabled {
+    background-color: inherit !important;
+}

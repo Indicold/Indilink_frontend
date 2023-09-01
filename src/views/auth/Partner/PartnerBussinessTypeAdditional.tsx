@@ -120,7 +120,7 @@ const PartnerBussinessTypeAdditional = () => {
              ...fetchDetails?.data
            };
      
-           const updatedArray = array.map((item) =>
+           const updatedArray = array.map((item:any) =>
              newData[item.key]
                ? { ...item, view: true, url: newData[item.key], message: 'Uploaded' }
                : item
@@ -132,7 +132,7 @@ const PartnerBussinessTypeAdditional = () => {
   return (
     <div>
     <div  className="bg-white">
-     <h4 className=" mb-2 text-head-title text-center">Additional Submissions</h4>
+     <h4 className=" mb-2 text-head-title text-center p-4">Additional Submissions</h4>
      <div>
  <Formik>
      <Form className="py-2 multistep-form-step">
@@ -140,7 +140,7 @@ const PartnerBussinessTypeAdditional = () => {
              <div className="flex flex-wrap">
                 {array?.map((item:any,index:any)=>(
        <FormItem label={item?.label} key={index}
-       className=' w-1/2 rounded-lg pl-[22px] flex '>
+       className=' w-1/2 rounded-lg pl-[22px] flex text-label-title '>
 
 <input
 disabled={isDisabled}
@@ -173,7 +173,7 @@ onChange={(e:any)=>handleFileChange(e,item)}
                            variant="solid"
                            type="button"
                            onClick={()=>navigate('/asset_list')}
-                           className='indigo-btn w-[300px] mx-auto rounded-[30px]'
+                           className='indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]'
                        >
                     Next
                        </Button>

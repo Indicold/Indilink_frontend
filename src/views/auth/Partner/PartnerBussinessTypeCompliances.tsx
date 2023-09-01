@@ -184,7 +184,7 @@ const PartnerBussinessTypeCompliances = () => {
       <div>
          <ToastContainer />
          <div className="bg-white">
-            <h4 className=" mb-2 text-head-title text-center">Compliance Details</h4>
+            <h4 className=" mb-2 text-head-title text-center p-4">Compliance Details</h4>
             <div>
                <Formik>
                   <Form className="py-2 multistep-form-step">
@@ -192,7 +192,7 @@ const PartnerBussinessTypeCompliances = () => {
                         <div className="flex flex-wrap">
                            {array?.map((item: any, index: any) => (
                               <FormItem label={item?.label} key={index}
-                                 className=' w-1/2 rounded-lg pl-[22px] '>
+                                 className=' w-1/2 rounded-lg pl-[22px] text-label-title '>
 
                                  <input 
                                  disabled={isDisabled}
@@ -225,7 +225,7 @@ const PartnerBussinessTypeCompliances = () => {
                               variant="solid"
                               type="button"
                               onClick={handleRoute}
-                              className='indigo-btn w-[300px] mx-auto rounded-[30px]'
+                              className='indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]'
                            >
                               Next
                            </Button>

@@ -314,4 +314,45 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
+  const newErrors: any = {};
+
+  if (!formData?.country_id) {
+    newErrors.country_id = 'This Field is required';
+  }
+
+  if (!formData?.city_id) {
+    newErrors.city_id = 'This Field is required';
+  }
+
+  if (!formData?.temperature) {
+    newErrors.temperature = 'This Field is required';
+  }
+
+  if (!formData?.temperature_type_id) {
+    newErrors.temperature_type_id = 'This Field is required';
+  }
+ if (!formData?.certification_id) {
+    newErrors.certification_id = 'This Field is required';
+  }
+  if (!formData?.unit_id) {
+    newErrors.unit_id = 'This Field is required';
+  }
+
+  if (!formData?.date) {
+    newErrors.date = 'This Field is required';
+  }
+  if (!formData?.storage_duration) {
+    newErrors.storage_duration = 'This Field is required';
+  }
+  if (!formData?.storage_duration_type) {
+    newErrors.storage_duration_type = 'This Field is required';
+  }
+  if (!formData?.product_type_id) {
+    newErrors.product_type_id = 'This Field is required';
+  }
+  console.log("errr", newErrors);
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
+};
 
