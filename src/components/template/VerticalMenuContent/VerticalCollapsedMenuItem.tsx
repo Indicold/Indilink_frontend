@@ -25,6 +25,8 @@ interface VerticalCollapsedMenuItemProps extends CollapsedItemProps {
 const { MenuItem, MenuCollapse } = Menu
 
 const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
+console.log("gggg4545",nav.authority);
+   
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <MenuCollapse

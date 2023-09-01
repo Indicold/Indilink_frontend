@@ -82,3 +82,40 @@ padding-right: 0px !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
 }
+.partner-details-container{
+    height: 70vh !important;
+    overflow-y: auto !important;
+}
+.partner-details-container ::-webkit-scrollbar,
+.partner-details-container ::-moz-scrollbar,
+.partner-details-container ::-ms-scrollbar {
+    width: 1px !important;
+    color: #0f3492 !important;
+    background: linear-gradient(13deg, #bc11d7 14%, #c7ceff 64%) !important;
+}
+
+.multistep-form button {
+
+    
+    background-color: #FFB017;
+
+    color: white;
+
+    margin: 0.2rem;
+
+    padding: 0.2rem 0.7rem;
+
+    border-radius: 0.2rem;
+
+}
+
+ 
+
+.multistep-form button:disabled {
+
+    background-color: #CA7D11!important;
+
+}
+.go2150698616:before {
+    bottom: -4.2rem !important;
+}

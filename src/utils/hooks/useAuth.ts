@@ -119,6 +119,7 @@ function useAuth() {
                 authority: [],
             })
         )
+        localStorage.removeItem('user_type');
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 

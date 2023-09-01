@@ -31,7 +31,6 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
 
     const [emailSent, setEmailSent] = useState(false)
 
-    const [message, setMessage] = useTimeOutMessage()
 
     const onSendMail = (
         values: ForgotPasswordFormSchema,
@@ -89,7 +88,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 ) : (
                     <>
-                        <h4 className="mb-1 text-head-title">Forgot Password</h4>
+                        <h4 className="mb-1 text-head-title text-center">Forgot Password</h4>
                         <p className='!text-[#103492]'>
                             Please enter your email address to receive a
                             verification code
