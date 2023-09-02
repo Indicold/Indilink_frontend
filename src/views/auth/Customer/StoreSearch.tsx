@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+// Import necessary React and custom components and libraries
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     Dropdown,
     FormContainer,
     FormItem,
     Input,
-} from '@/components/ui'
-import { Field, Form, Formik } from 'formik'
-import { getToken } from '@/store/customeHook/token'
-import useApiFetch from '@/store/customeHook/useApiFetch'
-import { useNavigate } from 'react-router-dom'
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'
-import usePostApi from '@/store/customeHook/postApi'
-import LoaderSpinner from '@/components/LoaderSpinner'
-import { validateStoreCustomerForm } from '@/store/customeHook/validate'
+} from '@/components/ui'; // Import UI components
+import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
+import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
+import { useNavigate } from 'react-router-dom'; // Import routing related hook
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
+import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
+import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
+import { validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+
+// Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
     country_id: '',
     city_id: '',
@@ -27,39 +30,71 @@ export const payloadSearchCustomer: any = {
     storage_duration_type: 1
 }
 
+// Define the main functional component for StoreSearch
 const StoreSearch = () => {
+    // Get the user's token using a custom hook
     const { token }: any = getToken();
+    
+    // Initialize the form data with the payload
     const [formData, setFormData] = useState<any>(payloadSearchCustomer)
-    const { data: ListOfCountry, loading: LCloading, error: LCerror } = useApiFetch<any>(`master/get-countries`, token);
-    const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } = useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
-    const { data: ListOfProduct, loading: LPloading, error: Lperror } = useApiFetch<any>(`master/customer/store/get-product-type`, token);
-    const { data: ListOfTemp, loading: LTloading, error: Lterror } = useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
-    const { data: ListOfCert, loading: Lctloading, error: Lcterror } = useApiFetch<any>(`master/customer/store/get-certification-type`, token);
-    const { data: ListOfTimeUnits, loading: Ltuloading, error: Ltuerror } = useApiFetch<any>(`master/customer/store/get-duration`, token);
-    const { result:CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }:any = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/customer/store/search');
-    const [modal, setModal] =useState<any>(false)
+    
+    // Fetch a list of countries using a custom hook
+    const { data: ListOfCountry, loading: LCloading, error: LCerror } =
+        useApiFetch<any>(`master/get-countries`, token);
+    
+    // Fetch a list of cities based on the selected country
+    const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
+        useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
+    
+    // Fetch a list of product types using a custom hook
+    const { data: ListOfProduct, loading: LPloading, error: Lperror } =
+        useApiFetch<any>(`master/customer/store/get-product-type`, token);
+    
+    // Fetch a list of temperature types using a custom hook
+    const { data: ListOfTemp, loading: LTloading, error: Lterror } =
+        useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
+    
+    // Fetch a list of certification types using a custom hook
+    const { data: ListOfCert, loading: Lctloading, error: Lcterror } =
+        useApiFetch<any>(`master/customer/store/get-certification-type`, token);
+    
+    // Fetch a list of time units using a custom hook
+    const { data: ListOfTimeUnits, loading: Ltuloading, error: Ltuerror } =
+        useApiFetch<any>(`master/customer/store/get-duration`, token);
+    
+    // Define a custom hook for making a POST request
+    const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }: any =
+        usePostApi('https://seal-app-uqxwl.ondigitalocean.app/customer/store/search');
+    
+    // Define state variables for the ThankYou modal and form errors
+    const [modal, setModal] = useState<any>(false);
     const [errors, setErrors] = useState<any>({});
 
+    // Define a function to handle form submission
     const handleRoute = () => {
         console.log('clicked!')
-        if(validateStoreCustomerForm(formData,setErrors)){
+        
+        // Check form validation before making a POST request
+        if (validateStoreCustomerForm(formData, setErrors)) {
             PostCustomerRegisterDetails(formData);
-
         }
     }
+
+    // Define a function to handle form input changes
     const handlechange = (e: any) => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
     }
-    useEffect(()=>{
-        if(CustomerResponse?.status==200){
-setModal(true)
-            
-        }
-    },[CustomerResponse?.status])
-console.log("statusstatusstatusstatusstatusstatusstatus",modal);
 
+    // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
+    useEffect(() => {
+        if (CustomerResponse?.status == 200) {
+            setModal(true);
+        }
+    }, [CustomerResponse?.status]);
+
+    console.log("statusstatusstatusstatusstatusstatusstatus", modal);
     return (
         <div>
             {modal && <ThankYouModal message={CustomerResponse} setModal={setModal} setFormData={setFormData} />}

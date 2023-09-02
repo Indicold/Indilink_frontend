@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
-import { Button } from '@/components/ui';
+import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
+
+// Defines the table header with column names.
 const tableHead = {
   asset_id: "Asset ID",
   is_registration_complete: "Registration",
@@ -18,6 +20,7 @@ const tableHead = {
   Action: "Action"
 };
 
+// The TableLayout component takes a prop called AllStore, presumably for rendering data.
 
 const TableLayout = ({ AllStore }: any) => {
   let allData: any = AllStore;
@@ -28,6 +31,8 @@ const TableLayout = ({ AllStore }: any) => {
   const [collection, setCollection] = React.useState(
     cloneDeep(allData.slice(0, countPerPage))
   );
+
+  // Ref for a search function that filters data based on user input.
   const searchData = useRef(
     throttle(val => {
       const query = val.toLowerCase();
@@ -46,8 +51,8 @@ const TableLayout = ({ AllStore }: any) => {
     }, 400)
   );
 
-
   React.useEffect(() => {
+    // Update the displayed data when the search input value changes.
     if (!value) {
       updatePage(1);
     } else {
@@ -55,32 +60,34 @@ const TableLayout = ({ AllStore }: any) => {
     }
   }, [value]);
 
-
-
   const updatePage = (p: any) => {
+    // Function to update the current page of data.
     setCurrentPage(p);
     const to = countPerPage * p;
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
+
   const navigate = useNavigate();
+
   const handleEdit = (rowData: any) => {
-    console.log('rowDatarowData', rowData)
+    // Handle edit action for different asset types.
     if (rowData?.asset_type?.type === 'Store') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate('/partner-registration', { state:false })
+      navigate('/partner-registration', { state: false })
     }
     if (rowData?.asset_type?.type === 'Prepare') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate('/partner-bussiness-type-prepare', { state:false })
+      navigate('/partner-bussiness-type-prepare', { state: false })
     }
     if (rowData?.asset_type?.type === 'Move') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate('/partner-bussiness-type-move', { state:false })
+      navigate('/partner-bussiness-type-move', { state: false })
     }
   };
+  
   const handleView = (rowData: any) => {
-    console.log('rowDatarowData', rowData)
+    // Handle view action for different asset types.
     if (rowData?.asset_type?.type === 'Store') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate('/partner-registration', { state: true })
@@ -94,9 +101,12 @@ const TableLayout = ({ AllStore }: any) => {
       navigate('/partner-bussiness-type-move', { state: true })
     }
   }
+
   const tableRows = (rowData: any, index: any) => {
+    // Generates table rows based on data.
     const tableCell = Object.keys(tableHead);
     const columnData = tableCell.map((key, i) => {
+      // Renders table cells for each column in the header.
       if (key === 'asset_type') {
         return <td key={i} className='text-center'>{rowData.asset_type.type}</td>;
       }
@@ -116,14 +126,18 @@ const TableLayout = ({ AllStore }: any) => {
   };
 
   const tableData = () => {
+    // Generates table data rows.
     return collection.map((rowData: any, index: any) => tableRows(rowData, index));
   };
+
   const headRow = () => {
+    // Generates the header row.
     return Object.values(tableHead).map((title, index) => (
       <td key={index} className='text-center'>{title}</td>
     ));
   };
 
+  // JSX structure for rendering the table and pagination.
 
   return (
     <>
@@ -154,4 +168,4 @@ const TableLayout = ({ AllStore }: any) => {
   )
 }
 
-export default TableLayout
+export default TableLayout;

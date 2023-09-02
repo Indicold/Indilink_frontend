@@ -1,25 +1,41 @@
-import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'
-import { getToken } from '@/store/customeHook/token';
-import useApiFetch from '@/store/customeHook/useApiFetch';
-import { Field, Form, Formik } from 'formik'
-import { useState } from 'react';
+// Import necessary components and libraries
+import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
+import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
+import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
+import { useState } from 'react'; // Import useState hook for managing component state
+
+// Define the functional component for InvestorBussinessTypeStore
 const InvestorBussinessTypeStore = () => {
-    const {token}:any =getToken();
+    // Get the token from a custom hook
+    const { token }: any = getToken();
+
+    // Use the useApiFetch hook to fetch data
     const { data, loading, error } = useApiFetch<any>('master/partner/store/get-store-type', token);
-    const [island,setIsland]=useState(false)
-    const [formData,setFormData]=useState({});
-    const handleChange=(e:any)=>{
-        const newData:any={...formData};
-        newData[e.target.name]=e.target.value;
-        console.log("gggggg",e.target.value,e.target.name);
 
-        if(e.target.name==='islandavailable' && e.target.value==='Yes'){
-            
-setIsland(true)
+    // Define a state variable for 'island' and initialize it to 'false'
+    const [island, setIsland] = useState(false);
+
+    // Define a state variable 'formData' and initialize it as an empty object
+    const [formData, setFormData] = useState({});
+
+    // Define a function to handle input changes
+    const handleChange = (e: any) => {
+        // Create a copy of the existing 'formData' object
+        const newData: any = { ...formData };
+
+        // Update the property in 'newData' with the new value
+        newData[e.target.name] = e.target.value;
+        
+        // Check if the input with name 'islandavailable' has a value of 'Yes'
+        if (e.target.name === 'islandavailable' && e.target.value === 'Yes') {
+            setIsland(true); // Set 'island' state to 'true'
         }
-        setFormData(newData);
 
+        // Update the 'formData' state with the modified object
+        setFormData(newData);
     }
+
     return (
     <div  className="bg-white">
             <h4 className=" mb-2 text-head-title text-center">Investor</h4>

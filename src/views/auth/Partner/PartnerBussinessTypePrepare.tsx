@@ -1,30 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'
-import { Field, Form, Formik } from 'formik'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { getToken } from '@/store/customeHook/token';
-import useApiFetch from '@/store/customeHook/useApiFetch';
-import usePostApi from '@/store/customeHook/postApi';
-import LoaderSpinner from '@/components/LoaderSpinner';
-import { messageView, validatePrepareForm } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
-import ACUModall from './MultistepForm/ACUModal';
-import MachineModal from './MultistepForm/MachineModal';
-import 'react-accessible-accordion/dist/fancy-example.css';
+// Import necessary React and custom components and libraries
+import React, { useEffect, useState } from 'react';
+import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
+import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
+import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hooks
+import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
+import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
+import LoaderSpinner from '@/components/LoaderSpinner'; // Import a custom loader spinner component
+import { messageView, validatePrepareForm } from '@/store/customeHook/validate'; // Import custom functions for messages and form validation
+import { ToastContainer } from 'react-toastify'; // Import a toast notification container component
+import ACUModall from './MultistepForm/ACUModal'; // Import a custom modal component
+import MachineModal from './MultistepForm/MachineModal'; // Import another custom modal component
+import 'react-accessible-accordion/dist/fancy-example.css'; // Import CSS styles for an accordion
 
+// Define the main functional component for PartnerBussinessTypePrepare
 const PartnerBussinessTypePrepare = () => {
-    const {token}:any=getToken();
-    const location=useLocation();
-    const isDisabled=location?.state || false;
-    const AssetsId:any=localStorage.getItem('assets_list_id');
-    const { data:prepareType, loading:prepareTypeLoading, error:prepareTypeError } = useApiFetch<any>('master/partner/prepare/get-prepare-type', token);
-    const { data:CityList, loading:CityListLoading, error:CityListError } = useApiFetch<any>('master/get-city-by-countryId/101', token);
-    const { data:ProductType, loading:ProductTypeLoading, error:ProductTypeError } = useApiFetch<any>('master/partner/prepare/get-product-category', token);
-    const { result:PrepareResponse, loading: PrepareLoading, sendPostRequest: PostPrepareRegisterDetails }:any = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/partner/prepare/register');
-    const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } = useApiFetch<any>(`partner/prepare/${AssetsId}`, token);
-   
-    const payload:any={
-    asset_id:localStorage.getItem('AssetsId'),
+  // Get the user's token using a custom hook
+  const { token }: any = getToken();
+  
+  // Get the current route location and check if it's disabled
+  const location = useLocation();
+  const isDisabled = location?.state || false;
+  
+  // Get the AssetsId from local storage
+  const AssetsId: any = localStorage.getItem('assets_list_id');
+  
+  // Fetch data for various elements using custom hooks
+  const { data: prepareType, loading: prepareTypeLoading, error: prepareTypeError } =
+    useApiFetch<any>('master/partner/prepare/get-prepare-type', token);
+  const { data: CityList, loading: CityListLoading, error: CityListError } =
+    useApiFetch<any>('master/get-city-by-countryId/101', token);
+  const { data: ProductType, loading: ProductTypeLoading, error: ProductTypeError } =
+    useApiFetch<any>('master/partner/prepare/get-product-category', token);
+
+  // Define state variables for API response and loading status
+  const { result: PrepareResponse, loading: PrepareLoading, sendPostRequest: PostPrepareRegisterDetails }: any =
+    usePostApi('https://seal-app-uqxwl.ondigitalocean.app/partner/prepare/register');
+  const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } =
+    useApiFetch<any>(`partner/prepare/${AssetsId}`, token);
+
+  // Define a sample payload for the POST request
+  const payload: any = {
+    asset_id: localStorage.getItem('AssetsId'),
     city_id: "9",
     address: "VARANSHI",
     hourly_throughput: "2132",
@@ -38,64 +55,70 @@ const PartnerBussinessTypePrepare = () => {
     batch_size: "353453",
     machine_ids: "5545",
     area: "45345343"
-  }
-    const [formData,setFormData]=useState<any>({
-        asset_id: localStorage.getItem('AssetsId'),
-        city_id: '',
-        address: '',
-        hourly_throughput: '',
-        prepare_type_id: '',
-        product_category_ids: '',
-        product_type: '',
-        throughput: '',
-        avg_case_size: '',
-        temperature: '',
-        no_of_docks:'',
-        type_of_dock_id: '',
-        batch_size: '',
-        machine_ids: '',
-        area: '',
-      });
-      const [errors, setErrors] = useState<any>({});
-    const navigate=useNavigate();
-    const handleChange=(e:any)=>{
-        const newData={...formData};
-        newData[e.target.name]=e.target.value;
-        setFormData(newData)
-        
+  };
+
+  // Define state variable and function for form data
+  const [formData, setFormData] = useState<any>({
+    asset_id: localStorage.getItem('AssetsId'),
+    city_id: '',
+    address: '',
+    hourly_throughput: '',
+    prepare_type_id: '',
+    product_category_ids: '',
+    product_type: '',
+    throughput: '',
+    avg_case_size: '',
+    temperature: '',
+    no_of_docks: '',
+    type_of_dock_id: '',
+    batch_size: '',
+    machine_ids: '',
+    area: '',
+  });
+
+  // Define state variable for form validation errors
+  const [errors, setErrors] = useState<any>({});
+
+  // Get the navigate function from the routing hook
+  const navigate = useNavigate();
+
+  // Define a function to handle form input changes
+  const handleChange = (e: any) => {
+    const newData = { ...formData };
+    newData[e.target.name] = e.target.value;
+    setFormData(newData);
+  };
+
+  // Define a function to handle form submission and POST request
+  const handleRoute = () => {
+    let isValid = validatePrepareForm(formData, setErrors);
+    if (isValid) {
+      PostPrepareRegisterDetails(payload);
+      navigate('/partner-bussiness-type-compliance');
     }
-    const handleRoute=()=>{
-    let isValid=validatePrepareForm(formData,setErrors)
-    console.log("isValid",isValid);
-        if(isValid){
-            
-            PostPrepareRegisterDetails(payload)
-    navigate('/partner-bussiness-type-compliance')
+  };
 
-
-        }
-      
-   }
-   console.log("newdata",formData,PrepareResponse,PrepareLoading);
-   useEffect(()=>{
-    if(PrepareResponse?.status && PrepareResponse?.data){
-        messageView('Data Updated Successfully !')
-        setTimeout(()=>{
-            navigate('/partner-bussiness-type-compliance')
-
-        },2000)
+  // Handle success message display on successful POST request
+  useEffect(() => {
+    if (PrepareResponse?.status && PrepareResponse?.data) {
+      messageView('Data Updated Successfully!');
+      setTimeout(() => {
+        navigate('/partner-bussiness-type-compliance');
+      }, 2000);
     }
+  }, [PrepareResponse]);
 
-   },[PrepareResponse])
+  // Define state variable and function for the machine modal
+  const [machineModal, setMachineModal] = useState<any>(false);
 
-   const [machineModal, setMachineModal] = useState<any>(false);
-   useEffect(() => {
-if(fetchDetails?.data){
-    setFormData(fetchDetails?.data)
-}
-   
-}, [fetchDetails])
-console.log("INDI01AAAA5INDI01AAAA5", fetchDetails);
+  // Load data into the form when fetchDetails has data
+  useEffect(() => {
+    if (fetchDetails?.data) {
+      setFormData(fetchDetails?.data);
+    }
+  }, [fetchDetails]);
+
+  console.log("INDI01AAAA5INDI01AAAA5", fetchDetails);
   return (
     <div>
         <ToastContainer />

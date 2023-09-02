@@ -26,9 +26,13 @@ import {
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
+// Define the StoreRegistration component
 const StoreRegistration = () => {
+    // Fetch the user's token
     const { token }: any = getToken();
+     // Get the assets list ID from local storage
     const AssetsId:any=localStorage.getItem('assets_list_id');
+     // Fetch various data from APIs using custom hooks
     const { data: ColdStorageType, loading, error } = useApiFetch<any>('master/partner/store/type-of-cold-storage', token);
     const { data: StorageType, loading: Sloading, error: Serror } = useApiFetch<any>('master/partner/store/get-store-type', token);
     const { data: DocksType, loading: Dockloading, error: DockSerror } = useApiFetch<any>('master/partner/store/type-of-docks', token);
@@ -37,6 +41,7 @@ const StoreRegistration = () => {
     const { data: WeighBridge, loading: WeighBridgeloading, error: WeighBridgeSerror } = useApiFetch<any>('master/partner/store/get-weight-bridge', token);
     const { data: RoadCondition, loading: RoadConditionloading, error: RoadConditionSerror } = useApiFetch<any>('master/partner/store/get-road-condition', token);
     const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } = useApiFetch<any>(`partner/store/${AssetsId}`, token);
+    // Manage state variables for modals and other components
     const [numChambers, setNumChambers] = useState<any>(0);
     const [show, setShow] = useState(false);
     const [chamberModal, setChamberModal] = useState(false);
@@ -61,144 +66,157 @@ const StoreRegistration = () => {
     const [MHEModal, setMHEModal] = useState<any>(false);
     const [SEShow, setSEShow] = useState<any>(false);
     const [SEModal, setSEModal] = useState<any>(false);
-    let payload = {
-        city_id: "14",
-        address: "FARIDABAD",
-        total_tonnage: "23",
-        store_type_id: "3",
-        cold_storage_type_id: "1",
-        no_of_chambers: "34",
-        ante_room_area: "347",
-        total_number_of_docks: "5",
-        total_office_space: "566",
-        type_of_dock_id: "2",
-        processing_area: "6565",
-        parking_area: "566",
-        type_of_refrigeration_id: "3",
-        installation_year: "2023",
-        facility_manager_name: "AMRIT",
-        facility_manager_contact: "8287059939",
-        internet: "true",
-        wifi: "true",
-        cctv: "true",
-        driver_area_food_resting: "true",
-        weight_bridge_id: "2",
-        road_condition_id: "1",
-        asset_id:localStorage.getItem('assets_list_id'),
-         ca_equipment_ids: [3],
-              compressor_ids: [2],
-              acu_ids: [2],
-              condensor_ids: [2],
-              amc_ids: [1],
-              iot_devices_ids: [1, 2, 5],
-              it_devices_ids: [1],
-              generator_ids: [1],
-              mhe_ids: [1],
-              solar_invertor_ids: [1],
-                chamber_ids: [3],
-      }
-    let payload1 = {
-        chamber_ids: [],
-        weight_bridge_id: "",
-        city_id: "",
-        address: "",
-        total_tonnage: "",
-        store_type_id: "",
-        cold_storage_type_id: "",
-        no_of_chambers: "",
-        ante_room_area: "",
-        total_number_of_docks: "",
-        total_office_space: "",
-        type_of_dock_id: "",
-        processing_area: "",
-        parking_area: "",
-        type_of_refrigeration_id: "",
-        installation_year: "",
-        facility_manager_name: "",
-        facility_manager_contact: "",
-        internet: "",
-        wifi: "",
-        cctv: "",
-        driver_area_food_resting: "",
-        road_condition_id: "",
-        ca_equipment_ids: [],
-        compressor_ids: [],
-        acu_ids: [],
-        condensor_ids: [],
-        amc_ids: [],
-        iot_devices_ids: [],
-        it_devices_ids: [],
-        generator_ids: [],
-        mhe_ids: [],
-        solar_invertor_ids: [],
-        asset_id: "",
-    };
-const location=useLocation();
+// Define an initial payload with default values for form data
+let payload = {
+    city_id: "14",
+    address: "FARIDABAD",
+    total_tonnage: "23",
+    store_type_id: "3",
+    cold_storage_type_id: "1",
+    no_of_chambers: "34",
+    ante_room_area: "347",
+    total_number_of_docks: "5",
+    total_office_space: "566",
+    type_of_dock_id: "2",
+    processing_area: "6565",
+    parking_area: "566",
+    type_of_refrigeration_id: "3",
+    installation_year: "2023",
+    facility_manager_name: "AMRIT",
+    facility_manager_contact: "8287059939",
+    internet: "true",
+    wifi: "true",
+    cctv: "true",
+    driver_area_food_resting: "true",
+    weight_bridge_id: "2",
+    road_condition_id: "1",
+    asset_id: localStorage.getItem('assets_list_id'),
+    ca_equipment_ids: [3],
+    compressor_ids: [2],
+    acu_ids: [2],
+    condensor_ids: [2],
+    amc_ids: [1],
+    iot_devices_ids: [1, 2, 5],
+    it_devices_ids: [1],
+    generator_ids: [1],
+    mhe_ids: [1],
+    solar_invertor_ids: [1],
+    chamber_ids: [3],
+};
 
-    const [dataa, setData] = useState<any>(payload1 || {
-        chamber_ids: [3]
-    });
-    const [errors, setErrors] = useState<any>({});
-console.log("dataa55555",dataa);
+// Define an empty payload with default values for form data
+let payload1 = {
+    chamber_ids: [],
+    weight_bridge_id: "",
+    city_id: "",
+    address: "",
+    total_tonnage: "",
+    store_type_id: "",
+    cold_storage_type_id: "",
+    no_of_chambers: "",
+    ante_room_area: "",
+    total_number_of_docks: "",
+    total_office_space: "",
+    type_of_dock_id: "",
+    processing_area: "",
+    parking_area: "",
+    type_of_refrigeration_id: "",
+    installation_year: "",
+    facility_manager_name: "",
+    facility_manager_contact: "",
+    internet: "",
+    wifi: "",
+    cctv: "",
+    driver_area_food_resting: "",
+    road_condition_id: "",
+    ca_equipment_ids: [],
+    compressor_ids: [],
+    acu_ids: [],
+    condensor_ids: [],
+    amc_ids: [],
+    iot_devices_ids: [],
+    it_devices_ids: [],
+    generator_ids: [],
+    mhe_ids: [],
+    solar_invertor_ids: [],
+    asset_id: "",
+};
 
-    const navigate = useNavigate();
-    const handleRoute = async () => {
+// Fetch the current location
+const location = useLocation();
 
-        const { token }: any = getToken();
-        
-        if (validateStorePartnerForm(dataa, setErrors)) {
-            try {
-                dataa.asset_id=localStorage.getItem('assets_list_id');
+// Initialize state variables for form data and errors
+const [dataa, setData] = useState<any>(payload1 || {
+    chamber_ids: [3]
+});
+const [errors, setErrors] = useState<any>({});
+console.log("dataa55555", dataa);
 
-                const config = {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                    body: JSON.stringify(dataa)
-                };
+// Access the navigate function from React Router
+const navigate = useNavigate();
 
-                const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/partner/store/register`, config);
-                const result = await response.json();
+// Handle the form submission
+const handleRoute = async () => {
+    const { token }: any = getToken();
+    
+    // Validate the form data
+    if (validateStorePartnerForm(dataa, setErrors)) {
+        try {
+            // Set the asset_id based on local storage
+            dataa.asset_id = localStorage.getItem('assets_list_id');
 
-                if (result?.status) {
+            // Define the HTTP request configuration
+            const config = {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(dataa)
+            };
 
-                    messageView(result.message);
-                    navigate('/partner-bussiness-type-compliance')
-                    if (result?.status === 200) {
-                        setTimeout(() => {
-                            navigate('/partner-bussiness-type-compliance')
+            // Send the HTTP request to register the store
+            const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/partner/store/register`, config);
+            const result = await response.json();
 
-                        }, 2000)
-                    }
+            if (result?.status) {
+                // Display a success message and navigate to a new page
+                messageView(result.message);
+                navigate('/partner-bussiness-type-compliance');
 
-
-                } else {
-
-                    messageView(result?.message);
+                if (result?.status === 200) {
+                    setTimeout(() => {
+                        navigate('/partner-bussiness-type-compliance');
+                    }, 2000);
                 }
-
-            } catch (error: any) {
-                messageView(error.message);
+            } else {
+                // Display an error message
+                messageView(result?.message);
             }
-        }else if(location?.state){
-            navigate('/partner-bussiness-type-compliance',{state:true})
+        } catch (error: any) {
+            // Handle any errors that occur during the request
+            messageView(error.message);
         }
-
-
+    } else if (location?.state) {
+        // Navigate to another page if there's state data
+        navigate('/partner-bussiness-type-compliance', { state: true });
     }
-    const handlechange = (e: any) => {
-        const newData: any = { ...dataa };
-        newData[e.target.name] = e.target.value;
-        setData(newData);
-    }
-    useEffect(() => {
-if(fetchDetails?.data!==null){
-    setData(fetchDetails?.data)
-
 }
-    }, [fetchDetails])
+
+// Handle changes to form input fields
+const handlechange = (e: any) => {
+    const newData: any = { ...dataa };
+    newData[e.target.name] = e.target.value;
+    setData(newData);
+}
+
+// Use useEffect to update form data when fetchDetails changes
+useEffect(() => {
+    if (fetchDetails?.data !== null) {
+        setData(fetchDetails?.data);
+    }
+}, [fetchDetails]);
+
 
     return (
         <div className='bg-white p-4 rounded'>

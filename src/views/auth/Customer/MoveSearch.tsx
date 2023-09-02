@@ -1,23 +1,29 @@
-import React, { useState } from 'react'
+// Import necessary React and custom components and libraries
+import React, { useState } from 'react';
 import {
     Button,
     Dropdown,
     FormContainer,
     FormItem,
     Input,
-} from '@/components/ui'
-import { Field, Form, Formik } from 'formik'
-import { getToken } from '@/store/customeHook/token'
-import useApiFetch from '@/store/customeHook/useApiFetch'
-import { useNavigate } from 'react-router-dom'
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'
+} from '@/components/ui'; // Import UI components
+import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
+import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
+import { useNavigate } from 'react-router-dom'; // Import routing related hook
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 
+// Define the functional component for MoveSearch
 const MoveSearch = () => {
-    const [modal, setModal] = useState(false)
+    // Define a state variable for the ThankYou modal
+    const [modal, setModal] = useState(false);
+    
+    // Define a function to handle a button click
     const handleRoute = () => {
-        console.log('clicked!')
-        setModal(true)
+        console.log('clicked!');
+        setModal(true); // Set the modal state to true
     }
+
   return (
         <div>
               {modal && <ThankYouModal/>}
