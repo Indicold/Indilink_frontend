@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from './slices/auth';
 
 const API_URL = 'https://seal-app-uqxwl.ondigitalocean.app';
 
@@ -59,7 +61,12 @@ export const userLoginApiPost = createAsyncThunk(
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
+    if(data.message.accessToken) {
+      // const dispatch = useDispatch();
+      // dispatch(signInSuccess(data.message.accessToken))
+      sessionStorage.setItem('access_token', data.message.accessToken);
+    }
+    // if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
     return data;
   }
 );

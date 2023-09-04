@@ -1,21 +1,15 @@
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Alert from '@/components/ui/Alert'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import useAuth from '@/utils/hooks/useAuth'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateFormData } from '@/store/slices/Authentication/userDetails'
-import { userRegisterPostApi, usergetOTPPostApi, userverifyOTPPostApi } from '@/store'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Spinner } from '@/components/ui'
 import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
 
@@ -24,16 +18,7 @@ interface BasicInformationFormProps extends CommonProps {
     signInUrl?: string
 }
 
-type BasicInformationFormSchema = {
-    first_name: string
-    last_name: string
-    password: string
-    confirm_password: string
-    email: string
-    phone_number: string
-    term_condition: String
-    gst: String
-}
+
 
 
 const validationSchema = Yup.object().shape({
@@ -61,13 +46,15 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const autoFilldata = GSTResponse?.message;
+    const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false)
 
 
 
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
+        console.log("OTPPostDetails",OTPPostDetails);
+        
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
             PostOTPDetails(obj)
@@ -75,23 +62,44 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     }
 
 
+  
     const handleChange = (e: any) => {
-        const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
-        setFormData(newData);
-        if (newData?.gst?.length == 16) {
-            setDisabled(false)
-            dispatch(updateFormData(formData));
-            FetchGSTDetails(formData)
+        const newGst = e.target.value;
+    
+        if (newGst.length <= 15) {
+          const newData = { ...formData, gst: newGst };
+          setFormData(newData);
+    
+          if (newGst.length === 15) {
+            setDisabled(false);
+            dispatch(updateFormData(newData)); // Dispatch your Redux action with the new data
+            FetchGSTDetails(newData); // Call your API function
+          } else {
+            setDisabled(true);
+          }
         }
-
-
-    }
-    const handlesubmit = () => {
-         formData.gst=formData?.gst?.split(" ").join("");        
+      };
+    const handlesubmit = () => {   
+        let ObjectData:any={
+            first_name:formData?.first_name,
+            last_name:formData?.last_name,
+            email: formData?.email,
+            phone_number:formData?.phone_number,
+            password:formData?.password,
+            country: "India",
+            panNo:autoFilldata?.taxpayerInfo?.panNo,
+            gstNo:autoFilldata?.taxpayerInfo?.gstin,
+            userDesignation: autoFilldata?.taxpayerInfo?.ctb,
+            firmType:autoFilldata?.taxpayerInfo?.ctb,
+            firmName: autoFilldata?.taxpayerInfo?.tradeNam,
+            pincode: autoFilldata?.taxpayerInfo?.pradr?.addr?.pncd,
+            state: autoFilldata?.taxpayerInfo?.pradr?.addr?.stcd,
+            city: autoFilldata?.taxpayerInfo?.pradr?.addr?.dst,
+            address: autoFilldata?.taxpayerInfo?.pradr?.addr?.bno
+          }    
         setSubmitting(true)
         setOtpModal(true)
-        sendPostRequest(formData);
+        sendPostRequest(ObjectData);
         setSubmitting(false)
 
     }
@@ -107,7 +115,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 draggable: true,
                 progress: undefined,
                 style: {
-                    background: '#6aa5fc',
+                    background: '#FFB017',fontSize:"bold",
                     color: "#fff"// Set the background color here
                 },
             });
@@ -134,7 +142,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 draggable: true,
                 progress: undefined,
                 style: {
-                    background: '#6aa5fc',
+                    background: '#FFB017',fontSize:"bold",
                     color: "#fff"// Set the background color here
                 },
             });
@@ -154,7 +162,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 draggable: true,
                 progress: undefined,
                 style: {
-                    background: '#6aa5fc',
+                    background: '#FFB017',fontSize:"bold",
                     color: "#fff"// Set the background color here
                 },
             });
@@ -183,17 +191,17 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">An OTP has been sent to your email. Please enter here.</h3>
+                                <h3 className="mb-4 text-xl font-medium text-label-title">An OTP has been sent to your email. Please enter here.</h3>
                                 <form className="space-y-6" onSubmit={(e) => handleFinalSubmit(e)}>
                                     <div>
-                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">OTP</label>
+                                        <label htmlFor="email" className="h5 block mb-2 text-bold  text-label-title">Enter Your OTP</label>
                                         <div className="otp mx-auto">
-                                            <input type='text' className='w-full p-4 rounded-[3px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
+                                            <input type='text' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
                                         </div>
                                     </div>
-                                    <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-                                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                                        Didn't receive email? <a href="#" className="text-blue-700 hover:underline dark:text-blue-500" onClick={handlesubmit}>Resend OTP</a>
+                                    <button type="submit" className="indigo-btn rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify OTP</button>
+                                    <div className="!text-[#103492]">
+                                        Didn't receive email? <a role='button' className="text-blue-700 !text-[#103492]" onClick={handlesubmit}>Resend OTP</a>
                                     </div>
                                 </form>
                             </div>
@@ -216,8 +224,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 <Form className='signup-form'>
                     <FormContainer>
                         <FormItem
-                            label="CIN No"
-                            className='mx-auto cin-number'
+                            label="CIN No/GST"
+                            className=' text-start cin-number text-label-title'
                         >
                             <Field
                                 type="text"
@@ -233,7 +241,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Country"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
@@ -247,7 +255,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Pan Card No."
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
@@ -265,7 +273,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="User Designation"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
@@ -280,7 +288,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Firm Type"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
@@ -298,7 +306,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Firm Name"
 
-                                className='me-auto'
+                                className='me-auto text-label-title'
                             >
                                 <Field
                                     type="text"
@@ -316,11 +324,12 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                         <div className='flex'>
                             <Button
                                 block
+                                style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
                                 disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
+                                className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
                             >
                                 {isSubmitting
                                     ? 'Creating Account...'

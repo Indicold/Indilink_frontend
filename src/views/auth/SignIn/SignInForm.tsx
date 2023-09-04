@@ -9,10 +9,11 @@ import useAuth from '@/utils/hooks/useAuth'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { userLoginApiPost } from '@/store'
+import { signInSuccess, userLoginApiPost } from '@/store'
 import { NavLink } from 'react-router-dom'
+import { validateForm } from '@/store/customeHook/validate'
 
 interface SignInFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -41,7 +42,11 @@ const SignInForm = (props: SignInFormProps) => {
         username:"",
         password:""
     })
-    const dispatch=useDispatch();
+    const [error,setError]=useState<any>({
+        username:"",
+        password:""
+    })
+    const dispatch:any=useDispatch();
     const LoginResponse=useSelector((state:any)=>state?.auth?.apiLoginPostReducer)
     console.log("LOGIN",LoginResponse?.responseData?.message);
     
@@ -52,41 +57,47 @@ const SignInForm = (props: SignInFormProps) => {
         signUpUrl = '/sign-up',
     } = props
 
-    const [message, setMessage] = useTimeOutMessage()
 
-    const { signIn } = useAuth()
 
-    const onSignIn = async (
-        values: SignInFormSchema,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
-        const { email, password } = values
-console.log("hhhhhhhhhhhhhhhhhhh");
-
-        setSubmitting(true)
-
-        const result = await signIn({ email, password })
-        console.log("HHHHH", result);
-
-        if (result?.status === 'failed') {
-            setMessage(result.message)
-        }
-
-        setSubmitting(false)
-    }
+  
 const handlesubmit=(e:any)=>{
     e.preventDefault();
-    dispatch(userLoginApiPost({user_id:formData?.username,password:formData?.password}))
-    console.log("handle")
+    console.log("HGFFGDFGD",validateForm({user_id:formData?.username,passwordlGN:formData?.password},setError));
+
+    if(validateFormLogin()){
+        
+        dispatch(userLoginApiPost({user_id:formData?.username,password:formData?.password}))
+    }
+}
+const validateFormLogin=()=>{
+    const errors:any={};
+    if(!formData.username){
+        errors.username="Username is required !"
+    }
+    if(!formData.password){
+        errors.password="Password is can't be Empty !"
+    }
+    setError(errors)
+    return Object.keys(errors).length == 0;
 }
 const handlechange=(e:any)=>{
     const newData:any={...formData};
     newData[e.target.name]=e.target.value;
     setFormData(newData);
+    
+        }
+        useEffect(()=>{
+            updateToken();
+        })
+        const updateToken = async() => {
+            if(sessionStorage.getItem("access_token")) {
+                const token:any = await sessionStorage.getItem("access_token")
+                dispatch(signInSuccess(token))
+            }
         }
     return (
         <div className={className}>
-         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && (
+         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && false && (
 
 <Alert showIcon className="mb-4" type="danger">
 
@@ -101,7 +112,7 @@ const handlechange=(e:any)=>{
             >
                     <Form onSubmit={handlesubmit}>
                         <FormContainer>
-                            <FormItem
+                            <FormItem className='!text-[#103492]'
                                 label="Username"
                                 
                             >
@@ -114,8 +125,10 @@ const handlechange=(e:any)=>{
                                     onChange={handlechange}
                                     component={Input}
                                 />
+                                 <p className='text-[red]'>{error && error.username}</p>
                             </FormItem>
                             <FormItem
+                            className='!text-[#103492]'
                                 label="Password"
 
                                 
@@ -128,13 +141,14 @@ const handlechange=(e:any)=>{
                                     onChange={handlechange}
                                     component={PasswordInput}
                                 />
+                                 <p className='text-[red]'>{error && error.password}</p>
                             </FormItem>
                             <div className='flex justify-between'>
                                 <div className="flex items-center mb-4">
                                     <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-[#979da8] dark:text-[#979da8]">Remember me</label>
+                                    <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-[#103492] dark:text-[#103492]">Remember me</label>
                                 </div>
-                                <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium text-[#979da8] dark:text-[#979da8]">Forgot Password?</ActionLink>
+                                <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]">Forgot Password?</ActionLink>
 
                             </div>
                             <div className='w-full flex'>
@@ -144,25 +158,23 @@ const handlechange=(e:any)=>{
                                     loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className='bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]'
+                                    className='bg-[#ffb017] indigo-btn w-[40%] mx-auto rounded-[30px]'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in'}
                                 </Button>
 
                             </div>
                             <div className='w-full flex'>
-                                <NavLink to="/sign-in-otp" className='w-full flex'>
-                                <label role='button'
-                                    style={{ borderRadius: "13px" }}
-                                    className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
+                                <NavLink  to="/sign-in-otp" role='button'
+                                    style={{ borderRadius: "13px",textDecoration:"auto" }}
+                                    className='!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with OTP'}
-                                </label>
                                 </NavLink>
                             </div>
-                            <div className="mt-4 text-center text-[#3f8cfe]">
+                            <div className="mt-4 text-center text-[#103492]">
                                 <span>{`Not a member yet?`} </span>
-                                <ActionLink className='text-bold decoration-none p-2 pl-4 pr-4 rounded-lg border border-[black] ml-5' to={signUpUrl}>Sign up</ActionLink>
+                                <ActionLink className='text-bold decoration-none rounded-lg !text-[#103492]' to={signUpUrl}>Sign up</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>

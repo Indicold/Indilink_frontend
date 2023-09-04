@@ -1,4 +1,4 @@
-import { useMemo, lazy, Suspense } from 'react'
+import { useMemo, lazy, Suspense, useEffect } from 'react'
 import Loading from '@/components/shared/Loading'
 import { useAppSelector } from '@/store'
 import {
@@ -7,6 +7,7 @@ import {
 } from '@/constants/theme.constant'
 import useAuth from '@/utils/hooks/useAuth'
 import useLocale from '@/utils/hooks/useLocale'
+import { useNavigate } from 'react-router-dom'
 
 const layouts = {
     [LAYOUT_TYPE_CLASSIC]: lazy(() => import('./ClassicLayout')),
@@ -24,8 +25,10 @@ const Layout = () => {
         if (authenticated) {
             return layouts[layoutType]
         }
-        return lazy(() => import('./AuthLayout'))
+        else
+            return lazy(() => import('./AuthLayout'))
     }, [layoutType, authenticated])
+
 
     return (
         <Suspense
