@@ -1,14 +1,21 @@
-import React from 'react'
-import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'
-import { Field, Form, Formik } from 'formik'
-import { getToken } from '@/store/customeHook/token';
-import useApiFetch from '@/store/customeHook/useApiFetch';
+// Import necessary components and libraries
+import React from 'react'; // Import React library
+import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
+import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
+import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
 
+// Define the functional component for InvestorBussinessTypeMove
 const InvestorBussinessTypeMove = () => {
-    const {token}:any =getToken();
+    // Get the token from a custom hook
+    const { token }: any = getToken();
+
+    // Use the useApiFetch hook to fetch data
     const { data, loading, error } = useApiFetch<any>('master/partner/store/get-store-type', token);
-  console.log("HHHH555",data);
-  
+
+    // Log the fetched data to the console
+    console.log("HHHH555", data);
+    
   return (
     <div>
            <div  className="bg-white">

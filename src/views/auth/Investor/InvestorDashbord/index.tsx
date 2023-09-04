@@ -1,4 +1,3 @@
-import Chatbot from '@/components/Chatbot';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -28,7 +27,6 @@ const InvestorDashbord = () => {
                 <h2>Investor Dashboard</h2>
               
             </div>
-            <Chatbot />
         </div>
     )
 }

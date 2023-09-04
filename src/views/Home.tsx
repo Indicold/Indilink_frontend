@@ -3,7 +3,6 @@ import UserTypeModal from "./auth/UserTypeModal"
 import { useState } from "react"
 import BussinessTypeModal from "./auth/BussinessTypeModal"
 import { useNavigate } from "react-router-dom"
-import Chatbot from "@/components/Chatbot"
 
 const Home = () => {
     const [authModal,setAuthModal]=useState<any>(true)
@@ -32,7 +31,6 @@ const Home = () => {
                 <h2>Customer Dashboard</h2>
               
             </div>
-            <Chatbot />
         </>
     )
 }

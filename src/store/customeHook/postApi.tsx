@@ -37,14 +37,16 @@ function postRequest(url: string, data: PostData): Promise<ApiResult> {
     body: JSON.stringify(data),
   })
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Something went wrong try again !`);
-      }
+      console.log("RRRRRRRRRR",response);
+      
+      // if (!response.ok) {
+      //   throw new Error(`Something went wrong try again !`);
+      // }
       return response.json();
     })
     .then(responseData => {
       
-      console.log("responseData",responseData);
+      console.log("responseData45454",responseData);
       
       // Assuming you have a certain way to determine success or failure
       if (responseData) {

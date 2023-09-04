@@ -1,18 +1,30 @@
+import LoaderSpinner from '@/components/LoaderSpinner';
+import TableLayout from '@/components/layouts/TableLayout';
 import { getToken } from '@/store/customeHook/token';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import React from 'react'
 
+
 const PartnerTableAssetsList = () => {
   const {token}:any =getToken();
-  const { data:Store, loading, error } = useApiFetch<any>('partner/store', token);
+  const { data:Store, loading:StoreLoad, error } = useApiFetch<any>('partner/store', token);
   const { data:Move, loading:moveLoad, error:moveErr } = useApiFetch<any>('partner/move', token);
   const { data:Prepare, loading:prepLoad, error:prepErr } = useApiFetch<any>('partner/prepare', token);
- 
-console.log("Table data: ", Store);
+  const { data:AllStore, loading:StoreRLoad, error:allerr }:any = useApiFetch<any>('master/asset', token);
+
+
 
   return (
+    <>
+  {AllStore?.data?.length>0 &&   
+  <>
+      <h4 className='text-head-title text-center'>Assets List</h4>
+  <TableLayout AllStore={AllStore?.data?.length>0 && AllStore?.data}/>
+  </>
+  }
     <div>
-        <h4 className='text-head-title text-center'>Assets List</h4>
+      {(moveLoad || prepLoad || StoreLoad ) && <LoaderSpinner />}
+        {/* <h4 className='text-head-title text-center'>Assets List</h4>
         <h5 className='text-head-title text-center'>Store</h5>
         <div className='w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3'>
                         <div className='bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2'>
@@ -84,8 +96,17 @@ console.log("Table data: ", Store);
                         </div>
                       )) : <p className="text-center">No assets of type Prepare</p> }
                        
-                    </div>
+                    </div> */}
+
+
+      
+
+
+
+
+
     </div>
+    </>
   )
 }
 

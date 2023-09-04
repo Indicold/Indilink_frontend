@@ -1,4 +1,3 @@
-import Chatbot from '@/components/Chatbot'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -25,7 +24,6 @@ const PartnerDashbord = () => {
                 <h2 className='text-start'>Partner Dashboard</h2>
                
             </div>
-            <Chatbot />
     </div>
   )
 }

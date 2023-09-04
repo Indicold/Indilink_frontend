@@ -1,10 +1,8 @@
 import { Button, FormItem, Input } from "@/components/ui";
-import usePostApi from "@/store/customeHook/postApi";
-import { getToken } from "@/store/customeHook/token";
+import { apiUrl, getToken } from "@/store/customeHook/token";
 import useApiFetch from "@/store/customeHook/useApiFetch";
-import axios from "axios";
 import { Field } from "formik";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 interface MajorityHolderModalProps {
@@ -71,7 +69,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
         };
     
         try {
-          const response = await fetch("https://seal-app-uqxwl.ondigitalocean.app/partner/store/chamber", requestOptions);
+          const response = await fetch(`${apiUrl}/partner/store/chamber`, requestOptions);
           const result = await response.json();
           if(result?.status){
             messageView('Chamber Details Updated Successfully!')

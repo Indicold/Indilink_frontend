@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-import { signInSuccess } from './slices/auth';
+import { apiUrl } from './customeHook/token';
 
-const API_URL = 'https://seal-app-uqxwl.ondigitalocean.app';
+const API_URL = apiUrl;
 
 
 

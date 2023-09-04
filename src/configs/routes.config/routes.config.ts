@@ -43,6 +43,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list',
+        component: lazy(() => import('@/views/auth/Customer/CustomerTableTicketList')),
+        authority: [],
+    },
+    {
         key: 'groupMenu.single',
         path: '/group-single-menu-item-view',
         component: lazy(() =>
@@ -159,30 +165,6 @@ export const protectedRoutes = [
         key: 'customerbusinesstype',
         path: `/customer-prepare`,
         component: lazy(() => import('@/views/auth/Customer/PrepareSearch')),
-        authority: [],
-
-    },
-    {
-
-        key: 'customerstoretable',
-        path: `/customer-store-table`,
-        component: lazy(() => import('@/views/auth/Customer/CustomerTableStore')),
-        authority: [],
-
-    },
-    {
-
-        key: 'customermovetable',
-        path: `/customer-move-table`,
-        component: lazy(() => import('@/views/auth/Customer/CustomerTableMove')),
-        authority: [],
-
-    },
-    {
-
-        key: 'customerpreparetable',
-        path: `/customer-prepare-table`,
-        component: lazy(() => import('@/views/auth/Customer/CustomerTablePrepare')),
         authority: [],
 
     },

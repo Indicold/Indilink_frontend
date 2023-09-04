@@ -46,7 +46,7 @@ const SignInForm = (props: SignInFormProps) => {
         username:"",
         password:""
     })
-    const dispatch:any=useDispatch();
+    const dispatch=useDispatch();
     const LoginResponse=useSelector((state:any)=>state?.auth?.apiLoginPostReducer)
     console.log("LOGIN",LoginResponse?.responseData?.message);
     
@@ -87,14 +87,8 @@ const handlechange=(e:any)=>{
     
         }
         useEffect(()=>{
-            updateToken();
-        })
-        const updateToken = async() => {
-            if(sessionStorage.getItem("access_token")) {
-                const token:any = await sessionStorage.getItem("access_token")
-                dispatch(signInSuccess(token))
-            }
-        }
+            localStorage.setItem("access_token",LoginResponse?.responseData?.message?.accessToken)
+        },[LoginResponse?.responseData?.message])
     return (
         <div className={className}>
          {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && false && (
