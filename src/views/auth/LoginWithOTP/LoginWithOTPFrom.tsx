@@ -10,6 +10,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import usePutApi from '@/store/customeHook/putApi'
+import { apiUrl } from '@/store/customeHook/token'
 
 interface LoginWithOTPFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -24,8 +25,8 @@ interface LoginWithOTPFormProps extends CommonProps {
 const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     const [isSubmitting,setSubmitting]=useState(false)
     const [isNumber,setIsNumber]=useState<any>(true)
-    const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/login-with-otp');
-    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails } = usePutApi('https://seal-app-uqxwl.ondigitalocean.app/auth/login-with-otp-verify');
+    const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`${apiUrl}/auth/login-with-otp`);
+    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails } = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
     const [formdata,setFormData]=useState<any>({
         mobile:"",
         otp:""

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hooks
-import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a custom loader spinner component
@@ -35,7 +35,7 @@ const PartnerBussinessTypePrepare = () => {
 
   // Define state variables for API response and loading status
   const { result: PrepareResponse, loading: PrepareLoading, sendPostRequest: PostPrepareRegisterDetails }: any =
-    usePostApi('https://seal-app-uqxwl.ondigitalocean.app/partner/prepare/register');
+    usePostApi(`${apiUrl}/partner/prepare/register`);
   const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } =
     useApiFetch<any>(`partner/prepare/${AssetsId}`, token);
 

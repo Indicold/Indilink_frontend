@@ -161,7 +161,7 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
      };
    
      try {
-       const response = await fetch('https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc', config);
+       const response = await fetch(`${apiUrl}/partner/register-partner-upload-doc`, config);
        const responseData = await response.json();
        if (responseData?.status == 200 || responseData?.status) {
          const updatedArray = array.map((itemData: any) =>
@@ -236,7 +236,7 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
                                  <div className='flex'>
                                     {item?.message && <p className='text-[red]'>Status:{item?.message}</p>}
                                     {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
-                                    {item?.view && <a href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`} target='_blank' >View</a>}
+                                    {item?.view && <a href={`${apiUrl}/${item?.url}`} target='_blank' >View</a>}
                                  </div>
                               </FormItem>
                            ))}

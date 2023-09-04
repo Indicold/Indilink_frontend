@@ -43,6 +43,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list',
+        component: lazy(() => import('@/views/auth/Customer/CustomerTableTicketList')),
+        authority: [],
+    },
+    {
         key: 'groupMenu.single',
         path: '/group-single-menu-item-view',
         component: lazy(() =>

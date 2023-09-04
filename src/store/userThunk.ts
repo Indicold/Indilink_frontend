@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { apiUrl } from './customeHook/token';
 
-const API_URL = 'https://seal-app-uqxwl.ondigitalocean.app';
+const API_URL = apiUrl;
 
 
 

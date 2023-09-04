@@ -1,6 +1,7 @@
 // useApiUpload.tsx
 import { useState } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
+import { apiUrl } from './token';
 
 interface UploadResponse {
   // Define the properties of the response object here
@@ -27,7 +28,7 @@ const useApiUpload = () => {
     const config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc',
+      url: `${apiUrl}/partner/register-partner-upload-doc`,
       headers,
       data: formData
     };

@@ -12,6 +12,7 @@ import { updateFormData } from '@/store/slices/Authentication/userDetails'
 import { useNavigate } from 'react-router-dom'
 import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
+import { apiUrl } from '@/store/customeHook/token';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -39,9 +40,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [formData, setFormData] = useState(selector?.details?.data);
-    const { result: OTPPostDetails, loading, sendPostRequest } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/getOTP');
-    const { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/getGstDetails');
-    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails } = usePutApi('https://seal-app-uqxwl.ondigitalocean.app/auth/verifyOTP');
+    const { result: OTPPostDetails, loading, sendPostRequest } = usePostApi(`${apiUrl}/auth/getOTP`);
+    const { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails } = usePostApi(`${apiUrl}/auth/getGstDetails`);
+    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails } = usePutApi(`${apiUrl}/auth/verifyOTP`);
     const { className } = props
     const dispatch = useDispatch();
     const navigate = useNavigate();

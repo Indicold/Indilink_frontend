@@ -1,4 +1,4 @@
-import { getToken } from '@/store/customeHook/token'
+import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import React, { useEffect, useState } from 'react'
 import { Button, FormItem, Input } from "@/components/ui";
@@ -17,7 +17,7 @@ const BussinessTypeModal = () => {
   const { data, loading, error } = useApiFetch<any>('master/get-asset-types', token);
   const { data:countryId, loading:countryIdLoading, error:countryIdError } = useApiFetch<any>('master/get-countries', token);
   const { data:CategoryId, loading:CategoryIdLoading, error:CategoryIdError } = useApiFetch<any>('master/get-categories', token);
-  const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostAssetsDetails }:any = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/partner/selectAsset');
+  const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostAssetsDetails }:any = usePostApi(`${apiUrl}/partner/selectAsset`);
   const [modal, setModal] = useState(true)
   const navigate = useNavigate();
   const [Bussiness, setBussiness] = useState('');
@@ -132,7 +132,7 @@ if(AssetsResponse?.data && AssetsResponse?.status){
             </button> */}
 
             <div className="px-6 py-6 lg:px-8">
-              <h4 className="text-head-title  mb-4">Choice on Bussiness </h4>
+              <h4 className="text-head-title  mb-4">{localStorage.getItem('user_type')==='Customer' ? "Request search" : "Choice on Bussiness"} </h4>
               <p>You may also change later</p>
 
               <div className="flex justify-around grid grid-cols-3 grid-flow-col gap-2">

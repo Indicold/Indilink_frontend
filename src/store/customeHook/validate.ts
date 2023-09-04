@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { getToken } from "./token";
+import { apiUrl, getToken } from "./token";
 
 export const validateEmail = async (email: any, setIsEmailValid: any) => {
   let body: any = {
@@ -7,7 +7,7 @@ export const validateEmail = async (email: any, setIsEmailValid: any) => {
   };
 
   try {
-    const response = await fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/check-email', {
+    const response = await fetch(`${apiUrl}/auth/check-email`, {
       method: 'POST', // Specify the HTTP method
       headers: {
         'Content-Type': 'application/json'
@@ -25,6 +25,7 @@ export const validateEmail = async (email: any, setIsEmailValid: any) => {
     console.error('Error validating email:', error);
   }
 };
+
 export const validateForm = (formData: any, setError: any) => {
   const errorss: any = {}
 
@@ -82,7 +83,7 @@ export const validateMobile = async (phone_number: any, setIsMobileValid: any) =
   };
 
   try {
-    const response = await fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/check-phone', {
+    const response = await fetch(`${apiUrl}/auth/check-phone`, {
       method: 'POST', // Specify the HTTP method
       headers: {
         'Content-Type': 'application/json'
@@ -100,6 +101,7 @@ export const validateMobile = async (phone_number: any, setIsMobileValid: any) =
     console.error('Error validating email:', error);
   }
 };
+
 export const messageView = (messagevalue: any) => {
   toast.success(messagevalue, {
     position: 'top-right', // Position of the toast
@@ -115,6 +117,7 @@ export const messageView = (messagevalue: any) => {
     },
   });
 }
+
 export const handleStoreTable = async (url: any, data: any, setModal: any, formD: any, update:any, name: string) => {
   const { token }: any = getToken();
   try {
@@ -128,7 +131,7 @@ export const handleStoreTable = async (url: any, data: any, setModal: any, formD
       body: JSON.stringify(data)
     };
 
-    const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/${url}`, config);
+    const response = await fetch(`${apiUrl}/${url}`, config);
     const result = await response.json();
 
     if (result?.status) {
@@ -152,6 +155,7 @@ export const handleStoreTable = async (url: any, data: any, setModal: any, formD
     console.log('error', error.message);
   }
 };
+
 export const validatePrepareForm = (formData: any, setErrors: any) => {
   const newErrors: any = {};
 
@@ -203,6 +207,7 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
 export const validateStorePartnerForm = (formData: any, setErrors: any) => {
   console.log("GGGGGGGGGGGG",formData);
   
@@ -283,6 +288,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
 export const validateMovePartnerForm = (formData: any, setErrors: any) => {
   const newErrors: any = {};
 
@@ -314,6 +320,7 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
 export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
   const newErrors: any = {};
 
@@ -356,3 +363,34 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
 
+export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
+  const newErrors: any = {};
+
+  if (!formData?.origin_country_id) {
+    newErrors.origin_country_id = 'This Field is required';
+  }
+
+  if (!formData?.origin_city_id) {
+    newErrors.origin_city_id = 'This Field is required';
+  }
+
+  if (!formData?.dest_country_id) {
+    newErrors.dest_country_id = 'This Field is required';
+  }
+
+  if (!formData?.dest_city_id) {
+    newErrors.dest_city_id = 'This Field is required';
+  }
+ if (!formData?.load_quantity_id) {
+    newErrors.load_quantity_id = 'This Field is required';
+  }
+  if (!formData?.broad_category_id) {
+    newErrors.broad_category_id = 'This Field is required';
+  }
+  if (formData?.load_quantity_id && !formData?.unit_id) {
+    newErrors.load_quantity_id = 'Unit is required';
+  }
+  console.log("errr", newErrors);
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
+};

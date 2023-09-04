@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hooks
 import { messageView, validateMovePartnerForm } from '@/store/customeHook/validate'; // Import custom functions for messages and form validation
 import { ToastContainer } from 'react-toastify'; // Import a toast notification container component
@@ -88,7 +88,7 @@ const PartnerBussinessTypeMove = () => {
       
       try {
         // Make the POST request
-        const response = await fetch("https://seal-app-uqxwl.ondigitalocean.app/partner/move/register", requestOptions);
+        const response = await fetch(`${apiUrl}/partner/move/register`, requestOptions);
         const result = await response.json();
         messageView(result?.message);
         

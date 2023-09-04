@@ -8,7 +8,7 @@ import {
     Input,
 } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
+import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
 import { useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
@@ -64,7 +64,7 @@ const StoreSearch = () => {
     
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }: any =
-        usePostApi('https://seal-app-uqxwl.ondigitalocean.app/customer/store/search');
+        usePostApi(`${apiUrl}/customer/store/search`);
     
     // Define state variables for the ThankYou modal and form errors
     const [modal, setModal] = useState<any>(false);

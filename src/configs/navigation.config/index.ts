@@ -58,7 +58,7 @@ const navigationConfig: NavigationTree[] = [
             },
             {
                 key: 'collapseMenu.item2',
-                path: '/collapse-menu-item-view-2',
+                path: '/ticket_list',
                 title: 'Collapse menu item 2',
                 translateKey: 'nav.collapseMenu.item2',
                 icon: '',
