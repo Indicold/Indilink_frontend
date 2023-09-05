@@ -460,6 +460,7 @@ const PrepareSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
+                             {location?.state?.extraForm &&   <>
                                 <div className="flex">
                                     <FormItem
                                         label="Status Id"
@@ -593,6 +594,7 @@ const PrepareSearch = () => {
                                     </FormItem>
 
                                 </div>
+                                </>}
 
                                 <div className="flex justify-center w-[310px] mx-auto">
                                     {location?.state?.edit ? <Button

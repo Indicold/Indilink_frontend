@@ -374,6 +374,7 @@ const MoveSearch = () => {
                                         </select>
                                     </FormItem>
                                 </div>
+                      {location?.state?.extraForm &&    <>
                                 <div className="flex">
                                     <FormItem
                                         label="Dispactch Date/ Time"
@@ -504,6 +505,7 @@ const MoveSearch = () => {
                                     </FormItem>
 
                                 </div>
+                                </>}
                                 <div className="flex justify-center w-[310px] mx-auto">
 
                                     {location?.state?.edit ? <Button

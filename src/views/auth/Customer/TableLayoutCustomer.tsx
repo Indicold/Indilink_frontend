@@ -24,7 +24,6 @@ contract_name: "Contract Name",
 // The TableLayoutCustomer component takes a prop called AllStore, presumably for rendering data.
 
 const TableLayoutCustomer = ({ AllStore }: any) => {
-    console.log("GGGGGGGGGG666666",AllStore);
     
   let allData: any = AllStore;
   const countPerPage = 10;
@@ -78,17 +77,17 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
     // Handle edit action for different asset types.
     if (rowData?.asset_type_id==3) {
 
-      navigate('/customer-prepare', {state:{data:rowData,disabled:false,edit:true} });
+      navigate('/customer-prepare', {state:{data:rowData,disabled:false,extraForm:true} });
 
     }
     if (rowData?.asset_type_id==2) {
 
-      navigate('/customer-move', {state:{data:rowData,disabled:false,edit:true} });
+      navigate('/customer-move', {state:{data:rowData,disabled:false,extraForm:true} });
 
     }
     if (rowData?.asset_type_id==1) {
 
-      navigate('/customer-store', {state:{data:rowData,disabled:false,edit:true} });
+      navigate('/customer-store', {state:{data:rowData,disabled:false,extraForm:true} });
 
     }
   
@@ -96,16 +95,16 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
   
   const handleView = (rowData: any) => {
     if (rowData?.asset_type_id==3) {
-      navigate('/customer-prepare', {state:{data:rowData,disabled:true} });
+      navigate('/customer-prepare', {state:{data:rowData,disabled:true,extraForm:true} });
     }
     if (rowData?.asset_type_id==2) {
 
-      navigate('/customer-move', {state:{data:rowData,disabled:true} });
+      navigate('/customer-move', {state:{data:rowData,disabled:true,extraForm:true} });
 
     }
     if (rowData?.asset_type_id==1) {
 
-      navigate('/customer-store', {state:{data:rowData,disabled:true} });
+      navigate('/customer-store', {state:{data:rowData,disabled:true,extraForm:true} });
 
     }
   

@@ -347,6 +347,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
+                          {location?.state?.extraForm &&      <>
                                 <div className="flex">
                                     <FormItem
                                         label="Status Id"
@@ -441,6 +442,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                    
                                 </div>
+                                </>}
 
 
                                 <div className="flex justify-center w-[310px] mx-auto">
