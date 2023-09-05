@@ -10,11 +10,12 @@ import {
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
 import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useNavigate } from 'react-router-dom'; // Import routing related hook
+import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
-import { validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+import { objectToFormData, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+import usePutApi from '@/store/customeHook/putApi';
 
 // Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
@@ -34,46 +35,52 @@ export const payloadSearchCustomer: any = {
 const StoreSearch = () => {
     // Get the user's token using a custom hook
     const { token }: any = getToken();
-    
+
     // Initialize the form data with the payload
-    const [formData, setFormData] = useState<any>(payloadSearchCustomer)
-    
+    const [formData, setFormData] = useState<any>(payloadSearchCustomer);
+    const [isDisabled, setIsDisabled] = useState<any>(false)
+
     // Fetch a list of countries using a custom hook
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
         useApiFetch<any>(`master/get-countries`, token);
-    
+
     // Fetch a list of cities based on the selected country
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
-    
+
     // Fetch a list of product types using a custom hook
     const { data: ListOfProduct, loading: LPloading, error: Lperror } =
         useApiFetch<any>(`master/customer/store/get-product-type`, token);
-    
+
     // Fetch a list of temperature types using a custom hook
     const { data: ListOfTemp, loading: LTloading, error: Lterror } =
         useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
-    
+
     // Fetch a list of certification types using a custom hook
     const { data: ListOfCert, loading: Lctloading, error: Lcterror } =
         useApiFetch<any>(`master/customer/store/get-certification-type`, token);
-    
+
     // Fetch a list of time units using a custom hook
     const { data: ListOfTimeUnits, loading: Ltuloading, error: Ltuerror } =
         useApiFetch<any>(`master/customer/store/get-duration`, token);
-    
+
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }: any =
         usePostApi(`${apiUrl}/customer/store/search`);
-    
+
+    const { result: StoreCustomerResponse, loading: OTPLoading, sendPostRequest: UpdateStoreCustomer }: any =
+        usePutApi(`${apiUrl}/customer/store/search-update/5`);
+
+
     // Define state variables for the ThankYou modal and form errors
-    const [modal, setModal] = useState<any>(false);
+    const [modal, setModal] = useState<any>(!false);
+    const [message,setMessage]=useState<any>('')
     const [errors, setErrors] = useState<any>({});
 
     // Define a function to handle form submission
     const handleRoute = () => {
         console.log('clicked!')
-        
+
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
             PostCustomerRegisterDetails(formData);
@@ -83,24 +90,82 @@ const StoreSearch = () => {
     // Define a function to handle form input changes
     const handlechange = (e: any) => {
         const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
+        if (e.target.name === 'contract_download') {
+            console.log("DDDDDDDDDDDDDDD", e.target.files[0]);
+    
+            newData[e.target.name] = e.target.files[0];
+        } else {
+            newData[e.target.name] = e.target.value;
+        }
         setFormData(newData);
     }
- const navigate:any=useNavigate()
+    const handleRouteUpdate = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
+        
+        var formdata = new FormData();
+        formdata.append("country_id", formData?.country_id);
+        formdata.append("city_id", formData?.city_id);
+        formdata.append("product_type_id", formData?.product_type_id);
+        formdata.append("temperature", formData?.temperature);
+        formdata.append("temperature_type_id",formData?.temperature_type_id);
+        formdata.append("unit_id", formData?.unit_id);
+        formdata.append("certification_id", formData?.certification_id);
+        formdata.append("date", formData?.date);
+        formdata.append("storage_duration", formData?.storage_duration);
+        formdata.append("storage_duration_type", formData?.storage_duration_type);
+        formdata.append("contract_name", formData?.contract_name);
+        formdata.append("contract_type", formData?.contract_type);
+        formdata.append("status_id", formData?.status_id);
+        formdata.append("comment", formData?.comment);
+        formdata.append("contract_download", formData?.contract_download);
+        
+        var requestOptions:any = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
+        
+        fetch(`${apiUrl}/customer/store/search-update/${location?.state?.data?.user?.id}`, requestOptions)
+          .then(response => response.json())
+          .then((result:any) => {
+            setMessage(result);
+            setModal(true)
+            setTimeout(() => {
+                navigate('/ticket_list_store')
+            }, 2000)
+            console.log("GGGGGG88888777",result)
+          })
+          .catch(error => console.log('error', error));
+      }
+    
+    const navigate: any = useNavigate();
+    const location: any = useLocation();
+    console.log("GGG88888GGG", location?.state);
+
+    useEffect(() => {
+        if (location?.state?.data) {
+            setFormData(location?.state?.data);
+            setIsDisabled(location?.state?.disabled)
+        }
+
+    }, [])
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
+            setMessage(CustomerResponse)
             setModal(true);
-            setTimeout(()=>{
+            setTimeout(() => {
                 navigate('/ticket_list_store')
-            },2000)
+            }, 2000)
         }
     }, [CustomerResponse?.status]);
 
     console.log("statusstatusstatusstatusstatusstatusstatus", modal);
     return (
         <div>
-            {modal && <ThankYouModal message={CustomerResponse} setModal={setModal} setFormData={setFormData} />}
+            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title text-center">Store</h4>
                 <div>
@@ -118,6 +183,7 @@ const StoreSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="country_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -135,6 +201,7 @@ const StoreSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="city_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -154,6 +221,7 @@ const StoreSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="product_type_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -171,15 +239,18 @@ const StoreSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             onChange={(e: any) => handlechange(e)}
                                             className="w-[80%]"
                                             name="temperature"
+                                            value={formData?.temperature}
                                             placeholder="Temperature"
                                             component={Input}
                                         />
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="temperature_type_id"
                                             className="h-11 border w-[20%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -199,20 +270,23 @@ const StoreSearch = () => {
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             type="text"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             name="unit_id"
+                                            value={formData?.unit_id}
                                             placeholder="Unit"
                                             component={Input}
                                         />
-                                          <p className='text-[red]'>{errors && errors.unit_id}</p>
+                                        <p className='text-[red]'>{errors && errors.unit_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Certification"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="certification_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -232,29 +306,34 @@ const StoreSearch = () => {
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             type="date"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             name="date"
+                                            value={formData?.date}
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
-                                          <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red]'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Storage Duration"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             type="text"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             className="w-[80%]"
                                             name="storage_duration"
+                                            value={formData?.storage_duration}
                                             placeholder="Storage Duration"
                                             component={Input}
                                         />
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="storage_duration_type"
                                             className="h-11 border w-[20%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -268,19 +347,129 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Status Id"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handlechange(e)}
+                                            autoComplete="off"
+                                            name="status_id"
+                                            value={formData?.status_id}
+                                            placeholder="Enter Value"
+                                            component={Input}
+                                        />
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Comment"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handlechange(e)}
+                                            autoComplete="off"
+
+                                            name="comment"
+                                            value={formData?.comment}
+                                            placeholder="comment"
+                                            component={Input}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Contract Name"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handlechange(e)}
+                                            autoComplete="off"
+                                            name="contract_name"
+                                            value={formData?.contract_name}
+                                            placeholder="Contract name"
+                                            component={Input}
+                                        />
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Contract Type"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handlechange(e)}
+                                            autoComplete="off"
+
+                                            name="contract_type"
+                                            value={formData?.contract_type}
+                                            placeholder="Contract Type"
+                                            component={Input}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Contract Upload"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                         <input
+                                        disabled={isDisabled}
+                                        type="file"
+                                        name="contract_download"
+                                        id="file-input"
+                                        className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                        file:bg-transparent file:border-0
+                                        file:bg-gray-100 file:mr-4
+                                        file:py-3 file:px-4
+                                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                        onChange={(e: any) => handlechange(e)}
+                                      />
+
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+                                   
+                                </div>
 
 
                                 <div className="flex justify-center w-[310px] mx-auto">
-                                    <Button
+                                   
+                                  {location?.state?.edit ?  <Button
+                                        disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={handleRoute}
+                                        onClick={handleRouteUpdate}
                                         className="indigo-btn w-[300px] mx-auto rounded-[30px]"
                                     >
-                                        Request for Search
-                                    </Button>
+                                    Update
+                                    </Button> :
+                                     <Button
+                                     disabled={isDisabled}
+                                     style={{ borderRadius: '13px' }}
+                                     block
+                                     variant="solid"
+                                     type="button"
+                                     onClick={handleRoute}
+                                     className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                 >
+                                     Request for Search
+                                 </Button>
+                                    }
+                                    
+
                                 </div>
                             </FormContainer>
                         </Form>

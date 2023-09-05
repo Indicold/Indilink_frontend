@@ -35,6 +35,7 @@ const HeaderActionsEnd = () => {
         }
     
     }
+    let UserType=localStorage.getItem('user_type');
     return (
         <>
             <select
@@ -42,9 +43,9 @@ const HeaderActionsEnd = () => {
                 onChange={(e:any)=>handleChange(e)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-                <option value='1' selected>Partner</option>
-                <option value='2'>Customer</option>
-                <option  value='3'>Investor</option>
+                <option value='1' selected={UserType==='Partner'}>Partner</option>
+                <option value='2' selected={UserType==='Customer'}>Customer</option>
+                <option  value='3' selected={UserType==='Investor'}>Investor</option>
             </select>
             <UserDropdown hoverable={false} />
         </>

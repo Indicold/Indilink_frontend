@@ -36,12 +36,12 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/auth/BussinessTypeModal')),
         authority: [],
     },
-    {
-        key: 'collapseMenu.item2',
-        path: '/asset_list',
-        component: lazy(() => import('@/views/auth/Partner/PartnerTable/index')),
-        authority: [],
-    },
+    // {
+    //     key: 'collapseMenu.item2',
+    //     path: '/asset_list',
+    //     component: lazy(() => import('@/views/auth/Partner/PartnerTable/index')),
+    //     authority: [],
+    // },
     {
         key: 'collapseMenu.item2',
         path: '/ticket_list_store',

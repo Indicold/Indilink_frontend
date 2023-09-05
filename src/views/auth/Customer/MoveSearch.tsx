@@ -10,7 +10,7 @@ import {
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
 import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useNavigate } from 'react-router-dom'; // Import routing related hook
+import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
@@ -26,6 +26,8 @@ const MoveSearch = () => {
     const [errors, setErrors] = useState<any>({});
     const [modal, setModal] = useState(false);
     const [formData, setFormData] = useState<any>(CustomerMovePayload1);
+    const [message, setMessage] = useState<any>('')
+    const [isDisabled, setIsDisabled] = useState<any>(false)
 
     // Fetch a list of countries using a custom hook
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
@@ -39,6 +41,10 @@ const MoveSearch = () => {
     // Fetch a list of cities based on the selected country
     const { data: ListOfCityDest, loading: LcityDestloading, error: LcityDesterror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.dest_country_id}`, token);
+
+    // Fetch a list of status based on it
+    const { data: ListOfstatus, loading: Lstatusloading, error: Lstatuserror } =
+        useApiFetch<any>(`master/customer/store/get-status`, token);
 
 
     // Fetch a list of cities based on the selected country
@@ -65,17 +71,77 @@ const MoveSearch = () => {
             PostCustomerMoveDetails(formData);
         }
     }
+    const handleRouteUpdate = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
+        var formdata = new FormData();
+        formdata.append("origin_country_id", formData?.origin_country_id);
+        formdata.append("origin_city_id", formData?.origin_city_id);
+        formdata.append("origin_pincode", formData?.origin_pincode);
+        formdata.append("origin_gps", formData?.origin_gps);
+        formdata.append("dest_country_id", formData?.dest_country_id);
+        formdata.append("dest_city_id", formData?.dest_city_id);
+        formdata.append("dest_pincode", formData?.dest_pincode);
+        formdata.append("dest_gps", formData?.dest_gps);
+        formdata.append("load_quantity_id", formData?.load_quantity_id);
+        formdata.append("unit_id", formData?.unit_id);
+        formdata.append("broad_category_id", formData?.broad_category_id);
+        formdata.append("product_type_id", formData?.product_type_id);
+        formdata.append("contract_name", formData?.contract_name);
+        formdata.append("dispatch_date", formData?.dispatch_date);
+        formdata.append("arrival_date", formData?.arrival_date);
+        formdata.append("contract_type", formData?.contract_type);
+        formdata.append("status_id", formData?.status_id);
+        formdata.append("comment", formData?.comment);
+        formdata.append("contract_download", formData?.contract_download);
+
+        var requestOptions: any = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        fetch(`${apiUrl}/customer/move/search-update/${location?.state?.data?.id}`, requestOptions)
+            .then(response => response.json())
+            .then((result: any) => {
+                setMessage(result);
+                setModal(true)
+                setTimeout(() => {
+                    navigate('/ticket_list_move')
+                }, 2000)
+                console.log("GGGGGG88888777", result)
+            })
+            .catch(error => console.log('error', error));
+    }
     // Define a function to handle a button click
     const handleChange = (e: any) => {
         const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
+        if (e.target.name === 'contract_download') {
+            console.log("DDDDDDDDDDDDDDD", e.target.files[0]);
+
+            newData[e.target.name] = e.target.files[0];
+        } else {
+            newData[e.target.name] = e.target.value;
+        }
         setFormData(newData);
     }
     const navigate: any = useNavigate();
+    const location: any = useLocation();
+    console.log("GGG88888GGG", location?.state);
+
+    useEffect(() => {
+        if (location?.state?.data) {
+            setFormData(location?.state?.data);
+            setIsDisabled(location?.state?.disabled)
+        }
+
+    }, [])
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
+            setMessage(CustomerResponse)
             setModal(true);
             setTimeout(() => {
                 navigate('/ticket_list_move')
@@ -86,7 +152,7 @@ const MoveSearch = () => {
 
     return (
         <div>
-            {modal && <ThankYouModal message={CustomerResponse} setModal={setModal} setFormData={setFormData} />}
+            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title pl-[22px] text-center">Move</h4>
                 <div>
@@ -105,13 +171,14 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_country_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.country_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.origin_country_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -122,13 +189,14 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_city_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.city_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.origin_city_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -141,10 +209,12 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="origin_pincode"
+                                            value={formData?.origin_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
                                         />
@@ -154,10 +224,12 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="origin_gps"
+                                            value={formData?.origin_gps}
                                             placeholder="Location"
                                             component={Input}
                                         />
@@ -170,13 +242,14 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_country_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.country_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.dest_country_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -187,13 +260,14 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_city_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCityDest && ListOfCityDest?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.city_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.dest_city_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -206,10 +280,12 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="dest_pincode"
+                                            value={formData?.dest_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
                                         />
@@ -219,10 +295,12 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="dest_gps"
+                                            value={formData?.dest_gps}
                                             placeholder="Location"
                                             component={Input}
                                         />
@@ -234,22 +312,25 @@ const MoveSearch = () => {
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             className="w-[80%]"
                                             autoComplete="off"
                                             name="load_quantity_id"
+                                            value={formData?.load_quantity_id}
                                             placeholder="Load Quantity"
                                             component={Input}
                                         />
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="unit_id"
                                             className="!w-[20%] h-11 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
 
                                             ))}
                                         </select>
@@ -260,13 +341,14 @@ const MoveSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroad && ListOfBroad?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -279,13 +361,14 @@ const MoveSearch = () => {
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id}>{item?.type}</option>
+                                                <option value={item?.id} selected>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -297,10 +380,12 @@ const MoveSearch = () => {
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
                                             name="dispatch_date"
+                                            value={formData?.dispatch_date}
                                             placeholder="Date of Dispatch"
                                             component={Input}
                                         />
@@ -310,9 +395,11 @@ const MoveSearch = () => {
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
+                                            value={formData?.arrival_date}
                                             name="arrival_date"
                                             placeholder="Arrival Dtate"
                                             component={Input}
@@ -320,18 +407,128 @@ const MoveSearch = () => {
                                     </FormItem>
                                 </div>
 
+                                <div className="flex">
+                                    <FormItem
+                                        label="Status Id"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
 
+                                        <select
+                                            disabled={isDisabled}
+                                            onChange={(e: any) => handleChange(e)}
+                                            name="status_id"
+                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        >
+                                            <option>Select</option>
+                                            {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
+                                                <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
+
+                                            ))}
+                                        </select>
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Comment"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handleChange(e)}
+                                            autoComplete="off"
+
+                                            name="comment"
+                                            value={formData?.comment}
+                                            placeholder="comment"
+                                            component={Input}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Contract Name"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handleChange(e)}
+                                            autoComplete="off"
+                                            name="contract_name"
+                                            value={formData?.contract_name}
+                                            placeholder="Contract name"
+                                            component={Input}
+                                        />
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Contract Type"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            onChange={(e: any) => handleChange(e)}
+                                            autoComplete="off"
+
+                                            name="contract_type"
+                                            value={formData?.contract_type}
+                                            placeholder="Contract Type"
+                                            component={Input}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Contract Upload"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <input
+                                            disabled={isDisabled}
+                                            type="file"
+                                            name="contract_download"
+                                            id="file-input"
+                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                        file:bg-transparent file:border-0
+                                        file:bg-gray-100 file:mr-4
+                                        file:py-3 file:px-4
+                                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                            onChange={(e: any) => handleChange(e)}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                    </FormItem>
+
+                                </div>
                                 <div className="flex justify-center w-[310px] mx-auto">
-                                    <Button
+
+                                    {location?.state?.edit ? <Button
+                                        disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={handleRoute}
+                                        onClick={handleRouteUpdate}
                                         className="indigo-btn w-[300px] mx-auto rounded-[30px]"
                                     >
-                                        Request for Search
-                                    </Button>
+                                        Update
+                                    </Button> :
+                                        <Button
+                                            disabled={isDisabled}
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            onClick={handleRoute}
+                                            className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        >
+                                            Request for Search
+                                        </Button>
+                                    }
                                 </div>
                             </FormContainer>
                         </Form>

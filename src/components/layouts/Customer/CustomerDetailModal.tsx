@@ -8,28 +8,16 @@ import {
     Input,
 } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
-import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
-import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
-import { validatePrepareCustomerForm } from '@/store/customeHook/validate';
-import LoaderSpinner from '@/components/LoaderSpinner';
+import { getToken } from '@/store/customeHook/token';
+import useApiFetch from '@/store/customeHook/useApiFetch';
 
-// Define the functional component for PrepareSearch
-const PrepareSearch = () => {
 
-    // Get the user's token using a custom hook
-    const { token }: any = getToken();
-
-    // Define a state variable for the  modal
-    const [errors, setErrors] = useState<any>({});
-    const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>(CustomerPrepare1);
-    const [isDisabled, setIsDisabled] = useState<any>(false);
-    const [message, setMessage] = useState<any>('')
-
+const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
+ const {token}:any=getToken()
+  const [formData,setFormdata]=useState<any>({});
+  const [errors, setErrors] = useState<any>({});
+  console.log("setform",message);
+  
     // Fetch a list of categories using a custom hook
     const { data: ListOfProductCategory, loading: PCloading, error: PCerror } =
         useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
@@ -50,7 +38,7 @@ const PrepareSearch = () => {
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
 
-
+        
 
 
     // Fetch a list of category based on the selected category
@@ -64,112 +52,29 @@ const PrepareSearch = () => {
     const { data: ListOfProduct, loading: LOPloading, error: LOPerror } =
         useApiFetch<any>(`master/customer/store/get-product-type`, token);
 
-    // Fetch a list of status based on it
-    const { data: ListOfstatus, loading: Lstatusloading, error: Lstatuserror } =
-        useApiFetch<any>(`master/customer/store/get-status`, token);
 
     // Fetch a list of cities based on the selected country
     const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
         useApiFetch<any>(`master/customer/store/get-unit-type`, token);
 
-    // Define a custom hook for making a POST request
-    const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerPrepareDetails }: any =
-        usePostApi(`${apiUrl}/customer/prepare/search`);
+  
+  return (
+    <div>
+         {true && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div className="relative w-full max-w-[800px] mt-[50px] max-h-full">
+          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button onClick={() => setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+              <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+              </svg>
+              <span className="sr-only">Close modal</span>
+            </button>
 
-    // Define a function to handle a button click
-    const handleChange = (e: any) => {
-        const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
-        setFormData(newData);
-        console.log("FFFFFFFFFF", newData);
+            <div className="px-6 py-6 lg:px-8">
+              <h4 className="text-head-title text-center mb-4">{localStorage.getItem('user_type')==='Customer' ? "Request search" : "Choice on Bussiness"} </h4>
+              <p>You may also change later</p>
 
-    }
-
-    // Define a function to handle a button click
-    const handleRoute = () => {
-        // Check form validation before making a POST request
-        if (validatePrepareCustomerForm(formData, setErrors)) {
-            PostCustomerPrepareDetails(formData);
-        }
-    };
-    const handleRouteUpdate = () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-
-        var formdata = new FormData();
-        formdata.append("product_category_id", formData?.product_category_id);
-        formdata.append("broad_category_id", formData?.broad_category_id);
-        formdata.append("product_type_id", formData?.product_type_id);
-        formdata.append("service_category_id", formData?.service_category_id);
-        formdata.append("country_id", formData?.country_id);
-        formdata.append("state_id", formData?.state_id);
-        formdata.append("city_id", formData?.city_id);
-        formdata.append("throughput", formData?.throughput);
-        formdata.append("throughput_unit_id", formData?.throughput_unit_id);
-        formdata.append("case_size", formData?.case_size);
-        formdata.append("case_size_unit_id", formData?.case_size_unit_id);
-        formdata.append("estimated_docks", formData?.estimated_docks);
-        formdata.append("estimated_dispatch", formData?.estimated_dispatch);
-        formdata.append("temp_min", formData?.temp_min);
-        formdata.append("temp_max", formData?.temp_max);
-        formdata.append("temp_unit_id", formData?.temp_unit_id);
-        formdata.append("date_of_start", formData?.date_of_start);
-        formdata.append("dispatch_date", formData?.dispatch_date);
-        formdata.append("arrival_date", formData?.arrival_date);
-        formdata.append("contract_type", formData?.contract_type);
-        formdata.append("contract_name", formData?.contract_name);
-        formdata.append("status_id", formData?.status_id);
-        formdata.append("comment", formData?.comment);
-        formdata.append("contract_download", formData?.contract_download);
-
-        var requestOptions: any = {
-            method: 'PUT',
-            headers: myHeaders,
-            body: formdata,
-            redirect: 'follow'
-        };
-
-        fetch(`${apiUrl}/customer/prepare/search-update/${location?.state?.data?.id}`, requestOptions)
-            .then(response => response.json())
-            .then((result: any) => {
-                setMessage(result);
-                setModal(true)
-                setTimeout(() => {
-                    navigate('/ticket_list_prepare')
-                }, 2000)
-                console.log("GGGGGG88888777", result)
-            })
-            .catch(error => console.log('error', error));
-    }
-    const navigate: any = useNavigate();
-    const location: any = useLocation();
-    console.log("GGG88888GGG", location?.state);
-
-    useEffect(() => {
-        if (location?.state?.data) {
-            setFormData(location?.state?.data);
-            setIsDisabled(location?.state?.disabled)
-        }
-
-    }, [])
-    // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
-    useEffect(() => {
-        if (CustomerResponse?.status == 200) {
-            setMessage(CustomerResponse)
-            setModal(true);
-            setTimeout(() => {
-                navigate('/ticket_list_prepare')
-            }, 2000)
-        }
-    }, [CustomerResponse?.status]);
-
-
-    return (
-        <div>
-            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
-            <div className="bg-white">
-                <h4 className=" mb-2 text-head-title text-center">Prepare</h4>
-                <div>
+              <div>
                     <Formik
                         initialValues={{ field: true }}
                         onSubmit={() =>
@@ -184,14 +89,14 @@ const PrepareSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_category_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProductCategory && ListOfProductCategory?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.product_category_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.product_category_id}>{item?.name}</option>
                                             ))}
 
                                         </select>
@@ -202,14 +107,14 @@ const PrepareSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroadCategory && ListOfBroadCategory?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.broad_category_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -222,32 +127,32 @@ const PrepareSearch = () => {
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.product_type_id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.product_type_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
-
+                                        
                                     </FormItem>
                                     <FormItem
                                         label="Service Category"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="service_category_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfServiceCategory && ListOfServiceCategory?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.service_category_id}>{item?.name}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.service_category_id}>{item?.name}</option>
                                             ))}
 
                                         </select>
@@ -260,7 +165,7 @@ const PrepareSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="country_id"
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -279,7 +184,7 @@ const PrepareSearch = () => {
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
-                                                disabled={isDisabled}
+                                             disabled={isDisabled}
                                                 onChange={(e: any) => handleChange(e)}
                                                 name="state_id"
                                                 className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -297,14 +202,14 @@ const PrepareSearch = () => {
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
-                                                disabled={isDisabled}
+                                             disabled={isDisabled}
                                                 onChange={(e: any) => handleChange(e)}
                                                 name="city_id"
                                                 className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
                                                 <option>Select</option>
                                                 {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                    <option value={item?.id} selected={item?.id === formData?.city_id}>{item?.name}</option>
+                                                    <option value={item?.id} selected={item?.id===formData?.city_id}>{item?.name}</option>
 
                                                 ))}
                                             </select>
@@ -317,9 +222,9 @@ const PrepareSearch = () => {
                                         label="Throughput"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                        <Field 
+                                        disabled={isDisabled}
+                                        onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="throughput"
@@ -329,14 +234,14 @@ const PrepareSearch = () => {
                                             component={Input}
                                         />
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="throughput_unit_id"
                                             className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.throughput_unit_id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.throughput_unit_id}>{item?.type}</option>
 
                                             ))}
                                         </select>
@@ -346,9 +251,9 @@ const PrepareSearch = () => {
                                         label="Avg. Case Size"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                        <Field 
+                                        disabled={isDisabled}
+                                        onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="case_size"
@@ -359,7 +264,7 @@ const PrepareSearch = () => {
                                         />
 
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="case_size_unit_id"
                                             className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
@@ -379,9 +284,9 @@ const PrepareSearch = () => {
                                         label="Estimated Docks"
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                        <Field 
+                                        disabled={isDisabled}
+                                        onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="estimated_docks"
@@ -394,9 +299,9 @@ const PrepareSearch = () => {
                                         label="Estimated Dispatches"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                        <Field 
+                                        disabled={isDisabled}
+                                        onChange={(e: any) => handleChange(e)}
                                             type="text"
                                             autoComplete="off"
                                             name="estimated_dispatch"
@@ -415,14 +320,14 @@ const PrepareSearch = () => {
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_min"
                                             className="h-11 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Minimum</option>
                                             {Array(3).fill(0).map((_, index) => (
-                                                <option key={index} value={index * 5} selected={index * 5 === formData?.temp_min}>
+                                                <option key={index} value={index * 5} selected={index*5===formData?.temp_min}>
                                                     {index * 5}
                                                 </option>
                                             ))}
@@ -430,27 +335,27 @@ const PrepareSearch = () => {
 
                                         </select>
                                         <select
-                                            disabled={isDisabled}
+                                         disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_max"
                                             className="h-11 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Maximum</option>
-                                            {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index * 5 + 5).map((item: any, index: any) => (
-                                                <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
+                                            {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index*5+5).map((item: any, index: any) => (
+                                                <option value={parseInt(item) + 5} selected={parseInt(item) + 5===formData?.temp_max}>{parseInt(item)}</option>
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max : errors.temp_min}</p>
+                                        <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max:errors.temp_min}</p>
 
                                     </FormItem>
                                     <FormItem
                                         label="Date of Start"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                        <Field 
+                                        disabled={isDisabled}
+                                        onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
                                             value={formData?.date_of_start}
@@ -460,172 +365,32 @@ const PrepareSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Status Id"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
 
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="status_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                        >
-                                            <option>Select</option>
-                                            {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
-
-                                            ))}
-                                        </select>
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Comment"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-
-                                            name="comment"
-                                            value={formData?.comment}
-                                            placeholder="comment"
-                                            component={Input}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Contract Name"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="contract_name"
-                                            value={formData?.contract_name}
-                                            placeholder="Contract name"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Contract Type"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-
-                                            name="contract_type"
-                                            value={formData?.contract_type}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Arrival Date"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="arrival_date"
-                                            value={formData?.arrival_date}
-                                            placeholder="Arrival Date"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Dispatch Date"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-
-                                            name="dispatch_date"
-                                            value={formData?.dispatch_date}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Contract Upload"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <input
-                                            disabled={isDisabled}
-                                            type="file"
-                                            name="contract_download"
-                                            id="file-input"
-                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                        file:bg-transparent file:border-0
-                                        file:bg-gray-100 file:mr-4
-                                        file:py-3 file:px-4
-                                        dark:file:bg-gray-700 dark:file:text-gray-400"
-                                            onChange={(e: any) => handleChange(e)}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-
-                                </div>
 
                                 <div className="flex justify-center w-[310px] mx-auto">
-                                    {location?.state?.edit ? <Button
-                                        disabled={isDisabled}
+                                    <Button
+                                    disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={handleRouteUpdate}
+                                        onClick={handleRoute}
                                         className="indigo-btn w-[300px] mx-auto rounded-[30px]"
                                     >
-                                        Update
-                                    </Button> :
-                                        <Button
-                                            disabled={isDisabled}
-                                            style={{ borderRadius: '13px' }}
-                                            block
-                                            variant="solid"
-                                            type="button"
-                                            onClick={handleRoute}
-                                            className="indigo-btn w-[300px] mx-auto rounded-[30px]"
-                                        >
-                                            Request for Search
-                                        </Button>
-                                    }
+                                        Request for Search
+                                    </Button>
                                 </div>
                             </FormContainer>
                         </Form>
                     </Formik>
                 </div>
+           
             </div>
+          </div>
         </div>
-    )
+      </div>}
+    </div>
+  )
 }
 
-export default PrepareSearch
+export default CustomerDetailModal
