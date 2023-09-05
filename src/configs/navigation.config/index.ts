@@ -66,7 +66,94 @@ const navigationConfig: NavigationTree[] = [
                 authority: [],
                 subMenu: [],
             },
+            
         ],
+        
+    },
+    {
+
+       
+
+        key: 'groupMenu.collapsesetting',
+
+        path: '',
+
+        title: 'Tickets',
+
+        translateKey: 'nav.groupMenu.collapse.collapsesetting',
+
+        icon: 'groupCollapseMenu',
+
+        type: NAV_ITEM_TYPE_COLLAPSE,
+
+        authority: [],
+
+        subMenu: [
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting8',
+
+                path: '/ticket_list_store',
+
+                title: 'Store',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting8',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting9',
+
+                path: '/ticket_list_move',
+
+                title: 'Move',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting9',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting11',
+
+                path: '/ticket_list_prepare',
+
+                title: 'Prepare',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting11',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+        ]
+
+ 
+
     },
     // {
     //     key: 'groupMenu',

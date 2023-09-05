@@ -86,11 +86,14 @@ const StoreSearch = () => {
         newData[e.target.name] = e.target.value;
         setFormData(newData);
     }
-
+ const navigate:any=useNavigate()
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
             setModal(true);
+            setTimeout(()=>{
+                navigate('/ticket_list_store')
+            },2000)
         }
     }, [CustomerResponse?.status]);
 

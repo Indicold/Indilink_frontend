@@ -49,10 +49,10 @@ const MoveSearch = () => {
     const { data: ListOfProduct, loading: LOPloading, error: LOPerror } =
         useApiFetch<any>(`master/customer/store/get-product-type`, token);
 
-        
+
     // Fetch a list of cities based on the selected country
     const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
-    useApiFetch<any>(`master/customer/store/get-unit-type`, token);
+        useApiFetch<any>(`master/customer/store/get-unit-type`, token);
 
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerMoveDetails }: any =
@@ -72,18 +72,20 @@ const MoveSearch = () => {
         newData[e.target.name] = e.target.value;
         setFormData(newData);
     }
-
+    const navigate: any = useNavigate();
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
             setModal(true);
+            setTimeout(() => {
+                navigate('/ticket_list_move')
+            }, 2000)
         }
     }, [CustomerResponse?.status]);
 
 
     return (
         <div>
-            {/* {CustomerLoading && !modal && <LoaderSpinner /> } */}
             {modal && <ThankYouModal message={CustomerResponse} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title pl-[22px] text-center">Move</h4>
@@ -240,7 +242,7 @@ const MoveSearch = () => {
                                             placeholder="Load Quantity"
                                             component={Input}
                                         />
-                                           <select
+                                        <select
                                             onChange={(e: any) => handleChange(e)}
                                             name="unit_id"
                                             className="!w-[20%] h-11 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"

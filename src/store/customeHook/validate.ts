@@ -394,3 +394,51 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
+export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
+  const newErrors: any = {};
+
+  if (!formData?.product_category_id) {
+    newErrors.product_category_id = 'This Field is required';
+  }
+
+  if (!formData?.broad_category_id) {
+    newErrors.broad_category_id = 'This Field is required';
+  }
+
+  if (!formData?.service_category_id) {
+    newErrors.service_category_id = 'This Field is required';
+  }
+
+  if (!formData?.country_id) {
+    newErrors.country_id = 'This Field is required';
+  }
+ if (!formData?.state_id) {
+    newErrors.state_id = 'This Field is required';
+  }
+  if (!formData?.city_id) {
+    newErrors.city_id = 'This Field is required';
+  }
+  if (!formData?.throughput) {
+    newErrors.throughput = 'This Field is required';
+  }
+  if (formData?.throughput && !formData?.throughput_unit_id) {
+    newErrors.throughput = 'Unit is required';
+  }
+  if (!formData?.case_size) {
+    newErrors.case_size = 'This Field is required';
+  }
+  if (formData?.case_size && !formData?.case_size_unit_id) {
+    newErrors.case_size = 'Unit is required';
+  }
+  if (!formData?.temp_min) {
+    newErrors.temp_min = 'This Field is required';
+  }
+  if (!formData?.temp_max) {
+    newErrors.temp_max = 'This Field is required';
+  }
+  
+  console.log("errr", newErrors);
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
+};
