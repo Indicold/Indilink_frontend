@@ -153,6 +153,10 @@ const PartnerBussinessTypeAdditional = () => {
     }
   }, [fetchDetails]);
   
+  useEffect(()=>{
+    window.scrollTo(0,0)
+       },[])
+
   // Render the component JSX
   return (
     <div>
@@ -180,7 +184,7 @@ const PartnerBussinessTypeAdditional = () => {
                       />
                       <div className='flex'>
                         {item?.view && <b>Status:</b>}
-                        {item?.view && <a href={`${apiUrl}/${item?.url}`} target='_blank' >View</a>}
+                        {item?.view && <a href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`} target='_blank' >View</a>}
                       </div>
                     </FormItem>
                   ))}

@@ -469,3 +469,11 @@ export const fieldsToAppendForPrepare:any =[
   "comment",
   "contract_download",
 ];
+export const formatDate=(inputDate:any)=>{
+  const parts = inputDate.split('-'); // Split the input date into parts
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    return `${day}-${month}-${year}`;
+  }
+  return inputDate; // Return the input date if it's not in the expected format
+}
