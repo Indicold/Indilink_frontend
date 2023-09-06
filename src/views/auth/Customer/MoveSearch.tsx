@@ -64,6 +64,19 @@ const MoveSearch = () => {
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerMoveDetails }: any =
         usePostApi(`${apiUrl}/customer/move/search`);
 
+
+        function formatDate(inputDate:any) {
+            console.log("GGGGGGGGGtIME",inputDate);
+            
+                const parts = inputDate.split('-'); // Split the input date into parts
+                if (parts.length === 3) {
+                  const [year, month, day] = parts;
+                  return `${day}-${month}-${year}`;
+                }
+                return inputDate; // Return the input date if it's not in the expected format
+              }
+
+              
     // Define a function to handle a button click
     const handleRoute = () => {
         // Check form validation before making a POST request
@@ -508,7 +521,7 @@ const MoveSearch = () => {
                                 </>}
                                 <div className="flex justify-center w-[310px] mx-auto">
 
-                                    {location?.state?.edit ? <Button
+                                    {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block

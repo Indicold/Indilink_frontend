@@ -101,7 +101,7 @@ const PartnerBussinessTypeAdditional = () => {
   
   // Upload the file to the server
   const handleUpload = async (item: any, file: any) => {
-    let AssetsId = localStorage.getItem('AssetsId');
+    let AssetsId = localStorage.getItem('assets_list_id');
     let asset_type_id = localStorage.getItem('asset_id');
     const { token } = getToken();
     const formData = new FormData();
@@ -120,7 +120,7 @@ const PartnerBussinessTypeAdditional = () => {
     };
   
     try {
-      const response = await fetch(`${apiUrl}/partner/register-partner-upload-doc`, config);
+      const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc`, config);
       const responseData = await response.json();
       if (responseData?.status) {
         const updatedArray = array.map((itemData: any) =>

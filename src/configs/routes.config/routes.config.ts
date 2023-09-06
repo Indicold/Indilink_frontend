@@ -36,12 +36,12 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/auth/BussinessTypeModal')),
         authority: [],
     },
-    // {
-    //     key: 'collapseMenu.item2',
-    //     path: '/asset_list',
-    //     component: lazy(() => import('@/views/auth/Partner/PartnerTable/index')),
-    //     authority: [],
-    // },
+    {
+        key: 'collapseMenu.item2',
+        path: '/asset_list',
+        component: lazy(() => import('@/views/auth/Partner/PartnerTable/index')),
+        authority: [],
+    },
     {
         key: 'collapseMenu.item2',
         path: '/ticket_list_store',
@@ -177,6 +177,30 @@ export const protectedRoutes = [
         key: 'customerbusinesstype',
         path: `/customer-prepare`,
         component: lazy(() => import('@/views/auth/Customer/PrepareSearch')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-prepare`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerPrepareList')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-move`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerMoveList')),
+        authority: [],
+
+    },
+      {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-store`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerStoreList')),
         authority: [],
 
     },

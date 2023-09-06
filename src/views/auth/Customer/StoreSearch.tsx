@@ -127,7 +127,7 @@ const StoreSearch = () => {
           redirect: 'follow'
         };
         
-        fetch(`${apiUrl}/customer/store/search-update/${location?.state?.data?.user?.id}`, requestOptions)
+        fetch(`${apiUrl}/customer/store/search-update/${location?.state?.data?.id}`, requestOptions)
           .then(response => response.json())
           .then((result:any) => {
             setMessage(result);
@@ -447,7 +447,7 @@ const StoreSearch = () => {
 
                                 <div className="flex justify-center w-[310px] mx-auto">
                                    
-                                  {location?.state?.edit ?  <Button
+                                  {location?.state?.extraForm ?  <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block

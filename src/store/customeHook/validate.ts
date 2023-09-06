@@ -442,3 +442,30 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
+export const fieldsToAppendForPrepare:any =[
+  "product_category_id",
+  "broad_category_id",
+  "product_type_id",
+  "service_category_id",
+  "country_id",
+  "state_id",
+  "city_id",
+  "throughput",
+  "throughput_unit_id",
+  "case_size",
+  "case_size_unit_id",
+  "estimated_docks",
+  "estimated_dispatch",
+  "temp_min",
+  "temp_max",
+  "temp_unit_id",
+  "date_of_start",
+  "dispatch_date",
+  "arrival_date",
+  "contract_type",
+  "contract_name",
+  "status_id",
+  "comment",
+  "contract_download",
+];

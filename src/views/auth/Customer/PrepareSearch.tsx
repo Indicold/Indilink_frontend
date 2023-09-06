@@ -16,6 +16,16 @@ import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
 import { validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
+function formatDate(inputDate:any) {
+console.log("GGGGGGGGGtIME",inputDate);
+
+    const parts = inputDate.split('-'); // Split the input date into parts
+    if (parts.length === 3) {
+      const [year, month, day] = parts;
+      return `${day}-${month}-${year}`;
+    }
+    return inputDate; // Return the input date if it's not in the expected format
+  }
 
 // Define the functional component for PrepareSearch
 const PrepareSearch = () => {
@@ -547,7 +557,7 @@ const PrepareSearch = () => {
                                             onChange={(e: any) => handleChange(e)}
                                             autoComplete="off"
                                             name="arrival_date"
-                                            value={formData?.arrival_date}
+                                            value={formatDate(formData?.arrival_date)}
                                             placeholder="Arrival Date"
                                             component={Input}
                                         />
@@ -597,7 +607,7 @@ const PrepareSearch = () => {
                                 </>}
 
                                 <div className="flex justify-center w-[310px] mx-auto">
-                                    {location?.state?.edit ? <Button
+                                    {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
                                         block

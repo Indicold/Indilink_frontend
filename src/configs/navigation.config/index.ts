@@ -78,7 +78,7 @@ const navigationConfig: NavigationTree[] = [
 
         path: '',
 
-        title: 'Tickets',
+        title: 'Supports',
 
         translateKey: 'nav.groupMenu.collapse.collapsesetting',
 

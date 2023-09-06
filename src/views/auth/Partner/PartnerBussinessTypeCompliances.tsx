@@ -37,10 +37,10 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
        ? `partner/prepare/${AssetsId}`
        : '';
    
-   console.log("TTTTTTTTTT", apiUrl);
    
    // Fetch details using the determined API URL
    const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } = useApiFetch<any>(apiUrl, token);
+   console.log("TTTTTTTTTT", apiUrl,fetchDetails);
    
    let array1 = [
       {
@@ -143,12 +143,13 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
    // Handle the file upload
    const handleUpload = async (item: any, file: any) => {
      let AssetsId = localStorage.getItem('AssetsId');
+     let ListId=localStorage.getItem('assets_list_id');
      let asset_type_id = localStorage.getItem('asset_id');
      const { token } = getToken();
      const formData = new FormData();
      formData.append(item?.key, file);
      formData.append('key', item?.key);
-     formData.append('asset_id', AssetsId || 'INDI01AAAA9');
+     formData.append('asset_id', ListId || 'INDI01AAAA9');
      formData.append('asset_type_id', asset_type_id || '1');
    
      const headers = new Headers();
@@ -161,7 +162,7 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
      };
    
      try {
-       const response = await fetch(`${apiUrl}/partner/register-partner-upload-doc`, config);
+       const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc`, config);
        const responseData = await response.json();
        if (responseData?.status == 200 || responseData?.status) {
          const updatedArray = array.map((itemData: any) =>
@@ -236,7 +237,7 @@ const PartnerBussinessTypeCompliances = () => {// Get the user's token
                                  <div className='flex'>
                                     {item?.message && <p className='text-[red]'>Status:{item?.message}</p>}
                                     {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
-                                    {item?.view && <a href={`${apiUrl}/${item?.url}`} target='_blank' >View</a>}
+                                    {item?.view && <a href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`} target='_blank' >View</a>}
                                  </div>
                               </FormItem>
                            ))}
