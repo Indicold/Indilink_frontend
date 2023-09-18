@@ -1,18 +1,16 @@
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
-import Alert from '@/components/ui/Alert'
-import PasswordInput from '@/components/shared/PasswordInput'
 import ActionLink from '@/components/shared/ActionLink'
-import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
-import useAuth from '@/utils/hooks/useAuth'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { userLoginApiPost } from '@/store'
-import { NavLink } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import usePostApi from '@/store/customeHook/postApi'
+import { ToastContainer, toast } from 'react-toastify'
+import usePutApi from '@/store/customeHook/putApi'
+import { apiUrl } from '@/store/customeHook/token'
 
 interface LoginWithOTPFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -20,30 +18,20 @@ interface LoginWithOTPFormProps extends CommonProps {
     signUpUrl?: string
 }
 
-type LoginWithOTPFormSchema = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-interface UserLoginApiPostPayload {
-    user_id: string;
-    password: string;
-  }
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Please enter your email address'),
-    password: Yup.string().required('Please enter your password'),
-    rememberMe: Yup.bool(),
-})
+
+
+
 
 const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     const [isSubmitting,setSubmitting]=useState(false)
-    const [formData,setFormData]=useState({
-        username:"",
-        password:""
+    const [isNumber,setIsNumber]=useState<any>(true)
+    const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`${apiUrl}/auth/login-with-otp`);
+    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails } = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
+    const [formdata,setFormData]=useState<any>({
+        mobile:"",
+        otp:""
     })
-    const dispatch=useDispatch();
-    const LoginResponse=useSelector((state:any)=>state?.auth?.apiLoginPostReducer)
-    console.log("LOGIN",LoginResponse?.responseData?.message);
+  
     
     const {
         disableSubmit = false,
@@ -52,57 +40,85 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
         signUpUrl = '/sign-up',
     } = props
 
-    const [message, setMessage] = useTimeOutMessage()
 
-    const { signIn } = useAuth()
-
-    const onSignIn = async (
-        values: LoginWithOTPFormSchema,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
-        const { email, password } = values
-console.log("hhhhhhhhhhhhhhhhhhh");
-
-        setSubmitting(true)
-
-        const result = await signIn({ email, password })
-        console.log("HHHHH", result);
-
-        if (result?.status === 'failed') {
-            setMessage(result.message)
+    const navigate=useNavigate();
+   
+    const handlesubmit=(e:any)=>{
+        e.preventDefault()
+        if(formdata?.otp){
+            PUTOTPDetails(formdata)
+        }else{
+            let body:any={phone_number:formdata?.mobile}
+            postMobileNumber(body)
         }
-
-        setSubmitting(false)
+     
     }
-const handlesubmit=(e:any)=>{
-    e.preventDefault();
-    dispatch(userLoginApiPost({user_id:formData?.username,password:formData?.password}))
-    console.log("handle")
-}
-const handlechange=(e:any)=>{
-    const newData:any={...formData};
+
+const handleChange=(e:any)=>{
+    const newData:any={...formdata};
     newData[e.target.name]=e.target.value;
-    setFormData(newData);
-        }
+    setFormData(newData)
+}
+        useEffect(() => {
+            console.log("TTTTTT",postMobileNumberResponse);
+            if(postMobileNumberResponse?.status){
+                setIsNumber(false);
+                
+            }
+            if (postMobileNumberResponse?.message) {
+                toast.success(postMobileNumberResponse?.message, {
+                    position: 'top-right', // Position of the toast
+                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        background: '#FFB017',fontSize:"bold",
+                        color: "#fff"// Set the background color here
+                    },
+                });
+            }
+    
+        }, [postMobileNumberResponse?.message])
+        useEffect(() => {
+            console.log("TTTTTT",postMobileNumberResponse);
+           
+            if (verifyResponse?.message) {
+                toast.success(verifyResponse?.message, {
+                    position: 'top-right', // Position of the toast
+                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        background: '#FFB017',fontSize:"bold",
+                        color: "#fff"// Set the background color here
+                    },
+                });
+            }
+            if(verifyResponse?.status){
+                if(verifyResponse.message.accessToken)sessionStorage.setItem('access_token', verifyResponse.message.accessToken);
+  
+                navigate('/home')
+            }
+    
+        }, [verifyResponse?.message])
     return (
         <div className={className}>
-         {LoginResponse?.responseData?.message && typeof LoginResponse?.responseData?.message === 'string' && (
-
-<Alert showIcon className="mb-4" type="danger">
-
-    <>{LoginResponse?.responseData?.message}</>
-
-</Alert>
-
-)}
+              <ToastContainer />
+    
             <Formik
                
             
             >
                     <Form onSubmit={handlesubmit}>
                         <FormContainer>
-                            <FormItem className='d-flex'
-                                label="Mobile"
+                           {isNumber ? <FormItem className='d-flex text-label-title'
+                                label="Mobile Number"
                                 
                             >
                                 <Field
@@ -111,51 +127,57 @@ const handlechange=(e:any)=>{
                                     className="rounded-[13px]"
                                     name="mobile"
                                     placeholder="Mobile Number"
-                                    onChange={handlechange}
+                                    value={formdata?.mobile}
+                                    onChange={handleChange}
                                     component={Input}
                                 />
-                                  <label
-                                role='button'
-                                    style={{ borderRadius: "13px" }}
-                                    className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
-                                >
-                                    {isSubmitting ? 'Signing in...' : 'Log in with Password'}
-                                </label>
-                            </FormItem>
-                            <FormItem
-                                label="Enter OTP"
-
                                 
-                            >
-                                <Field
-                                    style={{ borderRadius: "13px" }}
-                                    autoComplete="off"
-                                    name="otp"
-                                    placeholder="Enter Your OTP"
-                                    onChange={handlechange}
-                                    component={Input}
-                                    // component={PasswordInput}
-                                />
-                            </FormItem>
+                            </FormItem> :
+                             <FormItem className='text-label-title'
+                             label="Enter OTP"
+
+                             
+                         >
+                             <Field
+                                 style={{ borderRadius: "13px" }}
+                                 autoComplete="off"
+                                 name="otp"
+                                 value={formdata?.otp}
+                                 placeholder="Enter Your OTP"
+                                 onChange={handleChange}
+                                 component={Input}
+                                 // component={PasswordInput}
+                             />
+                         </FormItem>
+                            }
+                           
                             <div className='flex justify-between'>
-                                <div className="flex items-center mb-4">
+                                <div className="flex items-center">
                                     {/* <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                     <label htmlFor="default-checkbox" className="ml-2 text-sm font-medium text-[#979da8] dark:text-[#979da8]">Remember me</label> */}
                                 </div>
-                                <ActionLink to={forgotPasswordUrl} className=" my-2 ml-2 text-sm font-medium text-[#979da8] dark:text-[#979da8]">Forgot Password?</ActionLink>
+                                <ActionLink to={forgotPasswordUrl} className="mb-1 ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]">Forgot Password?</ActionLink>
 
                             </div>
                             <div className='w-full flex'>
-                                <Button
+                              {isNumber ?  <Button
+                                    style={{ borderRadius: "13px" }}
+                                    block
+                                    loading={isSubmitting}
+                                    variant="solid"
+                                    className='bg-[#3f8cfe] indigo-btn  w-[40%] mx-auto rounded-[30px]'
+                                >
+                                    {isSubmitting ? 'Signing in...' : 'Log in'}
+                                </Button> :  <Button
                                     style={{ borderRadius: "13px" }}
                                     block
                                     loading={isSubmitting}
                                     variant="solid"
                                     type="submit"
-                                    className='bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]'
+                                    className='bg-[#3f8cfe] indigo-btn  w-[40%] mx-auto rounded-[30px]'
                                 >
-                                    {isSubmitting ? 'Signing in...' : 'Log in'}
-                                </Button>
+                                    {isSubmitting ? 'Signing in...' : 'Verfy OTP'}
+                                </Button> }
 
                             </div>
                             <div className='w-full flex'>
@@ -163,15 +185,15 @@ const handlechange=(e:any)=>{
                                 <label
                                 role='button'
                                     style={{ borderRadius: "13px" }}
-                                    className='text-[#3f8cfe] mx-auto rounded-[30px] font-bold mx-auto py-2'
+                                    className='!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {isSubmitting ? 'Signing in...' : 'Log in with Password'}
                                 </label>
                                 </NavLink>
                             </div>
-                            <div className="mt-4 text-center text-[#3f8cfe]">
+                            <div className="mt-4 text-center !text-[#103492]">
                                 <span>{`Not a member yet?`} </span>
-                                <ActionLink className='text-bold decoration-none p-2 pl-4 pr-4 rounded-lg border border-[black] ml-5' to={signUpUrl}>Sign up</ActionLink>
+                                <ActionLink className='text-bold decoration-none' to={signUpUrl}>Sign up</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>

@@ -66,7 +66,7 @@ const emailId=localStorage.getItem("email");
             draggable: true,
             progress: undefined,
             style: {
-                background: '#6aa5fc',
+                background: '#FFB017',fontSize:"bold",
                 color: "#fff"// Set the background color here
             },
         });
@@ -86,18 +86,18 @@ const emailId=localStorage.getItem("email");
                     </>
                 ) : (
                     <>
-                        <h3 className="mb-1">Verify OTP</h3>
+                        <h3 className="mb-1 text-head-title">Verify OTP</h3>
                         <p>
                             Please enter your verification code
                         </p>
                     </>
                 )}
             </div>
-            {message && (
+            {/* {message && (
                 <Alert showIcon className="mb-4" type="danger">
                     {message}
                 </Alert>
-            )}
+            )} */}
             <Formik
                 initialValues={{
                     email: emailId || null,
@@ -146,6 +146,7 @@ const emailId=localStorage.getItem("email");
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
+                                className='indigo-btn'
                             >
                                 {emailSent ? 'Resend Email' : 'Send Email'}
                             </Button>

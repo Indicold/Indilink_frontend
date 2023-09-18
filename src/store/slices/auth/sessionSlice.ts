@@ -3,7 +3,7 @@ import { SLICE_BASE_NAME } from './constants'
 
 export interface SessionState {
     signedIn: boolean
-    token: string | null
+    token: any
 }
 
 const initialState: SessionState = {

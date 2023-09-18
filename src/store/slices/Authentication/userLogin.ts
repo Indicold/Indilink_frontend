@@ -7,19 +7,25 @@ const userPostLoginSlice = createSlice({
     loading: false,
     error: null,
     responseData: null,
+    refreshPage:false
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(userLoginApiPost.pending, (state:any) => {
-        state.loading = true;
         state.error = null;
+        state.refreshPage=false
       })
       .addCase(userLoginApiPost.fulfilled, (state:any, action) => {
         console.log("HHHHHHH122",action.payload);
         
         state.loading = false;
         state.responseData = action.payload;
+        if(action.payload.accessToken){
+          localStorage.setItem("Access_Token",action.payload.accessToken)
+
+        }
+        
       })
       .addCase(userLoginApiPost.rejected, (state:any, action) => {
         console.log("HHHHHHH1",action);

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { apiUrl } from './customeHook/token';
 
-const API_URL = 'https://seal-app-uqxwl.ondigitalocean.app';
+const API_URL = apiUrl;
 
 
 
@@ -59,7 +60,12 @@ export const userLoginApiPost = createAsyncThunk(
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
+    if(data.message.accessToken) {
+      // const dispatch = useDispatch();
+      // dispatch(signInSuccess(data.message.accessToken))
+      sessionStorage.setItem('access_token', data.message.accessToken);
+    }
+    // if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
     return data;
   }
 );

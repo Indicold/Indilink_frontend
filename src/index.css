@@ -2,11 +2,26 @@
 
 
 
+:root {
+
+ 
+
+    --indicold-first-color: #ffb017;
+
+ 
+
+    --indicold-second-color: #10338c;
+
+ 
+
+}
 .cin-number label {
     width: fit-content;
-    font-size: 18px;
+
+
     letter-spacing: 3px;
-    margin-left: auto;
+
+
     margin-right: auto;
 }
 
@@ -30,19 +45,89 @@
     width: 95%;
 }
 
-.multistep-form button {
-    background-color: blue;
-    color: white;
-    margin: 0.2rem;
-    padding: 0.2rem 0.7rem;
-    border-radius: 0.2rem;
+.indigo-btn{
+
+    background-color: #FFB017;
+
 }
+
+ 
+
+.indigo-btn:hover{
+
+    background-color: #CA7D11!important;
+
+}
+.text-head-title{
+    color: #0f3492 !important;
+}
+.text-label-title{
+    color:#103492 !important
+}
+.hyper-link-color{
+    color: #103492 !important;
+}
+.hyper-link-color:hover{
+
+    background-color: #CA7D11!important;
+
+}
+.input-wrapper,
+.input-md {
+border-radius: 13px !important;
+padding-right: 0px !important;
+}
+.email-msg-text{
+    width: 180px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+}
+.partner-details-container{
+    height: 70vh !important;
+    overflow-y: auto !important;
+}
+.partner-details-container ::-webkit-scrollbar,
+.partner-details-container ::-moz-scrollbar,
+.partner-details-container ::-ms-scrollbar {
+    width: 1px !important;
+    color: #0f3492 !important;
+    background: linear-gradient(13deg, #bc11d7 14%, #c7ceff 64%) !important;
+}
+
+.multistep-form button {
+
+    
+    background-color: #FFB017;
+
+    color: white;
+
+    margin: 0.2rem;
+
+    padding: 0.2rem 0.7rem;
+
+    border-radius: 0.2rem;
+
+}
+
+ 
 
 .multistep-form button:disabled {
-    background-color: rgb(134, 134, 255);
+
+    background-color: #CA7D11!important;
+
+}
+.go2150698616:before {
+    bottom: -4.2rem !important;
 }
 
-.multistep-form-step {
-    overflow-y: auto;
-    height: 70vh;
+.cbot {
+    position: fixed;
+    right: 0;
+    bottom: 42px;
+    /* backdrop-filter: blur(5px); */
+}
+
+.message:nth-of-type(odd) {
+    text-align: right;
 }

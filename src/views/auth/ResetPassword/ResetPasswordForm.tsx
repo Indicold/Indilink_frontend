@@ -75,7 +75,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             draggable: true,
             progress: undefined,
             style: {
-                background: '#6aa5fc',
+                background: '#FFB017',fontSize:"bold",
                 color: "#fff"// Set the background color here
             },
         });
@@ -99,11 +99,11 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                     </>
                 )}
             </div>
-            {message && (
+            {/* {message && (
                 <Alert showIcon className="mb-4" type="danger">
                     {message}
                 </Alert>
-            )}
+            )} */}
             <Formik
                 initialValues={{
                     password: null,
@@ -156,6 +156,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                         block
                                         loading={isSubmitting}
                                         variant="solid"
+                                        className='indigo-btn'
                                         type="submit"
                                     >
                                         {isSubmitting

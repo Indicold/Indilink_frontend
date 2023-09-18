@@ -1,3 +1,4 @@
+import { apiUrl } from '@/store/customeHook/token'
 import ApiService from './ApiService'
 import type {
     SignInCredential,
@@ -65,9 +66,12 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
         body: data
       };
       
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-gen-otp', requestOptions)
-        .then(response => {
+      fetch(`${apiUrl}/auth/forgot-pass-gen-otp`, requestOptions)
+        .then((response:any )=> {
+          console.log("hhhh",JSON.parse(response?._bodyInit));
+
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -83,6 +87,8 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
           
         })
         .catch(error => {
+          console.log("HHHH",error);
+          
           console.log(error);
         });
       
@@ -105,9 +111,10 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
         body: data
       };
       
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-verify-otp', requestOptions)
-        .then(response => {
+      fetch(`${apiUrl}/auth/forgot-pass-verify-otp`, requestOptions)
+        .then((response:any )=> {
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -145,7 +152,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
         body: data
       };
       
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-set-new-pass', requestOptions)
+      fetch(`${apiUrl}/auth/forgot-pass-set-new-pass`, requestOptions)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

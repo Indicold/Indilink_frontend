@@ -36,7 +36,7 @@ const MultistepForm = () => {
                         <Button
                             block
                             variant="solid"
-                            className='signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
+                            className='bg-[#ffb017] indigo-btn w-[40%] mx-auto rounded-[30px]'
                             onClick={handlePrevStep}
                         >
                             Previous
@@ -44,7 +44,7 @@ const MultistepForm = () => {
                         <Button
                             block
                             variant="solid"
-                            className='signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
+                            className='bg-[#ffb017] indigo-btn w-[40%] mx-auto rounded-[30px]'
                             onClick={handleNextStep}
                         >
                             Next

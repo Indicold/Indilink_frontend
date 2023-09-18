@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getToken } from './token';
 
 interface ApiResponse {
   // Define the properties of the response object here
@@ -24,23 +25,28 @@ interface PostData {
 }
 
 function postRequest(url: string, data: PostData): Promise<ApiResult> {
+  const {token}:any=getToken()
   // Implement your actual POST request logic here and return the result
   // You can use libraries like axios, fetch, etc.
   return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify(data),
   })
     .then(response => {
-      if (!response.ok) {
-        throw new Error(`Request failed with status: ${response.status}`);
-      }
+      console.log("RRRRRRRRRR",response);
+      
+      // if (!response.ok) {
+      //   throw new Error(`Something went wrong try again !`);
+      // }
       return response.json();
     })
     .then(responseData => {
-      console.log("responseData",responseData);
+      
+      console.log("responseData45454",responseData);
       
       // Assuming you have a certain way to determine success or failure
       if (responseData) {
