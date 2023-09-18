@@ -1,3 +1,8 @@
+/**
+ * This is a TypeScript React component for a form that allows users to verify their OTP (One-Time
+ * Password) for password recovery.
+ * @property {string} email - The email field is used to enter the user's email address.
+ */
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -32,6 +37,14 @@ const VerfyOtpForm = (props: ForgotPasswordFormProps) => {
 
     const [message, setMessage] = useTimeOutMessage()
 const emailId=localStorage.getItem("email");
+    /**
+     * The `onSendMail` function is used to handle the logic for sending a password reset email.
+     * @param {ForgotPasswordFormSchema} values - The `values` parameter is an object that represents
+     * the form values submitted by the user. It likely contains properties such as email, password,
+     * and any other fields present in the form.
+     * @param setSubmitting - A function that takes a boolean value and updates the state of whether
+     * the form is submitting or not.
+     */
     const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
@@ -56,6 +69,12 @@ const emailId=localStorage.getItem("email");
             //     setSubmitting(false);
             // });
     };
+    /**
+     * The function `messageView` displays a success toast message with specified options.
+     * @param {any} messagevalue - The messagevalue parameter is the value of the message that you want
+     * to display in the toast notification. It can be any string or variable that contains the message
+     * you want to show.
+     */
     const messageView=(messagevalue:any)=>{
         toast.success(messagevalue, {
             position: 'top-right', // Position of the toast

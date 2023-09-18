@@ -1,4 +1,8 @@
-// Import necessary React and custom components and libraries
+/* 
+* The above code is a TypeScript React component that represents a form for preparing partner business
+* types. It imports various UI components, hooks, and custom functions for handling tokens, API
+* fetching, form validation, and displaying messages. 
+*/
 import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
@@ -32,12 +36,16 @@ const PartnerBussinessTypePrepare = () => {
     useApiFetch<any>('master/get-city-by-countryId/101', token);
   const { data: ProductType, loading: ProductTypeLoading, error: ProductTypeError } =
     useApiFetch<any>('master/partner/prepare/get-product-category', token);
+    const { data: ProductTypeList, loading: PTLLoading, error: PTLError } =
+    useApiFetch<any>('master/customer/store/get-product-type', token);
 
   // Define state variables for API response and loading status
   const { result: PrepareResponse, loading: PrepareLoading, sendPostRequest: PostPrepareRegisterDetails }: any =
     usePostApi(`${apiUrl}/partner/prepare/register`);
   const { data: fetchDetails, loading: fetchDetailsloading, error: fetchDetailsSerror } =
     useApiFetch<any>(`partner/prepare/${AssetsId}`, token);
+
+    
 
   // Define a sample payload for the POST request
   const payload: any = {
@@ -220,7 +228,10 @@ const PartnerBussinessTypePrepare = () => {
                     <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
                          <select disabled={isDisabled} className='w-full' name='product_type'  onChange={(e:any)=>handleChange(e)}>
                              <option>Product Type</option>
-                             <option>B</option>
+                             {ProductTypeList && ProductTypeList?.data?.map((item:any,index:any)=>(
+ <option value={item?.id} selected={item?.id===formData?.product_type}>{item?.type}</option>
+                             ))}
+                            
                          </select>
                          
                      </div>

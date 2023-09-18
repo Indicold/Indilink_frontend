@@ -109,3 +109,43 @@ export let CustomerMovePayload1 = {
     dispatch_date: '',
     arrival_date: ''
 }
+
+export let CustomerPrepare={
+    product_category_id: 1,
+    broad_category_id: 2,
+    product_type_id: 2,
+    service_category_id: 2,
+    country_id: 101,
+    state_id: 101,
+    city_id: 5211,
+    throughput: 50,
+    throughput_unit_id: 1,
+    case_size: 1,
+    case_size_unit_id: 1,
+    estimated_docks: 1,
+    estimated_dispatch: 5,
+    temp_min: 5,
+    temp_max: 10,
+    temp_unit_id: 1,
+    date_of_start: "2023-10-20"
+  };
+
+  export let CustomerPrepare1={
+    product_category_id: '',
+    broad_category_id: '',
+    product_type_id: '',
+    service_category_id: '',
+    country_id: '',
+    state_id: '',
+    city_id:'',
+    throughput:'',
+    throughput_unit_id: '',
+    case_size: '',
+    case_size_unit_id: '',
+    estimated_docks: '',
+    estimated_dispatch: '',
+    temp_min: '',
+    temp_max: '',
+    temp_unit_id: 1,
+    date_of_start:''
+  }

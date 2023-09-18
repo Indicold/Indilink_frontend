@@ -1,3 +1,13 @@
+/**
+ * This is a TypeScript React component for a sign-in form with validation and submission
+ * functionality.
+ * @property {string} email - The email property is a string that represents the user's email address.
+ * It is required and must be a valid email format.
+ * @property {string} password - The password property is used to store the user's password input in
+ * the form.
+ * @property {boolean} rememberMe - A boolean value indicating whether the user wants to be remembered
+ * for future logins.
+ */
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
@@ -11,7 +21,7 @@ import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { signInSuccess, userLoginApiPost } from '@/store'
+import { userLoginApiPost } from '@/store'
 import { NavLink } from 'react-router-dom'
 import { validateForm } from '@/store/customeHook/validate'
 
@@ -30,6 +40,8 @@ interface UserLoginApiPostPayload {
     user_id: string;
     password: string;
   }
+/* The `validationSchema` constant is defining the validation rules for the form fields in the
+`SignInForm` component. It is using the Yup library to create a validation schema object. */
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter your email address'),
     password: Yup.string().required('Please enter your password'),
@@ -60,6 +72,12 @@ const SignInForm = (props: SignInFormProps) => {
 
 
   
+/**
+ * The function handlesubmit is used to handle form submission in a TypeScript React application,
+ * including validation and dispatching an API call.
+ * @param {any} e - The parameter `e` is an event object that is passed to the `handlesubmit` function.
+ * It is typically an event object that is triggered when a form is submitted.
+ */
 const handlesubmit=(e:any)=>{
     e.preventDefault();
     console.log("HGFFGDFGD",validateForm({user_id:formData?.username,passwordlGN:formData?.password},setError));
@@ -69,10 +87,16 @@ const handlesubmit=(e:any)=>{
         dispatch(userLoginApiPost({user_id:formData?.username,password:formData?.password}))
     }
 }
+/**
+ * The function `validateFormLogin` checks if the `username` and `password` fields in a form are
+ * filled, and returns true if they are, otherwise it returns false and sets error messages.
+ * @returns a boolean value. It returns true if there are no errors in the form data, and false if
+ * there are any errors.
+ */
 const validateFormLogin=()=>{
     const errors:any={};
     if(!formData.username){
-        errors.username="Username is required !"
+        errors.username="Email is required !"
     }
     if(!formData.password){
         errors.password="Password is can't be Empty !"
@@ -80,12 +104,20 @@ const validateFormLogin=()=>{
     setError(errors)
     return Object.keys(errors).length == 0;
 }
+/**
+ * The handlechange function updates the formData state with the new value entered in the input field.
+ * @param {any} e - The parameter `e` is an event object that is passed to the `handlechange` function.
+ * It represents the event that triggered the function, such as a change event on an input field.
+ */
 const handlechange=(e:any)=>{
     const newData:any={...formData};
     newData[e.target.name]=e.target.value;
     setFormData(newData);
     
         }
+        /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
+        `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`
+        whenever the `LoginResponse?.responseData?.message?.accessToken` value changes. */
         useEffect(()=>{
             localStorage.setItem("access_token",LoginResponse?.responseData?.message?.accessToken)
         },[LoginResponse?.responseData?.message])
@@ -101,12 +133,13 @@ const handlechange=(e:any)=>{
 
 )}
             <Formik
-                onSubmit={handlesubmit}
+               
+            
             >
-                    <Form className='formm' action=''>
+                    <Form onSubmit={handlesubmit}>
                         <FormContainer>
                             <FormItem className='!text-[#103492]'
-                                label="Username"
+                                label="Email address"
                                 
                             >
                                 <Field
@@ -114,7 +147,7 @@ const handlechange=(e:any)=>{
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="username"
-                                    placeholder="username"
+                                    placeholder="your@email.com"
                                     onChange={handlechange}
                                     component={Input}
                                 />
@@ -144,7 +177,7 @@ const handlechange=(e:any)=>{
                                 <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]">Forgot Password?</ActionLink>
 
                             </div>
-                            <div className='w-full flex'>
+                            <div className='w-[40%] mx-auto flex mt-5'>
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block

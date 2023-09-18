@@ -1,3 +1,8 @@
+/**
+ * This is a TypeScript React component for a Forgot Password form that sends a password recovery
+ * instruction to the user's email.
+ * @property {string} email - The email property is a string that represents the user's email address.
+ */
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -22,6 +27,10 @@ type ForgotPasswordFormSchema = {
     email: string
 }
 
+/* The `validationSchema` constant is defining the validation rules for the form. In this case, it is
+using the Yup library to create a validation schema object. The schema specifies that the `email`
+field is required and must be a string. If the field is empty or not a string, it will display the
+error message `'Please enter your email'`. */
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter your email'),
 })
@@ -32,6 +41,14 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     const [emailSent, setEmailSent] = useState(false)
 
 
+    /**
+     * The function `onSendMail` is used to send a forgot password email and store the email in local
+     * storage.
+     * @param {ForgotPasswordFormSchema} values - The `values` parameter is an object that contains the
+     * form values submitted by the user. In this case, it likely includes the user's email address.
+     * @param setSubmitting - A function that takes a boolean value and updates the state of whether
+     * the form is submitting or not.
+     */
     const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
@@ -57,6 +74,12 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
             //     setSubmitting(false);
             // });
     };
+    /**
+     * The function `messageView` displays a success toast message with a custom style.
+     * @param {any} messagevalue - The messagevalue parameter is the value of the message that you want
+     * to display in the toast notification. It can be any string or variable that contains the message
+     * you want to show.
+     */
     const messageView=(messagevalue:any)=>{
         toast.success(messagevalue, {
             position: 'top-right', // Position of the toast

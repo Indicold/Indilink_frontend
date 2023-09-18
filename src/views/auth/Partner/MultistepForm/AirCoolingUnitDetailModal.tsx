@@ -1,3 +1,11 @@
+/* 
+* The above code is a TypeScript React component that renders a modal for entering air cooling unit
+* details. It receives two props: `modal` and `setModal`, which control the visibility of the modal.
+* Inside the component, there is a form with input fields for ACU make and model number, ACU capacity,
+* ACU CFM, ACU defrosting method, and ACU outlet pipe make. The user can enter the details and click
+* the "Save" button to save the data. The `handleChange` function updates the `data` state with the
+* input values, and the `handles 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { Field } from "formik";
 import { useState } from "react";
@@ -8,22 +16,23 @@ interface MajorityHolderModalProps {
 const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps>  = ({modal,setModal}) => {
     const [data,setData]=useState({
     });
-    const handleChange=(e:any)=>{
-     const newData:any={...data};
-     newData[e.target.name]=e.target.value;
-  
-     setData(newData);
-     console.log("newData",newData);
-     
-         }
+        /**
+         * The handleChange function updates the state with the new value of the input field and logs
+         * the updated data.
+         * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+         * function. It represents the event that triggered the function, such as a change event on an
+         * input field.
+         */
+        const handleChange=(e:any)=>{
+            const newData:any={...data};
+            newData[e.target.name]=e.target.value;
+            setData(newData);
+            console.log("newData",newData);
+        }
+         /**
+          * The function `handlesave` saves data to local storage and closes a modal.
+          */
          const handlesave = () => {
-             // let getData: any[] = JSON.parse(localStorage.getItem('airCooling_List') || '[]');
-         
-             // if (localStorage.getItem('airCooling_List')) {
-             //     getData.push(data);
-             //     localStorage.setItem('airCooling_List', JSON.stringify(getData));
-             // }
-             
              if (!localStorage.getItem('airCooling_List')) {
                  localStorage.setItem('airCooling_List', JSON.stringify(data));
              }
@@ -31,9 +40,14 @@ const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps>  = ({modal,s
 
              console.log("gggggg");
              
-         };
+         }
     return (
       <> 
+       {/* The above code is rendering a modal component in a React application. The modal is displayed
+       when the `modal` variable is true. The modal contains a form with input fields for ACU Make
+       and Model no., ACU Capacity, ACU CFM, ACU Defrosting, and ACU Outlet Pipe Make. The user can
+       enter values in these fields and click the "Save" button to save the form data. The modal can
+       be closed by clicking the close button in the top right corner. */}
        {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

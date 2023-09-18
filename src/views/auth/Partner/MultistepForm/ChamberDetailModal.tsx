@@ -1,3 +1,12 @@
+/* 
+* The above code is a TypeScript React component that represents a modal for adding chamber details.
+* It includes form fields for entering chamber information such as chamber number, chamber name,
+* chamber size, number of pallets, pallet size, racking type, photo of entrance, photo of the chamber
+* from inside, number of floors, floor area, temperature range, height of each floor, staircase
+* (yes/no), and parking area. It also includes a save button that triggers a function to save the
+* chamber details. The component uses various dependencies such as FormItem, Input, useApiFetch,
+* useState, and ToastContainer 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { apiUrl, getToken } from "@/store/customeHook/token";
 import useApiFetch from "@/store/customeHook/useApiFetch";
@@ -9,7 +18,7 @@ interface MajorityHolderModalProps {
     modal: boolean;
     formD: any;
     update: React.Dispatch<React.SetStateAction<boolean>>;
-    // chamber: any;
+    chamber: any;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, update, setModal }) => {
@@ -20,10 +29,15 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
     const [data, setData] = useState<any>({
     });
 
-    // function to store form data
+    /**
+     * The handleChange function updates the data object based on the input value and name, and logs
+     * the updated data object.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the change, such as a user input or a file
+     * selection.
+     */
     const handleChange = (e: any) => {
         const newData: any = { ...data };
-        // asset id extraction from localstorage
         newData.asset_id =localStorage.getItem('AssetsId') || "INDI01AAAA4";
         newData[e.target.name] = e.target.value;
         if (e.target.name === 'photo_of_entrance') {
@@ -38,8 +52,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
         console.log("newData", newData);
 
     }
-
-    // function to handle modal form submission
+    /**
+     * The `handlesave` function is responsible for saving chamber details by making a POST request to
+     * the server with the provided form data.
+     */
     const handlesave = async () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -87,6 +103,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
         }
     };
     
+    /**
+     * The function `messageView` displays a success toast message with specified options.
+     * @param {any} messagevalue - The message value is the text that you want to display in the toast
+     * message. It can be any string or variable that contains the message you want to show.
+     */
     const messageView=(messagevalue:any)=>{
         toast.success(messagevalue, {
             position: 'top-right', // Position of the toast
@@ -104,21 +125,24 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
     }
     return (
         <>
-        {/* Component that displays messages from backend on api call */}
          <ToastContainer />
+            {/* The above code is rendering a modal component in a TypeScript React application. The
+            modal is displayed when the `modal` variable is true. The modal contains a form with
+            various input fields such as chamber number, chamber name, chamber size, number of
+            pallets, pallet size, racking type, photo of entrance, photo of the chamber from inside,
+            number of floors, floor area, temperature range, height of each floor, staircase
+            (yes/no), and parking area. The user can fill in these fields and click the "Save"
+            button to save the form data. */}
             {modal &&
-            // modal container
                 <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-[800px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            {/* button to close modal */}
                             <button onClick={() => setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                 </svg>
                                 <span className="sr-only">Close modal</span>
                             </button>
-                            {/* modal form container */}
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center text-head-title">Chamber</h6>
                                 <div className="flex">
@@ -309,8 +333,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({ modal, formD, 
                                     </FormItem>
                                     
                                 </div> 
-
-                                {/* modal form submission button */}
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block

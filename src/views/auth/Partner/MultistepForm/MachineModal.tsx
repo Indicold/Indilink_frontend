@@ -1,3 +1,8 @@
+/**
+ * The `MachineModal` component is a modal that allows users to input data for a machine and save it.
+ * @param  - 1. `modal`: A boolean value that determines whether the modal is visible or not.
+ * @returns The code is returning a React functional component named "MachineModal".
+ */
 import { Button, FormItem, Input } from "@/components/ui";
 import { handleStoreTable } from "@/store/customeHook/validate";
 import { Field } from "formik";
@@ -13,7 +18,14 @@ interface MajorityHolderModalProps {
 const MachineModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, update,setModal}) => {
     const [data,setData]=useState({
        });
-       // function to store form data
+       
+      /**
+       * The handleChange function updates the state data object with the new value from the input
+       * field.
+       * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+       * function. It is typically an event object that is triggered by a user action, such as clicking
+       * a button or typing in an input field.
+       */
        const handleChange=(e:any)=>{
         const newData:any={...data};
     
@@ -24,29 +36,31 @@ const MachineModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, update
         console.log("newData",newData);
         
             }
-            // function that handles form submit and calls api
+           /**
+            * The handlesave function is used to handle saving data related to a partner's prepared
+            * machine.
+            */
             const handlesave = () => {
-                // custom hook that calls api
                 handleStoreTable('partner/prepare/machine',data,setModal,formD,update,"machine_ids")
              };
       
     return (
         <>
-        {/* Component that displays messages from backend */}
         <ToastContainer/>
+      {/* The above code is rendering a modal component in a TypeScript React application. The modal is
+      displayed when the `modal` variable is true. The modal contains a form with input fields for
+      asset ID, type of machine, name, make, model, purpose, and power requirement. There is also a
+      "Save" button that triggers the `handlesave` function when clicked. */}
        {modal && 
-       // modal container
        <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-[600px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            {/* button to close modal */}
                             <button onClick={()=>setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                 </svg>
                                 <span className="sr-only">Close modal</span>
                             </button>
-                            {/* modal form container */}
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Machine</h6>
                                 <div className="flex">
@@ -149,7 +163,52 @@ const MachineModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, update
                                     </FormItem>
                                 </div>
   
-                                {/* submit button */}
+                                {/* <div className="flex">
+                                    <FormItem
+                                        label="Pallet Dimension mm"
+                                        className='mx-auto'
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="Pallet_Dimension"
+                                            onChange={(e:any)=>handleChange(e)}
+                                            placeholder="Pallet Dimension "
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                    <FormItem
+                                        label="Floor Area (sqft)"
+                                        className='mx-auto'
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="Floor_Area_(sqft)"
+                                            onChange={(e:any)=>handleChange(e)}
+                                            placeholder="Floor Area (sqft)"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                    
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Staircase (Yes/No)"
+                                        className='mx-auto'
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="Staircase_(Yes/No)"
+                                            onChange={(e:any)=>handleChange(e)}
+                                            placeholder="Yes/No"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                  
+                                    
+                                </div> */}
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block

@@ -1,3 +1,11 @@
+/**
+ * This code contains various functions for form validation and handling API requests in a TypeScript
+ * application.
+ * @param {any} email - The email address to be validated.
+ * @param {any} setIsEmailValid - The `setIsEmailValid` parameter is a function that is used to update
+ * the state of the email validation result. It takes a single argument, which is the result of the
+ * email validation.
+ */
 import { toast } from "react-toastify";
 import { apiUrl, getToken } from "./token";
 
@@ -49,27 +57,27 @@ export const validateForm = (formData: any, setError: any) => {
     errorss.first_name = 'First name is required';
   }
 
-  if (!formData?.last_name) {
-    errorss.last_name = 'Last name is required';
-  }
+  // if (!formData?.last_name) {
+  //   errorss.last_name = 'Last name is required';
+  // }
 
   if (!formData?.email) {
     errorss.email = 'Email is required';
   }
-  if (formData?.email) {
-    if (!/\S+@\S+\.\S+/.test(formData?.email)) {
-      errorss.email = 'Invalid email address';
-    }
-  }
+  // if (formData?.email) {
+  //   if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+  //     errorss.email = 'Invalid email address';
+  //   }
+  // }
 
   if (!formData?.phone_number) {
     errorss.phone_number = 'Phone Number is required';
   }
-  if (formData?.phone_number) {
-    if (!/^[0-9+\-]+$/.test(formData?.phone_number)) {
-      errorss.phone_number = 'Mobile Number should be 10 digit';
-    }
-  }
+  // if (formData?.phone_number) {
+  //   if (!/^[0-9+\-]+$/.test(formData?.phone_number)) {
+  //     errorss.phone_number = 'Mobile Number should be 10 digit';
+  //   }
+  // }
 
 
   // Add more validation rules for other fields
@@ -98,7 +106,7 @@ export const validateMobile = async (phone_number: any, setIsMobileValid: any) =
       setIsMobileValid(data.message);
     }
   } catch (error) {
-    console.error('Error validating email:', error);
+    console.error('Error validating mobile:', error);
   }
 };
 
@@ -394,3 +402,86 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
   setErrors(newErrors);
   return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
 };
+
+export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
+  const newErrors: any = {};
+
+  if (!formData?.product_category_id) {
+    newErrors.product_category_id = 'This Field is required';
+  }
+
+  if (!formData?.broad_category_id) {
+    newErrors.broad_category_id = 'This Field is required';
+  }
+
+  if (!formData?.service_category_id) {
+    newErrors.service_category_id = 'This Field is required';
+  }
+
+  if (!formData?.country_id) {
+    newErrors.country_id = 'This Field is required';
+  }
+ if (!formData?.state_id) {
+    newErrors.state_id = 'This Field is required';
+  }
+  if (!formData?.city_id) {
+    newErrors.city_id = 'This Field is required';
+  }
+  if (!formData?.throughput) {
+    newErrors.throughput = 'This Field is required';
+  }
+  if (formData?.throughput && !formData?.throughput_unit_id) {
+    newErrors.throughput = 'Unit is required';
+  }
+  if (!formData?.case_size) {
+    newErrors.case_size = 'This Field is required';
+  }
+  if (formData?.case_size && !formData?.case_size_unit_id) {
+    newErrors.case_size = 'Unit is required';
+  }
+  if (!formData?.temp_min) {
+    newErrors.temp_min = 'This Field is required';
+  }
+  if (!formData?.temp_max) {
+    newErrors.temp_max = 'This Field is required';
+  }
+  
+  console.log("errr", newErrors);
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0; // Empty object indicates no validation errors
+};
+
+export const fieldsToAppendForPrepare:any =[
+  "product_category_id",
+  "broad_category_id",
+  "product_type_id",
+  "service_category_id",
+  "country_id",
+  "state_id",
+  "city_id",
+  "throughput",
+  "throughput_unit_id",
+  "case_size",
+  "case_size_unit_id",
+  "estimated_docks",
+  "estimated_dispatch",
+  "temp_min",
+  "temp_max",
+  "temp_unit_id",
+  "date_of_start",
+  "dispatch_date",
+  "arrival_date",
+  "contract_type",
+  "contract_name",
+  "status_id",
+  "comment",
+  "contract_download",
+];
+export const formatDate=(inputDate:any)=>{
+  const parts = inputDate.split('-'); // Split the input date into parts
+  if (parts.length === 3) {
+    const [year, month, day] = parts;
+    return `${day}-${month}-${year}`;
+  }
+  return inputDate; // Return the input date if it's not in the expected format
+}

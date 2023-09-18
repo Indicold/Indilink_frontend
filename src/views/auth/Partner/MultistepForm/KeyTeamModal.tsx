@@ -1,3 +1,10 @@
+/* 
+* The above code is a TypeScript React component that renders a modal form. It receives props such as
+* `modal`, `setModal`, and `Team`. The modal form contains input fields for the user to enter their
+* full name, contact information, email, designation, and reporting manager. When the user clicks the
+* "Save" button, the form data is saved to the local storage. The modal form is displayed when the
+* `modal` prop is true. 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { Field } from "formik";
 import { useEffect, useState } from "react";
@@ -12,6 +19,13 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
        });
        console.log("Team",Team);
        
+       /**
+        * The handleChange function updates the state data object with the new value from the input
+        * field.
+        * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+        * function. It represents the event that triggered the function, such as a change event on an
+        * input field.
+        */
        const handleChange=(e:any)=>{
         const newData:any={...data};
         newData[e.target.name]=e.target.value;
@@ -20,6 +34,9 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
         console.log("newData",newData);
         
             }
+            /**
+             * The function `handlesave` saves data to the local storage in JSON format.
+             */
             const handlesave = () => {
                 let getData: any[] = JSON.parse(localStorage.getItem('Team_List') || '[]');
             
@@ -34,6 +51,9 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
                 console.log("gggggg");
                 
             };
+        /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
+        `useEffect` hook is used to update the state of the `data` object whenever the `Team` prop
+        changes. */
         useEffect(()=>{
             setData({
                 Team:Team
@@ -41,6 +61,10 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({modal,setModal,Team})
         },[data.Team])
     return (
        <>
+    {/* The above code is rendering a modal component in a TypeScript React application. The modal is
+    displayed when the `modal` variable is true. The modal contains a form with input fields for the
+    user to enter their full name, contact information, email, designation, and reporting manager.
+    There is also a "Save" button that triggers the `handlesave` function when clicked. */}
     {modal &&    <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

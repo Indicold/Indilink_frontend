@@ -1,3 +1,8 @@
+/**
+ * The BasicInformation component renders a form for collecting basic information.
+ * @returns The BasicInformation component is returning JSX elements. It includes a div with a heading
+ * and a BasicInformationForm component.
+ */
 import BasicInformationForm from "./BasicInformationForm";
 
 const BasicInformation = () => {

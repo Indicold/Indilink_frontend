@@ -25,8 +25,7 @@ const Layout = () => {
         if (authenticated) {
             return layouts[layoutType]
         }
-        else
-            return lazy(() => import('./AuthLayout'))
+        return lazy(() => import('./AuthLayout'))
     }, [layoutType, authenticated])
 
 

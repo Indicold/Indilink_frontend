@@ -1,3 +1,12 @@
+/* 
+* The above code is a TypeScript React component that renders a modal for entering refrigeration
+* details. It imports various components and custom hooks from different files. It uses the useState
+* and useEffect hooks to manage state and make API calls. The modal is displayed when the "modal" prop
+* is true. Inside the modal, there are form fields for entering refrigeration details such as type,
+* year of installation, manufacturer/vendor, vendor contact name, vendor contact number, number of
+* compressors, make of compressors, and AMC details. There is also a "Save" button that triggers the
+* handlesave function when clicked. 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { getToken } from "@/store/customeHook/token";
 import useApiFetch from "@/store/customeHook/useApiFetch";
@@ -13,6 +22,12 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({modal,set
     const { data, loading, error } = useApiFetch<any>('master/partner/store/type-of-cold-storage', token);
     const [data1,setData]=useState({
        });
+       /**
+        * The handleChange function updates the state with the new value of the input field.
+        * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+        * function. It represents the event that triggered the function, such as a change event on an
+        * input field.
+        */
        const handleChange=(e:any)=>{
         const newData:any={...data1};
         newData[e.target.name]=e.target.value;
@@ -21,13 +36,10 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({modal,set
         console.log("newData",newData);
         
             }
+            /**
+             * The function `handlesave` saves data to local storage and closes a modal.
+             */
             const handlesave = () => {
-                // let getData: any[] = JSON.parse(localStorage.getItem('Register_List') || '[]');
-            
-                // if (localStorage.getItem('Register_List')) {
-                //     getData.push(data);
-                //     localStorage.setItem('Register_List', JSON.stringify(getData));
-                // }
                 
                 if (!localStorage.getItem('Register_List')) {
                     localStorage.setItem('Register_List', JSON.stringify(data));
@@ -40,6 +52,10 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({modal,set
   
     return (
         <>
+        {/* The above code is rendering a modal component in a React application. The modal is displayed
+        when the `modal` variable is true. The modal contains a form with various input fields such
+        as select, text, and button. The user can input data into these fields and click the "Save"
+        button to save the data. The modal also has a close button to hide the modal when clicked. */}
         {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

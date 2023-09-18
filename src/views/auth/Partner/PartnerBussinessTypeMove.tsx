@@ -1,4 +1,11 @@
-// Import necessary React and custom components and libraries
+/* 
+* The above code is a TypeScript React component that represents a form for moving a partner's
+* business type. It includes various UI components such as buttons, dropdowns, and input fields. The
+* form is handled using Formik, a popular form library for React. The component fetches data from APIs
+* using custom hooks and displays the fetched data in the form fields. It also handles form validation
+* and submission. The form data is sent to an API endpoint for further processing. The component also
+* includes routing functionality to navigate to different routes based on the form submission. 
+*/
 import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling

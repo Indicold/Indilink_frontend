@@ -1,3 +1,9 @@
+/* 
+* The above code is a TypeScript React component that renders a modal for entering I.O.T. device
+* details. It includes form fields for asset id, type, device id, make, model, and internet enabled.
+* The component uses Formik for form handling and includes a save button that triggers a function to
+* store the entered data. The modal is displayed conditionally based on the value of the "modal" prop. 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { handleStoreTable } from "@/store/customeHook/validate";
 import { Field } from "formik";
@@ -12,7 +18,12 @@ interface MajorityHolderModalProps {
 const IOTDetailModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, update,setModal}) => {
     const [data,setData]=useState({
     });
-    // function that stores modal form data
+    /**
+     * The handleChange function updates the state data object with the new value from the input field.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the function, such as a change event on an
+     * input field.
+     */
     const handleChange=(e:any)=>{
      const newData:any={...data};
      newData[e.target.name]=e.target.value;
@@ -21,29 +32,31 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, upda
      console.log("newData",newData);
      
          }
-         // function that handles form submission and api call
+         /**
+          * The function `handlesave` is used to handle saving data to a specific store table in a
+          * React application.
+          */
          const handlesave = () => {
-            // custom hook that handles api call
             handleStoreTable('partner/store/iot-devices',data,setModal,formD,update,"iot_devices_ids")
              
          };
     return (
       <> 
-      {/* Component that displays messages from backend on api call */}
        <ToastContainer />
-      {modal && 
-    //   modal container
-      <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      /* The above code is rendering a modal component in a React application. The modal is displayed
+      when the `modal` variable is true. The modal contains a form with input fields for asset id,
+      type, device id, make, model, and internet enabled. The user can enter values in these fields
+      and click the "Save" button to save the form data. The modal can be closed by clicking the
+      close button in the top right corner. */
+      {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            {/* button to close modal */}
                             <button onClick={()=>setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                 </svg>
                                 <span className="sr-only">Close modal</span>
                             </button>
-                            {/* modal form container */}
                             <div className="px-6 py-6 lg:px-8">
                                 <h6>I.O.T. Device Details</h6>
                                 <div className="flex">
@@ -131,7 +144,6 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, upda
                                         </select>
                                     </FormItem>
                             </div>
-                            {/* modal form submission button */}
                             <Button
                                     style={{ borderRadius: "13px" }}
                                     block

@@ -1,4 +1,6 @@
-// Import necessary components and libraries
+/* 
+* The above code is a TypeScript React component that handles additional submissions for a partner's business type.
+*/
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui';
 import { getToken } from '@/store/customeHook/token';
 import useApiUpload from '@/store/customeHook/uploadApi';
@@ -101,7 +103,7 @@ const PartnerBussinessTypeAdditional = () => {
   
   // Upload the file to the server
   const handleUpload = async (item: any, file: any) => {
-    let AssetsId = localStorage.getItem('AssetsId');
+    let AssetsId = localStorage.getItem('assets_list_id');
     let asset_type_id = localStorage.getItem('asset_id');
     const { token } = getToken();
     const formData = new FormData();
@@ -120,7 +122,7 @@ const PartnerBussinessTypeAdditional = () => {
     };
   
     try {
-      const response = await fetch(`${apiUrl}/partner/register-partner-upload-doc`, config);
+      const response = await fetch(`https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc`, config);
       const responseData = await response.json();
       if (responseData?.status) {
         const updatedArray = array.map((itemData: any) =>
@@ -153,6 +155,10 @@ const PartnerBussinessTypeAdditional = () => {
     }
   }, [fetchDetails]);
   
+  useEffect(()=>{
+    window.scrollTo(0,0)
+       },[])
+
   // Render the component JSX
   return (
     <div>
@@ -180,7 +186,7 @@ const PartnerBussinessTypeAdditional = () => {
                       />
                       <div className='flex'>
                         {item?.view && <b>Status:</b>}
-                        {item?.view && <a href={`${apiUrl}/${item?.url}`} target='_blank' >View</a>}
+                        {item?.view && <a href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`} target='_blank' >View</a>}
                       </div>
                     </FormItem>
                   ))}

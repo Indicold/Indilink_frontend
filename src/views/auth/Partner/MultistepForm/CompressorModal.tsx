@@ -1,3 +1,9 @@
+/**
+ * The `CompressorModal` component is a modal that allows users to input data for a compressor and save
+ * it.
+ * @param  - 1. `modal`: a boolean value indicating whether the modal is open or not.
+ * @returns The CompressorModal component is being returned.
+ */
 import { Button, FormItem, Input } from "@/components/ui";
 import { handleStoreTable } from "@/store/customeHook/validate";
 import { Field } from "formik";
@@ -7,14 +13,20 @@ interface MajorityHolderModalProps {
     modal: boolean;
     formD: any;
     update: React.Dispatch<React.SetStateAction<boolean>>
-    // chamber:any;
+    chamber:any;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
   }
 const CompressorModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, update,setModal}) => {
     const [data,setData]=useState({
        });
        
-       // function that stores form data
+       /**
+        * The handleChange function updates the state with the new value entered in the input field or
+        * the selected file in the file input field.
+        * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+        * function. It represents the event that triggered the function, such as a change event on an
+        * input field or a file input event.
+        */
        const handleChange=(e:any)=>{
         const newData:any={...data};
     
@@ -28,31 +40,31 @@ const CompressorModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, upd
         console.log("newData",newData);
         
             }
-
-            // function that handles modal form submission and api call
+            /**
+             * The handlesave function is used to handle saving data related to compressors in a
+             * partner store.
+             */
             const handlesave = () => {
-                // custom hook to handle api call
                 handleStoreTable('partner/store/compressors',data,setModal,formD,update,"compressor_ids")
                
             };
       
     return (
         <>
-        {/* Component that displays message from backend on api call */}
            <ToastContainer />
+       {/* The above code is a modal component in a TypeScript React application. It is conditionally
+       rendered based on the value of the `modal` variable. When the `modal` variable is true, the
+       modal is displayed on the screen. */}
        {modal && 
-       // modal container
        <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-[600px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            {/* button to close modal */}
                             <button onClick={()=>setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                 </svg>
                                 <span className="sr-only">Close modal</span>
                             </button>
-                            {/* modal form container */}
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Compressor</h6>
                                 <div className="flex">
@@ -143,7 +155,6 @@ const CompressorModal: React.FC<MajorityHolderModalProps>  = ({modal, formD, upd
                                     </FormItem>
                                 </div>    
                                
-                               {/* modal form submission button */}
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block

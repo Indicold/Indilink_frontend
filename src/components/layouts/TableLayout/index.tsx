@@ -113,6 +113,15 @@ const TableLayout = ({ AllStore }: any) => {
       if (key === 'is_registration_complete') {
         return <td className='text-center' key={i} >{rowData.is_registration_complete ? "Complete" : "Pending"}</td>;
       }
+      if (key === 'is_verified') {
+        return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
+      }
+      if (key === 'createdAt') {
+        return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
+      }
+      if (key === 'updatedAt') {
+        return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
+      }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
           <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>

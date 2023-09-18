@@ -1,3 +1,6 @@
+/* 
+* This code is setting up and configuring a Redux store using Redux Toolkit and Redux Persist. 
+*/
 import {
     configureStore,
     Action,

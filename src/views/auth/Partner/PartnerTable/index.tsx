@@ -1,3 +1,8 @@
+/* 
+* The above code is a TypeScript React component that renders a table of assets. It imports various
+* components and custom hooks, such as LoaderSpinner, TableLayout, getToken, and useApiFetch. It also
+* imports React. 
+*/
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableLayout from '@/components/layouts/TableLayout';
 import { getToken } from '@/store/customeHook/token';

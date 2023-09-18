@@ -1,3 +1,6 @@
+/* 
+* The code is defining a React functional component called `InvestorBussinessTypePrepare`. 
+*/
 import { Button, FormContainer, FormItem, Input } from '@/components/ui';
 import { Field, Form, Formik } from 'formik';
 
@@ -8,7 +11,9 @@ const InvestorBussinessTypePrepare = () => {
         <div  className="bg-white">
             <h4 className=" mb-2 text-head-title text-center">Investor</h4>
             <div>
-      <Formik>
+        {/* The code snippet is using the Formik library to handle form state and validation in a React
+        component. */}
+        <Formik>
             <Form className="py-2 multistep-form-step">
                 <FormContainer>
                     <div className="flex">

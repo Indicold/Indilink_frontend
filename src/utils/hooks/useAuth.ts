@@ -1,3 +1,8 @@
+/**
+ * The `useAuth` function is a custom hook that provides authentication functionality such as signing
+ * in, signing up, and signing out.
+ * @returns The `useAuth` function returns an object with the following properties:
+ */
 import { apiSignIn, apiSignOut, apiSignUp } from '@/services/AuthService'
 import {
     setUser,
@@ -129,7 +134,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: token && signedIn,
+        authenticated: sessionStorage.getItem('access_token'),
         signIn,
         signUp,
         signOut,

@@ -1,3 +1,10 @@
+/* 
+* The above code is a TypeScript React component that represents a sign-up form. 
+* It imports various components from different files and libraries such as FormItem, 
+* FormContainer, Input, Button, PasswordInput, ActionLink, Field, Form, Formik, etc. 
+* It also imports some utility functions from
+* lodash library. 
+*/
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
@@ -21,10 +28,12 @@ interface SignUpFormProps extends CommonProps {
 
 
 const SignUpForm = (props: SignUpFormProps) => {
+   /* The code snippet is declaring and initializing multiple variables using destructuring assignment
+   and the useState hook. */
     const { className, signInUrl = '/sign-in' } = props
     const [error, setError] = useState({
         first_name: '',
-        last_name: '',
+        // last_name: '',
         email: '',
         phone_number: '',
         password: '',
@@ -52,6 +61,13 @@ const SignUpForm = (props: SignUpFormProps) => {
     const validateEmailDebounced = debounce(validateEmail, 300);
     const validateMobileDebounced = debounce(validateMobile, 300);
 
+    /**
+     * The handleChange function updates the formData state based on the input value and performs
+     * validation for email and phone number inputs.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the change, such as a user typing in an input
+     * field or selecting an option from a dropdown.
+     */
     const handleChange = (e: any) => {
 
         const newData: any = { ...formData };
@@ -67,12 +83,15 @@ const SignUpForm = (props: SignUpFormProps) => {
 
 
 
+    /**
+     * The `handlesubmit` function is used to handle form submission in a TypeScript React component.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handlesubmit`
+     * function. It is typically an event object that is triggered when a form is submitted.
+     */
     const handlesubmit = (e: any) => {
         e.preventDefault();
         console.log(error);
-
-
-        validateForm(formData, setError)
+        // validateForm(formData, setError)
         if (validateForm(formData, setError)) {
             setSubmitting(true)
             dispatch(updateFormData(formData))
@@ -80,14 +99,14 @@ const SignUpForm = (props: SignUpFormProps) => {
             setSubmitting(false)
 
         }
-
-
-
     }
     return (
 
         <div className={className}>
 
+            { /* The above code is a form component written in TypeScript and React using the Formik
+            library. It is a sign-up form that collects user information such as first name, last
+            name, email address, phone number, password, and confirm password. */ }
             <Formik
                 initialValues={{
                     first_name: null,
@@ -133,7 +152,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className='text-[red]'>{error && error.last_name}</p>
+                                {/* <p className='text-[red]'>{error && error.last_name}</p> */}
 
                             </FormItem>
                         </div>
@@ -161,8 +180,10 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 className='me-auto text-label-title'
                             >
                                 <Field
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
+                                    minLength={10}
+                                    maxLength={10}
                                     className="rounded-[13px]"
                                     name="phone_number"
                                     placeholder="Phone number"
@@ -217,7 +238,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         </div>
                         <p className='text-[red]'>{error && error.term_condition}</p>
 
-                        <div className='flex w-[80%] mx-auto '>
+                        <div className='flex w-[40%] mx-auto mt-4'>
                             <Button
                              style={{ borderRadius: "13px" }}
                                 block
@@ -230,9 +251,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     : 'Sign Up'}
                             </Button>
                         </div>
-                        <div className="mt-4 text-center text-[#103492]">
-                            <span className=''>Already have an account? </span>
-                            <ActionLink to={signInUrl} className=' !indigo-btn:hover text-bold decoration-none rounded-lg !text-[#103492]'>Login</ActionLink>
+                        <div className="mt-6 text-center text-[#103492]">
+                            <span className='mr-3'>Already have an account? </span>
+                            <ActionLink to={signInUrl} className='h-11 hover:underline mx-auto radius-round rounded-xl text-indigo-600 w-[30%] w-full'>Login</ActionLink>
                         </div>
                     </FormContainer>
                 </Form>

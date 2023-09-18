@@ -1,3 +1,6 @@
+/* 
+* The code is creating a set of async thunks for making API requests. 
+*/
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiUrl } from './customeHook/token';
 
@@ -60,14 +63,8 @@ export const userLoginApiPost = createAsyncThunk(
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    if(data.message.accessToken) {
-      // const dispatch = useDispatch();
-      // dispatch(signInSuccess(data.message.accessToken))
-      sessionStorage.setItem('access_token', data.message.accessToken);
-    }
-    // if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
+    if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
     return data;
   }
 );
-
 

@@ -1,3 +1,7 @@
+/* 
+* The above code is a TypeScript React component that renders a modal for selecting a business type.
+* It imports various dependencies and custom hooks for handling API requests and form data. 
+*/
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import React, { useEffect, useState } from 'react'
@@ -23,6 +27,10 @@ const BussinessTypeModal = () => {
   const [Bussiness, setBussiness] = useState('');
   const [formData,setFormData]=useState<any>({});
   
+  /**
+   * The `handleRoute` function sets various values in local storage based on user type and business
+   * type, and then navigates to different routes depending on the conditions.
+   */
   const handleRoute = () => {
     let title_id:any='';
     let asset_type_id:any='';
@@ -82,6 +90,13 @@ const BussinessTypeModal = () => {
   }
   console.log("datadatadata", countryId);
 
+  /**
+   * The handleChange function updates the formData state with the new value from the input field and
+   * logs the countryId.
+   * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+   * function. It is typically an event object that is triggered by a user interaction, such as a
+   * button click or input change.
+   */
   const handleChange = (e: any) => {
     const newData={...formData};
     newData[e.target.name]=e.target.value;
@@ -89,6 +104,12 @@ const BussinessTypeModal = () => {
     console.log("datadatadata", countryId);
 
   }
+  /**
+   * The function `messageView` displays a success toast message with a custom style and auto-closes
+   * after 3 seconds.
+   * @param {any} messagevalue - The message value is the text that you want to display in the toast
+   * message. It can be any string or variable that contains the message you want to show.
+   */
   const messageView=(messagevalue:any)=>{
     toast.success(messagevalue, {
         position: 'top-right', // Position of the toast
@@ -106,6 +127,8 @@ const BussinessTypeModal = () => {
 }
 console.log("AssetsResponse",AssetsResponse)
 
+  /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
+  effect is triggered whenever the `AssetsResponse` variable changes. */
   useEffect(()=>{
 
 if(AssetsResponse){

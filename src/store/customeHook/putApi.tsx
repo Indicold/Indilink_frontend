@@ -1,3 +1,15 @@
+/**
+ * The above code is a custom React hook that handles making a PUT request to an API endpoint and
+ * returns the result and loading state.
+ * @param {string} url - The `url` parameter is the endpoint URL where you want to send the POST
+ * request. It should be a string representing the URL of the API endpoint you want to send the request
+ * to.
+ * @param {PostData} data - The `data` parameter in the `postRequest` function is an object that
+ * represents the data you want to send in the POST request. In the provided code, it is defined as
+ * `PostData`, which is an interface that specifies the properties of the data object.
+ * @returns The `usePutApi` function returns an object with three properties: `result`, `loading`, and
+ * `sendPostRequest`.
+ */
 import { useState, useEffect } from 'react';
 
 interface ApiResponse {

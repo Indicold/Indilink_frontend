@@ -1,3 +1,14 @@
+/**
+ * The `useApiFetch` function is a custom hook in TypeScript that fetches data from an API using a
+ * provided URL and token, and returns the fetched data, loading state, and error state.
+ * @param {string} url - The `url` parameter is a string that represents the endpoint or route of the
+ * API that you want to fetch data from. It is used to construct the complete URL for the API request.
+ * @param {string} token - The `token` parameter is a string that represents the authentication token
+ * used for making API requests. It is passed to the `Authorization` header in the fetch request to
+ * authenticate the user.
+ * @returns The `useApiFetch` function returns an object with three properties: `data`, `loading`, and
+ * `error`.
+ */
 import { useState, useEffect } from 'react';
 import { apiUrl, getToken } from './token';
 

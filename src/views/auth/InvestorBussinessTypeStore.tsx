@@ -1,4 +1,6 @@
-// Import necessary components and libraries
+/* 
+* The above code is a TypeScript React component that represents a form for storing investor business types. 
+*/
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
 import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching

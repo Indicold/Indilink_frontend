@@ -1,3 +1,9 @@
+/**
+ * The UserTypeModal component is a modal that allows the user to select their user type (Partner,
+ * Customer, or Investor) and navigate to the corresponding dashboard page.
+ * @param  - 1. `setAuthModal`: A function that sets the state of the authentication modal.
+ * @returns The UserTypeModal component is being returned.
+ */
 import { Button } from '@/components/ui'
 import React, { useEffect, useState } from 'react'
 import { CiImageOn } from "react-icons/ci"
@@ -6,6 +12,12 @@ const UserTypeModal = ({ setAuthModal }) => {
   const [modal, setModal] = useState(true)
   const navigate = useNavigate()
   const [Bussiness, setBussiness] = useState('')
+  /**
+   * The function `handleUserType` sets the user type based on the input value and performs different
+   * actions depending on the user type.
+   * @param {any} value - The value parameter is the user type selected by the user. It can be one of
+   * three values: 'Investor', 'Partner', or 'Customer'.
+   */
   const handleUserType = (value: any) => {
     setBussiness(value)
     if (value == 'Investor') {

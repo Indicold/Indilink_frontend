@@ -1,3 +1,7 @@
+/* 
+* The above code is a TypeScript React component called `MajorityHolderModal`. It is a modal component
+* that is used to display a form for adding majority holder information. 
+*/
 import { Button, FormItem, Input } from "@/components/ui";
 import { Field } from "formik";
 import { useEffect, useState } from "react";
@@ -12,6 +16,13 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps>= ({modal,setModal,
     const [data,setData]=useState({
     Holder:Holder
    });
+   /**
+    * The handleChange function updates the state with the new value of the input field and logs the
+    * updated data.
+    * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+    * function. It represents the event that triggered the function, such as a change event on an input
+    * field.
+    */
    const handleChange=(e:any)=>{
     const newData:any={...data};
     newData[e.target.name]=e.target.value;
@@ -20,6 +31,10 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps>= ({modal,setModal,
     console.log("newData",newData);
     
         }
+        /**
+         * The function handlesave retrieves data from local storage, adds new data to it, and then
+         * saves it back to local storage.
+         */
         const handlesave = () => {
             let getData: any[] = JSON.parse(localStorage.getItem('Holder_List') || '[]');
         
@@ -34,6 +49,9 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps>= ({modal,setModal,
             console.log("gggggg");
             
         };
+    /* The above code is using the useEffect hook in a React component. It is setting the state of the
+    "data" variable to an object that contains a property called "Holder" with the value of the
+    "Holder" variable. This effect will be triggered whenever the value of "data.Holder" changes. */
     useEffect(()=>{
         setData({
             Holder:Holder
@@ -42,6 +60,11 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps>= ({modal,setModal,
         
     return (
         <>
+       {/* The above code is rendering a modal component in a React application. The modal is displayed
+       when the `modal` variable is true. The modal contains a form with various input fields such
+       as location started in year, number of shares held, %age holding, address, city, state, PIN
+       code, ID number, contact number, and email ID. There is also a "Save" button that triggers
+       the `handlesave` function when clicked. */}
        {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

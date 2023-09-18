@@ -1,4 +1,10 @@
-// Import necessary components and libraries
+/* 
+* The above code is a TypeScript React component that renders a form for the
+* InvestorBussinessTypeMove. It imports various UI components from the '@/components/ui' library and
+* uses Formik for form handling. It also uses custom hooks for handling tokens and API fetching. The
+* form includes several dropdowns and input fields for selecting options and entering data. The
+* fetched data is logged to the console. Finally, there is a button for submitting the form. 
+*/
 import React from 'react'; // Import React library
 import { Button, Dropdown, FormContainer, FormItem, Input } from '@/components/ui'; // Import UI components
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
@@ -21,6 +27,10 @@ const InvestorBussinessTypeMove = () => {
            <div  className="bg-white">
             <h4 className=" mb-2 text-head-title text-center">Investor</h4>
             <div>
+        {/* The above code is a form component written in TypeScript and React using the Formik library.
+        It renders a form with multiple input fields and selects. The form is divided into three
+        sections, each containing two input fields. The options for the selects are dynamically
+        generated based on the data received from an API. The form also includes a submit button. */}
         <Formik>
             <Form className="py-2 multistep-form-step">
                 <FormContainer>

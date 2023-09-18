@@ -67,59 +67,93 @@ const navigationPartnerConfig: NavigationTree[] = [
                 subMenu: [],
             },
         ],
+    },   {
+
+       
+
+        key: 'groupMenu.collapsesetting',
+
+        path: '',
+
+        title: 'Supports',
+
+        translateKey: 'nav.groupMenu.collapse.collapsesetting',
+
+        icon: 'groupCollapseMenu',
+
+        type: NAV_ITEM_TYPE_COLLAPSE,
+
+        authority: [],
+
+        subMenu: [
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting8',
+
+                path: '/partner-store',
+
+                title: 'Store',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting8',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting9',
+
+                path: '/partner-move',
+
+                title: 'Move',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting9',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+            {
+
+                key: 'groupMenu.collapse.itemsetting11',
+
+                path: '/partner-prepare',
+
+                title: 'Prepare',
+
+                translateKey: 'nav.groupMenu.collapse.itemsetting11',
+
+                icon: '',
+
+                type: NAV_ITEM_TYPE_ITEM,
+
+                authority: [],
+
+                subMenu: [],
+
+            },
+
+        ]
+
+ 
+
     },
-    // {
-    //     key: 'groupMenu',
-    //     path: '',
-    //     title: 'Group Menu',
-    //     translateKey: 'nav.groupMenu.groupMenu',
-    //     icon: '',
-    //     type: NAV_ITEM_TYPE_TITLE,
-    //     authority: [],
-    //     subMenu: [
-    //         {
-    //             key: 'groupMenu.single',
-    //             path: '/group-single-menu-item-view',
-    //             title: 'Group single menu item',
-    //             translateKey: 'nav.groupMenu.single',
-    //             icon: 'groupSingleMenu',
-    //             type: NAV_ITEM_TYPE_ITEM,
-    //             authority: [],
-    //             subMenu: [],
-    //         },
-    //         {
-    //             key: 'groupMenu.collapse',
-    //             path: '',
-    //             title: 'Group collapse menu',
-    //             translateKey: 'nav.groupMenu.collapse.collapse',
-    //             icon: 'groupCollapseMenu',
-    //             type: NAV_ITEM_TYPE_COLLAPSE,
-    //             authority: [],
-    //             subMenu: [
-    //                 {
-    //                     key: 'groupMenu.collapse.item1',
-    //                     path: '/group-collapse-menu-item-view-1',
-    //                     title: 'Menu item 1',
-    //                     translateKey: 'nav.groupMenu.collapse.item1',
-    //                     icon: '',
-    //                     type: NAV_ITEM_TYPE_ITEM,
-    //                     authority: [],
-    //                     subMenu: [],
-    //                 },
-    //                 {
-    //                     key: 'groupMenu.collapse.item2',
-    //                     path: '/group-collapse-menu-item-view-2',
-    //                     title: 'Menu item 2',
-    //                     translateKey: 'nav.groupMenu.collapse.item2',
-    //                     icon: '',
-    //                     type: NAV_ITEM_TYPE_ITEM,
-    //                     authority: [],
-    //                     subMenu: [],
-    //                 },
-    //             ],
-    //         },
-    //     ],
-    // },
+    
+  
 ]
 
 
