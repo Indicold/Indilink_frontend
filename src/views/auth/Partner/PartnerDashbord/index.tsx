@@ -8,7 +8,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const PartnerDashbord = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     /**
      * The handleChange function is used to handle the change event of a select input and navigate to
      * different pages based on the selected value.
@@ -16,29 +16,27 @@ const PartnerDashbord = () => {
      * function. It represents the event that triggered the function, such as a change event on an
      * input element.
      */
-    const handleChange=(e:any)=>{
-        if(e.target.value==1){
+    const handleChange = (e: any) => {
+        if (e.target.value == 1) {
             navigate('/partner_dashbord')
-            localStorage.setItem('user_type','Partner')
+            localStorage.setItem('user_type', 'Partner')
         }
-        if(e.target.value==2){
-          localStorage.setItem('user_type','Customer')
+        if (e.target.value == 2) {
+            localStorage.setItem('user_type', 'Customer')
             navigate('/home')
         }
-        if(e.target.value==3){
+        if (e.target.value == 3) {
             navigate('/investor-dashbord')
-            localStorage.setItem('user_type','Investor')
+            localStorage.setItem('user_type', 'Investor')
         }
-
     }
-  return (
-    <div>
-    <div className='w-full flex justify-between'>
-                <h2 className='text-start'>Partner Dashboard</h2>
-               
+    return (
+        <div>
+            <div className="w-full flex justify-between">
+                <h2 className="text-start">Partner Dashboard</h2>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
 
 export default PartnerDashbord

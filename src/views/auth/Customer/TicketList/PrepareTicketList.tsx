@@ -8,21 +8,18 @@ import LoaderSpinner from '@/components/LoaderSpinner';
 const PrepareTicketList = () => {
   const {token}:any =getToken();
   const { data:PrepareData, loading:PrepareLoad, error } = useApiFetch<any>('customer/prepare/search', token);
- console.log("FFFFFFF",PrepareData);
+  console.log("FFFFFFF",PrepareData);
  
   return (
-    <div>
-            
+    <div>     
       {PrepareData?.data?.length>0 &&   
-  <>
-      <h4 className='text-head-title text-center'>Prepare Ticket List</h4>
-  <TableLayoutCustomer AllStore={PrepareData?.data?.length>0 && PrepareData?.data}/>
-  </>
-  }
-    <div>
-      {PrepareLoad && <LoaderSpinner />}
-    
-    </div>
+      <>
+        <h4 className='text-head-title text-center'>Prepare Ticket List</h4>
+        <TableLayoutCustomer AllStore={PrepareData?.data?.length>0 && PrepareData?.data}/>
+      </>}
+      <div>
+        {PrepareLoad && <LoaderSpinner />}
+      </div>
     </div>
   )
 }

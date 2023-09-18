@@ -52,22 +52,6 @@ const emailId=localStorage.getItem("email");
         setSubmitting(true);
     
         apiVerifyOTP(values,messageView)
-            // .then((resp) => {
-            //     console.log("hhhhh", resp);
-    
-            //     if (resp && resp.data) {
-            //         setSubmitting(false);
-            //         setEmailSent(true);
-            //     }
-            // })
-            // .catch((errors) => {
-            //     console.log("errors", errors);
-            //     setMessage(
-            //         (errors as AxiosError<{ message: string }>)?.response?.data
-            //             ?.message || (errors as Error).toString()
-            //     );
-            //     setSubmitting(false);
-            // });
     };
     /**
      * The function `messageView` displays a success toast message with specified options.
@@ -112,11 +96,7 @@ const emailId=localStorage.getItem("email");
                     </>
                 )}
             </div>
-            {/* {message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {message}
-                </Alert>
-            )} */}
+            
             <Formik
                 initialValues={{
                     email: emailId || null,

@@ -8,20 +8,18 @@ import LoaderSpinner from '@/components/LoaderSpinner';
 const MoveTicketList = () => {
   const {token}:any =getToken();
   const { data:MoveData, loading:MoveLoad, error } = useApiFetch<any>('customer/move/search', token);
- console.log("FFFFFFF",MoveData);
+  console.log("FFFFFFF",MoveData);
   return (
     <div>
                  
       {MoveData?.data?.length>0 &&   
-  <>
-      <h4 className='text-head-title text-center'>Move Ticket List</h4>
-  <TableLayoutCustomer AllStore={MoveData?.data?.length>0 && MoveData?.data}/>
-  </>
-  }
-    <div>
-      {MoveLoad && <LoaderSpinner />}
-    
-    </div>
+      <>
+        <h4 className='text-head-title text-center'>Move Ticket List</h4>
+        <TableLayoutCustomer AllStore={MoveData?.data?.length>0 && MoveData?.data}/>
+      </>}
+      <div>
+        {MoveLoad && <LoaderSpinner />}
+      </div>
     </div>
   )
 }

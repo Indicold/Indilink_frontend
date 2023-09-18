@@ -57,22 +57,6 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
         const {email }=values;
     localStorage.setItem("email",email)
         apiForgotPassword(values,messageView)
-            // .then((resp) => {
-            //     console.log("hhhhh", resp);
-    
-            //     if (resp && resp.data) {
-            //         setSubmitting(false);
-            //         setEmailSent(true);
-            //     }
-            // })
-            // .catch((errors) => {
-            //     console.log("errors", errors);
-            //     setMessage(
-            //         (errors as AxiosError<{ message: string }>)?.response?.data
-            //             ?.message || (errors as Error).toString()
-            //     );
-            //     setSubmitting(false);
-            // });
     };
     /**
      * The function `messageView` displays a success toast message with a custom style.
@@ -119,11 +103,6 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 )}
             </div>
-            {/* {message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {message}
-                </Alert>
-            )} */}
             <Formik
                 initialValues={{
                     email: null,

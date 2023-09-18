@@ -8,7 +8,7 @@ import { Button } from '@/components/ui'
 import React, { useEffect, useState } from 'react'
 import { CiImageOn } from "react-icons/ci"
 import { useNavigate } from 'react-router-dom'
-const UserTypeModal = ({ setAuthModal }) => {
+const UserTypeModal = ({ setAuthModal }:any) => {
   const [modal, setModal] = useState(true)
   const navigate = useNavigate()
   const [Bussiness, setBussiness] = useState('')
@@ -87,18 +87,6 @@ const UserTypeModal = ({ setAuthModal }) => {
 
                 </div>
               </div>
-              {/* <div className='flex'>
-                <Button
-                  style={{ borderRadius: "13px" }}
-                  block
-                  variant="solid"
-                  type="button"
-                  onClick={() => setAuthModal(false)}
-                  className='indigo-btn w-[300px] mx-auto rounded-[30px]'
-                >
-                  Next
-                </Button>
-              </div> */}
             </div>
           </div>
         </div>

@@ -21,11 +21,9 @@ type Status = 'success' | 'failed'
 
 function useAuth() {
     const dispatch = useAppDispatch()
-
     const navigate = useNavigate()
-
     const query = useQuery()
-
+    
     const { token, signedIn } = useAppSelector((state) => state.auth.session)
 
     const signIn = async (
