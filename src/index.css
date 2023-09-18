@@ -3,33 +3,46 @@
 
 
 .cin-number label {
-
     width: fit-content;
-
     font-size: 18px;
-
     letter-spacing: 3px;
-
     margin-left: auto;
-
     margin-right: auto;
-
 }
 
 
 
 .cin-number input {
-
     text-align: center;
-
 }
 
-.otp-modal { display: flex; backdrop-filter: blur(5px); height: 100%; } .otp-modal > * { margin-left: auto; margin-right: auto; }
+.otp-modal { 
+    display: flex; 
+    backdrop-filter: blur(5px); 
+    height: 100%; 
+} 
 
-
+.otp-modal > * { 
+    margin-left: auto; margin-right: auto; 
+}
 
 .form-item>* {
-
     width: 95%;
+}
 
+.multistep-form button {
+    background-color: blue;
+    color: white;
+    margin: 0.2rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 0.2rem;
+}
+
+.multistep-form button:disabled {
+    background-color: rgb(134, 134, 255);
+}
+
+.multistep-form-step {
+    overflow-y: auto;
+    height: 70vh;
 }

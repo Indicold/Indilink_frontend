@@ -46,6 +46,14 @@ const authRoute: Routes = [
         authority: [],
 
     },
+    {
+
+        key: 'multistepPartner',
+        path: `/partner-multistep`,
+        component: lazy(() => import('@/views/auth/Partner/NewMultistep')),
+        authority: [],
+
+    },
 ]
 
 export default authRoute
