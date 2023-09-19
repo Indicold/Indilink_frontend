@@ -46,6 +46,9 @@ export const validateForm = (formData: any, setError: any) => {
 
         errorss.password = 'Passwords do not match'
     }
+    if (formData?.password?.length < 8) {
+        errorss.password = 'Password too short.'
+    }
     if (!formData?.password) {
         errorss.password = 'Password is required'
     }
@@ -56,6 +59,10 @@ export const validateForm = (formData: any, setError: any) => {
     // Add more specific validation rules for each field
     if (!formData?.first_name) {
         errorss.first_name = 'First name is required'
+    }
+
+    if (formData?.first_name?.length < 3) {
+        errorss.first_name = 'First name too short'
     }
 
     // if (!formData?.last_name) {

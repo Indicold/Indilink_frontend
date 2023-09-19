@@ -62,6 +62,8 @@ const SignUpForm = (props: SignUpFormProps) => {
     const validateEmailDebounced = debounce(validateEmail, 300)
     const validateMobileDebounced = debounce(validateMobile, 300)
 
+    const [phone, setPhone] = useState('');
+
     /**
      * The handleChange function updates the formData state based on the input value and performs
      * validation for email and phone number inputs.
@@ -71,12 +73,13 @@ const SignUpForm = (props: SignUpFormProps) => {
      */
     const handleChange = (e: any) => {
         const newData: any = { ...formData }
-        newData[e.target.name] = e.target.value
         if (e.target.name === 'email') {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         } else if (e.target.name === 'phone_number') {
-            validateMobileDebounced(e.target.value, setIsMobileValid)
+            validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+            setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
+        newData[e.target.name] = e.target.value
         setFormData(newData)
     }
 
@@ -178,6 +181,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     autoComplete="off"
                                     minLength={10}
                                     maxLength={10}
+                                    value={phone}
                                     className="rounded-[13px]"
                                     name="phone_number"
                                     placeholder="Phone number"
@@ -201,6 +205,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="password"
+                                    maxLength={16}
                                     placeholder="Password"
                                     component={PasswordInput}
                                     onChange={(e: any) => handleChange(e)}
