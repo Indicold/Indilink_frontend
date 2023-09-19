@@ -14,6 +14,7 @@ const tableHead = {
     contract_type: "Contract Type",
     comment:"Comment",
     admin:"Admin",
+    status_id:"Status",
 //   is_deletedBy: "Is Deleted By",
 contract_download: "Contract Download ",
 contract_name: "Contract Name",
@@ -120,6 +121,9 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
       }
       if (key === 'contract_type') {
         return <td className='text-center' key={i} >{rowData.contract_type ? rowData.contract_type : 'Not Available'}</td>;
+      }
+      if (key === 'status_id') {
+        return <td className='text-center' key={i} >{rowData.status_id===1 ? "Pending" : rowData.status_id==2 ? "Review":"Done"}</td>;
       }
       if (key === 'contract_download') {
         console.log("rowData",rowData);

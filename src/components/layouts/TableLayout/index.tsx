@@ -114,7 +114,7 @@ const TableLayout = ({ AllStore }: any) => {
         return <td className='text-center' key={i} >{rowData.is_registration_complete ? "Complete" : "Pending"}</td>;
       }
       if (key === 'is_verified') {
-        return <td className='text-center' key={i} >{rowData.is_verified ? "Complete" : "Pending"}</td>;
+        return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
       }
       if (key === 'createdAt') {
         return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;

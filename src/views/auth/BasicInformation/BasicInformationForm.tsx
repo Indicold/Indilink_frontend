@@ -40,8 +40,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [formData, setFormData] = useState(selector?.details?.data);
+    const [GSTRes, setGSTRes] = useState({});
     const { result: OTPPostDetails, loading, sendPostRequest } = usePostApi(`${apiUrl}/auth/getOTP`);
-    const { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails } = usePostApi(`${apiUrl}/auth/getGstDetails`);
+    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails } = usePostApi(`${apiUrl}/auth/getGstDetails`);
     const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails } = usePutApi(`${apiUrl}/auth/verifyOTP`);
     const { className } = props
     const dispatch = useDispatch();
@@ -62,7 +63,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         }
     }
 
-
+    // const [a, setA] = useState('false');
+    let b = "false";
   
     const handleChange = (e: any) => {
         const newGst = e.target.value;
@@ -75,8 +77,12 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             setDisabled(false);
             dispatch(updateFormData(newData)); // Dispatch your Redux action with the new data
             FetchGSTDetails(newData); // Call your API function
+            // setA('true');
+            b = "true"
+            console.log("true", a);
           } else {
             setDisabled(true);
+            // setA('false');
           }
         }
       };
@@ -99,7 +105,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             address: autoFilldata?.taxpayerInfo?.pradr?.addr?.bno
           }    
         setSubmitting(true)
-        setOtpModal(true)
+        GSTResponse?.message && setOtpModal(true)
         sendPostRequest(ObjectData);
         setSubmitting(false)
 
@@ -134,7 +140,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         if (GSTResponse?.message) {
             console.log("GSTResponse", GSTResponse);
 
-            toast.success("GST Detail fetch Successfully !", {
+            toast.success(GSTResponse?.message, {
                 position: 'top-right', // Position of the toast
                 autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
                 hideProgressBar: false,
@@ -147,8 +153,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     color: "#fff"// Set the background color here
                 },
             });
+            // setA("false");
+            b = "false";
         }
-    }, [GSTResponse?.message])
+    }, [b, GSTResponse])
 
     useEffect(() => {
 

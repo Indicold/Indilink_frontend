@@ -72,7 +72,7 @@ const handlesubmit=(e:any)=>{
 const validateFormLogin=()=>{
     const errors:any={};
     if(!formData.username){
-        errors.username="Username is required !"
+        errors.username="Email is required !"
     }
     if(!formData.password){
         errors.password="Password is can't be Empty !"
@@ -107,7 +107,7 @@ const handlechange=(e:any)=>{
                     <Form onSubmit={handlesubmit}>
                         <FormContainer>
                             <FormItem className='!text-[#103492]'
-                                label="Username"
+                                label="Email address"
                                 
                             >
                                 <Field
@@ -115,7 +115,7 @@ const handlechange=(e:any)=>{
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="username"
-                                    placeholder="username"
+                                    placeholder="your@email.com"
                                     onChange={handlechange}
                                     component={Input}
                                 />
@@ -145,7 +145,7 @@ const handlechange=(e:any)=>{
                                 <ActionLink to={forgotPasswordUrl} className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]">Forgot Password?</ActionLink>
 
                             </div>
-                            <div className='w-full flex'>
+                            <div className='w-[40%] mx-auto flex mt-5'>
                                 <Button
                                     style={{ borderRadius: "13px" }}
                                     block

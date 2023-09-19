@@ -28,7 +28,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`${apiUrl}/auth/login-with-otp`);
     const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails } = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
     const [formdata,setFormData]=useState<any>({
-        mobile:"",
+        phone_number:"",
         otp:""
     })
   
@@ -48,7 +48,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
         if(formdata?.otp){
             PUTOTPDetails(formdata)
         }else{
-            let body:any={phone_number:formdata?.mobile}
+            let body:any={phone_number:formdata?.phone_number}
             postMobileNumber(body)
         }
      
@@ -125,9 +125,9 @@ const handleChange=(e:any)=>{
                                     type="text"
                                     autoComplete="off"
                                     className="rounded-[13px]"
-                                    name="mobile"
+                                    name="phone_number"
                                     placeholder="Mobile Number"
-                                    value={formdata?.mobile}
+                                    value={formdata?.phone_number}
                                     onChange={handleChange}
                                     component={Input}
                                 />

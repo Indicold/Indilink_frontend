@@ -1,4 +1,3 @@
-import MultiStep from 'react-multistep';
 import Step1 from './Step1';
 
 const NewMultistep = () => {

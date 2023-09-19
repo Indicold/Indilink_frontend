@@ -49,9 +49,9 @@ export const validateForm = (formData: any, setError: any) => {
     errorss.first_name = 'First name is required';
   }
 
-  if (!formData?.last_name) {
-    errorss.last_name = 'Last name is required';
-  }
+  // if (!formData?.last_name) {
+  //   errorss.last_name = 'Last name is required';
+  // }
 
   if (!formData?.email) {
     errorss.email = 'Email is required';

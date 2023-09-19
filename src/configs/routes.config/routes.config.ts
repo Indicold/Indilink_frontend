@@ -44,6 +44,12 @@ export const protectedRoutes = [
     },
     {
         key: 'collapseMenu.item2',
+        path: '/ticket_list',
+        component: lazy(() => import('@/views/auth/Customer/CustomerTableTicketList')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item2',
         path: '/ticket_list_store',
         component: lazy(() => import('@/views/auth/Customer/TicketList/StoreTicketList')),
         authority: [],

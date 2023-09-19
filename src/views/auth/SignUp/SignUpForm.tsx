@@ -24,7 +24,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     const { className, signInUrl = '/sign-in' } = props
     const [error, setError] = useState({
         first_name: '',
-        last_name: '',
+        // last_name: '',
         email: '',
         phone_number: '',
         password: '',
@@ -133,7 +133,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className='text-[red]'>{error && error.last_name}</p>
+                                {/* <p className='text-[red]'>{error && error.last_name}</p> */}
 
                             </FormItem>
                         </div>
@@ -161,8 +161,10 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 className='me-auto text-label-title'
                             >
                                 <Field
-                                    type="text"
+                                    type="tel"
                                     autoComplete="off"
+                                    minLength={10}
+                                    maxLength={10}
                                     className="rounded-[13px]"
                                     name="phone_number"
                                     placeholder="Phone number"
@@ -217,7 +219,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         </div>
                         <p className='text-[red]'>{error && error.term_condition}</p>
 
-                        <div className='flex w-[80%] mx-auto '>
+                        <div className='flex w-[40%] mx-auto mt-4'>
                             <Button
                              style={{ borderRadius: "13px" }}
                                 block
@@ -230,9 +232,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     : 'Sign Up'}
                             </Button>
                         </div>
-                        <div className="mt-4 text-center text-[#103492]">
-                            <span className=''>Already have an account? </span>
-                            <ActionLink to={signInUrl} className=' !indigo-btn:hover text-bold decoration-none rounded-lg !text-[#103492]'>Login</ActionLink>
+                        <div className="mt-6 text-center text-[#103492]">
+                            <span className='mr-3'>Already have an account? </span>
+                            <ActionLink to={signInUrl} className='border h-11 hover:bg-indigo-500 mx-auto px-[10%] py-[2%] radius-round rounded-xl shadow-lg w-[30%] w-full'>Login</ActionLink>
                         </div>
                     </FormContainer>
                 </Form>

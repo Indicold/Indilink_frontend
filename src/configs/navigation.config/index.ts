@@ -56,16 +56,16 @@ const navigationConfig: NavigationTree[] = [
                 authority: [],
                 subMenu: [],
             },
-            // {
-            //     key: 'collapseMenu.item2',
-            //     path: '/ticket_list',
-            //     title: 'Collapse menu item 2',
-            //     translateKey: 'nav.collapseMenu.item2',
-            //     icon: '',
-            //     type: NAV_ITEM_TYPE_ITEM,
-            //     authority: [],
-            //     subMenu: [],
-            // },
+            {
+                key: 'collapseMenu.item2',
+                path: '/ticket_list',
+                title: 'Collapse menu item 2',
+                translateKey: 'nav.collapseMenu.item2',
+                icon: '',
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [],
+                subMenu: [],
+            },
             
         ],
         
