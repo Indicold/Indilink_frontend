@@ -142,7 +142,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 type="submit"
                                 className='indigo-btn w-[94%]'
                             >
-                                {emailSent ? 'Resend Email' : 'Send Email'}
+                                {emailSent ? 'Resend' : 'Send'}
                             </Button>
                             </div>
                             <div className="mt-4 text-center !text-[#103492]">

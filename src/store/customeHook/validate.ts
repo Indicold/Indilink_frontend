@@ -56,14 +56,15 @@ export const validateForm = (formData: any, setError: any) => {
         errorss.term_condition = 'Please Accept Term & condition'
     }
 
-    // Add more specific validation rules for each field
-    if (!formData?.first_name) {
-        errorss.first_name = 'First name is required'
-    }
 
     if (formData?.first_name?.length < 3) {
         errorss.first_name = 'First name too short'
     }
+
+    if (!formData?.first_name) {
+        errorss.first_name = 'First name is required'
+    }
+
 
     // if (!formData?.last_name) {
     //   errorss.last_name = 'Last name is required';
