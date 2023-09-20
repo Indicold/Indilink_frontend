@@ -117,6 +117,7 @@ const PartnerBussinessTypePrepare = () => {
         const newData = { ...formData }
         newData[e.target.name] = e.target.value
         setFormData(newData)
+        console.log("formsdata", formData)
     }
 
     // Define a function to handle form submission and POST request
@@ -170,6 +171,8 @@ const PartnerBussinessTypePrepare = () => {
                                     <MachineModal
                                         modal={machineModal}
                                         setModal={setMachineModal}
+                                        formD={formData?.machine_ids}
+                                        update={setFormData}
                                     />
                                 )}
                                 <FormContainer>
@@ -242,7 +245,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -332,7 +335,7 @@ const PartnerBussinessTypePrepare = () => {
                                                                     selected={
                                                                         item?.id ===
                                                                         formData
-                                                                            ?.product_category_ids[0]
+                                                                            ?.product_category_ids?product_category_ids[0]:""
                                                                     }
                                                                 >
                                                                     {item?.name}
@@ -392,7 +395,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -412,7 +415,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -434,7 +437,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -479,7 +482,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -499,7 +502,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
@@ -522,7 +525,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Field
                                                 disabled={isDisabled}
-                                                type="text"
+                                                type="number"
                                                 autoComplete="off"
                                                 onChange={(e: any) =>
                                                     handleChange(e)

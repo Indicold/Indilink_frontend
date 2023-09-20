@@ -169,6 +169,7 @@ export const handleStoreTable = async (
             arr.push(result?.date?.id)
             newD[name] = arr
             update(newD)
+            console.log("formdataa: ", formD, name, arr, newD); 
             setTimeout(() => {
                 setModal(false)
             }, 2000)
@@ -233,12 +234,18 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
 }
 
 export const validateStorePartnerForm = (formData: any, setErrors: any) => {
-    console.log('GGGGGGGGGGGG', formData)
+    console.log('partner store validation', formData)
 
     const newErrors: any = {}
 
-    if (formData?.weight_bridge_id === '') {
-        newErrors.weight_bridge_id = 'Weight Bridge is required'
+    if (!formData?.weight_bridge_id || formData?.weight_bridge_id === '') {
+        newErrors.weight_bridge_id = 'Weigh Bridge is required'
+        console.log("err weigh:", newErrors.weight_bridge_id)
+    }
+
+    if (!formData?.road_condition_id || formData?.road_condition_id === '') {
+        newErrors.road_condition_id = 'Please select road condition'
+        console.log("err road:", newErrors.road_condition_id)
     }
 
     if (!formData?.city_id) {

@@ -366,7 +366,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="total_tonnage"
                                             value={dataa?.total_tonnage}
@@ -460,7 +460,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
@@ -484,7 +484,7 @@ const StoreRegistration = () => {
                                             <input
                                                 className="w-2/3 border-0"
                                                 value={dataa?.ante_room_area}
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -509,7 +509,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
@@ -536,7 +536,7 @@ const StoreRegistration = () => {
                                                 value={
                                                     dataa?.total_office_space
                                                 }
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -601,7 +601,7 @@ const StoreRegistration = () => {
                                             <input
                                                 className="w-2/3 border-0"
                                                 value={dataa?.processing_area}
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -624,7 +624,7 @@ const StoreRegistration = () => {
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0"
-                                                type="text"
+                                                type="number"
                                                 value={dataa?.parking_area}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -685,7 +685,9 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
+                                            min="1990"
+                                            max="2023"
                                             autoComplete="off"
                                             name="installation_year"
                                             onChange={(e: any) =>
@@ -728,7 +730,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="facility_manager_contact"
                                             onChange={(e: any) =>
@@ -890,7 +892,7 @@ const StoreRegistration = () => {
                                                 }
                                                 name="weight_bridge_id"
                                             >
-                                                <option>Distance in km</option>
+                                                <option value="" disabled selected>Distance in km</option>
 
                                                 {WeighBridge &&
                                                     WeighBridge?.data?.map(
@@ -910,10 +912,10 @@ const StoreRegistration = () => {
                                                         )
                                                     )}
                                             </select>
-                                        </div>
                                         <p className="text-[red]">
                                             {errors && errors.weight_bridge_id}
                                         </p>{' '}
+                                        </div>
                                     </FormItem>
                                     <FormItem
                                         label="Road condition from main road"
@@ -928,7 +930,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option value="">
+                                            <option value="" disabled selected>
                                                 Road condition from main road
                                             </option>
 
@@ -960,7 +962,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Chamber no.
@@ -1007,7 +1009,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no chambers.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1017,7 +1019,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1050,7 +1052,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no CA Equipments.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1060,7 +1062,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1105,7 +1107,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no Compressors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1115,7 +1117,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1160,7 +1162,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no ACUs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1170,7 +1172,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1211,7 +1213,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no condensors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1221,7 +1223,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Name of Service
@@ -1260,7 +1262,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no AMCs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1270,7 +1272,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Type
@@ -1309,7 +1311,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no IOT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1319,7 +1321,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Type
@@ -1358,7 +1360,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no IT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1368,7 +1370,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1407,7 +1409,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no genrators.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1417,7 +1419,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1450,7 +1452,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no MHEs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1460,7 +1462,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1493,7 +1495,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no solar inverters.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                 </Accordion>

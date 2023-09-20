@@ -74,6 +74,7 @@ const BussinessTypeModal = () => {
         PostAssetsDetails(body)
         setTimeout(() => {
             if (localStorage.getItem('user_type') === 'Partner') {
+                localStorage.removeItem('assets_list_id')
                 title_id = 1
                 if (Bussiness === 'Move') {
                     setAssetsType(2)
