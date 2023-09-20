@@ -74,7 +74,7 @@
 .input-wrapper,
 .input-md {
 border-radius: 13px !important;
-padding-right: 0px !important;
+padding-right: 2rem !important;
 }
 .email-msg-text{
     width: 180px !important;

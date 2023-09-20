@@ -225,7 +225,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="City"
+                                        label="From"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -296,7 +296,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="From"
+                                        label="To"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -414,7 +414,6 @@ const MoveSearch = () => {
                                         </select>
                                     </FormItem>
                                 </div>
-                      {location?.state?.extraForm &&    <>
                                 <div className="flex">
                                     <FormItem
                                         label="Dispactch Date/ Time"
@@ -426,6 +425,8 @@ const MoveSearch = () => {
                                             type="date"
                                             autoComplete="off"
                                             name="dispatch_date"
+                                            // onFocus={(e:any) => (e.target.type = "date")}
+                                            // onBlur={(e:any) => (e.target.type = "text")}
                                             value={formData?.dispatch_date}
                                             placeholder="Date of Dispatch"
                                             component={Input}
@@ -442,11 +443,14 @@ const MoveSearch = () => {
                                             autoComplete="off"
                                             value={formData?.arrival_date}
                                             name="arrival_date"
+                                            // onFocus={(e:any) => (e.target.type = "date")}
+                                            // onBlur={(e:any) => (e.target.type = "text")}
                                             placeholder="Arrival Dtate"
                                             component={Input}
                                         />
                                     </FormItem>
                                 </div>
+                      {location?.state?.extraForm &&    <>
 
                                 <div className="flex">
                                     <FormItem
@@ -544,6 +548,42 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.date}</p>
                                     </FormItem>
 
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Dispatch Date/ Time"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="date"
+                                            onChange={(e: any) => handleChange(e)}
+                                            autoComplete="off"
+                                            name="dispatch_date"
+                                            value={formData?.contract_name}
+                                            placeholder="Dispatch Date/ Time"
+                                            component={Input}
+                                        />
+                                        <p className='text-[red]'>{errors && errors.dispatch_date}</p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Arrival Date/ Time"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="date"
+                                            onChange={(e: any) => handleChange(e)}
+                                            autoComplete="off"
+
+                                            name="arrival_date"
+                                            value={formData?.contract_type}
+                                            placeholder="Arrival Date/ Time"
+                                            component={Input}
+                                        />
+
+                                        <p className='text-[red]'>{errors && errors.arrival_date}</p>
+                                    </FormItem>
                                 </div>
                                 </>}
                                 <div className="flex justify-center w-[310px] mx-auto">
