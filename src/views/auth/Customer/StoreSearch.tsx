@@ -1,4 +1,3 @@
-// Import necessary React and custom components and libraries
 import React, { useEffect, useState } from 'react';
 import {
     Button,
@@ -99,6 +98,10 @@ const StoreSearch = () => {
         }
         setFormData(newData);
     }
+    /**
+     * The `handleRouteUpdate` function sends a PUT request to update a customer store search and then
+     * redirects the user to the ticket list store page.
+     */
     const handleRouteUpdate = () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -144,6 +147,11 @@ const StoreSearch = () => {
     const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
+    /* The above code is using the useEffect hook in a React component. It is checking if the
+    `location.state.data` property exists and if it does, it sets the `formData` state variable to
+    the value of `location.state.data` and sets the `isDisabled` state variable to the value of
+    `location.state.disabled`. This code is likely used to initialize the form data and disabled
+    state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
             setFormData(location?.state?.data);
@@ -165,9 +173,20 @@ const StoreSearch = () => {
     console.log("statusstatusstatusstatusstatusstatusstatus", modal);
     return (
         <div>
+            {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
+            The ThankYouModal component is passed the "message", "setModal", and "setFormData"
+            props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title text-center">Store</h4>
+                {/* The above code is a TypeScript React component that renders a form using the Formik
+                library. The form contains several input fields and select dropdowns for the user to
+                enter data. The form is wrapped in a Formik component, which handles form state and
+                validation. The form data is stored in the component's state using the useState
+                hook. The form also includes conditional rendering based on the value of the
+                `location?.state?.extraForm` variable. If this variable is truthy, additional form
+                fields are rendered. The form includes submit buttons that trigger different
+                functions depending on the form's purpose. */}
                 <div>
                     <Formik
                         initialValues={{ field: true }}

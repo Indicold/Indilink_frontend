@@ -73,6 +73,13 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
 
   const navigate = useNavigate();
 
+  /**
+   * The function `handleEdit` handles the edit action for different asset types and navigates to
+   * different routes based on the asset type.
+   * @param {any} rowData - The `rowData` parameter is an object that represents a row of data in a
+   * table. It contains information about the asset being edited, such as its type, ID, and other
+   * properties.
+   */
   const handleEdit = (rowData: any) => {
     
     // Handle edit action for different asset types.
@@ -94,6 +101,12 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
   
   };
   
+  /**
+   * The function `handleView` navigates to different routes based on the `asset_type_id` of the
+   * `rowData` object.
+   * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is
+   * used to determine the `asset_type_id` and pass it to the appropriate navigation route.
+   */
   const handleView = (rowData: any) => {
     if (rowData?.asset_type_id==3) {
       navigate('/customer-prepare', {state:{data:rowData,disabled:true,extraForm:true} });

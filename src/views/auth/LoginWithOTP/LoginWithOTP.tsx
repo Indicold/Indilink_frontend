@@ -1,3 +1,8 @@
+/**
+ * The LoginWithOTP component renders a form for logging in with a one-time password.
+ * @returns The LoginWithOTP component is being returned. It consists of a div with a heading and the
+ * LoginWithOTPForm component.
+ */
 import LoginWithOTPForm from './LoginWithOTPFrom'
 
 const LoginWithOTP = () => {

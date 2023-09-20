@@ -1,4 +1,8 @@
-// useApiUpload.tsx
+/**
+ * This is a custom hook in TypeScript React that handles file uploads using Axios.
+ * @returns The `useApiUpload` hook returns an object with three properties: `response`, `error`, and
+ * `uploadFile`.
+ */
 import { useState } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { apiUrl } from './token';

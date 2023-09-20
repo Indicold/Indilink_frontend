@@ -1,3 +1,6 @@
+/* 
+* The code is creating a set of async thunks for making API requests. 
+*/
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiUrl } from './customeHook/token';
 

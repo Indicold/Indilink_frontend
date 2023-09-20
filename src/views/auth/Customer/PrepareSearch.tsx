@@ -92,6 +92,10 @@ const PrepareSearch = () => {
             PostCustomerPrepareDetails(formData);
         }
     };
+    /**
+     * The `handleRouteUpdate` function sends a PUT request to update a customer's search data and
+     * redirects to the ticket list page after a successful response.
+     */
     const handleRouteUpdate = () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -145,6 +149,11 @@ const PrepareSearch = () => {
     const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
+    /* The above code is using the useEffect hook in a React component. It is checking if the
+    `location.state.data` property exists and if it does, it sets the `formData` state variable to
+    the value of `location.state.data` and sets the `isDisabled` state variable to the value of
+    `location.state.disabled`. This code is likely used to initialize the form data and disabled
+    state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
             setFormData(location?.state?.data);
@@ -167,9 +176,18 @@ console.log("formatDate",formData?.arrival_date);
 
     return (
         <div>
+            {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
+            The ThankYouModal component is passed the "message", "setModal", and "setFormData"
+            props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title text-center">Prepare</h4>
+                {/* The above code is a form component written in TypeScript and React. It uses the
+                Formik library for form management. The form consists of various input fields and
+                select dropdowns for selecting different categories and options. It also includes
+                validation for the form fields. The form can be submitted by clicking on the
+                "Request for Search" button or the "Update" button, depending on the value of the
+                `location.state.extraForm` variable. */}
                 <div>
                     <Formik
                         initialValues={{ field: true }}

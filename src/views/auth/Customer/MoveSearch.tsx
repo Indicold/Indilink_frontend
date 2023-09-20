@@ -1,4 +1,3 @@
-// Import necessary React and custom components and libraries
 import React, { useEffect, useState } from 'react';
 import {
     Button,
@@ -84,6 +83,11 @@ const MoveSearch = () => {
             PostCustomerMoveDetails(formData);
         }
     }
+    /**
+     * The `handleRouteUpdate` function sends a PUT request to update a move search with form data and
+     * authorization headers, and then displays a success message and redirects the user to a ticket
+     * list page after a delay.
+     */
     const handleRouteUpdate = () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -144,6 +148,19 @@ const MoveSearch = () => {
     const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
+    /* The above code is using the useEffect hook in a React component. It is checking if the
+    `location.state.data` property exists and if it does, it sets the `formData` state variable to
+    the value of `location.state.data` and sets the `isDisabled` state variable to the value of
+    `location.state.disabled`. This code is likely used to initialize the form data and disabled
+    state based on the data passed in through the `location` object. */
+    useEffect(() => {
+        if (location?.state?.data) {
+            setFormData(location?.state?.data);
+            setIsDisabled(location?.state?.disabled)
+        }
+
+    }, [])
+
     useEffect(() => {
         if (location?.state?.data) {
             setFormData(location?.state?.data);
@@ -165,7 +182,17 @@ const MoveSearch = () => {
 
     return (
         <div>
+            {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
+            The ThankYouModal component is passed the "message", "setModal", and "setFormData"
+            props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
+            {/* The above code is a TypeScript React component that renders a form for moving items. It
+            uses the Formik library for form management. The form includes fields for origin and
+            destination locations, load quantity, broad category, product type, dispatch date/time,
+            arrival date/time, status, comment, contract name, contract type, and contract upload.
+            The form also includes validation for required fields and handles form submission.
+            Depending on the value of the `location.state.extraForm` prop, the form will either
+            display an "Update" button or a "Request for Search" button. */}
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title pl-[22px] text-center">Move</h4>
                 <div>

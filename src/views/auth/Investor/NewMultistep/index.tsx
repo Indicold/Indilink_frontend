@@ -1,3 +1,7 @@
+/**
+ * The NewMultistep component renders a multistep form with Step1 component as the first step.
+ * @returns The NewMultistep component is being returned.
+ */
 import Step1 from './Step1';
 
 const NewMultistep = () => {

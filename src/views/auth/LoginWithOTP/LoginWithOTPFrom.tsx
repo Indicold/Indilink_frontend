@@ -1,3 +1,8 @@
+/* 
+* The above code is a TypeScript React component that represents a login form with OTP (One-Time
+* Password) functionality. It imports various components from different files and libraries, such as
+* Input, Button, FormItem, FormContainer, ActionLink, Field, Form, Formik, ToastContainer, and toast. 
+*/
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
@@ -26,7 +31,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     const [isSubmitting,setSubmitting]=useState(false)
     const [isNumber,setIsNumber]=useState<any>(true)
     const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`${apiUrl}/auth/login-with-otp`);
-    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails } = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
+    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails }:any = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
     const [formdata,setFormData]=useState<any>({
         phone_number:"",
         otp:""
@@ -40,6 +45,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
         signUpUrl = '/sign-up',
     } = props
 
+    let a = 'false'
 
     const navigate=useNavigate();
    
@@ -48,24 +54,35 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
         if(formdata?.otp){
             PUTOTPDetails(formdata)
         }else{
+            // a = 'true';
+            // console.log("aaaaaaaaaabb", a, postMobileNumberResponse);
             let body:any={phone_number:formdata?.phone_number}
             postMobileNumber(body)
+            a = 'true';
         }
-     
     }
 
+/**
+ * The handleChange function is used to update the form data object with the new value entered by the
+ * user.
+ * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange` function.
+ * It represents the event that triggered the function, such as a change event on an input field.
+ */
 const handleChange=(e:any)=>{
     const newData:any={...formdata};
     newData[e.target.name]=e.target.value;
     setFormData(newData)
 }
+
+        /* The `useEffect` hook in the code snippet is used to perform side effects in a React
+        component. In this case, it is used to handle the response from a POST request made to the
+        server. */
         useEffect(() => {
             console.log("TTTTTT",postMobileNumberResponse);
-            if(postMobileNumberResponse?.status){
-                setIsNumber(false);
-                
-            }
             if (postMobileNumberResponse?.message) {
+                if(postMobileNumberResponse?.message === 'OTP sent successfully over mobile.'){
+                    setIsNumber(false);
+                }
                 toast.success(postMobileNumberResponse?.message, {
                     position: 'top-right', // Position of the toast
                     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
@@ -79,9 +96,13 @@ const handleChange=(e:any)=>{
                         color: "#fff"// Set the background color here
                     },
                 });
+                a = 'false';
+                console.log("aaaaaaaaaa", a);
             }
     
-        }, [postMobileNumberResponse?.message])
+        }, [a, postMobileNumberResponse])
+        /* The `useEffect` hook in the code snippet is used to handle the response from a PUT request
+        made to the server. */
         useEffect(() => {
             console.log("TTTTTT",postMobileNumberResponse);
            
@@ -111,6 +132,13 @@ const handleChange=(e:any)=>{
         <div className={className}>
               <ToastContainer />
     
+            {/* The above code is a form component written in TypeScript and React using the Formik
+            library. It renders a form with different fields and buttons based on the value of the
+            `isNumber` variable. If `isNumber` is true, it renders a field for entering a mobile
+            number and a login button. If `isNumber` is false, it renders a field for entering an
+            OTP (One-Time Password) and a verify OTP button. The form also includes a checkbox for
+            remembering the user, a forgot password link, a login with password link, a sign up
+            link, and some styling classes. */}
             <Formik
                
             

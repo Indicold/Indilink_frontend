@@ -1,3 +1,7 @@
+/* The above code is a TypeScript React component that represents Step 1 of a form for an investor. It
+includes form fields for the amount of investment, business type, type (active or passive), area of
+land, and location. It also includes functionality for handling form submission and navigation to
+the next step. */
 import { Button, FormContainer, FormItem, Input } from "@/components/ui"
 import { Field, Form, Formik } from "formik"
 import { useState } from "react"
@@ -20,18 +24,29 @@ const Step1 = (props:any) => {
       setIsChecked(!isChecked)
     }
  
+    /**
+     * The function `handlechange` is used to update the form data and additional locations based on
+     * user input.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handlechange`
+     * function. It represents the event that triggered the function, such as a change event on an
+     * input field.
+     */
     const handlechange=(e:any)=>{
-const newData:any={...formData};
-newData[e.target.name]=e.target.value;
-if(e.target.name==='Number_of_Additional'){
-    setAdditionalLocations(e.target.value);
-}
-setFormData(newData);
+      const newData:any={...formData};
+      newData[e.target.name]=e.target.value;
+      if(e.target.name==='Number_of_Additional'){
+          setAdditionalLocations(e.target.value);
+      }
+      setFormData(newData);
     }
     const [additionalLocations, setAdditionalLocations] = useState(0);
   
    
     const navigate=useNavigate();
+    /**
+     * The function `handleRoute` checks the value of the `bussiness_type` key in the localStorage and
+     * navigates to different routes based on its value.
+     */
     const handleRoute=()=>{
       if(localStorage.getItem('bussiness_type')==='Store'){
       navigate('/investor-bussiness-type-store')
@@ -49,6 +64,13 @@ setFormData(newData);
     return (
         <div  className="bg-white">
             <h4 className=" mb-2 text-head-title text-center">Investor</h4>
+            {/* The above code is a form component written in TypeScript and React using the Formik
+            library. It renders a form with various input fields and radio buttons. The form has
+            initial values set for the "field" property. It also has an onSubmit function that logs
+            a message when the form is submitted. The form is wrapped in the Formik component, which
+            provides form handling and validation functionality. Inside the Formik component, the
+            form is rendered using the render prop pattern, where the form fields and buttons are
+            defined. */}
             <Formik
             initialValues={{field: true}}
             onSubmit={() => console.log("Submited via my onSubmit function")}
