@@ -7,7 +7,7 @@
  * `handleStoreTable` function to store the form data
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateITForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -25,6 +25,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -49,6 +50,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React TypeScript application.
      */
     const handlesave = () => {
+        if(validateITForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/it-devices',
             data,
@@ -57,6 +59,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'it_devices_ids'
         )
+        }
     }
 
     return (
@@ -117,6 +120,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Type" className="mx-auto">
                                         <Field
@@ -129,6 +135,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Type"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.type}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -146,6 +155,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Device ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.device_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -158,6 +170,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -172,6 +187,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                 </div>
 

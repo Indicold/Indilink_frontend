@@ -545,6 +545,170 @@ export const validateCondensorForm = (formData: any, setErrors: any) => {
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
+export const validateAMCForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.name_of_service) {
+        newErrors.name_of_service = 'This Field is required'
+    }
+
+    if (!formData?.vendor) {
+        newErrors.vendor = 'This Field is required'
+    }
+
+    if (!formData?.valid_till) {
+        newErrors.valid_till = 'This Field is required'
+    }
+
+    if (!formData?.fixed_cost) {
+        newErrors.fixed_cost = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateIOTForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.type) {
+        newErrors.type = 'This Field is required'
+    }
+
+    if (!formData?.device_id) {
+        newErrors.device_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.internet_enabled) {
+        newErrors.internet_enabled = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateITForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.type) {
+        newErrors.type = 'This Field is required'
+    }
+
+    if (!formData?.device_id) {
+        newErrors.device_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateGeneratorForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.kva) {
+        newErrors.kva = 'This Field is required'
+    }
+
+    if (!formData?.year) {
+        newErrors.year = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateMHEForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.load) {
+        newErrors.load = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateSolarInvertorForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.capacity) {
+        newErrors.capacity = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
 export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 

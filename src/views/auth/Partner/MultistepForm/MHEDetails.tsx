@@ -5,7 +5,7 @@
  * set the visibility of the modal), and `MHE` (the existing M.H.E. data).
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateMHEForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -26,6 +26,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({
         MHE: MHE,
     })
+    const [errors, setErrors] = useState({})
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -43,6 +44,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
      * component.
      */
     const handlesave = () => {
+        if(validateMHEForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/mhe',
             data,
@@ -51,6 +53,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'mhe_ids'
         )
+        }
     }
     /* The `useEffect` hook is used to perform side effects in a React component. In this case,
          the `useEffect` hook is used to update the state data object with the value of `MHE`
@@ -101,7 +104,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6>M.H.E. Details</h6>
+                                <h6 className='text-center'>M.H.E. Details</h6>
                                 <div className="flex">
                                     <FormItem
                                         label="Asset ID"
@@ -117,6 +120,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -129,6 +135,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -143,6 +152,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Load" className="mx-auto">
                                         <Field
@@ -155,6 +167,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Load"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.load}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <Button

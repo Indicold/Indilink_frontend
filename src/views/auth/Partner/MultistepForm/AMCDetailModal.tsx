@@ -7,7 +7,7 @@
  * the `data` state object with the input values.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateAMCForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -24,6 +24,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
     /**
      * The handleChange function updates the state with the new value of the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -40,6 +41,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
      * application using TypeScript.
      */
     const handlesave = () => {
+        if(validateAMCForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/amc',
             data,
@@ -48,6 +50,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'amc_ids'
         )
+        }
     }
     return (
         <>
@@ -107,6 +110,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Name of service"
@@ -122,6 +128,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.name_of_service}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -139,6 +148,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.vendor}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Valid till"
@@ -154,6 +166,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.valid_till}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -171,6 +186,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.fixed_cost}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <Button
