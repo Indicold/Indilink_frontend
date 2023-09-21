@@ -122,3 +122,6 @@ padding-right: 2rem !important;
 .input:disabled {
     background-color: inherit !important;
 }
+.input-wrapper, .input-md{
+padding-right: 0px !important;
+}

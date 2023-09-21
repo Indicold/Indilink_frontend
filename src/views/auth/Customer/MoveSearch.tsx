@@ -214,7 +214,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_country_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -232,7 +232,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_city_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
@@ -251,7 +251,7 @@ const MoveSearch = () => {
                                         <Field
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="origin_pincode"
                                             value={formData?.origin_pincode}
@@ -285,7 +285,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_country_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -303,7 +303,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_city_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCityDest && ListOfCityDest?.data?.map((item: any, index: any) => (
@@ -322,7 +322,7 @@ const MoveSearch = () => {
                                         <Field
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="dest_pincode"
                                             value={formData?.dest_pincode}
@@ -384,7 +384,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroad && ListOfBroad?.data?.map((item: any, index: any) => (
@@ -404,7 +404,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
@@ -462,7 +462,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="status_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (

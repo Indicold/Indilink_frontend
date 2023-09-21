@@ -13,8 +13,9 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
-import { objectToFormData, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+import { messageView, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
 import usePutApi from '@/store/customeHook/putApi';
+import { ToastContainer } from 'react-toastify';
 
 // Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
@@ -90,7 +91,6 @@ const StoreSearch = () => {
     const handlechange = (e: any) => {
         const newData: any = { ...formData };
         if (e.target.name === 'contract_download') {
-            console.log("DDDDDDDDDDDDDDD", e.target.files[0]);
     
             newData[e.target.name] = e.target.files[0];
         } else {
@@ -167,12 +167,15 @@ const StoreSearch = () => {
             setTimeout(() => {
                 navigate('/ticket_list_store')
             }, 2000)
+        }else {
+            messageView(CustomerResponse)
         }
     }, [CustomerResponse?.status]);
 
     console.log("statusstatusstatusstatusstatusstatusstatus", modal);
     return (
         <div>
+            <ToastContainer />
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
@@ -205,7 +208,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="country_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -223,7 +226,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="city_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg  h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
@@ -243,7 +246,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg  h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
@@ -259,7 +262,7 @@ const StoreSearch = () => {
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             onChange={(e: any) => handlechange(e)}
                                             className="w-[80%]"
@@ -272,7 +275,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="temperature_type_id"
-                                            className="h-11 border w-[20%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             {ListOfTemp && ListOfTemp?.data?.map((item: any, index: any) => (
@@ -288,16 +291,19 @@ const StoreSearch = () => {
                                         label="Unit"
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
-                                        <Field
+                                       
+                                            <select
                                             disabled={isDisabled}
-                                            type="text"
                                             onChange={(e: any) => handlechange(e)}
-                                            autoComplete="off"
                                             name="unit_id"
-                                            value={formData?.unit_id}
-                                            placeholder="Unit"
-                                            component={Input}
-                                        />
+                                            className="h-11 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        >
+                                            <option selected>Unit</option>
+                                            { ['Pallets', 'MT', 'Cubic', 'Feet', 'Sq. Feet']?.map((item: any, index: any) => (
+                                                <option value={item?.id} selected={item === 'MT'}>{item}</option>
+
+                                            ))}
+                                        </select>
                                         <p className='text-[red]'>{errors && errors.unit_id}</p>
                                     </FormItem>
                                     <FormItem
@@ -308,7 +314,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="certification_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Select</option>
                                             {ListOfCert && ListOfCert?.data?.map((item: any, index: any) => (
@@ -342,7 +348,7 @@ const StoreSearch = () => {
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            type="text"
+                                            type="number"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             className="w-[80%]"
