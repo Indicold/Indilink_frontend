@@ -8,7 +8,7 @@
  * displayed conditionally based on the value of the "modal
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 interface MajorityHolderModalProps {
@@ -25,6 +25,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -50,6 +51,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
      * parameters.
      */
     const handlesave = () => {
+        if(validateACUForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/acu',
             data,
@@ -58,6 +60,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
             update,
             'acu_ids'
         )
+        }
     }
 
     return (
@@ -116,6 +119,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -128,6 +134,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -142,9 +151,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label="C.M.F."
+                                        label="C.F.M."
                                         className="mx-auto"
                                     >
                                         <Field
@@ -154,9 +166,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            placeholder="C.M.F."
+                                            placeholder="C.F.M."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.cmf}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -171,6 +186,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="H.P."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.hp}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="A.M.C."
@@ -184,9 +202,13 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option selected>Yes</option>
+                                            <option selected disabled>Select</option>
+                                            <option>Yes</option>
                                             <option>No</option>
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.amc}
+                                        </p>
                                     </FormItem>
                                 </div>
 
@@ -202,6 +224,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="T.R."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.tr}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Defrosting ID"
@@ -217,6 +242,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Defrosting ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.defrosting_id}
+                                        </p>
                                     </FormItem>
                                 </div>
 

@@ -14,12 +14,16 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     // chamber:any;
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    setFormData: any
+    machineId: any
 }
 const MachineModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    setFormData,
+    machineId
 }) => {
     const [data, setData] = useState({})
 
@@ -49,6 +53,9 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'machine_ids'
         )
+        let arr = machineId;
+        arr.push()
+        setFormData()       
     }
 
     return (

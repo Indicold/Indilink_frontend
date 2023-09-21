@@ -30,6 +30,7 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { payload, payload1 } from '@/store/Payload'
+// import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
 const StoreRegistration = () => {
@@ -175,7 +176,44 @@ const StoreRegistration = () => {
     }, [fetchDetails])
 
     return (
-        <>
+        <div className='flex'>
+            <div className='w-1/6'>
+            
+
+            <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
+    <li className="mb-10 ml-6">            
+    <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z"/>
+            </svg>
+        </span>
+        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
+            </svg>
+        </span>
+        <h6 className="font-medium leading-tight">Compliance Details</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
+            </svg>
+        </span>
+        <h6 className="font-medium leading-tight">Additional submissions</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+</ol>
+
+
+
+
+            </div>
             {(CSLoading ||
                 Sloading ||
                 Dockloading ||
@@ -184,7 +222,7 @@ const StoreRegistration = () => {
                 WeighBridgeloading ||
                 RoadConditionloading ||
                 fetchDetailsloading) && <LoaderSpinner />}
-            <div className="bg-white p-4 rounded">
+            <div className="bg-white p-4 rounded w-5/6">
                 <ToastContainer />
                 <h4 className="text-center text-head-title">Store</h4>
                 <Formik
@@ -318,7 +356,7 @@ const StoreRegistration = () => {
                                                 handlechange(e)
                                             }
                                         >
-                                            <option>Select City</option>
+                                            <option disabled selected>Select City</option>
                                             {CityById &&
                                                 CityById?.data?.map(
                                                     (item: any, index: any) => (
@@ -333,6 +371,7 @@ const StoreRegistration = () => {
                                                         </option>
                                                     )
                                                 )}
+                                            <option>Other</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.city_id}
@@ -366,7 +405,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="total_tonnage"
                                             value={dataa?.total_tonnage}
@@ -460,7 +499,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
@@ -484,7 +523,7 @@ const StoreRegistration = () => {
                                             <input
                                                 className="w-2/3 border-0"
                                                 value={dataa?.ante_room_area}
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -509,7 +548,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
@@ -536,7 +575,7 @@ const StoreRegistration = () => {
                                                 value={
                                                     dataa?.total_office_space
                                                 }
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -601,7 +640,7 @@ const StoreRegistration = () => {
                                             <input
                                                 className="w-2/3 border-0"
                                                 value={dataa?.processing_area}
-                                                type="text"
+                                                type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -624,7 +663,7 @@ const StoreRegistration = () => {
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0"
-                                                type="text"
+                                                type="number"
                                                 value={dataa?.parking_area}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -685,7 +724,9 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
+                                            min="1990"
+                                            max="2023"
                                             autoComplete="off"
                                             name="installation_year"
                                             onChange={(e: any) =>
@@ -728,7 +769,7 @@ const StoreRegistration = () => {
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="facility_manager_contact"
                                             onChange={(e: any) =>
@@ -890,7 +931,7 @@ const StoreRegistration = () => {
                                                 }
                                                 name="weight_bridge_id"
                                             >
-                                                <option>Distance in km</option>
+                                                <option value="" disabled selected>Distance in km</option>
 
                                                 {WeighBridge &&
                                                     WeighBridge?.data?.map(
@@ -910,10 +951,10 @@ const StoreRegistration = () => {
                                                         )
                                                     )}
                                             </select>
-                                        </div>
                                         <p className="text-[red]">
                                             {errors && errors.weight_bridge_id}
                                         </p>{' '}
+                                        </div>
                                     </FormItem>
                                     <FormItem
                                         label="Road condition from main road"
@@ -928,7 +969,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option value="">
+                                            <option value="" disabled selected>
                                                 Road condition from main road
                                             </option>
 
@@ -960,7 +1001,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Chamber no.
@@ -977,6 +1018,9 @@ const StoreRegistration = () => {
                                                     <div className="mx-auto">
                                                         Pallet size
                                                     </div>
+                                                    <div className="mx-auto">
+                                                        Actions
+                                                    </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="mx-auto">
@@ -993,6 +1037,20 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="mx-auto">
                                                         48
+                                                    </div>
+                                                    <div className="mx-2 flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-1"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1007,7 +1065,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no chambers.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1017,27 +1075,44 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         CFM
+                                                    </div>
+                                                    <div className="w-[25%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center">
                                                         2
+                                                    </div>
+                                                    <div className="w-[25%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1050,7 +1125,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no CA Equipments.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1060,39 +1135,56 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         HP
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         CFM
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         AMC
+                                                    </div>
+                                                    <div className="w-[16%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         2014
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         48
+                                                    </div>
+                                                    <div className="w-[16%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1105,7 +1197,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no Compressors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1115,39 +1207,56 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         HP
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         CFM
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         TR
+                                                    </div>
+                                                    <div className="w-[16%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         2014
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[16%] text-center">
                                                         48
+                                                    </div>
+                                                    <div className="w-[16%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1160,7 +1269,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no ACUs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1170,33 +1279,50 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         TR
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         AMC
+                                                    </div>
+                                                    <div className="w-[20%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2014
+                                                    </div>
+                                                    <div className="w-[20%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1211,7 +1337,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no condensors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1221,33 +1347,50 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Name of Service
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Vendor
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Valid till
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Fixed Cost
+                                                    </div>
+                                                    <div className="w-[20%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2014
+                                                    </div>
+                                                    <div className="w-[20%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1260,7 +1403,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no AMCs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1270,33 +1413,50 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Type
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         ID
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Model
+                                                    </div>
+                                                    <div className="w-[20%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2014
+                                                    </div>
+                                                    <div className="w-[20%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1309,7 +1469,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no IOT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1319,33 +1479,50 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Type
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Asset ID
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         Model
+                                                    </div>
+                                                    <div className="w-[20%] text-center">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         A.P.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         EXG4568
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center">
                                                         2014
+                                                    </div>
+                                                    <div className="w-[20%] mx-auto flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-auto"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1358,7 +1535,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no IT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1368,7 +1545,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1382,6 +1559,9 @@ const StoreRegistration = () => {
                                                     <div className="mx-auto">
                                                         Year
                                                     </div>
+                                                    <div className="mx-auto">
+                                                    Actions
+                                                    </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="mx-auto">
@@ -1396,6 +1576,20 @@ const StoreRegistration = () => {
                                                     <div className="mx-auto">
                                                         2014
                                                     </div>
+                                                    <div className="mx-2 flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-1"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
+                                                    </div>
                                                 </div>
                                                 <div className="flex">
                                                     <button
@@ -1407,7 +1601,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no genrators.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1417,7 +1611,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1427,6 +1621,9 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="mx-auto">
                                                         Load
+                                                    </div>
+                                                    <div className="mx-auto">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1438,6 +1635,20 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="mx-auto">
                                                         2
+                                                    </div>
+                                                    <div className="mx-2 flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-1"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 <div className="flex">
@@ -1450,7 +1661,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no MHEs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1460,7 +1671,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1470,6 +1681,9 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="mx-auto">
                                                         Capacity
+                                                    </div>
+                                                    <div className="mx-auto">
+                                                    Actions
                                                     </div>
                                                 </div>
                                                 <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1482,6 +1696,20 @@ const StoreRegistration = () => {
                                                     <div className="mx-auto">
                                                         2
                                                     </div>
+                                                    <div className="mx-2 flex">
+                                                    <Button
+                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        // onClick={() => handleEdit(rowData)}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                    <Button
+                                                        className="!p-1 mx-1"
+                                                        // onClick={() => handleView(rowData)}
+                                                    >
+                                                        View
+                                                    </Button>
+                                                    </div>
                                                 </div>
                                                 <div className="flex">
                                                     <button
@@ -1493,7 +1721,7 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>:<p>Currently there are no solar inverters.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                 </Accordion>
@@ -1515,7 +1743,7 @@ const StoreRegistration = () => {
                     )}
                 </Formik>
             </div>
-        </>
+        </div>
     )
 }
 

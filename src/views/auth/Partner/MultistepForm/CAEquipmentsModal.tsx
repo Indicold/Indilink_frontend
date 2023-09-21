@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
-import { handleStoreTable, messageView } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCAEquipForm } from '@/store/customeHook/validate'
 import axios from 'axios'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
@@ -29,6 +29,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
 
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state data based on the input value or file selected by
@@ -54,6 +55,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function with specific parameters.
      */
     const handlesave = async () => {
+        if(validateCAEquipForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/ca-equipment',
             data,
@@ -62,6 +64,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'ca_equipment_ids'
         )
+        }
     }
 
     return (
@@ -119,6 +122,9 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -131,6 +137,9 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -145,9 +154,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label="C.M.F."
+                                        label="C.F.M."
                                         className="mx-auto"
                                     >
                                         <Field
@@ -157,9 +169,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            placeholder="C.M.F."
+                                            placeholder="C.F.M."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.cmf}
+                                        </p>
                                     </FormItem>
                                 </div>
 

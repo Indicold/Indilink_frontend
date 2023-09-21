@@ -74,6 +74,7 @@ const BussinessTypeModal = () => {
         PostAssetsDetails(body)
         setTimeout(() => {
             if (localStorage.getItem('user_type') === 'Partner') {
+                localStorage.removeItem('assets_list_id')
                 title_id = 1
                 if (Bussiness === 'Move') {
                     setAssetsType(2)
@@ -309,7 +310,7 @@ const BussinessTypeModal = () => {
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block
-                                        disabled={Bussiness === ''}
+                                        disabled={localStorage.getItem('user_type') === 'Partner' ? (Bussiness == '' || !formData?.country_id || !formData?.category_id) : Bussiness === ''}
                                         variant="solid"
                                         type="button"
                                         onClick={handleRoute}

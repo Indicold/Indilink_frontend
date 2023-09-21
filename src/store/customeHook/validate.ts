@@ -169,6 +169,7 @@ export const handleStoreTable = async (
             arr.push(result?.date?.id)
             newD[name] = arr
             update(newD)
+            console.log("formdataa: ", formD, name, arr, newD); 
             setTimeout(() => {
                 setModal(false)
             }, 2000)
@@ -233,12 +234,18 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
 }
 
 export const validateStorePartnerForm = (formData: any, setErrors: any) => {
-    console.log('GGGGGGGGGGGG', formData)
+    console.log('partner store validation', formData)
 
     const newErrors: any = {}
 
-    if (formData?.weight_bridge_id === '') {
-        newErrors.weight_bridge_id = 'Weight Bridge is required'
+    if (!formData?.weight_bridge_id || formData?.weight_bridge_id === '') {
+        newErrors.weight_bridge_id = 'Weigh Bridge is required'
+        console.log("err weigh:", newErrors.weight_bridge_id)
+    }
+
+    if (!formData?.road_condition_id || formData?.road_condition_id === '') {
+        newErrors.road_condition_id = 'Please select road condition'
+        console.log("err road:", newErrors.road_condition_id)
     }
 
     if (!formData?.city_id) {
@@ -342,6 +349,198 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     }
 
     console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateChamberForm = (formData: any, setErrors: any) => {
+    console.log("validateChamberForm", formData);
+    const newErrors: any = {}
+
+    if (!formData?.chamber_number) {
+        newErrors.chamber_number = 'This Field is required'
+    }
+
+    if (!formData?.chamber_name) {
+        newErrors.chamber_name = 'This Field is required'
+    }
+
+    if (!formData?.chamber_size) {
+        newErrors.chamber_size = 'This Field is required'
+    }
+
+    if (!formData?.no_of_pallets) {
+        newErrors.no_of_pallets = 'This Field is required'
+    }
+
+    if (!formData?.pallet_size) {
+        newErrors.pallet_size = 'This Field is required'
+    }
+
+    if (!formData?.racking_type_id) {
+        newErrors.racking_type_id = 'This Field is required'
+    }
+
+    if (!formData?.photo_of_entrance) {
+        newErrors.photo_of_entrance = 'This Field is required'
+    }
+
+    if (!formData?.photo_of_chamber) {
+        newErrors.photo_of_chamber = 'This Field is required'
+    }
+
+    if (!formData?.no_of_floors) {
+        newErrors.no_of_floors = 'This Field is required'
+    }
+
+    if (!formData?.floor_area) {
+        newErrors.floor_area = 'This Field is required'
+    }
+
+    if (!formData?.temp_range) {
+        newErrors.temp_range = 'This Field is required'
+    }
+
+    if (!formData?.each_floor_hight) {
+        newErrors.each_floor_hight = 'This Field is required'
+    }
+
+    if (!formData?.staircase) {
+        newErrors.staircase = 'This Field is required'
+    }
+
+    if (!formData?.parking_area) {
+        newErrors.parking_area = 'This Field is required'
+    }
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateCAEquipForm = (formData: any, setErrors: any) => {
+    console.log("validateChamberForm", formData);
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.cmf) {
+        newErrors.cmf = 'This Field is required'
+    }
+
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateCompressorForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.cmf) {
+        newErrors.cmf = 'This Field is required'
+    }
+
+    if (!formData?.hp) {
+        newErrors.hp = 'This Field is required'
+    }
+
+    if (!formData?.amc) {
+        newErrors.amc = 'This Field is required'
+    }
+
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateACUForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.cmf) {
+        newErrors.cmf = 'This Field is required'
+    }
+
+    if (!formData?.hp) {
+        newErrors.hp = 'This Field is required'
+    }
+
+    if (!formData?.amc) {
+        newErrors.amc = 'This Field is required'
+    }
+
+    if (!formData?.tr) {
+        newErrors.tr = 'This Field is required'
+    }
+
+    if (!formData?.defrosting_id) {
+        newErrors.defrosting_id = 'This Field is required'
+    }
+
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateCondensorForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.asset_id) {
+        newErrors.asset_id = 'This Field is required'
+    }
+
+    if (!formData?.make) {
+        newErrors.make = 'This Field is required'
+    }
+
+    if (!formData?.model) {
+        newErrors.model = 'This Field is required'
+    }
+
+    if (!formData?.amc) {
+        newErrors.amc = 'This Field is required'
+    }
+
+    if (!formData?.tr) {
+        newErrors.tr = 'This Field is required'
+    }
+
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
