@@ -6,7 +6,7 @@
  * within `handlesave` to store the generator data.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateGeneratorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -24,6 +24,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -48,6 +49,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
      * The handlesave function calls the handleStoreTable function with specific parameters.
      */
     const handlesave = () => {
+        if(validateGeneratorForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/generator',
             data,
@@ -56,6 +58,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'generator_ids'
         )
+        }
     }
 
     return (
@@ -115,6 +118,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -127,6 +133,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -141,6 +150,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="KVA" className="mx-auto">
                                         <Field
@@ -153,6 +165,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="KVA"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.kva}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -165,9 +180,15 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option selected>2028</option>
-                                            <option>2035</option>
+                                            <option selected disabled>Select</option>
+                                            {Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map((yr)=>{
+                                                return (<option>{yr}</option>);
+                                            })}
+
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.year}
+                                        </p>
                                     </FormItem>
                                 </div>
 

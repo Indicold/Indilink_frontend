@@ -1053,6 +1053,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no chambers.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1065,7 +1066,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no chambers.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1115,6 +1115,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no CA Equipments.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1125,7 +1126,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no CA Equipments.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1187,6 +1187,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no Compressors.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1197,7 +1198,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no Compressors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1259,6 +1259,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no ACUs.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1269,7 +1270,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no ACUs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1325,6 +1325,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no condensors.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1337,7 +1338,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no condensors.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1347,7 +1347,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center">
                                                         Name of Service
@@ -1393,6 +1393,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no AMCs.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1403,7 +1404,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no AMCs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1413,7 +1413,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center">
                                                         Type
@@ -1459,6 +1459,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no IOT Devices.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1469,7 +1470,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no IOT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1479,7 +1479,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center">
                                                         Type
@@ -1525,6 +1525,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no IT Devices.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1535,7 +1536,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no IT Devices.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1545,7 +1545,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1591,6 +1591,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no generators.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1601,7 +1602,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no genrators.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1611,7 +1611,7 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {true?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
@@ -1651,6 +1651,7 @@ const StoreRegistration = () => {
                                                     </Button>
                                                     </div>
                                                 </div>
+                                            </div>:<p>Currently there are no MHEs.</p>}
                                                 <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1661,7 +1662,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no MHEs.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1671,8 +1671,8 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                        {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="mx-auto">
                                                         Make
                                                     </div>
@@ -1710,8 +1710,10 @@ const StoreRegistration = () => {
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
-                                                <div className="flex">
+                                                </div></div>
+                                            </div>:<p>Currently there are no solar inverters.</p>}
+                                            
+                                            <div className="flex">
                                                     <button
                                                         className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                         onClick={() =>
@@ -1721,7 +1723,6 @@ const StoreRegistration = () => {
                                                         Add details
                                                     </button>
                                                 </div>
-                                            </div>:<p>Currently there are no solar inverters.</p>}
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                 </Accordion>

@@ -7,7 +7,7 @@
  * `handleStoreTable` function to store the form data. The modal
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateSolarInvertorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -25,6 +25,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     update,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -50,6 +51,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
      * partner store.
      */
     const handlesave = () => {
+        if(validateSolarInvertorForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/solar-invertor',
             data,
@@ -58,6 +60,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'solar_invertor_ids'
         )
+        }
     }
 
     return (
@@ -117,6 +120,9 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -129,6 +135,9 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -143,6 +152,9 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Capacity"
@@ -158,6 +170,9 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Capacity"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.capacity}
+                                        </p>
                                     </FormItem>
                                 </div>
 

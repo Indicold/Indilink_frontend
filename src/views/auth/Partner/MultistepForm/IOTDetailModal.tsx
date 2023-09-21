@@ -5,7 +5,7 @@
  * store the entered data. The modal is displayed conditionally based on the value of the "modal" prop.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateIOTForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -22,6 +22,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -40,6 +41,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React application.
      */
     const handlesave = () => {
+        if(validateIOTForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/iot-devices',
             data,
@@ -48,6 +50,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'iot_devices_ids'
         )
+        }
     }
     return (
         <>
@@ -92,7 +95,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6>I.O.T. Device Details</h6>
+                                <h6 className='text-center'>I.O.T. Device Details</h6>
                                 <div className="flex">
                                     <FormItem
                                         label="Asset id"
@@ -108,6 +111,9 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Type" className="mx-auto">
                                         <Field
@@ -120,6 +126,9 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.type}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -137,6 +146,9 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.device_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -149,6 +161,9 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -163,6 +178,9 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Internet enabled"
@@ -176,11 +194,15 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option value="true" selected>
+                                            <option selected disabled>Select</option>
+                                            <option value="true">
                                                 Yes
                                             </option>
                                             <option value="false">No</option>
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.internet_enabled}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <Button
