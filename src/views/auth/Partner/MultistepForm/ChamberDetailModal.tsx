@@ -10,6 +10,7 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
+import { validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
@@ -36,7 +37,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [data, setData] = useState<any>({})
-
+    const [errors, setErrors] = useState<any>({})
     /**
      * The handleChange function updates the data object based on the input value and name, and logs
      * the updated data object.
@@ -82,13 +83,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         formdata.append('each_floor_hight', data?.each_floor_hight)
         formdata.append(
             'photo_of_entrance',
-            data?.photo_of_entrance,
-            'C:UsersamritkumarPicturesadfas.png'
+            data?.photo_of_entrance
         )
         formdata.append(
             'photo_of_chamber',
-            data?.photo_of_chamber,
-            'C:UsersamritkumarPicturesadfas.png'
+            data?.photo_of_chamber
         )
 
         var requestOptions: any = {
@@ -97,7 +96,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             body: formdata,
             redirect: 'follow',
         }
-
+        console.log("validateChamberFormvalidateChamberForm", formdata)
+        if(validateChamberForm(formdata, setErrors)) {
         try {
             const response = await fetch(
                 `${apiUrl}/partner/store/chamber`,
@@ -117,7 +117,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         } catch (error: any) {
             messageView(error.message)
             console.log('error', error.message)
-        }
+        }}
     }
 
     /**
@@ -202,6 +202,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Chamber no."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.chamber_number}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Chamber name"
@@ -217,6 +220,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Chamber name"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.chamber_name}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -234,6 +240,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Chamber Size"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.chamber_size}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="No. of pallets"
@@ -249,6 +258,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="No. of pallets"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.no_of_pallets}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -266,6 +278,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Pallet size"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.pallet_size}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Racking Type"
@@ -290,6 +305,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                     )
                                                 )}
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.racking_type_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -306,6 +324,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.photo_of_entrance}
+                                        </p>
                                     </FormItem>
 
                                     <FormItem
@@ -321,6 +342,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.photo_of_chamber}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -338,6 +362,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="No. of floors"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.no_of_floors}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Floor area"
@@ -353,6 +380,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Floor area"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.floor_area}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -370,6 +400,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Temperature range"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.temp_range}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Height of each floor"
@@ -385,6 +418,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Capacity (Pallet)"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.each_floor_hight}
+                                        </p>
                                     </FormItem>
                                 </div>
 
@@ -403,6 +439,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.staircase}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="Parking Area (sqft)"
@@ -418,6 +457,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Parking Area (sqft)"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.parking_area}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <Button

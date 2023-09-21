@@ -43,6 +43,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'collapseMenu.item3',
+        path: '/asset_success',
+        component: lazy(() => import('@/views/auth/Partner/PartnerBusinessTypeSuccess')),
+        authority: [],
+    },
+    {
         key: 'collapseMenu.item2',
         path: '/ticket_list',
         component: lazy(() => import('@/views/auth/Customer/CustomerTableTicketList')),

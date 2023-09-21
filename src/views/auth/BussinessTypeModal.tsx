@@ -310,7 +310,7 @@ const BussinessTypeModal = () => {
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block
-                                        disabled={Bussiness === ''}
+                                        disabled={localStorage.getItem('user_type') === 'Partner' ? (Bussiness == '' || !formData?.country_id || !formData?.category_id) : Bussiness === ''}
                                         variant="solid"
                                         type="button"
                                         onClick={handleRoute}

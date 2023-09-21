@@ -7,7 +7,7 @@
  * the `data` state with the input values
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -24,6 +24,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -42,6 +43,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
      * component.
      */
     const handlesave = () => {
+        if(validateCondensorForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/condensor',
             data,
@@ -50,6 +52,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'condensor_ids'
         )
+        }
     }
     return (
         <>
@@ -106,6 +109,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -118,6 +124,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -132,6 +141,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="T.R." className="mx-auto">
                                         <Field
@@ -144,6 +156,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.tr}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -163,6 +178,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             <option>No</option>
                                         </select>
                                     </FormItem>
+                                        <p className="text-[red]">
+                                            {errors && errors.amc}
+                                        </p>
                                 </div>
                                 <Button
                                     style={{ borderRadius: '13px' }}

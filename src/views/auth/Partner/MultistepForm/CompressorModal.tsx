@@ -5,7 +5,7 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import { handleStoreTable, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
@@ -23,6 +23,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
 }) => {
     const [data, setData] = useState({})
+    const [errors, setErrors] = useState({})
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -47,6 +48,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
      * partner store.
      */
     const handlesave = () => {
+        if(validateCompressorForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/compressors',
             data,
@@ -55,6 +57,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             update,
             'compressor_ids'
         )
+        }
     }
 
     return (
@@ -112,6 +115,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.asset_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem label="Make" className="mx-auto">
                                         <Field
@@ -124,6 +130,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.make}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -138,6 +147,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.model}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="C.M.F."
@@ -153,6 +165,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="C.M.F."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.cmf}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -167,6 +182,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="H.P."
                                             component={Input}
                                         />
+                                        <p className="text-[red]">
+                                            {errors && errors.hp}
+                                        </p>
                                     </FormItem>
                                     <FormItem
                                         label="A.M.C."
@@ -186,6 +204,9 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                         </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.amc}
+                                        </p>
                                     </FormItem>
                                 </div>
 
