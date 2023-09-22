@@ -107,7 +107,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className="text-center m-2">Solar Invertor</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset ID"
+                                        label="Asset ID*"
                                         className="mx-auto"
                                     >
                                         <Field
@@ -124,7 +124,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make*" className="mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -141,7 +141,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto">
+                                    <FormItem label="Model*" className="mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -157,7 +157,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Capacity"
+                                        label="Capacity*"
                                         className="mx-auto"
                                     >
                                         <Field

@@ -65,7 +65,7 @@ const StoreRegistration = () => {
         data: CityById,
         loading: CityByIdloading,
         error: CityByIdSerror,
-    } = useApiFetch<any>(`master/get-city-by-countryId/101`, token)
+    } = useApiFetch<any>(`master/get-city-by-countryId/${localStorage.getItem('country_id')}`, token)
     const {
         data: WeighBridge,
         loading: WeighBridgeloading,
@@ -174,8 +174,8 @@ const StoreRegistration = () => {
     // Use useEffect to update form data when fetchDetails changes
     useEffect(() => {
         
-        if (fetchDetails?.data !== null) {
-            // setData(fetchDetails?.data)
+        if (fetchDetails?.data !== null && fetchDetails?.data !==undefined) {
+            setData(fetchDetails?.data)
         }
     }, [fetchDetails])
     console.log("validateChamberFormvalidateChamberForm",dataa);
@@ -353,7 +353,7 @@ useEffect(()=>{
                             <FormContainer>
                                 <div className="flex">
                                     <FormItem
-                                        label="City"
+                                        label="City*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select
@@ -386,7 +386,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Address"
+                                        label="Address*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -408,13 +408,14 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Total tonnage"
+                                        label="Total Tonnage(MT)*"
                                         className="w-1/2 text-label-title"
                                     >
+                                        
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area}
+                                                value={dataa?.total_tonnage}
                                                 type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -422,12 +423,12 @@ useEffect(()=>{
                                                 name="total_tonnage"
                                                 placeholder="Enter value"
                                             />
-                                            <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0 ms-auto me-2"
                                             >
                                                 <option>MT</option>
-                                            </select>
+                                            </select> */}
                                         </div>
 
                                         <p className="text-[red]">
@@ -435,7 +436,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Type of Store"
+                                        label="Type of Store*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select
@@ -472,7 +473,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Type of Cold Storage"
+                                        label="Type of Cold Storage*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select
@@ -508,7 +509,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Total number of chambers"
+                                        label="Total Number Of Chambers*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -530,7 +531,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Ante Room - Area"
+                                        label="Ante Room - Area (Square feet)*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -544,19 +545,19 @@ useEffect(()=>{
                                                 name="ante_room_area"
                                                 placeholder="Enter value"
                                             />
-                                            <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         <p className="text-[red]">
                                             {errors && errors.ante_room_area}
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Total number of docks"
+                                        label="Total number of docks*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -579,7 +580,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Total office space"
+                                        label="Total office space(Square feet)*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -595,12 +596,12 @@ useEffect(()=>{
                                                 name="total_office_space"
                                                 placeholder="Enter value"
                                             />
-                                            <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         <p className="text-[red]">
                                             {errors &&
@@ -608,7 +609,7 @@ useEffect(()=>{
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Type of docks"
+                                        label="Type of docks*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select
@@ -645,7 +646,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Processing Area"
+                                        label="Processing Area(Square feet)*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -659,19 +660,19 @@ useEffect(()=>{
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                             />
-                                          <select
+                                          {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         <p className="text-[red]">
                                             {errors && errors.processing_area}
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Parking Area"
+                                        label="Parking Area(Square feet)*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -685,12 +686,12 @@ useEffect(()=>{
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                             />
-                                        <select
+                                        {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         <p className="text-[red]">
                                             {errors && errors.parking_area}
@@ -699,7 +700,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Type of Refrigeration"
+                                        label="Type of Refrigeration*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select
@@ -735,7 +736,7 @@ useEffect(()=>{
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Year of Installation"
+                                        label="Year of Installation*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -759,7 +760,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Facility Manager Name"
+                                        label="Facility Manager Name*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -780,7 +781,7 @@ useEffect(()=>{
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Cold Storage Manager Contact Number"
+                                        label="Cold Storage Manager Contact Number*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -791,7 +792,7 @@ useEffect(()=>{
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            placeholder="Company Name"
+                                            placeholder="Contact Number"
                                             value={
                                                 dataa?.facility_manager_contact
                                             }
@@ -935,7 +936,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Weighbridge"
+                                        label="Weighbridge*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <div>
@@ -973,7 +974,7 @@ useEffect(()=>{
                                         </div>
                                     </FormItem>
                                     <FormItem
-                                        label="Road condition from main road"
+                                        label="Road condition from main road*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <select

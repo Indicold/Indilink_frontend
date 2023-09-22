@@ -58,7 +58,7 @@ const NotificationPage = () => {
       const inputDate = new Date(); // Replace this with your desired date
   return (
     <div>
-   <div className=" grid place-items-center my-8">
+   <div className=" grid place-items-center">
   <div className="lg:w-full sm:w-full w-full   rounded-xl mx-auto  p-10 ">
     <div className="inline-flex items-center justify-between w-full">
       <h3 className="font-bold text-xl sm:text-2xl text-gray-800 dark:text-white">

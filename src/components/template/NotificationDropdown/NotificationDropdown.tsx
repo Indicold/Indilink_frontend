@@ -4,12 +4,13 @@ import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
+import { HiOutlineLogout, HiOutlineUser,AiFillBell } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
 import Badge from '@mui/material/Badge';
 import Stack from '@mui/material/Stack';
 import MailIcon from '@mui/icons-material/Mail';
 import { Divider } from '@mui/material'
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 type DropdownList = {
     label: string
@@ -24,9 +25,9 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
     const { signOut } = useAuth()
 const navigate:any=useNavigate();
     const UserAvatar = (
-        <Stack spacing={2} direction="row">
+        <Stack spacing={2} direction="row" role="button">
         <Badge badgeContent={4} className='!m-4' color="secondary">
-          <MailIcon   color="action" />
+          <NotificationsIcon className='!text-[30px]'  color="action" />
         </Badge>
     
       </Stack>

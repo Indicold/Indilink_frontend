@@ -35,7 +35,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
-    const [data, setData] = useState<any>({})
+    const [data, setData] = useState<any>({
+        staircase:true
+    })
     const [errors, setErrors] = useState<any>({})
     /**
      * The handleChange function updates the data object based on the input value and name, and logs
@@ -55,6 +57,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         } else {
             newData[e.target.name] = e.target.value
         }
+        validateChamberForm(newData, setErrors)
         setData(newData)
         console.log('newData', newData)
     }
@@ -191,7 +194,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Chamber no."
+                                        label="Chamber No*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -209,7 +212,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Chamber name"
+                                        label="Chamber name *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -229,33 +232,26 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Chamber Size"
+                                        label="Chamber Size(Meter) *"
                                         className="mx-auto w-1/2"
                                     >
-                                        <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input
-                                            type="number"
+                                         <Field
+                                            type="text"
                                             autoComplete="off"
                                             name="chamber_size"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="L X B X H"
-                                            // component={Input}
+                                            component={Input}
                                         />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto"
-                                            >
-                                                <option>Meters</option>
-                                            </select>
-                                            </div>
+                                       
                                         <p className="text-[red]">
                                             {errors && errors.chamber_size}
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="No. of pallets"
+                                        label="No. of pallets *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -275,33 +271,26 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Pallet size"
+                                        label="Pallet size(MM)*"
                                         className="mx-auto w-1/2"
                                     >
-                                     <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input
-                                            type="number"
+                                          <Field
+                                            type="text"
                                             autoComplete="off"
                                             name="pallet_size"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="L X B X H"
-                                            // component={Input}
+                                            component={Input}
                                         />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto"
-                                            >
-                                                <option>Meters</option>
-                                            </select>
-                                            </div>
+                                     
                                         <p className="text-[red]">
                                             {errors && errors.pallet_size}
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Racking Type"
+                                        label="Racking Type *"
                                         className="mx-auto w-1/2"
                                     >
                                         <select
@@ -330,9 +319,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Photo of entrance"
+                                        label="Photo of entrance *"
                                         className="mx-auto w-1/2"
                                     >
+                                        
                                         <input
                                             type="file"
                                             name="photo_of_entrance"
@@ -369,7 +359,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="No. of floors"
+                                        label="No. of floors *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -387,27 +377,20 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Floor area"
+                                        label="Floor area (Square Feet) *"
                                         className="mx-auto w-1/2"
                                     >
-                                         <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input
-                                            type="number"
+                                          <Field
+                                            type="text"
                                             autoComplete="off"
                                             name="floor_area"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Enter Value"
-                                            // component={Input}
+                                            component={Input}
                                         />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto"
-                                            >
-                                                <option>Square Feet</option>
-                                            </select>
-                                            </div>
+                                      
                                         <p className="text-[red]">
                                             {errors && errors.floor_area}
                                         </p>
@@ -415,53 +398,39 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Temperature range"
+                                        label="Temperature range (°C) *"
                                         className="mx-auto w-1/2"
                                     >
-                                             <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input
-                                            type="number"
+                                            <Field
+                                            type="text"
                                             autoComplete="off"
                                             name="temp_range"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Enter Value"
-                                            // component={Input}
+                                            component={Input}
                                         />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto"
-                                            >
-                                                <option>Celsius</option>
-                                            </select>
-                                            </div>
+                                           
                                         <p className="text-[red]">
                                             {errors && errors.temp_range}
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Height of each floor"
+                                        label="Height of each floor (Feet) *"
                                         className="mx-auto w-1/2"
                                     >
-                                    <div className='border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input
-                                            type="number"
+                                            <Field
+                                            type="text"
                                             autoComplete="off"
                                             name="each_floor_hight"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Enter Value"
-                                            // component={Input}
+                                            component={Input}
                                         />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto"
-                                            >
-                                                <option>Feet</option>
-                                            </select>
-                                            </div>
+                            
                                         <p className="text-[red]">
                                             {errors && errors.each_floor_hight}
                                         </p>
@@ -488,7 +457,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Parking Area (sqft)"
+                                        label="Parking Area (sqft) *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field

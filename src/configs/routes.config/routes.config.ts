@@ -99,6 +99,14 @@ export const protectedRoutes = [
     {
 
         key: 'partner',
+        path: `/partner-registration/:id`,
+        component: lazy(() => import('@/views/auth/Partner/StoreRegistration')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partner',
         path: `/partner-registration`,
         component: lazy(() => import('@/views/auth/Partner/StoreRegistration')),
         authority: [],

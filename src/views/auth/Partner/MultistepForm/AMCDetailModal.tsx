@@ -97,7 +97,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className='text-center m-2'>A.M.C. Details</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset id"
+                                        label="Asset id*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -115,7 +115,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Name of service"
+                                        label="Name of service*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -135,7 +135,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Vendor"
+                                        label="Vendor*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -153,7 +153,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Valid till"
+                                        label="Valid till*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -173,7 +173,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex ">
                                     <FormItem
-                                        label="Fixed cost(Rs)"
+                                        label="Fixed cost(Rs)*"
                                         className=" w-1/2"
                                     >
                                         <Field

@@ -78,7 +78,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                     aria-hidden="true"
                     className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                    <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
                                 onClick={() => setModal(false)}
@@ -107,7 +107,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className="text-center">I.T. Device</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset ID"
+                                        label="Asset ID*"
                                         className="w-1/2 mx-auto"
                                     >
                                         <Field
@@ -124,7 +124,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Type" className="w-1/2 mx-auto">
+                                    <FormItem label="Type*" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -142,7 +142,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Device ID"
+                                        label="Device ID*"
                                         className="w-1/2 mx-auto"
                                     >
                                         <Field
@@ -159,7 +159,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.device_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="w-1/2 mx-auto">
+                                    <FormItem label="Make*" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -176,7 +176,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"

@@ -69,7 +69,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                     aria-hidden="true"
                     className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-md max-h-full">
+                    <div className="my-auto relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
                                 onClick={() => setModal(false)}
@@ -98,7 +98,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className='text-center'>I.O.T. Device Details</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset id"
+                                        label="Asset id*"
                                         className="mx-auto"
                                     >
                                         <Field
@@ -115,7 +115,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Type" className="mx-auto">
+                                    <FormItem label="Type*" className="mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -133,7 +133,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Device ID"
+                                        label="Device ID*"
                                         className="mx-auto"
                                     >
                                         <Field
@@ -150,7 +150,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.device_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make*" className="mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -167,7 +167,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -183,7 +183,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Internet enabled"
+                                        label="Internet enabled*"
                                         className="mx-auto w-1/2"
                                     >
                                         <select

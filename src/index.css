@@ -61,7 +61,12 @@
     color: #0f3492 !important;
 }
 .text-label-title{
-    color:#103492 !important
+    color:#103492 !important;
+    text-transform:capitalize !important
+}
+.form-label{
+    color:#103492 !important;
+    text-transform:capitalize !important
 }
 .hyper-link-color{
     color: #103492 !important;

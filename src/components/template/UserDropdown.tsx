@@ -16,6 +16,7 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _UserDropdown = ({ className }: CommonProps) => {
+    
 
     const { signOut } = useAuth()
 
@@ -41,7 +42,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                User01
+                            {JSON.parse(localStorage.getItem('RememberMe'))?.username || ''}
                             </div>
                             <div className="text-xs">user01@mail.com</div>
                         </div>

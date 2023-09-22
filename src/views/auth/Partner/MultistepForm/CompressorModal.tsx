@@ -102,7 +102,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className="text-center mt-4">Compressor</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset ID"
+                                        label="Asset ID *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -119,7 +119,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto w-1/2">
+                                    <FormItem label="Make *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -136,7 +136,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto w-1/2">
+                                    <FormItem label="Model *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -152,7 +152,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="C.F.M."
+                                        label="C.F.M. *"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -171,7 +171,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="H.P." className="mx-auto w-1/2">
+                                    <FormItem label="H.P.*" className="mx-auto w-1/2">
                                         <Field
                                             type="number"
                                             autoComplete="off"
@@ -187,7 +187,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="A.M.C."
+                                        label="A.M.C. *"
                                         className="mx-auto w-1/2"
                                     >
                                         <select

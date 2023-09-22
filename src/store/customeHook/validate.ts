@@ -386,9 +386,9 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.photo_of_entrance = 'This Field is required'
     }
 
-    if (!formData?.photo_of_chamber) {
-        newErrors.photo_of_chamber = 'This Field is required'
-    }
+    // if (!formData?.photo_of_chamber) {
+    //     newErrors.photo_of_chamber = 'This Field is required'
+    // }
 
     if (!formData?.no_of_floors) {
         newErrors.no_of_floors = 'This Field is required'

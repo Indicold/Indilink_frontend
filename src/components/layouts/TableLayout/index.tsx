@@ -72,9 +72,11 @@ const TableLayout = ({ AllStore }: any) => {
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
+    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
+    
     if (rowData?.asset_type?.type === 'Store') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate('/partner-registration', { state: false })
+      navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
     }
     if (rowData?.asset_type?.type === 'Prepare') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)

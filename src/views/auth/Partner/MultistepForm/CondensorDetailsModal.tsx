@@ -96,7 +96,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <h6 className='text-center m-2'>Condensor Details</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Asset id"
+                                        label="Asset id*"
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -113,7 +113,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto w-1/2">
+                                    <FormItem label="Make*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -130,7 +130,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -145,7 +145,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="T.R." className="mx-auto w-1/2">
+                                    <FormItem label="T.R.*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -163,7 +163,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex !justify-items-start">
                                     <FormItem
-                                        label="A.M.C."
+                                        label="A.M.C.*"
                                         className=" w-1/2"
                                     >
                                         <select

@@ -55,9 +55,10 @@ const validationSchema = Yup.object().shape({
 
 const SignInForm = (props: SignInFormProps) => {
     const [isSubmitting, setSubmitting] = useState(false)
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<any>({
         username: '',
         password: '',
+        rememberMe:false
     })
     const [error, setError] = useState<any>({
         username: '',
@@ -99,7 +100,11 @@ const SignInForm = (props: SignInFormProps) => {
         if (validateFormLogin(formData)) {
             
         setSubmitting(true)
-
+if(formData?.rememberMe){
+    localStorage.setItem('RememberMe',JSON.stringify(formData));
+}else{
+    localStorage.removeItem('RememberMe')
+}
             fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -179,6 +184,17 @@ const SignInForm = (props: SignInFormProps) => {
             LoginResponse?.responseData?.message?.accessToken
         )
     }, [LoginResponse?.responseData?.message])
+    const handleRememberMeChange = (e:any) => {
+        const newData = { ...formData };
+        newData.rememberMe = e.target.checked; // Update rememberMe state
+        setFormData(newData);
+    };
+    useEffect(()=>{
+        if(localStorage.getItem('RememberMe')){
+            const dataVal:any=localStorage.getItem('RememberMe');
+            setFormData(JSON.parse(dataVal))
+        }
+    },[])
     return (
         <>
             <ToastContainer />
@@ -203,6 +219,7 @@ const SignInForm = (props: SignInFormProps) => {
                                 autoComplete="off"
                                 className="rounded-[13px]"
                                 name="username"
+                                value={formData?.username}
                                 placeholder="your@email.com"
                                 onChange={handlechange}
                                 component={Input}
@@ -216,6 +233,7 @@ const SignInForm = (props: SignInFormProps) => {
                                 style={{ borderRadius: '13px' }}
                                 autoComplete="off"
                                 name="password"
+                                value={formData?.password}
                                 placeholder="Password"
                                 onChange={handlechange}
                                 component={PasswordInput}
@@ -225,20 +243,22 @@ const SignInForm = (props: SignInFormProps) => {
                             </p>
                         </FormItem>
                         <div className="flex justify-between">
-                            <div className="flex items-center mb-4">
-                                <input
-                                    id="default-checkbox"
-                                    type="checkbox"
-                                    value=""
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                />
-                                <label
-                                    htmlFor="default-checkbox"
-                                    className="ml-2 text-sm font-medium text-[#103492] dark:text-[#103492]"
-                                >
-                                    Remember me
-                                </label>
-                            </div>
+                        <div className="flex items-center mb-4">
+                                    <input
+                                        id="rememberMeCheckbox"
+                                        type="checkbox"
+                                        name="rememberMe"
+                                        checked={formData.rememberMe} // Bind to rememberMe state
+                                        onChange={handleRememberMeChange} // Handle the change event
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    />
+                                    <label
+                                        htmlFor="rememberMeCheckbox"
+                                        className="ml-2 text-sm font-medium text-[#103492] dark:text-[#103492]"
+                                    >
+                                        Remember me
+                                    </label>
+                                </div>
                             <ActionLink
                                 to={forgotPasswordUrl}
                                 className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]"
