@@ -137,3 +137,62 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+/* -----------according  to figma style and layout css start----------- */
+.title-color{
+    color: var(--text-text-black, #1C1C1C);
+
+/* H2/h2-bold */
+font-family: Inter;
+font-size: 28px;
+font-style: normal;
+font-weight: 700;
+line-height: 42px; /* 150% */
+}
+.text-field{
+    color: var(--text-text-gray, #818181);
+
+    /* H7/h7-medium */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 157.143% */
+}
+.text-link{
+    color: var(--text-text-blue, #063193);
+
+/* H6/h6-medium */
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+.multiple-selection{
+    display: flex;
+height: 24px;
+align-items: flex-start;
+gap: var(--spacing-spacing-xs, 8px);
+flex: 1 0 0;
+}
+.primary-button{
+    display: flex;
+padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+justify-content: center;
+align-items: center;
+gap: var(--spacing-spacing-xs, 8px);
+align-self: stretch;
+border-radius: var(--radius-radius-full, 64px);
+background: var(--surface-surface-green, #1AAD64);
+}
+.secondary-button{
+    display: flex;
+width: 444px;
+padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+justify-content: center;
+align-items: center;
+gap: var(--spacing-spacing-xs, 8px);
+border-radius: var(--radius-radius-full, 64px);
+background: var(--surface-surface-black, #1C1C1C);
+}
+/* -----------according  to figma style and layout css end----------- */

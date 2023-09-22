@@ -216,4 +216,12 @@ export const protectedRoutes = [
         authority: [],
 
     },
+    {
+
+        key: 'notifiaction',
+        path: `/notification`,
+        component: lazy(() => import('@/components/template/NotificationDropdown/index')),
+        authority: [],
+
+    },
 ]

@@ -5,6 +5,7 @@ import UserDropdown from '@/components/template/UserDropdown'
 import SideNav from '@/components/template/SideNav'
 import View from '@/views'
 import { useNavigate } from 'react-router-dom'
+import NotificationDropdown from '../template/NotificationDropdown/NotificationDropdown'
 
 const HeaderActionsStart = () => {
     return (
@@ -47,6 +48,8 @@ const HeaderActionsEnd = () => {
                 <option value='2' selected={UserType==='Customer'}>Customer</option>
                 <option  value='3' selected={UserType==='Investor'}>Investor</option>
             </select>
+            <NotificationDropdown  hoverable={false} />
+
             <UserDropdown hoverable={false} />
         </>
     )

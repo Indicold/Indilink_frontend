@@ -22,8 +22,13 @@ import type { CommonProps } from '@/@types/common'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLoginApiPost } from '@/store'
-import { NavLink } from 'react-router-dom'
-import { validateForm } from '@/store/customeHook/validate'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { messageView, validateForm } from '@/store/customeHook/validate'
+import axios from 'axios'
+import { apiUrl } from '@/store/customeHook/token'
+import { ToastContainer } from 'react-toastify'
+
+const API_URL = apiUrl;
 
 interface SignInFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -77,6 +82,7 @@ const SignInForm = (props: SignInFormProps) => {
      * @param {any} e - The parameter `e` is an event object that is passed to the `handlesubmit` function.
      * It is typically an event object that is triggered when a form is submitted.
      */
+    const navigate: any = useNavigate()
     const handlesubmit = (e: any) => {
         e.preventDefault()
         console.log(
@@ -91,12 +97,47 @@ const SignInForm = (props: SignInFormProps) => {
         )
 
         if (validateFormLogin()) {
-            dispatch(
-                userLoginApiPost({
-                    user_id: formData?.username,
-                    password: formData?.password,
+        setSubmitting(true)
+
+            fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
+                    {
+                        user_id: formData?.username,
+                        password: formData?.password,
+                    }
+                ),
+            }).then((res) => res.json())
+                .then((data) => {
+                    setSubmitting(false)
+                    if (data.message.accessToken) {
+                        sessionStorage.setItem('access_token', data.message.accessToken);
+                    messageView("Login Successfully")
+                    setTimeout(()=>{
+                        navigate('/home')
+                    },2000)
+                  
+
+                    }else{
+                    console.log("res", data)
+
+                        messageView(data?.message)
+
+                    }
                 })
-            )
+                .catch((err) => {
+                    setSubmitting(false)
+                    console.log("err", err)
+                })
+            // dispatch(
+            //     userLoginApiPost({
+            //         user_id: formData?.username,
+            //         password: formData?.password,
+            //     })
+            // )
         }
     }
     /**
@@ -136,6 +177,9 @@ const SignInForm = (props: SignInFormProps) => {
         )
     }, [LoginResponse?.responseData?.message])
     return (
+        <>
+            <ToastContainer />
+
         <div className={className}>
             {LoginResponse?.responseData?.message &&
                 typeof LoginResponse?.responseData?.message === 'string' &&
@@ -239,6 +283,7 @@ const SignInForm = (props: SignInFormProps) => {
                 </Form>
             </Formik>
         </div>
+        </>
     )
 }
 
