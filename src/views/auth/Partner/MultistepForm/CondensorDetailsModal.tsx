@@ -67,7 +67,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                     aria-hidden="true"
                     className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-md max-h-full">
+                    <div className="my-auto relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
                                 onClick={() => setModal(false)}
@@ -93,11 +93,11 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6>Condensor Details</h6>
+                                <h6 className='text-center m-2'>Condensor Details</h6>
                                 <div className="flex">
                                     <FormItem
                                         label="Asset id"
-                                        className="mx-auto"
+                                        className="mx-auto w-1/2"
                                     >
                                         <Field
                                             type="text"
@@ -113,7 +113,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -130,7 +130,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto">
+                                    <FormItem label="Model" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -145,7 +145,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="T.R." className="mx-auto">
+                                    <FormItem label="T.R." className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -161,10 +161,10 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex !justify-items-start">
                                     <FormItem
                                         label="A.M.C."
-                                        className="mx-auto"
+                                        className=" w-1/2"
                                     >
                                         <select
                                             id="countries"
@@ -183,16 +183,18 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
+                                <div className='flex justify-center'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                 >
                                     Save
                                 </Button>
+                                </div>
                             </div>
                         </div>
                     </div>
