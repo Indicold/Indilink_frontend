@@ -223,7 +223,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
-                                                    className="w-full"
+                                                    className="w-full focus:outline-0"
                                                     name="city_id"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -279,13 +279,13 @@ const PartnerBussinessTypePrepare = () => {
 
                                     <div className="flex">
                                         <FormItem
-                                            label="Total Hourly ThroughOut"
+                                            label="Total Hourly Throughput"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="number"
-                                                autoComplete="off"
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type='number'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
@@ -293,9 +293,15 @@ const PartnerBussinessTypePrepare = () => {
                                                 value={
                                                     formData?.hourly_throughput
                                                 }
-                                                placeholder="Enter Value"
-                                                component={Input}
+                                                placeholder="Enter value"
                                             />
+                                            <select
+                                                disabled={true}
+                                                className="border-0 ms-auto me-2"
+                                            >
+                                                <option>MT</option>
+                                            </select>
+                                        </div>
                                             <p className="text-[red]">
                                                 {errors &&
                                                     errors.hourly_throughput}
@@ -308,7 +314,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
-                                                    className="w-full"
+                                                    className="w-full focus:outline-0"
                                                     name="prepare_type_id"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -395,7 +401,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
-                                                    className="w-full"
+                                                    className="w-full focus:outline-0"
                                                     name="product_type"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -429,21 +435,29 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="ThroughOut"
+                                            label="Throughput"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="number"
-                                                autoComplete="off"
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type='number'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
                                                 name="throughput"
                                                 value={formData?.throughput}
-                                                placeholder="ThroughOut"
-                                                component={Input}
+                                                placeholder="Throughput"
                                             />
+                                            <select
+                                                disabled={false}
+                                                className="border-0 ms-auto me-2"
+                                            >
+                                                <option className='text-end'>MT</option>
+                                                <option className='text-end'>Cases</option>
+                                                <option className='text-end'>Pallets</option>
+                                            </select>
+                                        </div>
                                             <p className="text-[red]">
                                                 {errors && errors.throughput}
                                             </p>
@@ -452,18 +466,25 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Avg. case size"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="number"
-                                                autoComplete="off"
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type='number'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
                                                 name="avg_case_size"
                                                 value={formData?.avg_case_size}
                                                 placeholder="Avg. case size"
-                                                component={Input}
                                             />
+                                            <select
+                                                disabled={false}
+                                                className="border-0 ms-auto me-2"
+                                            >
+                                                <option className='text-end'>Kg</option>
+                                                <option className='text-end'>Cubic Feet</option>
+                                            </select>
+                                        </div>
                                             <p className="text-[red]">
                                                 {errors && errors.avg_case_size}
                                             </p>
@@ -539,18 +560,26 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Batch Size"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="number"
-                                                autoComplete="off"
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type='text'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
                                                 name="batch_size"
                                                 value={formData?.batch_size}
                                                 placeholder="Batch Size"
-                                                component={Input}
                                             />
+                                            <select
+                                                disabled={false}
+                                                className="border-0 ms-auto me-2 focus:outline-0"
+                                            >
+                                                <option className='text-end'>MT</option>
+                                                <option className='text-end'>Cases</option>
+                                                <option className='text-end'>Pallets</option>
+                                            </select>
+                                        </div>
                                             <p className="text-[red]">
                                                 {errors && errors.batch_size}
                                             </p>
@@ -562,18 +591,24 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Area"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="number"
-                                                autoComplete="off"
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type='text'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
                                                 name="area"
                                                 value={formData?.area}
                                                 placeholder="Area"
-                                                component={Input}
                                             />
+                                            <select
+                                                disabled={true}
+                                                className="border-0 ms-auto me-2 focus:outline-0"
+                                            >
+                                                <option className='text-end'>Square feet</option>
+                                            </select>
+                                        </div>
                                             <p className="text-[red]">
                                                 {errors && errors.area}
                                             </p>

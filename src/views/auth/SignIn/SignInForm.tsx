@@ -96,7 +96,8 @@ const SignInForm = (props: SignInFormProps) => {
             )
         )
 
-        if (validateFormLogin()) {
+        if (validateFormLogin(formData)) {
+            
         setSubmitting(true)
 
             fetch(`${API_URL}/auth/login`, {
@@ -127,6 +128,7 @@ const SignInForm = (props: SignInFormProps) => {
                         messageView(data?.message)
 
                     }
+      
                 })
                 .catch((err) => {
                     setSubmitting(false)
@@ -146,12 +148,12 @@ const SignInForm = (props: SignInFormProps) => {
      * @returns a boolean value. It returns true if there are no errors in the form data, and false if
      * there are any errors.
      */
-    const validateFormLogin = () => {
+    const validateFormLogin = (formD: any) => {
         const errors: any = {}
-        if (!formData.username) {
+        if (!formD.username) {
             errors.username = 'Email is required !'
         }
-        if (!formData.password) {
+        if (!formD.password) {
             errors.password = "Password can't be Empty !"
         }
         setError(errors)
@@ -166,6 +168,7 @@ const SignInForm = (props: SignInFormProps) => {
         const newData: any = { ...formData }
         newData[e.target.name] = e.target.value
         setFormData(newData)
+        if(error[e.target.name])validateFormLogin(newData);
     }
     /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
         `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`

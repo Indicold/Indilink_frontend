@@ -52,6 +52,7 @@ export const validateForm = (formData: any, setError: any) => {
     if (!formData?.password) {
         errorss.password = 'Password is required'
     }
+
     if (!formData?.term_condition) {
         errorss.term_condition = 'Please Accept Term & condition'
     }

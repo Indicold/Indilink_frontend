@@ -166,6 +166,9 @@ const StoreRegistration = () => {
         const newData: any = { ...dataa }
         newData[e.target.name] = e.target.value
         setData(newData)
+        console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
+        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
+        // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
 
     // Use useEffect to update form data when fetchDetails changes
@@ -177,7 +180,9 @@ const StoreRegistration = () => {
     }, [fetchDetails])
     console.log("validateChamberFormvalidateChamberForm",dataa);
 
-
+useEffect(()=>{
+    setData(dataa)
+},[dataa])
     return (
         <div className='flex'>
             <div className='w-1/6'>
@@ -442,7 +447,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option selected>
+                                            <option selected disabled value="">
                                                 Type of Store
                                             </option>
                                             {StorageType &&

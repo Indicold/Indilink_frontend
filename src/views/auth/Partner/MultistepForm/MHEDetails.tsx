@@ -158,7 +158,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem label="Load" className="mx-auto">
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="load"
                                             onChange={(e: any) =>
