@@ -102,7 +102,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                 <div className="flex">
                                     <FormItem
                                         label="Asset ID"
-                                        className="mx-auto"
+                                        className="mx-auto w-1/2"
                                     >
                                         <Field
                                             type="text"
@@ -117,7 +117,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Type of Machine"
-                                        className="mx-auto"
+                                        className="mx-auto w-1/2"
                                     >
                                         <Field
                                             type="text"
@@ -132,7 +132,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Name" className="mx-auto">
+                                    <FormItem label="Name" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -144,7 +144,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         />
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -158,7 +158,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto">
+                                    <FormItem label="Model" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -172,7 +172,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Purpose"
-                                        className="mx-auto"
+                                        className="mx-auto w-1/2"
                                     >
                                         <Field
                                             type="text"
@@ -189,10 +189,10 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                 <div className="flex">
                                     <FormItem
                                         label="Power requirement"
-                                        className=""
+                                        className="w-1/2"
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="power_requirement"
                                             onChange={(e: any) =>
@@ -203,17 +203,18 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                         />
                                     </FormItem>
                                 </div>
-
+                                <div className='flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                 >
                                     Save
                                 </Button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -106,7 +106,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <div className="flex">
                                     <FormItem
                                         label="Asset ID"
-                                        className="mx-auto"
+                                        className="w-1/2 mx-auto"
                                     >
                                         <Field
                                             type="text"
@@ -122,7 +122,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -139,7 +139,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto">
+                                    <FormItem label="Model" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -154,9 +154,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="KVA" className="mx-auto">
+                                    <FormItem label="KVA" className="w-1/2 mx-auto">
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="kva"
                                             onChange={(e: any) =>
@@ -171,14 +171,14 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Year" className="mx-auto">
+                                    <FormItem label="Year" className="w-1/2 mx-auto">
                                         <select
                                             id="countries"
                                             name="year"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected disabled>Select</option>
                                             {Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map((yr)=>{
@@ -190,6 +190,9 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.year}
                                         </p>
                                     </FormItem>
+                                    <div className="w-1/2">
+
+                                    </div>
                                 </div>
 
                                 {/* <div className="flex">

@@ -108,7 +108,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <div className="flex">
                                     <FormItem
                                         label="Asset ID"
-                                        className="mx-auto"
+                                        className="w-1/2 mx-auto"
                                     >
                                         <Field
                                             type="text"
@@ -124,7 +124,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Type" className="mx-auto">
+                                    <FormItem label="Type" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -143,7 +143,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <div className="flex">
                                     <FormItem
                                         label="Device ID"
-                                        className="mx-auto"
+                                        className="w-1/2 mx-auto"
                                     >
                                         <Field
                                             type="text"
@@ -159,7 +159,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.device_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Make" className="mx-auto">
+                                    <FormItem label="Make" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -176,7 +176,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Model" className="mx-auto">
+                                    <FormItem label="Model" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -191,18 +191,22 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
-                                </div>
+                                    <div className="w-1/2">
 
+                                    </div>
+                                </div>
+                                <div className='flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                 >
                                     Save
                                 </Button>
+                                </div>
                             </div>
                         </div>
                     </div>

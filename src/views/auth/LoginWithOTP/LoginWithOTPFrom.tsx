@@ -170,6 +170,9 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
                                 onChange={handleChange}
                                 component={Input}
                             />
+                            {formdata?.phone_number && <p className="text-[red]">
+                                "Mobile number is required"
+                            </p>}
 
                         </FormItem> :
                             <FormItem className='text-label-title'

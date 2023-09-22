@@ -166,6 +166,9 @@ const StoreRegistration = () => {
         const newData: any = { ...dataa }
         newData[e.target.name] = e.target.value
         setData(newData)
+        console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
+        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
+        // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
 
     // Use useEffect to update form data when fetchDetails changes
@@ -177,7 +180,9 @@ const StoreRegistration = () => {
     }, [fetchDetails])
     console.log("validateChamberFormvalidateChamberForm",dataa);
 
-
+useEffect(()=>{
+    setData(dataa)
+},[dataa])
     return (
         <div className='flex'>
             <div className='w-1/6'>
@@ -436,7 +441,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option selected>
+                                            <option selected disabled value="">
                                                 Type of Store
                                             </option>
                                             {StorageType &&
@@ -639,7 +644,7 @@ const StoreRegistration = () => {
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
-                                                className="w-2/3 border-0"
+                                                className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.processing_area}
                                                 type="number"
                                                 onChange={(e: any) =>

@@ -81,6 +81,7 @@ const SignUpForm = (props: SignUpFormProps) => {
         }
         newData[e.target.name] = e.target.value
         setFormData(newData)
+        if(error[e.target.name] || formData?.password !== formData?.confirm_password)validateForm(newData, setError)
     }
 
     /**
@@ -237,7 +238,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 type="checkbox"
                                 className="me-1 w-5"
                                 name="term_condition"
-                                onChange={(e: any) => handleChange(e)}
+                                onClick={(e: any) => handleChange(e)}
                             />
                             <p className="m-1">
                                 <span>I agree to </span>
