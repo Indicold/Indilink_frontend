@@ -80,7 +80,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                     aria-hidden="true"
                     className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                    <div className="relative my-auto w-full max-w-[600px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
                                 onClick={() => setModal(false)}
@@ -177,17 +177,18 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-
+<div className='flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="bg-[#3f8cfe] w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                 >
                                     Save
                                 </Button>
+                                </div>
                             </div>
                         </div>
                     </div>

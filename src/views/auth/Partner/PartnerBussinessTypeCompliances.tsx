@@ -65,7 +65,7 @@ const PartnerBussinessTypeCompliances = () => {
             url: null,
         },
         {
-            label: 'ISO (optional)',
+            label: 'ISO Certificate',
             placeholder: 'Upload',
             key: 'iso_cert',
             view: false,

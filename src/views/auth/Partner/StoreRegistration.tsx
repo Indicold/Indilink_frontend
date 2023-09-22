@@ -170,10 +170,13 @@ const StoreRegistration = () => {
 
     // Use useEffect to update form data when fetchDetails changes
     useEffect(() => {
+        
         if (fetchDetails?.data !== null) {
-            setData(fetchDetails?.data)
+            // setData(fetchDetails?.data)
         }
     }, [fetchDetails])
+    console.log("validateChamberFormvalidateChamberForm",dataa);
+
 
     return (
         <div className='flex'>
@@ -531,11 +534,10 @@ const StoreRegistration = () => {
                                                 placeholder="Enter value"
                                             />
                                             <select
-                                                disabled={location?.state}
+                                                disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                                <option>B</option>
                                             </select>
                                         </div>
                                         <p className="text-[red]">
@@ -583,11 +585,10 @@ const StoreRegistration = () => {
                                                 placeholder="Enter value"
                                             />
                                             <select
-                                                disabled={location?.state}
+                                                disabled={true}
                                                 className="border-0"
                                             >
                                                 <option>Square feet</option>
-                                                <option>B</option>
                                             </select>
                                         </div>
                                         <p className="text-[red]">
@@ -647,9 +648,11 @@ const StoreRegistration = () => {
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                             />
-                                            <select className="border-0">
+                                          <select
+                                                disabled={true}
+                                                className="border-0"
+                                            >
                                                 <option>Square feet</option>
-                                                <option>B</option>
                                             </select>
                                         </div>
                                         <p className="text-[red]">
@@ -671,9 +674,11 @@ const StoreRegistration = () => {
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                             />
-                                            <select className="border-0">
+                                        <select
+                                                disabled={true}
+                                                className="border-0"
+                                            >
                                                 <option>Square feet</option>
-                                                <option>B</option>
                                             </select>
                                         </div>
                                         <p className="text-[red]">

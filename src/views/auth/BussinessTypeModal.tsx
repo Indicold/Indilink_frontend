@@ -145,36 +145,23 @@ const BussinessTypeModal = () => {
      * @param {any} messagevalue - The message value is the text that you want to display in the toast
      * message. It can be any string or variable that contains the message you want to show.
      */
-    const messageView = (messagevalue: any) => {
-        toast.success(messagevalue, {
-            position: 'top-right', // Position of the toast
-            autoClose: 3000, // Auto-close after 3000ms (3 seconds)
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            style: {
-                background: '#FFB017',
-                fontSize: 'bold',
-                color: '#fff', // Set the background color here
-            },
-        })
-    }
+ 
     console.log('AssetsResponse', AssetsResponse)
 
     /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
   effect is triggered whenever the `AssetsResponse` variable changes. */
+  console.log('ATTTTTT', AssetsResponse?.message?.asset_id)
+
     useEffect(() => {
-        if (AssetsResponse) {
+        if (AssetsResponse?.message?.asset_id) {
+            localStorage.setItem('assets_list_id',AssetsResponse?.message?.asset_id)
+
             // messageView(AssetsResponse?.message)
         }
         if (AssetsResponse?.data && AssetsResponse?.status) {
-            console.log('ATTTTTT', AssetsResponse)
-
             localStorage.setItem('AssetsId', AssetsResponse?.data)
         }
-    }, [AssetsResponse])
+    }, [AssetsResponse,AssetsResponse?.message?.asset_id])
 
     return (
         <div>

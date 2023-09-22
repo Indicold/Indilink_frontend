@@ -152,7 +152,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="C.M.F."
+                                        label="C.F.M."
                                         className="mx-auto"
                                     >
                                         <Field
@@ -162,7 +162,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            placeholder="C.M.F."
+                                            placeholder="C.F.M."
                                             component={Input}
                                         />
                                         <p className="text-[red]">
