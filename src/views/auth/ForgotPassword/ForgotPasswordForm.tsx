@@ -95,11 +95,11 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 ) : (
                     <>
-                        <h4 className="mb-1 text-head-title text-center">Forgot Password</h4>
-                        <p className='!text-[#103492]'>
+                        <h4 className="mb-1 text-head-title">Forgot Password?</h4>
+                        {/* <p className='!text-[#103492]'>
                             Please enter your email address to receive a
                             verification code
-                        </p>
+                        </p> */}
                     </>
                 )}
             </div>
@@ -121,15 +121,16 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
-                                label='Email*'
+                                label='Email address*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
+                                    className='w-full'
                                 >
                                     <Field
                                         type="email"
                                         autoComplete="off"
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="eg. johndeo@gmail.com"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -141,14 +142,14 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className='indigo-btn w-[94%]'
+                                className='indigo-btn w-[94%] mt-4'
                             >
-                                {emailSent ? 'Resend' : 'Send'}
+                                {emailSent ? 'Resend' : 'Reset Password'}
                             </Button>
                             </div>
-                            <div className="mt-4 text-center !text-[#103492]">
-                                <span>Back to </span>
-                                <ActionLink to={signInUrl}>Sign in</ActionLink>
+                            <div className="w-full text-center mt-2">
+                                <span className='text-field'>Back to </span>
+                                <ActionLink to={signInUrl}>Login</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>

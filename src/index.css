@@ -31,7 +31,7 @@
 
 .cin-number input {
 
-    text-align: center;
+    /* text-align: center; */
 
 }
 
@@ -44,21 +44,38 @@
     width: 95%;
 
 }
-.indigo-btn{
-
-    background-color: #FFB017;
-
+.indigo-btn {
+    display: flex;
+    padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-spacing-xs, 8px);
+    align-self: stretch;
+    border-radius: var(--radius-radius-full, 64px) !important;
+    background: var(--surface-surface-green, #1AAD64);
 }
 
  
 
-.indigo-btn:hover{
-
-    background-color: #CA7D11!important;
-
+.indigo-btn:hover {
+    display: flex;
+    padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-spacing-xs, 8px);
+    align-self: stretch;
+    border-radius: var(--radius-radius-full, 64px) !important;
+    background: var(--surface-surface-green, #01b85c)!important;
 }
 .text-head-title{
-    color: #0f3492 !important;
+    color: var(--text-text-black, #1C1C1C);
+
+/* H2/h2-bold */
+font-family: Inter;
+font-size: 28px;
+font-style: normal;
+font-weight: 700;
+line-height: 42px; /* 150% */
 }
 .text-label-title{
     color:#103492 !important;
@@ -153,8 +170,8 @@ font-style: normal;
 font-weight: 700;
 line-height: 42px; /* 150% */
 }
-.text-field{
-    color: var(--text-text-gray, #818181);
+.text-field,.form-label{
+    color: var(--text-text-gray, #818181)!important;
 
     /* H7/h7-medium */
     font-family: Inter;
@@ -201,3 +218,10 @@ border-radius: var(--radius-radius-full, 64px);
 background: var(--surface-surface-black, #1C1C1C);
 }
 /* -----------according  to figma style and layout css end----------- */
+.input {
+    border-radius: 8px!important;
+    background-color: white!important;
+}
+.form-item {
+    margin-bottom: 0.45rem!important;
+}

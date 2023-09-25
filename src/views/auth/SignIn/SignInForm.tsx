@@ -212,7 +212,7 @@ if(formData?.rememberMe){
                     <FormContainer>
                         <FormItem
                             className="!text-[#103492]"
-                            label="Email address*"
+                            label="Registered Email ID*"
                         >
                             <Field
                                 type="text"
@@ -228,7 +228,7 @@ if(formData?.rememberMe){
                                 {error && error.username}
                             </p>
                         </FormItem>
-                        <FormItem className="!text-[#103492]" label="Password*">
+                        <FormItem className="text-field" label="Password*">
                             <Field
                                 style={{ borderRadius: '13px' }}
                                 autoComplete="off"
@@ -261,23 +261,23 @@ if(formData?.rememberMe){
                                 </div>
                             <ActionLink
                                 to={forgotPasswordUrl}
-                                className="ml-2 text-sm font-medium !text-[#103492] dark:text-[#103492]"
+                                className="text-link"
                             >
                                 Forgot Password?
                             </ActionLink>
                         </div>
-                        <div className="w-full mx-auto flex mt-5">
+                        <div className=" mx-auto flex mt-5">
                             <Button
                                 block
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className="primary-button w-[40%] mx-auto"
+                                className="indigo-btn  mx-auto "
                             >
                                 {isSubmitting ? 'Signing in...' : 'Log in'}
                             </Button>
                         </div>
-                        <div className="w-full flex">
+                        {/* <div className="w-full flex">
                             <NavLink
                                 to="/sign-in-otp"
                                 role="button"
@@ -289,17 +289,43 @@ if(formData?.rememberMe){
                             >
                                 {isSubmitting
                                     ? 'Signing in...'
-                                    : 'Log in with OTP'}
+                                    : 'Log in with Phone number'}
                             </NavLink>
-                        </div>
-                        <div className="mt-4 text-center text-[#103492]">
-                            <span>{`Not a member yet?`} </span>
+                        </div> */}
+                        <div className="text-center">
+                            <span className='text-field'>{`Don't have an account?`} </span>
                             <ActionLink
-                                className="text-bold decoration-none rounded-lg !text-[#103492]"
+                                className="text-link"
                                 to={signUpUrl}
                             >
                                 Sign up
                             </ActionLink>
+                        </div>
+                        <div className="flex mt-5">
+                            <hr className='w-[40%] my-auto mx-1' />
+                            Or
+                            <hr className='w-[40%] my-auto mx-1' />
+                        </div>
+                        <div className=" mx-auto flex mt-5">
+                            <Button
+                                block
+                                variant="solid"
+                                type='button'
+                                onClick={()=>navigate('/sign-in-otp')}
+                                className="indigo-btn !bg-black mx-auto !hover:bg-gray-900"
+                            >
+                                <NavLink
+                                to="/sign-in-otp"
+                                role="button"
+                                style={{
+                                    borderRadius: '13px',
+                                    textDecoration: 'auto',
+                                }}
+                                className=""
+                            >
+                                Login with Phone number
+                            </NavLink>
+                            </Button>
                         </div>
                     </FormContainer>
                 </Form>

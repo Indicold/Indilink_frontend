@@ -155,7 +155,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="flex">
+                        <div className="">
                             <FormItem
                                 label="Email Address"
                                 className="me-auto text-label-title "
@@ -200,7 +200,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         <div className="flex">
                             <FormItem
                                 label="Password"
-                                className="me-auto text-label-title"
+                                className="me-auto text-label-title !mb-0"
                             >
                                 <Field
                                     autoComplete="off"
@@ -233,7 +233,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="flex  w-[95%]">
+                        <div className="flex w-[95%]">
                             <input
                                 type="checkbox"
                                 className="me-1 w-5"
@@ -255,8 +255,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                             {error && error.term_condition}
                         </p>
 
-                        <div className="flex  mx-auto mt-4">
+                        <div className="flex mx-auto mt-3">
                             <Button
+                                // style={{ borderRadius: '13px' }}
                                 block
                                 variant="solid"
                                 type="submit"
@@ -264,10 +265,10 @@ const SignUpForm = (props: SignUpFormProps) => {
                             >
                                 {isSubmitting
                                     ? 'Creating Account...'
-                                    : 'Sign Up'}
+                                    : 'Create account'}
                             </Button>
                         </div>
-                        <div className="mt-6 text-center text-[#103492]">
+                        <div className="mt-3 text-center text-[#103492]">
                             <span className="mr-3">
                                 Already have an account?{' '}
                             </span>

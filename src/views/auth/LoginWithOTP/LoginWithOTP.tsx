@@ -9,7 +9,7 @@ const LoginWithOTP = () => {
     return (
         <>
             <div className="mb-8">
-                <h4 className="mb-1 text-center text-head-title">Login to Indicold</h4>
+                <h4 className="mb-1 text-head-title">Login!</h4>
             </div>
             <LoginWithOTPForm disableSubmit={false} />
         </>

@@ -151,7 +151,7 @@ const handleresend=()=>{
                             </div>
                         
                             <Button
-                            className='border-none'
+                            className='border-none m-2'
                                 block
                                 loading={isSubmitting}
                                 type="button"
