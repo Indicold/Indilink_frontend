@@ -124,7 +124,7 @@ const PartnerBussinessTypeAdditional = () => {
 
     // Upload the file to the server
     const handleUpload = async (item: any, file: any) => {
-        let AssetsId = localStorage.getItem('assets_list_id')
+        let AssetsId = localStorage.getItem('AssetsId')
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()

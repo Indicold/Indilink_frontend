@@ -83,7 +83,7 @@ const PartnerBussinessTypeMove = () => {
     }
 
     // Get the AssetsId from local storage
-    let ID: any = localStorage.getItem('assets_list_id')
+    let ID: any = localStorage.getItem('AssetsId')
 
     // Define a function to handle form submission
     const handlesave = async () => {

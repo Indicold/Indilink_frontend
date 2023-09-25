@@ -1017,6 +1017,8 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Chambers
+                                            <p className='text-[red]'>{errors?.chamber_ids}</p>
+
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>

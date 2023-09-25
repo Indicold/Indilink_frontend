@@ -243,7 +243,9 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.weight_bridge_id = 'Weigh Bridge is required'
         console.log("err weigh:", newErrors.weight_bridge_id)
     }
-
+   if(formData?.chamber_ids.length<1){
+    newErrors.chamber_ids="Chamber details is required"
+   }
     if (!formData?.road_condition_id || formData?.road_condition_id === '') {
         newErrors.road_condition_id = 'Please select road condition'
         console.log("err road:", newErrors.road_condition_id)

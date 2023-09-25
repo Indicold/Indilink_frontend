@@ -1,16 +1,22 @@
+import useApiFetch from '@/store/customeHook/useApiFetch';
+import { getToken } from '@/store/token';
 import React, { useState } from 'react'
 
 const NotificationPage = () => {
     const data:any=[1,2,3,4,5,6,7,8,'9'];
+    const {token}:any=getToken();
+    const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
+    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+
     const itemsPerPage:any=4; 
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = ListOfNotification?.data.slice(indexOfFirstItem, indexOfLastItem) || [];
   
-    const totalPages = Math.ceil(data.length / itemsPerPage);
+    const totalPages = Math.ceil(ListOfNotification?.data.length / itemsPerPage);
   
     const handlePageChange = (pageNumber:any) => {
       setCurrentPage(pageNumber);
@@ -29,6 +35,9 @@ const NotificationPage = () => {
       };
       function getYesterdayTodayOrDate(inputDate:any) {
         // Get the current date
+        
+        console.log("created_at",inputDate);
+        
         const currentDate = new Date();
       
         // Calculate yesterday's date
@@ -77,9 +86,9 @@ const NotificationPage = () => {
             alt="Training Icon"
             className="w-6 h-6 mr-3"
           />
-          <h3 className="font-bold text-base text-gray-800">Training</h3>
+          <h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
         </div>
-        <p className="text-xs text-gray-500">{getYesterdayTodayOrDate(inputDate)}</p>
+        <p className="text-xs text-gray-500">{item?.created_at}</p>
       </div>
       <p className="mt-1 text-sm">
         Hey! Do you remember about choosing your training regime?

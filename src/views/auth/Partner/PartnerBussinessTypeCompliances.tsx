@@ -166,7 +166,7 @@ const PartnerBussinessTypeCompliances = () => {
         const formData = new FormData()
         formData.append(item?.key, file)
         formData.append('key', item?.key)
-        formData.append('asset_id', ListId || 'INDI01AAAA9')
+        formData.append('asset_id', AssetsId || 'INDI01AAAA9')
         formData.append('asset_type_id', asset_type_id || '1')
 
         const headers = new Headers()
