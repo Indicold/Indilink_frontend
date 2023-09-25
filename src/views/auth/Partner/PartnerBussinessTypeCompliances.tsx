@@ -12,6 +12,7 @@ import {
 import { getToken } from '@/store/customeHook/token'
 import useApiUpload from '@/store/customeHook/uploadApi'
 import useApiFetch from '@/store/customeHook/useApiFetch'
+import { apiUrl } from '@/store/token'
 import axios from 'axios'
 import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
@@ -39,7 +40,7 @@ const PartnerBussinessTypeCompliances = () => {
     const AssetsType: any = localStorage.getItem('asset_id')
 
     // Determine the API URL based on the asset type
-    let apiUrl: string =
+    let apiUrls: string =
         AssetsType == 1
             ? `partner/store/${AssetsId}`
             : AssetsType == 2
@@ -53,8 +54,8 @@ const PartnerBussinessTypeCompliances = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(apiUrl, token)
-    console.log('TTTTTTTTTT', apiUrl, fetchDetails)
+    } = useApiFetch<any>(apiUrls, token)
+    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
     let array1 = [
         {
@@ -179,7 +180,7 @@ const PartnerBussinessTypeCompliances = () => {
 
         try {
             const response = await fetch(
-                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -332,7 +333,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                 {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
-                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
+                                                        href={`${apiUrl}/${item?.url}`}
                                                         target="_blank"
                                                     >
                                                         View

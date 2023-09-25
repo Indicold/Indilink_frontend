@@ -14,9 +14,9 @@ const tableHead = {
   is_verified: "Is Verified",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
-  createdAt: "Created At",
-  updatedAt: "Updated At",
-  asset_type: "Asset Type",
+  created_at: "Created At",
+  updated_at: "Updated At",
+  assetType: "Asset Type",
   Action: "Action"
 };
 
@@ -74,15 +74,15 @@ const TableLayout = ({ AllStore }: any) => {
     // Handle edit action for different asset types.
     console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
-    if (rowData?.asset_type?.type === 'Store') {
+    if (rowData?.assetType === 'Store') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
     }
-    if (rowData?.asset_type?.type === 'Prepare') {
+    if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
     }
-    if (rowData?.asset_type?.type === 'Move') {
+    if (rowData?.assetType === 'Move') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
     }
@@ -90,15 +90,15 @@ const TableLayout = ({ AllStore }: any) => {
   
   const handleView = (rowData: any) => {
     // Handle view action for different asset types.
-    if (rowData?.asset_type?.type === 'Store') {
+    if (rowData?.assetType === 'Store') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
     }
-    if (rowData?.asset_type?.type === 'Prepare') {
+    if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
     }
-    if (rowData?.asset_type?.type === 'Move') {
+    if (rowData?.assetType === 'Move') {
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }

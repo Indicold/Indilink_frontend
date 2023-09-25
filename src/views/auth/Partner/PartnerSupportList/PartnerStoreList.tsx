@@ -27,21 +27,22 @@ const PartnerStoreList = () => {
     console.log('FFFFFFF', Store)
 
     return (
-        <div>
-            {Store?.data?.length > 0 && (
-                <>
-                    <h4 className="text-head-title text-center">
+        <>
+              <h4 className="text-head-title text-center">
                         Store Support List
                     </h4>
+            {Store?.data?.length > 0 ? (
+                <>
+                  
                     <TableLayoutPartner
                         AllStore={Store?.data?.length > 0 && Store?.data}
                         tableHead={tableHead}
                         type="Store"
                     />
                 </>
-            )}
+            ) :<h3 className='mx-auto my-auto'>No Data Found</h3>}
             <div>{StoreLoad && <LoaderSpinner />}</div>
-        </div>
+        </>
     )
 }
 

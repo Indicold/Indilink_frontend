@@ -112,7 +112,7 @@ if(formData?.rememberMe){
                 },
                 body: JSON.stringify(
                     {
-                        user_id: formData?.username,
+                        email: formData?.username,
                         password: formData?.password,
                     }
                 ),
@@ -266,14 +266,13 @@ if(formData?.rememberMe){
                                 Forgot Password?
                             </ActionLink>
                         </div>
-                        <div className="w-[40%] mx-auto flex mt-5">
+                        <div className="w-full mx-auto flex mt-5">
                             <Button
-                                style={{ borderRadius: '13px' }}
                                 block
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className="bg-[#ffb017] indigo-btn w-[40%] mx-auto rounded-[30px]"
+                                className="primary-button w-[40%] mx-auto"
                             >
                                 {isSubmitting ? 'Signing in...' : 'Log in'}
                             </Button>

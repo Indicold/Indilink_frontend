@@ -95,7 +95,7 @@ const PartnerBussinessTypeMove = () => {
             var myHeaders = new Headers()
             myHeaders.append('Authorization', `Bearer ${token}`)
             var formdata = new FormData()
-            formdata.append('asset_id', 'INDI01AAAA7')
+            formdata.append('asset_id', ID)
             formdata.append('vehicle_make_id', data?.vehicle_make_id)
             formdata.append('vehicle_model_id', data?.vehicle_model_id)
             formdata.append('permit_validity', data?.permit_validity)
@@ -155,6 +155,15 @@ const PartnerBussinessTypeMove = () => {
     {
         console.log('vehicalMake?.data', vehicalMake?.data)
     }
+    const TimeString = (time: any) => {
+        const dateTimeString = "2023-09-15T00:00:00.000Z";
+        
+        const date = new Date(dateTimeString);
+        const formattedDate = date.toISOString().split('T')[0];
+        return formattedDate
+    }
+    console.log("66666666666666",TimeString());
+    
     return (
         <div className='flex'>
             <ToastContainer />
@@ -288,7 +297,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="permit_validity"
-                                            value={data?.permit_validity}
+                                            value={data?.permit_validity && TimeString(data?.permit_validity)}
                                             placeholder="Permit Validity Date"
                                             component={Input}
                                         />
@@ -308,7 +317,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="pucc_validity"
-                                            value={data?.pucc_validity}
+                                            value={data?.pucc_validity && TimeString(data?.pucc_validity)}
                                             placeholder="PUCC valid Till Date"
                                             component={Input}
                                         />
@@ -347,7 +356,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="date"
                                             autoComplete="off"
-                                            value={data?.fitness_validity}
+                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }

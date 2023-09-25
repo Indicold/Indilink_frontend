@@ -53,10 +53,10 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        setSubmitting(true);
+        
         const {email }=values;
     localStorage.setItem("email",email)
-        apiForgotPassword(values,messageView)
+        apiForgotPassword(values,messageView,setSubmitting)
     };
     /**
      * The function `messageView` displays a success toast message with a custom style.

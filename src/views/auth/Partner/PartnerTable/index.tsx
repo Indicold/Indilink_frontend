@@ -31,17 +31,19 @@ const PartnerTableAssetsList = () => {
         loading: StoreRLoad,
         error: allerr,
     }: any = useApiFetch<any>('master/asset', token)
+console.log("TTTTTUUUUUU",AllStore);
 
     return (
         <>
-            {AllStore?.data?.length > 0 && (
-                <>
                     <h4 className="text-head-title text-center">Assets List</h4>
+
+            {AllStore?.data?.length > 0 ? (
+                <>
                     <TableLayout
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
-            )}
+            ) : <h3 className='mx-auto my-auto'>No Data Found</h3>}
             <div>
                 {(moveLoad || prepLoad || StoreLoad) && <LoaderSpinner />}
             </div>

@@ -35,7 +35,7 @@ const VerfyOtpForm = (props: ForgotPasswordFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
 
     const [emailSent, setEmailSent] = useState(false)
-
+    const [submitting,setSubmitting]=useState(false)
     const [message, setMessage] = useTimeOutMessage()
 const emailId=localStorage.getItem("email");
     /**
@@ -75,7 +75,13 @@ const emailId=localStorage.getItem("email");
             },
         });
     }
-
+const handleresend=()=>{
+    const data:any={
+        email:emailId,
+        redirect:3
+    }
+    apiForgotPassword(data,messageView,setSubmitting)
+}
     return (
         <div className={className}>
                   <ToastContainer />
@@ -143,6 +149,16 @@ const emailId=localStorage.getItem("email");
                                     />
                                 </FormItem>
                             </div>
+                        
+                            <Button
+                            className='border-none'
+                                block
+                                loading={isSubmitting}
+                                type="button"
+                                onClick={handleresend}
+                            >
+                                Resend OTP
+                            </Button>
                             <Button
                                 block
                                 loading={isSubmitting}

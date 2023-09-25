@@ -255,13 +255,12 @@ const SignUpForm = (props: SignUpFormProps) => {
                             {error && error.term_condition}
                         </p>
 
-                        <div className="flex w-[40%] mx-auto mt-4">
+                        <div className="flex  mx-auto mt-4">
                             <Button
-                                style={{ borderRadius: '13px' }}
                                 block
                                 variant="solid"
                                 type="submit"
-                                className="indigo-btn w-[30%] mx-auto rounded-xl px-4 shadow-lg"
+                                className="indigo-btn  mx-auto rounded-xl px-4 shadow-lg"
                             >
                                 {isSubmitting
                                     ? 'Creating Account...'

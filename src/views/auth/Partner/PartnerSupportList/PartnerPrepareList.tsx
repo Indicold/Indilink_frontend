@@ -25,12 +25,13 @@ const PartnerPrepareList = () => {
     console.log('FFFFFFF', PrepareData)
 
     return (
-        <div>
-            {PrepareData?.data?.length > 0 && (
-                <>
-                    <h4 className="text-head-title text-center">
+        <>
+          <h4 className="text-head-title text-center">
                         Prepare Support List
                     </h4>
+            {PrepareData?.data?.length > 0 ? (
+                <>
+                  
                     <TableLayoutPartner
                         AllStore={
                             PrepareData?.data?.length > 0 && PrepareData?.data
@@ -39,9 +40,9 @@ const PartnerPrepareList = () => {
                         type="Prepare"
                     />
                 </>
-            )}
+            ) :<h3 className='mx-auto my-auto'>No Data Found</h3>}
             <div>{PrepareLoad && <LoaderSpinner />}</div>
-        </div>
+        </>
     )
 }
 

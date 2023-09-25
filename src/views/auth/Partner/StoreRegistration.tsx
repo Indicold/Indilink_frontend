@@ -172,6 +172,8 @@ const StoreRegistration = () => {
     }
 
     // Use useEffect to update form data when fetchDetails changes
+    console.log("GGGGGGGGGG",fetchDetails);
+    
     useEffect(() => {
         
         if (fetchDetails?.data !== null && fetchDetails?.data !==undefined) {

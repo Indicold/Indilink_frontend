@@ -11,6 +11,7 @@ import {
 import { getToken } from '@/store/customeHook/token'
 import useApiUpload from '@/store/customeHook/uploadApi'
 import useApiFetch from '@/store/customeHook/useApiFetch'
+import { apiUrl } from '@/store/token'
 import axios from 'axios'
 import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
@@ -35,7 +36,7 @@ const PartnerBussinessTypeAdditional = () => {
     const AssetsType: any = localStorage.getItem('asset_id')
 
     // Construct the API URL based on the AssetsType
-    let apiUrl: string =
+    let apiUrls: string =
         AssetsType == 1
             ? `partner/store/${AssetsId}`
             : AssetsType == 2
@@ -49,7 +50,7 @@ const PartnerBussinessTypeAdditional = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(apiUrl, token)
+    } = useApiFetch<any>(apiUrls, token)
 
     // Define an array of objects for file upload items
     let array1 = [
@@ -143,7 +144,7 @@ const PartnerBussinessTypeAdditional = () => {
 
         try {
             const response = await fetch(
-                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -263,7 +264,7 @@ const PartnerBussinessTypeAdditional = () => {
                                                 {item?.view && <b>Status:</b>}
                                                 {item?.view && (
                                                     <a
-                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
+                                                        href={`${apiUrl}/${item?.url}`}
                                                         target="_blank"
                                                     >
                                                         View

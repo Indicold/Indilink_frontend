@@ -25,21 +25,22 @@ const PartnerMoveList = () => {
     } = useApiFetch<any>('partner/move', token)
     console.log('FFFFFFF', MoveData)
     return (
-        <div>
-            {MoveData?.data?.length > 0 && (
-                <>
-                    <h4 className="text-head-title text-center">
+        <>
+             <h4 className="text-head-title text-center">
                         Move Support List
                     </h4>
+            {MoveData?.data?.length > 0 ? (
+                <>
+                 
                     <TableLayoutPartner
                         AllStore={MoveData?.data?.length > 0 && MoveData?.data}
                         tableHead={tableHead}
                         type="Move"
                     />
                 </>
-            )}
+            ) :<h3 className='mx-auto my-auto'>No Data Found</h3>}
             <div>{MoveLoad && <LoaderSpinner />}</div>
-        </div>
+        </>
     )
 }
 
