@@ -2,7 +2,7 @@ import Avatar from '@/components/ui/Avatar'
 import Dropdown from '@/components/ui/Dropdown'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
@@ -38,6 +38,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                 placement="bottom-end"
             >
                 <Dropdown.Item variant="header">
+                    <NavLink to='/profile'>
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
@@ -47,6 +48,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                             <div className="text-xs">user01@mail.com</div>
                         </div>
                     </div>
+                    </NavLink>
                 </Dropdown.Item>
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (

@@ -154,8 +154,24 @@ export const protectedRoutes = [
     },
     {
 
+        key: 'partnerbussinesstypeid',
+        path: `/partner-bussiness-type-move/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
         key: 'partnerbussinesstype',
         path: `/partner-bussiness-type-prepare`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-prepare/:id`,
         component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypePrepare')),
         authority: [],
 
@@ -229,6 +245,14 @@ export const protectedRoutes = [
         key: 'notifiaction',
         path: `/notification`,
         component: lazy(() => import('@/components/template/NotificationDropdown/index')),
+        authority: [],
+
+    },
+    {
+
+        key: 'profile',
+        path: `/profile`,
+        component: lazy(() => import('@/views/auth/UserProfile/index')),
         authority: [],
 
     },

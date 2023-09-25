@@ -239,7 +239,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
 
     const newErrors: any = {}
 
-    if (!formData?.weight_bridge_id || formData?.weight_bridge_id === '') {
+    if (!formData?.weight_bridge_id) {
         newErrors.weight_bridge_id = 'Weigh Bridge is required'
         console.log("err weigh:", newErrors.weight_bridge_id)
     }
@@ -269,19 +269,19 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.cold_storage_type_id = 'Cold Storage Type is required'
     }
 
-    if (!formData?.no_of_chambers) {
+    if (!formData?.no_of_chambers || formData?.no_of_chambers==0) {
         newErrors.no_of_chambers = 'Number of Chambers is required'
     }
 
-    if (!formData?.ante_room_area) {
+    if (!formData?.ante_room_area || formData?.ante_room_area==0) {
         newErrors.ante_room_area = 'Ante Room Area is required'
     }
 
-    if (!formData?.total_number_of_docks) {
+    if (!formData?.total_number_of_docks || formData?.total_number_of_docks==0) {
         newErrors.total_number_of_docks = 'Total Number of Docks is required'
     }
 
-    if (!formData?.total_office_space) {
+    if (!formData?.total_office_space || formData?.total_office_space==0) {
         newErrors.total_office_space = 'Total Office Space is required'
     }
 
@@ -289,11 +289,11 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.type_of_dock_id = 'Type of Dock is required'
     }
 
-    if (!formData?.processing_area) {
+    if (!formData?.processing_area || formData?.processing_area==0) {
         newErrors.processing_area = 'Processing Area is required'
     }
 
-    if (!formData?.parking_area) {
+    if (!formData?.parking_area || formData?.parking_area==0) {
         newErrors.parking_area = 'Parking Area is required'
     }
 

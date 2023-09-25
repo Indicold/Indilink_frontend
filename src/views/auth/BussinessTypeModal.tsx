@@ -13,6 +13,7 @@ import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
+import { messageView } from '@/store/customeHook/validate'
 
 const BussinessTypeModal = () => {
     const [assetsType, setAssetsType] = useState<any>(1)
@@ -46,9 +47,10 @@ const BussinessTypeModal = () => {
      * The `handleRoute` function sets various values in local storage based on user type and business
      * type, and then navigates to different routes depending on the conditions.
      */
+    let title_id: any = ''
+    let asset_type_id: any = ''
     const handleRoute = () => {
-        let title_id: any = ''
-        let asset_type_id: any = ''
+     
 
         localStorage.setItem('bussiness_type', Bussiness)
 
@@ -72,43 +74,7 @@ const BussinessTypeModal = () => {
         localStorage.setItem('category_id', formData?.category_id)
 
         PostAssetsDetails(body)
-        setTimeout(() => {
-            if (localStorage.getItem('user_type') === 'Partner') {
-                localStorage.removeItem('assets_list_id')
-                title_id = 1
-                if (Bussiness === 'Move') {
-                    setAssetsType(2)
-                    asset_type_id = 2
-                    navigate('/partner-bussiness-type-move')
-                }
-                if (Bussiness === 'Prepare') {
-                    setAssetsType(3)
-                    asset_type_id = 3
-                    navigate('/partner-bussiness-type-prepare')
-                }
-                if (Bussiness === 'Store') {
-                    asset_type_id = 1
-                    setAssetsType(1)
-                    navigate('/partner-registration')
-                }
-            }
-            if (localStorage.getItem('user_type') === 'Investor') {
-                title_id = 3
-                navigate('/investor-registration')
-            }
-            if (localStorage.getItem('user_type') === 'Customer') {
-                if (Bussiness === 'Store') {
-                    navigate('/customer-store')
-                }
-                if (Bussiness === 'Move') {
-                    navigate('/customer-move')
-                }
-                if (Bussiness === 'Prepare') {
-                    navigate('/customer-prepare')
-                }
-            }
-            localStorage.setItem('asset_id', asset_type_id)
-        }, 3000)
+      
     }
     console.log('datadatadata', countryId)
 
@@ -125,7 +91,51 @@ const BussinessTypeModal = () => {
             navigate('/investor-dashbord')
         }
     }
-
+useEffect(()=>{
+    console.log('AssetsResponse',AssetsResponse?.message?.message);
+    
+if(AssetsResponse?.message){
+    messageView(AssetsResponse?.message?.message)
+    setTimeout(() => {
+        if (localStorage.getItem('user_type') === 'Partner') {
+            // localStorage.removeItem('assets_list_id')
+            title_id = 1
+            if (Bussiness === 'Move') {
+                setAssetsType(2)
+                asset_type_id = 2
+                navigate('/partner-bussiness-type-move')
+            }
+            if (Bussiness === 'Prepare') {
+                setAssetsType(3)
+                asset_type_id = 3
+                navigate('/partner-bussiness-type-prepare')
+            }
+            if (Bussiness === 'Store') {
+                asset_type_id = 1
+                setAssetsType(1)
+                navigate('/partner-registration')
+            }
+        }
+        if (localStorage.getItem('user_type') === 'Investor') {
+            title_id = 3
+            navigate('/investor-registration')
+        }
+        if (localStorage.getItem('user_type') === 'Customer') {
+            if (Bussiness === 'Store') {
+                navigate('/customer-store')
+            }
+            if (Bussiness === 'Move') {
+                navigate('/customer-move')
+            }
+            if (Bussiness === 'Prepare') {
+                navigate('/customer-prepare')
+            }
+        }
+        localStorage.setItem('asset_id', asset_type_id)
+        localStorage.setItem('AssetId', AssetsResponse?.message?.asset_id)
+    }, 2000)
+}
+},[AssetsResponse?.message])
     /**
      * The handleChange function updates the formData state with the new value from the input field and
      * logs the countryId.
@@ -301,7 +311,7 @@ const BussinessTypeModal = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRoute}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                     >
                                         Next
                                     </Button>

@@ -121,6 +121,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
+                                label='Email*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
                                 >

@@ -73,17 +73,17 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
         if (type === 'Store') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '1')
-            navigate('/partner-registration', { state: false })
+            navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
         }
         if (type === 'Prepare') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '3')
-            navigate('/partner-bussiness-type-prepare', { state: false })
+            navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
         }
         if (type === 'Move') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '2')
-            navigate('/partner-bussiness-type-move', { state: false })
+            navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
         }
     }
 
@@ -91,17 +91,17 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
         if (type === 'Prepare') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '3')
-            navigate('/partner-bussiness-type-prepare', { state: true })
+            navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
         }
         if (type === 'Move') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '2')
-            navigate('/partner-bussiness-type-move', { state: true })
+            navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
         }
         if (type === 'Store') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '1')
-            navigate('/partner-registration', { state: true })
+            navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
         }
     }
 

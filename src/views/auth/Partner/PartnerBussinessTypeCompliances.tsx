@@ -179,7 +179,7 @@ const PartnerBussinessTypeCompliances = () => {
 
         try {
             const response = await fetch(
-                `https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc`,
+                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -332,7 +332,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                 {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
-                                                        href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`}
+                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
                                                         target="_blank"
                                                     >
                                                         View

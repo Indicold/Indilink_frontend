@@ -79,6 +79,7 @@ const PartnerBussinessTypeMove = () => {
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
+        if(errors[e.target.name])validateMovePartnerForm(newData, setErrors)
     }
 
     // Get the AssetsId from local storage
@@ -121,7 +122,10 @@ const PartnerBussinessTypeMove = () => {
 
                 // If the response status is 200, navigate to the specified route
                 if (result?.status == 200 || result?.status) {
-                    navigate('/partner-bussiness-type-compliance')
+                    setTimeout(()=>{
+                        navigate('/partner-bussiness-type-compliance')
+
+                    },2000)
                 }
             } catch (error: any) {
                 // Display an error message on request failure
@@ -129,9 +133,12 @@ const PartnerBussinessTypeMove = () => {
             }
         } else if (isDisabled) {
             // If the form is disabled, navigate to the specified route with state
+          setTimeout(()=>{
             navigate('/partner-bussiness-type-compliance', {
                 state: isDisabled,
             })
+          },2000)
+          
         }
     }
 
@@ -201,7 +208,7 @@ const PartnerBussinessTypeMove = () => {
                             <FormContainer>
                                 <div className="flex">
                                     <FormItem
-                                        label="Make"
+                                        label="Make*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -210,7 +217,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
-                                            className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Make</option>
                                             {vehicalMake &&
@@ -234,7 +241,7 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Model"
+                                        label="Model*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -243,7 +250,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_model_id"
-                                            className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Model</option>
                                             {vehicalModal &&
@@ -270,7 +277,7 @@ const PartnerBussinessTypeMove = () => {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Permit valid Till Date"
+                                        label="Permit valid Till Date*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -290,7 +297,7 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="PUCC valid Till Date"
+                                        label="PUCC valid Till Date*"
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
@@ -313,7 +320,7 @@ const PartnerBussinessTypeMove = () => {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Get Chassis No from RC"
+                                        label="Get Chassis No from RC*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -333,7 +340,7 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Fitness Certificate Valid Till"
+                                        label="Fitness Certificate Valid Till*"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field

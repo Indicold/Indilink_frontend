@@ -38,7 +38,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
         otp: ""
     })
 
-
+const [errors,setError]=useState<any>({})
     const {
         disableSubmit = false,
         className,
@@ -49,17 +49,29 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     let a = 'false'
 
     const navigate = useNavigate();
-
+const validate=()=>{
+    const error:any={};
+    if(!formdata?.phone_number){
+        error.phone_number="Phone number is required"
+    }
+    
+    console.log('errr', error)
+    setError(error)
+    return Object.keys(error).length === 0
+}
     const handlesubmit = (e: any) => {
         e.preventDefault()
-        if (formdata?.otp) {
-            PUTOTPDetails(formdata)
-        } else {
-            // a = 'true';
-            let body: any = { phone_number: formdata?.phone_number }
-            postMobileNumber(body)
-            a = 'true';
+        if(validate()){
+            if (formdata?.otp) {
+                PUTOTPDetails(formdata)
+            } else {
+                // a = 'true';
+                let body: any = { phone_number: formdata?.phone_number }
+                postMobileNumber(body)
+                a = 'true';
+            }
         }
+        
     }
 
     /**
@@ -157,7 +169,7 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
                 <Form onSubmit={handlesubmit}>
                     <FormContainer>
                         {isNumber ? <FormItem className='d-flex text-label-title'
-                            label="Mobile Number"
+                            label="Mobile Number*"
 
                         >
                             <Field
@@ -170,13 +182,12 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
                                 onChange={handleChange}
                                 component={Input}
                             />
-                            {formdata?.phone_number && <p className="text-[red]">
-                                "Mobile number is required"
-                            </p>}
+                           <p className="text-[red]">{errors?.phone_number}
+                            </p>
 
                         </FormItem> :
                             <FormItem className='text-label-title'
-                                label="Enter OTP"
+                                label="Enter OTP*"
 
 
                             >
@@ -190,6 +201,9 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
                                     component={Input}
                                 // component={PasswordInput}
                                 />
+                                  <p className="text-[red]">{errors?.OTP}
+                            </p>
+
                             </FormItem>
                         }
 

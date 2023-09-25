@@ -131,7 +131,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             <Formik
                 initialValues={{
                     password: null,
-                    confirm_password: null,
+                    confirm_password: '',
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -144,14 +144,16 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
             >
                 {({ touched, errors, isSubmitting }) => (
                     <Form>
+                      
                         <FormContainer>
                             {!resetComplete ? (
                                 <>
                                     <FormItem
-                                        label="Password"
+                                        label="Password*"
                                         invalid={
                                             errors.password && touched.password
                                         }
+                                            
                                         errorMessage={errors.password}
                                     >
                                         <Field
@@ -162,12 +164,12 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Confirm Password"
+                                        label="Confirm Password*"
                                         invalid={
                                             errors.confirm_password &&
                                             touched.confirm_password
                                         }
-                                        errorMessage={errors.confirm_password}
+                                        errorMessage={errors.confirm_password==='confirm_password cannot be null' ? 'Confirm password cannot be Empty' : errors.confirm_password}
                                     >
                                         <Field
                                             autoComplete="off"

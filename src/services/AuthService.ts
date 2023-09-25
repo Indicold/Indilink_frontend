@@ -8,6 +8,7 @@ import type {
     SignInResponse,
     SignUpResponse,
 } from '@/@types/auth'
+import { setThemeColor } from '@/store'
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
@@ -163,8 +164,11 @@ export async function apiResetPassword(dataa:any,messageView:any) {
 
           console.log(data);
           if(data?.status){
-            messageView("Password Reset Successfully!")
-            window.location.href="/sign-in"
+            messageView(data?.message)
+            setTimeout(()=>{
+              window.location.href="/sign-in"
+
+            },2000)
           }
           
         })

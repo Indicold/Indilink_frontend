@@ -8,6 +8,8 @@
  * displayed conditionally based on the value of the "modal
  */
 import { Button, FormItem, Input } from '@/components/ui'
+import { getToken } from '@/store/customeHook/token'
+import useApiFetch from '@/store/customeHook/useApiFetch'
 import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
@@ -26,6 +28,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
+    const {token}:any=getToken()
+    const {
+        data: DfTypeList,
+        loading: DfLoading,
+        error: DfError,
+    } = useApiFetch<any>('master/partner/store/get-defrosting', token)
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -229,10 +237,10 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Defrosting ID*"
+                                        label="Defrosting*"
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                        {/* <Field
                                             type="text"
                                             autoComplete="off"
                                             name="defrosting_id"
@@ -241,7 +249,20 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Defrosting ID"
                                             component={Input}
-                                        />
+                                        /> */}
+                                        <select
+                                            name="defrosting_id"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option >Select</option>
+                                            {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
+  <option selected={item?.id===data?.defrosting_id}>{item?.type}</option>
+                                            ))}
+                                          
+                                        </select>
                                         <p className="text-[red]">
                                             {errors && errors.defrosting_id}
                                         </p>

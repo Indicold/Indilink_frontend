@@ -68,10 +68,15 @@ const PartnerBussinessTypeAdditional = () => {
             placeholder: 'Upload',
             key: 'structural_load_safety_cert',
         },
+        // {
+        //     label: 'Pest Control Agency Contract',
+        //     placeholder: 'Upload',
+        //     key: 'pest_control_agency_contract',
+        // },
         {
-            label: 'Pest Control Agency Contract',
+            label: 'Plant Layout',
             placeholder: 'Upload',
-            key: 'pest_control_agency_contract',
+            key: 'plant_layout',
         },
         {
             label: 'Insurance Certificate',
@@ -138,7 +143,7 @@ const PartnerBussinessTypeAdditional = () => {
 
         try {
             const response = await fetch(
-                `https://seal-app-uqxwl.ondigitalocean.app/partner/register-partner-upload-doc`,
+                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -244,6 +249,7 @@ const PartnerBussinessTypeAdditional = () => {
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
+                                                accept="image/*,.doc, .docx,.pdf"
                                                 className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                         file:bg-transparent file:border-0
                         file:bg-gray-100 file:mr-4
@@ -257,7 +263,7 @@ const PartnerBussinessTypeAdditional = () => {
                                                 {item?.view && <b>Status:</b>}
                                                 {item?.view && (
                                                     <a
-                                                        href={`https://seal-app-uqxwl.ondigitalocean.app/${item?.url}`}
+                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
                                                         target="_blank"
                                                     >
                                                         View

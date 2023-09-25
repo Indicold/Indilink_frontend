@@ -57,7 +57,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         } else {
             newData[e.target.name] = e.target.value
         }
-        validateChamberForm(newData, setErrors)
+        if(errors[e.target.name]){
+            validateChamberForm(newData, setErrors)
+
+        }
         setData(newData)
         console.log('newData', newData)
     }
@@ -114,6 +117,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                 const newD: any = { ...formD }
                 let arr: any = []
                 if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
+                localStorage.setItem('StoreData',JSON.stringify(newD))
                 newD['chamber_ids'].push(result?.date?.id)
                 update(newD)
                 setModal(false)

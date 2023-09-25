@@ -45,7 +45,7 @@ const PartnerBussinessTypePrepare = () => {
         data: CityList,
         loading: CityListLoading,
         error: CityListError,
-    } = useApiFetch<any>('master/get-city-by-countryId/101', token)
+    } = useApiFetch<any>(`master/get-city-by-countryId/${localStorage.getItem('country_id')}`, token)
     const {
         data: ProductType,
         loading: ProductTypeLoading,
@@ -56,6 +56,13 @@ const PartnerBussinessTypePrepare = () => {
         loading: PTLLoading,
         error: PTLError,
     } = useApiFetch<any>('master/customer/store/get-product-type', token)
+
+
+    const {
+        data: DockTypeList,
+        loading: DTLoading,
+        error: DTError,
+    } = useApiFetch<any>('master/partner/store/type-of-docks', token)
 
     // Define state variables for API response and loading status
     const {
@@ -71,7 +78,7 @@ const PartnerBussinessTypePrepare = () => {
 
     // Define a sample payload for the POST request
     const payload: any = {
-        asset_id: localStorage.getItem('AssetsId'),
+        asset_id: localStorage.getItem('assets_list_id'),
         city_id: '9',
         address: 'VARANSHI',
         hourly_throughput: '2132',
@@ -89,7 +96,7 @@ const PartnerBussinessTypePrepare = () => {
 
     // Define state variable and function for form data
     const [formData, setFormData] = useState<any>({
-        asset_id: localStorage.getItem('AssetsId'),
+        asset_id: localStorage.getItem('assets_list_id'),
         city_id: '',
         address: '',
         hourly_throughput: '',
@@ -124,7 +131,7 @@ const PartnerBussinessTypePrepare = () => {
     const handleRoute = () => {
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
-            PostPrepareRegisterDetails(payload)
+            PostPrepareRegisterDetails(formData)
             navigate('/partner-bussiness-type-compliance')
         }
     }
@@ -149,7 +156,6 @@ const PartnerBussinessTypePrepare = () => {
         }
     }, [fetchDetails])
 
-    console.log('INDI01AAAA5INDI01AAAA5', fetchDetails)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -279,29 +285,22 @@ const PartnerBussinessTypePrepare = () => {
 
                                     <div className="flex">
                                         <FormItem
-                                            label="Total Hourly Throughput"
+                                            label="Total Hourly Throughput(MT)*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
-                                            <input
-                                                className="w-2/3 border-0 focus:outline-0"
-                                                type='number'
+                                              <Field
+                                                disabled={isDisabled}
+                                                type="number"
+                                                autoComplete="off"
+                                                name="hourly_throughput"
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
-                                                name="hourly_throughput"
-                                                value={
-                                                    formData?.hourly_throughput
-                                                }
                                                 placeholder="Enter value"
+                                                value={formData?.hourly_throughput}
+                                                component={Input}
                                             />
-                                            <select
-                                                disabled={true}
-                                                className="border-0 ms-auto me-2"
-                                            >
-                                                <option>MT</option>
-                                            </select>
-                                        </div>
+                                       
                                             <p className="text-[red]">
                                                 {errors &&
                                                     errors.hourly_throughput}
@@ -379,8 +378,7 @@ const PartnerBussinessTypePrepare = () => {
                                                                     }
                                                                     selected={
                                                                         item?.id ===
-                                                                        formData
-                                                                            ?.product_category_ids?product_category_ids[0]:""
+                                                                        formData?.product_category_ids[0]
                                                                     }
                                                                 >
                                                                     {item?.name}
@@ -440,6 +438,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
+                                            disabled={isDisabled}
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type='number'
                                                 onChange={(e: any) =>
@@ -450,7 +449,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 placeholder="Throughput"
                                             />
                                             <select
-                                                disabled={false}
+                                                   disabled={isDisabled}
                                                 className="border-0 ms-auto me-2"
                                             >
                                                 <option className='text-end'>MT</option>
@@ -468,6 +467,7 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
+                                                disabled={isDisabled}
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type='number'
                                                 onChange={(e: any) =>
@@ -478,7 +478,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 placeholder="Avg. case size"
                                             />
                                             <select
-                                                disabled={false}
+                                               disabled={isDisabled}
                                                 className="border-0 ms-auto me-2"
                                             >
                                                 <option className='text-end'>Kg</option>
@@ -515,20 +515,39 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Types of Docks"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="text"
-                                                autoComplete="off"
-                                                onChange={(e: any) =>
-                                                    handleChange(e)
-                                                }
-                                                name="type_of_dock_id"
-                                                value={
-                                                    formData?.type_of_dock_id
-                                                }
-                                                placeholder="Batch Size"
-                                                component={Input}
-                                            />
+                                                                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                              <select
+                                                    disabled={isDisabled}
+                                                    className="w-full focus:outline-0"
+                                                    name="type_of_dock_id"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                >
+                                                    <option>
+                                                    Dock Type
+                                                    </option>
+                                                    {DockTypeList &&
+                                                        DockTypeList?.data?.map(
+                                                            (
+                                                                item: any,
+                                                                index: any
+                                                            ) => (
+                                                                <option
+                                                                    value={
+                                                                        item?.id
+                                                                    }
+                                                                    selected={
+                                                                        item?.id ==
+                                                                        formData?.type_of_dock_id
+                                                                    }
+                                                                >
+                                                                    {item?.type}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                </select>
+                                          </div>
                                             <p className="text-[red]">
                                                 {errors &&
                                                     errors.type_of_dock_id}
@@ -562,8 +581,9 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
+                                                disabled={isDisabled}
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                type='text'
+                                                type='number'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
@@ -572,7 +592,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 placeholder="Batch Size"
                                             />
                                             <select
-                                                disabled={false}
+                                                   disabled={isDisabled}
                                                 className="border-0 ms-auto me-2 focus:outline-0"
                                             >
                                                 <option className='text-end'>MT</option>
@@ -588,13 +608,13 @@ const PartnerBussinessTypePrepare = () => {
 
                                     <div className="flex">
                                         <FormItem
-                                            label="Area"
+                                            label="Area (Square Feet)*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
-                                                className="w-2/3 border-0 focus:outline-0"
-                                                type='text'
+                                                className="w-full border-0 focus:outline-0"
+                                                type='number'
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
@@ -602,12 +622,12 @@ const PartnerBussinessTypePrepare = () => {
                                                 value={formData?.area}
                                                 placeholder="Area"
                                             />
-                                            <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0 ms-auto me-2 focus:outline-0"
                                             >
                                                 <option className='text-end'>Square feet</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                             <p className="text-[red]">
                                                 {errors && errors.area}
@@ -650,7 +670,7 @@ const PartnerBussinessTypePrepare = () => {
                                             variant="solid"
                                             type="button"
                                             onClick={handleRoute}
-                                            className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                            className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                         >
                                             Next
                                         </Button>

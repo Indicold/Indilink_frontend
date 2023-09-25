@@ -212,7 +212,7 @@ if(formData?.rememberMe){
                     <FormContainer>
                         <FormItem
                             className="!text-[#103492]"
-                            label="Email address"
+                            label="Email address*"
                         >
                             <Field
                                 type="text"
@@ -228,7 +228,7 @@ if(formData?.rememberMe){
                                 {error && error.username}
                             </p>
                         </FormItem>
-                        <FormItem className="!text-[#103492]" label="Password">
+                        <FormItem className="!text-[#103492]" label="Password*">
                             <Field
                                 style={{ borderRadius: '13px' }}
                                 autoComplete="off"

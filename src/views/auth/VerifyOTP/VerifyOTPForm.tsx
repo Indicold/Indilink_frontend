@@ -28,6 +28,7 @@ type ForgotPasswordFormSchema = {
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter your email'),
+    OTP: Yup.string().required('Please enter your OTP'),
 })
 
 const VerfyOtpForm = (props: ForgotPasswordFormProps) => {
@@ -116,6 +117,7 @@ const emailId=localStorage.getItem("email");
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
+                                label='Email*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
                                 >
@@ -128,8 +130,9 @@ const emailId=localStorage.getItem("email");
                                     />
                                 </FormItem>
                                 <FormItem
-                                    invalid={errors.email && touched.email}
-                                    errorMessage={errors.email}
+                                label='OTP*'
+                                    invalid={errors.OTP && touched.OTP}
+                                    errorMessage={errors.OTP}
                                 >
                                     <Field
                                         type="text"
