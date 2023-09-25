@@ -10,6 +10,7 @@ const SignIn = () => {
     return (
         <>
             <div className="mb-8">
+                <img className="lg:w-[130px] mt-4 md:w-3/6 w-5/6 mb-4 object-cover object-center rounded-[3%] " alt="hero" src="./img/images/logimg.png" />
                 <h4 className="mb-1 text-head-title">Login!</h4>
             </div>
             <SignInForm disableSubmit={false} />
