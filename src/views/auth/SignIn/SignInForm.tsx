@@ -112,7 +112,7 @@ if(formData?.rememberMe){
                 },
                 body: JSON.stringify(
                     {
-                        user_id: formData?.username,
+                        email: formData?.username,
                         password: formData?.password,
                     }
                 ),

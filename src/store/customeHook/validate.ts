@@ -728,9 +728,6 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This Field is required'
     }
-    if (!formData?.certification_id) {
-        newErrors.certification_id = 'This Field is required'
-    }
     if (!formData?.unit_id) {
         newErrors.unit_id = 'This Field is required'
     }

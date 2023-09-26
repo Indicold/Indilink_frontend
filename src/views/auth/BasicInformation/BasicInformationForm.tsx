@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
 import { apiUrl } from '@/store/customeHook/token';
+import Tooltip from '@mui/material/Tooltip';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -320,6 +321,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
                                 className='me-auto text-label-title'
                             >
+                                <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"
@@ -329,6 +331,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 />
+                                </Tooltip>
                             </FormItem>
 
                             <FormItem
@@ -336,6 +339,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
                                 className='me-auto text-label-title'
                             >
+                                <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"
@@ -345,6 +349,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 />
+                                </Tooltip>
                             </FormItem>
 
                         </div>

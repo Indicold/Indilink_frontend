@@ -94,7 +94,7 @@ const BussinessTypeModal = () => {
 useEffect(()=>{
     console.log('AssetsResponse',AssetsResponse?.message?.message);
     
-if(AssetsResponse?.message){
+if(AssetsResponse?.message || AssetsResponse?.data){
     messageView(AssetsResponse?.message?.message)
     setTimeout(() => {
         if (localStorage.getItem('user_type') === 'Partner') {
@@ -135,7 +135,7 @@ if(AssetsResponse?.message){
         localStorage.setItem('AssetId', AssetsResponse?.message?.asset_id)
     }, 2000)
 }
-},[AssetsResponse?.message])
+},[AssetsResponse?.message, AssetsResponse?.data])
     /**
      * The handleChange function updates the formData state with the new value from the input field and
      * logs the countryId.

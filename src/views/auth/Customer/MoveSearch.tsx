@@ -416,7 +416,7 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Dispactch Date/ Time"
+                                        label="Dispatch Date/ Time"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
