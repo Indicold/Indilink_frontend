@@ -321,7 +321,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
                                 className='me-auto text-label-title'
                             >
-                                <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
+                                   <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"
@@ -339,7 +339,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
                                 className='me-auto text-label-title'
                             >
-                                <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
+                                    <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"

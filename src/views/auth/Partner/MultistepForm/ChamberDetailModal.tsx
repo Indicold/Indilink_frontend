@@ -13,6 +13,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import { validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 interface MajorityHolderModalProps {
@@ -36,8 +37,25 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [data, setData] = useState<any>({
+        staircase: "false",
+        asset_id: "INDI01AAAA19",
+        chamber_number: "CH456",
+        chamber_name: "75765",
+        chamber_size: "2",
+        no_of_pallets: "5765",
+        pallet_size: "6",
+        racking_type_id: "1",
+        photo_of_entrance: {file:"kjh"},
+        photo_of_chamber: {file:"kjh"},
+        no_of_floors: "5",
+        floor_area: "56",
+        temp_range: "56",
+        each_floor_hight: "6566",
+        parking_area: "6"
+      } || {
         staircase:true
     })
+    const {id}:any=useParams();
     const [errors, setErrors] = useState<any>({})
     /**
      * The handleChange function updates the data object based on the input value and name, and logs
@@ -48,7 +66,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
      */
     const handleChange = (e: any) => {
         const newData: any = { ...data }
-        newData.asset_id = localStorage.getItem('AssetsId') || 'INDI01AAAA4'
+        newData.asset_id = id|| 'INDI01AAAA4'
         newData[e.target.name] = e.target.value
         if (e.target.name === 'photo_of_entrance') {
             newData[e.target.name] = e.target.files[0]
@@ -111,14 +129,39 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                 requestOptions
             )
             const result = await response.json()
+            console.log("VVVVVVV",result);
+
             if (result?.status) {
+                
                 messageView('Chamber Details Updated Successfully!')
                 
                 const newD: any = { ...formD }
                 let arr: any = []
                 if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                 localStorage.setItem('StoreData',JSON.stringify(newD))
-                newD['chamber_ids'].push(result?.date?.id)
+                newD['chamber_ids'].push(result?.data?.id)
+                console.log("GGGGGG8888",newD?.chamber_ids);
+                
+          // Retrieve existing chamber_ids from local storage
+const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
+let existingChamberIds = [];
+
+if (existingChamberIdsJSON) {
+  existingChamberIds = JSON.parse(existingChamberIdsJSON);
+}
+
+// Assuming newD?.chamber_ids is the new data to be added
+const newChamberIds = newD?.chamber_ids || [];
+
+// Check if the new data is not already in the existing array
+const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+if (!existingChamberIdsJSON) {
+  // If chamber_ids doesn't exist in local storage, set it
+  localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+}
+
+
                 update(newD)
                 setModal(false)
             }
@@ -240,7 +283,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         className="mx-auto w-1/2"
                                     >
                                          <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="chamber_size"
                                             onChange={(e: any) =>
@@ -309,7 +352,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 RackingType?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.type}
+                                                            value={item?.id}
                                                         >
                                                             {item?.type}
                                                         </option>

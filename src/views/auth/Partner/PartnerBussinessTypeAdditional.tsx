@@ -11,12 +11,12 @@ import {
 import { getToken } from '@/store/customeHook/token'
 import useApiUpload from '@/store/customeHook/uploadApi'
 import useApiFetch from '@/store/customeHook/useApiFetch'
+import { apiUrl } from '@/store/token'
 import axios from 'axios'
 import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 // Define the PartnerBussinessTypeAdditional component
 const PartnerBussinessTypeAdditional = () => {
@@ -27,7 +27,7 @@ const PartnerBussinessTypeAdditional = () => {
     const AssetsId: any = localStorage.getItem('assets_list_id')
     const location = useLocation()
     const isDisabled = location?.state || false
-
+    const {id}:any=useParams();
     // Initialize state variables for file upload
     const [selectedFile, setSelectedFile] = useState<any>(null)
     const [response, setResponse] = useState(null)
@@ -36,13 +36,13 @@ const PartnerBussinessTypeAdditional = () => {
     const AssetsType: any = localStorage.getItem('asset_id')
 
     // Construct the API URL based on the AssetsType
-    let apiUrl: string =
+    let apiUrls: string =
         AssetsType == 1
-            ? `partner/store/${AssetsId}`
+            ? `partner/store/${id}`
             : AssetsType == 2
-            ? `partner/move/${AssetsId}`
+            ? `partner/move/${id}`
             : AssetsType == 3
-            ? `partner/prepare/${AssetsId}`
+            ? `partner/prepare/${id}`
             : ''
 
     // Fetch data from the API using a custom hook
@@ -50,7 +50,7 @@ const PartnerBussinessTypeAdditional = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(apiUrl, token)
+    } = useApiFetch<any>(apiUrls, token)
 
     // Define an array of objects for file upload items
     let array1 = [
@@ -124,13 +124,13 @@ const PartnerBussinessTypeAdditional = () => {
 
     // Upload the file to the server
     const handleUpload = async (item: any, file: any) => {
-        let AssetsId = localStorage.getItem('assets_list_id')
+        let AssetsId = localStorage.getItem('AssetsId')
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()
         formData.append(item?.key, file)
         formData.append('key', item?.key)
-        formData.append('asset_id', AssetsId || 'INDI01AAAA9')
+        formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
 
         const headers = new Headers()
@@ -144,7 +144,7 @@ const PartnerBussinessTypeAdditional = () => {
 
         try {
             const response = await fetch(
-                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -265,7 +265,7 @@ const PartnerBussinessTypeAdditional = () => {
                                                 {item?.view && <b>Status:</b>}
                                                 {item?.view && (
                                                     <a
-                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
+                                                        href={`${item?.url}`}
                                                         target="_blank"
                                                     >
                                                         View

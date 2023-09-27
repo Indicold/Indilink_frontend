@@ -52,8 +52,9 @@ console.log("tttt",response);
     }
 }
 
-export async function apiForgotPassword(dataa:any,messageView:any) {
-    const data = JSON.stringify({
+export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:any) {
+   
+  const data = JSON.stringify({
         email: dataa?.email
       });
       
@@ -66,7 +67,7 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
         headers: headers,
         body: data
       };
-      
+      setSubmitting(true)
       fetch(`${apiUrl}/auth/forgot-pass-gen-otp`, requestOptions)
         .then((response:any )=> {
           console.log("hhhh",JSON.parse(response?._bodyInit));
@@ -78,16 +79,19 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
           return response.json();
         })
         .then(data => {
-
+          setSubmitting(false)
           console.log(data);
           if(data?.status){
             messageView("OTP Sent Successfully !");
-            
-            window.location.href="/VerfyOtp"
+            if(dataa?.redirect!==3){
+              window.location.href="/VerfyOtp"
+            }
+          
           }
           
         })
         .catch(error => {
+          setSubmitting(false)
           console.log("HHHH",error);
           
           console.log(error);
@@ -166,6 +170,10 @@ export async function apiResetPassword(dataa:any,messageView:any) {
           if(data?.status){
             messageView(data?.message)
             setTimeout(()=>{
+              localStorage.removeItem('RememberMe');
+              localStorage.removeItem('user_type');
+              localStorage.clear()
+
               window.location.href="/sign-in"
 
             },2000)

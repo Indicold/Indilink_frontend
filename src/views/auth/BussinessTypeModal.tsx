@@ -92,7 +92,7 @@ const BussinessTypeModal = () => {
         }
     }
 useEffect(()=>{
-    console.log('AssetsResponse',AssetsResponse?.message?.message);
+    console.log('AssetsResponse',AssetsResponse?.message?.asset_id);
     
 if(AssetsResponse?.message || AssetsResponse?.data){
     messageView(AssetsResponse?.message?.message)
@@ -103,7 +103,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
             if (Bussiness === 'Move') {
                 setAssetsType(2)
                 asset_type_id = 2
-                navigate('/partner-bussiness-type-move')
+                navigate(`/partner-bussiness-type-move/${AssetsResponse?.data}`)
             }
             if (Bussiness === 'Prepare') {
                 setAssetsType(3)
@@ -113,7 +113,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
             if (Bussiness === 'Store') {
                 asset_type_id = 1
                 setAssetsType(1)
-                navigate('/partner-registration')
+                navigate(`/partner-registration/${AssetsResponse?.data}`)
             }
         }
         if (localStorage.getItem('user_type') === 'Investor') {
@@ -135,7 +135,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
         localStorage.setItem('AssetId', AssetsResponse?.message?.asset_id)
     }, 2000)
 }
-},[AssetsResponse?.message, AssetsResponse?.data])
+},[AssetsResponse?.message,AssetsResponse?.data])
     /**
      * The handleChange function updates the formData state with the new value from the input field and
      * logs the countryId.
@@ -171,7 +171,8 @@ if(AssetsResponse?.message || AssetsResponse?.data){
         if (AssetsResponse?.data && AssetsResponse?.status) {
             localStorage.setItem('AssetsId', AssetsResponse?.data)
         }
-    }, [AssetsResponse,AssetsResponse?.message?.asset_id])
+    }, [AssetsResponse,AssetsResponse?.message?.asset_id,AssetsResponse?.data])
+    
 
     return (
         <div>

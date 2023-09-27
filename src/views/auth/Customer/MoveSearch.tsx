@@ -13,7 +13,8 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
-import { validateMoveCustomerForm } from '@/store/customeHook/validate';
+import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
+import { ToastContainer } from 'react-toastify';
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
@@ -177,11 +178,13 @@ const MoveSearch = () => {
                 navigate('/ticket_list_move')
             }, 2000)
         }
+        messageView(CustomerResponse?.message)
     }, [CustomerResponse?.status]);
 
 
     return (
         <div>
+            <ToastContainer />
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}

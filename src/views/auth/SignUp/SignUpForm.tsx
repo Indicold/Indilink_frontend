@@ -34,7 +34,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     /* The code snippet is declaring and initializing multiple variables using destructuring assignment
    and the useState hook. */
     const { className, signInUrl = '/sign-in' } = props
-    const [error, setError] = useState({
+    const [error, setError] = useState<any>({
         first_name: '',
         // last_name: '',
         email: '',
@@ -78,8 +78,7 @@ const SignUpForm = (props: SignUpFormProps) => {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         } else if (e.target.name === 'phone_number') {
             if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
-            console.log("isMobileValid", isMobileValid)
-            setPhone(e.target.value.replace(/[^0-9]/g, ""))
+             setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         newData[e.target.name] = e.target.value
         setFormData(newData)
@@ -193,7 +192,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 />
                                 <p className="text-[red] normal-case">
                                     {isMobileValid
-                                        ? isMobileValid !== 'Eligible'? isMobileValid : ''
+                                       ? isMobileValid !== 'Eligible' ? isMobileValid : ''
                                         : error.phone_number}
                                 </p>
                             </FormItem>
@@ -253,7 +252,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </ActionLink>
                             </p>
                         </div>
-                        <p className="text-[red] normal-case">
+                        <p className="text-[red]  normal-case">
                             {error && error.term_condition}
                         </p>
 
@@ -263,7 +262,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 block
                                 variant="solid"
                                 type="submit"
-                                className="indigo-btn w-[30%] mx-auto rounded-xl px-4 shadow-lg"
+                                className="indigo-btn  mx-auto rounded-xl px-4 shadow-lg"
                             >
                                 {isSubmitting
                                     ? 'Creating Account...'

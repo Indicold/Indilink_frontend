@@ -1,8 +1,17 @@
 import DownloadingIcon from '@mui/icons-material/Downloading';
+import { useNavigate } from 'react-router-dom';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 const UserProfilePage = () => {
     // const token:any=sessionStorage.getItem('access_token');
     // const decode=jwt_decode(token)
     // console.log("TTTTTTTTTT",decode);
+    const navigate:any=useNavigate();
+    const handleChangePassword=()=>{
+        sessionStorage.clear()
+
+        navigate('/forgot-password')
+
+    }
   return (
     <>
     <div className="container mx-auto my-24">
@@ -27,8 +36,9 @@ const UserProfilePage = () => {
             </p>
             <div className="my-5 px-6">
               <a
-                href="/forgot-password"
-                className="text-gray-200 mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
+                // href="/forgot-password"
+                onClick={handleChangePassword}
+                className="text-white mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
               >
                Change Password
               </a>
@@ -36,18 +46,22 @@ const UserProfilePage = () => {
             <div className="my-5 px-6">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
-                className="border-1 border-[#00000] mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
+                className="border-dashed border-2 border-indigo-600 mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
               >
             <DownloadingIcon /> Download NDA
               </a>
             </div>
             <div className="my-5 px-6">
-              <a
-                href="#"
-                className="text-gray-200 mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
+              <div role='button'
+                className="border-dashed border-2 border-indigo-600  mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3"
               >
+                <label htmlFor="file">
+                    <DriveFolderUploadIcon/>
             Upload NDA
-              </a>
+
+                </label>
+                <input type='file'  id='file' className='hidden'/>
+              </div>
             </div>
         
             <div className="w-full">

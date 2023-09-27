@@ -16,7 +16,7 @@ import {
 } from '@/components/ui' // Import UI components
 import { Field, Form, Formik } from 'formik' // Import Formik for form handling
 import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom hook for handling tokens
-import { useLocation, useNavigate } from 'react-router-dom' // Import routing related hooks
+import { useLocation, useNavigate, useParams } from 'react-router-dom' // Import routing related hooks
 import {
     messageView,
     validateMovePartnerForm,
@@ -29,13 +29,16 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // Define the main functional component for PartnerBussinessTypeMove
 const PartnerBussinessTypeMove = () => {
     // Get the user's token using a custom hook
+    const { id }:any = useParams();
     const { token }: any = getToken()
-
     // Get the AssetsId from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
+console.log("VVVVVVV",id);
 
     // Get the current route location and check if it's disabled
     const location = useLocation()
+    const pramas:any=location
+
     const isDisabled = location?.state
     console.log('location', location?.state)
 
@@ -84,7 +87,7 @@ const PartnerBussinessTypeMove = () => {
     }
 
     // Get the AssetsId from local storage
-    let ID: any = localStorage.getItem('assets_list_id')
+    let ID: any = localStorage.getItem('AssetsId')
 
     // Define a function to handle form submission
     const handlesave = async () => {
@@ -96,7 +99,7 @@ const PartnerBussinessTypeMove = () => {
             var myHeaders = new Headers()
             myHeaders.append('Authorization', `Bearer ${token}`)
             var formdata = new FormData()
-            formdata.append('asset_id', 'INDI01AAAA7')
+            formdata.append('asset_id', id)
             formdata.append('vehicle_make_id', data?.vehicle_make_id)
             formdata.append('vehicle_model_id', data?.vehicle_model_id)
             formdata.append('permit_validity', data?.permit_validity)
@@ -124,7 +127,7 @@ const PartnerBussinessTypeMove = () => {
                 // If the response status is 200, navigate to the specified route
                 if (result?.status == 200 || result?.status) {
                     setTimeout(()=>{
-                        navigate('/partner-bussiness-type-compliance')
+                        navigate(`/partner-bussiness-type-compliance/${id}`)
 
                     },2000)
                 }
@@ -135,7 +138,7 @@ const PartnerBussinessTypeMove = () => {
         } else if (isDisabled) {
             // If the form is disabled, navigate to the specified route with state
           setTimeout(()=>{
-            navigate('/partner-bussiness-type-compliance', {
+            navigate(`/partner-bussiness-type-compliance/${id}`, {
                 state: isDisabled,
             })
           },2000)
@@ -156,6 +159,15 @@ const PartnerBussinessTypeMove = () => {
     {
         console.log('vehicalMake?.data', vehicalMake?.data)
     }
+    const TimeString = (time: any) => {
+        const dateTimeString = "2023-09-15T00:00:00.000Z";
+        
+        const date = new Date(dateTimeString);
+        const formattedDate = date.toISOString().split('T')[0];
+        return formattedDate
+    }
+    console.log("66666666666666",TimeString());
+    
     return (
         <div className='flex'>
             <ToastContainer />
@@ -290,7 +302,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="permit_validity"
-                                            value={data?.permit_validity}
+                                            value={data?.permit_validity && TimeString(data?.permit_validity)}
                                             placeholder="Permit Validity Date"
                                             component={Input}
                                         />
@@ -310,7 +322,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="pucc_validity"
-                                            value={data?.pucc_validity}
+                                            value={data?.pucc_validity && TimeString(data?.pucc_validity)}
                                             placeholder="PUCC valid Till Date"
                                             component={Input}
                                         />
@@ -349,7 +361,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="date"
                                             autoComplete="off"
-                                            value={data?.fitness_validity}
+                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }

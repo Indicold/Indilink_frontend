@@ -12,18 +12,19 @@ import {
 import { getToken } from '@/store/customeHook/token'
 import useApiUpload from '@/store/customeHook/uploadApi'
 import useApiFetch from '@/store/customeHook/useApiFetch'
+import { apiUrl } from '@/store/token'
 import axios from 'axios'
 import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
-
+      const {id}:any=useParams()
     // Get the current location
     const location = useLocation()
 
@@ -40,13 +41,13 @@ const PartnerBussinessTypeCompliances = () => {
     const AssetsType: any = localStorage.getItem('asset_id')
 
     // Determine the API URL based on the asset type
-    let apiUrl: string =
+    let apiUrls: string =
         AssetsType == 1
-            ? `partner/store/${AssetsId}`
+            ? `partner/store/${id}`
             : AssetsType == 2
-            ? `partner/move/${AssetsId}`
+            ? `partner/move/${id}`
             : AssetsType == 3
-            ? `partner/prepare/${AssetsId}`
+            ? `partner/prepare/${id}`
             : ''
 
     // Fetch details using the determined API URL
@@ -54,8 +55,8 @@ const PartnerBussinessTypeCompliances = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(apiUrl, token)
-    console.log('TTTTTTTTTT', apiUrl, fetchDetails)
+    } = useApiFetch<any>(apiUrls, token)
+    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
     let array1 = [
         {
@@ -166,7 +167,7 @@ const PartnerBussinessTypeCompliances = () => {
         const formData = new FormData()
         formData.append(item?.key, file)
         formData.append('key', item?.key)
-        formData.append('asset_id', ListId || 'INDI01AAAA9')
+        formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
 
         const headers = new Headers()
@@ -180,7 +181,7 @@ const PartnerBussinessTypeCompliances = () => {
 
         try {
             const response = await fetch(
-                `http://www.ikeodesign.com/auth/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/register-partner-upload-doc`,
                 config
             )
             const responseData = await response.json()
@@ -224,7 +225,7 @@ const PartnerBussinessTypeCompliances = () => {
 
     // Handle route navigation
     const handleRoute = () => {
-        navigate('/partner-bussiness-type-additional', { state: isDisabled })
+        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -334,8 +335,9 @@ const PartnerBussinessTypeCompliances = () => {
                                                 {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
-                                                        href={`http://www.ikeodesign.com/auth/${item?.url}`}
+                                                        href={`${item?.url}`}
                                                         target="_blank"
+                                                        download={false}
                                                     >
                                                         View
                                                     </a>

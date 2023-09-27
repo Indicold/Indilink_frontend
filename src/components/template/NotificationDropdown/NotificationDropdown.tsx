@@ -11,6 +11,8 @@ import Stack from '@mui/material/Stack';
 import MailIcon from '@mui/icons-material/Mail';
 import { Divider } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import useApiFetch from '@/store/customeHook/useApiFetch'
+import { getToken } from '@/store/token'
 
 type DropdownList = {
     label: string
@@ -21,12 +23,17 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _NotificationDropdown = ({ className }: CommonProps) => {
+    const {token}:any=getToken();
+    const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
+    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
 
     const { signOut } = useAuth()
+    console.log("HHHHHHHH",ListOfNotification);
+    
 const navigate:any=useNavigate();
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
-        <Badge badgeContent={4} className='!m-4' color="secondary">
+        <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
           <NotificationsIcon className='!text-[30px]'  color="action" />
         </Badge>
     
@@ -35,6 +42,37 @@ const navigate:any=useNavigate();
 const handleViewAll=()=>{
     navigate('/notification')
 }
+function calculateTimeDifference(targetDate) {
+  const currentDate = new Date();
+  const target = new Date(targetDate);
+  
+  // Calculate the time difference in milliseconds
+  const timeDifference = target - currentDate;
+  
+  if (timeDifference < 0) {
+    return "Target date has passed";
+  }
+  
+  const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+  const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  
+  return {
+    days,
+    hours,
+    minutes,
+  };
+}
+
+// Example usage:
+const targetDate = "2023-09-15T05:11:27.000Z";
+const timeDifference = calculateTimeDifference(targetDate);
+
+console.log("Time Difference:");
+console.log(`${timeDifference.days} days`);
+console.log(`${timeDifference.hours} hours`);
+console.log(`${timeDifference.minutes} minutes`);
+
     return (
         <div>
             <Dropdown
@@ -46,26 +84,29 @@ const handleViewAll=()=>{
                         Notification
                     </Dropdown.Item>
                     <Dropdown.Item variant="divider" />
-                <Dropdown.Item variant="header">
-                    <div className="flex items-center">
-                    <div className="mt-2 px-6  bg-white rounded-lg w-full">
-      <div className=" inline-flex items-center justify-between w-full">
-        <div className="inline-flex items-center">
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
-            alt="Training Icon"
-            className="w-6 h-6 mr-3"
-          />
-          <h3 className="font-bold text-base text-gray-800">Training</h3>
-        </div>
-        <p className="text-xs text-gray-500">2 min ago</p>
-      </div>
-      <p className="mt-1 text-sm">
-        Hey! Do you remember about choosing your training regime?
-      </p>
-    </div>
-                    </div>
-                </Dropdown.Item>
+                    {ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
+     <Dropdown.Item variant="header">
+     <div className="flex items-center">
+     <div className="mt-2 px-6  bg-white rounded-lg w-full">
+<div className=" inline-flex items-center justify-between w-full">
+<div className="inline-flex items-center">
+<img
+src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+alt="Training Icon"
+className="w-6 h-6 mr-3"
+/>
+<h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+</div>
+<p className="text-xs text-gray-500">{item?.created_at}</p>
+</div>
+<p className="mt-1 text-sm">
+Hey! Do you remember about choosing your training regime?
+</p>
+</div>
+     </div>
+ </Dropdown.Item>
+                    ))}
+           
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
                     <Dropdown.Item
