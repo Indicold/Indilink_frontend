@@ -20,7 +20,6 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -296,7 +295,7 @@ const PartnerBussinessTypeCompliances = () => {
             </div>
 
             <div className="bg-white w-5/6">
-                <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
+            <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">
                     Compliance Details
                 </h4>

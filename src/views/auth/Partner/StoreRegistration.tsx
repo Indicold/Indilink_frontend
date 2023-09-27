@@ -19,6 +19,7 @@ import {
     messageView,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ToastContainer } from 'react-toastify'
 import {
     Accordion,
@@ -84,6 +85,11 @@ const StoreRegistration = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(`partner/store/${id}`, token)
+    const {
+        data: fetchDetailsAll,
+        loading: fetchDetailsloadingAll,
+        error: fetchDetailsSerrorAll,
+    } = useApiFetch<any>(`partner/store/components-all/${id}`, token)
     const { result: response, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/partner/store/chambers`);
     const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`${apiUrl}/partner/store/ca-equipments`);
     const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`${apiUrl}/partner/store/get-compressors`);
@@ -226,7 +232,6 @@ if(responseca?.data){
     setCAData(responseca?.data)
 }
 },[response?.data,responseca?.data])
-console.log("TTTTTTTTTTTTTTT",response);
 
 useEffect(()=>{
     setData(dataa)
@@ -1098,7 +1103,7 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {chamberData.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.chambers.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                
                                                     <div className="mx-auto">
@@ -1120,7 +1125,7 @@ useEffect(()=>{
                                                         Actions
                                                     </div> */}
                                                 </div>
-                                                {chamberData?.map((item:any,index:any)=>(
+                                                {fetchDetailsAll?.data?.chambers?.map((item:any,index:any)=>(
    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
    <div className="mx-auto">
     {item?.chamber_name}
@@ -1173,10 +1178,11 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 CA Equipments
+                                                <p className='text-[red]'>{errors?.ca_equipment_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {CAData.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.caEquipments.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center">
                                                         Make
@@ -1191,7 +1197,7 @@ useEffect(()=>{
                                                     Actions
                                                     </div>
                                                 </div>
-                                                {CAData?.map((item:any,index:any)=>(
+                                                {fetchDetailsAll?.data?.caEquipments?.map((item:any,index:any)=>(
   <div className="listt flex w-full bg-white py-4 rounded-[13px]">
   <div className="w-[25%] text-center">
       {item?.make}
@@ -1236,10 +1242,11 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Compressors
+                                                <p className='text-[red]'>{errors?.compressor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.compressors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[16%] text-center">
                                                         Make
@@ -1260,37 +1267,40 @@ useEffect(()=>{
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[16%] text-center">
-                                                        A.P.
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        EXG4568
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        2
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        2014
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        48
-                                                    </div>
-                                                    <div className="w-[16%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
-                                                </div>
+                                                {fetchDetailsAll?.data?.compressors?.map((item:any,index:any)=>(
+    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+    <div className="w-[16%] text-center">
+        A.P.
+    </div>
+    <div className="w-[16%] text-center">
+        EXG4568
+    </div>
+    <div className="w-[16%] text-center">
+        2
+    </div>
+    <div className="w-[16%] text-center">
+        2014
+    </div>
+    <div className="w-[16%] text-center">
+        48
+    </div>
+    <div className="w-[16%] mx-auto flex">
+    <Button
+        className="!p-2 pt-0 pb-0 mx-auto"
+        // onClick={() => handleEdit(rowData)}
+    >
+        Edit
+    </Button>
+    <Button
+        className="!p-1 mx-auto"
+        // onClick={() => handleView(rowData)}
+    >
+        View
+    </Button>
+    </div>
+</div>
+                                                ))}
+                                            
                                             </div>:<p className="text-center">Currently there are no Compressors.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1308,10 +1318,11 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 ACU
+                                                <p className='text-[red]'>{errors?.acu_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.acus?.length>0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[16%] text-center">
                                                         Make
@@ -1332,37 +1343,40 @@ useEffect(()=>{
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[16%] text-center">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.acus?.map((item:any,index:any)=>(
+                                                        <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[16%] text-center">
+                                                            A.P.
+                                                        </div>
+                                                        <div className="w-[16%] text-center">
+                                                            EXG4568
+                                                        </div>
+                                                        <div className="w-[16%] text-center">
+                                                            2
+                                                        </div>
+                                                        <div className="w-[16%] text-center">
+                                                            2014
+                                                        </div>
+                                                        <div className="w-[16%] text-center">
+                                                            48
+                                                        </div>
+                                                        <div className="w-[16%] mx-auto flex">
+                                                        <Button
+                                                            className="!p-2 pt-0 pb-0 mx-auto"
+                                                            // onClick={() => handleEdit(rowData)}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            className="!p-1 mx-auto"
+                                                            // onClick={() => handleView(rowData)}
+                                                        >
+                                                            View
+                                                        </Button>
+                                                        </div>
                                                     </div>
-                                                    <div className="w-[16%] text-center">
-                                                        EXG4568
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        2
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        2014
-                                                    </div>
-                                                    <div className="w-[16%] text-center">
-                                                        48
-                                                    </div>
-                                                    <div className="w-[16%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
-                                                </div>
+                                                ))}
+                                            
                                             </div>:<p className="text-center">Currently there are no ACUs.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1380,10 +1394,11 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Condensor
+                                                <p className='text-[red]'>{errors?.condensor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.condensors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center">
                                                         Make
@@ -1401,34 +1416,37 @@ useEffect(()=>{
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center">
-                                                        A.P.
-                                                    </div>
-                                                    <div className="w-[20%] text-center">
-                                                        EXG4568
-                                                    </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2
-                                                    </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2014
-                                                    </div>
-                                                    <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
-                                                </div>
+                                                {fetchDetailsAll?.data?.condensors?.map((item:any,index:any)=>(
+    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+    <div className="w-[20%] text-center">
+        A.P.
+    </div>
+    <div className="w-[20%] text-center">
+        EXG4568
+    </div>
+    <div className="w-[20%] text-center">
+        2
+    </div>
+    <div className="w-[20%] text-center">
+        2014
+    </div>
+    <div className="w-[20%] mx-auto flex">
+    <Button
+        className="!p-2 pt-0 pb-0 mx-auto"
+        // onClick={() => handleEdit(rowData)}
+    >
+        Edit
+    </Button>
+    <Button
+        className="!p-1 mx-auto"
+        // onClick={() => handleView(rowData)}
+    >
+        View
+    </Button>
+    </div>
+</div>
+                                                ))}
+                                            
                                             </div>:<p className="text-center">Currently there are no condensors.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1448,6 +1466,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 AMC
+                                                <p className='text-[red]'>{errors?.amc_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1514,6 +1533,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 IOT Devices
+                                                <p className='text-[red]'>{errors?.iot_devices_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1580,6 +1600,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 IT Devices
+                                                <p className='text-[red]'>{errors?.it_devices_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1646,6 +1667,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Generator
+                                                <p className='text-[red]'>{errors?.generator_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1712,6 +1734,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 MHE
+                                                <p className='text-[red]'>{errors?.mhe_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1772,6 +1795,7 @@ useEffect(()=>{
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Solar Inverters
+                                                <p className='text-[red]'>{errors?.solar_invertor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>

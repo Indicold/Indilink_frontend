@@ -17,6 +17,7 @@ import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Define the PartnerBussinessTypeAdditional component
 const PartnerBussinessTypeAdditional = () => {
@@ -231,7 +232,8 @@ const PartnerBussinessTypeAdditional = () => {
 
             </div>
             <div className="bg-white w-5/6">
-                <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
+            <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
+
                 <h4 className="mb-2 text-head-title text-center p-4">
                     Additional Submissions
                 </h4>
@@ -275,6 +277,7 @@ const PartnerBussinessTypeAdditional = () => {
                                         </FormItem>
                                     ))}
                                 </div>
+
                                 <div className="flex justify-center">
                                 <Button
                                         style={{ borderRadius: '13px' }}

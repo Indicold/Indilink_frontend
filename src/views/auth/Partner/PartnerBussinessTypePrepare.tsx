@@ -23,7 +23,6 @@ import ACUModall from './MultistepForm/ACUModal' // Import a custom modal compon
 import MachineModal from './MultistepForm/MachineModal' // Import another custom modal component
 import 'react-accessible-accordion/dist/fancy-example.css' // Import CSS styles for an accordion
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
 // Define the main functional component for PartnerBussinessTypePrepare
 const PartnerBussinessTypePrepare = () => {
     // Get the user's token using a custom hook
@@ -208,7 +207,7 @@ const PartnerBussinessTypePrepare = () => {
                 <LoaderSpinner />
             ) : (
                 <div className="bg-white w-5/6">
-                <ArrowBackIcon onClick={()=>navigate(-1)} />
+                     <ArrowBackIcon onClick={()=>navigate(-1)} />
                     <h4 className=" mb-2 text-head-title text-center">
                         Prepare
                     </h4>

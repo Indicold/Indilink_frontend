@@ -268,6 +268,36 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
    if(formData?.chamber_ids.length<1){
     newErrors.chamber_ids="Chamber details is required"
    }
+   if(formData?.ca_equipment_ids.length<1){
+    newErrors.ca_equipment_ids="CA Equipment details is required"
+   }
+   if(formData?.compressor_ids.length<1){
+    newErrors.compressor_ids="Compressor details is required"
+   }
+   if(formData?.acu_ids.length<1){
+    newErrors.acu_ids="ACU details is required"
+   }
+   if(formData?.condensor_ids.length<1){
+    newErrors.condensor_ids="Condensor details is required"
+   }
+   if(formData?.amc_ids.length<1){
+    newErrors.amc_ids="AMC details is required"
+   }
+   if(formData?.iot_devices_ids.length<1){
+    newErrors.iot_devices_ids="IOT details is required"
+   }
+   if(formData?.it_devices_ids.length<1){
+    newErrors.it_devices_ids="IT Device details is required"
+   }
+   if(formData?.generator_ids.length<1){
+    newErrors.generator_ids="Generator details is required"
+   }
+   if(formData?.mhe_ids.length<1){
+    newErrors.mhe_ids="MHE details is required"
+   }
+   if(formData?.solar_invertor_ids.length<1){
+    newErrors.solar_invertor_ids="Solar Inverter details is required"
+   }
     if (!formData?.road_condition_id || formData?.road_condition_id === '') {
         newErrors.road_condition_id = 'Please select road condition'
         console.log("err road:", newErrors.road_condition_id)
