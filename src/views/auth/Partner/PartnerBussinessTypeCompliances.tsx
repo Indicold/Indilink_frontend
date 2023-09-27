@@ -17,13 +17,13 @@ import axios from 'axios'
 import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
-
+      const {id}:any=useParams()
     // Get the current location
     const location = useLocation()
 
@@ -42,11 +42,11 @@ const PartnerBussinessTypeCompliances = () => {
     // Determine the API URL based on the asset type
     let apiUrls: string =
         AssetsType == 1
-            ? `partner/store/${AssetsId}`
+            ? `partner/store/${id}`
             : AssetsType == 2
-            ? `partner/move/${AssetsId}`
+            ? `partner/move/${id}`
             : AssetsType == 3
-            ? `partner/prepare/${AssetsId}`
+            ? `partner/prepare/${id}`
             : ''
 
     // Fetch details using the determined API URL
@@ -166,7 +166,7 @@ const PartnerBussinessTypeCompliances = () => {
         const formData = new FormData()
         formData.append(item?.key, file)
         formData.append('key', item?.key)
-        formData.append('asset_id', AssetsId || 'INDI01AAAA9')
+        formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
 
         const headers = new Headers()
@@ -224,7 +224,7 @@ const PartnerBussinessTypeCompliances = () => {
 
     // Handle route navigation
     const handleRoute = () => {
-        navigate('/partner-bussiness-type-additional', { state: isDisabled })
+        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -333,8 +333,9 @@ const PartnerBussinessTypeCompliances = () => {
                                                 {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
-                                                        href={`${apiUrl}/${item?.url}`}
+                                                        href={`${item?.url}`}
                                                         target="_blank"
+                                                        download={false}
                                                     >
                                                         View
                                                     </a>

@@ -169,7 +169,29 @@ export const handleStoreTable = async (
             if (newD[name]) arr = [...newD[name]]
             arr.push(result?.date?.id)
             newD[name] = arr
+            console.log("CACGFG",newD);
+            
             update(newD)
+                      // Retrieve existing chamber_ids from local storage
+const existingChamberIdsJSON = localStorage.getItem('ca_equipment_ids');
+let existingChamberIds = [];
+
+if (existingChamberIdsJSON) {
+  existingChamberIds = JSON.parse(existingChamberIdsJSON);
+}
+
+// Assuming newD?.chamber_ids is the new data to be added
+const newChamberIds = newD?.ca_equipment_ids || [];
+
+// Check if the new data is not already in the existing array
+const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+localStorage.setItem('ca_equipment_ids', JSON.stringify(mergedChamberIds));
+if (!existingChamberIdsJSON) {
+  // If chamber_ids doesn't exist in local storage, set it
+  localStorage.setItem('ca_equipment_ids', JSON.stringify(mergedChamberIds));
+}
+
+
             console.log("formdataa: ", formD, name, arr, newD); 
             setTimeout(() => {
                 setModal(false)
@@ -730,9 +752,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This Field is required'
     }
-    if (!formData?.certification_id) {
-        newErrors.certification_id = 'This Field is required'
-    }
+    // if (!formData?.certification_id) {
+    //     newErrors.certification_id = 'This Field is required'
+    // }
     if (!formData?.unit_id) {
         newErrors.unit_id = 'This Field is required'
     }

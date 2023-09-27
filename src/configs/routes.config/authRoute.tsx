@@ -56,6 +56,14 @@ const authRoute: Routes = [
     },
     {
 
+        key: 'partner',
+        path: `/partner-registration/:id`,
+        component: lazy(() => import('@/views/auth/Partner/NewMultistep')),
+        authority: [],
+
+    },
+    {
+
         key: 'investor',
         path: `/investor-registration`,
         component: lazy(() => import('@/views/auth/Investor/NewMultistep')),

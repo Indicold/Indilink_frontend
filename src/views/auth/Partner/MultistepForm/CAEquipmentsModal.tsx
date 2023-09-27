@@ -29,7 +29,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
 
     const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState<any>({})
 
     /**
      * The handleChange function updates the state data based on the input value or file selected by

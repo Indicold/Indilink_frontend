@@ -2,7 +2,7 @@ import { Button, FormContainer, FormItem, Input } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import ChamberDetailModal from './MultistepForm/ChamberDetailModal'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import CAEquipmentsModal from './MultistepForm/CAEquipmentsModal'
@@ -30,6 +30,7 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { payload, payload1 } from '@/store/Payload'
+import usePostApi from '@/store/customeHook/postApi'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -39,6 +40,7 @@ const StoreRegistration = () => {
 
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
+    const {id}:any=useParams()
 
     // Fetch various data from APIs using custom hooks
     const {
@@ -80,8 +82,10 @@ const StoreRegistration = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(`partner/store/${AssetsId}`, token)
-
+    } = useApiFetch<any>(`partner/store/${id}`, token)
+    const { result: response, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/partner/store/chambers`);
+    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`${apiUrl}/partner/store/ca-equipments`);
+    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`${apiUrl}/partner/store/get-compressors`);
     // Manage state variables for modals and other components
     const [chamberModal, setChamberModal] = useState(false)
     const [CAModal, setCAModal] = useState<any>(false)
@@ -94,7 +98,8 @@ const StoreRegistration = () => {
     const [genModal, setGenModal] = useState<any>(false)
     const [MHEModal, setMHEModal] = useState<any>(false)
     const [SEModal, setSEModal] = useState<any>(false)
-
+    const [chamberData,setChamberData]=useState<any>([])
+    const [CAData,setCAData]=useState<any>([])
     // Fetch the current location
     const location = useLocation()
 
@@ -118,7 +123,7 @@ const StoreRegistration = () => {
         if (validateStorePartnerForm(dataa, setErrors)) {
             try {
                 // Set the asset_id based on local storage
-                dataa.asset_id = localStorage.getItem('assets_list_id')
+                dataa.asset_id = id
 
                 // Define the HTTP request configuration
                 const config = {
@@ -140,11 +145,11 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     // Display a success message and navigate to a new page
                     messageView(result.message)
-                    navigate('/partner-bussiness-type-compliance')
+                    // navigate(`/partner-bussiness-type-compliance/${id}`)
 
                     if (result?.status === 200) {
                         setTimeout(() => {
-                            navigate('/partner-bussiness-type-compliance')
+                            navigate(`/partner-bussiness-type-compliance/${id}`)
                         }, 2000)
                     }
                 } else {
@@ -157,7 +162,7 @@ const StoreRegistration = () => {
             }
         } else if (location?.state) {
             // Navigate to another page if there's state data
-            navigate('/partner-bussiness-type-compliance', { state: true })
+            navigate(`/partner-bussiness-type-compliance/${id}`, { state: true })
         }
     }
 
@@ -172,7 +177,6 @@ const StoreRegistration = () => {
     }
 
     // Use useEffect to update form data when fetchDetails changes
-    console.log("GGGGGGGGGG",fetchDetails);
     
     useEffect(() => {
         
@@ -180,7 +184,48 @@ const StoreRegistration = () => {
             setData(fetchDetails?.data)
         }
     }, [fetchDetails])
-    console.log("validateChamberFormvalidateChamberForm",dataa);
+useEffect(()=>{
+if(localStorage.getItem('chamber_ids')){
+    const arr:any=JSON.parse(localStorage.getItem('chamber_ids')) || []; 
+    if(arr){
+        const filteredArray:any = arr?.filter((item:any) => item !== null) || [];
+        const body:any={
+            ids:filteredArray
+        }
+        sendPostRequest(body)
+    }
+
+    
+}
+
+},[])
+useEffect(()=>{
+    if(localStorage.getItem('ca_equipment_ids')){
+        const arr:any=JSON.parse(localStorage.getItem('ca_equipment_ids')) || []; 
+        if(arr){
+            const filteredArray:any = arr?.filter((item:any) => item !== null) || [];
+            const body:any={
+                ids:filteredArray
+            }
+            console.log("GGGGGG",body,filteredArray);
+            if(arr.length>0){
+      sendPostRequestca(body)
+            }
+          
+        }
+    
+        
+    }
+},[])
+useEffect(()=>{
+if(response?.data){
+    setChamberData(response?.data)
+}
+if(responseca?.data){
+    setCAData(responseca?.data)
+}
+},[response?.data,responseca?.data])
+console.log("TTTTTTTTTTTTTTT",response);
 
 useEffect(()=>{
     setData(dataa)
@@ -243,6 +288,7 @@ useEffect(()=>{
                 >
                     {({ handleSubmit }) => (
                         <Form className="py-2 ">
+                            
                             {chamberModal && (
                                 <ChamberDetailModal
                                     modal={chamberModal}
@@ -741,7 +787,35 @@ useEffect(()=>{
                                         label="Year of Installation*"
                                         className="w-1/2 text-label-title"
                                     >
-                                        <Field
+                                        
+                                        <select
+                                            disabled={location?.state}
+                                            id="countries"
+                                            name="installation_year"
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option selected>
+                                                Choose Year of Installation
+                                            </option>
+                                            {true &&
+                                                [2022, 2021, 2020, 2019, 2018].map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item ===
+                                                                dataa?.installation_year
+                                                            }
+                                                        >
+                                                            {item}
+                                                        </option>
+                                                    )
+                                                )}
+                                        </select>
+                                        {/* <Field
                                             disabled={location?.state}
                                             type="number"
                                             min="1990"
@@ -754,7 +828,7 @@ useEffect(()=>{
                                             value={dataa?.installation_year}
                                             placeholder="Year of Installation"
                                             component={Input}
-                                        />
+                                        /> */}
                                         <p className="text-[red]">
                                             {errors && errors.installation_year}
                                         </p>{' '}
@@ -773,7 +847,7 @@ useEffect(()=>{
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            placeholder="Company Name"
+                                            placeholder="Facility Manager Name"
                                             value={dataa?.facility_manager_name}
                                             component={Input}
                                         />
@@ -1022,58 +1096,62 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {chamberData.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
-                                                        Chamber no.
-                                                    </div>
+                                               
                                                     <div className="mx-auto">
                                                         Chamber name
+                                                    </div>
+                                                    <div className="mx-auto">
+                                                        Chamber no.
                                                     </div>
                                                     <div className="mx-auto">
                                                         Chamber size
                                                     </div>
                                                     <div className="mx-auto">
-                                                        No. of pallets
+                                                      Created 
                                                     </div>
                                                     <div className="mx-auto">
-                                                        Pallet size
+                                                   Updated
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    {/* <div className="mx-auto">
                                                         Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
-                                                        A.P.
-                                                    </div>
-                                                    <div className="mx-auto">
-                                                        EXG4568
-                                                    </div>
-                                                    <div className="mx-auto">
-                                                        2
-                                                    </div>
-                                                    <div className="mx-auto">
-                                                        2014
-                                                    </div>
-                                                    <div className="mx-auto">
-                                                        48
-                                                    </div>
-                                                    <div className="mx-2 flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-1"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-1"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
-                                                </div>
+                                                {chamberData?.map((item:any,index:any)=>(
+   <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+   <div className="mx-auto">
+    {item?.chamber_name}
+   </div>
+   <div className="mx-auto">
+     {item?.chamber_number}
+   </div>
+   <div className="mx-auto !text-center">
+       {item?.no_of_pallets}
+   </div>
+   <div className="mx-auto">
+      {new Date(item?.created_at)?.toLocaleDateString()}
+   </div>
+   <div className="mx-auto">
+       {new Date(item?.updated_at)?.toLocaleDateString()}
+   </div>
+   <div className="mx-2 flex">
+   {/* <Button
+       className="!p-2 pt-0 pb-0 mx-1"
+       // onClick={() => handleEdit(rowData)}
+   >
+       Edit
+   </Button>
+   <Button
+       className="!p-1 mx-1"
+       // onClick={() => handleView(rowData)}
+   >
+       View
+   </Button> */}
+   </div>
+</div>
+                                                ))}
+                                             
                                             </div>:<p className="text-center">Currently there are no chambers.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1096,7 +1174,7 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {CAData.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center">
                                                         Make
@@ -1111,31 +1189,34 @@ useEffect(()=>{
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center">
-                                                        A.P.
-                                                    </div>
-                                                    <div className="w-[25%] text-center">
-                                                        EXG4568
-                                                    </div>
-                                                    <div className="w-[25%] text-center">
-                                                        2
-                                                    </div>
-                                                    <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
-                                                </div>
+                                                {CAData?.map((item:any,index:any)=>(
+  <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+  <div className="w-[25%] text-center">
+      {item?.make}
+  </div>
+  <div className="w-[25%] text-center">
+      {item?.model}
+  </div>
+  <div className="w-[25%] text-center">
+      {item?.cmf}
+  </div>
+  <div className="w-[25%] mx-auto flex">
+  <Button
+      className="!p-2 pt-0 pb-0 mx-auto"
+      // onClick={() => handleEdit(rowData)}
+  >
+      Edit
+  </Button>
+  <Button
+      className="!p-1 mx-auto"
+      // onClick={() => handleView(rowData)}
+  >
+      View
+  </Button>
+  </div>
+</div>
+                                                ))}
+                                              
                                             </div>:<p className="text-center">Currently there are no CA Equipments.</p>}
                                                 <div className="flex">
                                                     <button

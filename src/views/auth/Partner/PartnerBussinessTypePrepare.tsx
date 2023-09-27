@@ -124,6 +124,7 @@ const PartnerBussinessTypePrepare = () => {
         const newData = { ...formData }
         newData[e.target.name] = e.target.value
         setFormData(newData)
+        if(errors[e.target.name])validatePrepareForm(newData, setErrors)
         console.log("formsdata", formData)
     }
 

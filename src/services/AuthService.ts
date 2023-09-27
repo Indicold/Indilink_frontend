@@ -128,7 +128,7 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
 
           console.log(data);
           if(data?.status){
-            messageView("OTP Verified Successfully !")
+            messageView(data?.message)
             window.location.href="/reset-password"
           }
           

@@ -259,7 +259,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         >
                                             <option >Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
-  <option selected={item?.id===data?.defrosting_id}>{item?.type}</option>
+  <option selected={item?.id===data?.defrosting_id} value={item?.id}>{item?.type}</option>
                                             ))}
                                           
                                         </select>

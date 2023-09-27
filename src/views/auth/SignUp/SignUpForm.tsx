@@ -34,7 +34,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     /* The code snippet is declaring and initializing multiple variables using destructuring assignment
    and the useState hook. */
     const { className, signInUrl = '/sign-in' } = props
-    const [error, setError] = useState({
+    const [error, setError] = useState<any>({
         first_name: '',
         // last_name: '',
         email: '',
@@ -76,8 +76,8 @@ const SignUpForm = (props: SignUpFormProps) => {
         if (e.target.name === 'email') {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         } else if (e.target.name === 'phone_number') {
-            validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
-            setPhone(e.target.value.replace(/[^0-9]/g, ""))
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+             setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         newData[e.target.name] = e.target.value
         setFormData(newData)
@@ -134,7 +134,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className="text-[red]">
+                                <p className="text-[red] normal-case">
                                     {error && error.first_name}
                                 </p>
                             </FormItem>
@@ -169,8 +169,8 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className="text-[red] email-msg-text">
-                                    {isEmailValid ? isEmailValid : error?.email}
+                                <p className="text-[red] normal-case">
+                                    {isEmailValid ? isEmailValid !== 'Eligible'? isEmailValid : '' : error?.email}
                                 </p>
                             </FormItem>
                             <FormItem
@@ -189,9 +189,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className="text-[red] email-msg-text">
+                                <p className="text-[red] normal-case">
                                     {isMobileValid
-                                        ? isMobileValid
+                                       ? isMobileValid !== 'Eligible' ? isMobileValid : ''
                                         : error.phone_number}
                                 </p>
                             </FormItem>
@@ -211,7 +211,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={PasswordInput}
                                     onChange={(e: any) => handleChange(e)}
                                 />
-                                <p className="text-[red]">
+                                <p className="text-[red] normal-case">
                                     {error && error.password}
                                 </p>
                             </FormItem>
@@ -227,7 +227,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     onChange={(e: any) => handleChange(e)}
                                     component={PasswordInput}
                                 />
-                                <p className="text-[red]">
+                                <p className="text-[red] normal-case">
                                     {error && error.password}
                                 </p>
                             </FormItem>
@@ -242,7 +242,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             />
                             <p className="m-1">
                                 <span>I agree to </span>
-                                <ActionLink to={signInUrl}>
+                                <ActionLink to={'/sign-up'}>
                                     <big>
                                         <u className="!text-[#103492] text-sm">
                                             Terms and Conditions
@@ -251,7 +251,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </ActionLink>
                             </p>
                         </div>
-                        <p className="text-[red]">
+                        <p className="text-[red]  normal-case">
                             {error && error.term_condition}
                         </p>
 

@@ -364,10 +364,10 @@ const StoreSearch = () => {
                                             className="h-11 border w-[20%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            {ListOfTimeUnits && ListOfTimeUnits?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>
-
-                                            ))}
+                                            {ListOfTimeUnits && ListOfTimeUnits?.data?.map((item: any, index: any) =>{if(item.id === 4||item.id === 6||item.id === 7){
+                                                return (
+                                                <option value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>)
+                                            }})}
                                         </select>
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
