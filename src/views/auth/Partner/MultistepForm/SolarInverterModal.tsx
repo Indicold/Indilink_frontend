@@ -26,6 +26,12 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -105,8 +111,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center m-2">Solar Invertor</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID*"
                                         className="mx-auto"
                                     >
@@ -123,7 +128,8 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -139,8 +145,6 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -156,9 +160,11 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="Capacity*"
-                                        className="mx-auto"
+                                        className="me-auto ms-2"
                                     >
                                         <Field
                                             type="number"

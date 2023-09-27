@@ -28,6 +28,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
     const {token}:any=getToken()
     const {
         data: DfTypeList,
@@ -112,8 +118,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">ACU Details</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID*"
                                         className="mx-auto w-1/2"
                                     >
@@ -130,7 +135,8 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -146,8 +152,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -163,6 +167,8 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="C.F.M.*"
                                         className="mx-auto w-1/2"
@@ -181,8 +187,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="H.P.*" className="mx-auto w-1/2">
                                         <Field
                                             type="number"
@@ -198,6 +202,8 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.hp}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="A.M.C.*"
                                         className="mx-auto w-1/2"
@@ -218,9 +224,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem>
-                                </div>
-
-                                <div className="flex">
                                     <FormItem label="T.R.*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -236,6 +239,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.tr}
                                         </p>
                                     </FormItem>
+                                </div>
+
+                                <div className="flex">
                                     <FormItem
                                         label="Defrosting*"
                                         className="mx-auto w-1/2"
@@ -267,9 +273,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.defrosting_id}
                                         </p>
                                     </FormItem>
-                                 
-                                </div>
-                                <div className="flex">
                                 <FormItem
                                         label="Discharge Outlet Pipe - GI*"
                                         className=" w-1/2"
@@ -288,6 +291,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.defrosting_id}
                                         </p>
                                     </FormItem>
+                                 
+                                </div>
+                                <div className="flex">
                                 </div>
 <div className='flex'>
                                 <Button

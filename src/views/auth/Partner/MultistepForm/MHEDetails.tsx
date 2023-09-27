@@ -27,6 +27,12 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         MHE: MHE,
     })
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -105,8 +111,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className='text-center'>M.H.E. Details</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID*"
                                         className="mx-auto"
                                     >
@@ -123,7 +128,8 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -139,8 +145,6 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -156,7 +160,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Load*" className="mx-auto">
+                                </div>
+                                <div className="flex">
+                                    <FormItem label="Load*" className="me-auto">
                                         <Field
                                             type="number"
                                             autoComplete="off"

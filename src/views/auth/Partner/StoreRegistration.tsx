@@ -31,7 +31,6 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { payload, payload1 } from '@/store/Payload'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
@@ -1184,28 +1183,28 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.caEquipments.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[25%] text-center">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item:any,index:any)=>(
   <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-  <div className="w-[25%] text-center">
+  <div className="w-[25%] text-center my-auto">
       {item?.make}
   </div>
-  <div className="w-[25%] text-center">
+  <div className="w-[25%] text-center my-auto">
       {item?.model}
   </div>
-  <div className="w-[25%] text-center">
+  <div className="w-[25%] text-center my-auto">
       {item?.cmf}
   </div>
   <div className="w-[25%] mx-auto flex">
@@ -1248,41 +1247,41 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.compressors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         HP
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item:any,index:any)=>(
     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[16%] text-center">
-        A.P.
+    <div className="w-[16%] text-center my-auto">
+        {item?.make}
     </div>
-    <div className="w-[16%] text-center">
-        EXG4568
+    <div className="w-[16%] text-center my-auto">
+        {item?.model}
     </div>
-    <div className="w-[16%] text-center">
-        2
+    <div className="w-[16%] text-center my-auto">
+        {item?.hp}
     </div>
-    <div className="w-[16%] text-center">
-        2014
+    <div className="w-[16%] text-center my-auto">
+        {item?.cmf}
     </div>
-    <div className="w-[16%] text-center">
-        48
+    <div className="w-[16%] text-center my-auto">
+        {item?.amc}
     </div>
     <div className="w-[16%] mx-auto flex">
     <Button
@@ -1324,43 +1323,49 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.acus?.length>0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         HP
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[16%] text-center">
+                                                    <div className="w-[14%] text-center my-auto">
+                                                        Defrosting ID
+                                                    </div>
+                                                    <div className="w-[14%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item:any,index:any)=>(
                                                         <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[16%] text-center">
-                                                            A.P.
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.make}
                                                         </div>
-                                                        <div className="w-[16%] text-center">
-                                                            EXG4568
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.model}
                                                         </div>
-                                                        <div className="w-[16%] text-center">
-                                                            2
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.hp}
                                                         </div>
-                                                        <div className="w-[16%] text-center">
-                                                            2014
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.cmf}
                                                         </div>
-                                                        <div className="w-[16%] text-center">
-                                                            48
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.tr}
                                                         </div>
-                                                        <div className="w-[16%] mx-auto flex">
+                                                        <div className="w-[14%] text-center my-auto">
+                                                            {item?.defrosting_id}
+                                                        </div>
+                                                        <div className="w-[14%] mx-auto flex">
                                                         <Button
                                                             className="!p-2 pt-0 pb-0 mx-auto"
                                                             // onClick={() => handleEdit(rowData)}
@@ -1400,35 +1405,35 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.condensors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.condensors?.map((item:any,index:any)=>(
     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[20%] text-center">
-        A.P.
+    <div className="w-[20%] text-center my-auto">
+        {item?.make}
     </div>
-    <div className="w-[20%] text-center">
-        EXG4568
+    <div className="w-[20%] text-center my-auto">
+        {item?.model}
     </div>
-    <div className="w-[20%] text-center">
-        2
+    <div className="w-[20%] text-center my-auto">
+        {item?.tr}
     </div>
-    <div className="w-[20%] text-center">
-        2014
+    <div className="w-[20%] text-center my-auto">
+        {item?.amc}
     </div>
     <div className="w-[20%] mx-auto flex">
     <Button
@@ -1470,36 +1475,36 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.amcs?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Name of Service
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Vendor
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Valid till
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Fixed Cost
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.amcs?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[20%] text-center my-auto">
+                                                    {item?.name_of_service}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        EXG4568
+                                                    <div className="w-[20%] text-center my-auto">
+                                                    {item?.vendor}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2
+                                                    <div className="w-[20%] text-center my-auto">
+                                                    {item?.valid_till}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2014
+                                                    <div className="w-[20%] text-center my-auto">
+                                                    {item?.fixed_cost}
                                                     </div>
                                                     <div className="w-[20%] mx-auto flex">
                                                     <Button
@@ -1515,7 +1520,7 @@ useEffect(()=>{
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
+                                                </div>))}
                                             </div>:<p className="text-center">Currently there are no AMCs.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1537,36 +1542,36 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.iotDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         ID
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.iotDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.type}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        EXG4568
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.device_id}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.make}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2014
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.model}
                                                     </div>
                                                     <div className="w-[20%] mx-auto flex">
                                                     <Button
@@ -1582,7 +1587,7 @@ useEffect(()=>{
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
+                                                </div>))}
                                             </div>:<p className="text-center">Currently there are no IOT Devices.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1604,36 +1609,36 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.itDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        Asset ID
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        Device ID
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.itDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.type}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        EXG4568
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.device_id}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.make}
                                                     </div>
-                                                    <div className="w-[20%] text-center">
-                                                        2014
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.model}
                                                     </div>
                                                     <div className="w-[20%] mx-auto flex">
                                                     <Button
@@ -1649,7 +1654,7 @@ useEffect(()=>{
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
+                                                </div>))}
                                             </div>:<p className="text-center">Currently there are no IT Devices.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1671,52 +1676,52 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.generators?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         KVA
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Year
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.generators?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.make}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        EXG4568
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.model}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        2
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.kva}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        2014
+                                                    <div className="w-[20%] text-center my-auto">
+                                                        {item?.year}
                                                     </div>
-                                                    <div className="mx-2 flex">
+                                                    <div className="w-[20%] mx-auto flex">
                                                     <Button
-                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
-                                                        className="!p-1 mx-1"
+                                                        className="!p-1 mx-auto"
                                                         // onClick={() => handleView(rowData)}
                                                     >
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
+                                                </div>))}
                                             </div>:<p className="text-center">Currently there are no generators.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1738,46 +1743,46 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.mhes?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Load
                                                     </div>
-                                                    <div className="mx-auto">
-                                                    Actions
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.mhes?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.make}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        EXG4568
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.model}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        2
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.load}
                                                     </div>
-                                                    <div className="mx-2 flex">
+                                                    <div className="w-[25%] mx-auto flex">
                                                     <Button
-                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
-                                                        className="!p-1 mx-1"
+                                                        className="!p-1 mx-auto"
                                                         // onClick={() => handleView(rowData)}
                                                     >
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div>
+                                                </div>))}
                                             </div>:<p className="text-center">Currently there are no MHEs.</p>}
                                                 <div className="flex">
                                                     <button
@@ -1799,46 +1804,46 @@ useEffect(()=>{
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                        {false?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                        {fetchDetailsAll?.data?.solarInverters?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                             <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Capacity
                                                     </div>
-                                                    <div className="mx-auto">
-                                                    Actions
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        Actions
                                                     </div>
                                                 </div>
-                                                <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="mx-auto">
-                                                        A.P.
+                                                {fetchDetailsAll?.data?.solarInverters?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.make}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        EXG4568
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.model}
                                                     </div>
-                                                    <div className="mx-auto">
-                                                        2
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        {item?.capacity}
                                                     </div>
-                                                    <div className="mx-2 flex">
+                                                    <div className="w-[25%] mx-auto flex">
                                                     <Button
-                                                        className="!p-2 pt-0 pb-0 mx-1"
+                                                        className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
-                                                        className="!p-1 mx-1"
+                                                        className="!p-1 mx-auto"
                                                         // onClick={() => handleView(rowData)}
                                                     >
                                                         View
                                                     </Button>
                                                     </div>
-                                                </div></div>
+                                                </div>))}</div>
                                             </div>:<p className="text-center">Currently there are no solar inverters.</p>}
                                             
                                             <div className="flex">

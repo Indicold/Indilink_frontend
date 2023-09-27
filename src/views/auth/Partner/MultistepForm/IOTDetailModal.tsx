@@ -7,7 +7,7 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable, validateIOTForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -23,6 +23,12 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -96,8 +102,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className='text-center'>I.O.T. Device Details</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset id*"
                                         className="mx-auto"
                                     >
@@ -114,7 +119,8 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Type*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -130,8 +136,6 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.type}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem
                                         label="Device ID*"
                                         className="mx-auto"
@@ -150,6 +154,8 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.device_id}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
                                         <Field
                                             type="text"
@@ -165,8 +171,6 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -182,6 +186,8 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="Internet enabled*"
                                         className="mx-auto w-1/2"

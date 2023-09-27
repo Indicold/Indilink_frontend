@@ -30,6 +30,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 
     const [data, setData] = useState({})
     const [errors, setErrors] = useState<any>({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
 
     /**
      * The handleChange function updates the state data based on the input value or file selected by
@@ -55,6 +61,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function with specific parameters.
      */
     const handlesave = async () => {
+        console.log("asset_idddd", data)
         if(validateCAEquipForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/ca-equipment',
@@ -107,8 +114,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">CA Equipment</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID *"
                                         className="mx-auto"
                                     >
@@ -125,7 +131,8 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make *" className="mx-auto">
                                         <Field
                                             type="text"
@@ -141,8 +148,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model *" className="mx-auto">
                                         <Field
                                             type="text"
@@ -158,9 +163,11 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="C.F.M.*"
-                                        className="mx-auto"
+                                        className="me-auto ms-2"
                                     >
                                         <Field
                                             type="text"

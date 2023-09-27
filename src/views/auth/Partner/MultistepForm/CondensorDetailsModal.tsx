@@ -9,7 +9,7 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -25,6 +25,12 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -94,8 +100,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className='text-center m-2'>Condensor Details</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset id*"
                                         className="mx-auto w-1/2"
                                     >
@@ -112,7 +117,8 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -128,8 +134,6 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -145,6 +149,8 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem label="T.R.*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -160,8 +166,6 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.tr}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex !justify-items-start">
                                     <FormItem
                                         label="A.M.C.*"
                                         className=" w-1/2"
@@ -182,6 +186,8 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex !justify-items-start">
                                 </div>
                                 <div className='flex justify-center'>
                                 <Button

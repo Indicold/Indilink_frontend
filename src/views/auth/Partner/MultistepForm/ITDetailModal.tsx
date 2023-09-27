@@ -26,6 +26,12 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -105,8 +111,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">I.T. Device</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID*"
                                         className="w-1/2 mx-auto"
                                     >
@@ -123,7 +128,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Type*" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
@@ -139,8 +145,6 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.type}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem
                                         label="Device ID*"
                                         className="w-1/2 mx-auto"
@@ -159,6 +163,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.device_id}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem label="Make*" className="w-1/2 mx-auto">
                                         <Field
                                             type="text"
@@ -174,8 +180,6 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -191,6 +195,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <div className="w-1/2">
 
                                     </div>

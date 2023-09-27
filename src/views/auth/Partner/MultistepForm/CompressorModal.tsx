@@ -24,6 +24,12 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
 
     /**
      * The handleChange function updates the state with the new value entered in the input field or
@@ -100,8 +106,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center mt-4">Compressor</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset ID *"
                                         className="mx-auto w-1/2"
                                     >
@@ -118,7 +123,8 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem label="Make *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -134,8 +140,6 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -151,6 +155,8 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="C.F.M. *"
                                         className="mx-auto w-1/2"
@@ -169,8 +175,6 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="H.P.*" className="mx-auto w-1/2">
                                         <Field
                                             type="number"
@@ -186,9 +190,11 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.hp}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="A.M.C. *"
-                                        className="mx-auto w-1/2"
+                                        className="w-1/2"
                                     >
                                         <select
                                             id="countries"

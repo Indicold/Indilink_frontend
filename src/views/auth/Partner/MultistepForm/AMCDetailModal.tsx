@@ -9,7 +9,7 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable, validateAMCForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -25,6 +25,12 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    useEffect(()=>{
+        const newState:any = { ...data };
+        newState.asset_id = localStorage.getItem('AssetsId')
+        setData(newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+    }, [])
     /**
      * The handleChange function updates the state with the new value of the input field.
      * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
@@ -95,8 +101,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className='text-center m-2'>A.M.C. Details</h6>
-                                <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="Asset id*"
                                         className="mx-auto w-1/2"
                                     >
@@ -113,7 +118,8 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.asset_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
+                                <div className="flex">
                                     <FormItem
                                         label="Name of service*"
                                         className="mx-auto w-1/2"
@@ -132,8 +138,6 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.name_of_service}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem
                                         label="Vendor*"
                                         className="mx-auto w-1/2"
@@ -152,6 +156,8 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.vendor}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex">
                                     <FormItem
                                         label="Valid till*"
                                         className="mx-auto w-1/2"
@@ -170,8 +176,6 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.valid_till}
                                         </p>
                                     </FormItem>
-                                </div>
-                                <div className="flex ">
                                     <FormItem
                                         label="Fixed cost(Rs)*"
                                         className=" w-1/2"
@@ -190,6 +194,8 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.fixed_cost}
                                         </p>
                                     </FormItem>
+                                </div>
+                                <div className="flex ">
                                 </div>
                                 <div className='flex'>
                                 <Button
