@@ -50,9 +50,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isSubmitting, setSubmitting] = useState(false)
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
+    const [seconds, setSeconds] = useState(10);
     const [formData, setFormData] = useState(selector?.details?.data);
     const [GSTRes, setGSTRes] = useState({});
-    const { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/auth/getOTP`);
+    let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/auth/getOTP`);
     let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`${apiUrl}/auth/getGstDetails`);
     const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`${apiUrl}/auth/verifyOTP`);
     const { className }:any = props
@@ -114,7 +115,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
      * where it collects form data and sends a POST request with the data to a server.
      */
-    const handlesubmit = () => {   
+    const handlesubmit = () => {
         let ObjectData:any={
             first_name:formData?.first_name,
             last_name:formData?.last_name,
@@ -194,9 +195,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     /* The above code is a useEffect hook in a TypeScript React component. It is used to display a
     toast notification when the `OTPPostDetails` object has a `message` property. */
     useEffect(() => {
-
-        if (OTPPostDetails?.message) {
-
+        if (OTPPostDetails?.message && OTPPostDetails?.message !== 'hello') {
+            setSeconds(20)
             toast.success(OTPPostDetails?.message, {
                 position: 'top-right', // Position of the toast
                 autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
@@ -210,8 +210,22 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     color: "#fff"// Set the background color here
                 },
             });
+            OTPPostDetails.message = 'hello'
         }
     }, [OTPPostDetails?.message])
+
+    useEffect(() => {
+        // Decrease the timer every second
+        const timer = setInterval(() => {
+            if (seconds > 0) {
+                setSeconds(seconds - 1);
+            }
+        }, 1000);
+
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(timer);
+
+    }, [seconds]);
 
 
     return (
@@ -245,7 +259,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     </div>
                                     <button type="submit" className="indigo-btn mt-3 rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get Started!</button>
                                     <div className="text-field text-center">
-                                    If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>Resend OTP</a>
+                                    If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? seconds < 10 ? `00:0${seconds}` : `00:${seconds}` : 'Resend OTP'}</a>
                                     </div>
                                 </form>
                             </div>
