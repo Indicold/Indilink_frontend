@@ -30,6 +30,7 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { payload, payload1 } from '@/store/Payload'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -232,6 +233,7 @@ useEffect(()=>{
                 fetchDetailsloading) && <LoaderSpinner />}
             <div className="bg-white p-4 rounded w-5/6">
                 <ToastContainer />
+                <ArrowBackIcon onClick={()=>navigate(-1)} />
                 <h4 className="text-center text-head-title">Store</h4>
                 <Formik
                     initialValues={{ field: true }}
@@ -1745,6 +1747,17 @@ useEffect(()=>{
                                 </Accordion>
 
                                 <div className="flex justify-center">
+                                <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        variant="solid"
+                                        type="button"
+                                        disabled
+                                        onClick={()=>navigate(-1)}
+                                        className="indigo-btn mt-2 !w-[140px] !bg-gray-300 mx-auto rounded-[30px]"
+                                    >
+                                        Prev
+                                    </Button>
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block

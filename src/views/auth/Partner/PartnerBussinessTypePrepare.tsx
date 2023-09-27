@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify' // Import a toast notification c
 import ACUModall from './MultistepForm/ACUModal' // Import a custom modal component
 import MachineModal from './MultistepForm/MachineModal' // Import another custom modal component
 import 'react-accessible-accordion/dist/fancy-example.css' // Import CSS styles for an accordion
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Define the main functional component for PartnerBussinessTypePrepare
 const PartnerBussinessTypePrepare = () => {
@@ -206,6 +207,7 @@ const PartnerBussinessTypePrepare = () => {
                 <LoaderSpinner />
             ) : (
                 <div className="bg-white w-5/6">
+                <ArrowBackIcon onClick={()=>navigate(-1)} />
                     <h4 className=" mb-2 text-head-title text-center">
                         Prepare
                     </h4>
@@ -664,13 +666,24 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                     </div>
                                     <div className="flex justify-center">
+                                    <Button
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            disabled
+                                            onClick={()=>navigate(-1)}
+                                            className="indigo-btn mt-2 !w-[30%] !bg-gray-300 mx-auto rounded-[30px]"
+                                        >
+                                            Prev
+                                        </Button>
                                         <Button
                                             style={{ borderRadius: '13px' }}
                                             block
                                             variant="solid"
                                             type="button"
                                             onClick={handleRoute}
-                                            className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                            className="indigo-btn mt-2 !w-[30%] mx-auto rounded-[30px]"
                                         >
                                             Next
                                         </Button>

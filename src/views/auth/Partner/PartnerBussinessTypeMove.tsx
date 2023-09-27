@@ -24,6 +24,7 @@ import {
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import 'react-toastify/dist/ReactToastify.css' // Import CSS for toast notifications
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Define the main functional component for PartnerBussinessTypeMove
 const PartnerBussinessTypeMove = () => {
@@ -196,6 +197,7 @@ const PartnerBussinessTypeMove = () => {
 
             </div>
             <div className="bg-white w-5/6">
+                <ArrowBackIcon onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">Move</h4>
                 <div>
                     <Formik
@@ -362,6 +364,17 @@ const PartnerBussinessTypeMove = () => {
                                 </div>
 
                                 <div className="flex justify-center">
+                                <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        variant="solid"
+                                        type="button"
+                                        disabled
+                                        onClick={()=>navigate(-1)}
+                                        className="indigo-btn mt-2 !w-[200px] !bg-gray-300 mx-auto rounded-[30px]"
+                                    >
+                                        Prev
+                                    </Button>
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block
