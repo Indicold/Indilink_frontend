@@ -32,6 +32,8 @@ import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -178,9 +180,19 @@ const StoreRegistration = () => {
         const newData: any = { ...dataa }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
+        // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
+        console.log("newData", newData)
         if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
+    }
+
+    const handleStoreChange = (e:any, newValue:any) => {
+        const newData: any = { ...dataa }
+        newData['store_type_id'] = newValue?.map((item:any,index:any)=>item?.id)
+        setData(newData)
+        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
+        console.log("newDataa", newData)
+        // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
     }
 
     // Use useEffect to update form data when fetchDetails changes
@@ -471,8 +483,9 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.total_tonnage}
+                                                value={dataa?.total_tonnage || 0}
                                                 type="number"
+                                                min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -495,7 +508,7 @@ useEffect(()=>{
                                         label="Type of Store*"
                                         className="w-1/2 text-label-title"
                                     >
-                                        <select
+                                        {/* <select
                                             disabled={location?.state}
                                             id="countries"
                                             name="store_type_id"
@@ -521,7 +534,22 @@ useEffect(()=>{
                                                         </option>
                                                     )
                                                 )}
-                                        </select>
+                                        </select> */}
+                                        <Autocomplete
+                                            multiple
+                                            limitTags={2}
+                                            options={StorageType?StorageType?.data:[]}
+                                            getOptionLabel={(option:any) => option.type}
+                                                onChange={handleStoreChange}
+                                          
+                                            // defaultValue={}
+                                            renderInput={(params) => (
+                                                <TextField {...params} placeholder="Store Types"
+                                                className="!p-[0px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                id="multiple-limit-tags"
+                                                name="store_type_id" />)}
+                                                // sx={{ width: '500px' }}
+                                            />
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}
                                         </p>
@@ -572,9 +600,10 @@ useEffect(()=>{
                                             disabled={location?.state}
                                             type="number"
                                             autoComplete="off"
+                                            min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={dataa?.no_of_chambers}
+                                            value={dataa?.chamber_ids?.length}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
@@ -593,8 +622,9 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area}
+                                                value={dataa?.ante_room_area || 0}
                                                 type="number"
+                                                min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -619,10 +649,11 @@ useEffect(()=>{
                                         <Field
                                             disabled={location?.state}
                                             type="number"
+                                            min="0"
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
-                                            value={dataa?.total_number_of_docks}
+                                            value={dataa?.total_number_of_docks || 0}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
@@ -643,8 +674,9 @@ useEffect(()=>{
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
-                                                    dataa?.total_office_space
+                                                    dataa?.total_offfice_space || 0
                                                 }
+                                                min={0}
                                                 type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -678,7 +710,7 @@ useEffect(()=>{
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option selected>
-                                                Choose Cold Storage
+                                                Choose Dock Storage
                                             </option>
                                             {DocksType &&
                                                 DocksType?.data?.map(
@@ -708,8 +740,9 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.processing_area}
+                                                value={dataa?.processing_area || 0}
                                                 type="number"
+                                                min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -735,7 +768,8 @@ useEffect(()=>{
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
-                                                value={dataa?.parking_area}
+                                                min={0}
+                                                value={dataa?.parking_area || 0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -844,7 +878,7 @@ useEffect(()=>{
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Facility Manager Name*"
+                                        label="Vendor Name*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
@@ -865,13 +899,15 @@ useEffect(()=>{
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Cold Storage Manager Contact Number*"
+                                        label="Vendor Contact Number*"
                                         className="w-1/2 text-label-title"
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="number"
+                                            type="tel"
                                             autoComplete="off"
+                                            minLength={10}
+                                            maxLength={10}
                                             name="facility_manager_contact"
                                             onChange={(e: any) =>
                                                 handlechange(e)
@@ -1328,44 +1364,38 @@ useEffect(()=>{
                                                     <div className="w-[14%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         HP
                                                     </div>
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[14%] text-center my-auto">
-                                                        Defrosting ID
-                                                    </div>
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item:any,index:any)=>(
                                                         <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[14%] text-center my-auto">
+                                                        <div className="w-[16%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[14%] text-center my-auto">
+                                                        <div className="w-[16%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[14%] text-center my-auto">
+                                                        <div className="w-[16%] text-center my-auto">
                                                             {item?.hp}
                                                         </div>
-                                                        <div className="w-[14%] text-center my-auto">
+                                                        <div className="w-[16%] text-center my-auto">
                                                             {item?.cmf}
                                                         </div>
-                                                        <div className="w-[14%] text-center my-auto">
+                                                        <div className="w-[16%] text-center my-auto">
                                                             {item?.tr}
-                                                        </div>
-                                                        <div className="w-[14%] text-center my-auto">
-                                                            {item?.defrosting_id}
                                                         </div>
                                                         <div className="w-[14%] mx-auto flex">
                                                         <Button
@@ -1472,7 +1502,7 @@ useEffect(()=>{
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                AMC
+                                                Annual Maintenance Contract
                                                 <p className='text-[red]'>{errors?.amc_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>

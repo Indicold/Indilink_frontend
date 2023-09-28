@@ -21,6 +21,7 @@ interface MajorityHolderModalProps {
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -37,11 +38,33 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
+    const [length, setLength] = useState('');
+    const [breadth, setBreadth] = useState('');
+    const [height, setHeight] = useState('');
+    const [lengthP, setLengthP] = useState('');
+    const [breadthP, setBreadthP] = useState('');
+    const [heightP, setHeightP] = useState('');
+    const [formattedString, setFormattedString] = useState('');
+    const [formattedStringP, setFormattedStringP] = useState('');
     const [data, setData] = useState<any>({
         staircase:true
     })
     const {id}:any=useParams();
     const [errors, setErrors] = useState<any>({})
+    let chamber_sizee = ''
+
+    const updateFormattedString = (newLength:any, newBreadth:any, newHeight:any) => {
+        const formatted = `${newLength}x${newBreadth}x${newHeight}`;
+        setFormattedString(formatted);
+        data['chamber_size'] = formatted
+    };
+
+    const updateFormattedStringP = (newLength:any, newBreadth:any, newHeight:any) => {
+        const formatted = `${newLength}x${newBreadth}x${newHeight}`;
+        setFormattedStringP(formatted);
+        data['pallet_size'] = formatted
+    };
+
     /**
      * The handleChange function updates the data object based on the input value and name, and logs
      * the updated data object.
@@ -52,12 +75,41 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const handleChange = (e: any) => {
         const newData: any = { ...data }
         newData.asset_id = id
+        newData['chamber_size'] = formattedString
+        newData['pallet_size'] = formattedStringP
         newData[e.target.name] = e.target.value
         if (e.target.name === 'photo_of_entrance') {
             newData[e.target.name] = e.target.files[0]
         } else if (e.target.name === 'photo_of_chamber') {
-            newData[e.target.name] = e.target.files[0]
-        } else {
+            newData[e.target.name] = e.target.files
+        } 
+        else if (e.target.name === 'ch-l') {
+            // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
+            // data['chamber_size'].concat('x')
+            // console.log("chamber_size", typeof e.target.value.toString())
+            setLength(e.target.value);
+            updateFormattedString(e.target.value, breadth, height);
+        } else if (e.target.name === 'ch-b') {
+            setBreadth(e.target.value);
+            updateFormattedString(length, e.target.value, height);
+        } else if (e.target.name === 'ch-h') {
+            setHeight(e.target.value);
+            updateFormattedString(length, breadth, e.target.value);
+        } 
+        else if (e.target.name === 'pl-l') {
+            // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
+            // data['chamber_size'].concat('x')
+            // console.log("chamber_size", typeof e.target.value.toString())
+            setLengthP(e.target.value);
+            updateFormattedStringP(e.target.value, breadthP, heightP);
+        } else if (e.target.name === 'pl-b') {
+            setBreadthP(e.target.value);
+            updateFormattedStringP(lengthP, e.target.value, heightP);
+        } else if (e.target.name === 'pl-h') {
+            setHeightP(e.target.value);
+            updateFormattedStringP(lengthP, breadthP, e.target.value);
+        }
+        else {
             newData[e.target.name] = e.target.value
         }
         if(errors[e.target.name]){
@@ -95,11 +147,14 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             'photo_of_entrance',
             data?.photo_of_entrance
         )
-        formdata.append(
-            'photo_of_chamber',
-            data?.photo_of_chamber
-        )
-
+        if(data?.photo_of_chamber)for (let index = 0; index < data?.photo_of_chamber.length; index++) {
+            formdata.append(
+                'photo_of_chamber',
+                data?.photo_of_chamber[index]
+            )
+            
+        }
+    
         var requestOptions: any = {
             method: 'POST',
             headers: myHeaders,
@@ -267,7 +322,7 @@ if (!existingChamberIdsJSON) {
                                         label="Chamber Size(Meter) *"
                                         className="mx-auto w-1/2"
                                     >
-                                         <Field
+                                         {/* <Field
                                             type="number"
                                             autoComplete="off"
                                             name="chamber_size"
@@ -276,8 +331,14 @@ if (!existingChamberIdsJSON) {
                                             }
                                             placeholder="L X B X H"
                                             component={Input}
-                                        />
-                                       
+                                        /> */}
+                                        <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
+                                        <input type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} />
+                                        <span className='h-fit my-auto'>X</span>
+                                        <input type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} />
+                                        <span className='h-fit my-auto'>X</span>
+                                        <input type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} />
+                                       </div>
                                         <p className="text-[red]">
                                             {errors && errors.chamber_size}
                                         </p>
@@ -306,7 +367,7 @@ if (!existingChamberIdsJSON) {
                                         label="Pallet size(MM)*"
                                         className="mx-auto w-1/2"
                                     >
-                                          <Field
+                                          {/* <Field
                                             type="text"
                                             autoComplete="off"
                                             name="pallet_size"
@@ -315,7 +376,14 @@ if (!existingChamberIdsJSON) {
                                             }
                                             placeholder="L X B X H"
                                             component={Input}
-                                        />
+                                        /> */}
+                                        <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
+                                        <input type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} />
+                                        <span className='h-fit my-auto'>X</span>
+                                        <input type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} />
+                                        <span className='h-fit my-auto'>X</span>
+                                        <input type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} />
+                                       </div>
                                      
                                         <p className="text-[red]">
                                             {errors && errors.pallet_size}
@@ -371,12 +439,13 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber from inside"
+                                        label="Photo of the chamber (inside, Gate, one corner)"
                                         className="mx-auto w-1/2"
                                     >
                                         <input
                                             type="file"
                                             name="photo_of_chamber"
+                                            multiple
                                             id=""
                                             accept="image/png, image/gif, image/jpeg" 
                                             className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
@@ -433,7 +502,7 @@ if (!existingChamberIdsJSON) {
                                         label="Temperature range (°C) *"
                                         className="mx-auto w-1/2"
                                     >
-                                            <Field
+                                            {/* <Field
                                             type="text"
                                             autoComplete="off"
                                             name="temp_range"
@@ -442,7 +511,11 @@ if (!existingChamberIdsJSON) {
                                             }
                                             placeholder="Enter Value"
                                             component={Input}
-                                        />
+                                        /> */}
+                                        <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
+                                        <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' onChange={(e: any) => handleChange(e)} />
+                                        <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' onChange={(e: any) => handleChange(e)} />
+                                       </div>
                                            
                                         <p className="text-[red]">
                                             {errors && errors.temp_range}

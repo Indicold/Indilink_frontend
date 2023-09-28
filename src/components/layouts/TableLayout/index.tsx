@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const tableHead = {
   asset_id: "Asset ID",
   is_registration_complete: "Registration",
-  is_verified: "Is Verified",
+  is_verified: "Verification Status",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
   created_at: "Created At",

@@ -423,6 +423,11 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
     if (!formData?.chamber_size) {
         newErrors.chamber_size = 'This Field is required'
     }
+    
+    if (formData?.chamber_size?.length < 5) {
+        console.log('formdata_chamber', formData?.chamber_size?.length)
+        newErrors.chamber_size = 'Enter all details'
+    }
 
     if (!formData?.no_of_pallets) {
         newErrors.no_of_pallets = 'This Field is required'
@@ -430,6 +435,11 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
 
     if (!formData?.pallet_size) {
         newErrors.pallet_size = 'This Field is required'
+    }
+    
+    if (formData?.pallet_size?.length < 5) {
+        console.log('formdata_chamber', formData?.chamber_size?.length)
+        newErrors.chamber_size = 'Enter all details'
     }
 
     if (!formData?.racking_type_id) {
@@ -452,7 +462,7 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.floor_area = 'This Field is required'
     }
 
-    if (!formData?.temp_range) {
+    if (!formData?.temp_range_min || !formData?.temp_range_max) {
         newErrors.temp_range = 'This Field is required'
     }
 
