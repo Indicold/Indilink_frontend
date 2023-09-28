@@ -88,6 +88,7 @@ const StoreRegistration = () => {
         data: fetchDetailsAll,
         loading: fetchDetailsloadingAll,
         error: fetchDetailsSerrorAll,
+        refetch:FetchAgain
     } = useApiFetch<any>(`partner/store/components-all/${id}`, token)
     const { result: response, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/partner/store/chambers`);
     const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`${apiUrl}/partner/store/ca-equipments`);
@@ -297,6 +298,7 @@ useEffect(()=>{
                             
                             {chamberModal && (
                                 <ChamberDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={chamberModal}
                                     formD={dataa}
                                     update={setData}

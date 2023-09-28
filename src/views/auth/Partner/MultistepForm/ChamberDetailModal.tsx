@@ -27,6 +27,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const { token }: any = getToken()
     const {
@@ -37,22 +38,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [data, setData] = useState<any>({
-        staircase: "false",
-        asset_id: "INDI01AAAA19",
-        chamber_number: "CH456",
-        chamber_name: "75765",
-        chamber_size: "2",
-        no_of_pallets: "5765",
-        pallet_size: "6",
-        racking_type_id: "1",
-        photo_of_entrance: {file:"kjh"},
-        photo_of_chamber: {file:"kjh"},
-        no_of_floors: "5",
-        floor_area: "56",
-        temp_range: "56",
-        each_floor_hight: "6566",
-        parking_area: "6"
-      } || {
         staircase:true
     })
     const {id}:any=useParams();
@@ -66,7 +51,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
      */
     const handleChange = (e: any) => {
         const newData: any = { ...data }
-        newData.asset_id = id|| 'INDI01AAAA4'
+        newData.asset_id = id
         newData[e.target.name] = e.target.value
         if (e.target.name === 'photo_of_entrance') {
             newData[e.target.name] = e.target.files[0]
@@ -132,7 +117,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             console.log("VVVVVVV",result);
 
             if (result?.status) {
-                
+                FetchAgain()
                 messageView('Chamber Details Updated Successfully!')
                 
                 const newD: any = { ...formD }
