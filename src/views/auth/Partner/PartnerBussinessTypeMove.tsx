@@ -82,6 +82,7 @@ console.log("VVVVVVV",id);
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
+        console.log("newData", newData)
         if(errors[e.target.name])validateMovePartnerForm(newData, setErrors)
     }
 
@@ -371,6 +372,379 @@ console.log("VVVVVVV",id);
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.fitness_validity}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="MFG Month/Year"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="month"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="mfg_month_year"
+                                            value={data?.mfg_month_year || '2023-05'}
+                                            placeholder="MFG Month/Year"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.mfg_month_year}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Vehicle Class"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            value={data?.vehicle_class}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="vehicle_class"
+                                            placeholder="Vehicle Class"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.vehicle_class}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Emission norms"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="emission_norms"
+                                            value={data?.emission_norms}
+                                            placeholder="Emission norms"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.emission_norms}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Actual Payload (in kg)"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            value={data?.actual_payload}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="actual_payload"
+                                            placeholder="Actual Payload (in kg)"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.actual_payload}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Crate Capacity"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="create_capacity"
+                                            value={data?.create_capacity}
+                                            placeholder="Crate Capacity"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.create_capacity}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Length"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            value={data?.length}                          
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="length"
+                                            placeholder="Length"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.length}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Width"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="width"
+                                            value={data?.width}
+                                            placeholder="Width"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.width}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Height"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            value={data?.height}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="height"
+                                            placeholder="Height"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.height}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="GV Weight"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="gv_weight"
+                                            value={data?.gv_weight}
+                                            placeholder="GV Weight"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.gv_weight}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Unladen Weight in RC
+"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            min="0"
+                                            autoComplete="off"
+                                            value={data?.unladen_weight_in_rc}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="unladen_weight_in_rc"
+                                            placeholder="Unladen Weight in RC
+"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.unladen_weight_in_rc}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Get Engine No"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="engine_no"
+                                            value={data?.engine_no}
+                                            placeholder="Get Engine No"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.engine_no}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Side Door"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <select
+                                            disabled={location?.state}
+                                            id="countries"
+                                            name="side_door"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option
+                                                value="true"
+                                                selected={data?.side_door}
+                                            >
+                                                Yes
+                                            </option>
+                                            <option
+                                                value="false"
+                                                selected={!data?.side_door}
+                                            >
+                                                No
+                                            </option>
+                                        </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.side_door}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Hatch Window"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <select
+                                            disabled={location?.state}
+                                            id="countries"
+                                            name="hatch_window"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option
+                                                value="true"
+                                                selected={data?.hatch_window}
+                                            >
+                                                Yes
+                                            </option>
+                                            <option
+                                                value="false"
+                                                selected={!data?.hatch_window}
+                                            >
+                                                No
+                                            </option>
+                                        </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.hatch_window}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Dual Temperature"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <select
+                                            disabled={location?.state}
+                                            id="countries"
+                                            name="dual_temp_bulkhead"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        >
+                                            <option
+                                                value="true"
+                                                selected={data?.dual_temp_bulkhead}
+                                            >
+                                                Yes
+                                            </option>
+                                            <option
+                                                value="false"
+                                                selected={!data?.dual_temp_bulkhead}
+                                            >
+                                                No
+                                            </option>
+                                        </select>
+                                        <p className="text-[red]">
+                                            {errors && errors.dual_temp_bulkhead}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="RC (Upload clear picture)"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <input
+                                            type="file"
+                                            name="rc_image"
+                                            id=""
+                                            accept="image/png, image/gif, image/jpeg" 
+                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.rc_image}
+                                        </p>
+                                    </FormItem>
+                                    <FormItem
+                                        label="RC Number from RC"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            value={data?.rc_no}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="rc_no"
+                                            placeholder="RC Number from RC"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.rc_no}
                                         </p>
                                     </FormItem>
                                 </div>

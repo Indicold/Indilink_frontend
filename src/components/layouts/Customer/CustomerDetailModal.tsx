@@ -71,7 +71,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
             </button>
 
             <div className="px-6 py-6 lg:px-8">
-              <h4 className="text-head-title text-center mb-4">{localStorage.getItem('user_type')==='Customer' ? "Request search" : "Choice on Bussiness"} </h4>
+              <h4 className="text-head-title text-center mb-4">{localStorage.getItem('user_type')==='Customer' ? "Request search" : "Choice on Business"} </h4>
               <p>You may also change later</p>
 
               <div>

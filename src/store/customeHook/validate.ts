@@ -311,7 +311,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.address = 'Address is required'
     }
 
-    if (!formData?.total_tonnage) {
+    if (!formData?.total_tonnage || formData?.total_tonnage === '0') {
         newErrors.total_tonnage = 'Total Tonnage is required'
     }
 
@@ -327,7 +327,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.no_of_chambers = 'Number of Chambers is required'
     }
 
-    if (!formData?.ante_room_area || formData?.ante_room_area==0) {
+    if (!formData?.ante_room_area || formData?.ante_room_area<0) {
         newErrors.ante_room_area = 'Ante Room Area is required'
     }
 
@@ -472,10 +472,6 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
 
     if (!formData?.staircase) {
         newErrors.staircase = 'This Field is required'
-    }
-
-    if (!formData?.parking_area) {
-        newErrors.parking_area = 'This Field is required'
     }
 
     console.log('errr', newErrors)

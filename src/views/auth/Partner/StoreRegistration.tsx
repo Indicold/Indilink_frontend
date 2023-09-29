@@ -426,7 +426,7 @@ useEffect(()=>{
                                     >
                                         <select
                                             disabled={location?.state}
-                                            className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                             name="city_id"
                                             onChange={(e: any) =>
                                                 handlechange(e)
@@ -483,9 +483,9 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.total_tonnage || 0}
+                                                value={dataa?.total_tonnage || ''}
                                                 type="number"
-                                                min={0}
+                                                min={1}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -622,7 +622,7 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area || 0}
+                                                value={dataa?.ante_room_area || ''}
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -653,7 +653,7 @@ useEffect(()=>{
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
-                                            value={dataa?.total_number_of_docks || 0}
+                                            value={dataa?.total_number_of_docks || ''}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
@@ -674,7 +674,7 @@ useEffect(()=>{
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
-                                                    dataa?.total_offfice_space || 0
+                                                    dataa?.total_offfice_space || ''
                                                 }
                                                 min={0}
                                                 type="number"
@@ -740,7 +740,7 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.processing_area || 0}
+                                                value={dataa?.processing_area || ''}
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -769,7 +769,7 @@ useEffect(()=>{
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
                                                 min={0}
-                                                value={dataa?.parking_area || 0}
+                                                value={dataa?.parking_area || ''}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -843,14 +843,12 @@ useEffect(()=>{
                                                 Choose Year of Installation
                                             </option>
                                             {true &&
-                                                [2022, 2021, 2020, 2019, 2018].map(
+                                                Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
-                                                            selected={
-                                                                item ===
-                                                                dataa?.installation_year
-                                                            }
+                                                            key={item}
+                                                            value={item}
+                                                            selected={item === dataa?.installation_year}
                                                         >
                                                             {item}
                                                         </option>

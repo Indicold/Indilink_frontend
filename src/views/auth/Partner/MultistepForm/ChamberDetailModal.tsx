@@ -82,6 +82,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.files[0]
         } else if (e.target.name === 'photo_of_chamber') {
             newData[e.target.name] = e.target.files
+        } else if (e.target.name === 'photo_of_chamber_gate') {
+            newData[e.target.name] = e.target.files
+        } else if (e.target.name === 'photo_of_chamber_corner') {
+            newData[e.target.name] = e.target.files
         } 
         else if (e.target.name === 'ch-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
@@ -143,16 +147,33 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         formdata.append('temp_range', data?.temp_range)
         formdata.append('parking_area', data?.parking_area)
         formdata.append('each_floor_hight', data?.each_floor_hight)
-        formdata.append(
-            'photo_of_entrance',
-            data?.photo_of_entrance
-        )
+        // formdata.append(
+        //     'photo_of_entrance',
+        //     data?.photo_of_entrance
+        // )
+        if(data?.photo_of_entrance)for (let index = 0; index < data?.photo_of_entrance.length; index++) {
+            formdata.append(
+                'photo_of_entrance',
+                data?.photo_of_entrance[index]
+            )
+        }
         if(data?.photo_of_chamber)for (let index = 0; index < data?.photo_of_chamber.length; index++) {
             formdata.append(
                 'photo_of_chamber',
                 data?.photo_of_chamber[index]
             )
-            
+        }
+        if(data?.photo_of_chamber_gate)for (let index = 0; index < data?.photo_of_chamber_gate.length; index++) {
+            formdata.append(
+                'photo_of_chamber',
+                data?.photo_of_chamber_gate[index]
+            )
+        }
+        if(data?.photo_of_chamber_corner)for (let index = 0; index < data?.photo_of_chamber_corner.length; index++) {
+            formdata.append(
+                'photo_of_chamber',
+                data?.photo_of_chamber_corner[index]
+            )
         }
     
         var requestOptions: any = {
@@ -398,7 +419,7 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option>Select</option>
                                             {RackingType &&
@@ -425,6 +446,7 @@ if (!existingChamberIdsJSON) {
                                         
                                         <input
                                             type="file"
+                                            multiple
                                             name="photo_of_entrance"
                                             id=""
                                             accept="image/png, image/gif, image/jpeg" 
@@ -439,12 +461,54 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber (inside, Gate, one corner)"
+                                        label="Photo of the chamber from inside*"
                                         className="mx-auto w-1/2"
                                     >
                                         <input
                                             type="file"
                                             name="photo_of_chamber"
+                                            multiple
+                                            id=""
+                                            accept="image/png, image/gif, image/jpeg" 
+                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.photo_of_chamber}
+                                        </p>
+                                    </FormItem>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Photo of chamber from gate *"
+                                        className="mx-auto w-1/2"
+                                    >
+                                        
+                                        <input
+                                            type="file"
+                                            multiple
+                                            name="photo_of_chamber_gate"
+                                            id=""
+                                            accept="image/png, image/gif, image/jpeg" 
+                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.photo_of_entrance}
+                                        </p>
+                                    </FormItem>
+
+                                    <FormItem
+                                        label="Photo of the chamber from one corner *"
+                                        className="mx-auto w-1/2"
+                                    >
+                                        <input
+                                            type="file"
+                                            name="photo_of_chamber_corner"
                                             multiple
                                             id=""
                                             accept="image/png, image/gif, image/jpeg" 
@@ -545,7 +609,7 @@ if (!existingChamberIdsJSON) {
                                 <div className="flex">
                                     <FormItem
                                         label="Staircase (Yes/No)"
-                                        className="mx-auto w-1/2"
+                                        className="w-1/2"
                                     >
                                         <select
                                             name="staircase"
@@ -559,24 +623,6 @@ if (!existingChamberIdsJSON) {
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.staircase}
-                                        </p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Parking Area (sqft) *"
-                                        className="mx-auto w-1/2"
-                                    >
-                                        <Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="parking_area"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
-                                            placeholder="Parking Area (sqft)"
-                                            component={Input}
-                                        />
-                                        <p className="text-[red]">
-                                            {errors && errors.parking_area}
                                         </p>
                                     </FormItem>
                                 </div>

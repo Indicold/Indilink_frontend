@@ -23,15 +23,13 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
     MHE,
 }) => {
-    const [data, setData] = useState<any>({
-        MHE: MHE,
-    })
+    const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = localStorage.getItem('AssetsId')
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -43,7 +41,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData)
+        console.log('newData', newData, data)
     }
     /**
      * The handlesave function is used to handle saving data to a store table in a React
@@ -64,11 +62,11 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     /* The `useEffect` hook is used to perform side effects in a React component. In this case,
          the `useEffect` hook is used to update the state data object with the value of `MHE`
          whenever it changes. */
-    useEffect(() => {
-        setData({
-            MHE: MHE,
-        })
-    }, [data.MHE])
+    // useEffect(() => {
+    //     setData({
+    //         MHE: MHE,
+    //     })
+    // }, [data.MHE])
     return (
         <>
             <ToastContainer />

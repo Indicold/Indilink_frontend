@@ -198,7 +198,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                     {localStorage.getItem('user_type') ===
                                     'Customer'
                                         ? 'Request search'
-                                        : 'Choice on Bussiness'}{' '}
+                                        : 'Choice on Business'}{' '}
                                 </h4>
                                 <p>You may also change later</p>
 

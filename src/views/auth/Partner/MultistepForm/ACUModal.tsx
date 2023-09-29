@@ -204,7 +204,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem
+                                    {/* <FormItem
                                         label="A.M.C.*"
                                         className="mx-auto w-1/2"
                                     >
@@ -223,7 +223,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.amc}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
                                     <FormItem label="T.R.*" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -239,9 +239,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.tr}
                                         </p>
                                     </FormItem>
-                                </div>
-
-                                <div className="flex">
                                     <FormItem
                                         label="Defrosting*"
                                         className="mx-auto w-1/2"
@@ -273,7 +270,10 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.defrosting_id}
                                         </p>
                                     </FormItem>
-                                <FormItem
+                                </div>
+
+                                <div className="flex">
+                                {/* <FormItem
                                         label="Discharge Outlet Pipe - GI*"
                                         className=" w-1/2"
                                     >
@@ -290,7 +290,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         <p className="text-[red]">
                                             {errors && errors.defrosting_id}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
                                  
                                 </div>
                                 <div className="flex">
