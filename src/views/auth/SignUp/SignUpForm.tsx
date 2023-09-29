@@ -234,26 +234,6 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="flex">
-                            <FormItem
-                                label="CIN Number"
-                                className="me-auto text-label-title !mb-0"
-                            >
-                                <Field
-                                    autoComplete="off"
-                                    className="rounded-[13px]"
-                                    name="cin"
-                                    maxLength={16}
-                                    placeholder="CIN No."
-                                    component={Input}
-                                    onChange={(e: any) => handleChange(e)}
-                                />
-                                <p className="text-[red] normal-case">
-                                    {error && error.cin}
-                                </p>
-                            </FormItem>
-                        </div>
-
                         <div className="flex w-[95%]">
                             <input
                                 type="checkbox"
