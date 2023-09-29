@@ -160,7 +160,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
         if (OTPResponse?.status) {
             setTimeout(() => {
-                navigate('/sign-in')
+                navigate('/signup-success')
 
             }, 2000)
         }
@@ -284,14 +284,14 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 <Form className='signup-form'>
                     <FormContainer>
                         <FormItem
-                            label="GST Number"
+                            label="GST Number*"
                             className='text-start cin-number text-label-title'
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
                                 name="gst"
-                                placeholder="CIN No"
+                                placeholder="GST No"
                                 onChange={(e: any) => handleChange(e)}
                                 component={Input}
                                 className=''

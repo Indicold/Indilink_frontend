@@ -48,6 +48,14 @@ const authRoute: Routes = [
     },
     {
 
+        key: 'basicInformationSuccess',
+        path: `/signup-success`,
+        component: lazy(() => import('@/views/auth/BasicInformation/SuccessScreen')),
+        authority: [],
+
+    },
+    {
+
         key: 'partner',
         path: `/partner-registration`,
         component: lazy(() => import('@/views/auth/Partner/NewMultistep')),

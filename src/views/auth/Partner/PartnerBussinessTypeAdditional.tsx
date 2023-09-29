@@ -123,6 +123,16 @@ const PartnerBussinessTypeAdditional = () => {
         handleUpload(item, e.target.files[0])
     }
 
+    const handleDateChange = (e:any) => {
+        let newData = {...array}
+        let newarr:any=array?.map((item:any,index:any)=>{
+            if(item?.key==e.target.name){
+                item.valid_till = e.target.value
+            }
+        })
+        console.log("date_change", newData, e.target.value)
+    }
+
     // Upload the file to the server
     const handleUpload = async (item: any, file: any) => {
         let AssetsId = localStorage.getItem('AssetsId')
@@ -248,13 +258,14 @@ const PartnerBussinessTypeAdditional = () => {
                                             key={index}
                                             className="w-1/2 rounded-lg pl-[22px] flex text-label-title"
                                         >
+                                            <div className="flex">
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
                                                 accept="image/*,.doc, .docx,.pdf"
-                                                className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                className="!w-2/3 block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                         file:bg-transparent file:border-0
                         file:bg-gray-100 file:mr-4
                         file:py-3 file:px-4
@@ -263,6 +274,8 @@ const PartnerBussinessTypeAdditional = () => {
                                                     handleFileChange(e, item)
                                                 }
                                             />
+                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
+                                            </div>
                                             <div className="flex">
                                                 {item?.view && <b>Status:</b>}
                                                 {item?.view && (

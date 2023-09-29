@@ -123,7 +123,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                     <FormContainer>
                         <div className="flex">
                             <FormItem
-                                label="First Name"
+                                label="First Name*"
                                 className="me-auto text-label-title"
                             >
                                 <Field
@@ -158,7 +158,7 @@ const SignUpForm = (props: SignUpFormProps) => {
 
                         <div className="">
                             <FormItem
-                                label="Email Address"
+                                label="Email Address*"
                                 className="me-auto text-label-title "
                             >
                                 <Field
@@ -175,7 +175,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </p>
                             </FormItem>
                             <FormItem
-                                label="Phone Number"
+                                label="Phone Number*"
                                 className="me-auto text-label-title"
                             >
                                 <Field
@@ -200,7 +200,7 @@ const SignUpForm = (props: SignUpFormProps) => {
 
                         <div className="flex">
                             <FormItem
-                                label="Password"
+                                label="Password*"
                                 className="me-auto text-label-title !mb-0"
                             >
                                 <Field
@@ -217,7 +217,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </p>
                             </FormItem>
                             <FormItem
-                                label="Confirm Password"
+                                label="Confirm Password*"
                                 className="me-auto text-label-title"
                             >
                                 <Field
@@ -230,6 +230,26 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 />
                                 <p className="text-[red] normal-case">
                                     {error && error.password}
+                                </p>
+                            </FormItem>
+                        </div>
+
+                        <div className="flex">
+                            <FormItem
+                                label="CIN Number"
+                                className="me-auto text-label-title !mb-0"
+                            >
+                                <Field
+                                    autoComplete="off"
+                                    className="rounded-[13px]"
+                                    name="cin"
+                                    maxLength={16}
+                                    placeholder="CIN No."
+                                    component={Input}
+                                    onChange={(e: any) => handleChange(e)}
+                                />
+                                <p className="text-[red] normal-case">
+                                    {error && error.cin}
                                 </p>
                             </FormItem>
                         </div>

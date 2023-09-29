@@ -59,11 +59,12 @@ const PartnerBussinessTypeCompliances = () => {
 
     let array1 = [
         {
-            label: 'FASSAI License',
+            label: 'FSSAI License',
             placeholder: 'Upload',
             key: 'fsssai_lic',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'ISO Certificate',
@@ -71,6 +72,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'iso_cert',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'HACCP',
@@ -78,6 +80,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'haccp',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'Pest Control Agency Contract',
@@ -85,6 +88,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'pest_control_agency_contract',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'BRC Audit or any other certification (If Applicable)',
@@ -92,6 +96,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'brc_audit',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'Pollution NOC',
@@ -99,6 +104,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'pollution_noc',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'Fire Safety NOC',
@@ -106,6 +112,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'fire_safety_noc',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'MCD License (if applicable)',
@@ -113,6 +120,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'mcd_lic',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'UP Cold Storage License',
@@ -120,6 +128,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'up_cond_storage_lic',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'Factory License',
@@ -127,6 +136,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'factory_lic',
             view: false,
             url: null,
+            valid_till: null,
         },
         {
             label: 'Panchayat NOC',
@@ -134,16 +144,8 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'panchayat_noc',
             view: false,
             url: null,
+            valid_till: null,
         },
-        // Add additional objects as needed
-        // Example:
-        // {
-        //   label: "New License",
-        //   placeholder: "Upload",
-        //   key: "new_license",
-        //   view: false,
-        //   url: null,
-        // },
     ]
 
     // Initialize state variable for the file upload items
@@ -152,9 +154,18 @@ const PartnerBussinessTypeCompliances = () => {
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
         console.log('FILE', e.target.files[0])
-
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
+    }
+
+    const handleDateChange = (e:any) => {
+        let newData = {...array}
+        let newarr:any=array?.map((item:any,index:any)=>{
+            if(item?.key==e.target.name){
+                item.valid_till = e.target.value
+            }
+        })
+        console.log("date_change", newData, e.target.value)
     }
 
     // Handle the file upload
@@ -310,12 +321,13 @@ const PartnerBussinessTypeCompliances = () => {
                                             key={index}
                                             className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
+                                            <div className='flex'>
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
-                                                className="block w-full border border-gray-200 
+                                                className="!w-2/3 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
@@ -325,6 +337,8 @@ const PartnerBussinessTypeCompliances = () => {
                                                     handleFileChange(e, item)
                                                 }
                                             />
+                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
+                                            </div>
                                             <div className="flex">
                                                 {item?.message && (
                                                     <p className="text-[red]">
