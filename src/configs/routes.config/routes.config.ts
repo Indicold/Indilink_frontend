@@ -272,4 +272,25 @@ export const protectedRoutes = [
         authority: [],
 
     },
+    {
+
+        key: 'profileBasic',
+        path: `/basic-info`,
+        component: lazy(() => import('@/views/auth/Profile/BasicInfo')),
+        authority: [],
+    },
+    {
+
+        key: 'profileKeyManagement',
+        path: `/key-management`,
+        component: lazy(() => import('@/views/auth/Profile/KeyManagement')),
+        authority: [],
+    },
+    {
+
+        key: 'profileAccountDetails',
+        path: `/account-details`,
+        component: lazy(() => import('@/views/auth/Profile/AccountDetails')),
+        authority: [],
+    },
 ]
