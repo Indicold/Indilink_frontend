@@ -38,7 +38,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                 placement="bottom-end"
             >
                 <Dropdown.Item variant="header">
-                    <NavLink to='/profile'>
+                    <NavLink to='/basic-info'>
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>

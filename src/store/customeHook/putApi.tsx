@@ -11,6 +11,7 @@
  * `sendPostRequest`.
  */
 import { useState, useEffect } from 'react';
+import { getToken } from './token';
 
 interface ApiResponse {
   // Define the properties of the response object here
@@ -36,12 +37,14 @@ interface PostData {
 }
 
 function postRequest(url: string, data: PostData): Promise<ApiResult> {
+  const {token}:any=getToken()
   // Implement your actual POST request logic here and return the result
   // You can use libraries like axios, fetch, etc.
   return fetch(url, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      "Authorization":`Bearer ${token}`
     },
     body: JSON.stringify(data),
   })

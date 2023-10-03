@@ -891,6 +891,179 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
+export const validateSHForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.full_name) {
+        newErrors.full_name = 'This Field is required'
+    }
+
+    if (!formData?.percentage_holding) {
+        newErrors.percentage_holding = 'This Field is required'
+    }
+
+    if (!formData?.address) {
+        newErrors.address = 'This Field is required'
+    }
+
+    if (!formData?.phone_number) {
+        newErrors.phone_number = 'This Field is required'
+    }
+    if (!formData?.shareholder_email) {
+        newErrors.shareholder_email = 'This Field is required'
+    }
+    if (!formData?.designation) {
+        newErrors.designation = 'This Field is required'
+    }
+    if (!formData?.din_number) {
+        newErrors.din_number = 'This Field is required'
+    }
+   
+    if (!formData?.authorized_signatory) {
+        newErrors.authorized_signatory = 'This Field is required'
+    }
+   
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+export const validateBranchForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.name) {
+        newErrors.name = 'This Field is required'
+    }
+
+    if (!formData?.address) {
+        newErrors.address = 'This Field is required'
+    }
+
+    if (!formData?.branch_gst) {
+        newErrors.branch_gst = 'This Field is required'
+    }
+
+    if (!formData?.branch_email) {
+        newErrors.branch_email = 'This Field is required'
+    }
+    if (!formData?.branch_head) {
+        newErrors.branch_head = 'This Field is required'
+    }
+    if (!formData?.branch_phone) {
+        newErrors.branch_phone = 'This Field is required'
+    }
+  
+   
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+export const validateBasicForm = (data: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!data?.country_id) {
+        newErrors.country_id = 'This Field is required'
+    }
+
+    if (!data?.state_id) {
+        newErrors.state_id = 'This Field is required'
+    }
+
+    if (!data?.address) {
+        newErrors.address = 'This Field is required'
+    }
+
+    if (data?.gst_file?.length<1) {
+        newErrors.gst_file = 'Gst file is required'
+    }
+    if (data?.shareholder_ids?.length<1) {
+        newErrors.shareholder_ids = 'This Field is required'
+    }
+    if (data?.branch_ids<1) {
+        newErrors.branch_ids = 'This Field is required'
+    }
+  
+   
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+export const validateKeyForm = (data: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!data?.full_name) {
+        newErrors.full_name = 'This Field is required'
+    }
+
+    if (!data?.person_email) {
+        newErrors.person_email = 'This Field is required'
+    }
+
+    if (!data?.designation) {
+        newErrors.designation = 'This Field is required'
+    }
+
+    if (!data?.address) {
+        newErrors.address = 'Gst file is required'
+    }
+    if (!data?.country_id) {
+        newErrors.country_id = 'This Field is required'
+    }
+    if (!data?.state_id) {
+        newErrors.state_id = 'This Field is required'
+    }
+    if (!data?.city_id) {
+        newErrors.city_id = 'This Field is required'
+    }
+    if (!data?.pin_code) {
+        newErrors.pin_code = 'This Field is required'
+    }
+    if (!data?.aadhar) {
+        newErrors.aadhar = 'This Field is required'
+    }
+    if (!data?.contact_number) {
+        newErrors.contact_number = 'This Field is required'
+    }
+    if (!data?.platform_role_id) {
+        newErrors.platform_role_id = 'This Field is required'
+    }
+  
+   
+
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateAccountForm = (data: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!data?.account_name) {
+        newErrors.account_name = 'This Field is required'
+    }
+
+    if (!data?.account_number) {
+        newErrors.account_number = 'This Field is required'
+    }
+
+    if (!data?.bank_name) {
+        newErrors.bank_name = 'This Field is required'
+    }
+
+    if (!data?.bank_ifsc) {
+        newErrors.bank_ifsc = 'This Field is required'
+    }
+    if (!data?.branch_name) {
+        newErrors.branch_name = 'This Field is required'
+    }
+  
+    console.log('errr', newErrors)
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
 
 export const fieldsToAppendForPrepare: any = [
     'product_category_id',
