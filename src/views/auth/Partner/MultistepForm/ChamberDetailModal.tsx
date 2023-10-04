@@ -79,7 +79,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         newData['pallet_size'] = formattedStringP
         newData[e.target.name] = e.target.value
         if (e.target.name === 'photo_of_entrance') {
-            newData[e.target.name] = e.target.files[0]
+            newData[e.target.name] = e.target.files
         } else if (e.target.name === 'photo_of_chamber') {
             newData[e.target.name] = e.target.files
         } else if (e.target.name === 'photo_of_chamber_gate') {
@@ -144,9 +144,13 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         formdata.append('no_of_floors', data?.no_of_floors)
         formdata.append('staircase', data?.staircase)
         formdata.append('floor_area', data?.floor_area)
-        formdata.append('temp_range', data?.temp_range)
+        formdata.append('temp_range_min', data?.temp_range_min)
+        formdata.append('temp_range_max', data?.temp_range_max)
         formdata.append('parking_area', data?.parking_area)
         formdata.append('each_floor_hight', data?.each_floor_hight)
+        // data?.photo_of_entrance?.forEach((file:any, index:any) => {
+        //     formdata.append(`photo_of_entrance`, file, file.name);
+        //   });
         // formdata.append(
         //     'photo_of_entrance',
         //     data?.photo_of_entrance

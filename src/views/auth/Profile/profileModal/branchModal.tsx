@@ -14,11 +14,19 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
     const [error, setErrors] = useState<any>({})
     let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`${apiUrl}/auth/branch`);
     const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`${apiUrl}/auth/branch/${formData?.id}`);
+    const [phone, setPhone] = useState('')
 
     const isDisabled: any = false;
     const handleChange = (e: any) => {
         const newdata: any = { ...formData };
-        newdata[e.target.name] = e.target.value;
+        if(e.target.name === 'branch_phone') {
+            if(e.target.value.length<=10)  {
+                newdata[e.target.name] = e.target.value
+                setPhone(e.target.value);
+            }
+        } else {
+            newdata[e.target.name] = e.target.value;
+        }
         setformData(newdata)
         console.log("changed", newdata)
     }
@@ -118,6 +126,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Name"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.name}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Address"
@@ -135,6 +146,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Address"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.address}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className="flex">
@@ -154,6 +168,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch GST"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.branch_gst}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Head"
@@ -171,6 +188,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Head"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.branch_email}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className="flex">
@@ -190,6 +210,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Email Address"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.branch_head}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Phone Number"
@@ -197,16 +220,20 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
-                                                    type="text"
+                                                    type="number"
+                                                    maxLength={10}
                                                     autoComplete="off"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
                                                     }
                                                     name="branch_phone"
-                                                    value={formData?.branch_phone}
+                                                    value={phone}
                                                     placeholder="Branch Phone Number"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.branch_phone}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className='flex'>
@@ -230,9 +257,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 onClick={handlesubmit}
                                                 className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
                                             >
-                                                {true
-                                                    ? 'Saving...'
-                                                    : 'Save & Next'}
+                                                Save & Next
                                             </Button>
                                         </div>
                                     </FormContainer>

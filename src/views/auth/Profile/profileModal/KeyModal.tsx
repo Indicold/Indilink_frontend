@@ -304,26 +304,6 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                             <FormItem
-                                label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
-                            >
-                                <Field
-                                    disabled={data?.isdisabled}
-                                    type="text"
-                                    autoComplete="off"
-                                    onChange={(e: any) =>
-                                        handleChange(e)
-                                    }
-                                    name="pucc_validity"
-                                    value={data?.firm_state}
-                                    placeholder="Aadhar Card"
-                                    component={Input}
-                                />
-                                  
-                            </FormItem>
-                        </div>
-                        <div className="flex">
-                        <FormItem
                                 label="Contact no."
                                 className="rounded-lg pl-[22px] w-1/2"
                             >
@@ -343,6 +323,26 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         {error && error.contact_number}
                                     </p>
                             </FormItem>
+                        </div>
+                        <div className="flex">
+                            {/* <FormItem
+                                label="Aadhar Card"
+                                className="rounded-lg pl-[22px] w-1/2"
+                            >
+                                <Field
+                                    disabled={data?.isdisabled}
+                                    type="text"
+                                    autoComplete="off"
+                                    onChange={(e: any) =>
+                                        handleChange(e)
+                                    }
+                                    name="pucc_validity"
+                                    value={data?.firm_state}
+                                    placeholder="Aadhar Card"
+                                    component={Input}
+                                />
+                                  
+                            </FormItem> */}
                             <FormItem
                                 label="Platform Role"
                                 className="rounded-lg pl-[22px] w-1/2"

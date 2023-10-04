@@ -145,7 +145,8 @@ export const handleStoreTable = async (
     setModal: any,
     formD: any,
     update: any,
-    name: string
+    name: string,
+    fetchAgain: any,
 ) => {
     const { token }: any = getToken()
     try {
@@ -162,6 +163,7 @@ export const handleStoreTable = async (
         const result = await response.json()
 
         if (result?.status) {
+            fetchAgain()
             messageView('Data Updated Successfully!')
             setModal(false)
             const newD: any = { ...formD }

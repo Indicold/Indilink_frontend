@@ -17,12 +17,14 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     setModal,
     formD,
     update,
+    FetchAgain
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -64,7 +66,8 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'solar_invertor_ids'
+            'solar_invertor_ids',
+            FetchAgain
         )
         }
     }

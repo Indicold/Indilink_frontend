@@ -16,12 +16,14 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -62,7 +64,8 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'generator_ids'
+            'generator_ids',
+            FetchAgain
         )
         }
     }

@@ -19,12 +19,14 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const ACUModall: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
@@ -65,14 +67,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
      * parameters.
      */
     const handlesave = () => {
+        console.log("saved", data, validateACUForm(data, setErrors), errors)
         if(validateACUForm(data, setErrors)) {
+            console.log("validated")
         handleStoreTable(
             'partner/store/acu',
             data,
             setModal,
             formD,
             update,
-            'acu_ids'
+            'acu_ids',
+            FetchAgain
         )
         }
     }

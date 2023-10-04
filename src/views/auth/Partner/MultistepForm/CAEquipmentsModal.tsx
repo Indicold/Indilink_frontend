@@ -19,12 +19,14 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain,
 }) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
 
@@ -69,7 +71,8 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'ca_equipment_ids'
+            'ca_equipment_ids',
+            FetchAgain
         )
         }
     }

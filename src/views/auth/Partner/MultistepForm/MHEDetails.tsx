@@ -15,6 +15,7 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     MHE: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -22,6 +23,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     MHE,
+    FetchAgain
 }) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
@@ -55,7 +57,8 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'mhe_ids'
+            'mhe_ids',
+            FetchAgain
         )
         }
     }

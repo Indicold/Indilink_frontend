@@ -15,12 +15,14 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain,
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -61,7 +63,8 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'compressor_ids'
+            'compressor_ids',
+            FetchAgain
         )
         }
     }

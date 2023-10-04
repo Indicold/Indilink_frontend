@@ -14,12 +14,14 @@ interface MajorityHolderModalProps {
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -54,7 +56,8 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'iot_devices_ids'
+            'iot_devices_ids',
+            FetchAgain
         )
         }
     }

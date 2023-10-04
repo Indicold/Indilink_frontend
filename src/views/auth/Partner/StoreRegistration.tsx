@@ -320,6 +320,7 @@ useEffect(()=>{
 
                             {CAModal && (
                                 <CAEquipmentsModal
+                                FetchAgain={FetchAgain}
                                     modal={CAModal}
                                     formD={dataa}
                                     update={setData}
@@ -330,6 +331,7 @@ useEffect(()=>{
 
                             {compModal && (
                                 <CompressorModal
+                                FetchAgain={FetchAgain}
                                     modal={compModal}
                                     formD={dataa}
                                     update={setData}
@@ -340,6 +342,7 @@ useEffect(()=>{
 
                             {ACUModal && (
                                 <ACUModall
+                                FetchAgain={FetchAgain}
                                     modal={ACUModal}
                                     formD={dataa}
                                     update={setData}
@@ -350,6 +353,7 @@ useEffect(()=>{
 
                             {condensorModal && (
                                 <CondensorDetailsModal
+                                FetchAgain={FetchAgain}
                                     modal={condensorModal}
                                     formD={dataa}
                                     update={setData}
@@ -370,6 +374,7 @@ useEffect(()=>{
 
                             {IOTModal && (
                                 <IOTDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={IOTModal}
                                     formD={dataa}
                                     update={setData}
@@ -380,6 +385,7 @@ useEffect(()=>{
 
                             {ITModal && (
                                 <ITDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={ITModal}
                                     formD={dataa}
                                     update={setData}
@@ -390,6 +396,7 @@ useEffect(()=>{
 
                             {genModal && (
                                 <GeneratorDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={genModal}
                                     formD={dataa}
                                     update={setData}
@@ -400,6 +407,7 @@ useEffect(()=>{
 
                             {MHEModal && (
                                 <MHEDetailsModal
+                                FetchAgain={FetchAgain}
                                     modal={MHEModal}
                                     formD={dataa}
                                     update={setData}
@@ -410,6 +418,7 @@ useEffect(()=>{
 
                             {SEModal && (
                                 <SolarInverterModal
+                                FetchAgain={FetchAgain}
                                     modal={SEModal}
                                     formD={dataa}
                                     update={setData}

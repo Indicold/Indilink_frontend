@@ -131,6 +131,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Name"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.full_name}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Percentage"
@@ -148,6 +151,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Percentage"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.percentage_holding}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className="flex">
@@ -167,6 +173,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Address"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.address}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Phone Number"
@@ -184,6 +193,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Phone Number"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.phone_number}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className="flex">
@@ -203,6 +215,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Email address"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.shareholder_email}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Designation"
@@ -220,6 +235,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Designation"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.designation}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className="flex">
@@ -239,6 +257,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="DIN Number"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.din_number}
+                                                </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Authorised Signatory"
@@ -256,6 +277,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Authorised Signatory"
                                                     component={Input}
                                                 />
+                                                <p className='text-[red]'>
+                                                    {error && error?.authorized_signatory}
+                                                </p>
                                             </FormItem>
                                         </div>
                                         <div className='flex'>

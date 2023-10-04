@@ -129,7 +129,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Account Name"
                                     component={Input}
                                 />
-                                        {error && error.account_name}
+                                        <p className='text-[red]'>{error && error.account_name}</p>
                             </FormItem>
                             <FormItem
                                 label="Account Number"
@@ -147,7 +147,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Account Number"
                                     component={Input}
                                 />
-                                   {error && error.account_number}
+                                   <p className='text-[red]'>{error && error.account_number}</p>
                             </FormItem>
                         </div>
                         <div className="flex">
@@ -167,7 +167,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Bank Name"
                                     component={Input}
                                 />
-                                       {error && error.bank_name}
+                                       <p className='text-[red]'>{error && error.bank_name}</p>
                             </FormItem>
                             <FormItem
                                 label="Bank IFSC Code"
@@ -185,7 +185,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Bank IFSC Code"
                                     component={Input}
                                 />
-                                 {error && error.bank_ifsc}
+                                 <p className='text-[red]'>{error && error.bank_ifsc}</p>
                             </FormItem>
                         </div>
                         <div className="flex">
@@ -205,7 +205,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Branch Name"
                                     component={Input}
                                 />
-                                     {error && error.branch_name}
+                                     <p className='text-[red]'>{error && error.branch_name}</p>
                             </FormItem>
                         </div>
                         <div className='flex'>
