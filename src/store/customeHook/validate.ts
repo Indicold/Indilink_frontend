@@ -267,39 +267,6 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.weight_bridge_id = 'Weigh Bridge is required'
         console.log("err weigh:", newErrors.weight_bridge_id)
     }
-   if(formData?.chamber_ids.length<1){
-    newErrors.chamber_ids="Chamber details is required"
-   }
-   if(formData?.ca_equipment_ids.length<1){
-    newErrors.ca_equipment_ids="CA Equipment details is required"
-   }
-   if(formData?.compressor_ids.length<1){
-    newErrors.compressor_ids="Compressor details is required"
-   }
-   if(formData?.acu_ids.length<1){
-    newErrors.acu_ids="ACU details is required"
-   }
-   if(formData?.condensor_ids.length<1){
-    newErrors.condensor_ids="Condensor details is required"
-   }
-   if(formData?.amc_ids.length<1){
-    newErrors.amc_ids="AMC details is required"
-   }
-   if(formData?.iot_devices_ids.length<1){
-    newErrors.iot_devices_ids="IOT details is required"
-   }
-   if(formData?.it_devices_ids.length<1){
-    newErrors.it_devices_ids="IT Device details is required"
-   }
-   if(formData?.generator_ids.length<1){
-    newErrors.generator_ids="Generator details is required"
-   }
-   if(formData?.mhe_ids.length<1){
-    newErrors.mhe_ids="MHE details is required"
-   }
-   if(formData?.solar_invertor_ids.length<1){
-    newErrors.solar_invertor_ids="Solar Inverter details is required"
-   }
     if (!formData?.road_condition_id || formData?.road_condition_id === '') {
         newErrors.road_condition_id = 'Please select road condition'
         console.log("err road:", newErrors.road_condition_id)
@@ -313,7 +280,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.address = 'Address is required'
     }
 
-    if (!formData?.total_tonnage || formData?.total_tonnage === '0') {
+    if (!formData?.total_tonnage || formData?.total_tonnage <= '0') {
         newErrors.total_tonnage = 'Total Tonnage is required'
     }
 
@@ -325,32 +292,58 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.cold_storage_type_id = 'Cold Storage Type is required'
     }
 
-    if (!formData?.no_of_chambers || formData?.no_of_chambers==0) {
-        newErrors.no_of_chambers = 'Number of Chambers is required'
+    // if (!formData?.no_of_chambers) {
+    //     newErrors.no_of_chambers = 'Number of Chambers is required'
+    // }
+
+    if (!formData?.ante_room_area) {
+        if (formData?.ante_room_area==='') {
+            newErrors.ante_room_area = 'Ante Room Area is required'
+        }
+        if (formData?.ante_room_area<0) {
+            newErrors.ante_room_area = 'Ante Room Area is required'
+        }
+    }
+   
+
+    if (!formData?.total_number_of_docks) {
+        if (formData?.total_number_of_docks==='') {
+            newErrors.total_number_of_docks = 'Total Number of Docks is required'
+        }
+        if (formData?.total_number_of_docks<0) {
+            newErrors.total_number_of_docks = 'Total Number of Docks is required'
+        }
     }
 
-    if (!formData?.ante_room_area || formData?.ante_room_area<0) {
-        newErrors.ante_room_area = 'Ante Room Area is required'
-    }
-
-    if (!formData?.total_number_of_docks || formData?.total_number_of_docks==0) {
-        newErrors.total_number_of_docks = 'Total Number of Docks is required'
-    }
-
-    if (!formData?.total_office_space || formData?.total_office_space==0) {
-        newErrors.total_office_space = 'Total Office Space is required'
+    if (!formData?.total_office_space ) {
+        if (formData?.total_office_space==='') {
+            newErrors.total_office_space = 'Total Office Space is required'
+        }
+        if (formData?.total_office_space<0) {
+            newErrors.total_office_space = 'Total Office Space is required'
+        }
     }
 
     if (!formData?.type_of_dock_id) {
         newErrors.type_of_dock_id = 'Type of Dock is required'
     }
 
-    if (!formData?.processing_area || formData?.processing_area==0) {
-        newErrors.processing_area = 'Processing Area is required'
+    if (!formData?.processing_area) {
+        if (formData?.processing_area==='') {
+            newErrors.processing_area = 'Processing Area is required'
+        }
+        if (formData?.processing_area<0) {
+            newErrors.processing_area = 'Processing Area is required'
+        }
     }
 
-    if (!formData?.parking_area || formData?.parking_area==0) {
-        newErrors.parking_area = 'Parking Area is required'
+    if (!formData?.parking_area ) {
+        if (formData?.parking_area==='') {
+            newErrors.parking_area = 'Parking Area is required'
+        }
+        if (formData?.parking_area<0) {
+            newErrors.parking_area = 'Parking Area is required'
+        }
     }
 
     if (!formData?.type_of_refrigeration_id) {
@@ -365,7 +358,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.facility_manager_name = 'Facility Manager Name is required'
     }
 
-    if (!formData?.facility_manager_contact) {
+    if (!formData?.facility_manager_contact || formData?.facility_manager_contact.length<10) {
         newErrors.facility_manager_contact =
             'Facility Manager Contact is required'
     }
@@ -377,7 +370,11 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
-
+ export const onkeyDown=(e:any)=>{
+    if (e.key === 'e' || e.key === '-') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+ }
 export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
