@@ -503,7 +503,7 @@ useEffect(()=>{
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.total_tonnage }
                                                 type="number"
-                                                min={1}
+                                                min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -923,7 +923,7 @@ useEffect(()=>{
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="tel"
+                                            type="number"
                                             autoComplete="off"
                                             minLength={10}
                                             maxLength={10}
