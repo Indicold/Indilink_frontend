@@ -17,6 +17,7 @@ import MHEDetailsModal from './MultistepForm/MHEDetails'
 import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
+    onkeyDown,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -113,16 +114,14 @@ const StoreRegistration = () => {
     const location = useLocation()
 
     // Initialize state variables for form data and errors
-    const [dataa, setData] = useState<any>(
-        payload1 || {
-            chamber_ids: [3],
-        }
-    )
+    const [dataa, setData] = useState<any>({})
 
     const [errors, setErrors] = useState<any>({})
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
+
+    
 
     // Handle the form submission
     const handleRoute = async () => {
@@ -179,12 +178,15 @@ const StoreRegistration = () => {
     const handlechange = (e: any) => {
         const newData: any = { ...dataa }
         newData[e.target.name] = e.target.value
+        newData.no_of_chambers = dataa.no_of_chambers?dataa.no_of_chambers:'0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
         console.log("newData", newData)
         if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
+
+    const [value, setValue] = useState([])
 
     const handleStoreChange = (e:any, newValue:any) => {
         const newData: any = { ...dataa }
@@ -204,6 +206,13 @@ const StoreRegistration = () => {
         }
     }, [fetchDetails])
 useEffect(()=>{
+    
+    const newState:any = { ...dataa };
+    newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
+    console.log("no_of_chambers", newState)
+    setData(newState)
+    setValue(dataa?.store_type_id)
+    console.log("dataa", dataa)
 if(localStorage.getItem('chamber_ids')){
     const arr:any=JSON.parse(localStorage.getItem('chamber_ids')) || []; 
     if(arr){
@@ -492,13 +501,14 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.total_tonnage || ''}
+                                                value={dataa?.total_tonnage }
                                                 type="number"
                                                 min={1}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
                                                 name="total_tonnage"
+                                                onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
                                             />
                                             {/* <select
@@ -551,7 +561,7 @@ useEffect(()=>{
                                             getOptionLabel={(option:any) => option.type}
                                                 onChange={handleStoreChange}
                                           
-                                            // defaultValue={}
+                                            // value={value?.length>0 && value}
                                             renderInput={(params) => (
                                                 <TextField {...params} placeholder="Store Types"
                                                 className="!p-[0px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -612,10 +622,7 @@ useEffect(()=>{
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={dataa?.chamber_ids?.length}
-                                            onChange={(e: any) =>
-                                                handlechange(e)
-                                            }
+                                            value={dataa?.chamber_ids?.length || 0}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -631,13 +638,14 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area || ''}
+                                                value={dataa?.ante_room_area }
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
                                                 name="ante_room_area"
+                                                onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
                                             />
                                             {/* <select
@@ -662,10 +670,11 @@ useEffect(()=>{
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
-                                            value={dataa?.total_number_of_docks || ''}
+                                            value={dataa?.total_number_of_docks}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onKeyDown={onkeyDown}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -683,13 +692,14 @@ useEffect(()=>{
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
-                                                    dataa?.total_offfice_space || ''
+                                                    dataa?.total_office_space 
                                                 }
-                                                min={0}
+                                                min="0"
                                                 type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="total_office_space"
                                                 placeholder="Enter value"
                                             />
@@ -749,12 +759,13 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.processing_area || ''}
+                                                value={dataa?.processing_area }
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                             />
@@ -778,10 +789,11 @@ useEffect(()=>{
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
                                                 min={0}
-                                                value={dataa?.parking_area || ''}
+                                                value={dataa?.parking_area }
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                             />
@@ -1114,7 +1126,7 @@ useEffect(()=>{
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option value="" disabled selected>
-                                                Road condition from main road
+                                                Select
                                             </option>
 
                                             {RoadCondition &&

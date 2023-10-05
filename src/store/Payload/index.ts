@@ -45,7 +45,7 @@ export let payload1 = {
     total_tonnage: "",
     store_type_id: "",
     cold_storage_type_id: "",
-    no_of_chambers: "",
+    no_of_chambers: "0",
     ante_room_area: "",
     total_number_of_docks: "",
     total_office_space: "",

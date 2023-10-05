@@ -204,7 +204,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                 let arr: any = []
                 if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                 localStorage.setItem('StoreData',JSON.stringify(newD))
-                newD['chamber_ids'].push(result?.data?.id)
+                console.log("GGGGGG88889", result?.data, newD)
+                arr.push(result?.data?.id)
+                newD['chamber_ids'] = arr;
                 console.log("GGGGGG8888",newD?.chamber_ids);
                 
           // Retrieve existing chamber_ids from local storage
