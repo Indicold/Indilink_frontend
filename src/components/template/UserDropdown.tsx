@@ -6,6 +6,7 @@ import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
+import { TokenInfo } from '@/store/customeHook/token'
 
 type DropdownList = {
     label: string
@@ -15,8 +16,8 @@ type DropdownList = {
 
 const dropdownItemList: DropdownList[] = []
 
-const _UserDropdown = ({ className }: CommonProps) => {
-    
+const _UserDropdown = ({ className,UserType }:any) => {
+    const {aud}:any=TokenInfo()
 
     const { signOut } = useAuth()
 
@@ -24,8 +25,8 @@ const _UserDropdown = ({ className }: CommonProps) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">User01</div>
+                <div className="text-xs capitalize">{UserType}</div>
+                <div className="font-bold">{aud ? aud :"N/A"}</div>
             </div>
         </div>
     )
