@@ -163,15 +163,20 @@ export const handleStoreTable = async (
         const result = await response.json()
 
         if (result?.status) {
-            fetchAgain()
+            if(fetchAgain){
+                fetchAgain()
+            }
+          if(result?.status==200){
             messageView('Data Updated Successfully!')
+          }
+          
             setModal(false)
             const newD: any = { ...formD }
             let arr: any = []
             if (newD[name]) arr = [...newD[name]]
             arr.push(result?.date?.id)
             newD[name] = arr
-            console.log("CACGFG",newD);
+            console.log("CACGFG",formD);
             
             update(newD)
                       // Retrieve existing chamber_ids from local storage
@@ -256,11 +261,14 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     //         newErrors.no_of_docks = 'No of Docks is required'
     //     }
     // }
-    if (!formData?.type_of_dock_id) {
-        newErrors.type_of_dock_id = 'Type of Dock id is required'
+    // if (!formData?.type_of_dock_id) {
+    //     newErrors.type_of_dock_id = 'Type of Dock id is required'
+    // }
+    if (!formData?.temperature_min) {
+        newErrors.temperature_min = 'Min Temperature is required'
     }
-    if (!formData?.temperature) {
-        newErrors.temperature = 'Temperature is required'
+    if (!formData?.temperature_max) {
+        newErrors.temperature_min = 'Max Temperature is required'
     }
     if (!formData?.batch_size) {
         if (formData?.batch_size==='') {
