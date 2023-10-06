@@ -280,8 +280,13 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.address = 'Address is required'
     }
 
-    if (!formData?.total_tonnage || formData?.total_tonnage <= '0') {
-        newErrors.total_tonnage = 'Total Tonnage is required'
+    if (!formData?.total_tonnage ) {
+        if (formData?.total_tonnage==='') {
+            newErrors.total_tonnage = 'Total Tonnage is required'
+        }
+        if (formData?.total_tonnage<0) {
+            newErrors.total_tonnage ='Total Tonnage is required'
+        }
     }
 
     if (!formData?.store_type_id) {

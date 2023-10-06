@@ -7,12 +7,11 @@ import {
     RichUtils,
     DraftHandleValue,
 } from "draft-js";
-import { stateToHTML } from 'draft-js-export-html';
+//import { stateToHTML } from 'draft-js-export-html';
 import jsPDF from 'jspdf';
 import StateToPdfMake from "draft-js-export-pdfmake";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import CheckIcon from '@mui/icons-material/Check';
 import ReplyIcon from '@mui/icons-material/Reply';
