@@ -416,20 +416,8 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
         newErrors.vehicle_model_id = 'This Field is required'
     }
 
-    if (!formData?.permit_validity) {
-        newErrors.permit_validity = 'This Field is required'
-    }
-
-    if (!formData?.pucc_validity) {
-        newErrors.pucc_validity = 'This Field is required'
-    }
-
     if (!formData?.chassis_no) {
         newErrors.chassis_no = 'This Field is required'
-    }
-
-    if (!formData?.fitness_validity) {
-        newErrors.fitness_validity = 'This Field is required'
     }
 
     console.log('errr', newErrors)
@@ -588,10 +576,6 @@ export const validateACUForm = (formData: any, setErrors: any) => {
 
     if (!formData?.hp) {
         newErrors.hp = 'This Field is required'
-    }
-
-    if (!formData?.amc) {
-        newErrors.amc = 'This Field is required'
     }
 
     if (!formData?.tr) {

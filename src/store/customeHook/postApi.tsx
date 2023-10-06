@@ -11,7 +11,7 @@
  * `sendPostRequest`.
  */
 import { useState, useEffect } from 'react';
-import { getToken } from './token';
+import { apiUrl, getToken } from './token';
 
 interface ApiResponse {
   // Define the properties of the response object here
@@ -40,7 +40,7 @@ function postRequest(url: string, data: PostData): Promise<ApiResult> {
   const {token}:any=getToken()
   // Implement your actual POST request logic here and return the result
   // You can use libraries like axios, fetch, etc.
-  return fetch(url, {
+  return fetch(`${apiUrl}/${url}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

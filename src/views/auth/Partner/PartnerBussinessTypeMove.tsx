@@ -25,6 +25,7 @@ import { ToastContainer } from 'react-toastify' // Import a toast notification c
 import 'react-toastify/dist/ReactToastify.css' // Import CSS for toast notifications
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PartnerMoveMakeModal from './PartnerMoveMakeModal'
 // Define the main functional component for PartnerBussinessTypeMove
 const PartnerBussinessTypeMove = () => {
     // Get the user's token using a custom hook
@@ -46,11 +47,13 @@ console.log("VVVVVVV",id);
         data: vehicalModal,
         loading: vehicalLoading,
         error: vehicalError,
+        refetch:fetchList
     } = useApiFetch<any>('master/partner/move/get-vehicle-model', token)
     const {
         data: vehicalMake,
         loading: MakeLoading,
         error: makeError,
+        refetch:fetchmake
     } = useApiFetch<any>('master/partner/move/get-vehicle-make', token)
 
     // Fetch additional data for form pre-filling using a custom hook
@@ -151,7 +154,7 @@ console.log("VVVVVVV",id);
                 // If the response status is 200, navigate to the specified route
                 if (result?.status == 200 || result?.status) {
                     setTimeout(()=>{
-                        navigate(`/partner-bussiness-type-compliance/${id}`)
+                        navigate(`/partner-move-compliance/${id}`)
 
                     },2000)
                 }
@@ -195,6 +198,7 @@ console.log("VVVVVVV",id);
     return (
         <div className='flex'>
             <ToastContainer />
+            {makeCustom && <PartnerMoveMakeModal setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
             <div className='w-1/6'>
             
 
@@ -250,7 +254,7 @@ console.log("VVVVVVV",id);
                                         label="Make*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
-                                        {!makeCustom?<select
+                                        <select
                                             disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -275,7 +279,7 @@ console.log("VVVVVVV",id);
                                                 )}
                                             <option value="other">Other</option>
                                         </select>
-                                        :
+                                        {/* :
                                         <Field
                                             disabled={isDisabled}
                                             type="text"
@@ -287,7 +291,7 @@ console.log("VVVVVVV",id);
                                             value={data?.make}
                                             placeholder="Make"
                                             component={Input}
-                                        />}
+                                        />} */}
 
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_make_id}
@@ -297,7 +301,7 @@ console.log("VVVVVVV",id);
                                         label="Model*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        {!modelCustom?<select
+                                        <select
                                             disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -323,7 +327,7 @@ console.log("VVVVVVV",id);
                                                     )
                                                 )}
                                         </select>
-                                        :<Field
+                                        {/* :<Field
                                         disabled={isDisabled}
                                         type="text"
                                         autoComplete="off"
@@ -334,13 +338,13 @@ console.log("VVVVVVV",id);
                                         value={data?.make}
                                         placeholder="Model"
                                         component={Input}
-                                    />}
+                                    /> */}
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_model_id}
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                {/* <div className="flex">
                                     <FormItem
                                         label="Permit valid Till Date*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -382,7 +386,7 @@ console.log("VVVVVVV",id);
                                             {errors && errors.pucc_validity}
                                         </p>
                                     </FormItem>
-                                </div>
+                                </div> */}
                                 <div className="flex">
                                     <FormItem
                                         label="Get Chassis No from RC*"
@@ -405,23 +409,23 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Fitness Certificate Valid Till*"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        label="Emission norms"
+                                        className="w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            type="date"
+                                            type="text"
                                             autoComplete="off"
-                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="fitness_validity"
-                                            placeholder="Fitness Certificate Valid Till"
+                                            name="emission_norms"
+                                            value={data?.emission_norms}
+                                            placeholder="Emission norms"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.fitness_validity}
+                                            {errors && errors.emission_norms}
                                         </p>
                                     </FormItem>
                                 </div>
@@ -801,26 +805,26 @@ console.log("VVVVVVV",id);
 
                                 <div className="flex">
                                     
-                                    <FormItem
-                                        label="Emission norms"
-                                        className="w-1/2 rounded-lg pl-[22px]"
+                                    {/* <FormItem
+                                        label="Fitness Certificate Valid Till*"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            type="text"
+                                            type="date"
                                             autoComplete="off"
+                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="emission_norms"
-                                            value={data?.emission_norms}
-                                            placeholder="Emission norms"
+                                            name="fitness_validity"
+                                            placeholder="Fitness Certificate Valid Till"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.emission_norms}
+                                            {errors && errors.fitness_validity}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
                                 </div>
 
                                 <div className="flex justify-center">
