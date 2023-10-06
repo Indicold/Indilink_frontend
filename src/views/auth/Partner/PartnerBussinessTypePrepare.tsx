@@ -113,14 +113,6 @@ const PartnerBussinessTypePrepare = () => {
         machine_ids: '',
         area: '',
     })
-    const handleStoreChange = (e:any, newValue:any) => {
-        const newData: any = { ...dataa }
-        newData['store_type_id'] = newValue?.map((item:any,index:any)=>item?.id)
-        setData(newData)
-        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
-        console.log("newDataa", newData)
-        // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
-    }
 
     // Define state variable for form validation errors
     const [errors, setErrors] = useState<any>({})
@@ -409,7 +401,7 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Product Type"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"> */}
+                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"> 
                                                 <select
                                                     disabled={isDisabled}
                                                     className="w-full focus:outline-0"
@@ -441,21 +433,7 @@ const PartnerBussinessTypePrepare = () => {
                                                             )
                                                         )}
                                                 </select>
-                                                <Autocomplete
-                                                multiple
-                                                limitTags={2}
-                                                options={ProductTypeList?ProductTypeList?.data:[]}
-                                                getOptionLabel={(option:any) => option.type}
-                                                    onChange={handleStoreChange}
-                                              
-                                                // value={value?.length>0 && value}
-                                                renderInput={(params) => (
-                                                    <TextField {...params} placeholder="Store Types"
-                                                    className="!p-[0px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                    id="multiple-limit-tags"
-                                                    name="store_type_id" />)}
-                                                    // sx={{ width: '500px' }}
-                                                />
+                                                
     
                                             </div>
                                         </FormItem>

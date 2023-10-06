@@ -74,12 +74,36 @@ console.log("VVVVVVV",id);
     const [data, setData] = useState<any>(payload)
     const [errors, setErrors] = useState<any>(null)
 
+    const [makeCustom, setMakeCustom] = useState<any>(false)
+    const [modelCustom, setModelCustom] = useState<any>(false)
+
     // Get the navigate function from the routing hook
     const navigate = useNavigate()
 
     // Define a function to handle form input changes
     const handleChange = (e: any) => {
         const newData: any = { ...data }
+        if(e.target.name === 'vehicle_make_id') {
+            console.log("makeCustom", makeCustom)
+            if(e.target.value === 'other') {
+                console.log("makeCustomm", makeCustom)
+                setMakeCustom(true)
+                setModelCustom(true)
+            }
+            else {
+                setMakeCustom(false)
+            }
+        }
+        if(e.target.name === 'vehicle_model_id') {
+            console.log("makeCustom", makeCustom)
+            if(e.target.value === 'other') {
+                console.log("makeCustomm", makeCustom)
+                setModelCustom(true)
+            }
+            else {
+                setModelCustom(false)
+            }
+        }
         newData[e.target.name] = e.target.value
         setData(newData)
         console.log("newData", newData)
@@ -226,7 +250,7 @@ console.log("VVVVVVV",id);
                                         label="Make*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
-                                        <select
+                                        {!makeCustom?<select
                                             disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -249,7 +273,21 @@ console.log("VVVVVVV",id);
                                                         </option>
                                                     )
                                                 )}
+                                            <option value="other">Other</option>
                                         </select>
+                                        :
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="vehicle_make_id"
+                                            value={data?.make}
+                                            placeholder="Make"
+                                            component={Input}
+                                        />}
 
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_make_id}
@@ -259,7 +297,7 @@ console.log("VVVVVVV",id);
                                         label="Model*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <select
+                                        {!modelCustom?<select
                                             disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -285,6 +323,18 @@ console.log("VVVVVVV",id);
                                                     )
                                                 )}
                                         </select>
+                                        :<Field
+                                        disabled={isDisabled}
+                                        type="text"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="vehicle_model_id"
+                                        value={data?.make}
+                                        placeholder="Model"
+                                        component={Input}
+                                    />}
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_model_id}
                                         </p>
@@ -419,7 +469,7 @@ console.log("VVVVVVV",id);
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Emission norms"
+                                        label="Vehicle number"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -429,13 +479,13 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="emission_norms"
+                                            name="vehicle_number"
                                             value={data?.emission_norms}
-                                            placeholder="Emission norms"
+                                            placeholder="Vehicle number"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.emission_norms}
+                                            {errors && errors.vehicle_number}
                                         </p>
                                     </FormItem>
                                     <FormItem
@@ -462,7 +512,7 @@ console.log("VVVVVVV",id);
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Crate Capacity"
+                                        label="Crate Capacity (in Numbers)"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -728,7 +778,7 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="RC Number from RC"
+                                        label="Get RC Number from RC"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -745,6 +795,30 @@ console.log("VVVVVVV",id);
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.rc_no}
+                                        </p>
+                                    </FormItem>
+                                </div>
+
+                                <div className="flex">
+                                    
+                                    <FormItem
+                                        label="Emission norms"
+                                        className="w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="emission_norms"
+                                            value={data?.emission_norms}
+                                            placeholder="Emission norms"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.emission_norms}
                                         </p>
                                     </FormItem>
                                 </div>
