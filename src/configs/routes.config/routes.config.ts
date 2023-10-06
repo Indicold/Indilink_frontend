@@ -195,6 +195,22 @@ export const protectedRoutes = [
     {
 
         key: 'partnerbussinesstype',
+        path: `/partner-move-compliance`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerComplianceMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-move-compliance/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerComplianceMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
         path: `/partner-bussiness-type-additional`,
         component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeAdditional')),
         authority: [],

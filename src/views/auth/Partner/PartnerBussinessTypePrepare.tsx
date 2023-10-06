@@ -105,14 +105,6 @@ const PartnerBussinessTypePrepare = () => {
         machine_ids: '',
         area: '',
     })
-    // const handleStoreChange = (e: any, newValue: any) => {
-    //     const newData: any = { ...dataa }
-    //     newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
-    //     setData(newData)
-    //     if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
-    //     console.log("newDataa", newData)
-    //     // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
-    // }
 
     // Define state variable for form validation errors
     const [errors, setErrors] = useState<any>({})
