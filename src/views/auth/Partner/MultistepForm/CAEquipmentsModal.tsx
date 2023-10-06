@@ -12,6 +12,7 @@ import { handleStoreTable, messageView, validateCAEquipForm } from '@/store/cust
 import axios from 'axios'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -29,12 +30,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
 }) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
-
+    const {id}: any = useParams()
     const [data, setData] = useState({})
     const [errors, setErrors] = useState<any>({})
     useEffect(()=>{
         const newState:any = { ...data };
-        newState.asset_id = localStorage.getItem('AssetsId')
+        newState.asset_id = id
         setData(newState)
         console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])

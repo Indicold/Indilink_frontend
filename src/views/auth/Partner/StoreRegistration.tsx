@@ -174,10 +174,17 @@ const StoreRegistration = () => {
         }
     }
 
+    const [phone, setPhone] = useState('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
         const newData: any = { ...dataa }
-        newData[e.target.name] = e.target.value
+        if(e.target.name==='facility_manager_contact') {
+            if(e.target.value.length<=10) {
+                setPhone(e.target.value)
+                newData[e.target.name] = e.target.value
+            }
+        }
+        else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers?dataa.no_of_chambers:'0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
@@ -908,7 +915,7 @@ useEffect(()=>{
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            placeholder="Facility Manager Name"
+                                            placeholder="Vendor Name"
                                             value={dataa?.facility_manager_name}
                                             component={Input}
                                         />
@@ -933,7 +940,7 @@ useEffect(()=>{
                                             }
                                             placeholder="Contact Number"
                                             value={
-                                                dataa?.facility_manager_contact
+                                                phone || dataa?.facility_manager_contact
                                             }
                                             component={Input}
                                         />

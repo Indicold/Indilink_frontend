@@ -10,6 +10,7 @@ import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable, validateSolarInvertorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -28,9 +29,10 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    const {id}: any = useParams()
     useEffect(()=>{
         const newState:any = { ...data };
-        newState.asset_id = localStorage.getItem('AssetsId')
+        newState.asset_id = id
         setData(newState)
         console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
