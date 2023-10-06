@@ -218,8 +218,13 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
         newErrors.address = 'Address is required'
     }
 
-    if (formData?.hourly_throughput === '') {
-        newErrors.hourly_throughput = 'Hourly throughput is required'
+    if (!formData?.hourly_throughput) {
+        if (formData?.hourly_throughput==='') {
+            newErrors.hourly_throughput = 'Hourly throughput is required'
+        }
+        if (formData?.hourly_throughput<0) {
+            newErrors.hourly_throughput = 'Hourly throughput is required'
+        }
     }
     if (!formData?.prepare_type_id) {
         newErrors.prepare_type_id = 'Prepare type id is required'
@@ -228,14 +233,29 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
         newErrors.product_category_ids = 'Product category ids is required'
     }
     if (!formData?.throughput) {
-        newErrors.throughput = 'Throughput is required'
+        if (formData?.throughput==='') {
+            newErrors.throughput = 'Throughput is required'
+        }
+        if (formData?.throughput<0) {
+            newErrors.throughput = 'Throughput is required'
+        }
     }
     if (!formData?.avg_case_size) {
-        newErrors.avg_case_size = 'Avg.Case Size is required'
+        if (formData?.avg_case_size==='') {
+            newErrors.avg_case_size = 'Avg.Case Size is required'
+        }
+        if (formData?.avg_case_size<0) {
+            newErrors.avg_case_size = 'Avg.Case Size is required'
+        }
     }
-    if (!formData?.no_of_docks) {
-        newErrors.no_of_docks = 'No of Docks is required'
-    }
+    // if (!formData?.no_of_docks) {
+    //     if (formData?.no_of_docks==='') {
+    //         newErrors.no_of_docks = 'No of Docks is required'
+    //     }
+    //     if (formData?.no_of_docks<0) {
+    //         newErrors.no_of_docks = 'No of Docks is required'
+    //     }
+    // }
     if (!formData?.type_of_dock_id) {
         newErrors.type_of_dock_id = 'Type of Dock id is required'
     }
@@ -243,14 +263,19 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
         newErrors.temperature = 'Temperature is required'
     }
     if (!formData?.batch_size) {
-        newErrors.batch_size = 'Batch_size is required'
+        if (formData?.batch_size==='') {
+            newErrors.batch_size = 'Batch_size is required'
+        }
+        if (formData?.batch_size<0) {
+            newErrors.batch_size = 'Batch_size is required'
+        }
     }
-    if (!formData?.machine_ids) {
-        newErrors.machine_ids = 'Machine id is required'
-    }
-    if (!formData?.area) {
-        newErrors.area = 'Area is required'
-    }
+    // if (!formData?.machine_ids) {
+    //     newErrors.machine_ids = 'Machine id is required'
+    // }
+    // if (!formData?.area) {
+    //     newErrors.area = 'Area is required'
+    // }
     // Add more specific validation rules for other fields
     console.log('errr', newErrors)
 

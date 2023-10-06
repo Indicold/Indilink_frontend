@@ -13,6 +13,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -29,10 +30,11 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     FetchAgain
 }) => {
     const [data, setData] = useState<any>({})
+    const {id}: any = useParams()
     const [errors, setErrors] = useState<any>({})
     useEffect(()=>{
         const newState:any = { ...data };
-        newState.asset_id = localStorage.getItem('AssetsId')
+        newState.asset_id = id
         setData(newState)
         console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
