@@ -1,3 +1,8 @@
+/**
+ * This is a TypeScript React component for a form that allows users to verify their OTP (One-Time
+ * Password) for password recovery.
+ * @property {string} email - The email field is used to enter the user's email address.
+ */
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -23,15 +28,24 @@ type ForgotPasswordFormSchema = {
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter your email'),
+    OTP: Yup.string().required('Please enter your OTP'),
 })
 
 const VerfyOtpForm = (props: ForgotPasswordFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
 
     const [emailSent, setEmailSent] = useState(false)
-
+    const [submitting,setSubmitting]=useState(false)
     const [message, setMessage] = useTimeOutMessage()
 const emailId=localStorage.getItem("email");
+    /**
+     * The `onSendMail` function is used to handle the logic for sending a password reset email.
+     * @param {ForgotPasswordFormSchema} values - The `values` parameter is an object that represents
+     * the form values submitted by the user. It likely contains properties such as email, password,
+     * and any other fields present in the form.
+     * @param setSubmitting - A function that takes a boolean value and updates the state of whether
+     * the form is submitting or not.
+     */
     const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
@@ -39,23 +53,13 @@ const emailId=localStorage.getItem("email");
         setSubmitting(true);
     
         apiVerifyOTP(values,messageView)
-            // .then((resp) => {
-            //     console.log("hhhhh", resp);
-    
-            //     if (resp && resp.data) {
-            //         setSubmitting(false);
-            //         setEmailSent(true);
-            //     }
-            // })
-            // .catch((errors) => {
-            //     console.log("errors", errors);
-            //     setMessage(
-            //         (errors as AxiosError<{ message: string }>)?.response?.data
-            //             ?.message || (errors as Error).toString()
-            //     );
-            //     setSubmitting(false);
-            // });
     };
+    /**
+     * The function `messageView` displays a success toast message with specified options.
+     * @param {any} messagevalue - The messagevalue parameter is the value of the message that you want
+     * to display in the toast notification. It can be any string or variable that contains the message
+     * you want to show.
+     */
     const messageView=(messagevalue:any)=>{
         toast.success(messagevalue, {
             position: 'top-right', // Position of the toast
@@ -71,7 +75,13 @@ const emailId=localStorage.getItem("email");
             },
         });
     }
-
+const handleresend=()=>{
+    const data:any={
+        email:emailId,
+        redirect:3
+    }
+    apiForgotPassword(data,messageView,setSubmitting)
+}
     return (
         <div className={className}>
                   <ToastContainer />
@@ -93,11 +103,7 @@ const emailId=localStorage.getItem("email");
                     </>
                 )}
             </div>
-            {/* {message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {message}
-                </Alert>
-            )} */}
+            
             <Formik
                 initialValues={{
                     email: emailId || null,
@@ -117,6 +123,7 @@ const emailId=localStorage.getItem("email");
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
+                                label='Email*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
                                 >
@@ -129,8 +136,9 @@ const emailId=localStorage.getItem("email");
                                     />
                                 </FormItem>
                                 <FormItem
-                                    invalid={errors.email && touched.email}
-                                    errorMessage={errors.email}
+                                label='OTP*'
+                                    invalid={errors.OTP && touched.OTP}
+                                    errorMessage={errors.OTP}
                                 >
                                     <Field
                                         type="text"
@@ -141,6 +149,16 @@ const emailId=localStorage.getItem("email");
                                     />
                                 </FormItem>
                             </div>
+                        
+                            <Button
+                            className='border-none m-2'
+                                block
+                                loading={isSubmitting}
+                                type="button"
+                                onClick={handleresend}
+                            >
+                                Resend OTP
+                            </Button>
                             <Button
                                 block
                                 loading={isSubmitting}

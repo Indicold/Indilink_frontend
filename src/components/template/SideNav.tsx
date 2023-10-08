@@ -14,6 +14,9 @@ import navigationConfig from '@/configs/navigation.config'
 import VerticalMenuContent from '@/components/template/VerticalMenuContent'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
+import navigationPartnerConfig from '@/configs/navigationPartner.config'
+import navigationInvestorConfig from '@/configs/navigationInvestor.config'
+import { useEffect } from 'react'
 
 const sideNavStyle = {
     width: SIDE_NAV_WIDTH,
@@ -39,7 +42,7 @@ const SideNav = () => {
     const sideNavCollapse = useAppSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
-    const userAuthority = useAppSelector((state) => state.auth.user.authority)
+    const userAuthority = useAppSelector((state:any) => state?.auth?.user?.authority)
 
     const { larger } = useResponsive()
 
@@ -61,12 +64,30 @@ const SideNav = () => {
 
         return navMode
     }
+console.log("navigationConfig",navigationConfig,navigationPartnerConfig);
+
+let val='';
+console.log("bBBBBBB",val);
+
+useEffect(()=>{
+let val=localStorage.getItem('user_type');
+
+    if(val==='Customer'){
+        val=val;
+    }
+    if (val == 'Partner') {
+        val=val;
+    }
+    if (val == 'Investor') {
+        val=val;
+    }
+  },[])
 
     const menuContent = (
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={navigationConfig}
+            navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig: localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}

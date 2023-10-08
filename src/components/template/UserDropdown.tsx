@@ -2,10 +2,11 @@ import Avatar from '@/components/ui/Avatar'
 import Dropdown from '@/components/ui/Dropdown'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
+import { TokenInfo } from '@/store/customeHook/token'
 
 type DropdownList = {
     label: string
@@ -15,7 +16,8 @@ type DropdownList = {
 
 const dropdownItemList: DropdownList[] = []
 
-const _UserDropdown = ({ className }: CommonProps) => {
+const _UserDropdown = ({ className,UserType }:any) => {
+    const {aud}:any=TokenInfo()
 
     const { signOut } = useAuth()
 
@@ -23,8 +25,8 @@ const _UserDropdown = ({ className }: CommonProps) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">User01</div>
+                <div className="text-xs capitalize">{UserType}</div>
+                <div className="font-bold">{aud ? aud :"N/A"}</div>
             </div>
         </div>
     )
@@ -37,15 +39,17 @@ const _UserDropdown = ({ className }: CommonProps) => {
                 placement="bottom-end"
             >
                 <Dropdown.Item variant="header">
+                    <NavLink to='/basic-info'>
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                User01
+                            {JSON.parse(localStorage.getItem('RememberMe'))?.username || localStorage.getItem('email') || ''}
                             </div>
-                            <div className="text-xs">user01@mail.com</div>
+                            {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
                     </div>
+                    </NavLink>
                 </Dropdown.Item>
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (

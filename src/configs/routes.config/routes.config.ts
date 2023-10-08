@@ -11,6 +11,18 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/Home')),
         authority: [],
     },
+    {
+        key: 'partner',
+        path: '/partner-dashbord',
+        component: lazy(() => import('@/views/auth/Partner/PartnerDashbord/index')),
+        authority: [],
+    },
+    {
+        key: 'investor',
+        path: '/investor-dashbord',
+        component: lazy(() => import('@/views/auth/Investor/InvestorDashbord/index')),
+        authority: [],
+    },
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',
@@ -21,13 +33,43 @@ export const protectedRoutes = [
     {
         key: 'collapseMenu.item1',
         path: '/collapse-menu-item-view-1',
-        component: lazy(() => import('@/views/demo/CollapseMenuItemView1')),
+        component: lazy(() => import('@/views/auth/BussinessTypeModal')),
         authority: [],
     },
     {
         key: 'collapseMenu.item2',
-        path: '/collapse-menu-item-view-2',
-        component: lazy(() => import('@/views/demo/CollapseMenuItemView2')),
+        path: '/asset_list',
+        component: lazy(() => import('@/views/auth/Partner/PartnerTable/index')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item3',
+        path: '/asset_success',
+        component: lazy(() => import('@/views/auth/Partner/PartnerBusinessTypeSuccess')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list',
+        component: lazy(() => import('@/views/auth/Customer/CustomerTableTicketList')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list_store',
+        component: lazy(() => import('@/views/auth/Customer/TicketList/StoreTicketList')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list_move',
+        component: lazy(() => import('@/views/auth/Customer/TicketList/MoveTicketList')),
+        authority: [],
+    },
+    {
+        key: 'collapseMenu.item2',
+        path: '/ticket_list_prepare',
+        component: lazy(() => import('@/views/auth/Customer/TicketList/PrepareTicketList')),
         authority: [],
     },
     {
@@ -52,6 +94,226 @@ export const protectedRoutes = [
         component: lazy(() =>
             import('@/views/demo/GroupCollapseMenuItemView2')
         ),
+        authority: [],
+    },
+    {
+
+        key: 'partner',
+        path: `/partner-registration/:id`,
+        component: lazy(() => import('@/views/auth/Partner/StoreRegistration')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partner',
+        path: `/partner-registration`,
+        component: lazy(() => import('@/views/auth/Partner/StoreRegistration')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investor',
+        path: `/investor-registration`,
+        component: lazy(() => import('@/views/auth/Investor/NewMultistep')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-move`,
+        component: lazy(() => import('@/views/auth/Investor/InvestorBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-store`,
+        component: lazy(() => import('@/views/auth/InvestorBussinessTypeStore')),
+        authority: [],
+
+    },
+    {
+
+        key: 'investorbussinesstype',
+        path: `/investor-bussiness-type-prepare`,
+        component: lazy(() => import('@/views/auth/Investor/InvestorBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-move`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstypeid',
+        path: `/partner-bussiness-type-move/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-prepare`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-prepare/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypePrepare')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-compliance`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeCompliances')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-compliance/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeCompliances')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-move-compliance`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerComplianceMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-move-compliance/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerComplianceMove')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-additional`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeAdditional')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbussinesstype',
+        path: `/partner-bussiness-type-additional/:id`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerBussinessTypeAdditional')),
+        authority: [],
+
+    },
+    {
+
+        key: 'customerbusinesstype',
+        path: `/customer-store`,
+        component: lazy(() => import('@/views/auth/Customer/StoreSearch')),
+        authority: [],
+
+    },
+    {
+
+        key: 'customerbusinesstype',
+        path: `/customer-move`,
+        component: lazy(() => import('@/views/auth/Customer/MoveSearch')),
+        authority: [],
+
+    },
+    {
+
+        key: 'customerbusinesstype',
+        path: `/customer-prepare`,
+        component: lazy(() => import('@/views/auth/Customer/PrepareSearch')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-prepare`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerPrepareList')),
+        authority: [],
+
+    },
+    {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-move`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerMoveList')),
+        authority: [],
+
+    },
+      {
+
+        key: 'partnerbusinesstype',
+        path: `/partner-store`,
+        component: lazy(() => import('@/views/auth/Partner/PartnerSupportList/PartnerStoreList')),
+        authority: [],
+
+    },
+    {
+
+        key: 'notifiaction',
+        path: `/notification`,
+        component: lazy(() => import('@/components/template/NotificationDropdown/index')),
+        authority: [],
+
+    },
+    {
+
+        key: 'profile',
+        path: `/profile`,
+        component: lazy(() => import('@/views/auth/UserProfile/index')),
+        authority: [],
+
+    },
+    {
+
+        key: 'profileBasic',
+        path: `/basic-info`,
+        component: lazy(() => import('@/views/auth/Profile/BasicInfo')),
+        authority: [],
+    },
+    {
+
+        key: 'profileKeyManagement',
+        path: `/key-management`,
+        component: lazy(() => import('@/views/auth/Profile/KeyManagement')),
+        authority: [],
+    },
+    {
+
+        key: 'profileAccountDetails',
+        path: `/account-details`,
+        component: lazy(() => import('@/views/auth/Profile/AccountDetails')),
+        authority: [],
+    },
+    {
+
+        key: 'assetsdocumentlist',
+        path: `/documents-list/:id`,
+        component: lazy(() => import('@/views/auth/Partner/AssetsDocumentsTable/index')),
         authority: [],
     },
 ]

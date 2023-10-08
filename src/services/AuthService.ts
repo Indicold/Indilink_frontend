@@ -1,3 +1,4 @@
+import { apiUrl } from '@/store/customeHook/token'
 import ApiService from './ApiService'
 import type {
     SignInCredential,
@@ -7,6 +8,7 @@ import type {
     SignInResponse,
     SignUpResponse,
 } from '@/@types/auth'
+import { setThemeColor } from '@/store'
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
@@ -50,8 +52,9 @@ console.log("tttt",response);
     }
 }
 
-export async function apiForgotPassword(dataa:any,messageView:any) {
-    const data = JSON.stringify({
+export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:any) {
+   
+  const data = JSON.stringify({
         email: dataa?.email
       });
       
@@ -64,25 +67,33 @@ export async function apiForgotPassword(dataa:any,messageView:any) {
         headers: headers,
         body: data
       };
-      
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-gen-otp', requestOptions)
-        .then(response => {
+      setSubmitting(true)
+      fetch(`${apiUrl}/auth/forgot-pass-gen-otp`, requestOptions)
+        .then((response:any )=> {
+          console.log("hhhh",JSON.parse(response?._bodyInit));
+
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
         })
         .then(data => {
-
+          setSubmitting(false)
           console.log(data);
           if(data?.status){
             messageView("OTP Sent Successfully !");
-            
-            window.location.href="/VerfyOtp"
+            if(dataa?.redirect!==3){
+              window.location.href="/VerfyOtp"
+            }
+          
           }
           
         })
         .catch(error => {
+          setSubmitting(false)
+          console.log("HHHH",error);
+          
           console.log(error);
         });
       
@@ -105,9 +116,10 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
         body: data
       };
       
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-verify-otp', requestOptions)
-        .then(response => {
+      fetch(`${apiUrl}/auth/forgot-pass-verify-otp`, requestOptions)
+        .then((response:any )=> {
           if (!response.ok) {
+            messageView(JSON.parse(response?._bodyInit)?.message);
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -116,7 +128,7 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
 
           console.log(data);
           if(data?.status){
-            messageView("OTP Verified Successfully !")
+            messageView(data?.message)
             window.location.href="/reset-password"
           }
           
@@ -145,7 +157,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
         body: data
       };
       
-      fetch('https://seal-app-uqxwl.ondigitalocean.app/auth/forgot-pass-set-new-pass', requestOptions)
+      fetch(`${apiUrl}/auth/forgot-pass-set-new-pass`, requestOptions)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -156,8 +168,15 @@ export async function apiResetPassword(dataa:any,messageView:any) {
 
           console.log(data);
           if(data?.status){
-            messageView("Password Reset Successfully!")
-            window.location.href="/sign-in"
+            messageView(data?.message)
+            setTimeout(()=>{
+              localStorage.removeItem('RememberMe');
+              localStorage.removeItem('user_type');
+              localStorage.clear()
+
+              window.location.href="/sign-in"
+
+            },2000)
           }
           
         })

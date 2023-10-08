@@ -1,3 +1,8 @@
+/**
+ * The `useAuth` function is a custom hook that provides authentication functionality such as signing
+ * in, signing up, and signing out.
+ * @returns The `useAuth` function returns an object with the following properties:
+ */
 import { apiSignIn, apiSignOut, apiSignUp } from '@/services/AuthService'
 import {
     setUser,
@@ -16,11 +21,9 @@ type Status = 'success' | 'failed'
 
 function useAuth() {
     const dispatch = useAppDispatch()
-
     const navigate = useNavigate()
-
     const query = useQuery()
-
+    
     const { token, signedIn } = useAppSelector((state) => state.auth.session)
 
     const signIn = async (
@@ -119,6 +122,7 @@ function useAuth() {
                 authority: [],
             })
         )
+        localStorage.removeItem('user_type');
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 

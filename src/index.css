@@ -31,7 +31,7 @@
 
 .cin-number input {
 
-    text-align: center;
+    /* text-align: center; */
 
 }
 
@@ -44,24 +44,46 @@
     width: 95%;
 
 }
-.indigo-btn{
-
-    background-color: #FFB017;
-
+.indigo-btn {
+    display: flex;
+    padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-spacing-xs, 8px);
+    align-self: stretch;
+    border-radius: var(--radius-radius-full, 64px) !important;
+    background: var(--surface-surface-green, #1AAD64);
 }
 
  
 
-.indigo-btn:hover{
-
-    background-color: #CA7D11!important;
-
+.indigo-btn:hover {
+    display: flex;
+    padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-spacing-xs, 8px);
+    align-self: stretch;
+    border-radius: var(--radius-radius-full, 64px) !important;
+    background: var(--surface-surface-green, #01b85c)!important;
 }
 .text-head-title{
-    color: #0f3492 !important;
+    color: var(--text-text-black, #1C1C1C);
+
+/* H2/h2-bold */
+font-family: Inter;
+font-size: 28px;
+font-style: normal;
+font-weight: 700;
+line-height: 42px; /* 150% */
 }
 .text-label-title{
-    color:#103492 !important
+    color:#103492 !important;
+    text-transform:capitalize !important
+}
+.form-label{
+    color:#103492 !important;
+    text-transform:capitalize !important
 }
 .hyper-link-color{
     color: #103492 !important;
@@ -74,11 +96,132 @@
 .input-wrapper,
 .input-md {
 border-radius: 13px !important;
-padding-right: 0px !important;
+padding-right: 2rem !important;
 }
 .email-msg-text{
     width: 180px !important;
         white-space: nowrap !important;
         overflow: hidden !important;
         text-overflow: ellipsis !important;
+}
+.partner-details-container{
+    height: 70vh !important;
+    overflow-y: auto !important;
+}
+.partner-details-container ::-webkit-scrollbar,
+.partner-details-container ::-moz-scrollbar,
+.partner-details-container ::-ms-scrollbar {
+    width: 1px !important;
+    color: #0f3492 !important;
+    background: linear-gradient(13deg, #bc11d7 14%, #c7ceff 64%) !important;
+}
+
+.multistep-form button {
+
+    
+    background-color: #FFB017;
+
+    color: white;
+
+    margin: 0.2rem;
+
+    padding: 0.2rem 0.7rem;
+
+    border-radius: 0.2rem;
+
+}
+
+ 
+
+.multistep-form button:disabled {
+
+    background-color: #CA7D11!important;
+
+}
+.go2150698616:before {
+    bottom: -4.2rem !important;
+}
+.input:disabled {
+    background-color: inherit !important;
+}
+.input-wrapper, .input-md{
+padding-right: 0px !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+/* -----------according  to figma style and layout css start----------- */
+.title-color{
+    color: var(--text-text-black, #1C1C1C);
+
+/* H2/h2-bold */
+font-family: Inter;
+font-size: 28px;
+font-style: normal;
+font-weight: 700;
+line-height: 42px; /* 150% */
+}
+.text-field,.form-label{
+    color: var(--text-text-gray, #818181)!important;
+
+    /* H7/h7-medium */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px; /* 157.143% */
+}
+.text-link{
+    color: var(--text-text-blue, #063193);
+
+/* H6/h6-medium */
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
+.multiple-selection{
+    display: flex;
+height: 24px;
+align-items: flex-start;
+gap: var(--spacing-spacing-xs, 8px);
+flex: 1 0 0;
+}
+.primary-button{
+    display: flex;
+padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+justify-content: center;
+align-items: center;
+gap: var(--spacing-spacing-xs, 8px);
+align-self: stretch;
+border-radius: var(--radius-radius-full, 64px);
+background: var(--surface-surface-green, #1AAD64);
+}
+.secondary-button{
+    display: flex;
+width: 444px;
+padding: var(--spacing-spacing-lg, 16px) var(--spacing-spacing-xl, 24px);
+justify-content: center;
+align-items: center;
+gap: var(--spacing-spacing-xs, 8px);
+border-radius: var(--radius-radius-full, 64px);
+background: var(--surface-surface-black, #1C1C1C);
+}
+/* -----------according  to figma style and layout css end----------- */
+.input {
+    border-radius: 8px!important;
+    background-color: white!important;
+}
+.form-item {
+    margin-bottom: 0.45rem!important;
 }

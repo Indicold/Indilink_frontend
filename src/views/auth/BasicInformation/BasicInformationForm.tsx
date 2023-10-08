@@ -1,3 +1,11 @@
+/* 
+* The above code is a TypeScript React component that represents a form for collecting basic information from a
+* user. It includes form validation using Yup, form submission handling, and API calls using custom hooks. 
+* The form includes fields for user name, email, password, and confirm password. 
+* It also includes fields for CIN No/GST, country, Pan Card No., user designation, firm type, and firm name. 
+* The form is wrapped in a Formik component for managing form state and validation. 
+* The form submission is handled by the handlesubmit function, which sends a POST request to the API endpoint. 
+*/
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
@@ -12,6 +20,8 @@ import { updateFormData } from '@/store/slices/Authentication/userDetails'
 import { useNavigate } from 'react-router-dom'
 import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
+import { apiUrl } from '@/store/customeHook/token';
+import Tooltip from '@mui/material/Tooltip';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -21,6 +31,8 @@ interface BasicInformationFormProps extends CommonProps {
 
 
 
+/* The above code is defining a validation schema using Yup for a form in a TypeScript React
+application. The validation schema specifies the validation rules for each field in the form. */
 const validationSchema = Yup.object().shape({
     userName: Yup.string().required('Please enter your user name'),
     email: Yup.string()
@@ -38,11 +50,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isSubmitting, setSubmitting] = useState(false)
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
+    const [seconds, setSeconds] = useState(10);
     const [formData, setFormData] = useState(selector?.details?.data);
-    const { result: OTPPostDetails, loading, sendPostRequest } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/getOTP');
-    const { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails } = usePostApi('https://seal-app-uqxwl.ondigitalocean.app/auth/getGstDetails');
-    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails } = usePutApi('https://seal-app-uqxwl.ondigitalocean.app/auth/verifyOTP');
-    const { className } = props
+    const [GSTRes, setGSTRes] = useState({});
+    let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/auth/getOTP`);
+    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`${apiUrl}/auth/getGstDetails`);
+    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`${apiUrl}/auth/verifyOTP`);
+    const { className }:any = props
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -51,6 +65,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
 
 
+    /**
+     * The function `handleFinalSubmit` is an asynchronous function that handles the final submission
+     * of OTP details by making a POST request with the user ID and OTP.
+     * @param {any} e - The parameter `e` is an event object that is passed to the function when it is
+     * triggered. It is commonly used to prevent the default behavior of an event, such as form
+     * submission, by calling the `preventDefault()` method on it.
+     */
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
         console.log("OTPPostDetails",OTPPostDetails);
@@ -61,8 +82,16 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         }
     }
 
-
+    // const [a, setA] = useState('false');
+    let b = "false";
   
+    /**
+     * The handleChange function updates the formData state with a new GST value and triggers an API
+     * call and Redux action when the GST value reaches a length of 15 characters.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the change, such as a user typing in an input
+     * field or selecting an option from a dropdown menu.
+     */
     const handleChange = (e: any) => {
         const newGst = e.target.value;
     
@@ -71,15 +100,22 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
           setFormData(newData);
     
           if (newGst.length === 15) {
-            setDisabled(false);
+            // setDisabled(false);
             dispatch(updateFormData(newData)); // Dispatch your Redux action with the new data
             FetchGSTDetails(newData); // Call your API function
+            // setA('true');
+            b = "true"
           } else {
             setDisabled(true);
+            // setA('false');
           }
         }
       };
-    const handlesubmit = () => {   
+    /**
+     * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
+     * where it collects form data and sends a POST request with the data to a server.
+     */
+    const handlesubmit = () => {
         let ObjectData:any={
             first_name:formData?.first_name,
             last_name:formData?.last_name,
@@ -98,12 +134,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             address: autoFilldata?.taxpayerInfo?.pradr?.addr?.bno
           }    
         setSubmitting(true)
-        setOtpModal(true)
+        GSTResponse?.message && setOtpModal(true)
         sendPostRequest(ObjectData);
         setSubmitting(false)
 
     }
 
+    /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
         if (OTPResponse?.message) {
             toast.success(OTPResponse?.message, {
@@ -123,17 +160,19 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
         if (OTPResponse?.status) {
             setTimeout(() => {
-                navigate('/sign-in')
+                navigate('/signup-success')
 
             }, 2000)
         }
     }, [OTPResponse?.message])
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    value of `b` or `GSTResponse` changes. */
     useEffect(() => {
         if (GSTResponse?.message) {
             console.log("GSTResponse", GSTResponse);
 
-            toast.success("GST Detail fetch Successfully !", {
+            toast.success(typeof GSTResponse?.message === 'string'?GSTResponse?.message:"Details fetched successfully.", {
                 position: 'top-right', // Position of the toast
                 autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
                 hideProgressBar: false,
@@ -146,13 +185,18 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     color: "#fff"// Set the background color here
                 },
             });
+            if(GSTResponse?.message?.compliance)setDisabled(false);
+            else setDisabled(true);
+            // setA("false");
+            b = "false";
         }
-    }, [GSTResponse?.message])
+    }, [b, GSTResponse])
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is used to display a
+    toast notification when the `OTPPostDetails` object has a `message` property. */
     useEffect(() => {
-
-        if (OTPPostDetails?.message) {
-
+        if (OTPPostDetails?.message && OTPPostDetails?.message !== 'hello') {
+            setSeconds(20)
             toast.success(OTPPostDetails?.message, {
                 position: 'top-right', // Position of the toast
                 autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
@@ -166,42 +210,56 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     color: "#fff"// Set the background color here
                 },
             });
+            OTPPostDetails.message = 'hello'
         }
     }, [OTPPostDetails?.message])
+
+    useEffect(() => {
+        // Decrease the timer every second
+        const timer = setInterval(() => {
+            if (seconds > 0) {
+                setSeconds(seconds - 1);
+            }
+        }, 1000);
+
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(timer);
+
+    }, [seconds]);
 
 
     return (
         <div className={className}>
             <ToastContainer />
-            {/* {selector?.apiGetAuthOtpReducer?.responseData?.message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {selector?.apiGetAuthOtpReducer?.responseData?.message}
-                </Alert>
-            )} */}
 
-
+            {/* The above code is rendering an OTP (One-Time Password) modal in a React component. The
+            modal is displayed conditionally based on the value of the `otpModal` variable. If
+            `otpModal` is true, the modal is displayed, otherwise it is not rendered. */}
             {otpModal ?
                 <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div className="relative w-full max-w-md max-h-full">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <button onClick={() => setOtpModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
-                                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span className="sr-only">Close modal</span>
-                            </button>
+                            <div className="bg-black h-8 flex rounded-t-[8px]">
+                                <h6 className='text-white my-auto ms-2'>OTP</h6>
+                                <button onClick={() => setOtpModal(false)} type="button" className="absolute right-2.5 text-gray-400 bg-transparent hover:bg-gray-800 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span className="sr-only">Close modal</span>
+                                </button>
+                            </div>
                             <div className="px-6 py-6 lg:px-8">
-                                <h3 className="mb-4 text-xl font-medium text-label-title">An OTP has been sent to your email. Please enter here.</h3>
-                                <form className="space-y-6" onSubmit={(e) => handleFinalSubmit(e)}>
+                                <h4 className="mb-4 text-center">Enter OTP</h4>
+                                <p className='text-field text-center mb-3'>An OTP has been sent to your email, kindly enter the code below to login.</p>
+                                <form className="" onSubmit={(e) => handleFinalSubmit(e)}>
                                     <div>
-                                        <label htmlFor="email" className="h5 block mb-2 text-bold  text-label-title">Enter Your OTP</label>
                                         <div className="otp mx-auto">
                                             <input type='text' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
                                         </div>
                                     </div>
-                                    <button type="submit" className="indigo-btn rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Verify OTP</button>
-                                    <div className="!text-[#103492]">
-                                        Didn't receive email? <a role='button' className="text-blue-700 !text-[#103492]" onClick={handlesubmit}>Resend OTP</a>
+                                    <button type="submit" className="indigo-btn mt-3 rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get Started!</button>
+                                    <div className="text-field text-center">
+                                    If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? seconds < 10 ? `00:0${seconds}` : `00:${seconds}` : 'Resend OTP'}</a>
                                     </div>
                                 </form>
                             </div>
@@ -209,6 +267,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     </div>
                 </div> : <></>}
 
+            {/* The above code is a form component written in TypeScript and React using the Formik
+            library. It renders a form with various input fields and a submit button. */}
             <Formik
                 initialValues={{
                     country: "india",
@@ -224,20 +284,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 <Form className='signup-form'>
                     <FormContainer>
                         <FormItem
-                            label="CIN No/GST"
-                            className=' text-start cin-number text-label-title'
+                            label="GST Number*"
+                            className='text-start cin-number text-label-title'
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
                                 name="gst"
-                                placeholder="CIN No"
+                                placeholder="GST No"
                                 onChange={(e: any) => handleChange(e)}
                                 component={Input}
                                 className=''
                             />
                         </FormItem>
-                        <div className="flex">
+                        <div className="">
                             <FormItem
                                 label="Country"
 
@@ -252,24 +312,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     className=''
                                 />
                             </FormItem>
-                            <FormItem
-                                label="Pan Card No."
-
-                                className='me-auto text-label-title'
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="pancardno"
-                                    placeholder="Pan Card No."
-                                    value={autoFilldata?.taxpayerInfo?.panNo}
-                                    component={Input}
-                                    className=''
-                                />
-                            </FormItem>
                         </div>
 
-                        <div className="flex">
                             <FormItem
                                 label="User Designation"
 
@@ -285,11 +329,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     className=''
                                 />
                             </FormItem>
+                        <div className="flex">
                             <FormItem
                                 label="Firm Type"
 
                                 className='me-auto text-label-title'
                             >
+                                   <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"
@@ -299,15 +345,15 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 />
+                                </Tooltip>
                             </FormItem>
-                        </div>
 
-                        <div className="flex">
                             <FormItem
                                 label="Firm Name"
 
                                 className='me-auto text-label-title'
                             >
+                                    <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
                                 <Field
                                     type="text"
                                     autoComplete="off"
@@ -317,11 +363,48 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 />
+                                </Tooltip>
                             </FormItem>
 
                         </div>
 
-                        <div className='flex'>
+
+                        <div className="flex">
+                            <FormItem
+                                label="CIN Number"
+                                className="me-auto text-label-title !mb-0"
+                            >
+                                <Field
+                                    autoComplete="off"
+                                    className="rounded-[13px]"
+                                    name="cin"
+                                    maxLength={16}
+                                    placeholder="CIN No."
+                                    component={Input}
+                                    onChange={(e: any) => handleChange(e)}
+                                />
+                                {/* <p className="text-[red] normal-case">
+                                    {error && error.cin}
+                                </p> */}
+                            </FormItem>
+                        <FormItem
+                                label="Pan Number"
+
+                                className='me-auto text-label-title'
+                            >
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="pancardno"
+                                    placeholder="Pan Card No."
+                                    value={autoFilldata?.taxpayerInfo?.panNo}
+                                    component={Input}
+                                    className=''
+                                />
+                            </FormItem>
+                        </div>
+
+                        <div className='flex mt-3'>
                             <Button
                                 block
                                 style={{borderRadius:"13px"}}

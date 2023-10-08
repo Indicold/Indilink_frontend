@@ -1,3 +1,8 @@
+/**
+ * This is a TypeScript React component for a Forgot Password form that sends a password recovery
+ * instruction to the user's email.
+ * @property {string} email - The email property is a string that represents the user's email address.
+ */
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -22,6 +27,10 @@ type ForgotPasswordFormSchema = {
     email: string
 }
 
+/* The `validationSchema` constant is defining the validation rules for the form. In this case, it is
+using the Yup library to create a validation schema object. The schema specifies that the `email`
+field is required and must be a string. If the field is empty or not a string, it will display the
+error message `'Please enter your email'`. */
 const validationSchema = Yup.object().shape({
     email: Yup.string().required('Please enter your email'),
 })
@@ -31,33 +40,30 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
 
     const [emailSent, setEmailSent] = useState(false)
 
-    const [message, setMessage] = useTimeOutMessage()
 
+    /**
+     * The function `onSendMail` is used to send a forgot password email and store the email in local
+     * storage.
+     * @param {ForgotPasswordFormSchema} values - The `values` parameter is an object that contains the
+     * form values submitted by the user. In this case, it likely includes the user's email address.
+     * @param setSubmitting - A function that takes a boolean value and updates the state of whether
+     * the form is submitting or not.
+     */
     const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        setSubmitting(true);
+        
         const {email }=values;
     localStorage.setItem("email",email)
-        apiForgotPassword(values,messageView)
-            // .then((resp) => {
-            //     console.log("hhhhh", resp);
-    
-            //     if (resp && resp.data) {
-            //         setSubmitting(false);
-            //         setEmailSent(true);
-            //     }
-            // })
-            // .catch((errors) => {
-            //     console.log("errors", errors);
-            //     setMessage(
-            //         (errors as AxiosError<{ message: string }>)?.response?.data
-            //             ?.message || (errors as Error).toString()
-            //     );
-            //     setSubmitting(false);
-            // });
+        apiForgotPassword(values,messageView,setSubmitting)
     };
+    /**
+     * The function `messageView` displays a success toast message with a custom style.
+     * @param {any} messagevalue - The messagevalue parameter is the value of the message that you want
+     * to display in the toast notification. It can be any string or variable that contains the message
+     * you want to show.
+     */
     const messageView=(messagevalue:any)=>{
         toast.success(messagevalue, {
             position: 'top-right', // Position of the toast
@@ -77,6 +83,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
 
     return (
         <div className={className}>
+            <img className="lg:w-[130px] mt-4 md:w-[25%] w-5/6 mb-4 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
              <ToastContainer />
             <div className="mb-6">
                 {emailSent ? (
@@ -89,19 +96,14 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 ) : (
                     <>
-                        <h4 className="mb-1 text-head-title">Forgot Password</h4>
-                        <p className='!text-[#103492]'>
+                        <h4 className="mb-1 text-head-title">Forgot Password?</h4>
+                        {/* <p className='!text-[#103492]'>
                             Please enter your email address to receive a
                             verification code
-                        </p>
+                        </p> */}
                     </>
                 )}
             </div>
-            {/* {message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {message}
-                </Alert>
-            )} */}
             <Formik
                 initialValues={{
                     email: null,
@@ -120,14 +122,16 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
+                                label='Email address*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
+                                    className='w-full'
                                 >
                                     <Field
                                         type="email"
                                         autoComplete="off"
                                         name="email"
-                                        placeholder="Email"
+                                        placeholder="eg. johndeo@gmail.com"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -139,14 +143,14 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className='indigo-btn w-[94%]'
+                                className='indigo-btn w-[94%] mt-4'
                             >
-                                {emailSent ? 'Resend Email' : 'Send Email'}
+                                {emailSent ? 'Resend' : 'Reset Password'}
                             </Button>
                             </div>
-                            <div className="mt-4 text-center !text-[#103492]">
-                                <span>Back to </span>
-                                <ActionLink to={signInUrl}>Sign in</ActionLink>
+                            <div className="w-full text-center mt-2">
+                                <span className='text-field'>Back to </span>
+                                <ActionLink to={signInUrl}>Login</ActionLink>
                             </div>
                         </FormContainer>
                     </Form>
