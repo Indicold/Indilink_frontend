@@ -81,6 +81,8 @@ const StoreSearch = () => {
     const handleRoute = () => {
         console.log('clicked!')
 
+        console.log(validateStoreCustomerForm(formData, setErrors))
+
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
             PostCustomerRegisterDetails(formData);
@@ -103,6 +105,8 @@ const StoreSearch = () => {
      * redirects the user to the ticket list store page.
      */
     const handleRouteUpdate = () => {
+
+        console.log(21)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         
@@ -299,7 +303,7 @@ const StoreSearch = () => {
                                             className="h-11 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            { ['Pallets', 'MT', 'Cubic', 'Feet', 'Sq. Feet']?.map((item: any, index: any) => (
+                                            { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item === 'MT'}>{item}</option>
 
                                             ))}

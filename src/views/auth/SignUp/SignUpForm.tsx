@@ -243,7 +243,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             />
                             <p className="m-1">
                                 <span>I agree to </span>
-                                <ActionLink to={'/sign-up'}>
+                                <ActionLink to={'/terms'}>
                                     <big>
                                         <u className="!text-[#103492] text-sm">
                                             Terms and Conditions
