@@ -96,7 +96,7 @@ const AccountDetails = () => {
             <div className="mb-4 w-5/6 bg-white">
                 <ArrowBackIcon role='button' className='ms-3' onClick={() => navigate(-1)} />
                 <h4 className="text-head-title text-center">Account Details</h4>
-                {modal && <AccountModal data={data} setModal={setModal} modal={modal} setData={setData} />
+                {modal && <AccountModal data={data} setModal={setModal} modal={modal} setData={setData}  fetchData={fetchData} />
                 }            <div className='flex'>
                     <Button
                         style={{ borderRadius: '13px' }}

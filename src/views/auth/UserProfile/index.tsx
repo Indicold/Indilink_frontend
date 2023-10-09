@@ -1,5 +1,5 @@
 import DownloadingIcon from '@mui/icons-material/Downloading';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 const UserProfilePage = () => {
     // const token:any=sessionStorage.getItem('access_token');
@@ -28,12 +28,15 @@ const UserProfilePage = () => {
             <h1 className="font-bold text-center text-3xl text-gray-900">
             {/* {data && data?.email} */}
             </h1>
-            <p className="text-center text-sm text-gray-400 font-medium">
-              UI Components Factory
-            </p>
-            <p>
-              <span></span>
-            </p>
+            <div className="my-5 px-6">
+              <NavLink to='/basic-info'
+                // href="/forgot-password"
+                // onClick={handleChangePassword}
+                className="text-white mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
+              >
+               Profile Details
+              </NavLink>
+            </div>
             <div className="my-5 px-6">
               <a
                 // href="/forgot-password"

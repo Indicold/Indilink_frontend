@@ -56,12 +56,12 @@ const validationSchema = Yup.object().shape({
 const SignInForm = (props: SignInFormProps) => {
     const [isSubmitting, setSubmitting] = useState(false)
     const [formData, setFormData] = useState<any>({
-        username: '',
+        email: '',
         password: '',
         rememberMe:false
     })
     const [error, setError] = useState<any>({
-        username: '',
+        email: '',
         password: '',
     })
     const dispatch = useDispatch()
@@ -90,7 +90,7 @@ const SignInForm = (props: SignInFormProps) => {
             'HGFFGDFGD',
             validateForm(
                 {
-                    user_id: formData?.username,
+                    email: formData?.email,
                     passwordlGN: formData?.password,
                 },
                 setError
@@ -100,11 +100,11 @@ const SignInForm = (props: SignInFormProps) => {
         if (validateFormLogin(formData)) {
             
         setSubmitting(true)
-if(formData?.rememberMe){
-    localStorage.setItem('RememberMe',JSON.stringify(formData));
-}else{
-    localStorage.removeItem('RememberMe')
-}
+        if(formData?.rememberMe){
+            localStorage.setItem('RememberMe',JSON.stringify(formData));
+        }else{
+            localStorage.removeItem('RememberMe')
+        }
             fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -112,7 +112,7 @@ if(formData?.rememberMe){
                 },
                 body: JSON.stringify(
                     {
-                        email: formData?.username,
+                        email: formData?.email,
                         password: formData?.password,
                     }
                 ),
@@ -139,12 +139,7 @@ if(formData?.rememberMe){
                     setSubmitting(false)
                     console.log("err", err)
                 })
-            // dispatch(
-            //     userLoginApiPost({
-            //         user_id: formData?.username,
-            //         password: formData?.password,
-            //     })
-            // )
+
         }
     }
     /**
@@ -155,9 +150,17 @@ if(formData?.rememberMe){
      */
     const validateFormLogin = (formD: any) => {
         const errors: any = {}
-        if (!formD.username) {
-            errors.username = 'Email is required !'
+        if (!formD.email) {
+            errors.email = 'Email is required !'
         }
+
+        if (formD.email) {
+            if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+                errors.email = 'Invalid email address';
+              }
+        }
+
+
         if (!formD.password) {
             errors.password = "Password can't be Empty !"
         }
@@ -218,14 +221,14 @@ if(formData?.rememberMe){
                                 type="text"
                                 autoComplete="off"
                                 className="rounded-[13px]"
-                                name="username"
-                                value={formData?.username}
+                                name="email"
+                                value={formData?.email}
                                 placeholder="your@email.com"
                                 onChange={handlechange}
                                 component={Input}
                             />
                             <p className="text-[red]">
-                                {error && error.username}
+                                {error && error.email}
                             </p>
                         </FormItem>
                         <FormItem className="text-field" label="Password*">

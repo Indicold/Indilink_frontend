@@ -23,8 +23,8 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
     const { data: ListOfRole, loading: LORloading, error: LORerror } =
     useApiFetch<any>(`master/profile/get-platform-roles`, token);
-    let { result: Accountesponse, loading: AccountLoading, sendPostRequest: AccountPostDetails }: any = usePostApi(`${apiUrl}/auth/account-detail`);
-    let { result: AccountUpdateesponse, loading: AccountUpdateLoading, sendPostRequest: AccountUpdatePost }: any = usePutApi(`${apiUrl}/auth/account-detail/${data?.id}`);
+    let { result: Accountesponse, loading: AccountLoading, sendPostRequest: AccountPostDetails }: any = usePostApi(`auth/account-detail`);
+    let { result: AccountUpdateesponse, loading: AccountUpdateLoading, sendPostRequest: AccountUpdatePost }: any = usePutApi(`auth/account-detail/${data?.id}`);
     
     const handleChange = (e:any) => {
         const newdata:any={...data};
@@ -49,6 +49,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(Accountesponse?.message)
         if(Accountesponse?.status==200){
+            fetchData()
             setTimeout(()=>{
          setModal(false)
          fetchData()
@@ -59,6 +60,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(AccountUpdateesponse?.message)
         if(AccountUpdateesponse?.status==200){
+            fetchData()
             setTimeout(()=>{
          setModal(false)
          fetchData()
@@ -129,7 +131,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Account Name"
                                     component={Input}
                                 />
-                                        {error && error.account_name}
+                                        <p className='text-[red]'>{error && error.account_name}</p>
                             </FormItem>
                             <FormItem
                                 label="Account Number"
@@ -147,7 +149,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Account Number"
                                     component={Input}
                                 />
-                                   {error && error.account_number}
+                                   <p className='text-[red]'>{error && error.account_number}</p>
                             </FormItem>
                         </div>
                         <div className="flex">
@@ -167,7 +169,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Bank Name"
                                     component={Input}
                                 />
-                                       {error && error.bank_name}
+                                       <p className='text-[red]'>{error && error.bank_name}</p>
                             </FormItem>
                             <FormItem
                                 label="Bank IFSC Code"
@@ -185,7 +187,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Bank IFSC Code"
                                     component={Input}
                                 />
-                                 {error && error.bank_ifsc}
+                                 <p className='text-[red]'>{error && error.bank_ifsc}</p>
                             </FormItem>
                         </div>
                         <div className="flex">
@@ -205,7 +207,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Branch Name"
                                     component={Input}
                                 />
-                                     {error && error.branch_name}
+                                     <p className='text-[red]'>{error && error.branch_name}</p>
                             </FormItem>
                         </div>
                         <div className='flex'>

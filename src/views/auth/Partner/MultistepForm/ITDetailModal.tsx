@@ -10,6 +10,7 @@ import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable, validateITForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -17,18 +18,21 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    const {id}: any = useParams()
     useEffect(()=>{
         const newState:any = { ...data };
-        newState.asset_id = localStorage.getItem('AssetsId')
+        newState.asset_id = id
         setData(newState)
         console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
@@ -63,7 +67,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'it_devices_ids'
+            'it_devices_ids',
+            FetchAgain
         )
         }
     }

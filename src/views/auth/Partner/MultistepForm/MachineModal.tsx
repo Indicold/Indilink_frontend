@@ -7,6 +7,7 @@ import { Button, FormItem, Input } from '@/components/ui'
 import { handleStoreTable } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 interface MajorityHolderModalProps {
     modal: boolean
@@ -25,7 +26,12 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     setFormData,
     machineId
 }) => {
-    const [data, setData] = useState({})
+    const {id}:any=useParams();
+    const [data, setData] = useState({
+        asset_id:id
+    })
+    console.log("formDformDformDformD",formD);
+    
 
     /**
      * The handleChange function updates the state data object with the new value from the input
@@ -51,7 +57,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
             setModal,
             formD,
             update,
-            'machine_ids'
+            'machine_ids',
         )
         let arr = machineId;
         arr.push()
@@ -72,7 +78,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                     aria-hidden="true"
                     className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                    <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button
                                 onClick={() => setModal(false)}
@@ -100,21 +106,19 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Machine</h6>
                                 <div className="flex">
-                                    <FormItem
-                                        label="Asset ID"
-                                        className="mx-auto w-1/2"
-                                    >
+                                <FormItem label="Name" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
-                                            name="asset_id"
+                                            name="name"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            placeholder="Asset ID"
+                                            placeholder="Name"
                                             component={Input}
                                         />
                                     </FormItem>
+                               
                                     <FormItem
                                         label="Type of Machine"
                                         className="mx-auto w-1/2"
@@ -132,18 +136,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="Name" className="mx-auto w-1/2">
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="name"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
-                                            placeholder="Name"
-                                            component={Input}
-                                        />
-                                    </FormItem>
+                                    
                                     <FormItem label="Make" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -156,8 +149,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         />
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem label="Model" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
@@ -170,6 +161,9 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         />
                                     </FormItem>
+                                </div>
+                                <div className="flex">
+                               
                                     <FormItem
                                         label="Purpose"
                                         className="mx-auto w-1/2"
@@ -185,8 +179,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         />
                                     </FormItem>
-                                </div>
-                                <div className="flex">
                                     <FormItem
                                         label="Power requirement"
                                         className="w-1/2"
@@ -203,6 +195,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                         />
                                     </FormItem>
                                 </div>
+                              
                                 <div className='flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}

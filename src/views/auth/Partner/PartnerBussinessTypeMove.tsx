@@ -25,6 +25,7 @@ import { ToastContainer } from 'react-toastify' // Import a toast notification c
 import 'react-toastify/dist/ReactToastify.css' // Import CSS for toast notifications
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PartnerMoveMakeModal from './PartnerMoveMakeModal'
 // Define the main functional component for PartnerBussinessTypeMove
 const PartnerBussinessTypeMove = () => {
     // Get the user's token using a custom hook
@@ -46,11 +47,13 @@ console.log("VVVVVVV",id);
         data: vehicalModal,
         loading: vehicalLoading,
         error: vehicalError,
+        refetch:fetchList
     } = useApiFetch<any>('master/partner/move/get-vehicle-model', token)
     const {
         data: vehicalMake,
         loading: MakeLoading,
         error: makeError,
+        refetch:fetchmake
     } = useApiFetch<any>('master/partner/move/get-vehicle-make', token)
 
     // Fetch additional data for form pre-filling using a custom hook
@@ -58,7 +61,7 @@ console.log("VVVVVVV",id);
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(`partner/move/${AssetsId}`, token)
+    } = useApiFetch<any>(`partner/move/${id}`, token)
 
     // Define a payload object for the POST request
     const payload = {
@@ -74,12 +77,36 @@ console.log("VVVVVVV",id);
     const [data, setData] = useState<any>(payload)
     const [errors, setErrors] = useState<any>(null)
 
+    const [makeCustom, setMakeCustom] = useState<any>(false)
+    const [modelCustom, setModelCustom] = useState<any>(false)
+
     // Get the navigate function from the routing hook
     const navigate = useNavigate()
 
     // Define a function to handle form input changes
     const handleChange = (e: any) => {
         const newData: any = { ...data }
+        if(e.target.name === 'vehicle_make_id') {
+            console.log("makeCustom", makeCustom)
+            if(e.target.value === 'other') {
+                console.log("makeCustomm", makeCustom)
+                setMakeCustom(true)
+                setModelCustom(true)
+            }
+            else {
+                setMakeCustom(false)
+            }
+        }
+        if(e.target.name === 'vehicle_model_id') {
+            console.log("makeCustom", makeCustom)
+            if(e.target.value === 'other') {
+                console.log("makeCustomm", makeCustom)
+                setModelCustom(true)
+            }
+            else {
+                setModelCustom(false)
+            }
+        }
         newData[e.target.name] = e.target.value
         setData(newData)
         console.log("newData", newData)
@@ -105,7 +132,24 @@ console.log("VVVVVVV",id);
             formdata.append('permit_validity', data?.permit_validity)
             formdata.append('pucc_validity', data?.pucc_validity)
             formdata.append('chassis_no', data?.chassis_no)
+            formdata.append('vehicle_no', data?.vehicle_no)
             formdata.append('fitness_validity', data?.fitness_validity)
+            formdata.append('pucc_validity', data?.mfg_month_year)
+            formdata.append('vehicle_class', data?.vehicle_class)
+            formdata.append('emission_norms', data?.emission_norms)
+            formdata.append('actual_payload', data?.actual_payload)
+            formdata.append('create_capacity', data?.create_capacity)
+            formdata.append('length', data?.length)
+            formdata.append('width', data?.width)
+            formdata.append('hight', data?.hight)
+            formdata.append('gv_weight', data?.gv_weight)
+            formdata.append('unladen_weight_in_rc', data?.unladen_weight_in_rc)
+            formdata.append('engine_no', data?.engine_no)
+            formdata.append('side_door', data?.side_door)
+            formdata.append('hatch_window', data?.hatch_window)
+            formdata.append('dual_temp_bulkhead', data?.dual_temp_bulkhead)
+            formdata.append('rc_no', data?.rc_no)
+            formdata.append('rc_image', data?.rc_image)
 
             // Prepare request options for the POST request
             var requestOptions: any = {
@@ -125,9 +169,9 @@ console.log("VVVVVVV",id);
                 messageView(result?.message)
 
                 // If the response status is 200, navigate to the specified route
-                if (result?.status == 200 || result?.status) {
+                if (result?.status == 200) {
                     setTimeout(()=>{
-                        navigate(`/partner-bussiness-type-compliance/${id}`)
+                        navigate(`/partner-move-compliance/${id}`)
 
                     },2000)
                 }
@@ -171,6 +215,7 @@ console.log("VVVVVVV",id);
     return (
         <div className='flex'>
             <ToastContainer />
+            {makeCustom && <PartnerMoveMakeModal setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
             <div className='w-1/6'>
             
 
@@ -249,7 +294,21 @@ console.log("VVVVVVV",id);
                                                         </option>
                                                     )
                                                 )}
+                                            <option value="other">Other</option>
                                         </select>
+                                        {/* :
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="text"
+                                            autoComplete="off"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="vehicle_make_id"
+                                            value={data?.make}
+                                            placeholder="Make"
+                                            component={Input}
+                                        />} */}
 
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_make_id}
@@ -285,12 +344,24 @@ console.log("VVVVVVV",id);
                                                     )
                                                 )}
                                         </select>
+                                        {/* :<Field
+                                        disabled={isDisabled}
+                                        type="text"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="vehicle_model_id"
+                                        value={data?.make}
+                                        placeholder="Model"
+                                        component={Input}
+                                    /> */}
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_model_id}
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                {/* <div className="flex">
                                     <FormItem
                                         label="Permit valid Till Date*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -332,7 +403,7 @@ console.log("VVVVVVV",id);
                                             {errors && errors.pucc_validity}
                                         </p>
                                     </FormItem>
-                                </div>
+                                </div> */}
                                 <div className="flex">
                                     <FormItem
                                         label="Get Chassis No from RC*"
@@ -355,23 +426,23 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Fitness Certificate Valid Till*"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        label="Emission norms"
+                                        className="w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            type="date"
+                                            type="text"
                                             autoComplete="off"
-                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="fitness_validity"
-                                            placeholder="Fitness Certificate Valid Till"
+                                            name="emission_norms"
+                                            value={data?.emission_norms}
+                                            placeholder="Emission norms"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.fitness_validity}
+                                            {errors && errors.emission_norms}
                                         </p>
                                     </FormItem>
                                 </div>
@@ -419,7 +490,7 @@ console.log("VVVVVVV",id);
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Emission norms"
+                                        label="Vehicle number"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -429,13 +500,13 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="emission_norms"
-                                            value={data?.emission_norms}
-                                            placeholder="Emission norms"
+                                            name="vehicle_no"
+                                            value={data?.vehicle_no}
+                                            placeholder="Vehicle number"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.emission_norms}
+                                            {errors && errors.vehicle_no}
                                         </p>
                                     </FormItem>
                                     <FormItem
@@ -462,7 +533,7 @@ console.log("VVVVVVV",id);
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Crate Capacity"
+                                        label="Crate Capacity (in Numbers)"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -535,16 +606,16 @@ console.log("VVVVVVV",id);
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.height}
+                                            value={data?.hight}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="height"
+                                            name="hight"
                                             placeholder="Height"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.height}
+                                            {errors && errors.hight}
                                         </p>
                                     </FormItem>
                                 </div>
@@ -728,7 +799,7 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="RC Number from RC"
+                                        label="Get RC Number from RC"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -747,6 +818,30 @@ console.log("VVVVVVV",id);
                                             {errors && errors.rc_no}
                                         </p>
                                     </FormItem>
+                                </div>
+
+                                <div className="flex">
+                                    
+                                    {/* <FormItem
+                                        label="Fitness Certificate Valid Till*"
+                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                    >
+                                        <Field
+                                            disabled={isDisabled}
+                                            type="date"
+                                            autoComplete="off"
+                                            value={data?.fitness_validity && TimeString(data?.fitness_validity)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            name="fitness_validity"
+                                            placeholder="Fitness Certificate Valid Till"
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors && errors.fitness_validity}
+                                        </p>
+                                    </FormItem> */}
                                 </div>
 
                                 <div className="flex justify-center">

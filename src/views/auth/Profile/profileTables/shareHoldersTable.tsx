@@ -12,7 +12,9 @@ import { useNavigate } from 'react-router-dom'
 // The ShareHolderTable component takes a prop called AllStore, presumably for rendering data.
 
 const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,modal }: any) => {
-    let allData: any = AllStore
+    let allData: any = AllStore || [];
+    console.log("tttttt",allData);
+    
     const countPerPage = 5
     const [value, setValue] = React.useState('')
 
@@ -47,21 +49,14 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
         }, 400)
     )
 
-    React.useEffect(() => {
-        // Update the displayed data when the search input value changes.
-        if (!value) {
-            updatePage(1)
-        } else {
-            searchData.current(value)
-        }
-    }, [value])
+ 
 
     const updatePage = (p: any) => {
         // Function to update the current page of data.
         setCurrentPage(p)
         const to = countPerPage * p
         const from = to - countPerPage
-        setCollection(cloneDeep(allData.slice(from, to)))
+        setCollection(cloneDeep(allData?.slice(from, to)))
     }
 
     const navigate = useNavigate()
@@ -187,6 +182,21 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
         ))
     }
 
+    React.useEffect(() => {
+        // Update the displayed data when the search input value changes.
+        if (!value) {
+            updatePage(1)
+        } else {
+            searchData.current(value)
+        }
+    }, [value])
+    React.useEffect(() => {
+        // Update the displayed data when the AllStore prop changes.
+        if (AllStore) {
+            const newCollection = cloneDeep(AllStore.slice(0, countPerPage));
+            setCollection(newCollection);
+        }
+    }, [AllStore]);
     // JSX structure for rendering the table and pagination.
 
     return (

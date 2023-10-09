@@ -1,5 +1,6 @@
 /*
- * The above code is a TypeScript React component that handles additional submissions for a partner's business type.
+ * The above code is a TypeScript React component that handles the file upload functionality for partner business
+ * type compliances.
  */
 import {
     Button,
@@ -17,26 +18,28 @@ import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
-// Define the PartnerBussinessTypeAdditional component
-const PartnerBussinessTypeAdditional = () => {
+const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
-
-    // Get the assets list ID and other information from local storage and location state
-    const AssetsId: any = localStorage.getItem('assets_list_id')
+      const {id}:any=useParams()
+    // Get the current location
     const location = useLocation()
+
+    // Initialize a boolean variable based on the location state (default to false)
     const isDisabled = location?.state || false
-    const {id}:any=useParams();
+
     // Initialize state variables for file upload
     const [selectedFile, setSelectedFile] = useState<any>(null)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
-    const navigate = useNavigate()
+
+    // Get asset IDs from local storage
+    const AssetsId: any = localStorage.getItem('assets_list_id')
     const AssetsType: any = localStorage.getItem('asset_id')
 
-    // Construct the API URL based on the AssetsType
+    // Determine the API URL based on the asset type
     let apiUrls: string =
         AssetsType == 1
             ? `partner/store/${id}`
@@ -46,79 +49,63 @@ const PartnerBussinessTypeAdditional = () => {
             ? `partner/prepare/${id}`
             : ''
 
-    // Fetch data from the API using a custom hook
+    // Fetch details using the determined API URL
     const {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
+    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
-    // Define an array of objects for file upload items
     let array1 = [
-        {
-            label: 'No Lien Certificate',
-            placeholder: 'Upload',
-            key: 'no_lien_cert',
-        },
-        {
-            label: 'Latest Electricity Bill',
-            placeholder: 'Upload',
-            key: 'latest_electricity_bill',
-        },
-        {
-            label: 'Structural Load Safety',
-            placeholder: 'Upload',
-            key: 'structural_load_safety_cert',
-        },
-        // {
-        //     label: 'Pest Control Agency Contract',
-        //     placeholder: 'Upload',
-        //     key: 'pest_control_agency_contract',
-        // },
-        {
-            label: 'Plant Layout',
-            placeholder: 'Upload',
-            key: 'plant_layout',
-        },
         {
             label: 'Insurance Certificate',
             placeholder: 'Upload',
             key: 'insurance_cert',
+            view: false,
+            url: null,
+            valid_till: null,
         },
         {
-            label: 'Facility Layout',
+            label: 'Permit',
             placeholder: 'Upload',
-            key: 'facility_layout',
+            key: 'permit',
+            view: false,
+            url: null,
+            valid_till: null,
         },
         {
-            label: 'Storage Temperature Record for Last Couple of Months',
+            label: 'PUCC',
             placeholder: 'Upload',
-            key: 'storage_temp_record',
+            key: 'pucc',
+            view: false,
+            url: null,
+            valid_till: null,
         },
         {
-            label: '3D view of the assets',
+            label: 'Fitness Certificate',
             placeholder: 'Upload',
-            key: 'three_d_view_of_asset',
+            key: 'fitness_cert',
+            view: false,
+            url: null,
+            valid_till: null,
         },
         {
-            label: 'Photo of the Assets',
+            label: 'No Entry Permit',
             placeholder: 'Upload',
-            key: 'photos_of_asset',
+            key: 'no_entry_permit',
+            view: false,
+            url: null,
+            valid_till: null,
         },
-        // Add additional objects as needed
-        // Example:
-        // {
-        //   label: "New License",
-        //   placeholder: "Upload",
-        //   key: "new_license",
-        // },
     ]
 
     // Initialize state variable for the file upload items
-    const [array, setArray] = useState<any>(array1)
+    const [array, setArray] = useState(array1)
 
-    // Handle file change and upload
+    // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
+        console.log('FILE', e.target.files[0])
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
@@ -133,9 +120,10 @@ const PartnerBussinessTypeAdditional = () => {
         console.log("date_change", newData, e.target.value)
     }
 
-    // Upload the file to the server
+    // Handle the file upload
     const handleUpload = async (item: any, file: any) => {
         let AssetsId = localStorage.getItem('AssetsId')
+        let ListId = localStorage.getItem('assets_list_id')
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()
@@ -159,30 +147,57 @@ const PartnerBussinessTypeAdditional = () => {
                 config
             )
             const responseData = await response.json()
-            if (responseData?.status) {
+            if (responseData?.status == 200 || responseData?.status) {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
-                        ? { ...itemData, view: true, url: responseData?.data }
+                        ? {
+                              ...itemData,
+                              view: true,
+                              url: responseData?.data,
+                              message: 'Uploaded',
+                          }
+                        : itemData
+                )
+
+                setArray(updatedArray) // Update the state with the modified array
+            } else if (
+                responseData?.status == 400 ||
+                responseData?.status == 409
+            ) {
+                const updatedArray = array.map((itemData: any) =>
+                    itemData.key === item.key
+                        ? {
+                              ...itemData,
+                              view: false,
+                              url: responseData?.data,
+                              message: 'Error While Uploading',
+                          }
                         : itemData
                 )
                 setArray(updatedArray) // Update the state with the modified array
             }
-            setResponse(response.data)
-            setError(null)
-        } catch (error: any) {
-            setError(error)
-            setResponse(null)
+            console.log('Response data:', responseData?.data)
+        } catch (error) {
+            console.error('Error:', error)
         }
     }
 
-    // Effect to update the array based on fetched data
+    // Access the navigate function from React Router
+    const navigate = useNavigate()
+
+    // Handle route navigation
+    const handleRoute = () => {
+        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+    }
+
+    // Use useEffect to update file upload items when fetchDetails changes
     useEffect(() => {
         if (fetchDetails) {
             const newData = {
                 ...fetchDetails?.data,
             }
 
-            const updatedArray = array.map((item: any) =>
+            const updatedArray = array.map((item) =>
                 newData[item.key]
                     ? {
                           ...item,
@@ -196,14 +211,14 @@ const PartnerBussinessTypeAdditional = () => {
             setArray(updatedArray)
         }
     }, [fetchDetails])
-
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-
-    // Render the component JSX
+    console.log('DDDDDDDD', array[0])
     return (
         <div className='flex'>
+            <ToastContainer />
+
             <div className='w-1/6'>
             
 
@@ -218,9 +233,9 @@ const PartnerBussinessTypeAdditional = () => {
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
-    <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
-            <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
             </svg>
         </span>
         <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
@@ -241,11 +256,11 @@ const PartnerBussinessTypeAdditional = () => {
 
 
             </div>
+
             <div className="bg-white w-5/6">
             <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
-
-                <h4 className="mb-2 text-head-title text-center p-4">
-                    Additional Submissions
+                <h4 className=" mb-2 text-head-title text-center p-4">
+                    Compliance Details
                 </h4>
                 <div>
                     <Formik>
@@ -256,20 +271,20 @@ const PartnerBussinessTypeAdditional = () => {
                                         <FormItem
                                             label={item?.label}
                                             key={index}
-                                            className="w-1/2 rounded-lg pl-[22px] flex text-label-title"
+                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
-                                            <div className="flex">
+                                            <div className='flex'>
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
-                                                accept="image/*,.doc, .docx,.pdf"
-                                                className="!w-2/3 block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                        file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                        file:py-3 file:px-4
-                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                className="!w-2/3 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
                                                 onChange={(e: any) =>
                                                     handleFileChange(e, item)
                                                 }
@@ -277,11 +292,17 @@ const PartnerBussinessTypeAdditional = () => {
                                             <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
                                             </div>
                                             <div className="flex">
-                                                {item?.view && <b>Status:</b>}
+                                                {item?.message && (
+                                                    <p className="text-[red]">
+                                                        Status:{item?.message}
+                                                    </p>
+                                                )}
+                                                {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
                                                         href={`${item?.url}`}
                                                         target="_blank"
+                                                        download={false}
                                                     >
                                                         View
                                                     </a>
@@ -323,4 +344,4 @@ const PartnerBussinessTypeAdditional = () => {
     )
 }
 
-export default PartnerBussinessTypeAdditional
+export default PartnerComplianceMove

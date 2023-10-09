@@ -36,7 +36,7 @@ const HeaderActionsEnd = () => {
         }
     
     }
-    let UserType=localStorage.getItem('user_type');
+    let UserType:any=localStorage.getItem('user_type');
     return (
         <>
             <select
@@ -50,7 +50,7 @@ const HeaderActionsEnd = () => {
             </select>
             <NotificationDropdown  hoverable={false} />
 
-            <UserDropdown hoverable={false} />
+            <UserDropdown hoverable={false} UserType={UserType} />
         </>
     )
 }

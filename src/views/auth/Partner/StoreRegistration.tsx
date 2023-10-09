@@ -17,6 +17,7 @@ import MHEDetailsModal from './MultistepForm/MHEDetails'
 import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
+    onkeyDown,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -34,6 +35,7 @@ import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import { Chip } from '@mui/material'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -44,7 +46,8 @@ const StoreRegistration = () => {
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
     const {id}:any=useParams()
-
+    const fixedOptions1: any = [];
+    const [value1, setValue1] =useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
     const {
         data: ColdStorageType,
@@ -92,9 +95,9 @@ const StoreRegistration = () => {
         error: fetchDetailsSerrorAll,
         refetch:FetchAgain
     } = useApiFetch<any>(`partner/store/components-all/${id}`, token)
-    const { result: response, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/partner/store/chambers`);
-    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`${apiUrl}/partner/store/ca-equipments`);
-    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`${apiUrl}/partner/store/get-compressors`);
+    const { result: response, loading, sendPostRequest }:any = usePostApi(`partner/store/chambers`);
+    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`partner/store/ca-equipments`);
+    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`partner/store/get-compressors`);
     // Manage state variables for modals and other components
     const [chamberModal, setChamberModal] = useState(false)
     const [CAModal, setCAModal] = useState<any>(false)
@@ -113,16 +116,14 @@ const StoreRegistration = () => {
     const location = useLocation()
 
     // Initialize state variables for form data and errors
-    const [dataa, setData] = useState<any>(
-        payload1 || {
-            chamber_ids: [3],
-        }
-    )
+    const [dataa, setData] = useState<any>({})
 
     const [errors, setErrors] = useState<any>({})
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
+
+    
 
     // Handle the form submission
     const handleRoute = async () => {
@@ -175,16 +176,26 @@ const StoreRegistration = () => {
         }
     }
 
+    const [phone, setPhone] = useState('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
         const newData: any = { ...dataa }
-        newData[e.target.name] = e.target.value
+        if(e.target.name==='facility_manager_contact') {
+            if(e.target.value.length<=10) {
+                setPhone(e.target.value)
+                newData[e.target.name] = e.target.value
+            }
+        }
+        else newData[e.target.name] = e.target.value
+        newData.no_of_chambers = dataa.no_of_chambers?dataa.no_of_chambers:'0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
         console.log("newData", newData)
         if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
+
+    const [value, setValue] = useState([])
 
     const handleStoreChange = (e:any, newValue:any) => {
         const newData: any = { ...dataa }
@@ -204,6 +215,13 @@ const StoreRegistration = () => {
         }
     }, [fetchDetails])
 useEffect(()=>{
+    
+    const newState:any = { ...dataa };
+    newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
+    console.log("no_of_chambers", newState)
+    setData(newState)
+    setValue(dataa?.store_type_id)
+    console.log("dataa", dataa)
 if(localStorage.getItem('chamber_ids')){
     const arr:any=JSON.parse(localStorage.getItem('chamber_ids')) || []; 
     if(arr){
@@ -248,6 +266,15 @@ if(responseca?.data){
 useEffect(()=>{
     setData(dataa)
 },[dataa])
+
+const targetArray1: any = StorageType?.data || [];
+const itemsToFind1 = dataa?.store_type_id;
+console.log("TTTTTTTTT",dataa);
+
+useEffect(() => {
+    const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+    setValue1(foundItems)
+}, [StorageType,dataa])
     return (
         <div className='flex'>
             <div className='w-1/6'>
@@ -320,6 +347,7 @@ useEffect(()=>{
 
                             {CAModal && (
                                 <CAEquipmentsModal
+                                FetchAgain={FetchAgain}
                                     modal={CAModal}
                                     formD={dataa}
                                     update={setData}
@@ -330,6 +358,7 @@ useEffect(()=>{
 
                             {compModal && (
                                 <CompressorModal
+                                FetchAgain={FetchAgain}
                                     modal={compModal}
                                     formD={dataa}
                                     update={setData}
@@ -340,6 +369,7 @@ useEffect(()=>{
 
                             {ACUModal && (
                                 <ACUModall
+                                FetchAgain={FetchAgain}
                                     modal={ACUModal}
                                     formD={dataa}
                                     update={setData}
@@ -350,6 +380,7 @@ useEffect(()=>{
 
                             {condensorModal && (
                                 <CondensorDetailsModal
+                                FetchAgain={FetchAgain}
                                     modal={condensorModal}
                                     formD={dataa}
                                     update={setData}
@@ -365,11 +396,13 @@ useEffect(()=>{
                                     update={setData}
                                     setData={setData}
                                     setModal={setAMCModal}
+                                    FetchAgain={FetchAgain}
                                 />
                             )}
 
                             {IOTModal && (
                                 <IOTDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={IOTModal}
                                     formD={dataa}
                                     update={setData}
@@ -380,6 +413,7 @@ useEffect(()=>{
 
                             {ITModal && (
                                 <ITDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={ITModal}
                                     formD={dataa}
                                     update={setData}
@@ -390,6 +424,7 @@ useEffect(()=>{
 
                             {genModal && (
                                 <GeneratorDetailModal
+                                FetchAgain={FetchAgain}
                                     modal={genModal}
                                     formD={dataa}
                                     update={setData}
@@ -400,6 +435,7 @@ useEffect(()=>{
 
                             {MHEModal && (
                                 <MHEDetailsModal
+                                FetchAgain={FetchAgain}
                                     modal={MHEModal}
                                     formD={dataa}
                                     update={setData}
@@ -410,6 +446,7 @@ useEffect(()=>{
 
                             {SEModal && (
                                 <SolarInverterModal
+                                FetchAgain={FetchAgain}
                                     modal={SEModal}
                                     formD={dataa}
                                     update={setData}
@@ -483,13 +520,14 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.total_tonnage || ''}
+                                                value={dataa?.total_tonnage }
                                                 type="number"
-                                                min={1}
+                                                min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
                                                 name="total_tonnage"
+                                                onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
                                             />
                                             {/* <select
@@ -535,20 +573,34 @@ useEffect(()=>{
                                                     )
                                                 )}
                                         </select> */}
-                                        <Autocomplete
-                                            multiple
-                                            limitTags={2}
-                                            options={StorageType?StorageType?.data:[]}
-                                            getOptionLabel={(option:any) => option.type}
-                                                onChange={handleStoreChange}
-                                          
-                                            // defaultValue={}
-                                            renderInput={(params) => (
-                                                <TextField {...params} placeholder="Store Types"
-                                                className="!p-[0px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                id="multiple-limit-tags"
-                                                name="store_type_id" />)}
-                                                // sx={{ width: '500px' }}
+                                     <Autocomplete
+                                                multiple
+                                                limitTags={1}
+                                                id="fixed-tags-demo"
+                                                value={value1}
+                                                onChange={(event, newValue) => {
+                                                    setValue1([
+                                                        ...fixedOptions1,
+                                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
+                                                    ]);
+                                                    handlechange(event)
+                                                }}
+                                                options={StorageType ? StorageType?.data : []}
+                                                getOptionLabel={(option: any) => option?.type}
+                                                renderTags={(tagValue, getTagProps) =>
+                                                    tagValue.map((option, index) => (
+                                                        <Chip
+                                                            label={option?.type}
+                                                            {...getTagProps({ index })}
+                                                            disabled={fixedOptions1.indexOf(option) !== -1}
+                                                        />
+                                                    ))
+                                                }
+                                                renderInput={(params) => (
+                                                    <TextField {...params}
+                                                        name="store_type_id"
+                                                        placeholder="Store Category" />
+                                                )}
                                             />
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}
@@ -603,10 +655,7 @@ useEffect(()=>{
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={dataa?.chamber_ids?.length}
-                                            onChange={(e: any) =>
-                                                handlechange(e)
-                                            }
+                                            value={dataa?.chamber_ids?.length || 0}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -622,13 +671,14 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area || ''}
+                                                value={dataa?.ante_room_area }
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
                                                 name="ante_room_area"
+                                                onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
                                             />
                                             {/* <select
@@ -653,10 +703,11 @@ useEffect(()=>{
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
-                                            value={dataa?.total_number_of_docks || ''}
+                                            value={dataa?.total_number_of_docks}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onKeyDown={onkeyDown}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -674,13 +725,14 @@ useEffect(()=>{
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
-                                                    dataa?.total_offfice_space || ''
+                                                    dataa?.total_office_space 
                                                 }
-                                                min={0}
+                                                min="0"
                                                 type="number"
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="total_office_space"
                                                 placeholder="Enter value"
                                             />
@@ -740,12 +792,13 @@ useEffect(()=>{
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.processing_area || ''}
+                                                value={dataa?.processing_area }
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                             />
@@ -769,10 +822,11 @@ useEffect(()=>{
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
                                                 min={0}
-                                                value={dataa?.parking_area || ''}
+                                                value={dataa?.parking_area }
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onKeyDown={onkeyDown}
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                             />
@@ -887,7 +941,7 @@ useEffect(()=>{
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            placeholder="Facility Manager Name"
+                                            placeholder="Vendor Name"
                                             value={dataa?.facility_manager_name}
                                             component={Input}
                                         />
@@ -902,7 +956,7 @@ useEffect(()=>{
                                     >
                                         <Field
                                             disabled={location?.state}
-                                            type="tel"
+                                            type="number"
                                             autoComplete="off"
                                             minLength={10}
                                             maxLength={10}
@@ -912,7 +966,7 @@ useEffect(()=>{
                                             }
                                             placeholder="Contact Number"
                                             value={
-                                                dataa?.facility_manager_contact
+                                                phone || dataa?.facility_manager_contact
                                             }
                                             component={Input}
                                         />
@@ -1105,7 +1159,7 @@ useEffect(()=>{
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option value="" disabled selected>
-                                                Road condition from main road
+                                                Select
                                             </option>
 
                                             {RoadCondition &&
@@ -1141,19 +1195,19 @@ useEffect(()=>{
                                             {fetchDetailsAll?.data?.chambers.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Chamber name
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Chamber no.
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Chamber size
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                       Created 
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                    Updated
                                                     </div>
                                                     {/* <div className="mx-auto">
@@ -1162,19 +1216,19 @@ useEffect(()=>{
                                                 </div>
                                                 {fetchDetailsAll?.data?.chambers?.map((item:any,index:any)=>(
    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-   <div className="mx-auto">
+   <div className="w-[20%] text-center my-auto">
     {item?.chamber_name}
    </div>
-   <div className="mx-auto">
+   <div className="w-[20%] text-center my-auto">
      {item?.chamber_number}
    </div>
-   <div className="mx-auto !text-center">
+   <div className="w-[20%] text-center my-auto !text-center">
        {item?.no_of_pallets}
    </div>
-   <div className="mx-auto">
+   <div className="w-[20%] text-center my-auto">
       {new Date(item?.created_at)?.toLocaleDateString()}
    </div>
-   <div className="mx-auto">
+   <div className="w-[20%] text-center my-auto">
        {new Date(item?.updated_at)?.toLocaleDateString()}
    </div>
    <div className="mx-2 flex">
@@ -1219,31 +1273,31 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.caEquipments.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    {/* <div className="w-[25%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item:any,index:any)=>(
   <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-  <div className="w-[25%] text-center my-auto">
+  <div className="w-[33%] text-center my-auto">
       {item?.make}
   </div>
-  <div className="w-[25%] text-center my-auto">
+  <div className="w-[33%] text-center my-auto">
       {item?.model}
   </div>
-  <div className="w-[25%] text-center my-auto">
+  <div className="w-[33%] text-center my-auto">
       {item?.cmf}
   </div>
-  <div className="w-[25%] mx-auto flex">
+  {/* <div className="w-[25%] mx-auto flex">
   <Button
       className="!p-2 pt-0 pb-0 mx-auto"
       // onClick={() => handleEdit(rowData)}
@@ -1256,7 +1310,7 @@ useEffect(()=>{
   >
       View
   </Button>
-  </div>
+  </div> */}
 </div>
                                                 ))}
                                               
@@ -1283,43 +1337,43 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.compressors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         HP
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    {/* <div className="w-[16%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item:any,index:any)=>(
     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[16%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.make}
     </div>
-    <div className="w-[16%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.model}
     </div>
-    <div className="w-[16%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.hp}
     </div>
-    <div className="w-[16%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.cmf}
     </div>
-    <div className="w-[16%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.amc}
     </div>
-    <div className="w-[16%] mx-auto flex">
+    {/* <div className="w-[16%] mx-auto flex">
     <Button
         className="!p-2 pt-0 pb-0 mx-auto"
         // onClick={() => handleEdit(rowData)}
@@ -1332,7 +1386,7 @@ useEffect(()=>{
     >
         View
     </Button>
-    </div>
+    </div> */}
 </div>
                                                 ))}
                                             
@@ -1359,43 +1413,43 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.acus?.length>0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[14%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         HP
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    {/* <div className="w-[16%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item:any,index:any)=>(
                                                         <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[16%] text-center my-auto">
+                                                        <div className="w-[20%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[16%] text-center my-auto">
+                                                        <div className="w-[20%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[16%] text-center my-auto">
+                                                        <div className="w-[20%] text-center my-auto">
                                                             {item?.hp}
                                                         </div>
-                                                        <div className="w-[16%] text-center my-auto">
+                                                        <div className="w-[20%] text-center my-auto">
                                                             {item?.cmf}
                                                         </div>
-                                                        <div className="w-[16%] text-center my-auto">
+                                                        <div className="w-[20%] text-center my-auto">
                                                             {item?.tr}
                                                         </div>
-                                                        <div className="w-[14%] mx-auto flex">
+                                                        {/* <div className="w-[14%] mx-auto flex">
                                                         <Button
                                                             className="!p-2 pt-0 pb-0 mx-auto"
                                                             // onClick={() => handleEdit(rowData)}
@@ -1408,7 +1462,7 @@ useEffect(()=>{
                                                         >
                                                             View
                                                         </Button>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 ))}
                                             
@@ -1435,37 +1489,37 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.condensors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    {/* <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.condensors?.map((item:any,index:any)=>(
     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[20%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.make}
     </div>
-    <div className="w-[20%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.model}
     </div>
-    <div className="w-[20%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.tr}
     </div>
-    <div className="w-[20%] text-center my-auto">
+    <div className="w-[25%] text-center my-auto">
         {item?.amc}
     </div>
-    <div className="w-[20%] mx-auto flex">
+    {/* <div className="w-[20%] mx-auto flex">
     <Button
         className="!p-2 pt-0 pb-0 mx-auto"
         // onClick={() => handleEdit(rowData)}
@@ -1478,7 +1532,7 @@ useEffect(()=>{
     >
         View
     </Button>
-    </div>
+    </div> */}
 </div>
                                                 ))}
                                             
@@ -1507,36 +1561,36 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.amcs?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Name of Service
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Vendor
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Valid till
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Fixed Cost
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    {/* <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.amcs?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     {item?.name_of_service}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     {item?.vendor}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     {item?.valid_till}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     {item?.fixed_cost}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
+                                                    {/* <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1549,7 +1603,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}
                                             </div>:<p className="text-center">Currently there are no AMCs.</p>}
                                                 <div className="flex">
@@ -1574,36 +1628,36 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.iotDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         ID
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    {/* <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.iotDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.device_id}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
+                                                    {/* <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1616,7 +1670,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}
                                             </div>:<p className="text-center">Currently there are no IOT Devices.</p>}
                                                 <div className="flex">
@@ -1641,36 +1695,36 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.itDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Device ID
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    {/* <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.itDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.device_id}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
+                                                    {/* <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1683,7 +1737,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}
                                             </div>:<p className="text-center">Currently there are no IT Devices.</p>}
                                                 <div className="flex">
@@ -1708,36 +1762,36 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.generators?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         KVA
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Year
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    {/* <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.generators?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.kva}
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.year}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
+                                                    {/* <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1750,7 +1804,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}
                                             </div>:<p className="text-center">Currently there are no generators.</p>}
                                                 <div className="flex">
@@ -1775,30 +1829,30 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.mhes?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Load
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    {/* <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.mhes?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.load}
                                                     </div>
-                                                    <div className="w-[25%] mx-auto flex">
+                                                    {/* <div className="w-[25%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1811,7 +1865,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}
                                             </div>:<p className="text-center">Currently there are no MHEs.</p>}
                                                 <div className="flex">
@@ -1836,30 +1890,30 @@ useEffect(()=>{
                                         <AccordionItemPanel>
                                         {fetchDetailsAll?.data?.solarInverters?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                             <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         Capacity
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    {/* <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 {fetchDetailsAll?.data?.solarInverters?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[33%] text-center my-auto">
                                                         {item?.capacity}
                                                     </div>
-                                                    <div className="w-[25%] mx-auto flex">
+                                                    {/* <div className="w-[25%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1872,7 +1926,7 @@ useEffect(()=>{
                                                     >
                                                         View
                                                     </Button>
-                                                    </div>
+                                                    </div> */}
                                                 </div>))}</div>
                                             </div>:<p className="text-center">Currently there are no solar inverters.</p>}
                                             

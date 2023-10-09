@@ -31,8 +31,8 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     const [isSubmitting, setSubmitting] = useState(false)
     const [isNumber, setIsNumber] = useState<any>(true)
     const [seconds, setSeconds] = useState(10);
-    const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`${apiUrl}/auth/login-with-otp`);
-    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails }: any = usePutApi(`${apiUrl}/auth/login-with-otp-verify`);
+    const { result: postMobileNumberResponse, loading: postMobileNumberLoading, sendPostRequest: postMobileNumber } = usePostApi(`auth/login-with-otp`);
+    const { result: verifyResponse, loading: verifyLoading, sendPostRequest: PUTOTPDetails }: any = usePutApi(`auth/login-with-otp-verify`);
     const [formdata, setFormData] = useState<any>({
         phone_number: "",
         otp: ""

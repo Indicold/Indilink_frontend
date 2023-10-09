@@ -37,7 +37,7 @@ const BussinessTypeModal = () => {
         result: AssetsResponse,
         loading: AssetsLoading,
         sendPostRequest: PostAssetsDetails,
-    }: any = usePostApi(`${apiUrl}/partner/selectAsset`)
+    }: any = usePostApi(`partner/selectAsset`)
     const [modal, setModal] = useState(true)
     const navigate = useNavigate()
     const [Bussiness, setBussiness] = useState('')
@@ -108,7 +108,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
             if (Bussiness === 'Prepare') {
                 setAssetsType(3)
                 asset_type_id = 3
-                navigate('/partner-bussiness-type-prepare')
+                navigate(`/partner-bussiness-type-prepare/${AssetsResponse?.data}`)
             }
             if (Bussiness === 'Store') {
                 asset_type_id = 1

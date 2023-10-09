@@ -7,25 +7,33 @@ import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DocumentViewModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentViewModal';
+import DocumentEditModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentEdit';
 // Defines the table header with column names.
 const tableHead = {
-  asset_id: "Asset ID",
-  is_registration_complete: "Registration",
-  is_verified: "Verification Status",
+    id: "ID",
+    asset_owner: "Owner",
+    doc_id: "Document ID",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
-  created_at: "Created At",
+  created_at: "Created",
+
+  status: "Status",
   updated_at: "Updated At",
-  assetType: "Asset Type",
   Action: "Action"
 };
 
-// The TableLayout component takes a prop called AllStore, presumably for rendering data.
+// The DocumentTableList component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayout = ({ AllStore }: any) => {
+const DocumentTableList = ({ AllStore }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
+  const [modal,setModal]=useState<any>(false)
+  const [modalEdit,setModalEdit]=useState<any>(false)
+  const [data,setData]=useState<any>({})
+
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
@@ -70,56 +78,27 @@ const TableLayout = ({ AllStore }: any) => {
 
   const navigate = useNavigate();
 
-  const handleEdit = (rowData: any) => {
-    // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
-    
-    if (rowData?.assetType === 'Store') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
-    }
-    if (rowData?.assetType === 'Prepare') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
-    }
-    if (rowData?.assetType === 'Move') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
-    }
-  };
+ 
   
   const handleView = (rowData: any) => {
+    console.log("DocumentViewModal",rowData);
+    
     // Handle view action for different asset types.
-    if (rowData?.assetType === 'Store') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
-    }
-    if (rowData?.assetType === 'Prepare') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
-    }
-    if (rowData?.assetType === 'Move') {
-      localStorage.setItem('assets_list_id', rowData?.asset_id)
-      navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
-    }
+    setModal(true)
+    setData(rowData)
+  
   }
-const handleDocs=(rowData:any)=>{
-  navigate(`/documents-list/${rowData?.asset_id}`)
-}
+  const handleEdit=(rowData:any)=>{
+    setModalEdit(true)
+    setData(rowData)
+  }
+
   const tableRows = (rowData: any, index: any) => {
     // Generates table rows based on data.
     const tableCell = Object.keys(tableHead);
     const columnData = tableCell.map((key, i) => {
       // Renders table cells for each column in the header.
-      if (key === 'asset_type') {
-        return <td key={i} className='text-center'>{rowData.asset_type.type}</td>;
-      }
-      if (key === 'is_registration_complete') {
-        return <td className='text-center' key={i} >{rowData.is_registration_complete ? "Complete" : "Pending"}</td>;
-      }
-      if (key === 'is_verified') {
-        return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
-      }
+     
       if (key === 'createdAt') {
         return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
       }
@@ -128,9 +107,8 @@ const handleDocs=(rowData:any)=>{
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
-          <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
+          <Button className='!p-2' onClick={() => handleView(rowData)}><VisibilityIcon /></Button>
+          <Button className='!p-2' onClick={() => handleEdit(rowData)}><TextSnippetIcon /></Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -155,6 +133,8 @@ const handleDocs=(rowData:any)=>{
 
   return (
     <>
+    <DocumentEditModal modal={modalEdit} setModal={setModalEdit} data={data} />
+    <DocumentViewModal modal={modal} setModal={setModal} data={data} />
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
@@ -164,7 +144,7 @@ const handleDocs=(rowData:any)=>{
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className=''>
+      <table className='w-full'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
@@ -182,4 +162,4 @@ const handleDocs=(rowData:any)=>{
   )
 }
 
-export default TableLayout;
+export default DocumentTableList;

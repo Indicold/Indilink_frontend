@@ -13,24 +13,28 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    FetchAgain: any
 }
 const ACUModall: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
+    FetchAgain
 }) => {
     const [data, setData] = useState<any>({})
+    const {id}: any = useParams()
     const [errors, setErrors] = useState<any>({})
     useEffect(()=>{
         const newState:any = { ...data };
-        newState.asset_id = localStorage.getItem('AssetsId')
+        newState.asset_id = id
         setData(newState)
         console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
@@ -65,14 +69,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
      * parameters.
      */
     const handlesave = () => {
+        console.log("saved", data, validateACUForm(data, setErrors), errors)
         if(validateACUForm(data, setErrors)) {
+            console.log("validated")
         handleStoreTable(
             'partner/store/acu',
             data,
             setModal,
             formD,
             update,
-            'acu_ids'
+            'acu_ids',
+            FetchAgain
         )
         }
     }

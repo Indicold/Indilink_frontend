@@ -62,7 +62,7 @@ const MoveSearch = () => {
 
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerMoveDetails }: any =
-        usePostApi(`${apiUrl}/customer/move/search`);
+        usePostApi(`customer/move/search`);
 
 
         function formatDate(inputDate:any) {

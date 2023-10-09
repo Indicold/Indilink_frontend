@@ -23,8 +23,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
     const { data: ListOfRole, loading: LORloading, error: LORerror } =
     useApiFetch<any>(`master/profile/get-platform-roles`, token);
-    let { result: Keyesponse, loading: KeyLoading, sendPostRequest: KeyPostDetails }: any = usePostApi(`${apiUrl}/auth/key-mgmt`);
-    let { result: KeyUpdateesponse, loading: KeyUpdateLoading, sendPostRequest: KeyUpdatePost }: any = usePutApi(`${apiUrl}/auth/key-mgmt/${data?.id}`);
+    let { result: Keyesponse, loading: KeyLoading, sendPostRequest: KeyPostDetails }: any = usePostApi(`auth/key-mgmt`);
+    let { result: KeyUpdateesponse, loading: KeyUpdateLoading, sendPostRequest: KeyUpdatePost }: any = usePutApi(`auth/key-mgmt/${data?.id}`);
     
     const handleChange = (e:any) => {
         const newdata:any={...data};
@@ -48,6 +48,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(Keyesponse?.message)
         if(Keyesponse?.status==200){
+            setData({})
+            fetchData()
             setTimeout(()=>{
          setModal(false)
 
@@ -57,6 +59,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(KeyUpdateesponse?.message)
         if(KeyUpdateesponse?.status==200){
+            fetchData()
             setTimeout(()=>{
          setModal(false)
 
@@ -304,26 +307,6 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                             <FormItem
-                                label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
-                            >
-                                <Field
-                                    disabled={data?.isdisabled}
-                                    type="text"
-                                    autoComplete="off"
-                                    onChange={(e: any) =>
-                                        handleChange(e)
-                                    }
-                                    name="pucc_validity"
-                                    value={data?.firm_state}
-                                    placeholder="Aadhar Card"
-                                    component={Input}
-                                />
-                                  
-                            </FormItem>
-                        </div>
-                        <div className="flex">
-                        <FormItem
                                 label="Contact no."
                                 className="rounded-lg pl-[22px] w-1/2"
                             >
@@ -343,6 +326,26 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         {error && error.contact_number}
                                     </p>
                             </FormItem>
+                        </div>
+                        <div className="flex">
+                            {/* <FormItem
+                                label="Aadhar Card"
+                                className="rounded-lg pl-[22px] w-1/2"
+                            >
+                                <Field
+                                    disabled={data?.isdisabled}
+                                    type="text"
+                                    autoComplete="off"
+                                    onChange={(e: any) =>
+                                        handleChange(e)
+                                    }
+                                    name="pucc_validity"
+                                    value={data?.firm_state}
+                                    placeholder="Aadhar Card"
+                                    component={Input}
+                                />
+                                  
+                            </FormItem> */}
                             <FormItem
                                 label="Platform Role"
                                 className="rounded-lg pl-[22px] w-1/2"

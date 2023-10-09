@@ -69,6 +69,7 @@ const BasicInfo = () => {
             newdata[e.target.name] = Array.from(e.target.files);
         }
         setData(newdata);
+        console.log("newdata", newdata);
     }
 
     const navigate = useNavigate()
@@ -93,7 +94,7 @@ const BasicInfo = () => {
         useApiFetch<any>(`auth/branches`, token);
 
     const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostBasicDetails, }: any =
-        usePostApi(`${apiUrl}/auth/basic-detail`)
+        usePostApi(`auth/basic-detail`)
 
     const [branch, setBranch] = useState(false)
 
@@ -115,7 +116,7 @@ const BasicInfo = () => {
             formdata.append("state_id", data?.state_id);
             formdata.append("address", data?.address);
             formdata.append("pin_code", data?.pin_code);
-            formdata.append("gst",data?.gst);
+            formdata.append("gst",data?.gst_number);
             
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
@@ -179,7 +180,7 @@ const BasicInfo = () => {
 
     }, [BranchList?.data])
     useEffect(() => {
-        if (companyDetails?.data) {
+        if (companyDetails?.data?.length>0) {
             setData(
                 {
                     ...data,
@@ -192,6 +193,7 @@ const BasicInfo = () => {
 
         }
     }, [companyDetails?.data])
+console.log("TTTTTTTTT",SareList?.data);
 
 
 
@@ -301,7 +303,9 @@ const BasicInfo = () => {
 
                                         ))}
                                     </select>
-                                    {error && error.state_id}
+                                    <p className="text-[red]">
+                                        {error && error.state_id}
+                                    </p>
                                 </FormItem>
 
                             </div>
@@ -322,7 +326,9 @@ const BasicInfo = () => {
                                         placeholder="Firm Registered Address"
                                         component={Input}
                                     />
-                                    {error && error.address}
+                                    <p className="text-[red]">
+                                        {error && error.address}
+                                    </p>
                                 </FormItem>
                                 <FormItem
                                     label="Firm Registered PIN Code"
@@ -340,7 +346,9 @@ const BasicInfo = () => {
                                         placeholder="Firm Registered PIN Code"
                                         component={Input}
                                     />
-                                    {error && error.pin_code}
+                                    <p className="text-[red]">
+                                        {error && error.pin_code}
+                                    </p>
                                 </FormItem>
                             </div>
                             <div className="flex">
@@ -357,7 +365,7 @@ const BasicInfo = () => {
                                         onChange={(e: any) =>
                                             handleChange(e)
                                         }
-                                        name="gst_file"
+                                        name="gst_number"
                                         value={data?.gst_number}
                                         placeholder="GST Number"
                                         component={Input}
@@ -365,7 +373,9 @@ const BasicInfo = () => {
                                     <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label>
-                                    {error && error.gst}
+                                    <p className="text-[red]">
+                                        {error && error.gst}
+                                    </p>
                                     <Field
                                         disabled={isDisabled}
                                         multiple
@@ -382,8 +392,9 @@ const BasicInfo = () => {
                                         placeholder="GST Number"
                                         component={Input}
                                     />
-                                    {error && error.gst_file}
-
+                                    <p className="text-[red]">
+                                        {error && error.gst_file}
+                                    </p>
                                 </FormItem>
                             </div>
                         </FormContainer>
@@ -407,7 +418,7 @@ const BasicInfo = () => {
                         <h4 className="text-head-title text-center">Branch Information6</h4>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
-                        {error && error.branch_ids}
+                        <p className="text-[red]">{error && error.branch_ids}</p>
                     </>}
                     <button className='w-full bg-gray-400 rounded-lg py-2' onClick={() => setBranchModal(true)}>+ Add Branch Details</button>
                 </div>
