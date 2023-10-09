@@ -74,11 +74,13 @@ export const validateForm = (formData: any, setError: any) => {
     if (!formData?.email) {
         errorss.email = 'Email is required'
     }
-    // if (formData?.email) {
-    //   if (!/\S+@\S+\.\S+/.test(formData?.email)) {
-    //     errorss.email = 'Invalid email address';
-    //   }
-    // }
+
+    
+    if (formData?.email) {
+      if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+        errorss.email = 'Invalid email address';
+      }
+    }
 
     if (!formData?.phone_number) {
         errorss.phone_number = 'Phone Number is required'
