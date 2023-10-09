@@ -66,10 +66,10 @@ const StoreSearch = () => {
 
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }: any =
-        usePostApi(`${apiUrl}/customer/store/search`);
+        usePostApi(`customer/store/search`);
 
     const { result: StoreCustomerResponse, loading: OTPLoading, sendPostRequest: UpdateStoreCustomer }: any =
-        usePutApi(`${apiUrl}/customer/store/search-update/5`);
+        usePutApi(`customer/store/search-update/5`);
 
 
     // Define state variables for the ThankYou modal and form errors
@@ -79,10 +79,11 @@ const StoreSearch = () => {
 
     // Define a function to handle form submission
     const handleRoute = () => {
-        console.log('clicked!')
 
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
+        console.log('clicked!',validateStoreCustomerForm(formData, setErrors))
+
             PostCustomerRegisterDetails(formData);
         }
     }
@@ -168,11 +169,11 @@ const StoreSearch = () => {
                 navigate('/ticket_list_store')
             }, 2000)
         }else {
-            messageView(CustomerResponse)
+            messageView(CustomerResponse?.message)
         }
     }, [CustomerResponse?.status]);
 
-    console.log("statusstatusstatusstatusstatusstatusstatus", modal);
+    console.log("statusstatusstatusstatusstatusstatusstatus", CustomerResponse);
     return (
         <div>
             <ToastContainer />

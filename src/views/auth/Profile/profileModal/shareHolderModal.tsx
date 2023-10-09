@@ -13,8 +13,8 @@ import usePutApi from '@/store/customeHook/putApi';
 const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
 
     const [error, setErrors] = useState<any>({})
-    let { result: SHResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`${apiUrl}/auth/shareholder`);
-    const { result: ShareUpadteResponse, loading: SULoading, sendPostRequest: PostShareUpdateDetails }: any = usePutApi(`${apiUrl}/auth/shareholder/${formData?.id}`);
+    let { result: SHResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/shareholder`);
+    const { result: ShareUpadteResponse, loading: SULoading, sendPostRequest: PostShareUpdateDetails }: any = usePutApi(`auth/shareholder/${formData?.id}`);
 
     const isDisabled: any = false
     const handleChange = (e: any) => {
@@ -37,6 +37,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                     authorized_signatory:formData?.authorized_signatory
                 }
                 PostShareUpdateDetails(body)
+                
             } else {
                 SHPostDetails(formData)
             }
@@ -48,6 +49,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
             messageView(SHResponse?.message)
 
             if (SHResponse?.status === 200) {
+                fetchShare()
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids, SHResponse?.data?.id]))
                 setData({ ...data, shareholder_ids: [...data?.shareholder_ids, SHResponse?.data?.id] })
                 setModal(false)

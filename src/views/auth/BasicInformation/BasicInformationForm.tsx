@@ -53,9 +53,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [seconds, setSeconds] = useState(10);
     const [formData, setFormData] = useState(selector?.details?.data);
     const [GSTRes, setGSTRes] = useState({});
-    let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/auth/getOTP`);
-    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`${apiUrl}/auth/getGstDetails`);
-    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`${apiUrl}/auth/verifyOTP`);
+    let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`auth/getOTP`);
+    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`auth/getGstDetails`);
+    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`auth/verifyOTP`);
     const { className }:any = props
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -108,6 +108,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
           } else {
             setDisabled(true);
             // setA('false');
+          }
+          if(e.target.name==='cin'){
+            setDisabled(!true); 
           }
         }
       };

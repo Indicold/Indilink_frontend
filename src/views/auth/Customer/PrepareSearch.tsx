@@ -74,7 +74,7 @@ const PrepareSearch = () => {
 
     // Define a custom hook for making a POST request
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerPrepareDetails }: any =
-        usePostApi(`${apiUrl}/customer/prepare/search`);
+        usePostApi(`customer/prepare/search`);
 
     // Define a function to handle a button click
     const handleChange = (e: any) => {

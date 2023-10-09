@@ -12,8 +12,8 @@ import usePutApi from '@/store/customeHook/putApi';
 const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetchBranch }: any) => {
 
     const [error, setErrors] = useState<any>({})
-    let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`${apiUrl}/auth/branch`);
-    const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`${apiUrl}/auth/branch/${formData?.id}`);
+    let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/branch`);
+    const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`auth/branch/${formData?.id}`);
     const [phone, setPhone] = useState('')
 
     const isDisabled: any = false;

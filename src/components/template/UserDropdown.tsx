@@ -26,7 +26,7 @@ const _UserDropdown = ({ className,UserType }:any) => {
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
                 <div className="text-xs capitalize">{UserType}</div>
-                <div className="font-bold">{aud ? aud :"N/A"}</div>
+                {/* <div className="font-bold">{aud ? aud :"N/A"}</div> */}
             </div>
         </div>
     )
@@ -39,12 +39,12 @@ const _UserDropdown = ({ className,UserType }:any) => {
                 placement="bottom-end"
             >
                 <Dropdown.Item variant="header">
-                    <NavLink to='/basic-info'>
+                    <NavLink to='/profile'>
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                            {JSON.parse(localStorage.getItem('RememberMe'))?.username || localStorage.getItem('email') || ''}
+                            {aud && aud}
                             </div>
                             {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
