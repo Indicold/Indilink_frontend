@@ -15,7 +15,7 @@ import { messageView } from '@/store/customeHook/validate'
 
 // The AccountTable component takes a prop called AllStore, presumably for rendering data.
 
-const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, modal }: any) => {
+const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, modal,fetchData }: any) => {
     let allData: any = AllStore
     const { token }: any = getToken()
     const countPerPage = 5
@@ -97,6 +97,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             .then(response => response.json())
             .then((result: any) => {
              messageView(result?.message)
+             fetchData()
                 console.log(result)
             })
             .catch((error: any) => {
@@ -230,7 +231,13 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             </td>
         ))
     }
-
+    React.useEffect(() => {
+        // Update the displayed data when the AllStore prop changes.
+        if (AllStore) {
+            const newCollection = cloneDeep(AllStore.slice(0, countPerPage));
+            setCollection(newCollection);
+        }
+    }, [AllStore]);
     // JSX structure for rendering the table and pagination.
 
     return (

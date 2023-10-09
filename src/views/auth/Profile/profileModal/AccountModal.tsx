@@ -23,8 +23,8 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
     const { data: ListOfRole, loading: LORloading, error: LORerror } =
     useApiFetch<any>(`master/profile/get-platform-roles`, token);
-    let { result: Accountesponse, loading: AccountLoading, sendPostRequest: AccountPostDetails }: any = usePostApi(`${apiUrl}/auth/account-detail`);
-    let { result: AccountUpdateesponse, loading: AccountUpdateLoading, sendPostRequest: AccountUpdatePost }: any = usePutApi(`${apiUrl}/auth/account-detail/${data?.id}`);
+    let { result: Accountesponse, loading: AccountLoading, sendPostRequest: AccountPostDetails }: any = usePostApi(`auth/account-detail`);
+    let { result: AccountUpdateesponse, loading: AccountUpdateLoading, sendPostRequest: AccountUpdatePost }: any = usePutApi(`auth/account-detail/${data?.id}`);
     
     const handleChange = (e:any) => {
         const newdata:any={...data};
@@ -49,6 +49,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(Accountesponse?.message)
         if(Accountesponse?.status==200){
+            fetchData()
             setTimeout(()=>{
          setModal(false)
          fetchData()
@@ -59,6 +60,7 @@ const AccountModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useEffect(()=>{
         messageView(AccountUpdateesponse?.message)
         if(AccountUpdateesponse?.status==200){
+            fetchData()
             setTimeout(()=>{
          setModal(false)
          fetchData()

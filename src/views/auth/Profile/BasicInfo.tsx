@@ -94,7 +94,7 @@ const BasicInfo = () => {
         useApiFetch<any>(`auth/branches`, token);
 
     const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostBasicDetails, }: any =
-        usePostApi(`${apiUrl}/auth/basic-detail`)
+        usePostApi(`auth/basic-detail`)
 
     const [branch, setBranch] = useState(false)
 
@@ -180,7 +180,7 @@ const BasicInfo = () => {
 
     }, [BranchList?.data])
     useEffect(() => {
-        if (companyDetails?.data) {
+        if (companyDetails?.data?.length>0) {
             setData(
                 {
                     ...data,
@@ -193,6 +193,7 @@ const BasicInfo = () => {
 
         }
     }, [companyDetails?.data])
+console.log("TTTTTTTTT",SareList?.data);
 
 
 
@@ -364,7 +365,7 @@ const BasicInfo = () => {
                                         onChange={(e: any) =>
                                             handleChange(e)
                                         }
-                                        name="gst_file"
+                                        name="gst_number"
                                         value={data?.gst_number}
                                         placeholder="GST Number"
                                         component={Input}

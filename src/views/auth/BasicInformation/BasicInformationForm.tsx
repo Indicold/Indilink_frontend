@@ -109,6 +109,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             setDisabled(true);
             // setA('false');
           }
+          if(e.target.name==='cin'){
+            setDisabled(!true); 
+          }
         }
       };
     /**

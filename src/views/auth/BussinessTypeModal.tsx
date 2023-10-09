@@ -37,7 +37,7 @@ const BussinessTypeModal = () => {
         result: AssetsResponse,
         loading: AssetsLoading,
         sendPostRequest: PostAssetsDetails,
-    }: any = usePostApi(`${apiUrl}/partner/selectAsset`)
+    }: any = usePostApi(`partner/selectAsset`)
     const [modal, setModal] = useState(true)
     const navigate = useNavigate()
     const [Bussiness, setBussiness] = useState('')

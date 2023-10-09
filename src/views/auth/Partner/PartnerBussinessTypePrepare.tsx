@@ -71,7 +71,7 @@ const PartnerBussinessTypePrepare = () => {
         result: PrepareResponse,
         loading: PrepareLoading,
         sendPostRequest: PostPrepareRegisterDetails,
-    }: any = usePostApi(`${apiUrl}/partner/prepare/register`)
+    }: any = usePostApi(`partner/prepare/register`)
     const {
         data: fetchDetails,
         loading: fetchDetailsloading,
@@ -126,7 +126,7 @@ const PartnerBussinessTypePrepare = () => {
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails(formData)
-            navigate('/partner-bussiness-type-compliance')
+            navigate(`/partner-bussiness-type-compliance/${id}`)
         }
     }
 
@@ -135,7 +135,7 @@ const PartnerBussinessTypePrepare = () => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
             messageView('Data Updated Successfully!')
             setTimeout(() => {
-                navigate('/partner-bussiness-type-compliance')
+                navigate(`/partner-bussiness-type-compliance/${id}`)
             }, 2000)
         }
     }, [PrepareResponse])
@@ -149,19 +149,7 @@ const PartnerBussinessTypePrepare = () => {
             setFormData(fetchDetails?.data)
         }
     }, [fetchDetails])
-    const targetArray1: any = ProductType?.data || [];
-    const itemsToFind1 = formData?.product_category_ids;
-    useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind);
-        setValue1(foundItems)
-    }, [ProductType])
-    const targetArray: any = ProductTypeList?.data || [];
-    const itemsToFind = formData?.product_type;
-
-    useEffect(() => {
-        const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
-        setValue(foundItems)
-    }, [ProductTypeList])
+ 
 
     useEffect(() => {
         setFormData({ ...formData, product_type: value?.map((item: any) => item?.id), product_category_ids: value1?.map((item: any) => item?.id) })
@@ -170,6 +158,19 @@ const PartnerBussinessTypePrepare = () => {
     useEffect(() => {
         setFormData({ ...formData, throughput_unit_id: 1, avg_case_size_unit_id: 2, batch_size_unit_id: 1 })
     }, [])
+    const targetArray1: any = ProductType?.data || [];
+    const itemsToFind1 = formData?.product_category_ids;
+    useEffect(() => {
+        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind);
+        setValue1(foundItems)
+    }, [ProductType,formData?.product_category_ids])
+    const targetArray: any = ProductTypeList?.data || [];
+    const itemsToFind = formData?.product_type;
+
+    useEffect(() => {
+        const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+        setValue(foundItems)
+    }, [ProductTypeList])
     return (
         <div className='flex'>
             <ToastContainer />

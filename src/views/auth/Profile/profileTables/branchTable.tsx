@@ -186,6 +186,13 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             </td>
         ))
     }
+    React.useEffect(() => {
+        // Update the displayed data when the AllStore prop changes.
+        if (AllStore) {
+            const newCollection = cloneDeep(AllStore.slice(0, countPerPage));
+            setCollection(newCollection);
+        }
+    }, [AllStore]);
 
     // JSX structure for rendering the table and pagination.
 

@@ -35,6 +35,7 @@ import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import { Chip } from '@mui/material'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -45,7 +46,8 @@ const StoreRegistration = () => {
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
     const {id}:any=useParams()
-
+    const fixedOptions1: any = [];
+    const [value1, setValue1] =useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
     const {
         data: ColdStorageType,
@@ -93,9 +95,9 @@ const StoreRegistration = () => {
         error: fetchDetailsSerrorAll,
         refetch:FetchAgain
     } = useApiFetch<any>(`partner/store/components-all/${id}`, token)
-    const { result: response, loading, sendPostRequest }:any = usePostApi(`${apiUrl}/partner/store/chambers`);
-    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`${apiUrl}/partner/store/ca-equipments`);
-    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`${apiUrl}/partner/store/get-compressors`);
+    const { result: response, loading, sendPostRequest }:any = usePostApi(`partner/store/chambers`);
+    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`partner/store/ca-equipments`);
+    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`partner/store/get-compressors`);
     // Manage state variables for modals and other components
     const [chamberModal, setChamberModal] = useState(false)
     const [CAModal, setCAModal] = useState<any>(false)
@@ -264,6 +266,15 @@ if(responseca?.data){
 useEffect(()=>{
     setData(dataa)
 },[dataa])
+
+const targetArray1: any = StorageType?.data || [];
+const itemsToFind1 = dataa?.store_type_id;
+console.log("TTTTTTTTT",dataa);
+
+useEffect(() => {
+    const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+    setValue1(foundItems)
+}, [StorageType,dataa])
     return (
         <div className='flex'>
             <div className='w-1/6'>
@@ -385,6 +396,7 @@ useEffect(()=>{
                                     update={setData}
                                     setData={setData}
                                     setModal={setAMCModal}
+                                    FetchAgain={FetchAgain}
                                 />
                             )}
 
@@ -561,20 +573,34 @@ useEffect(()=>{
                                                     )
                                                 )}
                                         </select> */}
-                                        <Autocomplete
-                                            multiple
-                                            limitTags={2}
-                                            options={StorageType?StorageType?.data:[]}
-                                            getOptionLabel={(option:any) => option.type}
-                                                onChange={handleStoreChange}
-                                          
-                                            // value={value?.length>0 && value}
-                                            renderInput={(params) => (
-                                                <TextField {...params} placeholder="Store Types"
-                                                className="!p-[0px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                id="multiple-limit-tags"
-                                                name="store_type_id" />)}
-                                                // sx={{ width: '500px' }}
+                                     <Autocomplete
+                                                multiple
+                                                limitTags={1}
+                                                id="fixed-tags-demo"
+                                                value={value1}
+                                                onChange={(event, newValue) => {
+                                                    setValue1([
+                                                        ...fixedOptions1,
+                                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
+                                                    ]);
+                                                    handlechange(event)
+                                                }}
+                                                options={StorageType ? StorageType?.data : []}
+                                                getOptionLabel={(option: any) => option?.type}
+                                                renderTags={(tagValue, getTagProps) =>
+                                                    tagValue.map((option, index) => (
+                                                        <Chip
+                                                            label={option?.type}
+                                                            {...getTagProps({ index })}
+                                                            disabled={fixedOptions1.indexOf(option) !== -1}
+                                                        />
+                                                    ))
+                                                }
+                                                renderInput={(params) => (
+                                                    <TextField {...params}
+                                                        name="store_type_id"
+                                                        placeholder="Store Category" />
+                                                )}
                                             />
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}

@@ -20,7 +20,7 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
         result: commentResponse,
         loading: commentLoading,
         sendPostRequest: Postcomment,
-    }: any = usePostApi(`${apiUrl}/legal/document-comment`)
+    }: any = usePostApi(`legal/document-comment`)
     const handlesubmitComment=()=>{
         if(!text){
             setError({text:"This field is required"})

@@ -61,7 +61,7 @@ console.log("VVVVVVV",id);
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(`partner/move/${AssetsId}`, token)
+    } = useApiFetch<any>(`partner/move/${id}`, token)
 
     // Define a payload object for the POST request
     const payload = {
@@ -132,7 +132,24 @@ console.log("VVVVVVV",id);
             formdata.append('permit_validity', data?.permit_validity)
             formdata.append('pucc_validity', data?.pucc_validity)
             formdata.append('chassis_no', data?.chassis_no)
+            formdata.append('vehicle_no', data?.vehicle_no)
             formdata.append('fitness_validity', data?.fitness_validity)
+            formdata.append('pucc_validity', data?.mfg_month_year)
+            formdata.append('vehicle_class', data?.vehicle_class)
+            formdata.append('emission_norms', data?.emission_norms)
+            formdata.append('actual_payload', data?.actual_payload)
+            formdata.append('create_capacity', data?.create_capacity)
+            formdata.append('length', data?.length)
+            formdata.append('width', data?.width)
+            formdata.append('hight', data?.hight)
+            formdata.append('gv_weight', data?.gv_weight)
+            formdata.append('unladen_weight_in_rc', data?.unladen_weight_in_rc)
+            formdata.append('engine_no', data?.engine_no)
+            formdata.append('side_door', data?.side_door)
+            formdata.append('hatch_window', data?.hatch_window)
+            formdata.append('dual_temp_bulkhead', data?.dual_temp_bulkhead)
+            formdata.append('rc_no', data?.rc_no)
+            formdata.append('rc_image', data?.rc_image)
 
             // Prepare request options for the POST request
             var requestOptions: any = {
@@ -152,7 +169,7 @@ console.log("VVVVVVV",id);
                 messageView(result?.message)
 
                 // If the response status is 200, navigate to the specified route
-                if (result?.status == 200 || result?.status) {
+                if (result?.status == 200) {
                     setTimeout(()=>{
                         navigate(`/partner-move-compliance/${id}`)
 
@@ -483,13 +500,13 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="vehicle_number"
-                                            value={data?.emission_norms}
+                                            name="vehicle_no"
+                                            value={data?.vehicle_no}
                                             placeholder="Vehicle number"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.vehicle_number}
+                                            {errors && errors.vehicle_no}
                                         </p>
                                     </FormItem>
                                     <FormItem
@@ -589,16 +606,16 @@ console.log("VVVVVVV",id);
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.height}
+                                            value={data?.hight}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            name="height"
+                                            name="hight"
                                             placeholder="Height"
                                             component={Input}
                                         />
                                         <p className="text-[red]">
-                                            {errors && errors.height}
+                                            {errors && errors.hight}
                                         </p>
                                     </FormItem>
                                 </div>
