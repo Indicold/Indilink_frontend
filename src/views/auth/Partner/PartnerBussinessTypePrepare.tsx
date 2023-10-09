@@ -161,15 +161,19 @@ const PartnerBussinessTypePrepare = () => {
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
     useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind);
+        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
-    }, [ProductType,formData?.product_category_ids])
+    }, [ProductType])
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
-        setValue(foundItems)
+        console.log("TTTTTTTTTTT66666",ProductTypeList);
+        if(ProductTypeList?.data!==null){
+            const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+            setValue(foundItems)
+        }
+       
     }, [ProductTypeList])
     return (
         <div className='flex'>
