@@ -116,7 +116,9 @@ const StoreRegistration = () => {
     const location = useLocation()
 
     // Initialize state variables for form data and errors
-    const [dataa, setData] = useState<any>({})
+    const [dataa, setData] = useState<any>({
+        store_type_id:value1
+    })
 
     const [errors, setErrors] = useState<any>({})
 
@@ -128,12 +130,14 @@ const StoreRegistration = () => {
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-
+        dataa.store_type_id=value1?.map((item:any)=>item?.id)
+        console.log("T666666",dataa);
         // Validate the form data
         if (validateStorePartnerForm(dataa, setErrors)) {
             try {
                 // Set the asset_id based on local storage
                 dataa.asset_id = id
+          
 
                 // Define the HTTP request configuration
                 const config = {
@@ -144,6 +148,7 @@ const StoreRegistration = () => {
                     },
                     body: JSON.stringify(dataa),
                 }
+
 
                 // Send the HTTP request to register the store
                 const response = await fetch(
@@ -180,6 +185,10 @@ const StoreRegistration = () => {
     // Handle changes to form input fields
     const handlechange = (e: any) => {
         const newData: any = { ...dataa }
+        if(e.target.name==='store_type_id'){
+            console.log("TTTTTT6565656",e.target.value);
+            
+        }
         if(e.target.name==='facility_manager_contact') {
             if(e.target.value.length<=10) {
                 setPhone(e.target.value)
@@ -274,7 +283,7 @@ console.log("TTTTTTTTT",dataa);
 useEffect(() => {
     const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
     setValue1(foundItems)
-}, [StorageType,dataa])
+}, [StorageType?.data,dataa?.store_type_id])
     return (
         <div className='flex'>
             <div className='w-1/6'>
@@ -655,7 +664,7 @@ useEffect(() => {
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={dataa?.chamber_ids?.length || 0}
+                                            value={fetchDetailsAll?.data?.chambers || dataa?.chamber_ids?.length || 0}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
