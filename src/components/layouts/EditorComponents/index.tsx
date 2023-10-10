@@ -721,7 +721,7 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
     const {id}:any=useParams()
     const AssetsId: any = location?.state;
     const handleSubmit = () => {
-        handlesubmitComment()
+        // handlesubmitComment()
         let date = new Date();
         const contentState: any = editorState.getCurrentContent();
         setContentHistory([...contentHistory, {
