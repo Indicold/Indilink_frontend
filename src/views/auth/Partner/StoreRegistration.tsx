@@ -655,7 +655,7 @@ useEffect(() => {
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={dataa?.chamber_ids?.length || 0}
+                                            value={fetchDetailsAll?.data?.chambers?.length}
                                             component={Input}
                                         />
                                         <p className="text-[red]">

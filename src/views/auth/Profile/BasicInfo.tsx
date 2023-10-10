@@ -152,7 +152,7 @@ const BasicInfo = () => {
                 }
                 console.log("GGGG",result)})
               .catch((error) => {
-                messageView("Something Went Wrong !")
+                messageView(error?.message)
               });
             
        
