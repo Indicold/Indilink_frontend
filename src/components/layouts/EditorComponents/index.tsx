@@ -430,7 +430,7 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
         setShowURLInput(false);
         setURLValue("");
         setTimeout(focusEditor, 0);
-        handleSubmit()
+        handleSubmit(nextEditorState)
     };
     const handleSubscriptClick = () => {
         // Get the current editor state
@@ -720,10 +720,12 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
     const location: any = useLocation();
     const {id}:any=useParams()
     const AssetsId: any = location?.state;
-    const handleSubmit = () => {
+    const handleSubmit = (nextEditorState:any) => {
         // handlesubmitComment()
         let date = new Date();
-        const contentState: any = editorState.getCurrentContent();
+        const contentState: any =nextEditorState.getCurrentContent() || editorState.getCurrentContent();
+        console.log("RRRRRRRRR",contentState);
+        
         setContentHistory([...contentHistory, {
             author: EditorData?.data?.author,
             content: JSON.stringify(convertToRaw(contentState)),
