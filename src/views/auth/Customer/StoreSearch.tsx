@@ -16,6 +16,7 @@ import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinn
 import { messageView, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
 import usePutApi from '@/store/customeHook/putApi';
 import { ToastContainer } from 'react-toastify';
+import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 
 // Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
@@ -484,7 +485,7 @@ const StoreSearch = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
                                     Update
                                     </Button> :
@@ -507,6 +508,8 @@ const StoreSearch = () => {
                         </Form>
                     </Formik>
                 </div>
+                {isDisabled?
+                <TableCustomerStoreAssets AllStore={[]} />:<></>}
             </div>
         </div>
     )
