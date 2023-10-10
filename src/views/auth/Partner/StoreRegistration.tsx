@@ -664,7 +664,7 @@ useEffect(() => {
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={fetchDetailsAll?.data?.chambers || dataa?.chamber_ids?.length || 0}
+                                            value={fetchDetailsAll?.data?.chambers?.length || 0}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -1586,7 +1586,11 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.amcs?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.amcs?.map((item:any,index:any)=>{
+                                                    let date:any = new Date(item?.valid_till)
+                                                    date = date?.toLocaleDateString()
+                                                    console.log("amcs", date)
+                                                    return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
                                                     {item?.name_of_service}
                                                     </div>
@@ -1594,7 +1598,7 @@ useEffect(() => {
                                                     {item?.vendor}
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
-                                                    {item?.valid_till}
+                                                    {date}
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
                                                     {item?.fixed_cost}
@@ -1613,7 +1617,7 @@ useEffect(() => {
                                                         View
                                                     </Button>
                                                     </div> */}
-                                                </div>))}
+                                                </div>)})}
                                             </div>:<p className="text-center">Currently there are no AMCs.</p>}
                                                 <div className="flex">
                                                     <button

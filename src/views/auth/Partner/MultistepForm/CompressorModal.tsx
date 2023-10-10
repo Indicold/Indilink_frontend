@@ -167,7 +167,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="cmf"
                                             onChange={(e: any) =>

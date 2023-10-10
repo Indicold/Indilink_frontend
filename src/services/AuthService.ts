@@ -84,7 +84,9 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
           if(data?.status){
             messageView("OTP Sent Successfully !");
             if(dataa?.redirect!==3){
-              window.location.href="/VerfyOtp"
+              setTimeout(() => {
+                window.location.href="/VerfyOtp"
+              }, 2000);
             }
           
           }
