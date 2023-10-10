@@ -298,6 +298,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 onChange={(e: any) => handleChange(e)}
                                 component={Input}
                                 className=''
+                                max="15"
                             />
                         </FormItem>
                         <div className="">
@@ -384,7 +385,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     maxLength={16}
                                     placeholder="CIN No."
                                     component={Input}
-                                    onChange={(e: any) => handleChange(e)}
+                                    // onChange={(e: any) => handleChange(e)}
                                 />
                                 {/* <p className="text-[red] normal-case">
                                     {error && error.cin}
