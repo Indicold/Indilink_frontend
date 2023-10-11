@@ -210,9 +210,9 @@ const SignInForm = (props: SignInFormProps) => {
                         <>{LoginResponse?.responseData?.message}</>
                     </Alert>
                 )}
-            <Formik>
-                <Form onSubmit={handlesubmit}>
-                    <FormContainer>
+            <Formik >
+                <Form className='md:m-auto ' onSubmit={handlesubmit}>
+                    <FormContainer className="">
                         <FormItem
                             className="!text-[#103492]"
                             label="Registered Email ID*"

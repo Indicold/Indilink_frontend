@@ -82,8 +82,8 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     
 
     return (
-        <div className={className}>
-            <img className="lg:w-[130px] mt-4 md:w-[25%] w-5/6 mb-4 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
+        <div className={`{className} w-80 -mt-[350px] sm:-mt-[350px] lg:-mt-[290px] lg:w-[400px]`}>
+            <img className="lg:w-[130px] mt-4 md:w-[25%] w-3/6 mb-4 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
              <ToastContainer />
             <div className="mb-6">
                 {emailSent ? (

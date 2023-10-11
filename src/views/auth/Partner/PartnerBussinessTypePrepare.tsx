@@ -123,6 +123,8 @@ const PartnerBussinessTypePrepare = () => {
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
+        formData.product_category_ids=value1?.map((item:any)=>item?.id);
+        formData.product_type=value?.map((item:any)=>item?.id);
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails(formData)
@@ -161,16 +163,20 @@ const PartnerBussinessTypePrepare = () => {
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
     useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind);
+        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
-    }, [ProductType,formData?.product_category_ids])
+    }, [ProductType?.data])
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
-        setValue(foundItems)
-    }, [ProductTypeList])
+        console.log("TTTTTTTTTTT66666",ProductTypeList);
+        if(ProductTypeList?.data!==null){
+            const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+            setValue(foundItems)
+        }
+       
+    }, [ProductTypeList?.data])
     return (
         <div className='flex'>
             <ToastContainer />
@@ -538,7 +544,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className=" w-[20%]  input-md right-0 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={item?.id === formData?.throughput_unit_id}>{item?.type}</option>
 
                                                     ))}
@@ -573,7 +579,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                                     ))}
@@ -729,7 +735,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                                     ))}

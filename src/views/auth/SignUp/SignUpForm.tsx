@@ -119,9 +119,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                 }}
                 onSubmit={handlesubmit}
             >
-                <Form className="signup-form" onSubmit={handlesubmit}>
+                <Form className="signup-form sm:w-fit md:screen" onSubmit={handlesubmit}>
                     <FormContainer>
-                        <div className="flex">
+                        <div className="sm:flex md:flex lx:flex" >
                             <FormItem
                                 label="First Name*"
                                 className="me-auto text-label-title"
@@ -139,6 +139,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     {error && error.first_name}
                                 </p>
                             </FormItem>
+                            
                             <FormItem
                                 label="Last Name"
                                 className="me-auto text-label-title"
@@ -159,7 +160,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         <div className="">
                             <FormItem
                                 label="Email Address*"
-                                className="me-auto text-label-title "
+                                className="w-full me-auto text-label-title "
                             >
                                 <Field
                                     type="text"
@@ -198,7 +199,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="flex">
+                        <div className="sm:fle md:flex xl:flex">
                             <FormItem
                                 label="Password*"
                                 className="me-auto text-label-title !mb-0"
@@ -234,7 +235,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="flex w-[95%]">
+                        <div className="flex w-[100%]">
                             <input
                                 type="checkbox"
                                 className="me-1 w-5"
