@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePostApi from '@/store/customeHook/postApi'
 const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -57,11 +58,18 @@ const PartnerComplianceMove = () => {
     } = useApiFetch<any>(apiUrls, token)
     console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
+    const {
+        result: ValidTillResponse,
+        loading: ValidTillLoading,
+        sendPostRequest: PostValidTillDetails,
+    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+
     let array1 = [
         {
-            label: 'Insurance Certificate',
+            label: 'Insurance Policy',
             placeholder: 'Upload',
-            key: 'insurance_cert',
+            key: 'insurance_policy_image',
+            key_text: 'insurance_policy_text',
             view: false,
             url: null,
             valid_till: null,
@@ -69,7 +77,8 @@ const PartnerComplianceMove = () => {
         {
             label: 'Permit',
             placeholder: 'Upload',
-            key: 'permit',
+            key: 'permit_image',
+            key_text: 'permit_validity_text',
             view: false,
             url: null,
             valid_till: null,
@@ -77,31 +86,36 @@ const PartnerComplianceMove = () => {
         {
             label: 'PUCC',
             placeholder: 'Upload',
-            key: 'pucc',
+            key: 'pucc_image',
+            key_text: 'pucc_validity_text',
             view: false,
             url: null,
             valid_till: null,
         },
-        {
-            label: 'Fitness Certificate',
-            placeholder: 'Upload',
-            key: 'fitness_cert',
-            view: false,
-            url: null,
-            valid_till: null,
-        },
-        {
-            label: 'No Entry Permit',
-            placeholder: 'Upload',
-            key: 'no_entry_permit',
-            view: false,
-            url: null,
-            valid_till: null,
-        },
+        // {
+        //     label: 'Fitness Certificate',
+        //     placeholder: 'Upload',
+        //     key: 'fitness_cert',
+        //     view: false,
+        //     url: null,
+        //     valid_till: null,
+        // },
+        // {
+        //     label: 'No Entry Permit',
+        //     placeholder: 'Upload',
+        //     key: 'no_entry_permit',
+        //     view: false,
+        //     url: null,
+        //     valid_till: null,
+        // },
     ]
 
     // Initialize state variable for the file upload items
     const [array, setArray] = useState(array1)
+    const [dateArray, setDateArray] = useState<any>({
+        'asset_id': id,
+        'asset_type_id': localStorage.getItem('asset_id')
+    })
 
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
@@ -111,12 +125,9 @@ const PartnerComplianceMove = () => {
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
-        let newarr:any=array?.map((item:any,index:any)=>{
-            if(item?.key==e.target.name){
-                item.valid_till = e.target.value
-            }
-        })
+        let newData = {...dateArray}
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
         console.log("date_change", newData, e.target.value)
     }
 
@@ -187,6 +198,7 @@ const PartnerComplianceMove = () => {
 
     // Handle route navigation
     const handleRoute = () => {
+        PostValidTillDetails(dateArray)
         navigate('/asset_success')
     }
 
@@ -214,7 +226,7 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    console.log('DDDDDDDD', array[0])
+    console.log('DDDDDDDD', array)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -305,7 +317,9 @@ const PartnerComplianceMove = () => {
                                             className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
                                      
-                                            <input type='date' placeholder='Valid Till' name={item?.key}  className="!w-full h-11 block w-full border border-gray-200 
+                                            <input type='date' placeholder='Valid Till' name={item?.key_text}  
+                                            defaultValue={fetchDetails?.data[item?.key_text]}
+                                            className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4

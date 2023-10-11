@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePostApi from '@/store/customeHook/postApi'
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -55,13 +56,14 @@ const PartnerBussinessTypeCompliances = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
-    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
+    console.log('TTTTTTTTTT66666',AssetsType, apiUrls, fetchDetails,AssetsType)
 
     let array1 = [
         {
             label: 'FSSAI License',
             placeholder: 'Upload',
             key: 'fsssai_lic',
+            key_text: 'fsssai_lic_text',
             view: false,
             url: null,
             valid_till: null,
@@ -70,6 +72,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'ISO Certificate',
             placeholder: 'Upload',
             key: 'iso_cert',
+            key_text: 'iso_cert_text',
             view: false,
             url: null,
             valid_till: null,
@@ -78,6 +81,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'HACCP',
             placeholder: 'Upload',
             key: 'haccp',
+            key_text: '',
             view: false,
             url: null,
             valid_till: null,
@@ -86,6 +90,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'Pest Control Agency Contract',
             placeholder: 'Upload',
             key: 'pest_control_agency_contract',
+            key_text: 'pest_control_agency_contract_text',
             view: false,
             url: null,
             valid_till: null,
@@ -94,6 +99,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'BRC Audit or any other certification (If Applicable)',
             placeholder: 'Upload',
             key: 'brc_audit',
+            key_text: 'brc_audit_text',
             view: false,
             url: null,
             valid_till: null,
@@ -102,6 +108,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'Pollution NOC',
             placeholder: 'Upload',
             key: 'pollution_noc',
+            key_text: 'pollution_noc_text',
             view: false,
             url: null,
             valid_till: null,
@@ -110,6 +117,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'Fire Safety NOC',
             placeholder: 'Upload',
             key: 'fire_safety_noc',
+            key_text: 'fire_safety_noc_text',
             view: false,
             url: null,
             valid_till: null,
@@ -118,6 +126,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'MCD License (if applicable)',
             placeholder: 'Upload',
             key: 'mcd_lic',
+            key_text: 'mcd_lic_text',
             view: false,
             url: null,
             valid_till: null,
@@ -126,6 +135,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'UP Cold Storage License',
             placeholder: 'Upload',
             key: 'up_cond_storage_lic',
+            key_text: 'up_cond_storage_lic_text',
             view: false,
             url: null,
             valid_till: null,
@@ -134,6 +144,7 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'Factory License',
             placeholder: 'Upload',
             key: 'factory_lic',
+            key_text: 'factory_lic_text',
             view: false,
             url: null,
             valid_till: null,
@@ -142,14 +153,25 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'Panchayat NOC',
             placeholder: 'Upload',
             key: 'panchayat_noc',
+            key_text: 'panchayat_noc_text',
             view: false,
             url: null,
             valid_till: null,
         },
     ]
 
+    const {
+        result: ValidTillResponse,
+        loading: ValidTillLoading,
+        sendPostRequest: PostValidTillDetails,
+    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+
     // Initialize state variable for the file upload items
     const [array, setArray] = useState(array1)
+    const [dateArray, setDateArray] = useState<any>({
+        'asset_id': id,
+        'asset_type_id': localStorage.getItem('asset_id')
+    })
 
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
@@ -159,13 +181,17 @@ const PartnerBussinessTypeCompliances = () => {
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
-        let newarr:any=array?.map((item:any,index:any)=>{
-            if(item?.key==e.target.name){
-                item.valid_till = e.target.value
-            }
-        })
+        let newData = {...dateArray}
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
         console.log("date_change", newData, e.target.value)
+        const updatedArray = array.map((item:any) => 
+        e.target.name===item?.key_text && {
+            ...item,
+            valid_till: e.target.value
+        }
+        )
+        setArray(updatedArray)
     }
 
     // Handle the file upload
@@ -232,10 +258,33 @@ const PartnerBussinessTypeCompliances = () => {
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
+ const validateData=()=>{
+    let error:any=false;
+    // array?.filter((item:any,index:any)=>{
+    //     if(item?.url!=='' && item?.valid_till===''){
+    //         error=true
+    //     }
+    // })
+    const updatedArray = array.map((itemData: any) =>
+   (itemData?.valid_till==='')
+        ? {
+              ...itemData,
+              message77: 'Valid tilllfhgg',
+          }
+        : itemData
+)
+setArray(updatedArray)
+console.log("TTTTTTTTTTTTTTTTT",array,error);
 
+    return error
+ }
     // Handle route navigation
     const handleRoute = () => {
-        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        if(!validateData()){
+            // PostValidTillDetails(dateArray)
+            // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        }
+      
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -359,10 +408,11 @@ const PartnerBussinessTypeCompliances = () => {
                                         <FormItem
                                             label="Valid Till"
                                             key={index}
-                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
+                                            className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === ''?'invisible':'visible'}`}
                                         >
                                      
-                                            <input type='date' placeholder='Valid Till' name={item?.key}  className="!w-full h-11 block w-full border border-gray-200 
+                                            <input type='date' placeholder='Valid Till' name={item?.key_text}  
+                                            defaultValue={fetchDetails?.data[item?.key_text]}  className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4

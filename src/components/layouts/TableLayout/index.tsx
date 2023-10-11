@@ -75,15 +75,21 @@ const TableLayout = ({ AllStore }: any) => {
     console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '1')
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
     }
     if (rowData?.assetType === 'Prepare') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '3')
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
     }
     if (rowData?.assetType === 'Move') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '2')
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
     }
   };
@@ -91,14 +97,20 @@ const TableLayout = ({ AllStore }: any) => {
   const handleView = (rowData: any) => {
     // Handle view action for different asset types.
     if (rowData?.assetType === 'Store') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
     }
     if (rowData?.assetType === 'Prepare') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '3')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
     }
     if (rowData?.assetType === 'Move') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '2')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }
