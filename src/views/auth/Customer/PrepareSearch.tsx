@@ -16,12 +16,14 @@ import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
 import { formatDate, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
+import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
 
 // Define the functional component for PrepareSearch
 const PrepareSearch = () => {
 
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+    const location: any = useLocation();
 
     // Define a state variable for the  modal
     const [errors, setErrors] = useState<any>({});
@@ -37,6 +39,9 @@ const PrepareSearch = () => {
     // Fetch a list of countries using a custom hook
     const { data: ListOfBroadCategory, loading: BCloading, error: BCerror } =
         useApiFetch<any>(`master/customer/store/get-broad-category`, token);
+    
+    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+        useApiFetch<any>(`customer/get-responses/3/${location?.state?.data?.id}`, token);
 
     // Fetch a list of countries using a custom hook
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
@@ -146,7 +151,6 @@ const PrepareSearch = () => {
             .catch(error => console.log('error', error));
     }
     const navigate: any = useNavigate();
-    const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
@@ -623,7 +627,7 @@ console.log("formatDate",formData?.arrival_date);
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
                                         Update
                                     </Button> :
@@ -644,6 +648,8 @@ console.log("formatDate",formData?.arrival_date);
                         </Form>
                     </Formik>
                 </div>
+                {isDisabled? 
+                ApprovedAssets?.data?.length>0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} />:<></>}
             </div>
         </div>
     )

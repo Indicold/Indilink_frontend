@@ -12,11 +12,12 @@ const MoveTicketList = () => {
   return (
     <div>
                  
-      {MoveData?.data?.length>0 &&   
+        
       <>
         <h4 className='text-head-title text-center'>Move Ticket List</h4>
-        <TableLayoutCustomer AllStore={MoveData?.data?.length>0 && MoveData?.data}/>
-      </>}
+        {MoveData?.data?.length>0 ? <TableLayoutCustomer AllStore={MoveData?.data?.length>0 && MoveData?.data}/>
+        :<p>No Data found.</p>}
+      </>
       <div>
         {MoveLoad && <LoaderSpinner />}
       </div>
