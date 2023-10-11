@@ -11,15 +11,14 @@ import { useNavigate } from 'react-router-dom';
 const tableHead = {
     id:"S.No",
     // date: "Date",
-    contract_type: "Contract Type",
+    asset_id: "Assets ID",
     comment:"Comment",
-    admin:"Admin",
-    status_id:"Status",
+    created_at:"Created At",
+    updated_at:"Updated At",
+    // status_id:"Status",
 //   is_deletedBy: "Is Deleted By",
-contract_download: "Contract Download ",
-contract_name: "Contract Name",
   // asset_type: "Asset Type",
-  Action: "Action"
+  // Action: "Action"
 };
 
 // The TableCustomerStoreAssets component takes a prop called AllStore, presumably for rendering data.

@@ -9,17 +9,16 @@ import { useNavigate } from 'react-router-dom';
 
 // Defines the table header with column names.
 const tableHead = {
-    id:"S.No",
-    // date: "Date",
-    contract_type: "Contract Type",
-    comment:"Comment",
-    admin:"Admin",
-    status_id:"Status",
+  id:"S.No",
+  // date: "Date",
+  asset_id: "Assets ID",
+  comment:"Comment",
+  created_at:"Created At",
+  updated_at:"Updated At",
+  // status_id:"Status",
 //   is_deletedBy: "Is Deleted By",
-contract_download: "Contract Download ",
-contract_name: "Contract Name",
-  // asset_type: "Asset Type",
-  Action: "Action"
+// asset_type: "Asset Type",
+// Action: "Action"
 };
 
 // The TableCustomerMoveAssets component takes a prop called AllStore, presumably for rendering data.

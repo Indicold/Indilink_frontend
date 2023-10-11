@@ -291,10 +291,10 @@ const PartnerBussinessTypeCompliances = () => {
     // Handle route navigation
     const handleRoute = () => {
 
-        if (!validateData()) {
+        // if (!validateData()) {
             PostValidTillDetails(dateArray)
             navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
-        }
+        // }
 
     }
 
