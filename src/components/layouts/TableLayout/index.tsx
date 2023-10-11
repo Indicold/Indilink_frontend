@@ -132,11 +132,11 @@ const handleDocs=(rowData:any)=>{
       if (key === 'is_verified') {
         return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
       }
-      if (key === 'createdAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
+      if (key === 'created_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.created_at)?.toLocaleDateString()}</td>;
       }
-      if (key === 'updatedAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
+      if (key === 'updated_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
