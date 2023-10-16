@@ -7,13 +7,14 @@
  * user can enter values in these fields and click the "Save" button to save the data. The modal is
  * displayed conditionally based on the value of the "modal
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import InfoIcon from '@mui/icons-material/Info';
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -177,7 +178,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="C.F.M.*"
+                                        // label="C.F.M.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                           C.F.M.*
+                                              <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -194,7 +203,16 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="H.P.*" className="mx-auto w-1/2">
+                                    <FormItem 
+                                    label={
+                                        <div className='flex justify-center items-center'>
+                                       H.P.*
+                                          <Tooltip title="Horsepower" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
+                                     className="mx-auto w-1/2">
                                         <Field
                                             type="number"
                                             autoComplete="off"
@@ -231,7 +249,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem> */}
-                                    <FormItem label="T.R.*" className="mx-auto w-1/2">
+                                    <FormItem 
+                                    // label="T.R.*"
+                                    label={
+                                        <div className='flex justify-center items-center'>
+                                     T.R.*
+                                          <Tooltip title="T.R.*" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
+                                    className="mx-auto w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"

@@ -7,6 +7,8 @@ import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import EditIcon from '@mui/icons-material/Edit';
 // Defines the table header with column names.
 const tableHead = {
   asset_id: "Asset ID",
@@ -26,6 +28,7 @@ const TableLayout = ({ AllStore }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
+  const [Alert,setAlert]=useState<any>(false)
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
@@ -140,9 +143,10 @@ const handleDocs=(rowData:any)=>{
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
-          <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
+          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>
+          <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
+          <Button className='!p-2' onClick={()=>setAlert(true)}>Submit</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -167,6 +171,45 @@ const handleDocs=(rowData:any)=>{
 
   return (
     <>
+    {Alert && <div
+                    id="authentication-modal"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                >
+                    <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                      
+                            <div className="px-6 py-6 lg:px-8">
+                                <h6 className="text-center"> You cannot make changes after submitting.</h6>
+                                    
+                                
+<div className='flex mt-4'>
+                                <Button
+                                    style={{ borderRadius: '13px' }}
+                                    block
+                                    variant="solid"
+                                    onClick={()=>setAlert(false)}
+                                    type="button"
+                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    style={{ borderRadius: '13px' }}
+                                    block
+                                    variant="solid"
+                                    // onClick={()=>setAlert(false)}
+                                    type="button"
+                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                >
+                                    Submit
+                                </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input

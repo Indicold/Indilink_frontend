@@ -64,6 +64,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'fsssai_lic',
             key_text: 'fsssai_lic_text',
             view: false,
+            key_lic: 'fsssai_licence_license',
             url: null,
             valid_till: null,
         },
@@ -73,6 +74,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'iso_cert',
             key_text: 'iso_cert_text',
             view: false,
+            key_lic: 'iso_certificate_license',
             url: null,
             valid_till: null,
         },
@@ -80,8 +82,9 @@ const PartnerBussinessTypeCompliances = () => {
             label: 'HACCP',
             placeholder: 'Upload',
             key: 'haccp',
-            key_text: '',
+            key_text: 'haccp_text',
             view: false,
+            key_lic: 'haccp_license',
             url: null,
             valid_till: null,
         },
@@ -91,6 +94,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'pest_control_agency_contract',
             key_text: 'pest_control_agency_contract_text',
             view: false,
+            key_lic: 'pest_control_agency_contract_license',
             url: null,
             valid_till: null,
         },
@@ -100,6 +104,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'brc_audit',
             key_text: 'brc_audit_text',
             view: false,
+            key_lic: 'brc_audit_license',
             url: null,
             valid_till: null,
         },
@@ -109,6 +114,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'pollution_noc',
             key_text: 'pollution_noc_text',
             view: false,
+            key_lic: 'pollution_noc_license',
             url: null,
             valid_till: null,
         },
@@ -118,6 +124,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'fire_safety_noc',
             key_text: 'fire_safety_noc_text',
             view: false,
+            key_lic: 'fire_safety_noc_license',
             url: null,
             valid_till: null,
         },
@@ -127,6 +134,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'mcd_lic',
             key_text: 'mcd_lic_text',
             view: false,
+            key_lic: 'mcd_lic_license',
             url: null,
             valid_till: null,
         },
@@ -136,6 +144,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'up_cond_storage_lic',
             key_text: 'up_cond_storage_lic_text',
             view: false,
+            key_lic: 'up_cond_storage_license',
             url: null,
             valid_till: null,
         },
@@ -145,6 +154,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'factory_lic',
             key_text: 'factory_lic_text',
             view: false,
+            key_lic: 'factory_lic_license',
             url: null,
             valid_till: null,
         },
@@ -154,10 +164,74 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'panchayat_noc',
             key_text: 'panchayat_noc_text',
             view: false,
+            key_lic: 'panchayat_noc_license',
             url: null,
             valid_till: null,
         },
-    ]
+        {
+            label: 'No Lien Certificate',
+            placeholder: 'Upload',
+            key_text: 'no_lien_cert_text',
+            view: false,
+            key: 'no_lien_cert',
+            key_lic: 'no_lien_cert_license',
+            url: null,
+            valid_till: null,
+        },
+        {
+            label: 'Latest Electricity Bill',
+            placeholder: 'Upload',
+            key_text: 'latest_electricity_bill_text',
+            key: 'latest_electricity_bill',
+            key_lic: 'latest_electricity_bill_license',
+            url: null,
+            valid_till: null,
+            view: false,
+        },
+        {
+            label: 'Structural Load Safety',
+            placeholder: 'Upload',
+            key_text: 'structural_load_safety_cert_text',
+            key: 'structural_load_safety_cert',
+            key_lic: 'structural_load_safety_cert_license',
+            url: null,
+            valid_till: null,
+            view: false,
+
+        },
+        {
+            label: 'Insurance Certificate',
+            placeholder: 'Upload',
+            key_text: 'insurance_cert_text',
+            key: 'insurance_cert',
+            key_lic: 'insurance_cert_license',
+            url: null,
+            valid_till: null,
+            view: false,
+        },
+        {
+            label: 'Facility Layout',
+            placeholder: 'Upload',
+            key_text: 'facility_layout_text',
+            key: 'facility_layout',
+            key_lic: 'facility_layout_license',
+            url: null,
+            valid_till: null,
+            view: false,
+        },
+        {
+            label: 'Storage Temperature Record for Last Couple of Months',
+            placeholder: 'Upload',
+            key_text: 'storage_temp_record_text',
+            key: 'storage_temp_record',
+            key_lic: 'storage_temp_record_license',
+            url: null,
+            valid_till: null,
+            view: false,
+        },
+    ];
+
+
 
     const {
         result: ValidTillResponse,
@@ -182,14 +256,18 @@ const PartnerBussinessTypeCompliances = () => {
         let newData = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        const updatedArray = array.map((item: any) =>
-            e.target.name === item?.key_text && {
-                ...item,
-                valid_till: e.target.value
+        const updatedArray = array.map((item: any) => {
+            if (e.target.name === item.key_text) {
+                return {
+                    ...item,
+                    valid_till: e.target.value
+                };
+            } else {
+                return item; // Keep the other items unchanged
             }
-        )
-        setArray(updatedArray)
-    }
+        });
+        setArray(updatedArray);
+    };
 
     // Handle the file upload
     const handleUpload = async (item: any, file: any) => {
@@ -240,6 +318,7 @@ const PartnerBussinessTypeCompliances = () => {
                         ? {
                             ...itemData,
                             view: false,
+                            key_lic: "",
                             url: responseData?.data,
                             message: 'Error While Uploading',
                         }
@@ -292,15 +371,36 @@ const PartnerBussinessTypeCompliances = () => {
     const handleRoute = () => {
 
         // if (!validateData()) {
-            PostValidTillDetails(dateArray)
-            navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        PostValidTillDetails(dateArray)
+        console.log("KEYJHJHKHKHKHK");
+        // navigate('/asset_success')
+        // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
         // }
 
     }
+    const handleChange = (e: any, item: any) => {
+
+        console.log("TYYYYYYYYY", e.target.name, item);
+
+        const newData: any = { ...dateArray }
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
+        // const updatedArray = array.map((itemData) =>
+        //   item.key_lic === itemData.key_lic
+        //     ? { ...itemData, key_lic: e.target.value }
+        //     : itemData
+        // );
+        // setArray(updatedArray);
+        console.log("TTTTT66TTTT", e.target.name, newData);
+        // console.log("TTTTT66TTTT",newData);
+
+    };
 
     // Use useEffect to update file upload items when fetchDetails changes
+    /* The above code is a commented out `useEffect` hook in a TypeScript React component. It appears to
+    be updating an array of items based on some data fetched from an API. */
     useEffect(() => {
-        if (fetchDetails) {
+        if (fetchDetails?.data !== null) {
             const newData = {
                 ...fetchDetails?.data,
             }
@@ -324,14 +424,21 @@ const PartnerBussinessTypeCompliances = () => {
         window.scrollTo(0, 0)
     }, [])
     useEffect(() => {
-        const updatedArray = array.map((item: any) =>
-            true && {
-                ...item,
-                valid_till: fetchDetails?.data[item?.key_text]
-            }
-        )
-        setArray(updatedArray)
+        if (fetchDetails?.data !== null) {
+            const updatedArray = array.map((item: any) =>
+                true && {
+                    ...item,
+                    valid_till: fetchDetails?.data[item?.key_text],
+                    // key_lic: fetchDetails?.data[item?.key_lic]
+
+                }
+            )
+            setArray(updatedArray)
+        }
+
     }, [])
+    console.log("tryttytyrty",array);
+    
     return (
         <div className='flex'>
             <ToastContainer />
@@ -425,26 +532,54 @@ const PartnerBussinessTypeCompliances = () => {
                                                     )}
                                                 </div>
                                             </FormItem>
-                                            <FormItem
-                                                label="Valid Till"
-                                                key={index}
-                                                className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-                                            >
+                                            <div className='flex'>
+                                                <FormItem
+                                                    label="Valid Till"
+                                                    key={index}
+                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                >
 
-                                                <input type='date' placeholder='Valid Till' name={item?.key_text}
-                                                    defaultValue={fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
+                                                    <input type='date' placeholder='Valid Till' name={item?.key_text}
+                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
                            file:py-3 file:px-4
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
-                                                    onChange={handleDateChange} />
-                                                {item?.messageText && (
-                                                    <p className="text-[red]">
-                                                        {item?.messageText}
-                                                    </p>
-                                                )}
-                                            </FormItem>
+                                                        onChange={handleDateChange} />
+
+                                                    {item?.messageText && (
+                                                        <p className="text-[red]">
+                                                            {item?.messageText}
+                                                        </p>
+                                                    )}
+                                                </FormItem>
+                                                <FormItem
+                                                    label="Licence No"
+                                                    key={index}
+                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                >
+
+                                                    <input type='text' placeholder='Licence No' name={`${item?.key_lic}`}
+                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
+                                                        className="!w-full h-11 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm 
+                        focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                         dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                        onChange={(e: any) => handleChange(e, item)} />
+
+                                                    {item?.messageText && (
+                                                        <p className="text-[red]">
+                                                            {item?.messageText}
+                                                        </p>
+                                                    )}
+                                                </FormItem>
+                                            </div>
+
 
                                         </>
 

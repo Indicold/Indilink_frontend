@@ -93,8 +93,9 @@ const BasicInfo = () => {
     const { data: BranchList, loading: Branchloading, error: BranchListerror, refetch: fetchBranch } =
         useApiFetch<any>(`auth/branches`, token);
 
-    const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostBasicDetails, }: any =
-        usePostApi(`auth/basic-detail`)
+    const { result: AssetsResponse}: any =
+    useApiFetch(`auth/basic-details`,token)
+    
 
     const [branch, setBranch] = useState(false)
 
@@ -193,9 +194,14 @@ const BasicInfo = () => {
 
         }
     }, [companyDetails?.data])
-console.log("TTTTTTTTT",SareList?.data);
 
-
+useEffect(()=>{
+    if(BasicInfo){
+        setData({...data,gst_file:BasicInfo?.data})
+    }
+ 
+},[BasicInfo?.data])
+console.log("TTTTTTTTT",data,BasicInfo);
 
     return (
         <div className='flex'>
@@ -360,6 +366,7 @@ console.log("TTTTTTTTT",SareList?.data);
                                         disabled={isDisabled}
                                         multiple
                                         type="text"
+                                        maxLength={15}
                                         className="w-[90%]"
                                         autoComplete="off"
                                         onChange={(e: any) =>
