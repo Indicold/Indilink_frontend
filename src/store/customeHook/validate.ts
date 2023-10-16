@@ -415,6 +415,14 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
  }
+ export const onkeyDownOne=(e:any)=>{
+    if (e.key === 'e' || e.key === '-') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+      if(e.target.value.length<1 &&  e.key === '0'){
+        e.preventDefault(); 
+      }
+ }
 export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 

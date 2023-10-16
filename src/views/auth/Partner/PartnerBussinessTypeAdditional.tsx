@@ -274,7 +274,7 @@ const PartnerBussinessTypeAdditional = () => {
                                                     handleFileChange(e, item)
                                                 }
                                             />
-                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
+                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} disabled={isDisabled} />
                                             </div>
                                             <div className="flex">
                                                 {item?.view && <b>Status:</b>}
@@ -310,8 +310,9 @@ const PartnerBussinessTypeAdditional = () => {
                                         type="button"
                                         onClick={() => navigate('/asset_success')}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
+                                        // disabled={isDisabled}
                                     >
-                                        Save Asset
+                                       {isDisabled ? "Next":"Save Assets"} 
                                     </Button>
                                 </div>
                             </FormContainer>

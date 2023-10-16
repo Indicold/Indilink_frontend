@@ -199,7 +199,7 @@ console.log("formatDate",formData?.arrival_date);
                             <FormContainer>
                                 <div className="flex">
                                     <FormItem
-                                        label="Category"
+                                        label="Product Category"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -265,7 +265,7 @@ console.log("formatDate",formData?.arrival_date);
                                             className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfServiceCategory && ListOfServiceCategory?.data?.map((item: any, index: any) => (
+                                            {ListOfServiceCategory && ListOfServiceCategory?.data?.filter((item: any) => [12, 13, 14, 15, 16, 17].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.service_category_id}>{item?.name}</option>
                                             ))}
 
@@ -275,7 +275,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Country"
+                                        label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -294,7 +294,7 @@ console.log("formatDate",formData?.arrival_date);
                                     </FormItem>
                                     <div className="flex mx-auto w-1/2 rounded-lg pl-[22px]">
                                         <FormItem
-                                            label="State"
+                                            label="State*"
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
@@ -312,7 +312,7 @@ console.log("formatDate",formData?.arrival_date);
                                             <p className='text-[red]'>{errors && errors.state_id}</p>
                                         </FormItem>
                                         <FormItem
-                                            label="City"
+                                            label="City*"
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
@@ -354,7 +354,7 @@ console.log("formatDate",formData?.arrival_date);
                                             className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
+                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.throughput_unit_id}>{item?.type}</option>
 
                                             ))}
@@ -384,7 +384,7 @@ console.log("formatDate",formData?.arrival_date);
                                             className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
+                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                             ))}

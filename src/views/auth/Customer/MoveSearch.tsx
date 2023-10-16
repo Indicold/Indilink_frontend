@@ -281,7 +281,7 @@ const MoveSearch = () => {
                                 <h6 className=" mb-2 text-head-title pl-[22px] text-start">Destination Location</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Country"
+                                        label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -299,7 +299,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="To"
+                                        label="To*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -351,7 +351,7 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Load Quantity"
+                                        label="Load Quantity*"
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
@@ -372,7 +372,7 @@ const MoveSearch = () => {
                                             className="!w-[20%] h-11 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
+                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
 
                                             ))}
@@ -380,7 +380,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.load_quantity_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Broad Category"
+                                        label="Broad Category*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select

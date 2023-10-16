@@ -262,7 +262,7 @@ const PartnerBussinessTypeCompliances = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    console.log('DDDDDDDD', array[0])
+    console.log('DDDDDDDD', array[0],isDisabled)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -362,7 +362,7 @@ const PartnerBussinessTypeCompliances = () => {
                                             className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
                                      
-                                            <input type='date' placeholder='Valid Till' name={item?.key}  className="!w-full h-11 block w-full border border-gray-200 
+                                            <input type='date' disabled={isDisabled} placeholder='Valid Till' name={item?.key}  className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4

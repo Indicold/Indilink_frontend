@@ -9,15 +9,15 @@ import { useNavigate } from 'react-router-dom';
 
 // Defines the table header with column names.
 const tableHead = {
-    id:"S.No",
+    // id:"S.No",
     // date: "Date",
-    contract_type: "Contract Type",
-    comment:"Comment",
+    // contract_type: "Contract Type",
+    // comment:"Comment",
     admin:"Admin",
     status_id:"Status",
 //   is_deletedBy: "Is Deleted By",
-contract_download: "Contract Download ",
-contract_name: "Contract Name",
+// contract_download: "Contract Download ",
+// contract_name: "Contract Name",
   // asset_type: "Asset Type",
   Action: "Action"
 };

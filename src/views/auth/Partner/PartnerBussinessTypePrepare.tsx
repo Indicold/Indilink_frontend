@@ -128,7 +128,7 @@ const PartnerBussinessTypePrepare = () => {
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails(formData)
-            navigate(`/partner-bussiness-type-compliance/${id}`)
+            navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
 
@@ -137,7 +137,7 @@ const PartnerBussinessTypePrepare = () => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
             messageView('Data Updated Successfully!')
             setTimeout(() => {
-                navigate(`/partner-bussiness-type-compliance/${id}`)
+                navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
             }, 2000)
         }
     }, [PrepareResponse])
@@ -381,6 +381,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <Autocomplete
                                                 multiple
                                                 limitTags={1}
+                                                disabled={isDisabled}
                                                 id="fixed-tags-demo"
                                                 value={value1}
                                                 onChange={(event, newValue) => {
@@ -453,6 +454,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 multiple
                                                 limitTags={1}
                                                 id="fixed-tags-demo"
+                                                disabled={isDisabled}
                                                 value={value}
                                                 onChange={(event, newValue) => {
                                                     setValue([
@@ -628,6 +630,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     }
                                                     name="area"
                                                     value={formData?.area}
+                                                    disabled={isDisabled}
                                                     placeholder="Area"
                                                 />
                                                 {/* <select
@@ -690,8 +693,8 @@ const PartnerBussinessTypePrepare = () => {
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} />
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} />
+                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}
