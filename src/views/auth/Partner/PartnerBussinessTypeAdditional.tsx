@@ -59,51 +59,75 @@ const PartnerBussinessTypeAdditional = () => {
             label: 'No Lien Certificate',
             placeholder: 'Upload',
             key: 'no_lien_cert',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Latest Electricity Bill',
             placeholder: 'Upload',
             key: 'latest_electricity_bill',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Structural Load Safety',
             placeholder: 'Upload',
             key: 'structural_load_safety_cert',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         // {
         //     label: 'Pest Control Agency Contract',
         //     placeholder: 'Upload',
         //     key: 'pest_control_agency_contract',
         // },
-        {
-            label: 'Plant Layout',
-            placeholder: 'Upload',
-            key: 'plant_layout',
-        },
+        // {
+        //     label: 'Plant Layout',
+        //     placeholder: 'Upload',
+        //     key: 'plant_layout',
+        // },
         {
             label: 'Insurance Certificate',
             placeholder: 'Upload',
             key: 'insurance_cert',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Facility Layout',
             placeholder: 'Upload',
             key: 'facility_layout',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Storage Temperature Record for Last Couple of Months',
             placeholder: 'Upload',
             key: 'storage_temp_record',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: '3D view of the assets',
             placeholder: 'Upload',
             key: 'three_d_view_of_asset',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Photo of the Assets',
             placeholder: 'Upload',
             key: 'photos_of_asset',
+            valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         // Add additional objects as needed
         // Example:
@@ -121,16 +145,34 @@ const PartnerBussinessTypeAdditional = () => {
     const handleFileChange = (e: any, item: any) => {
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
+        console.log("e.target.name ",e.target.name)
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
+        let newData = {...array};
+        let todayDateTime = new Date().getTime();
         let newarr:any=array?.map((item:any,index:any)=>{
             if(item?.key==e.target.name){
-                item.valid_till = e.target.value
+                let inputDateTime = new Date(e.target.value).getTime()
+                if(inputDateTime < todayDateTime){
+                    return (
+                        {
+                            ...item,
+                            valid_till_error: 'Valid till cannot be a past date'
+                        }
+                    )
+                }
+                return (
+                    {
+                        ...item,
+                        valid_till: e.target.value,
+                        show_valid_till_msg: false
+                    }
+                )
             }
+            return item
         })
-        console.log("date_change", newData, e.target.value)
+        setArray(newarr)
     }
 
     // Upload the file to the server
@@ -162,7 +204,7 @@ const PartnerBussinessTypeAdditional = () => {
             if (responseData?.status) {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
-                        ? { ...itemData, view: true, url: responseData?.data }
+                        ? { ...itemData, view: true, url: responseData?.data, show_valid_till_msg: true }
                         : itemData
                 )
                 setArray(updatedArray) // Update the state with the modified array
@@ -172,6 +214,22 @@ const PartnerBussinessTypeAdditional = () => {
         } catch (error: any) {
             setError(error)
             setResponse(null)
+        }
+    }
+
+    // Handle route navigation
+    const handleRoute = () => {
+        var shouldNavigate = true;
+
+        for(var i=0;i<array.length;++i){
+            if(array[i].show_valid_till_msg){
+                shouldNavigate = false;
+                break;
+            }
+        }
+        
+        if(shouldNavigate){
+            navigate('/asset_success')
         }
     }
 
@@ -189,6 +247,8 @@ const PartnerBussinessTypeAdditional = () => {
                           view: true,
                           url: newData[item.key],
                           message: 'Uploaded',
+                          show_valid_till_msg: true,
+                          valid_till_error: 'Valid till is required'
                       }
                     : item
             )
@@ -286,6 +346,11 @@ const PartnerBussinessTypeAdditional = () => {
                                                         View
                                                     </a>
                                                 )}
+                                                {item?.view && item.show_valid_till_msg && (
+                                            <p className="text-[red] ml-10">
+                                                {item?.valid_till_error}
+                                            </p>
+                                        )}
                                             </div>
                                         </FormItem>
                                     ))}
@@ -308,7 +373,7 @@ const PartnerBussinessTypeAdditional = () => {
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={() => navigate('/asset_success')}
+                                        onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                         // disabled={isDisabled}
                                     >

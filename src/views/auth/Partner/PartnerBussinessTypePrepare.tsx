@@ -170,7 +170,7 @@ const PartnerBussinessTypePrepare = () => {
     const itemsToFind = formData?.product_type;
 
     useEffect(() => {
-        console.log("TTTTTTTTTTT66666",ProductTypeList);
+        // console.log("TTTTTTTTTTT66666",ProductTypeList);
         if(ProductTypeList?.data!==null){
             const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
             setValue(foundItems)

@@ -30,7 +30,8 @@ export const payloadSearchCustomer: any = {
     certification_id: '',
     date: `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`,
     storage_duration: '',
-    storage_duration_type: 1
+    storage_duration_type: 1,
+    quantity: ''
 }
 
 // Define the main functional component for StoreSearch
@@ -296,14 +297,25 @@ const StoreSearch = () => {
                                 <div className="flex">
                                     <FormItem
                                         label="Unit"
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="mx-auto rounded-lg pl-[22px] w-1/2"
                                     >
-                                       
+                                       <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            autoComplete="off"
+                                            onChange={(e: any) => handlechange(e)}
+                                            className="w-[80%]"
+                                            name="quantity"
+                                            value={formData?.quantity}
+                                            placeholder="Quantity"
+                                            component={Input}
+                                            onKeyDown={onkeyDownOne}
+                                        />
                                             <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="unit_id"
-                                            className="h-11 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (

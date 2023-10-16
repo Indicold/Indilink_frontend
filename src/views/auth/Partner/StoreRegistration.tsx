@@ -1191,7 +1191,7 @@ useEffect(() => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <Accordion>
+                                <Accordion allowZeroExpanded={true}>
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>

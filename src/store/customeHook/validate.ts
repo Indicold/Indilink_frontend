@@ -236,7 +236,7 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     if (!formData?.prepare_type_id) {
         newErrors.prepare_type_id = 'Prepare type id is required'
     }
-    if (!formData?.product_category_ids) {
+    if (formData?.product_category_ids?.length == 0) {
         newErrors.product_category_ids = 'Product category ids is required'
     }
     if (!formData?.throughput) {

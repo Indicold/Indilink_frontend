@@ -55,7 +55,7 @@ const PartnerBussinessTypeCompliances = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
-    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
+    // console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
     let array1 = [
         {
@@ -65,6 +65,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'ISO Certificate',
@@ -73,6 +75,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'HACCP',
@@ -81,6 +85,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Pest Control Agency Contract',
@@ -89,6 +95,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'BRC Audit or any other certification (If Applicable)',
@@ -97,6 +105,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Pollution NOC',
@@ -105,6 +115,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Fire Safety NOC',
@@ -113,6 +125,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'MCD License (if applicable)',
@@ -121,6 +135,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'UP Cold Storage License',
@@ -129,6 +145,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Factory License',
@@ -137,6 +155,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Panchayat NOC',
@@ -145,6 +165,8 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
     ]
 
@@ -159,13 +181,30 @@ const PartnerBussinessTypeCompliances = () => {
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
+        let newData = {...array};
+        let todayDateTime = new Date().getTime();
         let newarr:any=array?.map((item:any,index:any)=>{
             if(item?.key==e.target.name){
-                item.valid_till = e.target.value
+                let inputDateTime = new Date(e.target.value).getTime()
+                if(inputDateTime < todayDateTime){
+                    return (
+                        {
+                            ...item,
+                            valid_till_error: 'Valid till cannot be a past date'
+                        }
+                    )
+                }
+                return (
+                    {
+                        ...item,
+                        valid_till: e.target.value,
+                        show_valid_till_msg: false
+                    }
+                )
             }
+            return item
         })
-        console.log("date_change", newData, e.target.value)
+        setArray(newarr)
     }
 
     // Handle the file upload
@@ -203,6 +242,7 @@ const PartnerBussinessTypeCompliances = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
+                              show_valid_till_msg: true
                           }
                         : itemData
                 )
@@ -235,7 +275,27 @@ const PartnerBussinessTypeCompliances = () => {
 
     // Handle route navigation
     const handleRoute = () => {
-        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        // let newarr:any=array?.map((item:any,index:any)=>{
+        //     if(!item?.valid_till && item?.view && !item.show_valid_till_msg){
+        //         item.show_valid_till_msg = true;
+        //     }
+            
+        //     if(item?.valid_till && item?.show_valid_till_msg){
+        //         item.show_valid_till_msg = false;
+        //     }
+        // })
+        // setArray(newarr);
+        
+        var shouldNavigate = true;
+        for(var i=0;i<array.length;++i){
+            if(array[i].show_valid_till_msg){
+                shouldNavigate = false;
+                break;
+            }
+        }
+        if(shouldNavigate){
+            navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        }
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -262,7 +322,7 @@ const PartnerBussinessTypeCompliances = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    console.log('DDDDDDDD', array[0],isDisabled)
+    // console.log('DDDDDDDD', array[0],isDisabled)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -369,6 +429,12 @@ const PartnerBussinessTypeCompliances = () => {
                            file:py-3 file:px-4
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                onChange={handleDateChange} />
+
+                                        {item?.view && item.show_valid_till_msg && (
+                                            <p className="text-[red]">
+                                                {item?.valid_till_error}
+                                            </p>
+                                        )}
                                         
                                         </FormItem>
                                         </>
