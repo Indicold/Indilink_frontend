@@ -21,7 +21,7 @@ var currentDate = new Date()
 
 // Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
-    country_id: '',
+    country_id: 101,
     city_id: '',
     product_type_id: '',
     temperature: '',
