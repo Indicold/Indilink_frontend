@@ -65,6 +65,8 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Permit',
@@ -73,6 +75,8 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'PUCC',
@@ -81,6 +85,8 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'Fitness Certificate',
@@ -89,6 +95,8 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
         {
             label: 'No Entry Permit',
@@ -97,6 +105,8 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            valid_till_error: 'Valid till is required',
+            show_valid_till_msg: false
         },
     ]
 
@@ -112,12 +122,30 @@ const PartnerComplianceMove = () => {
 
     const handleDateChange = (e:any) => {
         let newData = {...array}
+        let todayDateTime = new Date().getTime();
+
         let newarr:any=array?.map((item:any,index:any)=>{
             if(item?.key==e.target.name){
-                item.valid_till = e.target.value
+                let inputDateTime = new Date(e.target.value).getTime()
+                if(inputDateTime < todayDateTime){
+                    return (
+                        {
+                            ...item,
+                            valid_till_error: 'Valid till cannot be a past date'
+                        }
+                    )
+                }
+                return (
+                    {
+                        ...item,
+                        valid_till: e.target.value,
+                        show_valid_till_msg: false
+                    }
+                )
             }
+            return item
         })
-        console.log("date_change", newData, e.target.value)
+        setArray(newarr)
     }
 
     // Handle the file upload
@@ -155,6 +183,7 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
+                              show_valid_till_msg: true
                           }
                         : itemData
                 )
@@ -190,6 +219,22 @@ const PartnerComplianceMove = () => {
         navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
     }
 
+    // Function used to navigate to next page and save asset
+    const handleNavigation = () => {
+        var shouldNavigate = true;
+
+        for(var i=0;i<array.length;++i){
+            if(array[i].show_valid_till_msg){
+                shouldNavigate = false;
+                break;
+            }
+        }
+
+        if(shouldNavigate){
+            navigate('/asset_success')
+        }
+    }
+
     // Use useEffect to update file upload items when fetchDetails changes
     useEffect(() => {
         if (fetchDetails) {
@@ -204,6 +249,7 @@ const PartnerComplianceMove = () => {
                           view: true,
                           url: newData[item.key],
                           message: 'Uploaded',
+                          show_valid_till_msg: true
                       }
                     : item
             )
@@ -214,7 +260,7 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    console.log('DDDDDDDD', array[0])
+    console.log('Form array', array)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -307,6 +353,11 @@ const PartnerComplianceMove = () => {
                                                         View
                                                     </a>
                                                 )}
+                                                {item?.view && item.show_valid_till_msg && (
+                                            <p className="text-[red] ml-10">
+                                                {item?.valid_till_error}
+                                            </p>
+                                        )}
                                             </div>
                                         </FormItem>
                                     ))}
@@ -329,7 +380,7 @@ const PartnerComplianceMove = () => {
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={() => navigate('/asset_success')}
+                                        onClick={handleNavigation}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
                                         Save Asset
