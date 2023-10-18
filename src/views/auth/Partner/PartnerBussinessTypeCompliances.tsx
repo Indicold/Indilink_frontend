@@ -64,7 +64,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'fsssai_lic',
             key_text: 'fsssai_lic_text',
             view: false,
-            key_lic: 'fsssai_licence_license',
+            key_lic: 'fsssai_lic_license',
             url: null,
             valid_till: null,
         },
@@ -74,7 +74,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'iso_cert',
             key_text: 'iso_cert_text',
             view: false,
-            key_lic: 'iso_certificate_license',
+            key_lic: 'iso_cert_license',
             url: null,
             valid_till: null,
         },
@@ -144,7 +144,7 @@ const PartnerBussinessTypeCompliances = () => {
             key: 'up_cond_storage_lic',
             key_text: 'up_cond_storage_lic_text',
             view: false,
-            key_lic: 'up_cond_storage_license',
+            key_lic: 'up_cond_storage_lic_license',
             url: null,
             valid_till: null,
         },
@@ -373,7 +373,7 @@ const PartnerBussinessTypeCompliances = () => {
         // if (!validateData()) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
-        // navigate('/asset_success')
+        navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
         // }
 
@@ -437,8 +437,41 @@ const PartnerBussinessTypeCompliances = () => {
         }
 
     }, [])
-    console.log("tryttytyrty",array);
-    
+    console.log("tryttytyrty", array);
+/* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+`fetchDetails.data` value changes. */
+    useEffect(() => {
+
+
+        if (fetchDetails?.data) {
+            const apiData: any = fetchDetails?.data;
+
+            const payload: any = {
+                asset_id: id,
+                asset_type_id: localStorage.getItem('asset_id')
+            };
+
+            array.forEach((fieldDef: any) => {
+                const { key, key_text, key_lic } = fieldDef;
+
+                if (apiData[key]) {
+                    payload[key] = apiData[key];
+                }
+
+                if (apiData[key_text]) {
+                    payload[key_text] = apiData[key_text];
+                }
+
+                if (apiData[key_lic]) {
+                    payload[key_lic] = apiData[key_lic];
+                }
+            });
+            setDateArray(payload)
+            console.log("Payload:", payload);
+        }
+
+
+    }, [fetchDetails?.data])
     return (
         <div className='flex'>
             <ToastContainer />
@@ -539,7 +572,9 @@ const PartnerBussinessTypeCompliances = () => {
                                                     className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
-                                                    <input type='date' placeholder='Valid Till' name={item?.key_text}
+                                                    <input type='date'
+                                                     disabled={isDisabled}
+                                                    placeholder='Valid Till' name={item?.key_text}
                                                         defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
@@ -560,7 +595,9 @@ const PartnerBussinessTypeCompliances = () => {
                                                     className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
-                                                    <input type='text' placeholder='Licence No' name={`${item?.key_lic}`}
+                                                    <input type='text'
+                                                     disabled={isDisabled}
+                                                    placeholder='Licence No' name={`${item?.key_lic}`}
                                                         defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
                                                         className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm 

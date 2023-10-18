@@ -238,11 +238,11 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     // Display a success message and navigate to a new page
                     messageView(result.message)
-                    navigate(`/partner-bussiness-type-compliance/${id}`)
+                    navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
 
                     if (result?.status === 200) {
                         setTimeout(() => {
-                            navigate(`/partner-bussiness-type-compliance/${id}`)
+                            navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
                         }, 2000)
                     }
                 } else {

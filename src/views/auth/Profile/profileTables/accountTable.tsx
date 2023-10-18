@@ -70,7 +70,24 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
     }
 
     const navigate = useNavigate()
+    const handleDelete=(id:any)=>{
+        var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
 
+var requestOptions:any = {
+  method: 'DELETE',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
+  .then(response => response.text())
+  .then((result:any) => {
+    console.log("TTTTTTT",result)
+    fetchData();
+  })
+  .catch(error => console.log('error', error));
+    }
     const handleEdit = (rowData: any) => {
         // Handle edit action for different asset types.
         setformData({ ...rowData, isdisabled: false, type: "Edit" })
@@ -203,6 +220,12 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
                         >
                             View
                         </Button>
+                        <Button
+                            className="!p-2"
+                            onClick={() => handleDelete(rowData?.id)}
+                        >
+                            Delete
+                        </Button>
                     </td>
                 )
             }
@@ -231,6 +254,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             </td>
         ))
     }
+  
     React.useEffect(() => {
         // Update the displayed data when the AllStore prop changes.
         if (AllStore) {
