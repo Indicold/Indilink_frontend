@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 
 const PartnerMoveMakeModal = ({setModal,fetchList,fetchmake}:any) => {
-    const {
+    let {
         result: MakeModelResponse,
         loading,
         sendPostRequest: AddMakeModel,
@@ -26,13 +26,14 @@ const PartnerMoveMakeModal = ({setModal,fetchList,fetchmake}:any) => {
 console.log("MakeModelResponse",MakeModelResponse);
 
     useEffect(() => {
-        if(MakeModelResponse?.length>0){
+        if(MakeModelResponse?.status==200){
             setModal(false)
-            
+            fetchList();
+            fetchmake();
+            MakeModelResponse = 'asfsd'
            
         }
-        fetchList();
-            fetchmake();
+        
     }, [MakeModelResponse,MakeModelResponse?.message])
 
   return (

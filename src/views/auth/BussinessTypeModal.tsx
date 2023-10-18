@@ -235,7 +235,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                     )}
                                 </div>
                                 {localStorage.getItem('user_type') ===
-                                    'Partner' && (
+                                    'Partner' && Bussiness !== 'Move' && (
                                     <div className="flex">
                                         <FormItem
                                             label="Select Country"
@@ -305,17 +305,28 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                     </div>
                                 )}
                                 <div className="flex">
-                                    <Button
+                                 { Bussiness==='Move' ?  <Button
                                         style={{ borderRadius: '13px' }}
                                         block
-                                        disabled={localStorage.getItem('user_type') === 'Partner' ? (Bussiness == '' || !formData?.country_id || !formData?.category_id) : Bussiness === ''}
                                         variant="solid"
                                         type="button"
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                     >
                                         Next
-                                    </Button>
+                                    </Button> :
+                                    <Button
+                                    style={{ borderRadius: '13px' }}
+                                    block
+                                    disabled={localStorage.getItem('user_type') === 'Partner' ? (Bussiness == '' || !formData?.country_id || !formData?.category_id) : Bussiness === ''}
+                                    variant="solid"
+                                    type="button"
+                                    onClick={handleRoute}
+                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                >
+                                    Next
+                                </Button> 
+                                    }
                                 </div>
                             </div>
                         </div>

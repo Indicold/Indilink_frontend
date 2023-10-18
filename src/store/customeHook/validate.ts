@@ -997,9 +997,9 @@ export const validateBasicForm = (data: any, setErrors: any) => {
         newErrors.address = 'This Field is required'
     }
 
-    if (data?.gst_file?.length<1) {
-        newErrors.gst_file = 'Gst file is required'
-    }
+    // if (data?.gst_file?.length<1) {
+    //     newErrors.gst_file = 'Gst file is required'
+    // }
     if (data?.shareholder_ids?.length<1) {
         newErrors.shareholder_ids = 'This Field is required'
     }

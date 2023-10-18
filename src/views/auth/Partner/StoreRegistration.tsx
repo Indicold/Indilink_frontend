@@ -1,4 +1,4 @@
-import { Button, FormContainer, FormItem, Input } from '@/components/ui'
+import { Button, FormContainer, FormItem, Input, Tooltip } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import ChamberDetailModal from './MultistepForm/ChamberDetailModal'
@@ -45,9 +45,9 @@ const StoreRegistration = () => {
 
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
-    const {id}:any=useParams()
+    const { id }: any = useParams()
     const fixedOptions1: any = [];
-    const [value1, setValue1] =useState<any>([...fixedOptions1]);
+    const [value1, setValue1] = useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
     const {
         data: ColdStorageType,
@@ -93,11 +93,13 @@ const StoreRegistration = () => {
         data: fetchDetailsAll,
         loading: fetchDetailsloadingAll,
         error: fetchDetailsSerrorAll,
-        refetch:FetchAgain
+        refetch: FetchAgain
     } = useApiFetch<any>(`partner/store/components-all/${id}`, token)
-    const { result: response, loading, sendPostRequest }:any = usePostApi(`partner/store/chambers`);
-    const { result: responseca, sendPostRequest:sendPostRequestca }:any = usePostApi(`partner/store/ca-equipments`);
-    const { result: responsecompressor, sendPostRequest:sendPostRequestcompressor }:any = usePostApi(`partner/store/get-compressors`);
+    const { data: profileData, loading: PDloading, error: PDerror } =
+        useApiFetch<any>(`auth/get-user-profile`, token);
+    const { result: response, loading, sendPostRequest }: any = usePostApi(`partner/store/chambers`);
+    const { result: responseca, sendPostRequest: sendPostRequestca }: any = usePostApi(`partner/store/ca-equipments`);
+    const { result: responsecompressor, sendPostRequest: sendPostRequestcompressor }: any = usePostApi(`partner/store/get-compressors`);
     // Manage state variables for modals and other components
     const [chamberModal, setChamberModal] = useState(false)
     const [CAModal, setCAModal] = useState<any>(false)
@@ -110,14 +112,16 @@ const StoreRegistration = () => {
     const [genModal, setGenModal] = useState<any>(false)
     const [MHEModal, setMHEModal] = useState<any>(false)
     const [SEModal, setSEModal] = useState<any>(false)
-    const [chamberData,setChamberData]=useState<any>([])
-    const [CAData,setCAData]=useState<any>([])
+    const [chamberData, setChamberData] = useState<any>([])
+    const [CAData, setCAData] = useState<any>([])
     // Fetch the current location
     const location = useLocation()
 
     // Initialize state variables for form data and errors
     const [dataa, setData] = useState<any>({
-        store_type_id:value1
+        store_type_id: value1,
+        three_d_view_of_asset: [],
+        photos_of_asset: []
     })
 
     const [errors, setErrors] = useState<any>({})
@@ -125,28 +129,102 @@ const StoreRegistration = () => {
     // Access the navigate function from React Router
     const navigate = useNavigate()
 
-    
+
 
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        dataa.store_type_id=value1?.map((item:any)=>item?.id)
-        console.log("T666666",dataa);
+        dataa.store_type_id = value1?.map((item: any) => item?.id)
+        console.log("T666666", dataa);
+        let formdata: any = new FormData();
+        formdata.append("asset_id", id);
+        formdata.append("city_id", dataa?.city_id);
+        formdata.append("address", dataa?.address);
+        formdata.append("total_tonnage", dataa?.total_tonnage);
+        if (dataa?.store_type_id) for (const value of value1?.map((item: any) => item?.id)) {
+            formdata.append("store_type_id", value);
+        }
+        formdata.append("cold_storage_type_id", dataa?.cold_storage_type_id);
+        formdata.append("no_of_chambers", dataa?.no_of_chambers);
+        if (dataa?.chamber_ids) for (const value of dataa?.chamber_ids) {
+            formdata.append("chamber_ids", value);
+        }
+        formdata.append("ante_room_area", dataa?.ante_room_area);
+        formdata.append("total_number_of_docks", dataa?.total_number_of_docks);
+        formdata.append("total_office_space", dataa?.total_office_space);
+        formdata.append("type_of_dock_id", dataa?.type_of_dock_id);
+        formdata.append("processing_area", dataa?.processing_area);
+        formdata.append("parking_area", dataa?.parking_area);
+        formdata.append("type_of_refrigeration_id", dataa?.type_of_refrigeration_id);
+        formdata.append("installation_year", dataa?.installation_year);
+        formdata.append("facility_manager_name", dataa?.facility_manager_name);
+        formdata.append("facility_manager_contact", dataa?.facility_manager_contact);
+        formdata.append("internet", dataa?.internet);
+        formdata.append("wifi", dataa?.wifi);
+        formdata.append("cctv", dataa?.cctv);
+        formdata.append("cctv_internet", dataa?.cctv_internet);
+        formdata.append("driver_area_food_resting", dataa?.driver_area_food_resting);
+        formdata.append("weight_bridge_id", dataa?.weight_bridge_id);
+        formdata.append("road_condition_id", dataa?.road_condition_id);
+        console.log("5GHGHGHGHG", dataa?.three_d_view_of_asset);
+
+        if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
+            formdata.append(
+                'three_d_view_of_asset',
+                value
+            )
+        }
+        if (dataa?.photos_of_asset) for (const value of dataa?.photos_of_asset) {
+            formdata.append(
+                'photos_of_asset',
+                value
+            )
+        }
+
+        if (dataa?.compressor_ids) for (const value of dataa?.compressor_ids) {
+            formdata.append("compressor_ids", value);
+        }
+        if (dataa?.acu_ids) for (const value of dataa?.acu_ids) {
+            formdata.append("acu_ids", value);
+        }
+        if (dataa?.condensor_ids) for (const value of dataa?.condensor_ids) {
+            formdata.append("condensor_ids", value);
+        }
+        if (dataa?.amc_ids) for (const value of dataa?.amc_ids) {
+            formdata.append("amc_ids", value);
+        }
+        if (dataa?.iot_devices_ids) for (const value of dataa?.iot_devices_ids) {
+            formdata.append("iot_devices_ids", value);
+        }
+        if (dataa?.it_devices_ids) for (const value of dataa?.it_devices_ids) {
+            formdata.append("it_devices_ids", value);
+        }
+        if (dataa?.generator_ids) for (const value of dataa?.generator_ids) {
+            formdata.append("generator_ids", value);
+        }
+        if (dataa?.mhe_ids) for (const value of dataa?.mhe_ids) {
+            formdata.append("mhe_ids", value);
+        }
+        if (dataa?.solar_invertor_ids) for (const value of dataa?.solar_invertor_ids) {
+            formdata.append("solar_invertor_ids", value);
+        }
+
+
         // Validate the form data
         if (validateStorePartnerForm(dataa, setErrors)) {
             try {
                 // Set the asset_id based on local storage
                 dataa.asset_id = id
-          
+
 
                 // Define the HTTP request configuration
                 const config = {
                     method: 'post',
                     headers: {
-                        'Content-Type': 'application/json',
+                        // 'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify(dataa),
+                    body: formdata,
                 }
 
 
@@ -160,7 +238,7 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     // Display a success message and navigate to a new page
                     messageView(result.message)
-                    // navigate(`/partner-bussiness-type-compliance/${id}`)
+                    navigate(`/partner-bussiness-type-compliance/${id}`)
 
                     if (result?.status === 200) {
                         setTimeout(() => {
@@ -184,140 +262,178 @@ const StoreRegistration = () => {
     const [phone, setPhone] = useState('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
+        console.log("TYYYYYYYY", e.target.name);
+
         const newData: any = { ...dataa }
-        if(e.target.name==='store_type_id'){
-            console.log("TTTTTT6565656",e.target.value);
-            
+        if (e.target.name === 'store_type_id') {
+            console.log("TTTTTT6565656", e.target.value);
+
         }
-        if(e.target.name==='facility_manager_contact') {
-            if(e.target.value.length<=10) {
-                setPhone(e.target.value)
+
+        if (e.target.name === 'facility_manager_contact') {
+            if (e.target.value.length <= 10) {
+                // setPhone(e.target.value)
                 newData[e.target.name] = e.target.value
             }
-        }
-        else newData[e.target.name] = e.target.value
-        newData.no_of_chambers = dataa.no_of_chambers?dataa.no_of_chambers:'0';
+        } else if (e.target.name == 'three_d_view_of_asset') {
+
+            const fileInput: any = e.target; // Assuming e.target is the input element
+            const fileArray = Array.from(fileInput.files);
+            newData['three_d_view_of_asset'] = fileArray;
+            console.log("TTTTTTT787878787", fileArray, fileInput.files);
+
+        } else  
+            if (e.target.name === 'photos_of_asset') {
+
+                const fileInput = e.target; // Assuming e.target is the input element
+                const fileArray = [];
+
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    const file = fileInput.files[i];
+                    fileArray.push(file);
+                }
+                newData[e.target.name] = fileArray;
+
+            }
+            else newData[e.target.name] = e.target.value
+        newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
         console.log("newData", newData)
-        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
+        if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
 
     const [value, setValue] = useState([])
 
-    const handleStoreChange = (e:any, newValue:any) => {
+    const handleStoreChange = (e: any, newValue: any) => {
         const newData: any = { ...dataa }
-        newData['store_type_id'] = newValue?.map((item:any,index:any)=>item?.id)
+        newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
         setData(newData)
-        if(errors[e.target.name])validateStorePartnerForm(newData, setErrors)
+        if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         console.log("newDataa", newData)
         // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
     }
 
     // Use useEffect to update form data when fetchDetails changes
-    
+
     useEffect(() => {
-        
-        if (fetchDetails?.data !== null && fetchDetails?.data !==undefined) {
+
+        if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
             setData(fetchDetails?.data)
         }
     }, [fetchDetails])
-useEffect(()=>{
-    
-    const newState:any = { ...dataa };
-    newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
-    console.log("no_of_chambers", newState)
-    setData(newState)
-    setValue(dataa?.store_type_id)
-    console.log("dataa", dataa)
-if(localStorage.getItem('chamber_ids')){
-    const arr:any=JSON.parse(localStorage.getItem('chamber_ids')) || []; 
-    if(arr){
-        const filteredArray:any = arr?.filter((item:any) => item !== null) || [];
-        const body:any={
-            ids:filteredArray
-        }
-        sendPostRequest(body)
-    }
+    useEffect(() => {
 
-    
-}
-
-},[])
-useEffect(()=>{
-    if(localStorage.getItem('ca_equipment_ids')){
-        const arr:any=JSON.parse(localStorage.getItem('ca_equipment_ids')) || []; 
-        if(arr){
-            const filteredArray:any = arr?.filter((item:any) => item !== null) || [];
-            const body:any={
-                ids:filteredArray
+        const newState: any = { ...dataa };
+        newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
+        console.log("no_of_chambers", newState)
+        setData(newState)
+        setValue(dataa?.store_type_id)
+        console.log("dataa", dataa)
+        if (localStorage.getItem('chamber_ids')) {
+            const arr: any = JSON.parse(localStorage.getItem('chamber_ids')) || [];
+            if (arr) {
+                const filteredArray: any = arr?.filter((item: any) => item !== null) || [];
+                const body: any = {
+                    ids: filteredArray
+                }
+                sendPostRequest(body)
             }
-            console.log("GGGGGG",body,filteredArray);
-            if(arr.length>0){
-      sendPostRequestca(body)
-            }
-          
+
+
         }
-    
-        
+
+    }, [])
+    useEffect(() => {
+        if (localStorage.getItem('ca_equipment_ids')) {
+            const arr: any = JSON.parse(localStorage.getItem('ca_equipment_ids')) || [];
+            if (arr) {
+                const filteredArray: any = arr?.filter((item: any) => item !== null) || [];
+                const body: any = {
+                    ids: filteredArray
+                }
+                console.log("GGGGGG", body, filteredArray);
+                if (arr.length > 0) {
+                    sendPostRequestca(body)
+                }
+
+            }
+
+
+        }
+    }, [])
+    useEffect(() => {
+        if (response?.data) {
+            setChamberData(response?.data)
+        }
+        if (responseca?.data) {
+            setCAData(responseca?.data)
+        }
+    }, [response?.data, responseca?.data])
+
+    useEffect(() => {
+        setData(dataa)
+    }, [dataa])
+
+    const targetArray1: any = StorageType?.data || [];
+    const itemsToFind1 = dataa?.store_type_id;
+    console.log("TTTTTTTTT768786786786867", dataa);
+
+    useEffect(() => {
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        setValue1(foundItems)
+    }, [StorageType?.data, dataa?.store_type_id])
+
+    const handleCheckbox = (e: any) => {
+        const isChecked: any = e.target.checked;
+        const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
+        setPhone(phoneNumberWithoutCountryCode)
+        if (isChecked && profileData?.data) {
+            setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
+        } else {
+            setPhone('');
+            setData({ ...dataa, facility_manager_name: ``, facility_manager_contact: '' })
+
+        }
+
     }
-},[])
-useEffect(()=>{
-if(response?.data){
-    setChamberData(response?.data)
-}
-if(responseca?.data){
-    setCAData(responseca?.data)
-}
-},[response?.data,responseca?.data])
+    console.log("TTTTTTT77777777", dataa);
 
-useEffect(()=>{
-    setData(dataa)
-},[dataa])
-
-const targetArray1: any = StorageType?.data || [];
-const itemsToFind1 = dataa?.store_type_id;
-console.log("TTTTTTTTT",dataa);
-
-useEffect(() => {
-    const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
-    setValue1(foundItems)
-}, [StorageType?.data,dataa?.store_type_id])
     return (
         <div className='flex'>
             <div className='w-1/6'>
-            
 
-            <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
-    <li className="mb-10 ml-6">            
-    <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z"/>
-            </svg>
-        </span>
-        <h6 className="font-medium leading-tight">Asset Specifications</h6>
-        {/* <p className="text-sm">Step details here</p> */}
-    </li>
-    <li className="mb-10 ml-6">
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
-            </svg>
-        </span>
-        <h6 className="font-medium leading-tight">Compliance Details</h6>
-        {/* <p className="text-sm">Step details here</p> */}
-    </li>
-    <li className="mb-10 ml-6">
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-            </svg>
-        </span>
-        <h6 className="font-medium leading-tight">Additional submissions</h6>
-        {/* <p className="text-sm">Step details here</p> */}
-    </li>
-</ol>
+
+                <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                    <li className="mb-10 ml-6">
+                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
+                            </svg>
+                        </span>
+                        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+                        {/* <p className="text-sm">Step details here</p> */}
+                    </li>
+                    <li className="mb-10 ml-6">
+                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
+                            </svg>
+                        </span>
+                        <h6 className="font-medium leading-tight">Compliance Details</h6>
+                        {/* <p className="text-sm">Step details here</p> */}
+                    </li>
+                    <li className="mb-10 ml-6">
+                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+                            </svg>
+                        </span>
+                        <h6 className="font-medium leading-tight">Additional submissions</h6>
+                        {/* <p className="text-sm">Step details here</p> */}
+                    </li>
+                </ol>
 
 
 
@@ -333,7 +449,7 @@ useEffect(() => {
                 fetchDetailsloading) && <LoaderSpinner />}
             <div className="bg-white p-4 rounded w-5/6">
                 <ToastContainer />
-                <ArrowBackIcon onClick={()=>navigate(-1)} />
+                <ArrowBackIcon onClick={() => navigate(-1)} />
                 <h4 className="text-center text-head-title">Store</h4>
                 <Formik
                     initialValues={{ field: true }}
@@ -343,10 +459,10 @@ useEffect(() => {
                 >
                     {({ handleSubmit }) => (
                         <Form className="py-2 ">
-                            
+
                             {chamberModal && (
                                 <ChamberDetailModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={chamberModal}
                                     formD={dataa}
                                     update={setData}
@@ -356,7 +472,7 @@ useEffect(() => {
 
                             {CAModal && (
                                 <CAEquipmentsModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={CAModal}
                                     formD={dataa}
                                     update={setData}
@@ -367,7 +483,7 @@ useEffect(() => {
 
                             {compModal && (
                                 <CompressorModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={compModal}
                                     formD={dataa}
                                     update={setData}
@@ -378,7 +494,7 @@ useEffect(() => {
 
                             {ACUModal && (
                                 <ACUModall
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={ACUModal}
                                     formD={dataa}
                                     update={setData}
@@ -389,7 +505,7 @@ useEffect(() => {
 
                             {condensorModal && (
                                 <CondensorDetailsModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={condensorModal}
                                     formD={dataa}
                                     update={setData}
@@ -411,7 +527,7 @@ useEffect(() => {
 
                             {IOTModal && (
                                 <IOTDetailModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={IOTModal}
                                     formD={dataa}
                                     update={setData}
@@ -422,7 +538,7 @@ useEffect(() => {
 
                             {ITModal && (
                                 <ITDetailModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={ITModal}
                                     formD={dataa}
                                     update={setData}
@@ -433,7 +549,7 @@ useEffect(() => {
 
                             {genModal && (
                                 <GeneratorDetailModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={genModal}
                                     formD={dataa}
                                     update={setData}
@@ -444,7 +560,7 @@ useEffect(() => {
 
                             {MHEModal && (
                                 <MHEDetailsModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={MHEModal}
                                     formD={dataa}
                                     update={setData}
@@ -455,7 +571,7 @@ useEffect(() => {
 
                             {SEModal && (
                                 <SolarInverterModal
-                                FetchAgain={FetchAgain}
+                                    FetchAgain={FetchAgain}
                                     modal={SEModal}
                                     formD={dataa}
                                     update={setData}
@@ -465,6 +581,72 @@ useEffect(() => {
                             )}
 
                             <FormContainer>
+                                <div className="flex items-center mb-4">
+                                    <input
+                                        id="default-checkbox"
+                                        type="checkbox"
+                                        defaultValue=""
+                                        disabled={location?.state}
+                                        onClick={(e: any) => handleCheckbox(e)}
+                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    />
+                                    <label
+                                        htmlFor="default-checkbox"
+                                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                    >
+                                        Are You Facility Manager
+                                    </label>
+                                </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="Facility Manager*"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <Field
+                                            disabled={location?.state}
+                                            type="text"
+                                            autoComplete="off"
+                                            name="facility_manager_name"
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
+                                            placeholder="Facility Manager Name"
+                                            value={dataa?.facility_manager_name}
+                                            component={Input}
+                                        />
+                                        <p className="text-[red]">
+                                            {errors &&
+                                                errors.facility_manager_name}
+                                        </p>{' '}
+                                    </FormItem>
+                                    <FormItem
+                                        label="Contact Number*"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <Field
+                                            disabled={location?.state}
+                                            type="number"
+                                            autoComplete="off"
+                                            minLength={10}
+                                            maxLength={10}
+                                            name="facility_manager_contact"
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
+                                            placeholder="Contact Number"
+                                            value={
+                                                phone || dataa?.facility_manager_contact
+                                            }
+                                            component={Input}
+                                        />
+
+
+                                        <p className="text-[red]">
+                                            {errors &&
+                                                errors.facility_manager_contact}
+                                        </p>{' '}
+                                    </FormItem>
+                                </div>
                                 <div className="flex">
                                     <FormItem
                                         label="City*"
@@ -525,11 +707,11 @@ useEffect(() => {
                                         label="Total Tonnage(MT)*"
                                         className="w-1/2 text-label-title"
                                     >
-                                        
+
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.total_tonnage }
+                                                value={dataa?.total_tonnage}
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -582,35 +764,36 @@ useEffect(() => {
                                                     )
                                                 )}
                                         </select> */}
-                                     <Autocomplete
-                                                multiple
-                                                limitTags={1}
-                                                id="fixed-tags-demo"
-                                                value={value1}
-                                                onChange={(event, newValue) => {
-                                                    setValue1([
-                                                        ...fixedOptions1,
-                                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
-                                                    ]);
-                                                    handlechange(event)
-                                                }}
-                                                options={StorageType ? StorageType?.data : []}
-                                                getOptionLabel={(option: any) => option?.type}
-                                                renderTags={(tagValue, getTagProps) =>
-                                                    tagValue.map((option, index) => (
-                                                        <Chip
-                                                            label={option?.type}
-                                                            {...getTagProps({ index })}
-                                                            disabled={fixedOptions1.indexOf(option) !== -1}
-                                                        />
-                                                    ))
-                                                }
-                                                renderInput={(params) => (
-                                                    <TextField {...params}
-                                                        name="store_type_id"
-                                                        placeholder="Store Category" />
-                                                )}
-                                            />
+                                        <Autocomplete
+                                            multiple
+                                            limitTags={1}
+                                            id="fixed-tags-demo"
+                                            value={value1}
+                                            onChange={(event, newValue) => {
+                                                setValue1([
+                                                    ...fixedOptions1,
+                                                    ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
+                                                ]);
+                                                handlechange(event)
+                                            }}
+                                            options={StorageType ? StorageType?.data : []}
+                                            getOptionLabel={(option: any) => option?.type}
+                                            renderTags={(tagValue, getTagProps) =>
+                                                tagValue.map((option, index) => (
+                                                    <Chip
+                                                        label={option?.type}
+                                                        {...getTagProps({ index })}
+                                                        disabled={fixedOptions1.indexOf(option) !== -1}
+                                                    />
+                                                ))
+                                            }
+                                            renderInput={(params) => (
+                                                <TextField {...params}
+                                                    name="store_type_id"
+                                                    placeholder="Store Category" />
+                                            )}
+                                        />
+
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}
                                         </p>
@@ -653,7 +836,9 @@ useEffect(() => {
                                                 errors.cold_storage_type_id}
                                         </p>
                                     </FormItem>
-                                    <FormItem
+
+
+                                    {/* <FormItem
                                         label="Total Number Of Chambers*"
                                         className="w-1/2 text-label-title"
                                     >
@@ -664,13 +849,13 @@ useEffect(() => {
                                             min="0"
                                             name="no_of_chambers"
                                             placeholder="Total number of chambers"
-                                            value={fetchDetailsAll?.data?.chambers || dataa?.chamber_ids?.length || 0}
+                                            value={fetchDetailsAll?.data?.chambers?.length || 0}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.no_of_chambers}
                                         </p>
-                                    </FormItem>
+                                    </FormItem> */}
                                 </div>
                                 <div className="flex">
                                     <FormItem
@@ -680,7 +865,7 @@ useEffect(() => {
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.ante_room_area }
+                                                value={dataa?.ante_room_area}
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -734,7 +919,7 @@ useEffect(() => {
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
-                                                    dataa?.total_office_space 
+                                                    dataa?.total_office_space
                                                 }
                                                 min="0"
                                                 type="number"
@@ -801,7 +986,7 @@ useEffect(() => {
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                value={dataa?.processing_area }
+                                                value={dataa?.processing_area}
                                                 type="number"
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -811,7 +996,7 @@ useEffect(() => {
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                             />
-                                          {/* <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
@@ -831,7 +1016,7 @@ useEffect(() => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
                                                 min={0}
-                                                value={dataa?.parking_area }
+                                                value={dataa?.parking_area}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -839,7 +1024,7 @@ useEffect(() => {
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                             />
-                                        {/* <select
+                                            {/* <select
                                                 disabled={true}
                                                 className="border-0"
                                             >
@@ -892,7 +1077,7 @@ useEffect(() => {
                                         label="Year of Installation*"
                                         className="w-1/2 text-label-title"
                                     >
-                                        
+
                                         <select
                                             disabled={location?.state}
                                             id="countries"
@@ -937,54 +1122,7 @@ useEffect(() => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Vendor Name*"
-                                        className="w-1/2 text-label-title"
-                                    >
-                                        <Field
-                                            disabled={location?.state}
-                                            type="text"
-                                            autoComplete="off"
-                                            name="facility_manager_name"
-                                            onChange={(e: any) =>
-                                                handlechange(e)
-                                            }
-                                            placeholder="Vendor Name"
-                                            value={dataa?.facility_manager_name}
-                                            component={Input}
-                                        />
-                                        <p className="text-[red]">
-                                            {errors &&
-                                                errors.facility_manager_name}
-                                        </p>{' '}
-                                    </FormItem>
-                                    <FormItem
-                                        label="Vendor Contact Number*"
-                                        className="w-1/2 text-label-title"
-                                    >
-                                        <Field
-                                            disabled={location?.state}
-                                            type="number"
-                                            autoComplete="off"
-                                            minLength={10}
-                                            maxLength={10}
-                                            name="facility_manager_contact"
-                                            onChange={(e: any) =>
-                                                handlechange(e)
-                                            }
-                                            placeholder="Contact Number"
-                                            value={
-                                                phone || dataa?.facility_manager_contact
-                                            }
-                                            component={Input}
-                                        />
-                                        <p className="text-[red]">
-                                            {errors &&
-                                                errors.facility_manager_contact}
-                                        </p>{' '}
-                                    </FormItem>
-                                </div>
+
 
                                 <div className="flex">
                                     <FormItem
@@ -994,21 +1132,21 @@ useEffect(() => {
                                         <select
                                             disabled={location?.state}
                                             id="countries"
-                                            name="internet"
+                                            name="cctv_internet"
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
-                                                value="true"
-                                                selected={dataa?.internet}
+                                                value="1"
+                                                selected={dataa?.cctv_internet}
                                             >
                                                 Yes
                                             </option>
                                             <option
-                                                value="false"
-                                                selected={!dataa?.internet}
+                                                value="0"
+                                                selected={!dataa?.cctv_internet}
                                             >
                                                 No
                                             </option>
@@ -1031,13 +1169,13 @@ useEffect(() => {
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
-                                                value="true"
+                                                value="1"
                                                 selected={dataa?.wifi}
                                             >
                                                 Yes
                                             </option>
                                             <option
-                                                value="false"
+                                                value="0"
                                                 selected={!dataa?.wifi}
                                             >
                                                 No
@@ -1063,13 +1201,13 @@ useEffect(() => {
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
-                                                value="true"
+                                                value="1"
                                                 selected={dataa?.cctv}
                                             >
                                                 Yes
                                             </option>
                                             <option
-                                                value="false"
+                                                value="0"
                                                 selected={!dataa?.cctv}
                                             >
                                                 No
@@ -1149,9 +1287,9 @@ useEffect(() => {
                                                         )
                                                     )}
                                             </select>
-                                        <p className="text-[red]">
-                                            {errors && errors.weight_bridge_id}
-                                        </p>{' '}
+                                            <p className="text-[red]">
+                                                {errors && errors.weight_bridge_id}
+                                            </p>{' '}
                                         </div>
                                     </FormItem>
                                     <FormItem
@@ -1191,19 +1329,71 @@ useEffect(() => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
+                                <div className="flex">
+                                    <FormItem
+                                        label="3D Photo*"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                multiple
+                                                name="three_d_view_of_asset"
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type="file"
+                                                min={0}
+                                                onChange={(e: any) =>
+                                                    handlechange(e)
+                                                }
+
+                                            />
+
+                                        </div>
+                                        <p className="text-[red]">
+                                            {errors && errors.processing_area}
+                                        </p>{' '}
+                                    </FormItem>
+                                    <FormItem
+                                        label="Photo Of Assets*"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <input
+                                                multiple
+                                                className="w-2/3 border-0 focus:outline-0"
+                                                type="file"
+                                                min={0}
+                                                onChange={(e: any) =>
+                                                    handlechange(e)
+                                                }
+                                                onKeyDown={onkeyDown}
+                                                name="photos_of_asset"
+                                                placeholder="Enter value"
+                                            />
+                                            {/* <select
+                                                disabled={true}
+                                                className="border-0"
+                                            >
+                                                <option>Square feet</option>
+                                            </select> */}
+                                        </div>
+                                        <p className="text-[red]">
+                                            {errors && errors.parking_area}
+                                        </p>{' '}
+                                    </FormItem>
+                                </div>
                                 <Accordion>
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 Chambers
-                                            <p className='text-[red]'>{errors?.chamber_ids}</p>
+                                                <p className='text-[red]'>{errors?.chamber_ids}</p>
 
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.chambers.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                               
+
                                                     <div className="w-[20%] text-center my-auto">
                                                         Chamber name
                                                     </div>
@@ -1214,34 +1404,34 @@ useEffect(() => {
                                                         Chamber size
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
-                                                      Created 
+                                                        Created
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
-                                                   Updated
+                                                        Updated
                                                     </div>
                                                     {/* <div className="mx-auto">
                                                         Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.chambers?.map((item:any,index:any)=>(
-   <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-   <div className="w-[20%] text-center my-auto">
-    {item?.chamber_name}
-   </div>
-   <div className="w-[20%] text-center my-auto">
-     {item?.chamber_number}
-   </div>
-   <div className="w-[20%] text-center my-auto !text-center">
-       {item?.no_of_pallets}
-   </div>
-   <div className="w-[20%] text-center my-auto">
-      {new Date(item?.created_at)?.toLocaleDateString()}
-   </div>
-   <div className="w-[20%] text-center my-auto">
-       {new Date(item?.updated_at)?.toLocaleDateString()}
-   </div>
-   <div className="mx-2 flex">
-   {/* <Button
+                                                {fetchDetailsAll?.data?.chambers?.map((item: any, index: any) => (
+                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[20%] text-center my-auto">
+                                                            {item?.chamber_name}
+                                                        </div>
+                                                        <div className="w-[20%] text-center my-auto">
+                                                            {item?.chamber_number}
+                                                        </div>
+                                                        <div className="w-[20%] text-center my-auto !text-center">
+                                                            {item?.no_of_pallets}
+                                                        </div>
+                                                        <div className="w-[20%] text-center my-auto">
+                                                            {new Date(item?.created_at)?.toLocaleDateString()}
+                                                        </div>
+                                                        <div className="w-[20%] text-center my-auto">
+                                                            {new Date(item?.updated_at)?.toLocaleDateString()}
+                                                        </div>
+                                                        <div className="mx-2 flex">
+                                                            {/* <Button
        className="!p-2 pt-0 pb-0 mx-1"
        // onClick={() => handleEdit(rowData)}
    >
@@ -1253,23 +1443,23 @@ useEffect(() => {
    >
        View
    </Button> */}
-   </div>
-</div>
+                                                        </div>
+                                                    </div>
                                                 ))}
-                                             
-                                            </div>:<p className="text-center">Currently there are no chambers.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setChamberModal(
-                                                                true
-                                                            )
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+
+                                            </div> : <p className="text-center">Currently there are no chambers.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setChamberModal(
+                                                            true
+                                                        )
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1280,7 +1470,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.caEquipments.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.caEquipments.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[33%] text-center my-auto">
                                                         Make
@@ -1295,18 +1485,18 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.caEquipments?.map((item:any,index:any)=>(
-  <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-  <div className="w-[33%] text-center my-auto">
-      {item?.make}
-  </div>
-  <div className="w-[33%] text-center my-auto">
-      {item?.model}
-  </div>
-  <div className="w-[33%] text-center my-auto">
-      {item?.cmf}
-  </div>
-  {/* <div className="w-[25%] mx-auto flex">
+                                                {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
+                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.make}
+                                                        </div>
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.model}
+                                                        </div>
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.cmf}
+                                                        </div>
+                                                        {/* <div className="w-[25%] mx-auto flex">
   <Button
       className="!p-2 pt-0 pb-0 mx-auto"
       // onClick={() => handleEdit(rowData)}
@@ -1320,20 +1510,20 @@ useEffect(() => {
       View
   </Button>
   </div> */}
-</div>
+                                                    </div>
                                                 ))}
-                                              
-                                            </div>:<p className="text-center">Currently there are no CA Equipments.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setCAModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+
+                                            </div> : <p className="text-center">Currently there are no CA Equipments.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setCAModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1344,7 +1534,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.compressors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.compressors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Make
@@ -1365,24 +1555,24 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.compressors?.map((item:any,index:any)=>(
-    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[25%] text-center my-auto">
-        {item?.make}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.model}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.hp}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.cmf}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.amc}
-    </div>
-    {/* <div className="w-[16%] mx-auto flex">
+                                                {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
+                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.make}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.model}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.hp}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.cmf}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.amc}
+                                                        </div>
+                                                        {/* <div className="w-[16%] mx-auto flex">
     <Button
         className="!p-2 pt-0 pb-0 mx-auto"
         // onClick={() => handleEdit(rowData)}
@@ -1396,20 +1586,20 @@ useEffect(() => {
         View
     </Button>
     </div> */}
-</div>
+                                                    </div>
                                                 ))}
-                                            
-                                            </div>:<p className="text-center">Currently there are no Compressors.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setCompModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+
+                                            </div> : <p className="text-center">Currently there are no Compressors.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setCompModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1420,7 +1610,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.acus?.length>0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.acus?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center my-auto">
                                                         Make
@@ -1441,8 +1631,8 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.acus?.map((item:any,index:any)=>(
-                                                        <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.acus?.map((item: any, index: any) => (
+                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                         <div className="w-[20%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
@@ -1474,18 +1664,18 @@ useEffect(() => {
                                                         </div> */}
                                                     </div>
                                                 ))}
-                                            
-                                            </div>:<p className="text-center">Currently there are no ACUs.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setACUModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+
+                                            </div> : <p className="text-center">Currently there are no ACUs.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setACUModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1496,7 +1686,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.condensors?.length>0 ?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.condensors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Make
@@ -1514,21 +1704,21 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.condensors?.map((item:any,index:any)=>(
-    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-    <div className="w-[25%] text-center my-auto">
-        {item?.make}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.model}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.tr}
-    </div>
-    <div className="w-[25%] text-center my-auto">
-        {item?.amc}
-    </div>
-    {/* <div className="w-[20%] mx-auto flex">
+                                                {fetchDetailsAll?.data?.condensors?.map((item: any, index: any) => (
+                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.make}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.model}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.tr}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.amc}
+                                                        </div>
+                                                        {/* <div className="w-[20%] mx-auto flex">
     <Button
         className="!p-2 pt-0 pb-0 mx-auto"
         // onClick={() => handleEdit(rowData)}
@@ -1542,22 +1732,22 @@ useEffect(() => {
         View
     </Button>
     </div> */}
-</div>
+                                                    </div>
                                                 ))}
-                                            
-                                            </div>:<p className="text-center">Currently there are no condensors.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setCondensorModal(
-                                                                true
-                                                            )
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+
+                                            </div> : <p className="text-center">Currently there are no condensors.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setCondensorModal(
+                                                            true
+                                                        )
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1568,7 +1758,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.amcs?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.amcs?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Name of Service
@@ -1586,20 +1776,24 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.amcs?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
-                                                    {item?.name_of_service}
-                                                    </div>
-                                                    <div className="w-[25%] text-center my-auto">
-                                                    {item?.vendor}
-                                                    </div>
-                                                    <div className="w-[25%] text-center my-auto">
-                                                    {item?.valid_till}
-                                                    </div>
-                                                    <div className="w-[25%] text-center my-auto">
-                                                    {item?.fixed_cost}
-                                                    </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
+                                                {fetchDetailsAll?.data?.amcs?.map((item: any, index: any) => {
+                                                    let date: any = new Date(item?.valid_till)
+                                                    date = date?.toLocaleDateString()
+                                                    console.log("amcs", date)
+                                                    return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.name_of_service}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.vendor}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {date}
+                                                        </div>
+                                                        <div className="w-[25%] text-center my-auto">
+                                                            {item?.fixed_cost}
+                                                        </div>
+                                                        {/* <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1613,18 +1807,19 @@ useEffect(() => {
                                                         View
                                                     </Button>
                                                     </div> */}
-                                                </div>))}
-                                            </div>:<p className="text-center">Currently there are no AMCs.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setAMCModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                                    </div>)
+                                                })}
+                                            </div> : <p className="text-center">Currently there are no AMCs.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setAMCModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1635,7 +1830,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.iotDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.iotDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Type
@@ -1653,7 +1848,7 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.iotDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.iotDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
@@ -1681,17 +1876,17 @@ useEffect(() => {
                                                     </Button>
                                                     </div> */}
                                                 </div>))}
-                                            </div>:<p className="text-center">Currently there are no IOT Devices.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setIOTModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                            </div> : <p className="text-center">Currently there are no IOT Devices.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setIOTModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1702,7 +1897,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.itDevices?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.itDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Type
@@ -1720,7 +1915,7 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.itDevices?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
@@ -1748,17 +1943,17 @@ useEffect(() => {
                                                     </Button>
                                                     </div> */}
                                                 </div>))}
-                                            </div>:<p className="text-center">Currently there are no IT Devices.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setITModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                            </div> : <p className="text-center">Currently there are no IT Devices.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setITModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1769,7 +1964,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.generators?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.generators?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center my-auto">
                                                         Make
@@ -1787,7 +1982,7 @@ useEffect(() => {
                                                     Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.generators?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
@@ -1815,17 +2010,17 @@ useEffect(() => {
                                                     </Button>
                                                     </div> */}
                                                 </div>))}
-                                            </div>:<p className="text-center">Currently there are no generators.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setGenModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                            </div> : <p className="text-center">Currently there are no generators.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setGenModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1836,7 +2031,7 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.mhes?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                            {fetchDetailsAll?.data?.mhes?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[33%] text-center my-auto">
                                                         Make
@@ -1851,7 +2046,7 @@ useEffect(() => {
                                                         Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.mhes?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[33%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
@@ -1876,17 +2071,17 @@ useEffect(() => {
                                                     </Button>
                                                     </div> */}
                                                 </div>))}
-                                            </div>:<p className="text-center">Currently there are no MHEs.</p>}
-                                                <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setMHEModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                            </div> : <p className="text-center">Currently there are no MHEs.</p>}
+                                            <div className="flex">
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setMHEModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                     <AccordionItem>
@@ -1897,8 +2092,8 @@ useEffect(() => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                        {fetchDetailsAll?.data?.solarInverters?.length>0?<div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                            <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.solarInverters?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
                                                     <div className="w-[33%] text-center my-auto">
                                                         Make
                                                     </div>
@@ -1912,17 +2107,17 @@ useEffect(() => {
                                                         Actions
                                                     </div> */}
                                                 </div>
-                                                {fetchDetailsAll?.data?.solarInverters?.map((item:any,index:any)=>(<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[33%] text-center my-auto">
-                                                        {item?.make}
-                                                    </div>
-                                                    <div className="w-[33%] text-center my-auto">
-                                                        {item?.model}
-                                                    </div>
-                                                    <div className="w-[33%] text-center my-auto">
-                                                        {item?.capacity}
-                                                    </div>
-                                                    {/* <div className="w-[25%] mx-auto flex">
+                                                    {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.make}
+                                                        </div>
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.model}
+                                                        </div>
+                                                        <div className="w-[33%] text-center my-auto">
+                                                            {item?.capacity}
+                                                        </div>
+                                                        {/* <div className="w-[25%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
                                                         // onClick={() => handleEdit(rowData)}
@@ -1936,31 +2131,31 @@ useEffect(() => {
                                                         View
                                                     </Button>
                                                     </div> */}
-                                                </div>))}</div>
-                                            </div>:<p className="text-center">Currently there are no solar inverters.</p>}
-                                            
+                                                    </div>))}</div>
+                                            </div> : <p className="text-center">Currently there are no solar inverters.</p>}
+
                                             <div className="flex">
-                                                    <button
-                                                        className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                        onClick={() =>
-                                                            setSEModal(true)
-                                                        }
-                                                    >
-                                                        Add details
-                                                    </button>
-                                                </div>
+                                                <button
+                                                    className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
+                                                    onClick={() =>
+                                                        setSEModal(true)
+                                                    }
+                                                >
+                                                    Add details
+                                                </button>
+                                            </div>
                                         </AccordionItemPanel>
                                     </AccordionItem>
                                 </Accordion>
 
                                 <div className="flex justify-center">
-                                <Button
+                                    <Button
                                         style={{ borderRadius: '13px' }}
                                         block
                                         variant="solid"
                                         type="button"
                                         disabled
-                                        onClick={()=>navigate(-1)}
+                                        onClick={() => navigate(-1)}
                                         className="indigo-btn mt-2 !w-[140px] !bg-gray-300 mx-auto rounded-[30px]"
                                     >
                                         Prev

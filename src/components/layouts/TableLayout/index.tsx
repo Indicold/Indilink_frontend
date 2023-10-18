@@ -7,6 +7,8 @@ import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import EditIcon from '@mui/icons-material/Edit';
 // Defines the table header with column names.
 const tableHead = {
   asset_id: "Asset ID",
@@ -26,6 +28,7 @@ const TableLayout = ({ AllStore }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
+  const [Alert,setAlert]=useState<any>(false)
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
@@ -75,15 +78,21 @@ const TableLayout = ({ AllStore }: any) => {
     console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '1')
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
     }
     if (rowData?.assetType === 'Prepare') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '3')
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
     }
     if (rowData?.assetType === 'Move') {
+      localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
+      localStorage.setItem('asset_id', '2')
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
     }
   };
@@ -91,14 +100,20 @@ const TableLayout = ({ AllStore }: any) => {
   const handleView = (rowData: any) => {
     // Handle view action for different asset types.
     if (rowData?.assetType === 'Store') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
     }
     if (rowData?.assetType === 'Prepare') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '3')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
     }
     if (rowData?.assetType === 'Move') {
+      localStorage.setItem('country_id', rowData?.country_id)
+      localStorage.setItem('asset_id', '2')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }
@@ -120,17 +135,18 @@ const handleDocs=(rowData:any)=>{
       if (key === 'is_verified') {
         return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
       }
-      if (key === 'createdAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
+      if (key === 'created_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.created_at)?.toLocaleDateString()}</td>;
       }
-      if (key === 'updatedAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
+      if (key === 'updated_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
-          <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
+          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>
+          <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
+          <Button className='!p-2' onClick={()=>setAlert(true)}>Submit</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -155,6 +171,45 @@ const handleDocs=(rowData:any)=>{
 
   return (
     <>
+    {Alert && <div
+                    id="authentication-modal"
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                >
+                    <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                      
+                            <div className="px-6 py-6 lg:px-8">
+                                <h6 className="text-center"> You cannot make changes after submitting.</h6>
+                                    
+                                
+<div className='flex mt-4'>
+                                <Button
+                                    style={{ borderRadius: '13px' }}
+                                    block
+                                    variant="solid"
+                                    onClick={()=>setAlert(false)}
+                                    type="button"
+                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    style={{ borderRadius: '13px' }}
+                                    block
+                                    variant="solid"
+                                    // onClick={()=>setAlert(false)}
+                                    type="button"
+                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                                >
+                                    Submit
+                                </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input

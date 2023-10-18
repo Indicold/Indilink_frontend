@@ -245,7 +245,7 @@ const PartnerBussinessTypePrepare = () => {
                                 <FormContainer>
                                     <div className="flex">
                                         <FormItem
-                                            label="City"
+                                            label="City*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -284,7 +284,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Address"
+                                            label="Address*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <Field
@@ -331,7 +331,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Types Of Prepare"
+                                            label="Types Of Prepare*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -375,7 +375,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Product Category"
+                                            label="Product Category*"
                                             className="rounded-lg pl-[22px] w-1/2"
                                         >
                                             <Autocomplete
@@ -520,7 +520,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Throughput(MT)"
+                                            label="Throughput(MT)*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -555,7 +555,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Avg. case size"
+                                            label="Avg. case size*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -605,7 +605,8 @@ const PartnerBussinessTypePrepare = () => {
                                                     handleChange(e)
                                                 }
                                                 name="no_of_docks"
-                                                value={formData?.no_of_docks}
+                                                defaultValue={formData?.no_of_docks || 2}
+                                                // value={formData?.no_of_docks}
                                                 placeholder="Enter Value"
                                                 component={Input}
                                             />
@@ -614,7 +615,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Area (Square Feet)*"
+                                            label="Area (Square Feet)"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -686,7 +687,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Temperature"
+                                            label="Temperature*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
@@ -710,7 +711,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Batch Size"
+                                            label="Batch Size*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">

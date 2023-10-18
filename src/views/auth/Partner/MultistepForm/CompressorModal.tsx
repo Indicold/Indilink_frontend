@@ -4,12 +4,13 @@
  * @param  - 1. `modal`: a boolean value indicating whether the modal is open or not.
  * @returns The CompressorModal component is being returned.
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { handleStoreTable, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import InfoIcon from '@mui/icons-material/Info'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -163,11 +164,19 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="C.F.M. *"
+                                        // label="C.F.M. *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                           C.F.M.*
+                                              <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="cmf"
                                             onChange={(e: any) =>
@@ -180,7 +189,17 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="H.P.*" className="mx-auto w-1/2">
+                                    <FormItem 
+                                    // label="H.P.*"
+                                    label={
+                                        <div className='flex justify-center items-center'>
+                                     H.P.*
+                                          <Tooltip title="Horsepower " arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
+                                    className="mx-auto w-1/2">
                                         <Field
                                             type="number"
                                             autoComplete="off"
@@ -198,7 +217,15 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="A.M.C. *"
+                                        // label="A.M.C. *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                       A.M.C.*
+                                              <Tooltip title="A.M.C." arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="w-1/2"
                                     >
                                         <select
