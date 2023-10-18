@@ -6,7 +6,7 @@
  * function from a custom hook to store the table data. The modal is displayed when the `modal` prop is
  * true.
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
 import { handleStoreTable, messageView, validateCAEquipForm } from '@/store/customeHook/validate'
 import axios from 'axios'
@@ -14,6 +14,7 @@ import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import InfoIcon from '@mui/icons-material/Info';
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -137,7 +138,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem> */}
                                 <div className="flex">
-                                    <FormItem label="Make *" className="mx-auto">
+                                    <FormItem label="Make *"   className="w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -152,7 +153,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model *" className="mx-auto">
+                                    <FormItem label="Model *"   className="w-1/2">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -170,8 +171,16 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="C.F.M.*"
-                                        className="me-auto ms-2"
+                                        // label="C.F.M.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                           C.F.M.*
+                                              <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
+                                        className="w-1/2"
                                     >
                                         <Field
                                             type="text"

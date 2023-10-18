@@ -16,6 +16,7 @@ import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinn
 import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
 import usePutApi from '@/store/customeHook/putApi';
 import { ToastContainer } from 'react-toastify';
+import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 
 var currentDate = new Date()
 
@@ -38,6 +39,7 @@ export const payloadSearchCustomer: any = {
 const StoreSearch = () => {
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+    const location: any = useLocation();
 
     // Initialize the form data with the payload
     const [formData, setFormData] = useState<any>(payloadSearchCustomer);
@@ -58,6 +60,9 @@ const StoreSearch = () => {
     // Fetch a list of temperature types using a custom hook
     const { data: ListOfTemp, loading: LTloading, error: Lterror } =
         useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
+        
+    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+    useApiFetch<any>(`customer/get-responses/1/${location?.state?.data?.id}`, token);
 
     // Fetch a list of certification types using a custom hook
     const { data: ListOfCert, loading: Lctloading, error: Lcterror } =
@@ -152,7 +157,6 @@ const StoreSearch = () => {
       }
     
     const navigate: any = useNavigate();
-    const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
@@ -500,7 +504,7 @@ const StoreSearch = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
                                     Update
                                     </Button> :
@@ -523,6 +527,8 @@ const StoreSearch = () => {
                         </Form>
                     </Formik>
                 </div>
+                {isDisabled? 
+                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} />:<></>}
             </div>
         </div>
     )

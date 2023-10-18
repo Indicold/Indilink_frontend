@@ -12,11 +12,11 @@ const PrepareTicketList = () => {
  
   return (
     <div>     
-      {PrepareData?.data?.length>0 &&   
+        
       <>
         <h4 className='text-head-title text-center'>Prepare Ticket List</h4>
-        <TableLayoutCustomer AllStore={PrepareData?.data?.length>0 && PrepareData?.data}/>
-      </>}
+        {PrepareData?.data?.length>0 ? <TableLayoutCustomer AllStore={PrepareData?.data?.length>0 && PrepareData?.data}/>:<p>No Data found.</p>}
+      </>
       <div>
         {PrepareLoad && <LoaderSpinner />}
       </div>

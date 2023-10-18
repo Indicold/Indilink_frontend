@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePostApi from '@/store/customeHook/postApi'
 const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -57,61 +58,64 @@ const PartnerComplianceMove = () => {
     } = useApiFetch<any>(apiUrls, token)
     console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
+    const {
+        result: ValidTillResponse,
+        loading: ValidTillLoading,
+        sendPostRequest: PostValidTillDetails,
+    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+
     let array1 = [
         {
-            label: 'Insurance Certificate',
+            label: 'Insurance Policy',
             placeholder: 'Upload',
-            key: 'insurance_cert',
+            key: 'insurance_policy_image',
+            key_text: 'insurance_policy_text',
             view: false,
             url: null,
             valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Permit',
             placeholder: 'Upload',
-            key: 'permit',
+            key: 'permit_image',
+            key_text: 'permit_validity_text',
             view: false,
             url: null,
             valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'PUCC',
             placeholder: 'Upload',
-            key: 'pucc',
+            key: 'pucc_image',
+            key_text: 'pucc_validity_text',
             view: false,
             url: null,
             valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
-        {
-            label: 'Fitness Certificate',
-            placeholder: 'Upload',
-            key: 'fitness_cert',
-            view: false,
-            url: null,
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
-        },
-        {
-            label: 'No Entry Permit',
-            placeholder: 'Upload',
-            key: 'no_entry_permit',
-            view: false,
-            url: null,
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
-        },
+        // {
+        //     label: 'Fitness Certificate',
+        //     placeholder: 'Upload',
+        //     key: 'fitness_cert',
+        //     view: false,
+        //     url: null,
+        //     valid_till: null,
+        // },
+        // {
+        //     label: 'No Entry Permit',
+        //     placeholder: 'Upload',
+        //     key: 'no_entry_permit',
+        //     view: false,
+        //     url: null,
+        //     valid_till: null,
+        // },
     ]
 
     // Initialize state variable for the file upload items
     const [array, setArray] = useState(array1)
+    const [dateArray, setDateArray] = useState<any>({
+        'asset_id': id,
+        'asset_type_id': localStorage.getItem('asset_id')
+    })
 
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
@@ -121,31 +125,10 @@ const PartnerComplianceMove = () => {
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
-        let todayDateTime = new Date().getTime();
-
-        let newarr:any=array?.map((item:any,index:any)=>{
-            if(item?.key==e.target.name){
-                let inputDateTime = new Date(e.target.value).getTime()
-                if(inputDateTime < todayDateTime){
-                    return (
-                        {
-                            ...item,
-                            valid_till_error: 'Valid till cannot be a past date'
-                        }
-                    )
-                }
-                return (
-                    {
-                        ...item,
-                        valid_till: e.target.value,
-                        show_valid_till_msg: false
-                    }
-                )
-            }
-            return item
-        })
-        setArray(newarr)
+        let newData = {...dateArray}
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
+        console.log("date_change", newData, e.target.value)
     }
 
     // Handle the file upload
@@ -183,7 +166,6 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
-                              show_valid_till_msg: true
                           }
                         : itemData
                 )
@@ -216,23 +198,8 @@ const PartnerComplianceMove = () => {
 
     // Handle route navigation
     const handleRoute = () => {
-        navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
-    }
-
-    // Function used to navigate to next page and save asset
-    const handleNavigation = () => {
-        var shouldNavigate = true;
-
-        for(var i=0;i<array.length;++i){
-            if(array[i].show_valid_till_msg){
-                shouldNavigate = false;
-                break;
-            }
-        }
-
-        if(shouldNavigate){
-            navigate('/asset_success')
-        }
+        PostValidTillDetails(dateArray)
+        navigate('/asset_success')
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -249,7 +216,6 @@ const PartnerComplianceMove = () => {
                           view: true,
                           url: newData[item.key],
                           message: 'Uploaded',
-                          show_valid_till_msg: true
                       }
                     : item
             )
@@ -260,7 +226,7 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    console.log('Form array', array)
+    console.log('DDDDDDDD', array)
     return (
         <div className='flex'>
             <ToastContainer />
@@ -287,15 +253,6 @@ const PartnerComplianceMove = () => {
         <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
-    <li className="mb-10 ml-6">
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-            </svg>
-        </span>
-        <h6 className="font-medium leading-tight pt-2">Additional submissions</h6>
-        {/* <p className="text-sm">Step details here</p> */}
-    </li>
 </ol>
 
 
@@ -314,18 +271,18 @@ const PartnerComplianceMove = () => {
                             <FormContainer>
                                 <div className="flex flex-wrap">
                                     {array?.map((item: any, index: any) => (
-                                        <FormItem
+                                        <>
+                                           <FormItem
                                             label={item?.label}
                                             key={index}
                                             className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
-                                            <div className='flex'>
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
-                                                className="!w-2/3 block w-full border border-gray-200 
+                                                className="!w-full block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
@@ -335,8 +292,7 @@ const PartnerComplianceMove = () => {
                                                     handleFileChange(e, item)
                                                 }
                                             />
-                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
-                                            </div>
+                                          
                                             <div className="flex">
                                                 {item?.message && (
                                                     <p className="text-[red]">
@@ -353,13 +309,27 @@ const PartnerComplianceMove = () => {
                                                         View
                                                     </a>
                                                 )}
-                                                {item?.view && item.show_valid_till_msg && (
-                                            <p className="text-[red] ml-10">
-                                                {item?.valid_till_error}
-                                            </p>
-                                        )}
                                             </div>
                                         </FormItem>
+                                        <FormItem
+                                            label="Valid Till"
+                                            key={index}
+                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
+                                        >
+                                     
+                                            <input type='date' placeholder='Valid Till' name={item?.key_text}  
+                                            defaultValue={fetchDetails?.data[item?.key_text]}
+                                            className="!w-full h-11 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               onChange={handleDateChange} />
+                                        
+                                        </FormItem>
+                                        </>
+                                     
                                     ))}
                                 </div>
 
@@ -380,10 +350,10 @@ const PartnerComplianceMove = () => {
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={handleNavigation}
+                                        onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
-                                        Save Asset
+                                        Next
                                     </Button>
                                 </div>
                             </FormContainer>

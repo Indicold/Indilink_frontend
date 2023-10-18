@@ -15,12 +15,14 @@ import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
 import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
+import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
 
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+    const location: any = useLocation();
 
     // Define a state variable for the this component
     const [errors, setErrors] = useState<any>({});
@@ -37,6 +39,8 @@ const MoveSearch = () => {
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.origin_country_id}`, token);
 
+        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+        useApiFetch<any>(`customer/get-responses/2/${location?.state?.data?.id}`, token);
 
     // Fetch a list of cities based on the selected country
     const { data: ListOfCityDest, loading: LcityDestloading, error: LcityDesterror } =
@@ -146,7 +150,6 @@ const MoveSearch = () => {
         setFormData(newData);
     }
     const navigate: any = useNavigate();
-    const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
@@ -598,7 +601,7 @@ const MoveSearch = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
                                         Update
                                     </Button> :
@@ -619,6 +622,8 @@ const MoveSearch = () => {
                         </Form>
                     </Formik>
                 </div>
+                {isDisabled? 
+                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} />:<></>}
             </div>
         </div>
     )

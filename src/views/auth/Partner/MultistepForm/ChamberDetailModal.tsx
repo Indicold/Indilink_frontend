@@ -7,15 +7,16 @@
  * chamber details. The component uses various dependencies such as FormItem, Input, useApiFetch,
  * useState, and ToastContainer
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import InfoIcon from '@mui/icons-material/Info';
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -38,8 +39,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
-    const [length, setLength] = useState('');
-    const [breadth, setBreadth] = useState('');
+    const [length, setLength] = useState<any>('');
+    const [breadth, setBreadth] = useState<any>('');
     const [height, setHeight] = useState('');
     const [lengthP, setLengthP] = useState('');
     const [breadthP, setBreadthP] = useState('');
@@ -75,9 +76,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const handleChange = (e: any) => {
         const newData: any = { ...data }
         newData.asset_id = id
+       
         newData['chamber_size'] = formattedString
         newData['pallet_size'] = formattedStringP
         newData[e.target.name] = e.target.value
+      
         if (e.target.name === 'photo_of_entrance') {
             newData[e.target.name] = e.target.files
         } else if (e.target.name === 'photo_of_chamber') {
@@ -92,9 +95,13 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size'].concat('x')
             // console.log("chamber_size", typeof e.target.value.toString())
             setLength(e.target.value);
+            const area:any=e.target.value*breadth;
+            newData['floor_area']=area;
             updateFormattedString(e.target.value, breadth, height);
         } else if (e.target.name === 'ch-b') {
             setBreadth(e.target.value);
+            const area:any=e.target.value*length;
+            newData['floor_area']=area;
             updateFormattedString(length, e.target.value, height);
         } else if (e.target.name === 'ch-h') {
             setHeight(e.target.value);
@@ -112,6 +119,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         } else if (e.target.name === 'pl-h') {
             setHeightP(e.target.value);
             updateFormattedStringP(lengthP, breadthP, e.target.value);
+        }else
+        if(e.target.name==='staircase'){
+          
+            // setData({...data,staircase:e.target.checked})
+            newData[e.target.name]=e.target.checked ? true :false;
         }
         else {
             newData[e.target.name] = e.target.value
@@ -121,12 +133,13 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
 
         }
         setData(newData)
-        console.log('newData', newData)
+        
     }
     /**
      * The `handlesave` function is responsible for saving chamber details by making a POST request to
      * the server with the provided form data.
      */
+    console.log('newData')
     console.log("ididididididid",formD);
 
     const handlesave = async () => {
@@ -306,6 +319,7 @@ if (!existingChamberIdsJSON) {
                                 <h6 className="text-center text-head-title">
                                     Chamber
                                 </h6>
+                                
                                 <div className="flex">
                                     <FormItem
                                         label="Chamber No*"
@@ -445,8 +459,16 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
                                 </div>
                                 <div className="flex">
+                                    
                                     <FormItem
-                                        label="Photo of entrance *"
+                                     label={
+                                        <div className='flex justify-center items-center'>
+                                          Photo of entrance
+                                          <Tooltip title="Select multiple files" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
                                         className="mx-auto w-1/2"
                                     >
                                         
@@ -461,13 +483,22 @@ if (!existingChamberIdsJSON) {
                                                 handleChange(e)
                                             }
                                         />
+                                        
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
                                         </p>
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber from inside*"
+                                        // label="Photo of the chamber from inside*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                            Photo of the chamber from inside*
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <input
@@ -488,7 +519,15 @@ if (!existingChamberIdsJSON) {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Photo of chamber from gate *"
+                                        // label="Photo of chamber from gate *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                          Photo of chamber from gate *
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         
@@ -509,7 +548,15 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber from one corner *"
+                                        // label="Photo of the chamber from one corner *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                          Photo of the chamber from one corner *
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <input
@@ -536,10 +583,12 @@ if (!existingChamberIdsJSON) {
                                         <Field
                                             type="number"
                                             autoComplete="off"
+                                            min={1}
                                             name="no_of_floors"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            onKeyDown={onkeyDown}
                                             placeholder="No. of floors"
                                             component={Input}
                                         />
@@ -560,6 +609,7 @@ if (!existingChamberIdsJSON) {
                                             }
                                             placeholder="Enter Value"
                                             component={Input}
+                                            value={data?.floor_area}
                                         />
                                       
                                         <p className="text-[red]">
@@ -617,7 +667,20 @@ if (!existingChamberIdsJSON) {
                                         label="Staircase (Yes/No)"
                                         className="w-1/2"
                                     >
-                                        <select
+                                        <div className='border-2 flex justify-around p-4'>
+                                         <span className=" text-center ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                         Staircase (Yes/No)
+  </span>
+                                        <label className="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" className="sr-only peer"   name="staircase"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }/>
+  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+ 
+</label>
+</div>
+                                        {/* <select
                                             name="staircase"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -626,7 +689,7 @@ if (!existingChamberIdsJSON) {
                                         >
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
-                                        </select>
+                                        </select> */}
                                         <p className="text-[red]">
                                             {errors && errors.staircase}
                                         </p>

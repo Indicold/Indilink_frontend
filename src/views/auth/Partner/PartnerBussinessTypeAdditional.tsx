@@ -18,6 +18,7 @@ import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePostApi from '@/store/customeHook/postApi'
 
 // Define the PartnerBussinessTypeAdditional component
 const PartnerBussinessTypeAdditional = () => {
@@ -51,6 +52,7 @@ const PartnerBussinessTypeAdditional = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
+        refetch: refetchDetails
     } = useApiFetch<any>(apiUrls, token)
 
     // Define an array of objects for file upload items
@@ -58,76 +60,62 @@ const PartnerBussinessTypeAdditional = () => {
         {
             label: 'No Lien Certificate',
             placeholder: 'Upload',
+            key_text: '',
             key: 'no_lien_cert',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Latest Electricity Bill',
             placeholder: 'Upload',
+            key_text: '',
             key: 'latest_electricity_bill',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Structural Load Safety',
             placeholder: 'Upload',
+            key_text: '',
             key: 'structural_load_safety_cert',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         // {
         //     label: 'Pest Control Agency Contract',
         //     placeholder: 'Upload',
+        //     key_text: '',
         //     key: 'pest_control_agency_contract',
         // },
         // {
         //     label: 'Plant Layout',
         //     placeholder: 'Upload',
+        //     key_text: 'plant_layout',
         //     key: 'plant_layout',
         // },
         {
             label: 'Insurance Certificate',
             placeholder: 'Upload',
+            key_text: 'insurance_cert_text',
             key: 'insurance_cert',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Facility Layout',
             placeholder: 'Upload',
+            key_text: '',
             key: 'facility_layout',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Storage Temperature Record for Last Couple of Months',
             placeholder: 'Upload',
+            key_text: '',
             key: 'storage_temp_record',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: '3D view of the assets',
             placeholder: 'Upload',
+            key_text: '',
             key: 'three_d_view_of_asset',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         {
             label: 'Photo of the Assets',
             placeholder: 'Upload',
+            key_text: '',
             key: 'photos_of_asset',
-            valid_till: null,
-            valid_till_error: 'Valid till is required',
-            show_valid_till_msg: false
         },
         // Add additional objects as needed
         // Example:
@@ -138,41 +126,30 @@ const PartnerBussinessTypeAdditional = () => {
         // },
     ]
 
+    const {
+        result: ValidTillResponse,
+        loading: ValidTillLoading,
+        sendPostRequest: PostValidTillDetails,
+    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+
     // Initialize state variable for the file upload items
     const [array, setArray] = useState<any>(array1)
+    const [dateArray, setDateArray] = useState<any>({
+        'asset_id': id,
+        'asset_type_id': localStorage.getItem('asset_id')
+    })
 
     // Handle file change and upload
     const handleFileChange = (e: any, item: any) => {
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
-        console.log("e.target.name ",e.target.name)
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array};
-        let todayDateTime = new Date().getTime();
-        let newarr:any=array?.map((item:any,index:any)=>{
-            if(item?.key==e.target.name){
-                let inputDateTime = new Date(e.target.value).getTime()
-                if(inputDateTime < todayDateTime){
-                    return (
-                        {
-                            ...item,
-                            valid_till_error: 'Valid till cannot be a past date'
-                        }
-                    )
-                }
-                return (
-                    {
-                        ...item,
-                        valid_till: e.target.value,
-                        show_valid_till_msg: false
-                    }
-                )
-            }
-            return item
-        })
-        setArray(newarr)
+        let newData = {...dateArray}
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
+        console.log("date_change", newData, e.target.value)
     }
 
     // Upload the file to the server
@@ -204,7 +181,7 @@ const PartnerBussinessTypeAdditional = () => {
             if (responseData?.status) {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
-                        ? { ...itemData, view: true, url: responseData?.data, show_valid_till_msg: true }
+                        ? { ...itemData, view: true, url: responseData?.data }
                         : itemData
                 )
                 setArray(updatedArray) // Update the state with the modified array
@@ -216,21 +193,9 @@ const PartnerBussinessTypeAdditional = () => {
             setResponse(null)
         }
     }
-
-    // Handle route navigation
     const handleRoute = () => {
-        var shouldNavigate = true;
-
-        for(var i=0;i<array.length;++i){
-            if(array[i].show_valid_till_msg){
-                shouldNavigate = false;
-                break;
-            }
-        }
-        
-        if(shouldNavigate){
-            navigate('/asset_success')
-        }
+        PostValidTillDetails(dateArray)
+        navigate('/asset_success')
     }
 
     // Effect to update the array based on fetched data
@@ -247,8 +212,6 @@ const PartnerBussinessTypeAdditional = () => {
                           view: true,
                           url: newData[item.key],
                           message: 'Uploaded',
-                          show_valid_till_msg: true,
-                          valid_till_error: 'Valid till is required'
                       }
                     : item
             )
@@ -313,46 +276,63 @@ const PartnerBussinessTypeAdditional = () => {
                             <FormContainer>
                                 <div className="flex flex-wrap">
                                     {array?.map((item: any, index: any) => (
-                                        <FormItem
+                                           <>
+                                           <FormItem
                                             label={item?.label}
                                             key={index}
-                                            className="w-1/2 rounded-lg pl-[22px] flex text-label-title"
+                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
-                                            <div className="flex">
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
                                                 name={item?.key}
                                                 id="file-input"
-                                                accept="image/*,.doc, .docx,.pdf"
-                                                className="!w-2/3 block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                        file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                        file:py-3 file:px-4
-                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                className="!w-full block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
                                                 onChange={(e: any) =>
                                                     handleFileChange(e, item)
                                                 }
                                             />
-                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} disabled={isDisabled} />
-                                            </div>
+                                          
                                             <div className="flex">
-                                                {item?.view && <b>Status:</b>}
+                                                {item?.message && (
+                                                    <p className="text-[red]">
+                                                        Status:{item?.message}
+                                                    </p>
+                                                )}
+                                                {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
                                                         href={`${item?.url}`}
                                                         target="_blank"
+                                                        download={false}
                                                     >
                                                         View
                                                     </a>
                                                 )}
-                                                {item?.view && item.show_valid_till_msg && (
-                                            <p className="text-[red] ml-10">
-                                                {item?.valid_till_error}
-                                            </p>
-                                        )}
                                             </div>
                                         </FormItem>
+                                        <FormItem
+                                            label="Valid Till"
+                                            key={index}
+                                            className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === ''?'invisible':'visible'}`}
+                                        >
+                                     
+                                            <input type='date' placeholder='Valid Till' name={`${item?.key}_text`}  
+                                            defaultValue={fetchDetails?.data[item?.key_text]}  className="!w-full h-11 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               onChange={handleDateChange} />
+                                        
+                                        </FormItem>
+                                        </>
                                     ))}
                                 </div>
 
@@ -375,9 +355,8 @@ const PartnerBussinessTypeAdditional = () => {
                                         type="button"
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
-                                        // disabled={isDisabled}
                                     >
-                                       {isDisabled ? "Next":"Save Assets"} 
+                                        Save Asset
                                     </Button>
                                 </div>
                             </FormContainer>
