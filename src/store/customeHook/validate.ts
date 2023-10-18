@@ -255,17 +255,17 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
             newErrors.avg_case_size = 'Avg.Case Size is required'
         }
     }
-    // if (!formData?.no_of_docks) {
-    //     if (formData?.no_of_docks==='') {
-    //         newErrors.no_of_docks = 'No of Docks is required'
-    //     }
-    //     if (formData?.no_of_docks<0) {
-    //         newErrors.no_of_docks = 'No of Docks is required'
-    //     }
-    // }
-    // if (!formData?.type_of_dock_id) {
-    //     newErrors.type_of_dock_id = 'Type of Dock id is required'
-    // }
+    if (!formData?.no_of_docks) {
+        if (formData?.no_of_docks==='') {
+            newErrors.no_of_docks = 'No of Docks is required'
+        }
+        if (formData?.no_of_docks<0) {
+            newErrors.no_of_docks = 'No of Docks is required'
+        }
+    }
+    if (!formData?.type_of_dock_id) {
+        newErrors.type_of_dock_id = 'Type of Dock id is required'
+    }
     if (!formData?.temperature_min) {
         newErrors.temperature_min = 'Min Temperature is required'
     }
@@ -324,7 +324,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         }
     }
 
-    if (!formData?.store_type_id) {
+    if (formData?.store_type_id?.length == 0) {
         newErrors.store_type_id = 'Store Type is required'
     }
 
@@ -346,13 +346,14 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     }
    
 
-    if (!formData?.total_number_of_docks) {
-        if (formData?.total_number_of_docks==='') {
-            newErrors.total_number_of_docks = 'Total Number of Docks is required'
-        }
-        if (formData?.total_number_of_docks<0) {
-            newErrors.total_number_of_docks = 'Total Number of Docks is required'
-        }
+    if (formData?.total_number_of_docks==='' || formData?.total_number_of_docks<0) {
+        // if (formData?.total_number_of_docks==='') {
+        //     newErrors.total_number_of_docks = 'Total Number of Docks is required'
+        // }
+        // if (formData?.total_number_of_docks<0) {
+        //     newErrors.total_number_of_docks = 'Total Number of Docks is required'
+        // }
+        newErrors.total_number_of_docks = 'Total Number of Docks is required'
     }
 
     if (!formData?.total_office_space ) {
@@ -398,13 +399,21 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.facility_manager_name = 'Facility Manager Name is required'
     }
 
-    if (!formData?.facility_manager_contact || formData?.facility_manager_contact.length<10) {
+    if (!formData?.facility_manager_contact || formData?.facility_manager_contact?.length<10) {
         newErrors.facility_manager_contact =
             'Facility Manager Contact is required'
     }
 
     if (!formData?.road_condition_id) {
         newErrors.road_condition_id = 'Road Condition is required'
+    }
+
+    if(formData?.three_d_view_of_asset?.length === 0) {
+        newErrors.three_d_view_of_asset = 'This Field is required'
+    }
+
+    if(formData?.photos_of_asset?.length === 0) {
+        newErrors.photos_of_asset = 'This Field is required'
     }
 
     setErrors(newErrors)
@@ -419,7 +428,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if (e.key === 'e' || e.key === '-') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
-      if(e.target.value.length<1 &&  e.key === '0'){
+      if(e.target.value?.length<1 &&  e.key === '0'){
         e.preventDefault(); 
       }
  }
@@ -507,6 +516,10 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
 
     if (!formData?.staircase) {
         newErrors.staircase = 'This Field is required'
+    }
+
+    if(formData?.photos_of_asset?.length === 0) {
+        newErrors.photos_of_asset = 'This Field is required'
     }
 
     console.log('errr', newErrors)
@@ -1005,14 +1018,17 @@ export const validateBasicForm = (data: any, setErrors: any) => {
         newErrors.address = 'This Field is required'
     }
 
-    // if (data?.gst_file?.length<1) {
-    //     newErrors.gst_file = 'Gst file is required'
-    // }
+    if (data?.gst_file?.length<1) {
+        newErrors.gst_file = 'Gst file is required'
+    }
     if (data?.shareholder_ids?.length<1) {
         newErrors.shareholder_ids = 'This Field is required'
     }
     if (data?.branch_ids<1) {
         newErrors.branch_ids = 'This Field is required'
+    }
+    if(!data?.pan_number) {
+        newErrors.pan_number = 'This Field is required'
     }
   
    

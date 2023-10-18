@@ -113,7 +113,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             setDisabled(!true); 
           }
         }
-      };
+    };
     /**
      * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
      * where it collects form data and sends a POST request with the data to a server.
@@ -287,7 +287,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 <Form className='signup-form'>
                     <FormContainer>
                         <FormItem
-                            label="GST Number*"
+                            label="GST Number"
                             className='text-start cin-number text-label-title'
                         >
                             <Field
@@ -322,6 +322,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="User Designation"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"
@@ -338,6 +339,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="Firm Type"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                    <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
                                 <Field
@@ -356,6 +358,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="Firm Name"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                     <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
                                 <Field
@@ -395,6 +398,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="Pan Number"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"

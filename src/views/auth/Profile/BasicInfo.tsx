@@ -56,6 +56,7 @@ const BasicInfo = () => {
         state_id: "",
         address: "",
         pin_code: "",
+        pan_number: "",
         gst_number: [],
         gst_file:[],
         shareholder_ids: [],
@@ -408,6 +409,52 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                     <p className="text-[red]">
                                         {error && error.gst_file}
                                     </p>
+                                </FormItem>
+
+                                <FormItem
+                                    label="Pan Number"
+                                    className="rounded-lg pl-[22px] w-1/2"
+                                >
+                                    <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        type="text"
+                                        maxLength={10}
+                                        className="w-full"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="pan_number"
+                                        value={data?.pan_number}
+                                        placeholder="Pan Card No."
+                                        component={Input}
+                                    />
+                                    {/* <label htmlFor='gstfile'>
+                                        <PublishIcon className='text-center !mx-auto' />
+                                    </label> */}
+                                    <p className="text-[red]">
+                                        {error && error.pan_number}
+                                    </p>
+                                    {/* <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        id="gstfile"
+                                        style={{ display: "none" }}
+                                        type="file"
+                                        className="!hidden"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="gst_file"
+                                        value={data?.firm_state}
+                                        placeholder="GST Number"
+                                        component={Input}
+                                    />
+                                    <p className="text-[red]">
+                                        {error && error.gst_file}
+                                    </p> */}
                                 </FormItem>
                                 
                             </div>

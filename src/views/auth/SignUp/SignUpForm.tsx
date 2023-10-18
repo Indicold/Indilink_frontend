@@ -123,8 +123,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                     <FormContainer>
                         <div className="sm:flex md:flex lx:flex" >
                             <FormItem
-                                label="First Name*"
+                                label="First Name"
                                 className="me-auto text-label-title"
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"
@@ -159,8 +160,9 @@ const SignUpForm = (props: SignUpFormProps) => {
 
                         <div className="">
                             <FormItem
-                                label="Email Address*"
+                                label="Email Address"
                                 className="w-full me-auto text-label-title "
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"
@@ -176,8 +178,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </p>
                             </FormItem>
                             <FormItem
-                                label="Phone Number*"
+                                label="Phone Number"
                                 className="me-auto text-label-title"
+                                asterisk={true}
                             >
                                 <Field
                                     type="tel"
@@ -201,8 +204,9 @@ const SignUpForm = (props: SignUpFormProps) => {
 
                         <div className="sm:fle md:flex xl:flex">
                             <FormItem
-                                label="Password*"
+                                label="Password"
                                 className="me-auto text-label-title !mb-0"
+                                asterisk={true}
                             >
                                 <Field
                                     autoComplete="off"
@@ -218,8 +222,9 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 </p>
                             </FormItem>
                             <FormItem
-                                label="Confirm Password*"
+                                label="Confirm Password"
                                 className="me-auto text-label-title"
+                                asterisk={true}
                             >
                                 <Field
                                     autoComplete="off"
@@ -245,10 +250,8 @@ const SignUpForm = (props: SignUpFormProps) => {
                             <p className="m-1">
                                 <span>I agree to </span>
                                 <ActionLink to={'/terms'}>
-                                    <big>
-                                        <u className="!text-[#103492] text-sm">
-                                            Terms and Conditions
-                                        </u>
+                                    <big className="!text-[#103492] text-sm hover:underline font-semibold">
+                                        Terms and Conditions
                                     </big>{' '}
                                 </ActionLink>
                             </p>
@@ -272,13 +275,14 @@ const SignUpForm = (props: SignUpFormProps) => {
                         </div>
                         <div className="mt-3 text-center text-[#103492]">
                             <span className="mr-3">
-                                Already have an account?{' '}
+                                Already have an account?{''}
                             </span>
                             <ActionLink
                                 to={signInUrl}
-                                className="h-11 hover:underline mx-auto radius-round rounded-xl text-indigo-600 w-[30%] w-full"
                             >
-                                Login
+                                <big className="h-11 hover:underline mx-auto radius-round rounded-xl w-[30%] w-full !text-[#103492] text-sm font-semibold">
+                                    Login
+                                </big>
                             </ActionLink>
                         </div>
                     </FormContainer>
