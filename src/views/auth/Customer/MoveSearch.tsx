@@ -106,7 +106,7 @@ const MoveSearch = () => {
         formdata.append("dest_city_id", formData?.dest_city_id);
         formdata.append("dest_pincode", formData?.dest_pincode);
         formdata.append("dest_gps", formData?.dest_gps);
-        formdata.append("load_quantity_id", formData?.load_quantity_id);
+        formdata.append("load_quantity", formData?.load_quantity_id);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("broad_category_id", formData?.broad_category_id);
         formdata.append("product_type_id", formData?.product_type_id);
@@ -147,6 +147,8 @@ const MoveSearch = () => {
         } else {
             newData[e.target.name] = e.target.value;
         }
+        console.log("FFFFFFFFFFFF",newData);
+        
         setFormData(newData);
     }
     const navigate: any = useNavigate();
@@ -363,8 +365,8 @@ const MoveSearch = () => {
                                             type="text"
                                             className="w-[80%]"
                                             autoComplete="off"
-                                            name="load_quantity_id"
-                                            value={formData?.load_quantity_id}
+                                            name="load_quantity"
+                                            value={formData?.load_quantity}
                                             placeholder="Load Quantity"
                                             component={Input}
                                         />

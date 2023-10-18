@@ -104,7 +104,10 @@ const AccountDetails = () => {
                         variant="solid"
                         type="button"
                         role='button'
-                        onClick={() => setModal(true)}
+                        onClick={() => {
+                            setModal(true);
+                            setData({})
+                        }}
                         className="indigo-btn !w-[200px] !bg-gray-500 m-4 ml-auto rounded-[30px]"
                     >
                         + Add Account

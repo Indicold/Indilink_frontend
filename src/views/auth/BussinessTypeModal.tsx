@@ -38,10 +38,17 @@ const BussinessTypeModal = () => {
         loading: AssetsLoading,
         sendPostRequest: PostAssetsDetails,
     }: any = usePostApi(`partner/selectAsset`)
+    const {
+        result: QueryResponse,
+        loading:QLoading,
+        sendPostRequest: PostQueryDetails,
+    }: any = usePostApi(`customer/general/search`)
+    
     const [modal, setModal] = useState(true)
     const navigate = useNavigate()
     const [Bussiness, setBussiness] = useState('')
     const [formData, setFormData] = useState<any>({})
+    const [Query,setQuery]=useState<any>('')
 
     /**
      * The `handleRoute` function sets various values in local storage based on user type and business
@@ -172,7 +179,19 @@ if(AssetsResponse?.message || AssetsResponse?.data){
             localStorage.setItem('AssetsId', AssetsResponse?.data)
         }
     }, [AssetsResponse,AssetsResponse?.message?.asset_id,AssetsResponse?.data])
-    
+    useEffect(()=>{
+        if(QueryResponse?.data){
+            messageView(QueryResponse?.data)
+            if(QueryResponse?.status===200){
+                setTimeout(()=>{
+                    navigate('/ticket_list')
+                },2000)
+            }
+        
+         
+        }
+
+    },[QueryResponse?.data])
 
     return (
         <div>
@@ -184,7 +203,8 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                     aria-hidden="true"
                     className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
-                    <div className="relative w-full max-w-[800px] mt-[50px] max-h-full">
+                    <div className={`relative w-full ${localStorage.getItem('user_type') ===
+                                    'Customer' ?"max-w-[900px]" :"max-w-[800px]" }  mt-[50px] max-h-full`}>
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <button onClick={handleCloseModal} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -203,8 +223,11 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 <p>You may also change later</p>
 
                                 <div className="flex justify-around grid grid-cols-3 grid-flow-col gap-2">
+                       
                                     {data ? (
-                                        data?.data.map(
+                                        
+                                        data?.data.slice(0,localStorage.getItem('user_type') ===
+                                        'Customer' ? 4:3).map(
                                             (item: any, index: any) => (
                                                 <div
                                                     role="button"
@@ -234,8 +257,37 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         <LoaderSpinner />
                                     )}
                                 </div>
+                             {Bussiness==='General' &&   <div className='flex justify-around w-[80%] mx-auto items-center'>
+                                <FormItem
+                                            label="General Query"
+                                            className="mx-auto w-1/2"
+                                        >
+                                       <input type='text'
+                                     className=" h-11 block w-full border border-gray-200 
+                                     shadow-sm rounded-md text-sm 
+                                     focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                                      dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                file:bg-transparent file:border-0
+                                          file:bg-gray-100 file:mr-4
+                                        file:py-3 file:px-4
+                                               dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               placeholder='Enter your query'
+                                    onChange={(e:any)=>setQuery(e.target.value)}
+                                       />
+                                        </FormItem>
+                                        <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        variant="solid"
+                                        type="button"
+                                        onClick={()=>PostQueryDetails({description:Query})}
+                                        className="indigo-btn !w-[30%] mt-6 mx-auto rounded-[30px]"
+                                    >
+                                        Send Query
+                                    </Button>
+                                        </div>}
                                 {localStorage.getItem('user_type') ===
-                                    'Partner' && Bussiness !== 'Move' && (
+                                    'Partner' && Bussiness !== 'Move' && Bussiness!=='general'  && (
                                     <div className="flex">
                                         <FormItem
                                             label="Select Country"
@@ -304,7 +356,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         </FormItem>
                                     </div>
                                 )}
-                                <div className="flex">
+                              {Bussiness!=='General' &&   <div className="flex">
                                  { Bussiness==='Move' ?  <Button
                                         style={{ borderRadius: '13px' }}
                                         block
@@ -327,7 +379,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                     Next
                                 </Button> 
                                     }
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>

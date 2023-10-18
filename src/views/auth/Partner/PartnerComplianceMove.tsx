@@ -70,6 +70,7 @@ const PartnerComplianceMove = () => {
             placeholder: 'Upload',
             key: 'insurance_policy_image',
             key_text: 'insurance_policy_text',
+            key_lic:"insurance_policy_license",
             view: false,
             url: null,
             valid_till: null,
@@ -79,6 +80,7 @@ const PartnerComplianceMove = () => {
             placeholder: 'Upload',
             key: 'permit_image',
             key_text: 'permit_validity_text',
+            key_lic:"permit_license",
             view: false,
             url: null,
             valid_till: null,
@@ -87,6 +89,7 @@ const PartnerComplianceMove = () => {
             label: 'PUCC',
             placeholder: 'Upload',
             key: 'pucc_image',
+            key_lic:"pucc_license",
             key_text: 'pucc_validity_text',
             view: false,
             url: null,
@@ -130,6 +133,23 @@ const PartnerComplianceMove = () => {
         setDateArray(newData)
         console.log("date_change", newData, e.target.value)
     }
+    const handleChange = (e: any, item: any) => {
+
+        console.log("TYYYYYYYYY", e.target.name, item);
+
+        const newData: any = { ...dateArray }
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
+        // const updatedArray = array.map((itemData) =>
+        //   item.key_lic === itemData.key_lic
+        //     ? { ...itemData, key_lic: e.target.value }
+        //     : itemData
+        // );
+        // setArray(updatedArray);
+        console.log("TTTTT66TTTT", e.target.name, newData);
+        // console.log("TTTTT66TTTT",newData);
+
+    };
 
     // Handle the file upload
     const handleUpload = async (item: any, file: any) => {
@@ -227,6 +247,38 @@ const PartnerComplianceMove = () => {
         window.scrollTo(0, 0)
     }, [])
     console.log('DDDDDDDD', array)
+    useEffect(() => {
+
+
+        if (fetchDetails?.data) {
+            const apiData: any = fetchDetails?.data;
+
+            const payload: any = {
+                asset_id: id,
+                asset_type_id: localStorage.getItem('asset_id')
+            };
+
+            array.forEach((fieldDef: any) => {
+                const { key, key_text, key_lic } = fieldDef;
+
+                if (apiData[key]) {
+                    payload[key] = apiData[key];
+                }
+
+                if (apiData[key_text]) {
+                    payload[key_text] = apiData[key_text];
+                }
+
+                if (apiData[key_lic]) {
+                    payload[key_lic] = apiData[key_lic];
+                }
+            });
+            setDateArray(payload)
+            console.log("Payload:", payload);
+        }
+
+
+    }, [fetchDetails?.data])
     return (
         <div className='flex'>
             <ToastContainer />
@@ -311,23 +363,57 @@ const PartnerComplianceMove = () => {
                                                 )}
                                             </div>
                                         </FormItem>
-                                        <FormItem
-                                            label="Valid Till"
-                                            key={index}
-                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
-                                        >
-                                     
-                                            <input type='date' placeholder='Valid Till' name={item?.key_text}  
-                                            defaultValue={fetchDetails?.data[item?.key_text]}
-                                            className="!w-full h-11 block w-full border border-gray-200 
+                                        <div className='flex'>
+                                                <FormItem
+                                                    label="Valid Till"
+                                                    key={index}
+                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                >
+
+                                                    <input type='date'
+                                                     disabled={isDisabled}
+                                                    placeholder='Valid Till' name={item?.key_text}
+                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
                            file:py-3 file:px-4
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
-                                               onChange={handleDateChange} />
-                                        
-                                        </FormItem>
+                                                        onChange={handleDateChange} />
+
+                                                    {item?.messageText && (
+                                                        <p className="text-[red]">
+                                                            {item?.messageText}
+                                                        </p>
+                                                    )}
+                                                </FormItem>
+                                                <FormItem
+                                                    label="Licence No"
+                                                    key={index}
+                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                >
+
+                                                    <input type='text'
+                                                     disabled={isDisabled}
+                                                    placeholder='Licence No' name={`${item?.key_lic}`}
+                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
+                                                        className="!w-full h-11 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm 
+                        focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                         dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                        onChange={(e: any) => handleChange(e, item)} />
+
+                                                    {item?.messageText && (
+                                                        <p className="text-[red]">
+                                                            {item?.messageText}
+                                                        </p>
+                                                    )}
+                                                </FormItem>
+                                            </div>
                                         </>
                                      
                                     ))}

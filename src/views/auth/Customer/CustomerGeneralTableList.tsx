@@ -7,28 +7,26 @@ import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
-import { ToastContainer } from 'react-toastify';
 import { messageView } from '@/store/customeHook/validate';
+import { ToastContainer } from 'react-toastify';
 
 // Defines the table header with column names.
 const tableHead = {
-    // id:"S.No",
+    id:"S.No",
     // date: "Date",
-    // contract_type: "Contract Type",
-    comment:"Comment",
-    admin:"Admin",
+    description: "Description",
     status_id:"Status",
     is_deleted: "Query Status",
-contract_download: "Contract Download ",
-// contract_name: "Contract Name",
+created_at: "Created At",
+updated_at: "Updated At",
   // asset_type: "Asset Type",
   Action: "Action"
 };
 
-// The TableLayoutCustomer component takes a prop called AllStore, presumably for rendering data.
+// The CustomerGeneralTableList component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
-  const {token}:any=getToken();
+const CustomerGeneralTableList = ({ AllStore,fetchDataG }: any) => {
+     const {token}:any=getToken()
   let allData: any = AllStore || [];
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
@@ -44,7 +42,7 @@ const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
       const query = val.toLowerCase();
       setCurrentPage(1);
       const filteredData = cloneDeep(
-        allData.filter((item: any) =>
+        allData?.filter((item: any) =>
           Object.keys(tableHead).some(key => {
             if (item[key] !== undefined && item[key] !== null) {
               return item[key].toString().toLowerCase().indexOf(query) > -1;
@@ -71,7 +69,7 @@ const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
     setCurrentPage(p);
     const to = countPerPage * p;
     const from = to - countPerPage;
-    setCollection(cloneDeep(allData.slice(from, to)));
+    setCollection(cloneDeep(allData?.slice(from, to)));
   };
 
   const navigate = useNavigate();
@@ -103,28 +101,7 @@ const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
     }
   
   };
-  const handleDelete=(id:any)=>{
-    var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${token}`);
-
-var requestOptions:any = {
-  method: 'DELETE',
-  headers: myHeaders,
-  redirect: 'follow'
-};
-
-fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
-  .then(response => response.json())
-  .then((result:any) => {
-    console.log("TTTTTTT",result);
-    
-    messageView(result?.message)
-    console.log(result);
-    fetchDataA()
-
-})
-  .catch(error => console.log('error', error));
-  }
+  
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the
    * `rowData` object.
@@ -146,6 +123,26 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
 
     }
   
+  }
+  const handleDelete=(id:any)=>{
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions:any = {
+  method: 'DELETE',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
+  .then(response => response.json())
+  .then((result:any)=> {
+    messageView(result?.message)
+    console.log(result);
+    fetchDataG()
+
+})
+  .catch(error => console.log('error', error));
   }
 
   const tableRows = (rowData: any, index: any) => {
@@ -181,7 +178,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
         return <td className='text-center' key={i} >
           {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={()=>handleDelete(rowData?.master_query_id)}>Close</Button>
+          <Button className='!p-2' onClick={()=>handleDelete(rowData?.master_query_id)} >Close</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -227,11 +224,11 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
           pageSize={countPerPage}
           onChange={updatePage}
           current={currentPage}
-          total={allData.length}
+          total={allData?.length}
         />
       </div>
     </>
   )
 }
 
-export default TableLayoutCustomer;
+export default CustomerGeneralTableList;

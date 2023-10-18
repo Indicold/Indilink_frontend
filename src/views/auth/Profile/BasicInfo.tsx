@@ -104,7 +104,7 @@ const BasicInfo = () => {
 
     const handlesubmit = (e: any) => {
         console.log("DDDDDDD", data);
-
+  
         if (validateBasicForm(data, setErrors)) {
             var myHeaders = new Headers();
             myHeaders.append(
@@ -122,8 +122,8 @@ const BasicInfo = () => {
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
             
-            gstFiles.forEach((file:any, index:any) => {
-              formdata.append(`gst_file`, file, file.name);
+           if(gstFiles) gstFiles.forEach((file:any, index:any) => {
+              formdata.append(`gst_file`, file);
             });
             
             var shareholderIds =data?.shareholder_ids // Replace with your dynamic data
@@ -143,18 +143,24 @@ const BasicInfo = () => {
               body: formdata,
               redirect: "follow",
             };
-            
-            fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
-              .then((response) => response.json())
-              .then((result) => {
-                messageView(result?.message)
-                if(result?.status==200){
- navigate('/key-management')
-                }
-                console.log("GGGG",result)})
-              .catch((error) => {
-                messageView(error?.message)
-              });
+            console.log("667677",BasicInfo?.data[0]?.gst_file?.length>0);
+            if(BasicInfo?.data[0]?.gst_file?.length>0){
+         
+                navigate('/key-management')
+            }else{
+                fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                  messageView(result?.message)
+                  if(result?.status==200){
+   navigate('/key-management')
+                  }
+                  console.log("GGGG",result)})
+                .catch((error) => {
+                  messageView(error?.message)
+                });
+            }
+           
             
        
            
@@ -403,6 +409,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                         {error && error.gst_file}
                                     </p>
                                 </FormItem>
+                                
                             </div>
                         </FormContainer>
                     </Form>
