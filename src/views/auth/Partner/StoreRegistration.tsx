@@ -121,7 +121,13 @@ const StoreRegistration = () => {
     const [dataa, setData] = useState<any>({
         store_type_id: value1,
         three_d_view_of_asset: [],
-        photos_of_asset: []
+        photos_of_asset: [],
+        total_tonnage: '',
+        ante_room_area: '',
+        total_number_of_docks: '',
+        total_office_space: '',
+        processing_area: '',
+        parking_area: ''
     })
 
     const [errors, setErrors] = useState<any>({})
@@ -166,7 +172,7 @@ const StoreRegistration = () => {
         formdata.append("driver_area_food_resting", dataa?.driver_area_food_resting);
         formdata.append("weight_bridge_id", dataa?.weight_bridge_id);
         formdata.append("road_condition_id", dataa?.road_condition_id);
-        console.log("5GHGHGHGHG", dataa?.three_d_view_of_asset);
+        // console.log("5GHGHGHGHG", dataa?.three_d_view_of_asset);
 
         if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
             formdata.append(
@@ -262,11 +268,11 @@ const StoreRegistration = () => {
     const [phone, setPhone] = useState('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
-        console.log("TYYYYYYYY", e.target.name);
+        // console.log("TYYYYYYYY", e.target.name);
 
         const newData: any = { ...dataa }
         if (e.target.name === 'store_type_id') {
-            console.log("TTTTTT6565656", e.target.value);
+            // console.log("TTTTTT6565656", e.target.value);
 
         }
 
@@ -280,7 +286,7 @@ const StoreRegistration = () => {
             const fileInput: any = e.target; // Assuming e.target is the input element
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
-            console.log("TTTTTTT787878787", fileArray, fileInput.files);
+            // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
         } else  
             if (e.target.name === 'photos_of_asset') {
@@ -1343,7 +1349,7 @@ const StoreRegistration = () => {
 
                                         </div>
                                         <p className="text-[red]">
-                                            {errors && errors.processing_area}
+                                            {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
@@ -1373,7 +1379,7 @@ const StoreRegistration = () => {
                                             </select> */}
                                         </div>
                                         <p className="text-[red]">
-                                            {errors && errors.parking_area}
+                                            {errors && errors.photos_of_asset}
                                         </p>{' '}
                                     </FormItem>
                                 </div>
