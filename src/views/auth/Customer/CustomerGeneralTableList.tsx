@@ -81,26 +81,7 @@ const CustomerGeneralTableList = ({ AllStore,fetchDataG }: any) => {
    * table. It contains information about the asset being edited, such as its type, ID, and other
    * properties.
    */
-  const handleEdit = (rowData: any) => {
-    
-    // Handle edit action for different asset types.
-    if (rowData?.asset_type_id==3) {
 
-      navigate('/customer-prepare', {state:{data:rowData,disabled:false,extraForm:true} });
-
-    }
-    if (rowData?.asset_type_id==2) {
-
-      navigate('/customer-move', {state:{data:rowData,disabled:false,extraForm:true} });
-
-    }
-    if (rowData?.asset_type_id==1) {
-
-      navigate('/customer-store', {state:{data:rowData,disabled:false,extraForm:true} });
-
-    }
-  
-  };
   
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the

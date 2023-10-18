@@ -36,6 +36,9 @@ const CustomerTableTicketList = () => {
         refetch:fetchDataG
     }: any = useApiFetch<any>('customer/general/search', token)
 
+
+    console.log(AllStoreGeneral)
+
     return (
         <>
             {AllStore?.data?.length > 0 && (

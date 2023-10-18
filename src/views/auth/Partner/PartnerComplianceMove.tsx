@@ -332,6 +332,7 @@ const PartnerComplianceMove = () => {
                                             <input
                                                 disabled={isDisabled}
                                                 type="file"
+                                                accept="image/png, image/jpeg"
                                                 name={item?.key}
                                                 id="file-input"
                                                 className="!w-full block w-full border border-gray-200 
@@ -347,7 +348,7 @@ const PartnerComplianceMove = () => {
                                           
                                             <div className="flex">
                                                 {item?.message && (
-                                                    <p className="text-[red]">
+                                                    <p className="text-[green]">
                                                         Status:{item?.message}
                                                     </p>
                                                 )}
@@ -439,7 +440,7 @@ const PartnerComplianceMove = () => {
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
-                                        Next
+                                        save
                                     </Button>
                                 </div>
                             </FormContainer>
