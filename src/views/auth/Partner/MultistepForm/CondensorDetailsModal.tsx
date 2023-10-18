@@ -104,7 +104,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6 className='text-center m-2'>Condensor Details</h6>
+                                <h6 className='text-center m-2'>Condenser Details</h6>
                                     {/* <FormItem
                                         label="Asset id*"
                                         className="mx-auto w-1/2"

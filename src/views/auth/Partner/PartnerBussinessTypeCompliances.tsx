@@ -498,15 +498,7 @@ const PartnerBussinessTypeCompliances = () => {
                         <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
-                        <h6 className="font-medium leading-tight pt-2">Additional submissions</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
+
                 </ol>
 
 
@@ -533,7 +525,7 @@ const PartnerBussinessTypeCompliances = () => {
                                             >
                                                 <input
                                                     disabled={isDisabled}
-                                                    type="file"
+                                                    type="file"  accept="image/png, image/jpeg"
                                                     name={item?.key}
                                                     id="file-input"
                                                     className="!w-full block w-full border border-gray-200 
@@ -549,19 +541,20 @@ const PartnerBussinessTypeCompliances = () => {
 
                                                 <div className="flex">
                                                     {item?.message && (
-                                                        <p className="text-[red]">
+                                                        <p className="text-[green]">
                                                             Status:{item?.message}
                                                         </p>
                                                     )}
                                                     {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                     {item?.view && (
-                                                        <a
+                                                        <span className="align-right" ><a
                                                             href={`${item?.url}`}
                                                             target="_blank"
                                                             download={false}
                                                         >
                                                             View
                                                         </a>
+                                                        </span>
                                                     )}
                                                 </div>
                                             </FormItem>
@@ -643,7 +636,7 @@ const PartnerBussinessTypeCompliances = () => {
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
-                                        Next
+                                        save
                                     </Button>
                                 </div>
                             </FormContainer>

@@ -426,7 +426,7 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Dispatch Date/ Time"
+                                        label="Dispatch Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -443,7 +443,7 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Arrival Date/ Time"
+                                        label="Arrival Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -505,7 +505,7 @@ const MoveSearch = () => {
 
                                 <div className="flex">
                                     <FormItem
-                                        label="Dispatch Date/ Time"
+                                        label="Dispatch Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -515,13 +515,13 @@ const MoveSearch = () => {
                                             autoComplete="off"
                                             name="dispatch_date"
                                             value={formData?.contract_name}
-                                            placeholder="Dispatch Date/ Time"
+                                            placeholder="Dispatch Date"
                                             component={Input}
                                         />
                                         <p className='text-[red]'>{errors && errors.dispatch_date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Arrival Date/ Time"
+                                        label="Arrival Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -532,7 +532,7 @@ const MoveSearch = () => {
 
                                             name="arrival_date"
                                             value={formData?.contract_type}
-                                            placeholder="Arrival Date/ Time"
+                                            placeholder="Arrival Date"
                                             component={Input}
                                         />
 
