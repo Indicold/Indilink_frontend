@@ -84,6 +84,8 @@ const MoveSearch = () => {
     // Define a function to handle a button click
     const handleRoute = () => {
         // Check form validation before making a POST request
+
+    console.log(formData)
         if (validateMoveCustomerForm(formData, setErrors)) {
             PostCustomerMoveDetails(formData);
         }
@@ -106,7 +108,7 @@ const MoveSearch = () => {
         formdata.append("dest_city_id", formData?.dest_city_id);
         formdata.append("dest_pincode", formData?.dest_pincode);
         formdata.append("dest_gps", formData?.dest_gps);
-        formdata.append("load_quantity", formData?.load_quantity_id);
+        formdata.append("load_quantity", formData?.load_quantity);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("broad_category_id", formData?.broad_category_id);
         formdata.append("product_type_id", formData?.product_type_id);
@@ -215,7 +217,7 @@ const MoveSearch = () => {
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">Origin Location</h6>
                                 <div className="flex">
                                     <FormItem
-                                        label="Country"
+                                        label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -233,7 +235,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="From"
+                                        label="From*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -382,7 +384,7 @@ const MoveSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.load_quantity_id}</p>
+                                        <p className='text-[red]'>{errors && errors.load_quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Broad Category*"
@@ -499,64 +501,8 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Contract Name"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="contract_name"
-                                            value={formData?.contract_name}
-                                            placeholder="Contract name"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Contract Type"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
 
-                                            name="contract_type"
-                                            value={formData?.contract_type}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex">
-                                    <FormItem
-                                        label="Contract Upload"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <input
-                                            disabled={isDisabled}
-                                            type="file"
-                                            name="contract_download"
-                                            id="file-input"
-                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                        file:bg-transparent file:border-0
-                                        file:bg-gray-100 file:mr-4
-                                        file:py-3 file:px-4
-                                        dark:file:bg-gray-700 dark:file:text-gray-400"
-                                            onChange={(e: any) => handleChange(e)}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-
-                                </div>
                                 <div className="flex">
                                     <FormItem
                                         label="Dispatch Date/ Time"

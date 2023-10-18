@@ -861,14 +861,14 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.dest_city_id) {
         newErrors.dest_city_id = 'This Field is required'
     }
-    if (!formData?.load_quantity_id) {
-        newErrors.load_quantity_id = 'This Field is required'
+    if (!formData?.load_quantity) {
+        newErrors.load_quantity = 'This Field is required'
     }
     if (!formData?.broad_category_id) {
         newErrors.broad_category_id = 'This Field is required'
     }
-    if (formData?.load_quantity_id && !formData?.unit_id) {
-        newErrors.load_quantity_id = 'Unit is required'
+    if (formData?.unit_id && !formData?.unit_id) {
+        newErrors.unit_id = 'Unit is required'
     }
     console.log('errr', newErrors)
     setErrors(newErrors)
