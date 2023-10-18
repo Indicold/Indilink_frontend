@@ -12,7 +12,7 @@ import { messageView } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
-    id:"S.No",
+    // id:"S.No",
     // date: "Date",
     // contract_type: "Contract Type",
     comment:"Comment",

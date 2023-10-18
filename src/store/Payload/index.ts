@@ -92,6 +92,8 @@ export let CustomerMovePayload = {
     arrival_date: ""
 };
 
+var currentDate = new Date();
+
 // Define an empty payload with default values for form data
 export let CustomerMovePayload1 = {
     origin_country_id: '',
@@ -106,7 +108,7 @@ export let CustomerMovePayload1 = {
     load_quantity: '',
     broad_category_id: '',
     product_type_id: '',
-    dispatch_date: '',
+    dispatch_date: `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`,
     arrival_date: ''
 }
 
@@ -142,10 +144,10 @@ export let CustomerPrepare={
     throughput_unit_id: '',
     case_size: '',
     case_size_unit_id: '',
-    estimated_docks: '',
-    estimated_dispatch: '',
+    estimated_docks: 2,
+    estimated_dispatch: 2,
     temp_min: '',
     temp_max: '',
     temp_unit_id: 1,
-    date_of_start:''
+    date_of_start:`${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()+14}`
   }

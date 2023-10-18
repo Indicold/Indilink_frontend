@@ -13,23 +13,26 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
-import { messageView, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
 import usePutApi from '@/store/customeHook/putApi';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 
+var currentDate = new Date()
+
 // Define an initial payload for searching customers
 export const payloadSearchCustomer: any = {
-    country_id: '',
+    country_id: 101,
     city_id: '',
     product_type_id: '',
     temperature: '',
     temperature_type_id: 1,
     unit_id: 1,
     certification_id: '',
-    date: new Date(),
+    date: `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`,
     storage_duration: '',
-    storage_duration_type: 1
+    storage_duration_type: 1,
+    quantity: ''
 }
 
 // Define the main functional component for StoreSearch
@@ -287,7 +290,7 @@ const StoreSearch = () => {
                                             className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            {ListOfTemp && ListOfTemp?.data?.map((item: any, index: any) => (
+                                            {ListOfTemp && ListOfTemp?.data?.filter((item: any) => [1, 2].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.temperature_type_id}>{item?.type}</option>
 
                                             ))}
@@ -298,14 +301,25 @@ const StoreSearch = () => {
                                 <div className="flex">
                                     <FormItem
                                         label="Unit"
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="mx-auto rounded-lg pl-[22px] w-1/2"
                                     >
-                                       
+                                       <Field
+                                            disabled={isDisabled}
+                                            type="number"
+                                            autoComplete="off"
+                                            onChange={(e: any) => handlechange(e)}
+                                            className="w-[80%]"
+                                            name="quantity"
+                                            value={formData?.quantity}
+                                            placeholder="Quantity"
+                                            component={Input}
+                                            onKeyDown={onkeyDownOne}
+                                        />
                                             <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="unit_id"
-                                            className="h-11 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (
@@ -361,6 +375,8 @@ const StoreSearch = () => {
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             className="w-[80%]"
+                                            min={1}
+                                            onKeyDown={onkeyDownOne}
                                             name="storage_duration"
                                             value={formData?.storage_duration}
                                             placeholder="Storage Duration"
@@ -381,7 +397,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                          {location?.state?.extraForm &&      <>
+                          {/* {location?.state?.extraForm &&      <>
                                 <div className="flex">
                                     <FormItem
                                         label="Status Id"
@@ -476,7 +492,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                    
                                 </div>
-                                </>}
+                                </>} */}
 
 
                                 <div className="flex justify-center w-[310px] mx-auto">

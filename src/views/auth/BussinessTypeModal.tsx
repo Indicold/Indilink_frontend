@@ -217,7 +217,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 <h4 className="text-head-title  mb-4">
                                     {localStorage.getItem('user_type') ===
                                     'Customer'
-                                        ? 'Request search'
+                                        ? 'Request for solution'
                                         : 'Choice on Business'}{' '}
                                 </h4>
                                 <p>You may also change later</p>

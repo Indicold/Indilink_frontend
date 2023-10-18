@@ -236,7 +236,7 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     if (!formData?.prepare_type_id) {
         newErrors.prepare_type_id = 'Prepare type id is required'
     }
-    if (!formData?.product_category_ids) {
+    if (formData?.product_category_ids?.length == 0) {
         newErrors.product_category_ids = 'Product category ids is required'
     }
     if (!formData?.throughput) {
@@ -413,6 +413,14 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
  export const onkeyDown=(e:any)=>{
     if (e.key === 'e' || e.key === '-') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+ }
+ export const onkeyDownOne=(e:any)=>{
+    if (e.key === 'e' || e.key === '-') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+      if(e.target.value.length<1 &&  e.key === '0'){
+        e.preventDefault(); 
       }
  }
 export const validateMovePartnerForm = (formData: any, setErrors: any) => {
