@@ -132,7 +132,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: sessionStorage.getItem('access_token'),
+        authenticated: localStorage.getItem('access_token'),
         signIn,
         signUp,
         signOut,

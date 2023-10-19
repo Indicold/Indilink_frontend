@@ -120,7 +120,7 @@ const SignInForm = (props: SignInFormProps) => {
                 .then((data) => {
                     setSubmitting(false)
                     if (data.message.accessToken) {
-                        sessionStorage.setItem('access_token', data.message.accessToken);
+                        localStorage.setItem('access_token', data.message.accessToken);
                     messageView("Login Successfully")
                     setTimeout(()=>{
                         navigate('/home')
