@@ -18,6 +18,7 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -25,6 +26,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -33,7 +35,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -52,7 +54,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.value
         }
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to compressors in a
@@ -132,7 +134,15 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make *" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -141,13 +151,21 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model *" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -156,7 +174,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -175,7 +193,15 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                           }
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="cmf"
+                                            placeholder="C.F.M."
+                                            component={Input}
+                                            value={formD?.cmf}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="cmf"
@@ -184,7 +210,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
@@ -200,7 +226,15 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         </div>
                                       }
                                     className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="hp"
+                                            placeholder="H.P."
+                                            component={Input}
+                                            value={formD?.hp}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="hp"
@@ -209,7 +243,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="H.P."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.hp}
                                         </p>
@@ -235,12 +269,13 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            disabled={viewOnly}
                                         >
                                             <option selected value="">
                                                 Select
                                             </option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" selected={formD?.amc == "Yes"}>Yes</option>
+                                            <option value="No" selected={formD?.amc == "No"}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}
@@ -255,6 +290,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

@@ -490,7 +490,7 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.racking_type_id = 'This Field is required'
     }
 
-    if (!formData?.photo_of_entrance) {
+    if (formData?.photo_of_entrance?.length < 1) {
         newErrors.photo_of_entrance = 'This Field is required'
     }
 

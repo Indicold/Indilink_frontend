@@ -22,13 +22,15 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const ACUModall: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
-    FetchAgain
+    FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState<any>({})
     const {id}: any = useParams()
@@ -37,7 +39,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     const {token}:any=getToken()
     const {
@@ -63,16 +65,16 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` calls the `handleStoreTable` function with specific
      * parameters.
      */
     const handlesave = () => {
-        console.log("saved", data, validateACUForm(data, setErrors), errors)
+        // console.log("saved", data, validateACUForm(data, setErrors), errors)
         if(validateACUForm(data, setErrors)) {
-            console.log("validated")
+            // console.log("validated")
         handleStoreTable(
             'partner/store/acu',
             data,
@@ -146,7 +148,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -155,13 +165,21 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -170,7 +188,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -189,7 +207,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                           }
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="cmf"
+                                            placeholder="C.F.M."
+                                            component={Input}
+                                            value={formD?.cmf}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="cmf"
@@ -198,7 +224,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
@@ -213,7 +239,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </div>
                                       }
                                      className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="hp"
+                                            placeholder="H.P."
+                                            component={Input}
+                                            value={formD?.hp}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="hp"
@@ -222,7 +256,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="H.P."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.hp}
                                         </p>
@@ -260,7 +294,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </div>
                                       }
                                     className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="tr"
+                                            placeholder="T.R."
+                                            component={Input}
+                                            value={formD?.tr}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="tr"
@@ -269,7 +311,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="T.R."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.tr}
                                         </p>
@@ -294,10 +336,11 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            disabled={viewOnly}
                                         >
                                             <option >Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
-  <option selected={item?.id===data?.defrosting_id} value={item?.id}>{item?.type}</option>
+  <option selected={item?.id===data?.defrosting_id || (formD?.defrosting_id && item?.id === formD?.defrosting_id)} value={item?.id}>{item?.type}</option>
                                             ))}
                                           
                                         </select>
@@ -338,6 +381,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled = {viewOnly}
                                 >
                                     Save
                                 </Button>

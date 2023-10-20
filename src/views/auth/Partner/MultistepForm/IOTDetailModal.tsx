@@ -16,13 +16,15 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
-    FetchAgain
+    FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -31,7 +33,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -44,7 +46,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` is used to handle saving data to a specific store table in a
@@ -127,7 +129,15 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Type*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="type"
+                                            placeholder="Type"
+                                            component={Input}
+                                            value={formD?.type}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="type"
@@ -136,7 +146,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.type}
                                         </p>
@@ -145,7 +155,15 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Device ID*"
                                         className="mx-auto"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="device_id"
+                                            placeholder="Device ID"
+                                            component={Input}
+                                            value={formD?.device_id}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="device_id"
@@ -154,7 +172,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.device_id}
                                         </p>
@@ -162,7 +180,15 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -171,13 +197,21 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -186,7 +220,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -204,6 +238,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            disabled={viewOnly}
                                         >
                                             <option selected disabled>Select</option>
                                             <option value="true">
@@ -224,6 +259,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

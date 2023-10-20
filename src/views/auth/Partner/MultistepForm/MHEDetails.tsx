@@ -17,6 +17,7 @@ interface MajorityHolderModalProps {
     MHE: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -24,7 +25,8 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     MHE,
-    FetchAgain
+    FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
@@ -33,7 +35,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -45,7 +47,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData, data)
+        // console.log('newData', newData, data)
     }
     /**
      * The handlesave function is used to handle saving data to a store table in a React
@@ -134,7 +136,15 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -143,13 +153,21 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -158,7 +176,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -166,7 +184,15 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Load*" className="me-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="load"
+                                            placeholder="Load"
+                                            component={Input}
+                                            value={formD?.load}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="load"
@@ -175,7 +201,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Load"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.load}
                                         </p>
@@ -189,6 +215,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     variant="solid"
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

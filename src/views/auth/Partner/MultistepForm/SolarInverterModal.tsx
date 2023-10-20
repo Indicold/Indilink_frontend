@@ -19,13 +19,15 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     setModal,
     formD,
     update,
-    FetchAgain
+    FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -34,7 +36,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -54,7 +56,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to solar inverters in a
@@ -136,7 +138,15 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -145,13 +155,21 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -160,7 +178,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -171,7 +189,15 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Capacity*"
                                         className="me-auto ms-2"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="capacity"
+                                            placeholder="Capacity"
+                                            component={Input}
+                                            value={formD?.capacity}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="capacity"
@@ -180,7 +206,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Capacity"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.capacity}
                                         </p>
@@ -194,6 +220,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

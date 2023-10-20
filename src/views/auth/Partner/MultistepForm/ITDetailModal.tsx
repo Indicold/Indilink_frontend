@@ -19,13 +19,15 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
-    FetchAgain
+    FetchAgain,
+    viewOnly
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -34,7 +36,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -53,7 +55,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.value
         }
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data to a specific store table in a
@@ -136,7 +138,15 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Type*" className="w-1/2 mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="type"
+                                            placeholder="Type"
+                                            component={Input}
+                                            value={formD?.type}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="type"
@@ -145,7 +155,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Type"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.type}
                                         </p>
@@ -154,7 +164,15 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Device ID*"
                                         className="w-1/2 mx-auto"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="device_id"
+                                            placeholder="Device ID"
+                                            component={Input}
+                                            value={formD?.device_id}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="device_id"
@@ -163,7 +181,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Device ID"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.device_id}
                                         </p>
@@ -171,7 +189,15 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Make*" className="w-1/2 mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -180,13 +206,21 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -195,7 +229,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                            disabled={viewOnly}
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -214,6 +249,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>
