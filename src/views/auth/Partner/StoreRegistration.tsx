@@ -517,7 +517,7 @@ const StoreRegistration = () => {
                 <Formik
                     initialValues={{ field: true }}
                     onSubmit={() =>
-                        // console.log('Submited via my onSubmit function')
+                        console.log('Submited via my onSubmit function')
                     }
                 >
                     {({ handleSubmit }) => (
