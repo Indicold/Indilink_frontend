@@ -15,6 +15,14 @@
                 "item1": "Group collapse menu item 1",
                 "item2": "Group collapse menu item 2"
             }
+        },
+
+        "CustomerMenu": {
+            "groupMenu": "Support",
+             "collapseMenu": {
+                 "item1": "Add Query",
+                 "item2": "Query List"
+             }
         }
     }
 }

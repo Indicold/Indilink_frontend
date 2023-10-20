@@ -63,7 +63,7 @@ export const userLoginApiPost = createAsyncThunk(
       body: JSON.stringify(formData),
     });
     const data = await response.json();
-    if(data.message.accessToken)sessionStorage.setItem('access_token', data.message.accessToken);
+    if(data.message.accessToken)localStorage.setItem('access_token', data.message.accessToken);
     return data;
   }
 );

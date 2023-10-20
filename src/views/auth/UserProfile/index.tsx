@@ -2,12 +2,12 @@ import DownloadingIcon from '@mui/icons-material/Downloading';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 const UserProfilePage = () => {
-    // const token:any=sessionStorage.getItem('access_token');
+    // const token:any=localStorage.getItem('access_token');
     // const decode=jwt_decode(token)
     // console.log("TTTTTTTTTT",decode);
     const navigate:any=useNavigate();
     const handleChangePassword=()=>{
-        sessionStorage.clear()
+        localStorage.clear()
 
         navigate('/forgot-password')
 

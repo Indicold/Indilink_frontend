@@ -88,12 +88,11 @@ const StoreSearch = () => {
     // Define a function to handle form submission
     const handleRoute = () => {
 
-        console.log(validateStoreCustomerForm(formData, setErrors))
+      
 
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
-        console.log('clicked!',validateStoreCustomerForm(formData, setErrors))
-
+      
             PostCustomerRegisterDetails(formData);
         }
     }
@@ -115,7 +114,6 @@ const StoreSearch = () => {
      */
     const handleRouteUpdate = () => {
 
-        console.log(21)
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
         
@@ -151,13 +149,13 @@ const StoreSearch = () => {
             setTimeout(() => {
                 navigate('/ticket_list_store')
             }, 2000)
-            console.log("GGGGGG88888777",result)
+          
           })
           .catch(error => console.log('error', error));
       }
     
     const navigate: any = useNavigate();
-    console.log("GGG88888GGG", location?.state);
+   
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -184,7 +182,7 @@ const StoreSearch = () => {
         }
     }, [CustomerResponse?.status]);
 
-    console.log("statusstatusstatusstatusstatusstatusstatus", CustomerResponse);
+ 
     return (
         <div>
             <ToastContainer />

@@ -77,7 +77,7 @@ export const validateForm = (formData: any, setError: any) => {
 
     
     if (formData?.email) {
-      if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+      if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(formData?.email)) {
         errorss.email = 'Invalid email address';
       }
     }
