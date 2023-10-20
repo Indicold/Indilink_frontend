@@ -11,13 +11,15 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import InfoIcon from '@mui/icons-material/Info'
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
-    FetchAgain: any
+    FetchAgain: any,
+    
 }
 const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -25,10 +27,14 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-}) => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    commanData
+}:any) => {
+    const [data, setData] = useState<any>({})
+    const [errors, setErrors] = useState<any>({})
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/compressors/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -59,19 +65,29 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
      * partner store.
      */
     const handlesave = () => {
-        if(validateCompressorForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/compressors',
-            data,
-            setModal,
-            formD,
-            update,
-            'compressor_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateCompressorForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/compressors',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'compressor_ids',
+                    FetchAgain
+                )
+                }
         }
+     
+    }
+useEffect(()=>{
+    if(commanData?.type==='Edit' || commanData?.type==='View'){
+        setData(commanData)
     }
 
+},[commanData])
     return (
         <>
             <ToastContainer />
@@ -134,11 +150,13 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem label="Make *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="make"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
                                         />
@@ -149,8 +167,10 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem label="Model *" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="model"
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -177,8 +197,10 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="cmf"
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -202,8 +224,10 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     className="mx-auto w-1/2">
                                         <Field
                                             type="number"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="hp"
+                                            value={data?.hp}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -231,6 +255,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         <select
                                             id="countries"
                                             name="amc"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -239,8 +264,8 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             <option selected value="">
                                                 Select
                                             </option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                            <option value="Yes" selected={data?.amc}>Yes</option>
+                                            <option value="No" selected={data?.amc}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}
@@ -251,6 +276,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"

@@ -114,6 +114,10 @@ const StoreRegistration = () => {
     const [SEModal, setSEModal] = useState<any>(false)
     const [chamberData, setChamberData] = useState<any>([])
     const [CAData, setCAData] = useState<any>([])
+
+    let [commanData, setCommanData] = useState<any>({})
+
+
     // Fetch the current location
     const location = useLocation()
 
@@ -244,11 +248,11 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     // Display a success message and navigate to a new page
                     messageView(result.message)
-                    navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
+                    navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
 
                     if (result?.status === 200) {
                         setTimeout(() => {
-                            navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
+                            navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
                         }, 2000)
                     }
                 } else {
@@ -288,7 +292,7 @@ const StoreRegistration = () => {
             newData['three_d_view_of_asset'] = fileArray;
             // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
-        } else  
+        } else
             if (e.target.name === 'photos_of_asset') {
 
                 const fileInput = e.target; // Assuming e.target is the input element
@@ -405,6 +409,94 @@ const StoreRegistration = () => {
 
     }
     console.log("TTTTTTT77777777", dataa);
+    const handleView = (rowData: any, type: any) => {
+        if (type === 'Chamber') {
+            setChamberModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'CA') {
+            setCAModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'Compressors') {
+            setCompModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'ACU') {
+            setACUModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+         else if (type === 'Condenser') {
+            setCondensorModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'AMC') {
+            setAMCModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }else if (type === 'IOT') {
+            setIOTModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }else if (type === 'IT') {
+            setITModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'Generator') {
+            setGenModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'MHE') {
+            setMHEModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'Solar') {
+            setSEModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+
+
+    }
+    const handleEdit = (rowData: any, type: any) => {
+        if (type === 'Chamber') {
+            setChamberModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        } else if (type === 'CA') {
+            setCAModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Compressors') {
+            setCompModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'ACU') {
+            setACUModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        } else if (type === 'Condenser') {
+            setCondensorModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'AMC') {
+            setAMCModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'IOT') {
+            setIOTModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'IT') {
+            setITModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Generator') {
+            setGenModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'MHE') {
+            setMHEModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Solar') {
+            setSEModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+
+    }
 
     return (
         <div className='flex'>
@@ -430,7 +522,7 @@ const StoreRegistration = () => {
                         <h6 className="font-medium leading-tight">Compliance Details</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
-            
+
                 </ol>
 
 
@@ -463,6 +555,7 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={chamberModal}
                                     formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setChamberModal}
                                 />
@@ -473,6 +566,7 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={CAModal}
                                     formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setData={setData}
                                     setModal={setCAModal}
@@ -484,6 +578,7 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={compModal}
                                     formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setData={setData}
                                     setModal={setCompModal}
@@ -497,6 +592,7 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     update={setData}
                                     setData={setData}
+                                    commanData={commanData}
                                     setModal={setACUModal}
                                 />
                             )}
@@ -507,6 +603,7 @@ const StoreRegistration = () => {
                                     modal={condensorModal}
                                     formD={dataa}
                                     update={setData}
+                                    commanData={commanData}
                                     setData={setData}
                                     setModal={setCondensorModal}
                                 />
@@ -518,6 +615,7 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     update={setData}
                                     setData={setData}
+                                    commanData={commanData}
                                     setModal={setAMCModal}
                                     FetchAgain={FetchAgain}
                                 />
@@ -529,6 +627,7 @@ const StoreRegistration = () => {
                                     modal={IOTModal}
                                     formD={dataa}
                                     update={setData}
+                                    commanData={commanData}
                                     setData={setData}
                                     setModal={setIOTModal}
                                 />
@@ -539,6 +638,7 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={ITModal}
                                     formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setData={setData}
                                     setModal={setITModal}
@@ -552,6 +652,7 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     update={setData}
                                     setData={setData}
+                                    commanData={commanData}
                                     setModal={setGenModal}
                                 />
                             )}
@@ -561,6 +662,7 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={MHEModal}
                                     formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setData={setData}
                                     setModal={setMHEModal}
@@ -573,6 +675,7 @@ const StoreRegistration = () => {
                                     modal={SEModal}
                                     formD={dataa}
                                     update={setData}
+                                    commanData={commanData}
                                     setData={setData}
                                     setModal={setSEModal}
                                 />
@@ -1336,10 +1439,10 @@ const StoreRegistration = () => {
                                             <input
                                                 multiple
                                                 name="three_d_view_of_asset"
-                                    
+
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                type="file"  
-                                                accept="image/png, image/jpeg" 
+                                                type="file"
+                                                accept="image/png, image/jpeg"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1360,9 +1463,9 @@ const StoreRegistration = () => {
                                             <input
                                                 multiple
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                type="file"  
+                                                type="file"
                                                 accept="image/png, image/jpeg"
-                                            
+
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1411,9 +1514,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         Updated
                                                     </div>
-                                                    {/* <div className="mx-auto">
+                                                    <div className="mx-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.chambers?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1433,18 +1536,18 @@ const StoreRegistration = () => {
                                                             {new Date(item?.updated_at)?.toLocaleDateString()}
                                                         </div>
                                                         <div className="mx-2 flex">
-                                                            {/* <Button
-       className="!p-2 pt-0 pb-0 mx-1"
-       // onClick={() => handleEdit(rowData)}
-   >
-       Edit
-   </Button>
-   <Button
-       className="!p-1 mx-1"
-       // onClick={() => handleView(rowData)}
-   >
-       View
-   </Button> */}
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-1"
+                                                                onClick={() => handleEdit(item, 'Chamber')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-1"
+                                                                onClick={() => handleView(item, 'Chamber')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1483,9 +1586,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[33%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
-                                                    Actions
-                                                    </div> */}
+                                                    <div className="w-[25%] text-center my-auto">
+                                                        Actions
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1498,20 +1601,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[33%] text-center my-auto">
                                                             {item?.cmf}
                                                         </div>
-                                                        {/* <div className="w-[25%] mx-auto flex">
-  <Button
-      className="!p-2 pt-0 pb-0 mx-auto"
-      // onClick={() => handleEdit(rowData)}
-  >
-      Edit
-  </Button>
-  <Button
-      className="!p-1 mx-auto"
-      // onClick={() => handleView(rowData)}
-  >
-      View
-  </Button>
-  </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'CA')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'CA')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1519,8 +1622,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
                                                         setCAModal(true)
+                                                        setCommanData({})
+                                                    }
+                                                       
                                                     }
                                                 >
                                                     Add details
@@ -1553,9 +1659,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    {/* <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1574,20 +1680,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.amc}
                                                         </div>
-                                                        {/* <div className="w-[16%] mx-auto flex">
-    <Button
-        className="!p-2 pt-0 pb-0 mx-auto"
-        // onClick={() => handleEdit(rowData)}
-    >
-        Edit
-    </Button>
-    <Button
-        className="!p-1 mx-auto"
-        // onClick={() => handleView(rowData)}
-    >
-        View
-    </Button>
-    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Compressors')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Compressors')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1595,8 +1701,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        setCompModal(true)
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setCompModal(true);
+                                                    }
+                                                       
                                                     }
                                                 >
                                                     Add details
@@ -1629,9 +1738,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    {/* <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1650,20 +1759,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[20%] text-center my-auto">
                                                             {item?.tr}
                                                         </div>
-                                                        {/* <div className="w-[14%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            // onClick={() => handleEdit(rowData)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            // onClick={() => handleView(rowData)}
-                                                        >
-                                                            View
-                                                        </Button>
-                                                        </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'ACU')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'ACU')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1671,8 +1780,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setACUModal(true)
+                                                    }
+                                                     
                                                     }
                                                 >
                                                     Add details
@@ -1702,9 +1814,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.condensors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1720,20 +1832,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.amc}
                                                         </div>
-                                                        {/* <div className="w-[20%] mx-auto flex">
-    <Button
-        className="!p-2 pt-0 pb-0 mx-auto"
-        // onClick={() => handleEdit(rowData)}
-    >
-        Edit
-    </Button>
-    <Button
-        className="!p-1 mx-auto"
-        // onClick={() => handleView(rowData)}
-    >
-        View
-    </Button>
-    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Condenser')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Condenser')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1741,10 +1853,13 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setCondensorModal(
                                                             true
                                                         )
+                                                    }
+                                                        
                                                     }
                                                 >
                                                     Add details
@@ -1774,9 +1889,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         Fixed Cost
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.amcs?.map((item: any, index: any) => {
                                                     let date: any = new Date(item?.valid_till)
@@ -1795,28 +1910,31 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.fixed_cost}
                                                         </div>
-                                                        {/* <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'AMC')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'AMC')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>)
                                                 })}
                                             </div> : <p className="text-center">Currently there are no AMCs.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setAMCModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -1846,9 +1964,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.iotDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
@@ -1863,27 +1981,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'IOT')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'IOT')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IOT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setIOTModal(true)
+                                                    }
+                                                        
                                                     }
                                                 >
                                                     Add details
@@ -1913,9 +2034,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
@@ -1930,27 +2051,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'IT')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'IT')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({})
                                                         setITModal(true)
+                                                    }
+                                                     
                                                     }
                                                 >
                                                     Add details
@@ -1980,9 +2104,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         Year
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
@@ -1997,27 +2121,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.year}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Generator')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Generator')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no generators.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setGenModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -2044,9 +2171,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[33%] text-center my-auto">
                                                         Load
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[33%] text-center my-auto">
@@ -2058,27 +2185,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[33%] text-center my-auto">
                                                         {item?.load}
                                                     </div>
-                                                    {/* <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'MHE')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'MHE')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no MHEs.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
+                                                        setCommanData({});
                                                         setMHEModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -2105,9 +2235,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[33%] text-center my-auto">
                                                         Capacity
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                     {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                         <div className="w-[33%] text-center my-auto">
@@ -2119,28 +2249,30 @@ const StoreRegistration = () => {
                                                         <div className="w-[33%] text-center my-auto">
                                                             {item?.capacity}
                                                         </div>
-                                                        {/* <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Solar')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Solar')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>))}</div>
                                             </div> : <p className="text-center">Currently there are no solar inverters.</p>}
 
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
+                                                    onClick={() =>{
                                                         setSEModal(true)
+                                                        setCommanData({})
+                                                    }
                                                     }
                                                 >
                                                     Add details

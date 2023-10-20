@@ -7,7 +7,8 @@
  * `handleStoreTable` function to store the form data. The modal
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateSolarInvertorForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateSolarInvertorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -25,11 +26,15 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
     formD,
     update,
-    FetchAgain
-}) => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    FetchAgain,
+    commanData
+}:any) => {
+    const [data, setData] = useState<any>({})
+    const [errors, setErrors] = useState<any>({})
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/solar-invertor/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -61,19 +66,37 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
      * partner store.
      */
     const handlesave = () => {
-        if(validateSolarInvertorForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/solar-invertor',
-            data,
-            setModal,
-            formD,
-            update,
-            'solar_invertor_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateSolarInvertorForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/solar-invertor',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'solar_invertor_ids',
+                    FetchAgain
+                )
+                }
         }
+       
     }
-
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -140,6 +163,8 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="make"
+                                            disabled={isDisabled}
+                                            value={data?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -155,6 +180,8 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -173,8 +200,10 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="capacity"
+                                            value={data?.capacity}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -190,6 +219,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"

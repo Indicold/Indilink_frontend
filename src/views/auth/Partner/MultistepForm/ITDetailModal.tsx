@@ -7,7 +7,8 @@
  * `handleStoreTable` function to store the form data
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateITForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateITForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -25,11 +26,15 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
+    FetchAgain,
+    commanData
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/it-devices/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -60,19 +65,37 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React TypeScript application.
      */
     const handlesave = () => {
-        if(validateITForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/it-devices',
-            data,
-            setModal,
-            formD,
-            update,
-            'it_devices_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateITForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/it-devices',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'it_devices_ids',
+                    FetchAgain
+                )
+                }
         }
+       
     }
-
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -140,6 +163,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="type"
+                                            disabled={isDisabled}
+                                            value={data?.type}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -157,7 +182,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="device_id"
+                                            value={data?.device_id}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -174,7 +201,9 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="make"
+                                            value={data?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -190,6 +219,8 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -210,6 +241,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"

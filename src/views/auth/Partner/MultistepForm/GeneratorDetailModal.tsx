@@ -6,7 +6,8 @@
  * within `handlesave` to store the generator data.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateGeneratorForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateGeneratorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,11 +25,15 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
-}) => {
-    const [data, setData] = useState({})
+    FetchAgain,
+    commanData
+}:any) => {
+    const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/generator/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id =id
@@ -59,19 +64,37 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
      * The handlesave function calls the handleStoreTable function with specific parameters.
      */
     const handlesave = () => {
-        if(validateGeneratorForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/generator',
-            data,
-            setModal,
-            formD,
-            update,
-            'generator_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateGeneratorForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/generator',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'generator_ids',
+                    FetchAgain
+                )
+                }
         }
+     
     }
-
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -138,6 +161,8 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="make"
+                                            disabled={isDisabled}
+                                            value={data?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -153,6 +178,8 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -170,6 +197,8 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             type="number"
                                             autoComplete="off"
                                             name="kva"
+                                            disabled={isDisabled}
+                                            value={data?.kva}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -184,6 +213,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <select
                                             id="countries"
                                             name="year"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -191,7 +221,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         >
                                             <option selected disabled>Select</option>
                                             {Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map((yr)=>{
-                                                return (<option>{yr}</option>);
+                                                return (<option selected={data?.year===yr}>{yr}</option>);
                                             })}
 
                                         </select>
@@ -256,6 +286,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"

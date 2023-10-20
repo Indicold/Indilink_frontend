@@ -7,7 +7,8 @@
  * the `data` state object with the input values.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateAMCForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateAMCForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,11 +25,15 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
-}) => {
+    FetchAgain,
+    commanData
+}:any) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
     const {id}: any = useParams()
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/amc/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -51,18 +56,36 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
      * application using TypeScript.
      */
     const handlesave = () => {
-        if(validateAMCForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/amc',
-            data,
-            setModal,
-            formD,
-            update,
-            'amc_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateAMCForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/amc',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'amc_ids',
+                    FetchAgain
+                )
+                }
         }
+        
     }
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+            },[commanData])
+            useEffect(()=>{
+                if(PutApiResponse?.status===200){
+                    messageView("Data Updated Successfully !");
+                    setModal(false)
+                }else{
+                    messageView(PutApiResponse)
+                }
+                    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -131,9 +154,11 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="name_of_service"
                                             placeholder="Name of service"
+                                            value={data?.name_of_service}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -150,7 +175,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="vendor"
+                                            value={data?.vendor}
                                             placeholder="Vendor"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -169,8 +196,10 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="date"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="valid_till"
+                                            value={data?.valid_till}
                                             placeholder="Valid till"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -188,7 +217,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="number"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="fixed_cost"
+                                            value={data?.fixed_cost}
                                             placeholder="Fixed Cost"
                                             onChange={(e: any) =>
                                                 handleChange(e)

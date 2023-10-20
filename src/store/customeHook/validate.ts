@@ -589,9 +589,7 @@ export const validateCompressorForm = (formData: any, setErrors: any) => {
 export const validateACUForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
-    if (!formData?.asset_id) {
-        newErrors.asset_id = 'This Field is required'
-    }
+ 
 
     if (!formData?.make) {
         newErrors.make = 'This Field is required'
