@@ -123,6 +123,7 @@ function useAuth() {
             })
         )
         localStorage.removeItem('user_type');
+        localStorage.clear()
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 
