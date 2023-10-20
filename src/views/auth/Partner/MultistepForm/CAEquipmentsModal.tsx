@@ -22,6 +22,7 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -29,6 +30,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
+    viewOnly
 }) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
     const {id}: any = useParams()
@@ -38,7 +40,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -65,7 +67,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function with specific parameters.
      */
     const handlesave = async () => {
-        console.log("asset_idddd", data)
+        // console.log("asset_idddd", data)
         if(validateCAEquipForm(data, setErrors)) {
         handleStoreTable(
             'partner/store/ca-equipment',
@@ -139,7 +141,15 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make *"   className="w-1/2">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            disabled={viewOnly}
+                                            value={formD?.make}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -148,13 +158,21 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model *"   className="w-1/2">
-                                        <Field
+                                        {viewOnly ?(<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -163,7 +181,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -182,7 +200,15 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                           }
                                         className="w-1/2"
                                     >
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="cmf"
+                                            placeholder="C.F.M."
+                                            component={Input}
+                                            disabled={viewOnly}
+                                            value={formD?.cmf}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="cmf"
@@ -191,7 +217,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
@@ -205,6 +231,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

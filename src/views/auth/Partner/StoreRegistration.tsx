@@ -114,6 +114,9 @@ const StoreRegistration = () => {
     const [SEModal, setSEModal] = useState<any>(false)
     const [chamberData, setChamberData] = useState<any>([])
     const [CAData, setCAData] = useState<any>([])
+    const [editableFields, setEditableFields] = useState<any>(true);
+    const [actionTriggeredByTable, setTableTriggeredAction] = useState<any>(false);
+    const [rowData, setRowData] = useState<any>({});
     // Fetch the current location
     const location = useLocation()
 
@@ -127,7 +130,16 @@ const StoreRegistration = () => {
         total_number_of_docks: '',
         total_office_space: '',
         processing_area: '',
-        parking_area: ''
+        parking_area: '',
+        chamber_number: '',
+        chamber_name: '',
+        no_of_pallets: 0,
+        no_of_floors: 1,
+        floor_area: '',
+        temp_range_min: 0,
+        temp_range_max: 0,
+        each_floor_hight: '',
+        
     })
 
     const [errors, setErrors] = useState<any>({})
@@ -141,7 +153,7 @@ const StoreRegistration = () => {
     const handleRoute = async () => {
         const { token }: any = getToken()
         dataa.store_type_id = value1?.map((item: any) => item?.id)
-        console.log("T666666", dataa);
+        // console.log("T666666", dataa);
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
         formdata.append("city_id", dataa?.city_id);
@@ -305,7 +317,7 @@ const StoreRegistration = () => {
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
-        console.log("newData", newData)
+        // console.log("newData", newData)
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
@@ -317,8 +329,61 @@ const StoreRegistration = () => {
         newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
         setData(newData)
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
-        console.log("newDataa", newData)
+        // console.log("newDataa", newData)
         // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
+    }
+
+    const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
+        setEditableFields(!readOnly);
+        setTableTriggeredAction(true);
+        setRowData(rowdata);
+        switch(targetModal) {
+            case 'ChamberDetailModal':
+                setChamberModal(true);
+                break
+
+            case 'CAEquipmentsModal':
+                setCAModal(true);
+                break
+
+            case 'CompressorModal':
+                setCompModal(true);
+                break
+
+            case 'ACUModal':
+                setACUModal(true);
+                break
+
+            case 'CondensorDetailsModal':
+                setCondensorModal(true);
+                break
+
+            case 'AMCDetailModal':
+                setAMCModal(true);
+                break
+
+            case 'IOTDetailModal':
+                setIOTModal(true);
+                break
+
+            case 'ITDetailModal':
+                setITModal(true);
+                break
+
+            case 'GeneratorDetailModal':
+                setGenModal(true);
+                break
+
+            case 'MHEDetails':
+                setMHEModal(true);
+                break
+
+            case 'SolarInverterModal':
+                setSEModal(true);
+                break
+
+            default: return;
+        }
     }
 
     // Use useEffect to update form data when fetchDetails changes
@@ -333,10 +398,10 @@ const StoreRegistration = () => {
 
         const newState: any = { ...dataa };
         newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
-        console.log("no_of_chambers", newState)
+        // console.log("no_of_chambers", newState)
         setData(newState)
         setValue(dataa?.store_type_id)
-        console.log("dataa", dataa)
+        // console.log("dataa", dataa)
         if (localStorage.getItem('chamber_ids')) {
             const arr: any = JSON.parse(localStorage.getItem('chamber_ids')) || [];
             if (arr) {
@@ -359,7 +424,7 @@ const StoreRegistration = () => {
                 const body: any = {
                     ids: filteredArray
                 }
-                console.log("GGGGGG", body, filteredArray);
+                // console.log("GGGGGG", body, filteredArray);
                 if (arr.length > 0) {
                     sendPostRequestca(body)
                 }
@@ -384,7 +449,7 @@ const StoreRegistration = () => {
 
     const targetArray1: any = StorageType?.data || [];
     const itemsToFind1 = dataa?.store_type_id;
-    console.log("TTTTTTTTT768786786786867", dataa);
+    // console.log("TTTTTTTTT768786786786867", dataa);
 
     useEffect(() => {
         const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
@@ -404,7 +469,7 @@ const StoreRegistration = () => {
         }
 
     }
-    console.log("TTTTTTT77777777", dataa);
+    // console.log("TTTTTTT77777777", dataa);
 
     return (
         <div className='flex'>
@@ -452,7 +517,7 @@ const StoreRegistration = () => {
                 <Formik
                     initialValues={{ field: true }}
                     onSubmit={() =>
-                        console.log('Submited via my onSubmit function')
+                        // console.log('Submited via my onSubmit function')
                     }
                 >
                     {({ handleSubmit }) => (
@@ -462,9 +527,10 @@ const StoreRegistration = () => {
                                 <ChamberDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={chamberModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
                                     update={setData}
                                     setModal={setChamberModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -472,10 +538,11 @@ const StoreRegistration = () => {
                                 <CAEquipmentsModal
                                     FetchAgain={FetchAgain}
                                     modal={CAModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setCAModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -483,10 +550,11 @@ const StoreRegistration = () => {
                                 <CompressorModal
                                     FetchAgain={FetchAgain}
                                     modal={compModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setCompModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -494,10 +562,11 @@ const StoreRegistration = () => {
                                 <ACUModall
                                     FetchAgain={FetchAgain}
                                     modal={ACUModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setACUModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -505,21 +574,21 @@ const StoreRegistration = () => {
                                 <CondensorDetailsModal
                                     FetchAgain={FetchAgain}
                                     modal={condensorModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setCondensorModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
                             {AMCModal && (
                                 <AMCDetailModal
                                     modal={AMCModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setAMCModal}
                                     FetchAgain={FetchAgain}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -527,10 +596,10 @@ const StoreRegistration = () => {
                                 <IOTDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={IOTModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setIOTModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -538,10 +607,11 @@ const StoreRegistration = () => {
                                 <ITDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={ITModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setITModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -549,10 +619,11 @@ const StoreRegistration = () => {
                                 <GeneratorDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={genModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData: dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setGenModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -560,10 +631,10 @@ const StoreRegistration = () => {
                                 <MHEDetailsModal
                                     FetchAgain={FetchAgain}
                                     modal={MHEModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setMHEModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -571,10 +642,11 @@ const StoreRegistration = () => {
                                 <SolarInverterModal
                                     FetchAgain={FetchAgain}
                                     modal={SEModal}
-                                    formD={dataa}
+                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    chamber={null}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setSEModal}
+                                    viewOnly={!editableFields}
                                 />
                             )}
 
@@ -1396,24 +1468,24 @@ const StoreRegistration = () => {
                                             {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
 
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber name
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber no.
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber size
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         Created
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Updated
                                                     </div>
-                                                    {/* <div className="mx-auto">
+                                                    <div className="mx-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.chambers?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1433,18 +1505,18 @@ const StoreRegistration = () => {
                                                             {new Date(item?.updated_at)?.toLocaleDateString()}
                                                         </div>
                                                         <div className="mx-2 flex">
-                                                            {/* <Button
-       className="!p-2 pt-0 pb-0 mx-1"
-       // onClick={() => handleEdit(rowData)}
-   >
-       Edit
-   </Button>
-   <Button
-       className="!p-1 mx-1"
-       // onClick={() => handleView(rowData)}
-   >
-       View
-   </Button> */}
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-1"
+                                                                onClick={() => handleEditView(item, "ChamberDetailModal", false)}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-1"
+                                                                onClick={() => handleEditView(item, "ChamberDetailModal", true)}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1454,9 +1526,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setChamberModal(
-                                                            true
-                                                        )
+                                                        {
+                                                            setEditableFields(true);
+                                                            setChamberModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1474,44 +1549,44 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.caEquipments.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[26%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[27%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         CFM
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[28%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.cmf}
                                                         </div>
-                                                        {/* <div className="w-[25%] mx-auto flex">
-  <Button
-      className="!p-2 pt-0 pb-0 mx-auto"
-      // onClick={() => handleEdit(rowData)}
-  >
-      Edit
-  </Button>
-  <Button
-      className="!p-1 mx-auto"
-      // onClick={() => handleView(rowData)}
-  >
-      View
-  </Button>
-  </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                        <Button
+                                                            className="!p-2 pt-0 pb-0 mx-auto"
+                                                            onClick={() => handleEditView(item, "CAEquipmentsModal", false)}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            className="!p-1 mx-auto"
+                                                            onClick={() => handleEditView(item, "CAEquipmentsModal", true)}
+                                                        >
+                                                            View
+                                                        </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1520,7 +1595,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setCAModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setCAModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1553,13 +1633,13 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    {/* <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[23%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[25%] text-center my-auto">
+                                                        <div className="w-[22%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
                                                         <div className="w-[25%] text-center my-auto">
@@ -1574,20 +1654,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.amc}
                                                         </div>
-                                                        {/* <div className="w-[16%] mx-auto flex">
-    <Button
-        className="!p-2 pt-0 pb-0 mx-auto"
-        // onClick={() => handleEdit(rowData)}
-    >
-        Edit
-    </Button>
-    <Button
-        className="!p-1 mx-auto"
-        // onClick={() => handleView(rowData)}
-    >
-        View
-    </Button>
-    </div> */}
+                                                        <div className="w-[23%] mx-auto flex">
+                                                        <Button
+                                                            className="!p-2 pt-0 pb-0 mx-auto"
+                                                            onClick={() => handleEditView(item, "CompressorModal", false)}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            className="!p-1 mx-auto"
+                                                            onClick={() => handleEditView(item, "CompressorModal", true)}
+                                                        >
+                                                            View
+                                                        </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1596,7 +1676,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setCompModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setCompModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1629,9 +1714,9 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    {/* <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1650,20 +1735,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[20%] text-center my-auto">
                                                             {item?.tr}
                                                         </div>
-                                                        {/* <div className="w-[14%] mx-auto flex">
+                                                        <div className="w-[21%] mx-auto flex">
                                                         <Button
                                                             className="!p-2 pt-0 pb-0 mx-auto"
-                                                            // onClick={() => handleEdit(rowData)}
+                                                            onClick={() => handleEditView(item, "ACUModal", false)}
                                                         >
                                                             Edit
                                                         </Button>
                                                         <Button
                                                             className="!p-1 mx-auto"
-                                                            // onClick={() => handleView(rowData)}
+                                                            onClick={() => handleEditView(item, "ACUModal", true)}
                                                         >
                                                             View
                                                         </Button>
-                                                        </div> */}
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1672,7 +1757,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setACUModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setACUModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1690,21 +1780,21 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.condensors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.condensors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
@@ -1720,20 +1810,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.amc}
                                                         </div>
-                                                        {/* <div className="w-[20%] mx-auto flex">
-    <Button
-        className="!p-2 pt-0 pb-0 mx-auto"
-        // onClick={() => handleEdit(rowData)}
-    >
-        Edit
-    </Button>
-    <Button
-        className="!p-1 mx-auto"
-        // onClick={() => handleView(rowData)}
-    >
-        View
-    </Button>
-    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                        <Button
+                                                            className="!p-2 pt-0 pb-0 mx-auto"
+                                                            onClick={() => handleEditView(item, "CondensorDetailsModal", false)}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            className="!p-1 mx-auto"
+                                                            onClick={() => handleEditView(item, "CondensorDetailsModal", true)}
+                                                        >
+                                                            View
+                                                        </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
 
@@ -1742,9 +1832,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setCondensorModal(
-                                                            true
-                                                        )
+                                                        {
+                                                            setEditableFields(true);
+                                                            setCondensorModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1762,26 +1855,26 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.amcs?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Name of Service
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
                                                         Vendor
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Valid till
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Fixed Cost
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.amcs?.map((item: any, index: any) => {
                                                     let date: any = new Date(item?.valid_till)
                                                     date = date?.toLocaleDateString()
-                                                    console.log("amcs", date)
+                                                    // console.log("amcs", date)
                                                     return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.name_of_service}
@@ -1795,20 +1888,20 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.fixed_cost}
                                                         </div>
-                                                        {/* <div className="w-[20%] mx-auto flex">
+                                                        <div className="w-[23%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
+                                                        onClick={() => handleEditView(item, "AMCDetailModal", false)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
                                                         className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
+                                                        onClick={() => handleEditView(item, "AMCDetailModal", true)}
                                                     >
                                                         View
                                                     </Button>
-                                                    </div> */}
+                                                    </div>
                                                     </div>)
                                                 })}
                                             </div> : <p className="text-center">Currently there are no AMCs.</p>}
@@ -1816,7 +1909,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setAMCModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setAMCModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1834,21 +1932,21 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.iotDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         ID
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.iotDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center my-auto">
@@ -1863,27 +1961,32 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
+                                                    <div className="w-[25%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
+                                                        onClick={() => handleEditView(item, "IOTDetailModal", false)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
                                                         className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
+                                                        onClick={() => handleEditView(item, "IOTDetailModal", true)}
                                                     >
                                                         View
                                                     </Button>
-                                                    </div> */}
+                                                    </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IOT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setIOTModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setIOTModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1901,56 +2004,61 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.itDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Device ID
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.device_id}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
+                                                    <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
+                                                        onClick={() => handleEditView(item, "ITDetailModal", false)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
                                                         className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
+                                                        onClick={() => handleEditView(item, "ITDetailModal", true)}
                                                     >
                                                         View
                                                     </Button>
-                                                    </div> */}
+                                                    </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setITModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setITModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1968,56 +2076,61 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.generators?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         KVA
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Year
                                                     </div>
-                                                    {/* <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.kva}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.year}
                                                     </div>
-                                                    {/* <div className="w-[20%] mx-auto flex">
+                                                    <div className="w-[20%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
+                                                        onClick={() => handleEditView(item, "GeneratorDetailModal", false)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
                                                         className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
+                                                        onClick={() => handleEditView(item, "GeneratorDetailModal", true)}
                                                     >
                                                         View
                                                     </Button>
-                                                    </div> */}
+                                                    </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no generators.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setGenModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setGenModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -2035,50 +2148,55 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.mhes?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Load
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.load}
                                                     </div>
-                                                    {/* <div className="w-[25%] mx-auto flex">
+                                                    <div className="w-[25%] mx-auto flex">
                                                     <Button
                                                         className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
+                                                        onClick={() => handleEditView(item, "MHEDetails", false)}
                                                     >
                                                         Edit
                                                     </Button>
                                                     <Button
                                                         className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
+                                                        onClick={() => handleEditView(item, "MHEDetails", true)}
                                                     >
                                                         View
                                                     </Button>
-                                                    </div> */}
+                                                    </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no MHEs.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setMHEModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setMHEModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -2096,43 +2214,43 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.solarInverters?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Capacity
                                                     </div>
-                                                    {/* <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Actions
-                                                    </div> */}
+                                                    </div>
                                                 </div>
                                                     {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.capacity}
                                                         </div>
-                                                        {/* <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        // onClick={() => handleEdit(rowData)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        // onClick={() => handleView(rowData)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div> */}
+                                                        <div className="w-[25%] mx-auto flex">
+                                                        <Button
+                                                            className="!p-2 pt-0 pb-0 mx-auto"
+                                                            onClick={() => handleEditView(item, "SolarInverterModal", false)}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            className="!p-1 mx-auto"
+                                                            onClick={() => handleEditView(item, "SolarInverterModal", true)}
+                                                        >
+                                                            View
+                                                        </Button>
+                                                        </div>
                                                     </div>))}</div>
                                             </div> : <p className="text-center">Currently there are no solar inverters.</p>}
 
@@ -2140,7 +2258,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setSEModal(true)
+                                                        {
+                                                            setEditableFields(true);
+                                                            setSEModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details

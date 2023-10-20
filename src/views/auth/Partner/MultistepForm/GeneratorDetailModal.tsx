@@ -18,13 +18,15 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
+    viewOnly: boolean
 }
 const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     formD,
     update,
     setModal,
-    FetchAgain
+    FetchAgain,
+    viewOnly = false
 }) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
@@ -33,7 +35,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id =id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -53,7 +55,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function calls the handleStoreTable function with specific parameters.
@@ -134,7 +136,15 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="w-1/2 mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="make"
+                                            placeholder="Make"
+                                            component={Input}
+                                            value={formD?.make}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -143,13 +153,21 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="w-1/2 mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="model"
+                                            placeholder="Model"
+                                            component={Input}
+                                            value={formD?.model}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -158,7 +176,8 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />
+                                            disabled={viewOnly}
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -166,7 +185,15 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="KVA*" className="w-1/2 mx-auto">
-                                        <Field
+                                        {viewOnly ? (<Field
+                                            type="number"
+                                            autoComplete="off"
+                                            name="kva"
+                                            placeholder="KVA"
+                                            component={Input}
+                                            value={formD?.kva}
+                                            disabled={viewOnly}
+                                        />) : (<Field
                                             type="number"
                                             autoComplete="off"
                                             name="kva"
@@ -175,7 +202,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="KVA"
                                             component={Input}
-                                        />
+                                        />)}
                                         <p className="text-[red]">
                                             {errors && errors.kva}
                                         </p>
@@ -188,10 +215,11 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            disabled={viewOnly}
                                         >
                                             <option selected disabled>Select</option>
                                             {Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map((yr)=>{
-                                                return (<option>{yr}</option>);
+                                                return (<option selected={formD?.year && formD?.year === yr}>{yr}</option>);
                                             })}
 
                                         </select>
@@ -260,6 +288,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>
