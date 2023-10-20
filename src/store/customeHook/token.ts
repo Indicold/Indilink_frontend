@@ -8,11 +8,10 @@ import jwt_decode from "jwt-decode";
 export const getToken=()=>{
     return {token:localStorage.getItem("access_token")}
 }
-export const TokenInfo=()=>{ const {token}:any=getToken() 
-
+export const TokenInfo=()=>{
+    const {token}:any=getToken()
 return jwt_decode(token)
 }
-
 // export const apiUrl ="http://api.indilink.indicold.in/auth";
 export const apiUrl ="http://www.ikeodesign.com/auth";
 // export const apiUrl ="https://seal-app-uqxwl.ondigitalocean.app";

@@ -182,10 +182,10 @@ const SignInForm = (props: SignInFormProps) => {
         `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`
         whenever the `LoginResponse?.responseData?.message?.accessToken` value changes. */
     useEffect(() => {
-        localStorage.setItem(
-            'access_token',
-            LoginResponse?.responseData?.message?.accessToken
-        )
+        // localStorage.setItem(
+        //     'access_token',
+        //     LoginResponse?.responseData?.message?.accessToken
+        // )
     }, [LoginResponse?.responseData?.message])
     const handleRememberMeChange = (e:any) => {
         const newData = { ...formData };
