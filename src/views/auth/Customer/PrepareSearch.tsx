@@ -53,7 +53,7 @@ const PrepareSearch = () => {
 
     // Fetch a list of cities based on the selected country
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
-        useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
+        useApiFetch<any>(`master/get-city-by-stateId/${formData?.state_id}`, token);
 
 
 

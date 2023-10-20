@@ -20,16 +20,16 @@ const PartnerMoveMakeModal = ({setModal,fetchList,fetchmake}:any) => {
     const handleSave = () => {
         AddMakeModel(formData)
         setModal(false)
-        fetchList();
         fetchmake();
+        fetchList();
     }
 console.log("MakeModelResponse",MakeModelResponse);
 
     useEffect(() => {
         if(MakeModelResponse?.status==200){
             setModal(false)
-            fetchList();
             fetchmake();
+            fetchList();
             MakeModelResponse = 'asfsd'
            
         }
