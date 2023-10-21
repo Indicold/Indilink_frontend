@@ -131,7 +131,20 @@ const PartnerComplianceMove = () => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        console.log("date_change", newData, e.target.value)
+        // console.log("date_change", newData, e.target.value)
+
+        const updatedArray = array.map((item: any) => {
+            if (e.target.name === item.key_text) {
+                return {
+                    ...item,
+                    valid_till: e.target.value,
+                    messageText: null
+                };
+            } else {
+                return item; // Keep the other items unchanged
+            }
+        });
+        setArray(updatedArray);
     }
     const handleChange = (e: any, item: any) => {
 
@@ -186,6 +199,7 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
+                              messageText: 'Valid till date is Required'
                           }
                         : itemData
                 )
@@ -215,11 +229,37 @@ const PartnerComplianceMove = () => {
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
+    const validateData = () => {
+        let error: any = false;
+
+        const updatedArray = array.map((itemData: any) => {
+            if (itemData?.url) {
+                if (itemData?.valid_till === null || itemData?.valid_till === '' || itemData?.valid_till === undefined) {
+
+                    error = true
+                    return {
+                        ...itemData,
+                        messageText: 'Valid till date is required',
+                    }
+                } else {
+                    return {
+                        ...itemData,
+                        messageText: '',
+                    }
+                }
+            }
+
+        }
+        )
+        return error
+    }
 
     // Handle route navigation
     const handleRoute = () => {
-        PostValidTillDetails(dateArray)
-        navigate('/asset_success')
+        if(!validateData()){
+            PostValidTillDetails(dateArray)
+            navigate('/asset_success')
+        }
     }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -408,11 +448,11 @@ const PartnerComplianceMove = () => {
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                    {item?.messageText && (
-                                                        <p className="text-[red]">
-                                                            {item?.messageText}
-                                                        </p>
-                                                    )}
+                                                        {/* {item?.messageText && (
+                                                            <p className="text-[red]">
+                                                                {item?.messageText}
+                                                            </p>
+                                                        )} */}
                                                 </FormItem>
                                             </div>
                                         </>
