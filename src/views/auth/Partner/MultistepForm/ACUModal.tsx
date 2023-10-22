@@ -45,7 +45,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     const {token}:any=getToken()
     const {
@@ -71,7 +71,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` calls the `handleStoreTable` function with specific
@@ -173,7 +173,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -190,7 +190,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -220,7 +220,7 @@ if(PutApiResponse?.status===200){
                                           }
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                     <Field
                                             type="number"
                                             autoComplete="off"
                                             name="cmf"
@@ -246,7 +246,7 @@ if(PutApiResponse?.status===200){
                                         </div>
                                       }
                                      className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="number"
                                             autoComplete="off"
                                             name="hp"
@@ -295,7 +295,7 @@ if(PutApiResponse?.status===200){
                                         </div>
                                       }
                                     className="mx-auto w-1/2">
-                                        <Field
+                                   <Field
                                             type="text"
                                             autoComplete="off"
                                             name="tr"
@@ -332,10 +332,11 @@ if(PutApiResponse?.status===200){
                                             }
                                             disabled={isDisabled}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                           
                                         >
                                             <option >Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
-  <option selected={item?.id===data?.defrosting_id} value={item?.id}>{item?.type}</option>
+  <option selected={item?.id===data?.defrosting_id || (formD?.defrosting_id && item?.id === formD?.defrosting_id)} value={item?.id}>{item?.type}</option>
                                             ))}
                                           
                                         </select>
@@ -372,10 +373,12 @@ if(PutApiResponse?.status===200){
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                   
                                 >
                                     Save
                                 </Button>

@@ -132,7 +132,20 @@ const PartnerComplianceMove = () => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        console.log("date_change", newData, e.target.value)
+        // console.log("date_change", newData, e.target.value)
+
+        const updatedArray = array.map((item: any) => {
+            if (e.target.name === item.key_text) {
+                return {
+                    ...item,
+                    valid_till: e.target.value,
+                    messageText: null
+                };
+            } else {
+                return item; // Keep the other items unchanged
+            }
+        });
+        setArray(updatedArray);
     }
     const handleChange = (e: any, item: any) => {
 
@@ -187,6 +200,7 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
+                              messageText: 'Valid till date is Required'
                           }
                         : itemData
                 )
@@ -454,11 +468,11 @@ const PartnerComplianceMove = () => {
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                    {item?.messageText && (
-                                                        <p className="text-[red]">
-                                                            {item?.messageText}
-                                                        </p>
-                                                    )}
+                                                        {/* {item?.messageText && (
+                                                            <p className="text-[red]">
+                                                                {item?.messageText}
+                                                            </p>
+                                                        )} */}
                                                 </FormItem>
                                             </div>
                                         </>

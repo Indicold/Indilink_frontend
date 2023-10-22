@@ -38,7 +38,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id =id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,7 +58,7 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function calls the handleStoreTable function with specific parameters.
@@ -157,7 +157,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="w-1/2 mx-auto">
-                                        <Field
+                                     <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -174,7 +174,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="w-1/2 mx-auto">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -185,6 +185,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="Model"
                                             component={Input}
+                                          
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -193,7 +194,7 @@ if(PutApiResponse?.status===200){
                                 </div>
                                 <div className="flex">
                                     <FormItem label="KVA*" className="w-1/2 mx-auto">
-                                        <Field
+                                       <Field
                                             type="number"
                                             autoComplete="off"
                                             name="kva"
@@ -218,6 +219,7 @@ if(PutApiResponse?.status===200){
                                                 handleChange(e)
                                             }
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                           
                                         >
                                             <option selected disabled>Select</option>
                                             {Array.from({ length: 2023 - 1980 + 1 }, (_, index) => 1980 + index).map((yr)=>{
@@ -291,6 +293,7 @@ if(PutApiResponse?.status===200){
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                   
                                 >
                                     Save
                                 </Button>

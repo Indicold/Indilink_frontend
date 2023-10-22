@@ -30,7 +30,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    commanData
+    commanData,
 }:any) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
     const isDisabled:any=commanData?.type=='View' ? true: false;
@@ -43,7 +43,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -232,10 +232,12 @@ useEffect(()=>{
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    
                                 >
                                     Save
                                 </Button>

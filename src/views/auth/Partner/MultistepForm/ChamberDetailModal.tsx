@@ -141,8 +141,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
      * The `handlesave` function is responsible for saving chamber details by making a POST request to
      * the server with the provided form data.
      */
-    console.log('newData')
-    console.log("ididididididid",formD);
+    // console.log('newData')
+    // console.log("ididididididid",formD);
 
     const handlesave = async () => {
         var myHeaders = new Headers()
@@ -403,9 +403,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
                                             placeholder="Chamber no."
                                             component={Input}
                                             value={data?.chamber_number}
@@ -423,9 +420,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_name"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
                                             placeholder="Chamber name"
                                             component={Input}
                                             value={data?.chamber_name}
@@ -464,8 +458,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem
                                         label="No. of pallets *"
                                         className="mx-auto w-1/2"
-                                    >
-                                        <Field
+                                    ><Field
                                             type="number"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -520,6 +513,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             disabled={isDisabled}
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                         
                                         >
                                             <option>Select</option>
                                             {RackingType &&
@@ -564,6 +558,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         
                                         <p className="text-[red]">
@@ -594,6 +589,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -625,6 +621,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
@@ -654,6 +651,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -665,7 +663,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="No. of floors *"
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                   <Field
                                             type="number"
                                             autoComplete="off"
                                             min={1}
@@ -697,7 +695,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Enter Value"
                                             component={Input}
-                                            value={data?.floor_area}
+                                            value={data?.floor_area || formD?.floor_area}
+                                           
                                         />
                                       
                                         <p className="text-[red]">
@@ -732,8 +731,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem
                                         label="Height of each floor (Feet) *"
                                         className="mx-auto w-1/2"
-                                    >
-                                            <Field
+                                    ><Field
                                             type="text"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -766,7 +764,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
  
                                             onChange={(e: any) =>
                                                 handleChange(e)
-                                            }/>
+                                            }
+                                           />
   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
  
 </label>
@@ -794,6 +793,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                   
                                 >
                                     Save
                                 </Button>

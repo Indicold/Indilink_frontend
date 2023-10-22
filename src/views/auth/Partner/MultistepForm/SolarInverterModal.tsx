@@ -39,7 +39,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -59,7 +59,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to solar inverters in a
@@ -159,7 +159,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -176,7 +176,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto">
-                                        <Field
+                                    <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
@@ -198,7 +198,7 @@ if(PutApiResponse?.status===200){
                                         label="Capacity*"
                                         className="me-auto ms-2"
                                     >
-                                        <Field
+                                     <Field
                                             type="number"
                                             disabled={isDisabled}
                                             autoComplete="off"

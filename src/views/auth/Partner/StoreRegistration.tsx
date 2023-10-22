@@ -131,7 +131,16 @@ const StoreRegistration = () => {
         total_number_of_docks: '',
         total_office_space: '',
         processing_area: '',
-        parking_area: ''
+        parking_area: '',
+        chamber_number: '',
+        chamber_name: '',
+        no_of_pallets: 0,
+        no_of_floors: 1,
+        floor_area: '',
+        temp_range_min: 0,
+        temp_range_max: 0,
+        each_floor_hight: '',
+        
     })
 
     const [errors, setErrors] = useState<any>({})
@@ -145,7 +154,7 @@ const StoreRegistration = () => {
     const handleRoute = async () => {
         const { token }: any = getToken()
         dataa.store_type_id = value1?.map((item: any) => item?.id)
-        console.log("T666666", dataa);
+        // console.log("T666666", dataa);
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
         formdata.append("city_id", dataa?.city_id);
@@ -309,7 +318,7 @@ const StoreRegistration = () => {
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
         // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
-        console.log("newData", newData)
+        // console.log("newData", newData)
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
@@ -321,8 +330,61 @@ const StoreRegistration = () => {
         newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
         setData(newData)
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
-        console.log("newDataa", newData)
+        // console.log("newDataa", newData)
         // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
+    }
+
+    const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
+        setEditableFields(!readOnly);
+        setTableTriggeredAction(true);
+        setRowData(rowdata);
+        switch(targetModal) {
+            case 'ChamberDetailModal':
+                setChamberModal(true);
+                break
+
+            case 'CAEquipmentsModal':
+                setCAModal(true);
+                break
+
+            case 'CompressorModal':
+                setCompModal(true);
+                break
+
+            case 'ACUModal':
+                setACUModal(true);
+                break
+
+            case 'CondensorDetailsModal':
+                setCondensorModal(true);
+                break
+
+            case 'AMCDetailModal':
+                setAMCModal(true);
+                break
+
+            case 'IOTDetailModal':
+                setIOTModal(true);
+                break
+
+            case 'ITDetailModal':
+                setITModal(true);
+                break
+
+            case 'GeneratorDetailModal':
+                setGenModal(true);
+                break
+
+            case 'MHEDetails':
+                setMHEModal(true);
+                break
+
+            case 'SolarInverterModal':
+                setSEModal(true);
+                break
+
+            default: return;
+        }
     }
 
     // Use useEffect to update form data when fetchDetails changes
@@ -337,10 +399,10 @@ const StoreRegistration = () => {
 
         const newState: any = { ...dataa };
         newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
-        console.log("no_of_chambers", newState)
+        // console.log("no_of_chambers", newState)
         setData(newState)
         setValue(dataa?.store_type_id)
-        console.log("dataa", dataa)
+        // console.log("dataa", dataa)
         if (localStorage.getItem('chamber_ids')) {
             const arr: any = JSON.parse(localStorage.getItem('chamber_ids')) || [];
             if (arr) {
@@ -363,7 +425,7 @@ const StoreRegistration = () => {
                 const body: any = {
                     ids: filteredArray
                 }
-                console.log("GGGGGG", body, filteredArray);
+                // console.log("GGGGGG", body, filteredArray);
                 if (arr.length > 0) {
                     sendPostRequestca(body)
                 }
@@ -388,7 +450,7 @@ const StoreRegistration = () => {
 
     const targetArray1: any = StorageType?.data || [];
     const itemsToFind1 = dataa?.store_type_id;
-    console.log("TTTTTTTTT768786786786867", dataa);
+    // console.log("TTTTTTTTT768786786786867", dataa);
 
     useEffect(() => {
         const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
@@ -558,6 +620,7 @@ const StoreRegistration = () => {
                                     commanData={commanData}
                                     update={setData}
                                     setModal={setChamberModal}
+                                    
                                 />
                             )}
 
@@ -568,8 +631,8 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     commanData={commanData}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setCAModal}
+                                    
                                 />
                             )}
 
@@ -580,8 +643,8 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     commanData={commanData}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setCompModal}
+                                    
                                 />
                             )}
 
@@ -590,10 +653,12 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={ACUModal}
                                     formD={dataa}
+                                    chamber={null}
                                     update={setData}
                                     setData={setData}
                                     commanData={commanData}
                                     setModal={setACUModal}
+                                    
                                 />
                             )}
 
@@ -606,6 +671,7 @@ const StoreRegistration = () => {
                                     commanData={commanData}
                                     setData={setData}
                                     setModal={setCondensorModal}
+                                    
                                 />
                             )}
 
@@ -618,6 +684,7 @@ const StoreRegistration = () => {
                                     commanData={commanData}
                                     setModal={setAMCModal}
                                     FetchAgain={FetchAgain}
+                                    
                                 />
                             )}
 
@@ -630,6 +697,7 @@ const StoreRegistration = () => {
                                     commanData={commanData}
                                     setData={setData}
                                     setModal={setIOTModal}
+                                    
                                 />
                             )}
 
@@ -640,8 +708,8 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     commanData={commanData}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setITModal}
+                                    
                                 />
                             )}
 
@@ -650,10 +718,12 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={genModal}
                                     formD={dataa}
+                                    chamber={null}
                                     update={setData}
                                     setData={setData}
                                     commanData={commanData}
                                     setModal={setGenModal}
+                                    
                                 />
                             )}
 
@@ -664,8 +734,8 @@ const StoreRegistration = () => {
                                     formD={dataa}
                                     commanData={commanData}
                                     update={setData}
-                                    setData={setData}
                                     setModal={setMHEModal}
+                                    
                                 />
                             )}
 
@@ -674,10 +744,12 @@ const StoreRegistration = () => {
                                     FetchAgain={FetchAgain}
                                     modal={SEModal}
                                     formD={dataa}
+                                    chamber={null}
                                     update={setData}
                                     commanData={commanData}
                                     setData={setData}
                                     setModal={setSEModal}
+                                    
                                 />
                             )}
 
@@ -1499,19 +1571,19 @@ const StoreRegistration = () => {
                                             {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
 
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber name
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber no.
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Chamber size
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[14%] text-center my-auto">
                                                         Created
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[17%] text-center my-auto">
                                                         Updated
                                                     </div>
                                                     <div className="mx-auto">
@@ -1557,9 +1629,12 @@ const StoreRegistration = () => {
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
-                                                        setChamberModal(
-                                                            true
-                                                        )
+                                                        {
+                                                            setEditableFields(true);
+                                                            setChamberModal(true);
+                                                            setTableTriggeredAction(false);
+                                                            setRowData({});
+                                                        }
                                                     }
                                                 >
                                                     Add details
@@ -1577,13 +1652,13 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.caEquipments.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[26%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[27%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         CFM
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
@@ -1592,13 +1667,13 @@ const StoreRegistration = () => {
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[28%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.cmf}
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
@@ -1665,7 +1740,7 @@ const StoreRegistration = () => {
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[25%] text-center my-auto">
+                                                        <div className="w-[22%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
                                                         <div className="w-[25%] text-center my-auto">
@@ -1802,16 +1877,16 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.condensors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         AMC
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
@@ -1877,16 +1952,16 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.amcs?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Name of Service
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
                                                         Vendor
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Valid till
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Fixed Cost
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
@@ -1896,7 +1971,7 @@ const StoreRegistration = () => {
                                                 {fetchDetailsAll?.data?.amcs?.map((item: any, index: any) => {
                                                     let date: any = new Date(item?.valid_till)
                                                     date = date?.toLocaleDateString()
-                                                    console.log("amcs", date)
+                                                    // console.log("amcs", date)
                                                     return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.name_of_service}
@@ -1952,16 +2027,16 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.iotDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         ID
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
@@ -2022,16 +2097,16 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.itDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Device ID
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
@@ -2039,16 +2114,16 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.type}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.device_id}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
                                                     <div className="w-[25%] mx-auto flex">
@@ -2092,16 +2167,16 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.generators?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         KVA
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         Year
                                                     </div>
                                                     <div className="w-[20%] text-center my-auto">
@@ -2109,16 +2184,16 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.kva}
                                                     </div>
-                                                    <div className="w-[25%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                         {item?.year}
                                                     </div>
                                                     <div className="w-[25%] mx-auto flex">
@@ -2162,13 +2237,13 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.mhes?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Load
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
@@ -2176,13 +2251,13 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.make}
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         {item?.load}
                                                     </div>
                                                     <div className="w-[25%] mx-auto flex">
@@ -2226,13 +2301,13 @@ const StoreRegistration = () => {
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.solarInverters?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
                                                 <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[33%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                         Capacity
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
@@ -2240,13 +2315,13 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                     {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.model}
                                                         </div>
-                                                        <div className="w-[33%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.capacity}
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">

@@ -5,7 +5,7 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
-import { handleStoreTable, validateCompressorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -19,7 +19,7 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any,
-    
+
 }
 const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -28,18 +28,18 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
     FetchAgain,
     commanData
-}:any) => {
+}: any) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
-    const {id}: any = useParams();
-    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { id }: any = useParams();
+    const isDisabled: any = commanData?.type == 'View' ? true : false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/compressors/${commanData?.id}`)
 
-    useEffect(()=>{
-        const newState:any = { ...data };
+    useEffect(() => {
+        const newState: any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,17 +58,17 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.value
         }
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to compressors in a
      * partner store.
      */
     const handlesave = () => {
-        if(commanData?.type==='Edit'){
+        if (commanData?.type === 'Edit') {
             updateData(data)
-        }else{
-            if(validateCompressorForm(data, setErrors)) {
+        } else {
+            if (validateCompressorForm(data, setErrors)) {
                 handleStoreTable(
                     'partner/store/compressors',
                     data,
@@ -78,16 +78,24 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                     'compressor_ids',
                     FetchAgain
                 )
-                }
+            }
         }
-     
-    }
-useEffect(()=>{
-    if(commanData?.type==='Edit' || commanData?.type==='View'){
-        setData(commanData)
-    }
 
-},[commanData])
+    }
+    useEffect(() => {
+        if (commanData?.type == 'Edit' || commanData?.type == 'View') {
+            setData(commanData)
+        }
+    }, [commanData])
+    useEffect(() => {
+        if (PutApiResponse?.status === 200) {
+            messageView("Data Updated Successfully !");
+            FetchAgain()
+            setModal(false)
+        } else {
+            messageView(PutApiResponse)
+        }
+    }, [PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -128,7 +136,7 @@ useEffect(()=>{
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center mt-4">Compressor</h6>
-                                    {/* <FormItem
+                                {/* <FormItem
                                         label="Asset ID *"
                                         className="mx-auto w-1/2"
                                     >
@@ -187,12 +195,12 @@ useEffect(()=>{
                                         // label="C.F.M. *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                           C.F.M.*
-                                              <Tooltip title="Cubic Feet Per Minute" arrow>
-                                                <InfoIcon />
-                                              </Tooltip>
+                                                C.F.M.*
+                                                <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
                                             </div>
-                                          }
+                                        }
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
@@ -211,17 +219,17 @@ useEffect(()=>{
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                    <FormItem 
-                                    // label="H.P.*"
-                                    label={
-                                        <div className='flex justify-center items-center'>
-                                     H.P.*
-                                          <Tooltip title="Horsepower " arrow>
-                                            <InfoIcon />
-                                          </Tooltip>
-                                        </div>
-                                      }
-                                    className="mx-auto w-1/2">
+                                    <FormItem
+                                        // label="H.P.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                                H.P.*
+                                                <Tooltip title="Horsepower " arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        className="mx-auto w-1/2">
                                         <Field
                                             type="number"
                                             disabled={isDisabled}
@@ -244,12 +252,12 @@ useEffect(()=>{
                                         // label="A.M.C. *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                       A.M.C.*
-                                              <Tooltip title="A.M.C." arrow>
-                                                <InfoIcon />
-                                              </Tooltip>
+                                                A.M.C.*
+                                                <Tooltip title="A.M.C." arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
                                             </div>
-                                          }
+                                        }
                                         className="w-1/2"
                                     >
                                         <select
@@ -272,18 +280,19 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                 </div>
-<div className='flex'>
-                                <Button
-                                    style={{ borderRadius: '13px' }}
-                                    block
-                                    disabled={isDisabled}
-                                    variant="solid"
-                                    onClick={handlesave}
-                                    type="button"
-                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                >
-                                    Save
-                                </Button>
+                                <div className='flex'>
+                                    <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        disabled={isDisabled}
+                                        variant="solid"
+                                        onClick={handlesave}
+                                        type="button"
+                                        className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+
+                                    >
+                                        Save
+                                    </Button>
                                 </div>
                             </div>
                         </div>

@@ -38,7 +38,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state with the new value of the input field.
@@ -172,7 +172,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Vendor*"
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -214,7 +214,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Fixed cost(Rs)*"
                                         className=" w-1/2"
                                     >
-                                        <Field
+                                       <Field
                                             type="number"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -237,6 +237,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     onClick={handlesave}
                                     variant="solid"
                                     type="button"

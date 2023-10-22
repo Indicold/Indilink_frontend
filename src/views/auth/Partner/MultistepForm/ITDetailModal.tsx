@@ -39,7 +39,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,7 +58,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.value
         }
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data to a specific store table in a
@@ -159,7 +159,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Type*" className="w-1/2 mx-auto">
-                                        <Field
+                                     <Field
                                             type="text"
                                             autoComplete="off"
                                             name="type"
@@ -179,7 +179,7 @@ if(PutApiResponse?.status===200){
                                         label="Device ID*"
                                         className="w-1/2 mx-auto"
                                     >
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -198,7 +198,7 @@ if(PutApiResponse?.status===200){
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Make*" className="w-1/2 mx-auto">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -215,7 +215,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"

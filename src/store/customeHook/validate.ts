@@ -77,7 +77,7 @@ export const validateForm = (formData: any, setError: any) => {
 
     
     if (formData?.email) {
-      if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+      if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(formData?.email)) {
         errorss.email = 'Invalid email address';
       }
     }
@@ -263,9 +263,9 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
             newErrors.no_of_docks = 'No of Docks is required'
         }
     }
-    if (!formData?.type_of_dock_id) {
-        newErrors.type_of_dock_id = 'Type of Dock id is required'
-    }
+        // if (!formData?.type_of_dock_id) {
+        //     newErrors.type_of_dock_id = 'Type of Dock id is required'
+        // }
     if (!formData?.temperature_min) {
         newErrors.temperature_min = 'Min Temperature is required'
     }
@@ -490,7 +490,7 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.racking_type_id = 'This Field is required'
     }
 
-    if (!formData?.photo_of_entrance) {
+    if (formData?.photo_of_entrance?.length < 1) {
         newErrors.photo_of_entrance = 'This Field is required'
     }
 
@@ -1016,9 +1016,9 @@ export const validateBasicForm = (data: any, setErrors: any) => {
         newErrors.address = 'This Field is required'
     }
 
-    if (data?.gst_file?.length<1) {
-        newErrors.gst_file = 'Gst file is required'
-    }
+    // if (data?.gst_file?.length<1) {
+    //     newErrors.gst_file = 'Gst file is required'
+    // }
     if (data?.shareholder_ids?.length<1) {
         newErrors.shareholder_ids = 'This Field is required'
     }

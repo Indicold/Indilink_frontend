@@ -258,11 +258,13 @@ const PartnerBussinessTypeCompliances = () => {
         let newData = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
+        
         const updatedArray = array.map((item: any) => {
             if (e.target.name === item.key_text) {
                 return {
                     ...item,
-                    valid_till: e.target.value
+                    valid_till: e.target.value,
+                    messageText: null
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -306,6 +308,7 @@ const PartnerBussinessTypeCompliances = () => {
                             view: true,
                             url: responseData?.data,
                             message: 'Uploaded',
+                            messageText: 'Valid till date is required'
                         }
                         : itemData
                 )
@@ -358,16 +361,16 @@ const PartnerBussinessTypeCompliances = () => {
         }
 
         )
-        setArray(updatedArray)
-        let isValid = updatedArray?.some((item: any) => {
-            if ((item?.valid_till === null ||
-                item?.valid_till === undefined ||
-                item?.valid_till === '') && item?.url)
-                return true
-        });
+        // setArray(updatedArray)
+        // let isValid = updatedArray?.some((item: any) => {
+        //     if ((item?.valid_till === null ||
+        //         item?.valid_till === undefined ||
+        //         item?.valid_till === '') && item?.url)
+        //         return true
+        // });
 
 
-        return isValid
+        return error
     }
     function validateMandatoryFields(data:any, fieldName:any) {
         if (data[fieldName]) {
@@ -637,11 +640,11 @@ const array1Keys = array1?.map((item) => item?.key);
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                    {item?.messageText && (
+                                                    {/* {item?.messageText && (
                                                         <p className="text-[red]">
                                                             {item?.messageText}
                                                         </p>
-                                                    )}
+                                                    )} */}
                                                 </FormItem>
                                             </div>
 

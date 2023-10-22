@@ -36,7 +36,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -49,7 +49,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` is used to handle saving data to a specific store table in a
@@ -151,7 +151,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Type*" className="mx-auto">
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             name="type"
@@ -171,7 +171,7 @@ if(PutApiResponse?.status===200){
                                         label="Device ID*"
                                         className="mx-auto"
                                     >
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             disabled={isDisabled}
@@ -190,7 +190,7 @@ if(PutApiResponse?.status===200){
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                     <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
@@ -207,7 +207,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
