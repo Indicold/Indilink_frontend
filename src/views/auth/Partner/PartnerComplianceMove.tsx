@@ -21,6 +21,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
+import { messageView } from '@/store/customeHook/validate'
 const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -229,37 +230,56 @@ const PartnerComplianceMove = () => {
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
-    const validateData = () => {
-        let error: any = false;
-
-        const updatedArray = array.map((itemData: any) => {
-            if (itemData?.url) {
-                if (itemData?.valid_till === null || itemData?.valid_till === '' || itemData?.valid_till === undefined) {
-
-                    error = true
-                    return {
-                        ...itemData,
-                        messageText: 'Valid till date is required',
-                    }
-                } else {
-                    return {
-                        ...itemData,
-                        messageText: '',
-                    }
-                }
+    function validateMandatoryFields(data:any, fieldName:any) {
+        if (data[fieldName]) {
+            let licenseField = `${fieldName}_license`;
+            let textField = `${fieldName}_text`;
+            if(fieldName==='insurance_policy_image'){
+                licenseField="insurance_policy_license";
+                textField="insurance_policy_text";
             }
-
+            if(fieldName==='permit_image'){
+                licenseField="permit_license";
+                textField="permit_validity_text";
+            }
+    
+            if (!data[licenseField] || !data[textField]) {
+                console.log("YYYYYYYYYY",data[licenseField]);
+                
+                // messageView(`Valid Till and License no is mandatory`);
+                return false;
+            }
+            
+        } else {
+            // The field is not provided, so its corresponding 'license' and 'text' fields are not mandatory.
         }
-        )
-        return error
+    
+        return true; // Fields are valid or not applicable
     }
-
     // Handle route navigation
     const handleRoute = () => {
-        if(!validateData()){
-            PostValidTillDetails(dateArray)
-            navigate('/asset_success')
-        }
+        
+        // Extract keys from dateArray and slice from index 2
+ const slicedKeys = Object.keys(dateArray);
+ 
+ // Extract keys from array1 items
+ const array1Keys = array1?.map((item) => item?.key);
+         const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
+         console.log("matchingKeysmatchingKeys",matchingKeys);
+         
+       const isValids:any= matchingKeys?.map((item:any)=>{
+            return validateMandatoryFields(dateArray,item);
+         })
+         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
+         console.log("YUUUUUUUUU",Invalid,isValids);
+         if (Invalid) {
+         PostValidTillDetails(dateArray)
+         console.log("KEYJHJHKHKHKHK");
+         navigate('/asset_success')
+         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+         }else{
+             messageView(`Valid Till and License no is mandatory`);
+         }
     }
 
     // Use useEffect to update file upload items when fetchDetails changes

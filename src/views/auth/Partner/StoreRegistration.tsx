@@ -114,9 +114,10 @@ const StoreRegistration = () => {
     const [SEModal, setSEModal] = useState<any>(false)
     const [chamberData, setChamberData] = useState<any>([])
     const [CAData, setCAData] = useState<any>([])
-    const [editableFields, setEditableFields] = useState<any>(true);
-    const [actionTriggeredByTable, setTableTriggeredAction] = useState<any>(false);
-    const [rowData, setRowData] = useState<any>({});
+
+    let [commanData, setCommanData] = useState<any>({})
+
+
     // Fetch the current location
     const location = useLocation()
 
@@ -256,11 +257,11 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     // Display a success message and navigate to a new page
                     messageView(result.message)
-                    navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
+                    navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
 
                     if (result?.status === 200) {
                         setTimeout(() => {
-                            navigate(`/partner-bussiness-type-compliance/${id}`,{ state:location?.state })
+                            navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
                         }, 2000)
                     }
                 } else {
@@ -300,7 +301,7 @@ const StoreRegistration = () => {
             newData['three_d_view_of_asset'] = fileArray;
             // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
-        } else  
+        } else
             if (e.target.name === 'photos_of_asset') {
 
                 const fileInput = e.target; // Assuming e.target is the input element
@@ -469,7 +470,95 @@ const StoreRegistration = () => {
         }
 
     }
-    // console.log("TTTTTTT77777777", dataa);
+    console.log("TTTTTTT77777777", dataa);
+    const handleView = (rowData: any, type: any) => {
+        if (type === 'Chamber') {
+            setChamberModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'CA') {
+            setCAModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'Compressors') {
+            setCompModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'ACU') {
+            setACUModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+         else if (type === 'Condenser') {
+            setCondensorModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        } else if (type === 'AMC') {
+            setAMCModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }else if (type === 'IOT') {
+            setIOTModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }else if (type === 'IT') {
+            setITModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'Generator') {
+            setGenModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'MHE') {
+            setMHEModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+        else if (type === 'Solar') {
+            setSEModal(true)
+            setCommanData({ ...rowData, type: "View" })
+        }
+
+
+    }
+    const handleEdit = (rowData: any, type: any) => {
+        if (type === 'Chamber') {
+            setChamberModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        } else if (type === 'CA') {
+            setCAModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Compressors') {
+            setCompModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'ACU') {
+            setACUModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        } else if (type === 'Condenser') {
+            setCondensorModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'AMC') {
+            setAMCModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'IOT') {
+            setIOTModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'IT') {
+            setITModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Generator') {
+            setGenModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'MHE') {
+            setMHEModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+        else if (type === 'Solar') {
+            setSEModal(true)
+            setCommanData({ ...rowData, type: "Edit" })
+        }
+
+    }
 
     return (
         <div className='flex'>
@@ -495,7 +584,7 @@ const StoreRegistration = () => {
                         <h6 className="font-medium leading-tight">Compliance Details</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
-            
+
                 </ol>
 
 
@@ -527,10 +616,11 @@ const StoreRegistration = () => {
                                 <ChamberDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={chamberModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setChamberModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -538,11 +628,11 @@ const StoreRegistration = () => {
                                 <CAEquipmentsModal
                                     FetchAgain={FetchAgain}
                                     modal={CAModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
-                                    chamber={null}
+                                    formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setCAModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -550,11 +640,11 @@ const StoreRegistration = () => {
                                 <CompressorModal
                                     FetchAgain={FetchAgain}
                                     modal={compModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
-                                    chamber={null}
+                                    formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setCompModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -562,11 +652,13 @@ const StoreRegistration = () => {
                                 <ACUModall
                                     FetchAgain={FetchAgain}
                                     modal={ACUModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
                                     chamber={null}
                                     update={setData}
+                                    setData={setData}
+                                    commanData={commanData}
                                     setModal={setACUModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -574,21 +666,25 @@ const StoreRegistration = () => {
                                 <CondensorDetailsModal
                                     FetchAgain={FetchAgain}
                                     modal={condensorModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
                                     update={setData}
+                                    commanData={commanData}
+                                    setData={setData}
                                     setModal={setCondensorModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
                             {AMCModal && (
                                 <AMCDetailModal
                                     modal={AMCModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
                                     update={setData}
+                                    setData={setData}
+                                    commanData={commanData}
                                     setModal={setAMCModal}
                                     FetchAgain={FetchAgain}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -596,10 +692,12 @@ const StoreRegistration = () => {
                                 <IOTDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={IOTModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
                                     update={setData}
+                                    commanData={commanData}
+                                    setData={setData}
                                     setModal={setIOTModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -607,11 +705,11 @@ const StoreRegistration = () => {
                                 <ITDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={ITModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
-                                    chamber={null}
+                                    formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setITModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -619,11 +717,13 @@ const StoreRegistration = () => {
                                 <GeneratorDetailModal
                                     FetchAgain={FetchAgain}
                                     modal={genModal}
-                                    formD={actionTriggeredByTable ? rowData: dataa}
+                                    formD={dataa}
                                     chamber={null}
                                     update={setData}
+                                    setData={setData}
+                                    commanData={commanData}
                                     setModal={setGenModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -631,10 +731,11 @@ const StoreRegistration = () => {
                                 <MHEDetailsModal
                                     FetchAgain={FetchAgain}
                                     modal={MHEModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
+                                    commanData={commanData}
                                     update={setData}
                                     setModal={setMHEModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -642,11 +743,13 @@ const StoreRegistration = () => {
                                 <SolarInverterModal
                                     FetchAgain={FetchAgain}
                                     modal={SEModal}
-                                    formD={actionTriggeredByTable ? rowData : dataa}
+                                    formD={dataa}
                                     chamber={null}
                                     update={setData}
+                                    commanData={commanData}
+                                    setData={setData}
                                     setModal={setSEModal}
-                                    viewOnly={!editableFields}
+                                    
                                 />
                             )}
 
@@ -1408,10 +1511,10 @@ const StoreRegistration = () => {
                                             <input
                                                 multiple
                                                 name="three_d_view_of_asset"
-                                    
+
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                type="file"  
-                                                accept="image/png, image/jpeg" 
+                                                type="file"
+                                                accept="image/png, image/jpeg"
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1432,9 +1535,9 @@ const StoreRegistration = () => {
                                             <input
                                                 multiple
                                                 className="w-2/3 border-0 focus:outline-0"
-                                                type="file"  
+                                                type="file"
                                                 accept="image/png, image/jpeg"
-                                            
+
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1507,13 +1610,13 @@ const StoreRegistration = () => {
                                                         <div className="mx-2 flex">
                                                             <Button
                                                                 className="!p-2 pt-0 pb-0 mx-1"
-                                                                onClick={() => handleEditView(item, "ChamberDetailModal", false)}
+                                                                onClick={() => handleEdit(item, 'Chamber')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
                                                                 className="!p-1 mx-1"
-                                                                onClick={() => handleEditView(item, "ChamberDetailModal", true)}
+                                                                onClick={() => handleView(item, 'Chamber')}
                                                             >
                                                                 View
                                                             </Button>
@@ -1559,7 +1662,7 @@ const StoreRegistration = () => {
                                                         CFM
                                                     </div>
                                                     <div className="w-[25%] text-center my-auto">
-                                                    Actions
+                                                        Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
@@ -1574,18 +1677,18 @@ const StoreRegistration = () => {
                                                             {item?.cmf}
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            onClick={() => handleEditView(item, "CAEquipmentsModal", false)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            onClick={() => handleEditView(item, "CAEquipmentsModal", true)}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'CA')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'CA')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1594,13 +1697,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setCAModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCAModal(true)
+                                                        setCommanData({})
+                                                    }
+                                                       
                                                     }
                                                 >
                                                     Add details
@@ -1633,7 +1734,7 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[23%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
@@ -1654,19 +1755,19 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.amc}
                                                         </div>
-                                                        <div className="w-[23%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            onClick={() => handleEditView(item, "CompressorModal", false)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            onClick={() => handleEditView(item, "CompressorModal", true)}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Compressors')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Compressors')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1675,13 +1776,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setCompModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setCompModal(true);
+                                                    }
+                                                       
                                                     }
                                                 >
                                                     Add details
@@ -1714,7 +1813,7 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[20%] text-center my-auto">
+                                                    <div className="w-[16%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
@@ -1735,19 +1834,19 @@ const StoreRegistration = () => {
                                                         <div className="w-[20%] text-center my-auto">
                                                             {item?.tr}
                                                         </div>
-                                                        <div className="w-[21%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            onClick={() => handleEditView(item, "ACUModal", false)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            onClick={() => handleEditView(item, "ACUModal", true)}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'ACU')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'ACU')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1756,13 +1855,11 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setACUModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setACUModal(true)
+                                                    }
+                                                     
                                                     }
                                                 >
                                                     Add details
@@ -1811,18 +1908,18 @@ const StoreRegistration = () => {
                                                             {item?.amc}
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            onClick={() => handleEditView(item, "CondensorDetailsModal", false)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            onClick={() => handleEditView(item, "CondensorDetailsModal", true)}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Condenser')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Condenser')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -1831,13 +1928,13 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setCondensorModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setCondensorModal(
+                                                            true
+                                                        )
+                                                    }
+                                                        
                                                     }
                                                 >
                                                     Add details
@@ -1888,33 +1985,31 @@ const StoreRegistration = () => {
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.fixed_cost}
                                                         </div>
-                                                        <div className="w-[23%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        onClick={() => handleEditView(item, "AMCDetailModal", false)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        onClick={() => handleEditView(item, "AMCDetailModal", true)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
+                                                        <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'AMC')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'AMC')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                     </div>)
                                                 })}
                                             </div> : <p className="text-center">Currently there are no AMCs.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setAMCModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setAMCModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -1962,31 +2057,29 @@ const StoreRegistration = () => {
                                                         {item?.model}
                                                     </div>
                                                     <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        onClick={() => handleEditView(item, "IOTDetailModal", false)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        onClick={() => handleEditView(item, "IOTDetailModal", true)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'IOT')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'IOT')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IOT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setIOTModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setIOTModal(true)
+                                                    }
+                                                        
                                                     }
                                                 >
                                                     Add details
@@ -2033,32 +2126,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         {item?.model}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        onClick={() => handleEditView(item, "ITDetailModal", false)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        onClick={() => handleEditView(item, "ITDetailModal", true)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'IT')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'IT')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no IT Devices.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setITModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({})
+                                                        setITModal(true)
+                                                    }
+                                                     
                                                     }
                                                 >
                                                     Add details
@@ -2105,32 +2196,30 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         {item?.year}
                                                     </div>
-                                                    <div className="w-[20%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        onClick={() => handleEditView(item, "GeneratorDetailModal", false)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        onClick={() => handleEditView(item, "GeneratorDetailModal", true)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
+                                                    <div className="w-[25%] mx-auto flex">
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Generator')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Generator')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no generators.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setGenModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setGenModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -2172,31 +2261,29 @@ const StoreRegistration = () => {
                                                         {item?.load}
                                                     </div>
                                                     <div className="w-[25%] mx-auto flex">
-                                                    <Button
-                                                        className="!p-2 pt-0 pb-0 mx-auto"
-                                                        onClick={() => handleEditView(item, "MHEDetails", false)}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                    <Button
-                                                        className="!p-1 mx-auto"
-                                                        onClick={() => handleEditView(item, "MHEDetails", true)}
-                                                    >
-                                                        View
-                                                    </Button>
-                                                    </div>
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'MHE')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'MHE')}
+                                                            >
+                                                                View
+                                                            </Button>
+                                                        </div>
                                                 </div>))}
                                             </div> : <p className="text-center">Currently there are no MHEs.</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setMHEModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setCommanData({});
+                                                        setMHEModal(true)
+                                                    }
+                                                    
                                                     }
                                                 >
                                                     Add details
@@ -2238,18 +2325,18 @@ const StoreRegistration = () => {
                                                             {item?.capacity}
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
-                                                        <Button
-                                                            className="!p-2 pt-0 pb-0 mx-auto"
-                                                            onClick={() => handleEditView(item, "SolarInverterModal", false)}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                        <Button
-                                                            className="!p-1 mx-auto"
-                                                            onClick={() => handleEditView(item, "SolarInverterModal", true)}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                            <Button
+                                                                className="!p-2 pt-0 pb-0 mx-auto"
+                                                                onClick={() => handleEdit(item, 'Solar')}
+                                                            >
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                className="!p-1 mx-auto"
+                                                                onClick={() => handleView(item, 'Solar')}
+                                                            >
+                                                                View
+                                                            </Button>
                                                         </div>
                                                     </div>))}</div>
                                             </div> : <p className="text-center">Currently there are no solar inverters.</p>}
@@ -2257,13 +2344,10 @@ const StoreRegistration = () => {
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
-                                                    onClick={() =>
-                                                        {
-                                                            setEditableFields(true);
-                                                            setSEModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
-                                                        }
+                                                    onClick={() =>{
+                                                        setSEModal(true)
+                                                        setCommanData({})
+                                                    }
                                                     }
                                                 >
                                                     Add details

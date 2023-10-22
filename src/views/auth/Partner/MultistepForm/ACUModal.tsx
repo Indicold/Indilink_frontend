@@ -10,11 +10,12 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -22,7 +23,6 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
-    viewOnly: boolean
 }
 const ACUModall: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -30,11 +30,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
-    const [data, setData] = useState<any>({})
-    const {id}: any = useParams()
-    const [errors, setErrors] = useState<any>({})
+    commanData
+}:any) => {
+   
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const [data, setData] = useState<any>({
+        asset_id:id
+    })
+    const [errors, setErrors] = useState<any>({});
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/acu/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -72,21 +78,40 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
      * parameters.
      */
     const handlesave = () => {
-        // console.log("saved", data, validateACUForm(data, setErrors), errors)
-        if(validateACUForm(data, setErrors)) {
-            // console.log("validated")
-        handleStoreTable(
-            'partner/store/acu',
-            data,
-            setModal,
-            formD,
-            update,
-            'acu_ids',
-            FetchAgain
-        )
+        console.log("saved", data, validateACUForm(data, setErrors), errors)
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateACUForm(data, setErrors)) {
+                console.log("validated")
+            handleStoreTable(
+                'partner/store/acu',
+                data,
+                setModal,
+                formD,
+                update,
+                'acu_ids',
+                FetchAgain
+            )
+            }
         }
+      
     }
 
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             {/* The above code is a TypeScript React component that renders a modal. The modal is
@@ -148,47 +173,35 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
-                                            placeholder="Make"
-                                            component={Input}
-                                            value={formD?.make}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="make"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
-                                            placeholder="Model"
-                                            component={Input}
-                                            value={formD?.model}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -207,24 +220,18 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                           }
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                     <Field
                                             type="number"
                                             autoComplete="off"
                                             name="cmf"
-                                            placeholder="C.F.M."
-                                            component={Input}
-                                            value={formD?.cmf}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="cmf"
+                                            disabled={isDisabled}
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
@@ -239,24 +246,18 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </div>
                                       }
                                      className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                      <Field
                                             type="number"
                                             autoComplete="off"
                                             name="hp"
-                                            placeholder="H.P."
-                                            component={Input}
-                                            value={formD?.hp}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="hp"
+                                            disabled={isDisabled}
+                                            value={data?.hp}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="H.P."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.hp}
                                         </p>
@@ -294,24 +295,18 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </div>
                                       }
                                     className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                   <Field
                                             type="text"
                                             autoComplete="off"
                                             name="tr"
-                                            placeholder="T.R."
-                                            component={Input}
-                                            value={formD?.tr}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="tr"
+                                            disabled={isDisabled}
+                                            value={data?.tr}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="T.R."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.tr}
                                         </p>
@@ -335,8 +330,9 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            disabled={isDisabled}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            disabled={viewOnly}
+                                           
                                         >
                                             <option >Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
@@ -377,11 +373,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled = {viewOnly}
+                                   
                                 >
                                     Save
                                 </Button>

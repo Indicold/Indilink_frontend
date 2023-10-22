@@ -7,7 +7,8 @@
  * the `data` state object with the input values.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateAMCForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateAMCForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -18,7 +19,6 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
-    viewOnly: boolean
 }
 const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -26,11 +26,14 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
+    commanData
+}:any) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
     const {id}: any = useParams()
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/amc/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -53,32 +56,36 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
      * application using TypeScript.
      */
     const handlesave = () => {
-        if(validateAMCForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/amc',
-            data,
-            setModal,
-            formD,
-            update,
-            'amc_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateAMCForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/amc',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'amc_ids',
+                    FetchAgain
+                )
+                }
         }
+        
     }
-    // The following function will convert ISO Date format into yyyy-MM-DD
-    const handleISODateFormat = (isodate: string) => {
-        if(isodate){
-            const date = new Date(isodate);
-            const year = date.getUTCFullYear();
-            const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Add 1 to the month because it's zero-based
-            const day = String(date.getUTCDate()).padStart(2, '0');
-
-            const formattedDate = `${year}-${month}-${day}`;
-
-            return formattedDate
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
         }
-        return;
-    }
+            },[commanData])
+            useEffect(()=>{
+                if(PutApiResponse?.status===200){
+                    messageView("Data Updated Successfully !");
+                    setModal(false)
+                }else{
+                    messageView(PutApiResponse)
+                }
+                    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -145,24 +152,18 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Name of service*"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="name_of_service"
                                             placeholder="Name of service"
-                                            component={Input}
-                                            value={formD?.name_of_service}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="name_of_service"
-                                            placeholder="Name of service"
+                                            value={data?.name_of_service}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.name_of_service}
                                         </p>
@@ -171,24 +172,18 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Vendor*"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="vendor"
-                                            placeholder="Vendor"
-                                            component={Input}
-                                            value={formD?.vendor}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="vendor"
+                                            value={data?.vendor}
                                             placeholder="Vendor"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.vendor}
                                         </p>
@@ -199,24 +194,18 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Valid till*"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="date"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="valid_till"
-                                            placeholder="Valid till"
-                                            component={Input}
-                                            value={handleISODateFormat(formD?.valid_till)}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="date"
-                                            autoComplete="off"
-                                            name="valid_till"
+                                            value={data?.valid_till}
                                             placeholder="Valid till"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.valid_till}
                                         </p>
@@ -225,24 +214,18 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Fixed cost(Rs)*"
                                         className=" w-1/2"
                                     >
-                                        {viewOnly ?(<Field
+                                       <Field
                                             type="number"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="fixed_cost"
-                                            placeholder="Fixed Cost"
-                                            component={Input}
-                                            value={formD?.fixed_cost}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="fixed_cost"
+                                            value={data?.fixed_cost}
                                             placeholder="Fixed Cost"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.fixed_cost}
                                         </p>
@@ -254,11 +237,11 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     onClick={handlesave}
                                     variant="solid"
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

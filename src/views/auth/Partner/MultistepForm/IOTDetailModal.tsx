@@ -5,7 +5,8 @@
  * store the entered data. The modal is displayed conditionally based on the value of the "modal" prop.
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateIOTForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateIOTForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -16,7 +17,6 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
-    viewOnly: boolean
 }
 const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -24,11 +24,14 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
+    commanData
+}:any) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/iot-devices/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -53,18 +56,37 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React application.
      */
     const handlesave = () => {
-        if(validateIOTForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/iot-devices',
-            data,
-            setModal,
-            formD,
-            update,
-            'iot_devices_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateIOTForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/iot-devices',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'iot_devices_ids',
+                    FetchAgain
+                )
+                }
         }
+       
     }
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -129,24 +151,18 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Type*" className="mx-auto">
-                                        {viewOnly ? (<Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             name="type"
-                                            placeholder="Type"
-                                            component={Input}
-                                            value={formD?.type}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="type"
+                                            disabled={isDisabled}
                                             placeholder="Type"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.type}
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.type}
                                         </p>
@@ -155,24 +171,18 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         label="Device ID*"
                                         className="mx-auto"
                                     >
-                                        {viewOnly ? (<Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
-                                            name="device_id"
-                                            placeholder="Device ID"
-                                            component={Input}
-                                            value={formD?.device_id}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
+                                            disabled={isDisabled}
                                             name="device_id"
                                             placeholder="Device ID"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.device_id}
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.device_id}
                                         </p>
@@ -180,47 +190,35 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        {viewOnly ? (<Field
+                                     <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
-                                            placeholder="Make"
-                                            component={Input}
-                                            value={formD?.make}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="make"
+                                            disabled={isDisabled}
                                             placeholder="Make"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
                                             placeholder="Model"
-                                            component={Input}
-                                            value={formD?.model}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="model"
-                                            placeholder="Model"
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -233,18 +231,18 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <select
                                             id="countries"
+                                            disabled={isDisabled}
                                             name="internet_enabled"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                            disabled={viewOnly}
                                         >
-                                            <option selected disabled>Select</option>
-                                            <option value="true">
+                                            <option>Select</option>
+                                            <option value="true" selected={data?.internet_enabled}>
                                                 Yes
                                             </option>
-                                            <option value="false">No</option>
+                                            <option value="false" selected={data?.internet_enabled}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.internet_enabled}
@@ -255,11 +253,11 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled={viewOnly}
                                 >
                                     Save
                                 </Button>

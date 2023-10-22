@@ -5,20 +5,21 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
-import { handleStoreTable, validateCompressorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import InfoIcon from '@mui/icons-material/Info'
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
-    FetchAgain: any
-    viewOnly: boolean
+    FetchAgain: any,
+
 }
 const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -26,13 +27,16 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
-    useEffect(()=>{
-        const newState:any = { ...data };
+    commanData
+}: any) => {
+    const [data, setData] = useState<any>({})
+    const [errors, setErrors] = useState<any>({})
+    const { id }: any = useParams();
+    const isDisabled: any = commanData?.type == 'View' ? true : false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/compressors/${commanData?.id}`)
+
+    useEffect(() => {
+        const newState: any = { ...data };
         newState.asset_id = id
         setData(newState)
         // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
@@ -61,19 +65,37 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
      * partner store.
      */
     const handlesave = () => {
-        if(validateCompressorForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/compressors',
-            data,
-            setModal,
-            formD,
-            update,
-            'compressor_ids',
-            FetchAgain
-        )
+        if (commanData?.type === 'Edit') {
+            updateData(data)
+        } else {
+            if (validateCompressorForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/compressors',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'compressor_ids',
+                    FetchAgain
+                )
+            }
         }
-    }
 
+    }
+    useEffect(() => {
+        if (commanData?.type == 'Edit' || commanData?.type == 'View') {
+            setData(commanData)
+        }
+    }, [commanData])
+    useEffect(() => {
+        if (PutApiResponse?.status === 200) {
+            messageView("Data Updated Successfully !");
+            FetchAgain()
+            setModal(false)
+        } else {
+            messageView(PutApiResponse)
+        }
+    }, [PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -114,7 +136,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center mt-4">Compressor</h6>
-                                    {/* <FormItem
+                                {/* <FormItem
                                         label="Asset ID *"
                                         className="mx-auto w-1/2"
                                     >
@@ -134,47 +156,35 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make *" className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="text"
-                                            autoComplete="off"
-                                            name="make"
-                                            placeholder="Make"
-                                            component={Input}
-                                            value={formD?.make}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="make"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model *" className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="model"
-                                            placeholder="Model"
-                                            component={Input}
-                                            value={formD?.model}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="model"
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -185,65 +195,53 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="C.F.M. *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                           C.F.M.*
-                                              <Tooltip title="Cubic Feet Per Minute" arrow>
-                                                <InfoIcon />
-                                              </Tooltip>
+                                                C.F.M.*
+                                                <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
                                             </div>
-                                          }
+                                        }
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="number"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="cmf"
-                                            placeholder="C.F.M."
-                                            component={Input}
-                                            value={formD?.cmf}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="cmf"
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                    <FormItem 
-                                    // label="H.P.*"
-                                    label={
-                                        <div className='flex justify-center items-center'>
-                                     H.P.*
-                                          <Tooltip title="Horsepower " arrow>
-                                            <InfoIcon />
-                                          </Tooltip>
-                                        </div>
-                                      }
-                                    className="mx-auto w-1/2">
-                                        {viewOnly ? (<Field
+                                    <FormItem
+                                        // label="H.P.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                                H.P.*
+                                                <Tooltip title="Horsepower " arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        className="mx-auto w-1/2">
+                                        <Field
                                             type="number"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="hp"
-                                            placeholder="H.P."
-                                            component={Input}
-                                            value={formD?.hp}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="hp"
+                                            value={data?.hp}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="H.P."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.hp}
                                         </p>
@@ -254,46 +252,47 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="A.M.C. *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                       A.M.C.*
-                                              <Tooltip title="A.M.C." arrow>
-                                                <InfoIcon />
-                                              </Tooltip>
+                                                A.M.C.*
+                                                <Tooltip title="A.M.C." arrow>
+                                                    <InfoIcon />
+                                                </Tooltip>
                                             </div>
-                                          }
+                                        }
                                         className="w-1/2"
                                     >
                                         <select
                                             id="countries"
                                             name="amc"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            disabled={viewOnly}
                                         >
                                             <option selected value="">
                                                 Select
                                             </option>
-                                            <option value="Yes" selected={formD?.amc == "Yes"}>Yes</option>
-                                            <option value="No" selected={formD?.amc == "No"}>No</option>
+                                            <option value="Yes" selected={data?.amc}>Yes</option>
+                                            <option value="No" selected={data?.amc}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem>
                                 </div>
-<div className='flex'>
-                                <Button
-                                    style={{ borderRadius: '13px' }}
-                                    block
-                                    variant="solid"
-                                    onClick={handlesave}
-                                    type="button"
-                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled={viewOnly}
-                                >
-                                    Save
-                                </Button>
+                                <div className='flex'>
+                                    <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        disabled={isDisabled}
+                                        variant="solid"
+                                        onClick={handlesave}
+                                        type="button"
+                                        className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+
+                                    >
+                                        Save
+                                    </Button>
                                 </div>
                             </div>
                         </div>

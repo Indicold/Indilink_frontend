@@ -12,7 +12,7 @@ import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { onkeyDown, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -23,7 +23,6 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
-    viewOnly: boolean
 }
 const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -31,9 +30,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
+    commanData
+}:any) => {
     const { token }: any = getToken()
+    const isDisabled:any=commanData?.type=='View' ? true: false;
     const {
         data: RackingType,
         loading: RackingTypeLoading,
@@ -79,8 +79,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData.asset_id = id
        
-        newData['chamber_size'] = formattedString
-        newData['pallet_size'] = formattedStringP
+        newData['chamber_size'] = formattedString || commanData?.chamber_size;
+        newData['pallet_size'] = formattedStringP || commanData?.pallet_size;
         newData[e.target.name] = e.target.value
       
         if (e.target.name === 'photo_of_entrance') {
@@ -201,57 +201,116 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             body: formdata,
             redirect: 'follow',
         }
-        // console.log("validateChamberFormvalidateChamberForm", formD)
-        if(validateChamberForm(data, setErrors)) {
-        try {
-            const response = await fetch(
-                `${apiUrl}/partner/store/chamber`,
-                requestOptions
-            )
-            const result = await response.json()
-            // console.log("VVVVVVV",result);
+        var requestOptionsUpdate: any = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow',
+        }
+        console.log("validateChamberFormvalidateChamberForm", formD)
+            if(commanData?.type=='Edit'){
+                try {
+                    const response = await fetch(
+                        `${apiUrl}/partner/store/chamber/${commanData?.id}`,
+                        requestOptionsUpdate
+                    )
+                    const result = await response.json()
+                    console.log("VVVVVVV",result);
+        
+                    if (result?.status) {
+                        FetchAgain()
+                        messageView('Chamber Details Updated Successfully!')
+                        
+                        const newD: any = { ...formD }
+                        let arr: any = []
+                        if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
+                        localStorage.setItem('StoreData',JSON.stringify(newD))
+                        console.log("GGGGGG88889", result?.data, newD)
+                        arr.push(result?.data?.id)
+                        newD['chamber_ids'] = arr;
+                        console.log("GGGGGG8888",newD?.chamber_ids);
+                        
+                  // Retrieve existing chamber_ids from local storage
+        const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
+        let existingChamberIds = [];
+        
+        if (existingChamberIdsJSON) {
+          existingChamberIds = JSON.parse(existingChamberIdsJSON);
+        }
+        
+        // Assuming newD?.chamber_ids is the new data to be added
+        const newChamberIds = newD?.chamber_ids || [];
+        
+        // Check if the new data is not already in the existing array
+        const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+        localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        if (!existingChamberIdsJSON) {
+          // If chamber_ids doesn't exist in local storage, set it
+          localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        }
+        
+        
+                        update(newD)
+                        setModal(false)
+                    }
+                    console.log(result?.status)
+                } catch (error: any) {
+                    messageView(error.message)
+                    console.log('error', error.message)
+                }
+            }else{
 
-            if (result?.status) {
-                FetchAgain()
-                messageView('Chamber Details Updated Successfully!')
-                
-                const newD: any = { ...formD }
-                let arr: any = []
-                if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
-                localStorage.setItem('StoreData',JSON.stringify(newD))
-                // console.log("GGGGGG88889", result?.data, newD)
-                arr.push(result?.data?.id)
-                newD['chamber_ids'] = arr;
-                // console.log("GGGGGG8888",newD?.chamber_ids);
-                
-          // Retrieve existing chamber_ids from local storage
-const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
-let existingChamberIds = [];
-
-if (existingChamberIdsJSON) {
-  existingChamberIds = JSON.parse(existingChamberIdsJSON);
-}
-
-// Assuming newD?.chamber_ids is the new data to be added
-const newChamberIds = newD?.chamber_ids || [];
-
-// Check if the new data is not already in the existing array
-const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
-localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
-if (!existingChamberIdsJSON) {
-  // If chamber_ids doesn't exist in local storage, set it
-  localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
-}
-
-
-                update(newD)
-                setModal(false)
+               if(validateChamberForm(data, setErrors)){ try {
+                    const response = await fetch(
+                        `${apiUrl}/partner/store/chamber`,
+                        requestOptions
+                    )
+                    const result = await response.json()
+                    console.log("VVVVVVV",result);
+        
+                    if (result?.status) {
+                        FetchAgain()
+                        messageView('Chamber Details Updated Successfully!')
+                        
+                        const newD: any = { ...formD }
+                        let arr: any = []
+                        if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
+                        localStorage.setItem('StoreData',JSON.stringify(newD))
+                        console.log("GGGGGG88889", result?.data, newD)
+                        arr.push(result?.data?.id)
+                        newD['chamber_ids'] = arr;
+                        console.log("GGGGGG8888",newD?.chamber_ids);
+                        
+                  // Retrieve existing chamber_ids from local storage
+        const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
+        let existingChamberIds = [];
+        
+        if (existingChamberIdsJSON) {
+          existingChamberIds = JSON.parse(existingChamberIdsJSON);
+        }
+        
+        // Assuming newD?.chamber_ids is the new data to be added
+        const newChamberIds = newD?.chamber_ids || [];
+        
+        // Check if the new data is not already in the existing array
+        const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+        localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        if (!existingChamberIdsJSON) {
+          // If chamber_ids doesn't exist in local storage, set it
+          localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        }
+        
+        
+                        update(newD)
+                        setModal(false)
+                    }
+                    console.log(result?.status)
+                } catch (error: any) {
+                    messageView(error.message)
+                    console.log('error', error.message)
+                }}
             }
-            // console.log(result?.status)
-        } catch (error: any) {
-            messageView(error.message)
-            // console.log('error', error.message)
-        }}
+      
     }
 
     /**
@@ -275,6 +334,18 @@ if (!existingChamberIdsJSON) {
             },
         })
     }
+    useEffect(()=>{
+   
+     setLength(commanData?.chamber_size?.split('x')[0])
+     setBreadth(commanData?.chamber_size?.split('x')[1])
+     setHeight(commanData?.chamber_size?.split('x')[2])
+     setLengthP(commanData?.pallet_size?.split('x')[0])
+     setBreadthP(commanData?.pallet_size?.split('x')[1])
+     setHeightP(commanData?.pallet_size?.split('x')[2])
+        
+        setData(commanData)
+    },[commanData])
+    console.log("565767676",data);
     return (
         <>
             <ToastContainer />
@@ -327,26 +398,15 @@ if (!existingChamberIdsJSON) {
                                         label="Chamber No*"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
                                             placeholder="Chamber no."
                                             component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.chamber_name}
-                                        />) : (
-                                            (<Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="chamber_number"
-                                                onChange={(e: any) =>
-                                                    handleChange(e)
-                                                }
-                                                placeholder="Chamber no."
-                                                component={Input}
-                                            />)
-                                        )}
+                                            value={data?.chamber_number}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_number}
                                         </p>
@@ -355,26 +415,15 @@ if (!existingChamberIdsJSON) {
                                         label="Chamber name *"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_name"
                                             placeholder="Chamber name"
                                             component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.chamber_name}
-                                        />) : (
-                                            (<Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="chamber_name"
-                                                onChange={(e: any) =>
-                                                    handleChange(e)
-                                                }
-                                                placeholder="Chamber name"
-                                                component={Input}
-                                            />)
-                                        )}
+                                            value={data?.chamber_name}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_name}
                                         </p>
@@ -396,57 +445,11 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        {viewOnly ? (<input type="number"
-                                            placeholder='Length'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='ch-l'
-                                            value={formD?.chamber_size[0] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input type="number"
-                                        placeholder='Length'
-                                        className='w-1/3 text-center focus:outline-0'
-                                        min={1}
-                                        name='ch-l'
-                                        value={length}
-                                        onChange={(e: any) => handleChange(e)}
-                                    />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Breadth'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='ch-b'
-                                            value={formD?.chamber_size[2] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Breadth'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='ch-b'
-                                            value={breadth}
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Height'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='ch-h'
-                                            value={formD?.chamber_size[4] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Height'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='ch-h'
-                                            value={height}
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                         <p className="text-[red]">
                                             {errors && errors.chamber_size}
@@ -455,25 +458,18 @@ if (!existingChamberIdsJSON) {
                                     <FormItem
                                         label="No. of pallets *"
                                         className="mx-auto w-1/2"
-                                    >
-                                        {viewOnly ? (<Field
+                                    ><Field
                                             type="number"
                                             autoComplete="off"
-                                            name="no_of_pallets"
-                                            placeholder="No. of pallets"
-                                            component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.no_of_pallets}
-                                        />): (<Field
-                                            type="number"
-                                            autoComplete="off"
+                                            disabled={isDisabled}
                                             name="no_of_pallets"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="No. of pallets"
                                             component={Input}
-                                        />)}
+                                            value={data?.no_of_pallets}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.no_of_pallets}
                                         </p>
@@ -495,59 +491,11 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Length'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-l'
-                                            value={formD?.pallet_size[0] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Length'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-l'
-                                            value={lengthP}
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Breadth'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-b'
-                                            value={formD?.pallet_size[2] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Breadth'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-b'
-                                            value={breadthP}
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Height'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-h'
-                                            value={formD?.pallet_size[4] ?? ""}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Height'
-                                            className='w-1/3 text-center focus:outline-0'
-                                            min={1}
-                                            name='pl-h'
-                                            value={heightP}
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                      
                                         <p className="text-[red]">
@@ -563,8 +511,9 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            disabled={isDisabled}
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            disabled={viewOnly}
+                                         
                                         >
                                             <option>Select</option>
                                             {RackingType &&
@@ -572,7 +521,7 @@ if (!existingChamberIdsJSON) {
                                                     (item: any, index: any) => (
                                                         <option
                                                             value={item?.id}
-                                                            selected={formD?.racking_type_id && item?.id == formD?.racking_type_id}
+                                                            selected={item?.id===data?.racking_type_id}
                                                         >
                                                             {item?.type}
                                                         </option>
@@ -601,6 +550,7 @@ if (!existingChamberIdsJSON) {
                                         <input
                                             type="file"
                                             multiple
+                                            disabled={isDisabled}
                                             name="photo_of_entrance"
                                             id=""
                                             accept="image/png, image/gif, image/jpeg" 
@@ -608,7 +558,7 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            disabled={viewOnly}
+                                           
                                         />
                                         
                                         <p className="text-[red]">
@@ -630,6 +580,7 @@ if (!existingChamberIdsJSON) {
                                     >
                                         <input
                                             type="file"
+                                            disabled={isDisabled}
                                             name="photo_of_chamber"
                                             multiple
                                             id=""
@@ -638,7 +589,7 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            disabled={viewOnly}
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -664,12 +615,13 @@ if (!existingChamberIdsJSON) {
                                             multiple
                                             name="photo_of_chamber_gate"
                                             id=""
+                                            disabled={isDisabled}
                                             accept="image/png, image/gif, image/jpeg" 
                                             className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            disabled={viewOnly}
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
@@ -693,12 +645,13 @@ if (!existingChamberIdsJSON) {
                                             name="photo_of_chamber_corner"
                                             multiple
                                             id=""
+                                            disabled={isDisabled}
                                             accept="image/png, image/gif, image/jpeg" 
                                             className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            disabled={viewOnly}
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -710,27 +663,20 @@ if (!existingChamberIdsJSON) {
                                         label="No. of floors *"
                                         className="mx-auto w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                   <Field
                                             type="number"
                                             autoComplete="off"
                                             min={1}
                                             name="no_of_floors"
-                                            placeholder="No. of floors"
-                                            component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.no_of_floors}
-                                        />) : (<Field
-                                            type="number"
-                                            autoComplete="off"
-                                            min={1}
-                                            name="no_of_floors"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.no_of_floors}
                                             onKeyDown={onkeyDown}
                                             placeholder="No. of floors"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.no_of_floors}
                                         </p>
@@ -740,6 +686,7 @@ if (!existingChamberIdsJSON) {
                                         className="mx-auto w-1/2"
                                     >
                                           <Field
+                                              disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="floor_area"
@@ -749,7 +696,7 @@ if (!existingChamberIdsJSON) {
                                             placeholder="Enter Value"
                                             component={Input}
                                             value={data?.floor_area || formD?.floor_area}
-                                            disabled={viewOnly}
+                                           
                                         />
                                       
                                         <p className="text-[red]">
@@ -773,34 +720,8 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Min'
-                                            className='w-1/2text-center focus:outline-0'
-                                            name='temp_range_min'
-                                            value={formD?.temp_range_min}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Min'
-                                            className='w-1/2text-center focus:outline-0'
-                                            name='temp_range_min'
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
-                                        {viewOnly ? (<input
-                                            type="number"
-                                            placeholder='Max'
-                                            className='w-1/2 text-center focus:outline-0'
-                                            name='temp_range_max'
-                                            value={formD?.temp_range_max}
-                                            disabled={viewOnly}
-                                        />) : (<input
-                                            type="number"
-                                            placeholder='Max'
-                                            className='w-1/2 text-center focus:outline-0'
-                                            name='temp_range_max'
-                                            onChange={(e: any) => handleChange(e)}
-                                        />)}
+                                        <input     disabled={isDisabled} type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                            
                                         <p className="text-[red]">
@@ -810,25 +731,18 @@ if (!existingChamberIdsJSON) {
                                     <FormItem
                                         label="Height of each floor (Feet) *"
                                         className="mx-auto w-1/2"
-                                    >
-                                        {viewOnly ? (<Field
+                                    ><Field
                                             type="text"
                                             autoComplete="off"
-                                            name="each_floor_hight"
-                                            placeholder="Enter Value"
-                                            component={Input}
-                                            value={formD?.each_floor_hight}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
+                                            disabled={isDisabled}
                                             name="each_floor_hight"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.each_floor_hight}
                                             placeholder="Enter Value"
                                             component={Input}
-                                        />)}
+                                        />
                             
                                         <p className="text-[red]">
                                             {errors && errors.each_floor_hight}
@@ -846,11 +760,12 @@ if (!existingChamberIdsJSON) {
                                          Staircase (Yes/No)
   </span>
                                         <label className="relative inline-flex items-center cursor-pointer">
-  <input type="checkbox" className="sr-only peer"   name="staircase"
+  <input     disabled={isDisabled} type="checkbox" className="sr-only peer"  checked={data?.staircase}  name="staircase"
+ 
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            disabled={viewOnly}/>
+                                           />
   <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
  
 </label>
@@ -878,7 +793,7 @@ if (!existingChamberIdsJSON) {
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled={viewOnly}
+                                   
                                 >
                                     Save
                                 </Button>

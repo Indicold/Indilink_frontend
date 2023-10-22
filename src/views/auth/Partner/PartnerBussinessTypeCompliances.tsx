@@ -21,6 +21,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
+import { messageView } from '@/store/customeHook/validate'
+import { faL } from '@fortawesome/free-solid-svg-icons'
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -245,7 +247,7 @@ const PartnerBussinessTypeCompliances = () => {
         'asset_id': id,
         'asset_type_id': localStorage.getItem('asset_id')
     })
-
+    const [isValid,setIsValid]=useState<any>(false)
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
         setSelectedFile(e.target.files[0])
@@ -370,14 +372,46 @@ const PartnerBussinessTypeCompliances = () => {
 
         return error
     }
+    function validateMandatoryFields(data:any, fieldName:any) {
+        if (data[fieldName]) {
+            const licenseField = `${fieldName}_license`;
+            const textField = `${fieldName}_text`;
+    
+            if (!data[licenseField] || !data[textField]) {
+                // messageView(`Valid Till and License no is mandatory`);
+                return false;
+            }
+        } else {
+            // The field is not provided, so its corresponding 'license' and 'text' fields are not mandatory.
+        }
+    
+        return true; // Fields are valid or not applicable
+    }
+    
+    // You can add functions like isValidLicense and isValidDate to check the validity of the license and date fields.
+    
     // Handle route navigation
     const handleRoute = () => {
+        
+       // Extract keys from dateArray and slice from index 2
+const slicedKeys = Object.keys(dateArray);
 
-        if (!validateData()) {
+// Extract keys from array1 items
+const array1Keys = array1?.map((item) => item?.key);
+        const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
+        
+      const isValids:any= matchingKeys?.map((item:any)=>{
+           return validateMandatoryFields(dateArray,item);
+        })
+        let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
+        console.log("YUUUUUUUUU",Invalid);
+        if (Invalid) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        }else{
+            messageView(`Valid Till and License no is mandatory`);
         }
 
     }
@@ -441,6 +475,7 @@ const PartnerBussinessTypeCompliances = () => {
 
     }, [])
     console.log("tryttytyrty", array);
+ 
 /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
 `fetchDetails.data` value changes. */
     useEffect(() => {

@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -22,7 +23,6 @@ interface MajorityHolderModalProps {
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
     FetchAgain: any
-    viewOnly: boolean
 }
 const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     modal,
@@ -30,12 +30,15 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-    viewOnly
-}) => {
+    commanData,
+}:any) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
+    const isDisabled:any=commanData?.type=='View' ? true: false;
     const {id}: any = useParams()
-    const [data, setData] = useState({})
+    const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/ca-equipment/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -67,20 +70,40 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function with specific parameters.
      */
     const handlesave = async () => {
-        // console.log("asset_idddd", data)
-        if(validateCAEquipForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/ca-equipment',
-            data,
-            setModal,
-            formD,
-            update,
-            'ca_equipment_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            console.log("asset_idddd", data)
+            if(validateCAEquipForm(data, setErrors)) {
+            handleStoreTable(
+                'partner/store/ca-equipment',
+                data,
+                setModal,
+                formD,
+                update,
+                'ca_equipment_ids',
+                FetchAgain
+            )
+            }
         }
+      
+    }
+    useEffect(()=>{
+        if(commanData?.type==='Edit' || commanData?.type==='View'){
+            setData(commanData)
+        }
+    
+    },[commanData])
+useEffect(()=>{
+    if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !")
+        console.log("TTTTTTtytyty",PutApiResponse);
+        
+    }else{
+        messageView(PutApiResponse)
     }
 
+},[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -141,47 +164,35 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make *"   className="w-1/2">
-                                        {viewOnly ? (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="make"
-                                            placeholder="Make"
-                                            component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.make}
-                                        />) : (<Field
+                                        <Field
+                                        disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="make"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model *"   className="w-1/2">
-                                        {viewOnly ?(<Field
+                                        <Field
+                                                disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="model"
-                                            placeholder="Model"
-                                            component={Input}
-                                            value={formD?.model}
-                                            disabled={viewOnly}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="model"
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.model}
                                         </p>
@@ -200,24 +211,18 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                           }
                                         className="w-1/2"
                                     >
-                                        {viewOnly ? (<Field
+                                        <Field
+                                                disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="cmf"
-                                            placeholder="C.F.M."
-                                            component={Input}
-                                            disabled={viewOnly}
-                                            value={formD?.cmf}
-                                        />) : (<Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="cmf"
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
-                                        />)}
+                                        />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
                                         </p>
@@ -227,11 +232,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                    disabled={viewOnly}
+                                    
                                 >
                                     Save
                                 </Button>
