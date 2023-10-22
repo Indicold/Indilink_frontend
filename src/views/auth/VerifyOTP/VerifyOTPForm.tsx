@@ -82,6 +82,7 @@ const handleresend=()=>{
     }
     apiForgotPassword(data,messageView,setSubmitting)
 }
+    const newLocal = 'OTP*'
     return (
         <div className={className}>
                   <ToastContainer />
@@ -136,7 +137,7 @@ const handleresend=()=>{
                                     />
                                 </FormItem>
                                 <FormItem
-                                label='OTP*'
+                                label={newLocal}
                                     invalid={errors.OTP && touched.OTP}
                                     errorMessage={errors.OTP}
                                 >
@@ -150,15 +151,14 @@ const handleresend=()=>{
                                 </FormItem>
                             </div>
                         
-                            <Button
+                            <span
                             className='border-none m-2'
-                                block
-                                loading={isSubmitting}
-                                type="button"
+                                
+                              
                                 onClick={handleresend}
                             >
                                 Resend OTP
-                            </Button>
+                            </span>
                             <Button
                                 block
                                 loading={isSubmitting}
@@ -166,7 +166,7 @@ const handleresend=()=>{
                                 type="submit"
                                 className='indigo-btn'
                             >
-                                {emailSent ? 'Resend Email' : 'Send Email'}
+                            Verify OTP
                             </Button>
                             <div className="mt-4 text-center">
                                 <span>Back to </span>
