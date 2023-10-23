@@ -30,6 +30,7 @@ const PartnerTableAssetsList = () => {
         data: AllStore,
         loading: StoreRLoad,
         error: allerr,
+        refetch:fetchApi
     }: any = useApiFetch<any>('master/asset', token)
 console.log("TTTTTUUUUUU",AllStore);
 
@@ -39,7 +40,7 @@ console.log("TTTTTUUUUUU",AllStore);
 
             {AllStore?.data?.length > 0 ? (
                 <>
-                    <TableLayout
+                    <TableLayout fetchApi={fetchApi}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
