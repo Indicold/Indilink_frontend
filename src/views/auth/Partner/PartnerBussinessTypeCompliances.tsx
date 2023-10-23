@@ -402,13 +402,14 @@ const array1Keys = array1?.map((item) => item?.key);
         
       const isValids:any= matchingKeys?.map((item:any)=>{
            return validateMandatoryFields(dateArray,item);
-        })
+        });
+        const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        console.log("YUUUUUUUUU",Invalid);
+        console.log("YUUUUUUUUU",Invalid,newvalidate,array?.filter((item:any)=>item?.messageText));
         if (Invalid) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
-        navigate('/asset_success')
+        // navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
         }else{
             messageView(`Valid Till and License no is mandatory`);
