@@ -5,6 +5,8 @@ import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import React from 'react'
 import TableLayoutCustomer from './TableLayoutCustomer'
+import DataNotFound from '@/components/layouts/DataNotFound'
+import DataNotFoundBar from '@/components/layouts/DataNotFoundBar'
 
 const CustomerTableTicketList = () => {
     const { token }: any = getToken()
@@ -31,14 +33,18 @@ const CustomerTableTicketList = () => {
 
     return (
         <>
-            {AllStore?.data?.length > 0 && (
+            {!AllStore?.data?.length > 0 ? (
                 <>
                     <h4 className="text-head-title text-center">Ticket List</h4>
                     <TableLayoutCustomer
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
-            )}
+            ):
+            
+            <DataNotFound />
+            
+            }
             <div>
                 {(moveLoad || prepLoad || StoreLoad) && <LoaderSpinner />}
             </div>

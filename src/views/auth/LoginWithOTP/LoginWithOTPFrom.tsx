@@ -230,7 +230,7 @@ const validate=()=>{
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className='bg-[#3f8cfe] indigo-btn  w-[40%] mx-auto rounded-[30px] mt-2'
+                                className='bg-[#3f8cfe] indigo-btn w-[40%] mx-auto rounded-[30px] mt-2'
                             >
                                 {isSubmitting ? 'Signing in...' : 'Verify OTP'}
                             </Button>}
@@ -242,7 +242,7 @@ const validate=()=>{
                                     role='button'
                                     style={{ borderRadius: "13px" }}
                                     onClick={handlesubmit}
-                                    className='!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2'
+                                    className='!text-[#103492] rounded-[30px] font-bold mx-auto py-2'
                                 >
                                     {seconds !== 0 ? `00:${seconds}` : 'Resend OTP'}
                                 </label>

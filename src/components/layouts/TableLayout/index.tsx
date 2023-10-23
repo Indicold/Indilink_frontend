@@ -64,7 +64,7 @@ const TableLayout = ({ AllStore }: any) => {
     // Function to update the current page of data.
     setCurrentPage(p);
     const to = countPerPage * p;
-    const from = to - countPerPage;
+    const from = to - countPerPage; 
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 
@@ -128,9 +128,9 @@ const handleDocs=(rowData:any)=>{
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
-          <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
+          <Button className='' onClick={() => handleEdit(rowData)}>Edit</Button>
+          <Button className='' onClick={() => handleView(rowData)}>View</Button>
+          <Button className='' onClick={() => handleDocs(rowData)}><TextSnippetIcon /> </Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;

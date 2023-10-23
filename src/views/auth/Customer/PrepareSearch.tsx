@@ -180,7 +180,7 @@ console.log("formatDate",formData?.arrival_date);
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
-            <div className="bg-white">
+            <div className="bg-white p-4">
                 <h4 className=" mb-2 text-head-title text-center">Prepare</h4>
                 {/* The above code is a form component written in TypeScript and React. It uses the
                 Formik library for form management. The form consists of various input fields and
@@ -197,7 +197,7 @@ console.log("formatDate",formData?.arrival_date);
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Category"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
@@ -235,7 +235,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Product Type"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -273,7 +273,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.service_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Country"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -331,7 +331,7 @@ console.log("formatDate",formData?.arrival_date);
                                         </FormItem>
                                     </div>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Throughput"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -343,7 +343,7 @@ console.log("formatDate",formData?.arrival_date);
                                             autoComplete="off"
                                             name="throughput"
                                             value={formData?.throughput}
-                                            className="w-[80%]"
+                                            className="w-[70%]"
                                             placeholder="Throughput"
                                             component={Input}
                                         />
@@ -351,7 +351,7 @@ console.log("formatDate",formData?.arrival_date);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="throughput_unit_id"
-                                            className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-[20%] ml-4 p-2 input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
@@ -371,7 +371,7 @@ console.log("formatDate",formData?.arrival_date);
                                             type="text"
                                             autoComplete="off"
                                             name="case_size"
-                                            className="w-[80%]"
+                                            className="w-[70%]"
                                             value={formData?.case_size}
                                             placeholder="Avg. Case Size"
                                             component={Input}
@@ -381,7 +381,7 @@ console.log("formatDate",formData?.arrival_date);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="case_size_unit_id"
-                                            className="h-11 border w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border p-2 ml-4 w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
@@ -393,7 +393,7 @@ console.log("formatDate",formData?.arrival_date);
 
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Estimated Docks"
                                         className="rounded-lg pl-[22px] w-1/2"
@@ -425,10 +425,10 @@ console.log("formatDate",formData?.arrival_date);
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex ">
 
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Temperature"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -437,7 +437,7 @@ console.log("formatDate",formData?.arrival_date);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_min"
-                                            className="h-11 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Minimum</option>
                                             {Array(3).fill(0).map((_, index) => (
@@ -452,7 +452,7 @@ console.log("formatDate",formData?.arrival_date);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_max"
-                                            className="h-11 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Maximum</option>
                                             {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index * 5 + 5).map((item: any, index: any) => (
@@ -480,7 +480,7 @@ console.log("formatDate",formData?.arrival_date);
                                     </FormItem>
                                 </div>
                              {location?.state?.extraForm &&   <>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Status Id"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -519,7 +519,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Contract Name"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -555,7 +555,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Arrival Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -591,7 +591,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Contract Upload"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -615,7 +615,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 </>}
 
-                                <div className="flex justify-center w-[310px] mx-auto">
+                                <div className="flex mt-4 justify-center w-[310px] mx-auto">
                                     {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
@@ -634,7 +634,7 @@ console.log("formatDate",formData?.arrival_date);
                                             variant="solid"
                                             type="button"
                                             onClick={handleRoute}
-                                            className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                            className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
                                             Request for Search
                                         </Button>

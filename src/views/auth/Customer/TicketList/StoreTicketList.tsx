@@ -12,7 +12,7 @@ const StoreTicketList = () => {
     console.log("FFFFFFF",Store);
    
   return (
-    <div>
+    <div className='bg-white p-4 '>
       {Store?.data?.length>0 &&   
       <>
         <h4 className='text-head-title text-center'>Store Ticket List</h4>

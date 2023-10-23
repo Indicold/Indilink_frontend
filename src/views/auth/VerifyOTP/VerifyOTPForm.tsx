@@ -142,7 +142,7 @@ const handleresend=()=>{
                                 >
                                     <Field
                                         type="text"
-                                        autoComplete="off"
+                                           autoComplete="off"
                                         name="OTP"
                                         placeholder="Enter Your OTP"
                                         component={Input}

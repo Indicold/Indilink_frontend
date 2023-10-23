@@ -179,13 +179,13 @@ const StoreSearch = () => {
 
     console.log("statusstatusstatusstatusstatusstatusstatus", CustomerResponse);
     return (
-        <div>
+        <div className='bg-white p-2 rounded-md'>
             <ToastContainer />
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
-            <div className="bg-white">
+            <div className="">
                 <h4 className=" mb-2 text-head-title text-center">Store</h4>
                 {/* The above code is a TypeScript React component that renders a form using the Formik
                 library. The form contains several input fields and select dropdowns for the user to
@@ -197,14 +197,18 @@ const StoreSearch = () => {
                 functions depending on the form's purpose. */}
                 <div>
                     <Formik
+                        className="gap-2 rounded-md"
                         initialValues={{ field: true }}
                         onSubmit={() =>
                             console.log('Submited via my onSubmit function')
                         }
                     >
                         <Form className="py-2 multistep-form-step">
-                            <FormContainer>
-                                <div className="flex">
+                            <FormContainer className='gap-4'>
+                                <div className='bg-gray-100 p-2 rounded-md'>
+                                <p className='ml-[23px]'><b>Location</b></p>
+                                <div className="flex ">
+                                   
                                     <FormItem
                                         label="Country"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
@@ -213,7 +217,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="country_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full pl-2 rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -225,13 +229,13 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label="City"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="mx-auto w-1/2 rounded-lg pl-[20px]"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="city_id"
-                                            className="h-11 border w-full rounded-lg  h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
@@ -242,7 +246,10 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                </div>
+
+
+                                <div className="bg-gray-100 mt-4 p-3 rounded-md flex">
                                     <FormItem
                                         label="Product Type"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -251,7 +258,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full rounded-lg  h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className= "border pl-2 w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
@@ -270,7 +277,7 @@ const StoreSearch = () => {
                                             type="number"
                                             autoComplete="off"
                                             onChange={(e: any) => handlechange(e)}
-                                            className="w-[80%]"
+                                            className="w-[60%] pl-2"
                                             name="temperature"
                                             value={formData?.temperature}
                                             placeholder="Temperature"
@@ -280,7 +287,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="temperature_type_id"
-                                            className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             {ListOfTemp && ListOfTemp?.data?.map((item: any, index: any) => (
@@ -291,17 +298,17 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.temperature}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
                                         label="Unit"
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="rounded-lg pl-[22px] p-2 w-1/2"
                                     >
                                        
                                             <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="unit_id"
-                                            className="h-11 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border rounded-lg w-full h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (
@@ -319,7 +326,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="certification_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full rounded-lg p-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Select</option>
                                             {ListOfCert && ListOfCert?.data?.map((item: any, index: any) => (
@@ -330,7 +337,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.certification_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Date of Storage"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -345,7 +352,7 @@ const StoreSearch = () => {
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red]' >{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Storage Duration"
@@ -356,7 +363,7 @@ const StoreSearch = () => {
                                             type="number"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
-                                            className="w-[80%]"
+                                            className="w-[70%]"
                                             name="storage_duration"
                                             value={formData?.storage_duration}
                                             placeholder="Storage Duration"
@@ -366,7 +373,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="storage_duration_type"
-                                            className="h-11 border w-[20%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-[25%] ml-4 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             {ListOfTimeUnits && ListOfTimeUnits?.data?.map((item: any, index: any) =>{if(item.id === 4||item.id === 6||item.id === 7){
@@ -378,7 +385,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                 </div>
                           {location?.state?.extraForm &&      <>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
                                         label="Status Id"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -414,7 +421,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
                                         label="Contract Name"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -450,7 +457,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
                                         label="Contract Upload"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -460,11 +467,11 @@ const StoreSearch = () => {
                                         type="file"
                                         name="contract_download"
                                         id="file-input"
-                                        className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                        className="block w-full border border-bg-white shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                         file:bg-transparent file:border-0
-                                        file:bg-gray-100 file:mr-4
+                                        file:bg-white file:mr-4
                                         file:py-3 file:px-4
-                                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                        dark:file:bg-white dark:file:text-gray-400"
                                         onChange={(e: any) => handlechange(e)}
                                       />
 
@@ -484,7 +491,7 @@ const StoreSearch = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                        className="indigo-btn w-[300px] mt-4 mx-auto rounded-[30px]"
                                     >
                                     Update
                                     </Button> :
@@ -495,7 +502,7 @@ const StoreSearch = () => {
                                      variant="solid"
                                      type="button"
                                      onClick={handleRoute}
-                                     className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                     className="indigo-btn w-[300px] mt-4 mx-auto rounded-[30px]"
                                  >
                                      Request for Search
                                  </Button>
