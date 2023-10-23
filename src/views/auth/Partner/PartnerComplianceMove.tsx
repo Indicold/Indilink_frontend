@@ -272,25 +272,22 @@ const PartnerComplianceMove = () => {
  // Extract keys from array1 items
  const array1Keys = array1?.map((item) => item?.key);
          const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
-         console.log("matchingKeysmatchingKeys",matchingKeys);
          
-    //    const isValids:any= matchingKeys?.map((item:any)=>{
-    //         return validateMandatoryFields(dateArray,item);
-    //      })
+       const isValids:any= matchingKeys?.map((item:any)=>{
+            return validateMandatoryFields(dateArray,item);
+         });
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-        //  let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        //  console.log("YUUUUUUUUU",Invalid,isValids);
-        const isFormValid = localStorage.getItem('isFormValid');
-
-         if (newvalidate && isFormValid) {
+         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
+         console.log("YUUUUUUUUU",Invalid,newvalidate);
+         if (Invalid && newvalidate) {
          PostValidTillDetails(dateArray)
-        //  console.log("KEYJHJHKHKHKHK");
+         console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
          // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
          }else{
              messageView(`Valid Till and License no is mandatory`);
          }
-    }
+     }
 
     // Use useEffect to update file upload items when fetchDetails changes
     useEffect(() => {
