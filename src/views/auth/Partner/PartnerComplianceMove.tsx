@@ -145,6 +145,11 @@ const PartnerComplianceMove = () => {
                 return item; // Keep the other items unchanged
             }
         });
+        if (localStorage.getItem('isFormValid') !== null){
+            localStorage.removeItem('isFormValid');
+            const isFormValid:any=updatedArray?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+            localStorage.setItem('isFormValid', isFormValid);
+        }
         setArray(updatedArray);
     }
     const handleChange = (e: any, item: any) => {
@@ -205,6 +210,8 @@ const PartnerComplianceMove = () => {
                         : itemData
                 )
 
+                const isFormValid:any=updatedArray?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+                localStorage.setItem('isFormValid', isFormValid);
                 setArray(updatedArray) // Update the state with the modified array
             } else if (
                 responseData?.status == 400 ||
@@ -267,14 +274,17 @@ const PartnerComplianceMove = () => {
          const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
          console.log("matchingKeysmatchingKeys",matchingKeys);
          
-       const isValids:any= matchingKeys?.map((item:any)=>{
-            return validateMandatoryFields(dateArray,item);
-         })
-         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-         console.log("YUUUUUUUUU",Invalid,isValids);
-         if (Invalid) {
+    //    const isValids:any= matchingKeys?.map((item:any)=>{
+    //         return validateMandatoryFields(dateArray,item);
+    //      })
+         const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+        //  let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
+        //  console.log("YUUUUUUUUU",Invalid,isValids);
+        const isFormValid = localStorage.getItem('isFormValid');
+
+         if (newvalidate && isFormValid) {
          PostValidTillDetails(dateArray)
-         console.log("KEYJHJHKHKHKHK");
+        //  console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
          // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
          }else{
