@@ -878,6 +878,9 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.broad_category_id) {
         newErrors.broad_category_id = 'This Field is required'
     }
+    if (!formData?.product_type_id) {
+        newErrors.product_type_id = 'This Field is required'
+    }
     if (formData?.unit_id && !formData?.unit_id) {
         newErrors.unit_id = 'Unit is required'
     }
