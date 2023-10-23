@@ -18,6 +18,7 @@ import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import usePostApi from '@/store/customeHook/postApi'
 
 // Define the PartnerBussinessTypeAdditional component
 const PartnerBussinessTypeAdditional = () => {
@@ -51,6 +52,7 @@ const PartnerBussinessTypeAdditional = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
+        refetch: refetchDetails
     } = useApiFetch<any>(apiUrls, token)
 
     // Define an array of objects for file upload items
@@ -58,51 +60,61 @@ const PartnerBussinessTypeAdditional = () => {
         {
             label: 'No Lien Certificate',
             placeholder: 'Upload',
+            key_text: '',
             key: 'no_lien_cert',
         },
         {
             label: 'Latest Electricity Bill',
             placeholder: 'Upload',
+            key_text: '',
             key: 'latest_electricity_bill',
         },
         {
             label: 'Structural Load Safety',
             placeholder: 'Upload',
+            key_text: '',
             key: 'structural_load_safety_cert',
         },
         // {
         //     label: 'Pest Control Agency Contract',
         //     placeholder: 'Upload',
+        //     key_text: '',
         //     key: 'pest_control_agency_contract',
         // },
-        {
-            label: 'Plant Layout',
-            placeholder: 'Upload',
-            key: 'plant_layout',
-        },
+        // {
+        //     label: 'Plant Layout',
+        //     placeholder: 'Upload',
+        //     key_text: 'plant_layout',
+        //     key: 'plant_layout',
+        // },
         {
             label: 'Insurance Certificate',
             placeholder: 'Upload',
+            key_text: 'insurance_cert_text',
             key: 'insurance_cert',
         },
         {
             label: 'Facility Layout',
             placeholder: 'Upload',
+            key_text: '',
             key: 'facility_layout',
         },
         {
             label: 'Storage Temperature Record for Last Couple of Months',
             placeholder: 'Upload',
+            key_text: '',
             key: 'storage_temp_record',
         },
         {
             label: '3D view of the assets',
             placeholder: 'Upload',
+            key_text: '',
             key: 'three_d_view_of_asset',
         },
         {
             label: 'Photo of the Assets',
             placeholder: 'Upload',
+            key_text: '',
             key: 'photos_of_asset',
         },
         // Add additional objects as needed
@@ -114,8 +126,18 @@ const PartnerBussinessTypeAdditional = () => {
         // },
     ]
 
+    const {
+        result: ValidTillResponse,
+        loading: ValidTillLoading,
+        sendPostRequest: PostValidTillDetails,
+    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+
     // Initialize state variable for the file upload items
     const [array, setArray] = useState<any>(array1)
+    const [dateArray, setDateArray] = useState<any>({
+        'asset_id': id,
+        'asset_type_id': localStorage.getItem('asset_id')
+    })
 
     // Handle file change and upload
     const handleFileChange = (e: any, item: any) => {
@@ -124,12 +146,9 @@ const PartnerBussinessTypeAdditional = () => {
     }
 
     const handleDateChange = (e:any) => {
-        let newData = {...array}
-        let newarr:any=array?.map((item:any,index:any)=>{
-            if(item?.key==e.target.name){
-                item.valid_till = e.target.value
-            }
-        })
+        let newData = {...dateArray}
+        newData[e.target.name] = e.target.value
+        setDateArray(newData)
         console.log("date_change", newData, e.target.value)
     }
 
@@ -173,6 +192,10 @@ const PartnerBussinessTypeAdditional = () => {
             setError(error)
             setResponse(null)
         }
+    }
+    const handleRoute = () => {
+        PostValidTillDetails(dateArray)
+        navigate('/asset_success')
     }
 
     // Effect to update the array based on fetched data
@@ -226,15 +249,7 @@ const PartnerBussinessTypeAdditional = () => {
         <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
-    <li className="mb-10 ml-6">
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z"/>
-            </svg>
-        </span>
-        <h6 className="font-medium leading-tight pt-2">Additional submissions</h6>
-        {/* <p className="text-sm">Step details here</p> */}
-    </li>
+
 </ol>
 
 
@@ -253,41 +268,64 @@ const PartnerBussinessTypeAdditional = () => {
                             <FormContainer>
                                 <div className="flex flex-wrap">
                                     {array?.map((item: any, index: any) => (
-                                        <FormItem
+                                           <>
+                                           <FormItem
                                             label={item?.label}
                                             key={index}
-                                            className="w-1/2 rounded-lg pl-[22px] flex text-label-title"
+                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
                                         >
-                                            <div className="flex">
                                             <input
                                                 disabled={isDisabled}
-                                                type="file"
+                                                type="file"  accept="image/png, image/jpeg"
+
                                                 name={item?.key}
                                                 id="file-input"
-                                                accept="image/*,.doc, .docx,.pdf"
-                                                className="!w-2/3 block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                        file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                        file:py-3 file:px-4
-                        dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                className="!w-full block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
                                                 onChange={(e: any) =>
                                                     handleFileChange(e, item)
                                                 }
                                             />
-                                            <input type='date' placeholder='Valid Till' name={item?.key} className='!w-1/3 border' onChange={handleDateChange} />
-                                            </div>
+                                          
                                             <div className="flex">
-                                                {item?.view && <b>Status:</b>}
+                                                {item?.message && (
+                                                    <p className="text-[green]">
+                                                        Status:{item?.message}
+                                                    </p>
+                                                )}
+                                                {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                 {item?.view && (
                                                     <a
                                                         href={`${item?.url}`}
                                                         target="_blank"
+                                                        download={false}
                                                     >
                                                         View
                                                     </a>
                                                 )}
                                             </div>
                                         </FormItem>
+                                        <FormItem
+                                            label="Valid Till"
+                                            key={index}
+                                            className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === ''?'invisible':'visible'}`}
+                                        >
+                                     
+                                            <input type='date' placeholder='Valid Till' name={`${item?.key}_text`}  
+                                            defaultValue={fetchDetails?.data[item?.key_text]}  className="!w-full h-11 block w-full border border-gray-200 
+                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                   file:bg-transparent file:border-0
+                             file:bg-gray-100 file:mr-4
+                           file:py-3 file:px-4
+                                  dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               onChange={handleDateChange} />
+                                        
+                                        </FormItem>
+                                        </>
                                     ))}
                                 </div>
 
@@ -308,7 +346,7 @@ const PartnerBussinessTypeAdditional = () => {
                                         block
                                         variant="solid"
                                         type="button"
-                                        onClick={() => navigate('/asset_success')}
+                                        onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
                                         Save Asset

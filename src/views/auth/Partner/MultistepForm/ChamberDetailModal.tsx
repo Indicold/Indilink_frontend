@@ -7,15 +7,16 @@
  * chamber details. The component uses various dependencies such as FormItem, Input, useApiFetch,
  * useState, and ToastContainer
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import InfoIcon from '@mui/icons-material/Info';
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -28,9 +29,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
-}) => {
+    FetchAgain,
+    commanData
+}:any) => {
     const { token }: any = getToken()
+    const isDisabled:any=commanData?.type=='View' ? true: false;
     const {
         data: RackingType,
         loading: RackingTypeLoading,
@@ -38,8 +41,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
-    const [length, setLength] = useState('');
-    const [breadth, setBreadth] = useState('');
+    const [length, setLength] = useState<any>('');
+    const [breadth, setBreadth] = useState<any>('');
     const [height, setHeight] = useState('');
     const [lengthP, setLengthP] = useState('');
     const [breadthP, setBreadthP] = useState('');
@@ -75,9 +78,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const handleChange = (e: any) => {
         const newData: any = { ...data }
         newData.asset_id = id
-        newData['chamber_size'] = formattedString
-        newData['pallet_size'] = formattedStringP
+       
+        newData['chamber_size'] = formattedString || commanData?.chamber_size;
+        newData['pallet_size'] = formattedStringP || commanData?.pallet_size;
         newData[e.target.name] = e.target.value
+      
         if (e.target.name === 'photo_of_entrance') {
             newData[e.target.name] = e.target.files
         } else if (e.target.name === 'photo_of_chamber') {
@@ -92,9 +97,13 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size'].concat('x')
             // console.log("chamber_size", typeof e.target.value.toString())
             setLength(e.target.value);
+            const area:any=e.target.value*breadth;
+            newData['floor_area']=area;
             updateFormattedString(e.target.value, breadth, height);
         } else if (e.target.name === 'ch-b') {
             setBreadth(e.target.value);
+            const area:any=e.target.value*length;
+            newData['floor_area']=area;
             updateFormattedString(length, e.target.value, height);
         } else if (e.target.name === 'ch-h') {
             setHeight(e.target.value);
@@ -112,6 +121,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         } else if (e.target.name === 'pl-h') {
             setHeightP(e.target.value);
             updateFormattedStringP(lengthP, breadthP, e.target.value);
+        }else
+        if(e.target.name==='staircase'){
+          
+            // setData({...data,staircase:e.target.checked})
+            newData[e.target.name]=e.target.checked ? true :false;
         }
         else {
             newData[e.target.name] = e.target.value
@@ -121,13 +135,14 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
 
         }
         setData(newData)
-        console.log('newData', newData)
+        
     }
     /**
      * The `handlesave` function is responsible for saving chamber details by making a POST request to
      * the server with the provided form data.
      */
-    console.log("ididididididid",formD);
+    // console.log('newData')
+    // console.log("ididididididid",formD);
 
     const handlesave = async () => {
         var myHeaders = new Headers()
@@ -186,57 +201,116 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             body: formdata,
             redirect: 'follow',
         }
+        var requestOptionsUpdate: any = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow',
+        }
         console.log("validateChamberFormvalidateChamberForm", formD)
-        if(validateChamberForm(data, setErrors)) {
-        try {
-            const response = await fetch(
-                `${apiUrl}/partner/store/chamber`,
-                requestOptions
-            )
-            const result = await response.json()
-            console.log("VVVVVVV",result);
+            if(commanData?.type=='Edit'){
+                try {
+                    const response = await fetch(
+                        `${apiUrl}/partner/store/chamber/${commanData?.id}`,
+                        requestOptionsUpdate
+                    )
+                    const result = await response.json()
+                    console.log("VVVVVVV",result);
+        
+                    if (result?.status) {
+                        FetchAgain()
+                        messageView('Chamber Details Updated Successfully!')
+                        
+                        const newD: any = { ...formD }
+                        let arr: any = []
+                        if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
+                        localStorage.setItem('StoreData',JSON.stringify(newD))
+                        console.log("GGGGGG88889", result?.data, newD)
+                        arr.push(result?.data?.id)
+                        newD['chamber_ids'] = arr;
+                        console.log("GGGGGG8888",newD?.chamber_ids);
+                        
+                  // Retrieve existing chamber_ids from local storage
+        const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
+        let existingChamberIds = [];
+        
+        if (existingChamberIdsJSON) {
+          existingChamberIds = JSON.parse(existingChamberIdsJSON);
+        }
+        
+        // Assuming newD?.chamber_ids is the new data to be added
+        const newChamberIds = newD?.chamber_ids || [];
+        
+        // Check if the new data is not already in the existing array
+        const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+        localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        if (!existingChamberIdsJSON) {
+          // If chamber_ids doesn't exist in local storage, set it
+          localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        }
+        
+        
+                        update(newD)
+                        setModal(false)
+                    }
+                    console.log(result?.status)
+                } catch (error: any) {
+                    messageView(error.message)
+                    console.log('error', error.message)
+                }
+            }else{
 
-            if (result?.status) {
-                FetchAgain()
-                messageView('Chamber Details Updated Successfully!')
-                
-                const newD: any = { ...formD }
-                let arr: any = []
-                if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
-                localStorage.setItem('StoreData',JSON.stringify(newD))
-                console.log("GGGGGG88889", result?.data, newD)
-                arr.push(result?.data?.id)
-                newD['chamber_ids'] = arr;
-                console.log("GGGGGG8888",newD?.chamber_ids);
-                
-          // Retrieve existing chamber_ids from local storage
-const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
-let existingChamberIds = [];
-
-if (existingChamberIdsJSON) {
-  existingChamberIds = JSON.parse(existingChamberIdsJSON);
-}
-
-// Assuming newD?.chamber_ids is the new data to be added
-const newChamberIds = newD?.chamber_ids || [];
-
-// Check if the new data is not already in the existing array
-const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
-localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
-if (!existingChamberIdsJSON) {
-  // If chamber_ids doesn't exist in local storage, set it
-  localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
-}
-
-
-                update(newD)
-                setModal(false)
+               if(validateChamberForm(data, setErrors)){ try {
+                    const response = await fetch(
+                        `${apiUrl}/partner/store/chamber`,
+                        requestOptions
+                    )
+                    const result = await response.json()
+                    console.log("VVVVVVV",result);
+        
+                    if (result?.status) {
+                        FetchAgain()
+                        messageView('Chamber Details Updated Successfully!')
+                        
+                        const newD: any = { ...formD }
+                        let arr: any = []
+                        if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
+                        localStorage.setItem('StoreData',JSON.stringify(newD))
+                        console.log("GGGGGG88889", result?.data, newD)
+                        arr.push(result?.data?.id)
+                        newD['chamber_ids'] = arr;
+                        console.log("GGGGGG8888",newD?.chamber_ids);
+                        
+                  // Retrieve existing chamber_ids from local storage
+        const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
+        let existingChamberIds = [];
+        
+        if (existingChamberIdsJSON) {
+          existingChamberIds = JSON.parse(existingChamberIdsJSON);
+        }
+        
+        // Assuming newD?.chamber_ids is the new data to be added
+        const newChamberIds = newD?.chamber_ids || [];
+        
+        // Check if the new data is not already in the existing array
+        const mergedChamberIds = [...new Set([...existingChamberIds, ...newChamberIds])];
+        localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        if (!existingChamberIdsJSON) {
+          // If chamber_ids doesn't exist in local storage, set it
+          localStorage.setItem('chamber_ids', JSON.stringify(mergedChamberIds));
+        }
+        
+        
+                        update(newD)
+                        setModal(false)
+                    }
+                    console.log(result?.status)
+                } catch (error: any) {
+                    messageView(error.message)
+                    console.log('error', error.message)
+                }}
             }
-            console.log(result?.status)
-        } catch (error: any) {
-            messageView(error.message)
-            console.log('error', error.message)
-        }}
+      
     }
 
     /**
@@ -260,6 +334,18 @@ if (!existingChamberIdsJSON) {
             },
         })
     }
+    useEffect(()=>{
+   
+     setLength(commanData?.chamber_size?.split('x')[0])
+     setBreadth(commanData?.chamber_size?.split('x')[1])
+     setHeight(commanData?.chamber_size?.split('x')[2])
+     setLengthP(commanData?.pallet_size?.split('x')[0])
+     setBreadthP(commanData?.pallet_size?.split('x')[1])
+     setHeightP(commanData?.pallet_size?.split('x')[2])
+        
+        setData(commanData)
+    },[commanData])
+    console.log("565767676",data);
     return (
         <>
             <ToastContainer />
@@ -306,6 +392,7 @@ if (!existingChamberIdsJSON) {
                                 <h6 className="text-center text-head-title">
                                     Chamber
                                 </h6>
+                                
                                 <div className="flex">
                                     <FormItem
                                         label="Chamber No*"
@@ -313,13 +400,12 @@ if (!existingChamberIdsJSON) {
                                     >
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
                                             placeholder="Chamber no."
                                             component={Input}
+                                            value={data?.chamber_number}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_number}
@@ -331,13 +417,12 @@ if (!existingChamberIdsJSON) {
                                     >
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_name"
-                                            onChange={(e: any) =>
-                                                handleChange(e)
-                                            }
                                             placeholder="Chamber name"
                                             component={Input}
+                                            value={data?.chamber_name}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_name}
@@ -360,11 +445,11 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                         <p className="text-[red]">
                                             {errors && errors.chamber_size}
@@ -373,16 +458,17 @@ if (!existingChamberIdsJSON) {
                                     <FormItem
                                         label="No. of pallets *"
                                         className="mx-auto w-1/2"
-                                    >
-                                        <Field
+                                    ><Field
                                             type="number"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="no_of_pallets"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             placeholder="No. of pallets"
                                             component={Input}
+                                            value={data?.no_of_pallets}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.no_of_pallets}
@@ -405,11 +491,11 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                      
                                         <p className="text-[red]">
@@ -425,7 +511,9 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            disabled={isDisabled}
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                         
                                         >
                                             <option>Select</option>
                                             {RackingType &&
@@ -433,6 +521,7 @@ if (!existingChamberIdsJSON) {
                                                     (item: any, index: any) => (
                                                         <option
                                                             value={item?.id}
+                                                            selected={item?.id===data?.racking_type_id}
                                                         >
                                                             {item?.type}
                                                         </option>
@@ -445,14 +534,23 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
                                 </div>
                                 <div className="flex">
+                                    
                                     <FormItem
-                                        label="Photo of entrance *"
+                                     label={
+                                        <div className='flex justify-center items-center'>
+                                          Photo of entrance
+                                          <Tooltip title="Select multiple files" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
                                         className="mx-auto w-1/2"
                                     >
                                         
                                         <input
                                             type="file"
                                             multiple
+                                            disabled={isDisabled}
                                             name="photo_of_entrance"
                                             id=""
                                             accept="image/png, image/gif, image/jpeg" 
@@ -460,18 +558,29 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
+                                        
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
                                         </p>
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber from inside*"
+                                        // label="Photo of the chamber from inside*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                            Photo of the chamber from inside*
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <input
                                             type="file"
+                                            disabled={isDisabled}
                                             name="photo_of_chamber"
                                             multiple
                                             id=""
@@ -480,6 +589,7 @@ if (!existingChamberIdsJSON) {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -488,7 +598,15 @@ if (!existingChamberIdsJSON) {
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="Photo of chamber from gate *"
+                                        // label="Photo of chamber from gate *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                          Photo of chamber from gate *
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         
@@ -497,11 +615,13 @@ if (!existingChamberIdsJSON) {
                                             multiple
                                             name="photo_of_chamber_gate"
                                             id=""
+                                            disabled={isDisabled}
                                             accept="image/png, image/gif, image/jpeg" 
                                             className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
@@ -509,7 +629,15 @@ if (!existingChamberIdsJSON) {
                                     </FormItem>
 
                                     <FormItem
-                                        label="Photo of the chamber from one corner *"
+                                        // label="Photo of the chamber from one corner *"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                          Photo of the chamber from one corner *
+                                              <Tooltip title="Select multiple files" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
                                         <input
@@ -517,11 +645,13 @@ if (!existingChamberIdsJSON) {
                                             name="photo_of_chamber_corner"
                                             multiple
                                             id=""
+                                            disabled={isDisabled}
                                             accept="image/png, image/gif, image/jpeg" 
                                             className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                           
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
@@ -533,13 +663,17 @@ if (!existingChamberIdsJSON) {
                                         label="No. of floors *"
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                   <Field
                                             type="number"
                                             autoComplete="off"
+                                            min={1}
                                             name="no_of_floors"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.no_of_floors}
+                                            onKeyDown={onkeyDown}
                                             placeholder="No. of floors"
                                             component={Input}
                                         />
@@ -552,6 +686,7 @@ if (!existingChamberIdsJSON) {
                                         className="mx-auto w-1/2"
                                     >
                                           <Field
+                                              disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="floor_area"
@@ -560,6 +695,8 @@ if (!existingChamberIdsJSON) {
                                             }
                                             placeholder="Enter Value"
                                             component={Input}
+                                            value={data?.floor_area || formD?.floor_area}
+                                           
                                         />
                                       
                                         <p className="text-[red]">
@@ -583,8 +720,8 @@ if (!existingChamberIdsJSON) {
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' onChange={(e: any) => handleChange(e)} />
-                                        <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} />
                                        </div>
                                            
                                         <p className="text-[red]">
@@ -594,14 +731,15 @@ if (!existingChamberIdsJSON) {
                                     <FormItem
                                         label="Height of each floor (Feet) *"
                                         className="mx-auto w-1/2"
-                                    >
-                                            <Field
+                                    ><Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="each_floor_hight"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.each_floor_hight}
                                             placeholder="Enter Value"
                                             component={Input}
                                         />
@@ -617,7 +755,22 @@ if (!existingChamberIdsJSON) {
                                         label="Staircase (Yes/No)"
                                         className="w-1/2"
                                     >
-                                        <select
+                                        <div className='border-2 flex justify-around p-4'>
+                                         <span className=" text-center ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                         Staircase (Yes/No)
+  </span>
+                                        <label className="relative inline-flex items-center cursor-pointer">
+  <input     disabled={isDisabled} type="checkbox" className="sr-only peer"  checked={data?.staircase}  name="staircase"
+ 
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                           />
+  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" />
+ 
+</label>
+</div>
+                                        {/* <select
                                             name="staircase"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -626,7 +779,7 @@ if (!existingChamberIdsJSON) {
                                         >
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
-                                        </select>
+                                        </select> */}
                                         <p className="text-[red]">
                                             {errors && errors.staircase}
                                         </p>
@@ -640,6 +793,7 @@ if (!existingChamberIdsJSON) {
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                   
                                 >
                                     Save
                                 </Button>

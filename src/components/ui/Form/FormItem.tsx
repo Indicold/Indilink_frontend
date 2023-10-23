@@ -13,7 +13,7 @@ export interface FormItemProps extends CommonProps {
     extra?: string | ReactNode
     htmlFor?: string
     invalid?: boolean | ''
-    label?: string
+    label?: any
     labelClass?: string
     labelWidth?: string | number
     layout?: TypeAttributes.FormLayout
@@ -95,10 +95,10 @@ const FormItem = forwardRef<HTMLDivElement, FormItemProps>((props, ref) => {
                 className={formLabelClass}
                 style={formLabelStyle()}
             >
+                {label}
                 {asterisk && (
                     <span className="text-red-500 ltr:mr-1 rtl:ml-1">*</span>
                 )}
-                {label}
                 {extra && <span>{extra}</span>}
                 {label && formItemLayout !== 'vertical' && ''}
             </label>

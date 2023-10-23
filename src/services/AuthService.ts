@@ -70,31 +70,27 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
       setSubmitting(true)
       fetch(`${apiUrl}/auth/forgot-pass-gen-otp`, requestOptions)
         .then((response:any )=> {
-          console.log("hhhh",JSON.parse(response?._bodyInit));
 
-          if (!response.ok) {
-            messageView(JSON.parse(response?._bodyInit)?.message);
-            throw new Error('Network response was not ok');
-          }
           return response.json();
         })
         .then(data => {
           setSubmitting(false)
           console.log(data);
-          if(data?.status){
-            messageView("OTP Sent Successfully !");
+          if(data?.status == true){
+            messageView(data?.message);
             if(dataa?.redirect!==3){
-              window.location.href="/VerfyOtp"
+              setTimeout(() => {
+                window.location.href="/VerfyOtp"
+              }, 2000);
             }
           
+          } else {
+            messageView(data?.message);
           }
           
         })
         .catch(error => {
           setSubmitting(false)
-          console.log("HHHH",error);
-          
-          console.log(error);
         });
       
 }
@@ -118,19 +114,22 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
       
       fetch(`${apiUrl}/auth/forgot-pass-verify-otp`, requestOptions)
         .then((response:any )=> {
-          if (!response.ok) {
-            messageView(JSON.parse(response?._bodyInit)?.message);
-            throw new Error('Network response was not ok');
-          }
+
           return response.json();
         })
         .then(data => {
 
           console.log(data);
-          if(data?.status){
+          if(data?.status == true){
             messageView(data?.message)
             window.location.href="/reset-password"
+          } else {
+            messageView(data?.message);
+              setTimeout(() => {
+                window.location.href="/VerfyOtp"
+              }, 3000);
           }
+          
           
         })
         .catch(error => {
@@ -159,15 +158,13 @@ export async function apiResetPassword(dataa:any,messageView:any) {
       
       fetch(`${apiUrl}/auth/forgot-pass-set-new-pass`, requestOptions)
         .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
+
           return response.json();
         })
         .then(data => {
 
           console.log(data);
-          if(data?.status){
+          if(data?.status == true){
             messageView(data?.message)
             setTimeout(()=>{
               localStorage.removeItem('RememberMe');
@@ -177,7 +174,11 @@ export async function apiResetPassword(dataa:any,messageView:any) {
               window.location.href="/sign-in"
 
             },2000)
+          } else {
+        
+            messageView(data?.message);
           }
+     
           
         })
         .catch(error => {

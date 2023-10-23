@@ -79,6 +79,29 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
             PostOTPDetails(obj)
+
+            if (OTPResponse?.message) {
+                toast.success(OTPResponse?.message, {
+                    position: 'top-right', // Position of the toast
+                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        background: '#FFB017',fontSize:"bold",
+                        color: "#fff"// Set the background color here
+                    },
+                });
+            }
+    
+            if (OTPResponse?.status != 401) {
+                setTimeout(() => {
+                    navigate('/signup-success')
+    
+                }, 2000)
+            }
         }
     }
 
@@ -92,28 +115,37 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      * function. It represents the event that triggered the change, such as a user typing in an input
      * field or selecting an option from a dropdown menu.
      */
-    const handleChange = (e: any) => {
+    const handleChange = (e: any,key:any) => {
         const newGst = e.target.value;
-    
-        if (newGst.length <= 15) {
-          const newData = { ...formData, gst: newGst };
-          setFormData(newData);
-    
-          if (newGst.length === 15) {
-            // setDisabled(false);
-            dispatch(updateFormData(newData)); // Dispatch your Redux action with the new data
-            FetchGSTDetails(newData); // Call your API function
-            // setA('true');
-            b = "true"
-          } else {
-            setDisabled(true);
-            // setA('false');
-          }
-          if(e.target.name==='cin'){
-            setDisabled(!true); 
-          }
+        const newData = { ...formData, [key]: newGst };
+        setFormData(newData);
+        if (newGst.length > 10) {
+            setDisabled(false);
         }
       };
+
+
+      const handledChange = (e: any,key:any) => {
+        const newGst = e.target.value;
+        const newData = { ...formData, [key]: newGst };
+        setFormData(newData);
+      }
+
+      
+      const handledfChange = (e: any,key:any) => {
+        const newGst = e.target.value;
+        const newData = { ...formData, [key]: newGst };
+        setFormData(newData);
+      }
+
+      const handledfnChange = (e: any,key:any) => {
+        const newGst = e.target.value;
+        const newData = { ...formData, [key]: newGst };
+        setFormData(newData);
+      }
+      
+
+
     /**
      * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
      * where it collects form data and sends a POST request with the data to a server.
@@ -126,25 +158,26 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             phone_number:formData?.phone_number,
             password:formData?.password,
             country: "India",
-            panNo:autoFilldata?.taxpayerInfo?.panNo,
-            gstNo:autoFilldata?.taxpayerInfo?.gstin,
-            userDesignation: autoFilldata?.taxpayerInfo?.ctb,
-            firmType:autoFilldata?.taxpayerInfo?.ctb,
-            firmName: autoFilldata?.taxpayerInfo?.tradeNam,
-            pincode: autoFilldata?.taxpayerInfo?.pradr?.addr?.pncd,
-            state: autoFilldata?.taxpayerInfo?.pradr?.addr?.stcd,
-            city: autoFilldata?.taxpayerInfo?.pradr?.addr?.dst,
-            address: autoFilldata?.taxpayerInfo?.pradr?.addr?.bno
+            panNo:formData?.panNo,
+            gstNo:formData?.gstin,
+            userDesignation: formData?.designation,
+            firmType:formData?.firm,
+            firmName: formData?.firmName,
+
           }    
-        setSubmitting(true)
-        GSTResponse?.message && setOtpModal(true)
+
+          
+        setSubmitting(false)
         sendPostRequest(ObjectData);
+       
+        OTPPostDetails?.message && setOtpModal(true)
         setSubmitting(false)
 
     }
 
     /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
+        console.log(OTPResponse)
         if (OTPResponse?.message) {
             toast.success(OTPResponse?.message, {
                 position: 'top-right', // Position of the toast
@@ -161,7 +194,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             });
         }
 
-        if (OTPResponse?.status) {
+        if (OTPResponse?.status != 401) {
             setTimeout(() => {
                 navigate('/signup-success')
 
@@ -199,7 +232,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     toast notification when the `OTPPostDetails` object has a `message` property. */
     useEffect(() => {
         if (OTPPostDetails?.message && OTPPostDetails?.message !== 'hello') {
-            setSeconds(20)
+            setSeconds(120)
             toast.success(OTPPostDetails?.message, {
                 position: 'top-right', // Position of the toast
                 autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
@@ -275,19 +308,17 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             <Formik
                 initialValues={{
                     country: "india",
-                    gst: autoFilldata?.taxpayerInfo?.gstin,
-                    pancardno: autoFilldata?.taxpayerInfo?.panNo,
-                    designation: autoFilldata?.taxpayerInfo?.ctb,
-                    firmName: autoFilldata?.taxpayerInfo?.tradeNam,
-                    firm: autoFilldata?.taxpayerInfo?.pradr?.ntr,
+
                 }}
-                validationSchema={validationSchema}
+         
 
             >
                 <Form className='signup-form'>
+
+
                     <FormContainer>
                         <FormItem
-                            label="GST Number*"
+                            label="GST Number"
                             className='text-start cin-number text-label-title'
                         >
                             <Field
@@ -295,17 +326,36 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 autoComplete="off"
                                 name="gst"
                                 placeholder="GST No"
-                                onChange={(e: any) => handleChange(e)}
+                              
                                 component={Input}
                                 className=''
                                 max="15"
                             />
                         </FormItem>
+
+                        <FormItem
+                                label="Pan Number"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="panNo"
+                                    placeholder="Pan Card No."
+                                    onChange={(e: any) => handleChange(e,'panNo')}
+                                    component={Input}
+                                    className=''
+                                    max="10"
+                                />
+                            </FormItem>
                         <div className="">
                             <FormItem
                                 label="Country"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"
@@ -322,15 +372,17 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="User Designation"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     name="designation"
                                     placeholder="User Designation"
-                                    value={autoFilldata?.taxpayerInfo?.ctb}
+                                    onChange={(e: any) => handledChange(e,'designation')}
                                     component={Input}
                                     className=''
+                                    max="35"
                                 />
                             </FormItem>
                         <div className="flex">
@@ -338,75 +390,46 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 label="Firm Type"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
-                                   <Tooltip title={autoFilldata?.taxpayerInfo?.pradr?.ntr ? autoFilldata?.taxpayerInfo?.pradr?.ntr : ''} arrow>
+                                  
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     name="firm"
                                     placeholder="Firm Type"
-                                    value={autoFilldata?.taxpayerInfo?.pradr?.ntr}
+                                    onChange={(e: any) => handledfChange(e,'firm')}
+
+                                    
                                     component={Input}
                                     className=''
                                 />
-                                </Tooltip>
+                              
                             </FormItem>
 
                             <FormItem
                                 label="Firm Name"
 
                                 className='me-auto text-label-title'
+                                asterisk={true}
                             >
-                                    <Tooltip title={autoFilldata?.taxpayerInfo?.tradeNam ? autoFilldata?.taxpayerInfo?.tradeNam : ''} arrow>
+                                
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     name="firmName"
                                     placeholder="Firm Name"
-                                    value={autoFilldata?.taxpayerInfo?.tradeNam}
+                                    onChange={(e: any) => handledfnChange(e,'firmName')}
                                     component={Input}
                                     className=''
                                 />
-                                </Tooltip>
+                              
                             </FormItem>
 
                         </div>
 
 
-                        <div className="flex">
-                            <FormItem
-                                label="CIN Number"
-                                className="me-auto text-label-title !mb-0"
-                            >
-                                <Field
-                                    autoComplete="off"
-                                    className="rounded-[13px]"
-                                    name="cin"
-                                    maxLength={16}
-                                    placeholder="CIN No."
-                                    component={Input}
-                                    // onChange={(e: any) => handleChange(e)}
-                                />
-                                {/* <p className="text-[red] normal-case">
-                                    {error && error.cin}
-                                </p> */}
-                            </FormItem>
-                        <FormItem
-                                label="Pan Number"
 
-                                className='me-auto text-label-title'
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="pancardno"
-                                    placeholder="Pan Card No."
-                                    value={autoFilldata?.taxpayerInfo?.panNo}
-                                    component={Input}
-                                    className=''
-                                />
-                            </FormItem>
-                        </div>
 
                         <div className='flex mt-3'>
                             <Button

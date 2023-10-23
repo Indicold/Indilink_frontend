@@ -16,28 +16,7 @@ const navigationPartnerConfig: NavigationTree[] = [
         authority: [],
         subMenu: [],
     },
-    // {
-    //     key: 'partnerDashbord',
-    //     path: '/partner_dashbord',
-    //     title: 'Dashbord',
-    //     translateKey: 'nav.PartnerDashbord',
-    //     icon: 'home',
-    //     type: NAV_ITEM_TYPE_ITEM,
-    //     authority: [],
-    //     subMenu: [],
-    // },
-    /** Example purpose only, please remove */
-    // {
-    //     key: 'singleMenuItem',
-    //     path: '/single-menu-view',
-    //     title: 'Single menu item',
-    //     translateKey: 'nav.singleMenuItem',
-    //     icon: 'singleMenu',
-    //     type: NAV_ITEM_TYPE_ITEM,
-    //     authority: [],
-    //     subMenu: [],
-    // },
-    {
+{
         key: 'collapseMenu',
         path: '',
         title: 'Collapse Menu',
@@ -67,91 +46,7 @@ const navigationPartnerConfig: NavigationTree[] = [
                 subMenu: [],
             },
         ],
-    },   {
-
-       
-
-        key: 'groupMenu.collapsesetting',
-
-        path: '',
-
-        title: 'Supports',
-
-        translateKey: 'nav.groupMenu.collapse.collapsesetting',
-
-        icon: 'groupCollapseMenu',
-
-        type: NAV_ITEM_TYPE_COLLAPSE,
-
-        authority: [],
-
-        subMenu: [
-
-            {
-
-                key: 'groupMenu.collapse.itemsetting8',
-
-                path: '/partner-store',
-
-                title: 'Store',
-
-                translateKey: 'nav.groupMenu.collapse.itemsetting8',
-
-                icon: '',
-
-                type: NAV_ITEM_TYPE_ITEM,
-
-                authority: [],
-
-                subMenu: [],
-
-            },
-
-            {
-
-                key: 'groupMenu.collapse.itemsetting9',
-
-                path: '/partner-move',
-
-                title: 'Move',
-
-                translateKey: 'nav.groupMenu.collapse.itemsetting9',
-
-                icon: '',
-
-                type: NAV_ITEM_TYPE_ITEM,
-
-                authority: [],
-
-                subMenu: [],
-
-            },
-
-            {
-
-                key: 'groupMenu.collapse.itemsetting11',
-
-                path: '/partner-prepare',
-
-                title: 'Prepare',
-
-                translateKey: 'nav.groupMenu.collapse.itemsetting11',
-
-                icon: '',
-
-                type: NAV_ITEM_TYPE_ITEM,
-
-                authority: [],
-
-                subMenu: [],
-
-            },
-
-        ]
-
- 
-
-    },
+    }, 
     
   
 ]

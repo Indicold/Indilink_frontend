@@ -295,7 +295,7 @@ const Toolbar: React.FC<{
         );
     };
 
-export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:any) => {
+export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment }: any) => {
     const defaultData = {
         blocks: [
             {
@@ -348,8 +348,8 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
     };
     let _idVal = localStorage.getItem('_id')
     let { user_id, email }: any = TokenInfo();
-   console.log("GGGGGGG",data?.doc_id);
-   
+    console.log("GGGGGGG", data?.doc_id);
+
     const { token }: any = getToken();
     const [contentHistory, setContentHistory] = useState<any>([])
     const { data: EditorData, loading, refetch: ReFatchApi }: any = useApiFetch<any>(`legal/documents-by-id/${data?.doc_id}`, token);
@@ -430,7 +430,7 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
         setShowURLInput(false);
         setURLValue("");
         setTimeout(focusEditor, 0);
-        handleSubmit()
+        handleSubmit(nextEditorState)
     };
     const handleSubscriptClick = () => {
         // Get the current editor state
@@ -718,12 +718,14 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
     const raw = convertToRaw(contentState);
     //   const rawStr = jsonBeautify(raw, null, 2, 50);
     const location: any = useLocation();
-    const {id}:any=useParams()
+    const { id }: any = useParams()
     const AssetsId: any = location?.state;
-    const handleSubmit = () => {
-        handlesubmitComment()
+    const handleSubmit = (nextEditorState: any) => {
+        // handlesubmitComment()
         let date = new Date();
-        const contentState: any = editorState.getCurrentContent();
+        const contentState: any = nextEditorState.getCurrentContent() || editorState.getCurrentContent();
+        console.log("RRRRRRRRR", contentState);
+
         setContentHistory([...contentHistory, {
             author: EditorData?.data?.author,
             content: JSON.stringify(convertToRaw(contentState)),
@@ -747,14 +749,14 @@ export const LinkEditorExample: React.FC = ({data,setText,handlesubmitComment}:a
         updateData(body);
 
     }
-console.log("TTTTTTTuuuu",EditorData);
+    console.log("TTTTTTTuuuu", EditorData);
 
     useEffect(() => {
         ReFatchApi()
-        
+
     }, [])
     useEffect(() => {
-        
+
         if (EditorData?.data?.content && EditorData?.data?.content.length > 20) {
 
             setContentHistory(EditorData?.data?.contentHistory);
@@ -853,19 +855,19 @@ console.log("TTTTTTTuuuu",EditorData);
 
     };
 
-console.log("EditorData",EditorData);
-function myBlockRenderer(contentBlock:any) {
-    const type = contentBlock.getType();
-    if (type) {
-      return {
-        // component: MediaComponent,
-        editable: false,
-        // props: {
-        //   foo: 'bar',
-        // },
-      };
+    console.log("EditorData", EditorData);
+    function myBlockRenderer(contentBlock: any) {
+        const type = contentBlock.getType();
+        if (type) {
+            return {
+                // component: MediaComponent,
+                editable: false,
+                // props: {
+                //   foo: 'bar',
+                // },
+            };
+        }
     }
-  }
 
     return (
         <div className="w-full h-full">
@@ -873,9 +875,9 @@ function myBlockRenderer(contentBlock:any) {
             {/* <UploadModal open={open} setOpen={setOpen} /> */}
             {/* <TemporaryDrawer AssetsId={AssetsId} setEditorState={setEditorState} EditorState={EditorState} convertFromRaw={convertFromRaw} /> */}
 
-            
 
-           {false && <div style={styles.toolbar}>
+
+            {false && <div style={styles.toolbar}>
                 <Toolbar
                     onBoldClick={handleBoldClick}
                     onItalicClick={handleItalicClick}
@@ -901,7 +903,7 @@ function myBlockRenderer(contentBlock:any) {
                     onHeadingClick={handleHeadingClick}
                 />
             </div>
-}
+            }
             <div style={styles.buttons}>
                 <button onMouseDown={promptForLink} style={{ marginRight: 10 }}>
                     <AddCommentIcon />
@@ -909,7 +911,7 @@ function myBlockRenderer(contentBlock:any) {
                 <button onMouseDown={removeLink}><CommentsDisabledIcon /></button>
             </div>
             {showURLInput && (
-                
+
                 <div style={styles.urlInputContainer}>
                     <input
                         onChange={onURLChange}
@@ -934,9 +936,9 @@ function myBlockRenderer(contentBlock:any) {
                 onClick={focusEditor}
             >
                 <Editor
-                   
+
                     editorState={editorState}
-                   
+
                     onChange={onChange}
                     placeholder="Enter some text..."
                     blockStyleFn={(contentBlock: any) => {
@@ -1033,7 +1035,7 @@ function myBlockRenderer(contentBlock:any) {
                     ref={editorRef}
                 />
             </div>
-         {false &&   <div className="flex justify-end mt-4">
+            {false && <div className="flex justify-end mt-4">
                 <Button className='indigo-btn !bg-[#FFB017] !text-white' onClick={handleSubmit}>submit</Button>
             </div>}
             {/* <pre>

@@ -15,12 +15,14 @@ import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi';
 import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
+import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
 
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+    const location: any = useLocation();
 
     // Define a state variable for the this component
     const [errors, setErrors] = useState<any>({});
@@ -37,6 +39,8 @@ const MoveSearch = () => {
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.origin_country_id}`, token);
 
+        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+        useApiFetch<any>(`customer/get-responses/2/${location?.state?.data?.id}`, token);
 
     // Fetch a list of cities based on the selected country
     const { data: ListOfCityDest, loading: LcityDestloading, error: LcityDesterror } =
@@ -80,6 +84,8 @@ const MoveSearch = () => {
     // Define a function to handle a button click
     const handleRoute = () => {
         // Check form validation before making a POST request
+
+    console.log(formData)
         if (validateMoveCustomerForm(formData, setErrors)) {
             PostCustomerMoveDetails(formData);
         }
@@ -102,7 +108,7 @@ const MoveSearch = () => {
         formdata.append("dest_city_id", formData?.dest_city_id);
         formdata.append("dest_pincode", formData?.dest_pincode);
         formdata.append("dest_gps", formData?.dest_gps);
-        formdata.append("load_quantity_id", formData?.load_quantity_id);
+        formdata.append("load_quantity", formData?.load_quantity);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("broad_category_id", formData?.broad_category_id);
         formdata.append("product_type_id", formData?.product_type_id);
@@ -143,10 +149,11 @@ const MoveSearch = () => {
         } else {
             newData[e.target.name] = e.target.value;
         }
+        console.log("FFFFFFFFFFFF",newData);
+        
         setFormData(newData);
     }
     const navigate: any = useNavigate();
-    const location: any = useLocation();
     console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
@@ -210,7 +217,7 @@ const MoveSearch = () => {
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">Origin Location</h6>
                                 <div className="flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
-                                        label="Country"
+                                        label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -228,7 +235,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="From"
+                                        label="From*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -281,8 +288,8 @@ const MoveSearch = () => {
                                 <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start">Destination Location</h6>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Country"
-                                        className="mx-auto w-1/2  rounded-lg pl-[22px] "
+                                        label="Country*"
+                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -299,7 +306,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="To"
+                                        label="To*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -351,9 +358,8 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Load Quantity"
-                                        className="rounded-lg p-2 pl-[22px] w-1/2"
-                                      
+                                        label="Load Quantity*"
+                                        className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -361,8 +367,8 @@ const MoveSearch = () => {
                                             type="text"
                                             className="w-[70%]"
                                             autoComplete="off"
-                                            name="load_quantity_id"
-                                            value={formData?.load_quantity_id}
+                                            name="load_quantity"
+                                            value={formData?.load_quantity}
                                             placeholder="Load Quantity"
                                             component={Input}
                                         />
@@ -373,15 +379,15 @@ const MoveSearch = () => {
                                             className="w-[20%] ml-4 p-2 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.map((item: any, index: any) => (
+                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.load_quantity_id}</p>
+                                        <p className='text-[red]'>{errors && errors.load_quantity}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Broad Category"
+                                        label="Broad Category*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -420,7 +426,7 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Dispatch Date/ Time"
+                                        label="Dispatch Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -437,7 +443,7 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Arrival Date/ Time"
+                                        label="Arrival Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -495,67 +501,11 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 rounded-md mt-4">
-                                    <FormItem
-                                        label="Contract Name"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="contract_name"
-                                            value={formData?.contract_name}
-                                            placeholder="Contract name"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label="Contract Type"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
 
-                                            name="contract_type"
-                                            value={formData?.contract_type}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex bg-gray-100 p-2 rounded-md mt-4">
+                                <div className="flex">
                                     <FormItem
-                                        label="Contract Upload"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <input
-                                            disabled={isDisabled}
-                                            type="file"
-                                            name="contract_download"
-                                            id="file-input"
-                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                        file:bg-transparent file:border-0
-                                        file:bg-gray-100 file:mr-4
-                                        file:py-3 file:px-4
-                                        dark:file:bg-gray-700 dark:file:text-gray-400"
-                                            onChange={(e: any) => handleChange(e)}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-
-                                </div>
-                                <div className="flex bg-gray-100 p-2 rounded-md mt-4">
-                                    <FormItem
-                                        label="Dispatch Date/ Time"
+                                        label="Dispatch Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -565,13 +515,13 @@ const MoveSearch = () => {
                                             autoComplete="off"
                                             name="dispatch_date"
                                             value={formData?.contract_name}
-                                            placeholder="Dispatch Date/ Time"
+                                            placeholder="Dispatch Date"
                                             component={Input}
                                         />
                                         <p className='text-[red]'>{errors && errors.dispatch_date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Arrival Date/ Time"
+                                        label="Arrival Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -582,7 +532,7 @@ const MoveSearch = () => {
 
                                             name="arrival_date"
                                             value={formData?.contract_type}
-                                            placeholder="Arrival Date/ Time"
+                                            placeholder="Arrival Date"
                                             component={Input}
                                         />
 
@@ -599,7 +549,7 @@ const MoveSearch = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
                                         Update
                                     </Button> :
@@ -620,6 +570,8 @@ const MoveSearch = () => {
                         </Form>
                     </Formik>
                 </div>
+                {isDisabled? 
+                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} />:<></>}
             </div>
         </div>
     )

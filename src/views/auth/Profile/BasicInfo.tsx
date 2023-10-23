@@ -56,6 +56,7 @@ const BasicInfo = () => {
         state_id: "",
         address: "",
         pin_code: "",
+        pan_number: "",
         gst_number: [],
         gst_file:[],
         shareholder_ids: [],
@@ -93,8 +94,9 @@ const BasicInfo = () => {
     const { data: BranchList, loading: Branchloading, error: BranchListerror, refetch: fetchBranch } =
         useApiFetch<any>(`auth/branches`, token);
 
-    const { result: AssetsResponse, loading: AssetsLoading, sendPostRequest: PostBasicDetails, }: any =
-        usePostApi(`auth/basic-detail`)
+    const { result: AssetsResponse}: any =
+    useApiFetch(`auth/basic-details`,token)
+    
 
     const [branch, setBranch] = useState(false)
 
@@ -103,7 +105,7 @@ const BasicInfo = () => {
 
     const handlesubmit = (e: any) => {
         console.log("DDDDDDD", data);
-
+  
         if (validateBasicForm(data, setErrors)) {
             var myHeaders = new Headers();
             myHeaders.append(
@@ -121,8 +123,8 @@ const BasicInfo = () => {
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
             
-            gstFiles.forEach((file:any, index:any) => {
-              formdata.append(`gst_file`, file, file.name);
+           if(gstFiles) gstFiles.forEach((file:any, index:any) => {
+              formdata.append(`gst_file`, file);
             });
             
             var shareholderIds =data?.shareholder_ids // Replace with your dynamic data
@@ -142,18 +144,24 @@ const BasicInfo = () => {
               body: formdata,
               redirect: "follow",
             };
-            
-            fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
-              .then((response) => response.json())
-              .then((result) => {
-                messageView(result?.message)
-                if(result?.status==200){
- navigate('/key-management')
-                }
-                console.log("GGGG",result)})
-              .catch((error) => {
-                messageView("Something Went Wrong !")
-              });
+            console.log("667677",BasicInfo?.data[0]?.gst_file?.length>0);
+            if(BasicInfo?.data[0]?.gst_file?.length>0){
+         
+                navigate('/key-management')
+            }else{
+                fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                  messageView(result?.message)
+                  if(result?.status==200){
+   navigate('/key-management')
+                  }
+                  console.log("GGGG",result)})
+                .catch((error) => {
+                  messageView(error?.message)
+                });
+            }
+           
             
        
            
@@ -193,9 +201,14 @@ const BasicInfo = () => {
 
         }
     }, [companyDetails?.data])
-console.log("TTTTTTTTT",SareList?.data);
 
-
+useEffect(()=>{
+    if(BasicInfo){
+        setData({...data,gst_file:BasicInfo?.data})
+    }
+ 
+},[BasicInfo?.data])
+console.log("TTTTTTTTT",data,BasicInfo);
 
     return (
         <div className='flex'>
@@ -360,6 +373,7 @@ console.log("TTTTTTTTT",SareList?.data);
                                         disabled={isDisabled}
                                         multiple
                                         type="text"
+                                        maxLength={15}
                                         className="w-[90%]"
                                         autoComplete="off"
                                         onChange={(e: any) =>
@@ -396,6 +410,53 @@ console.log("TTTTTTTTT",SareList?.data);
                                         {error && error.gst_file}
                                     </p>
                                 </FormItem>
+
+                                <FormItem
+                                    label="Pan Number"
+                                    className="rounded-lg pl-[22px] w-1/2"
+                                >
+                                    <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        type="text"
+                                        maxLength={10}
+                                        className="w-full"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="pan_number"
+                                        value={data?.pan_number}
+                                        placeholder="Pan Card No."
+                                        component={Input}
+                                    />
+                                    {/* <label htmlFor='gstfile'>
+                                        <PublishIcon className='text-center !mx-auto' />
+                                    </label> */}
+                                    <p className="text-[red]">
+                                        {error && error.pan_number}
+                                    </p>
+                                    {/* <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        id="gstfile"
+                                        style={{ display: "none" }}
+                                        type="file"
+                                        className="!hidden"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="gst_file"
+                                        value={data?.firm_state}
+                                        placeholder="GST Number"
+                                        component={Input}
+                                    />
+                                    <p className="text-[red]">
+                                        {error && error.gst_file}
+                                    </p> */}
+                                </FormItem>
+                                
                             </div>
                         </FormContainer>
                     </Form>

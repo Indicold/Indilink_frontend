@@ -132,7 +132,7 @@ const validate=()=>{
             });
         }
         if (verifyResponse?.status) {
-            if (verifyResponse.message.accessToken) sessionStorage.setItem('access_token', verifyResponse.message.accessToken);
+            if (verifyResponse.message.accessToken) localStorage.setItem('access_token', verifyResponse.message.accessToken);
 
             navigate('/home')
         }

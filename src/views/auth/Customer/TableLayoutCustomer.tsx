@@ -6,33 +6,36 @@ import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
+import { apiUrl, getToken } from '@/store/token';
+import { ToastContainer } from 'react-toastify';
+import { messageView } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
-    id:"S.No",
+    // id:"S.No",
     // date: "Date",
-    contract_type: "Contract Type",
+    // contract_type: "Contract Type",
     comment:"Comment",
     admin:"Admin",
     status_id:"Status",
-//   is_deletedBy: "Is Deleted By",
+    is_deleted: "Query Status",
 contract_download: "Contract Download ",
-contract_name: "Contract Name",
+// contract_name: "Contract Name",
   // asset_type: "Asset Type",
   Action: "Action"
 };
 
 // The TableLayoutCustomer component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayoutCustomer = ({ AllStore }: any) => {
-    
-  let allData: any = AllStore;
+const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
+  const {token}:any=getToken();
+  let allData: any = AllStore || [];
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
-    cloneDeep(allData.slice(0, countPerPage))
+    cloneDeep(allData?.slice(0, countPerPage))
   );
 
   // Ref for a search function that filters data based on user input.
@@ -100,7 +103,28 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
     }
   
   };
-  
+  const handleDelete=(id:any)=>{
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions:any = {
+  method: 'DELETE',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
+  .then(response => response.json())
+  .then((result:any) => {
+    console.log("TTTTTTT",result);
+    
+    messageView(result?.message)
+    console.log(result);
+    fetchDataA()
+
+})
+  .catch(error => console.log('error', error));
+  }
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the
    * `rowData` object.
@@ -132,8 +156,8 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
       if (key === 'contract_name') {
         return <td key={i} className='text-center'>{rowData.contract_name ? rowData.contract_name : 'Not Available' }</td>;
       }
-      if (key === 'contract_type') {
-        return <td className='text-center' key={i} >{rowData.contract_type ? rowData.contract_type : 'Not Available'}</td>;
+      if (key === 'is_deleted') {
+        return <td className='text-center' key={i} >{rowData.is_deleted==1 ? "Close" : 'Open'}</td>;
       }
       if (key === 'status_id') {
         return <td className='text-center' key={i} >{rowData.status_id===1 ? "Pending" : rowData.status_id==2 ? "Review":"Done"}</td>;
@@ -155,8 +179,9 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
+          {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
+          <Button className='!p-2' onClick={()=>handleDelete(rowData?.master_query_id)}>Close</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -181,7 +206,8 @@ const TableLayoutCustomer = ({ AllStore }: any) => {
 
   return (
     <>
-      <div className="search  ">
+    <ToastContainer />
+      <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
           placeholder="Search here..."

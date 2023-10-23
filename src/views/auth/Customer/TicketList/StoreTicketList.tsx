@@ -12,12 +12,13 @@ const StoreTicketList = () => {
     console.log("FFFFFFF",Store);
    
   return (
-    <div className='bg-white p-4 '>
-      {Store?.data?.length>0 &&   
+    <div>
+        
       <>
         <h4 className='text-head-title text-center'>Store Ticket List</h4>
-        <TableLayoutCustomer AllStore={Store?.data?.length>0 && Store?.data}/>
-      </>}
+        {Store?.data?.length>0 ? <TableLayoutCustomer AllStore={Store?.data?.length>0 && Store?.data}/>
+        :<p>No data found.</p>}
+      </>
       <div>
         {StoreLoad && <LoaderSpinner />}
       </div>

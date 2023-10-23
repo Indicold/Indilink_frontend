@@ -1,3 +1,9 @@
+// Function to get the days in the month of the year
+// by passing the month (1-12) and year to the function daysInMonth.
+function daysInMonth(month: number, year: number) {
+    return new Date(year, month, 0).getDate();
+}
+
 // Define an initial payload with default values for form data
 export let payload = {
     city_id: "14",
@@ -92,21 +98,41 @@ export let CustomerMovePayload = {
     arrival_date: ""
 };
 
+var currentFullDate = new Date();
+var month: any = currentFullDate.getMonth()+1;
+var year = currentFullDate.getFullYear();
+var dateExpected: any = currentFullDate.getDate() + 14;
+
+if(dateExpected > daysInMonth(month, year)){
+    dateExpected -= daysInMonth(month, year);
+    month += 1;
+    if(month == 13){
+        month = 1;
+    }
+    
+    if(month < 10){
+        month = `0${month}`
+    }
+    
+    if(dateExpected < 10){
+        dateExpected = `0${dateExpected}`
+    }
+}
 // Define an empty payload with default values for form data
 export let CustomerMovePayload1 = {
     origin_country_id: '',
     origin_city_id: '',
     origin_pincode: '',
     origin_gps: '',
-    dest_country_id: '',
+    dest_country_id:'',
     dest_city_id: '',
     dest_pincode: '',
     dest_gps: '',
     unit_id:'',
-    load_quantity_id: '',
+    load_quantity: '',
     broad_category_id: '',
     product_type_id: '',
-    dispatch_date: '',
+    dispatch_date: `${year}-${currentFullDate.getMonth()+1}-${currentFullDate.getDate()}`,
     arrival_date: ''
 }
 
@@ -142,10 +168,10 @@ export let CustomerPrepare={
     throughput_unit_id: '',
     case_size: '',
     case_size_unit_id: '',
-    estimated_docks: '',
-    estimated_dispatch: '',
+    estimated_docks: 2,
+    estimated_dispatch: 2,
     temp_min: '',
     temp_max: '',
     temp_unit_id: 1,
-    date_of_start:''
+    date_of_start:`${year}-${month}-${dateExpected}`
   }

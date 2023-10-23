@@ -5,7 +5,8 @@
  * set the visibility of the modal), and `MHE` (the existing M.H.E. data).
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateMHEForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateMHEForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,16 +25,20 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     MHE,
-    FetchAgain
-}) => {
+    FetchAgain,
+    commanData
+}:any) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/mhe/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -45,33 +50,45 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData, data)
+        // console.log('newData', newData, data)
     }
     /**
      * The handlesave function is used to handle saving data to a store table in a React
      * component.
      */
     const handlesave = () => {
-        if(validateMHEForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/mhe',
-            data,
-            setModal,
-            formD,
-            update,
-            'mhe_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateMHEForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/mhe',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'mhe_ids',
+                    FetchAgain
+                )
+                }
         }
+      
     }
-    /* The `useEffect` hook is used to perform side effects in a React component. In this case,
-         the `useEffect` hook is used to update the state data object with the value of `MHE`
-         whenever it changes. */
-    // useEffect(() => {
-    //     setData({
-    //         MHE: MHE,
-    //     })
-    // }, [data.MHE])
+ 
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -134,10 +151,12 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto">
-                                        <Field
+                                     <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="make"
+                                            value={data?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -149,10 +168,12 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -166,10 +187,12 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="Load*" className="me-auto">
-                                        <Field
+                                       <Field
                                             type="number"
                                             autoComplete="off"
                                             name="load"
+                                            disabled={isDisabled}
+                                            value={data?.load}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -185,6 +208,7 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     onClick={handlesave}
                                     variant="solid"
                                     type="button"

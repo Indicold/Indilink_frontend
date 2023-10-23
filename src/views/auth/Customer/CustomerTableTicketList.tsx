@@ -5,8 +5,7 @@ import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import React from 'react'
 import TableLayoutCustomer from './TableLayoutCustomer'
-import DataNotFound from '@/components/layouts/DataNotFound'
-import DataNotFoundBar from '@/components/layouts/DataNotFoundBar'
+import CustomerGeneralTableList from './CustomerGeneralTableList'
 
 const CustomerTableTicketList = () => {
     const { token }: any = getToken()
@@ -29,15 +28,28 @@ const CustomerTableTicketList = () => {
         data: AllStore,
         loading: StoreRLoad,
         error: allerr,
+        refetch:fetchDataA
     }: any = useApiFetch<any>('customer/get-search-list-by-user', token)
+    const {
+        data: AllStoreGeneral,
+        loading: StoreGRLoad,
+        refetch:fetchDataG
+    }: any = useApiFetch<any>('customer/general/search', token)
+
+
+    console.log(AllStoreGeneral)
 
     return (
         <>
             {!AllStore?.data?.length > 0 ? (
                 <>
                     <h4 className="text-head-title text-center">Ticket List</h4>
-                    <TableLayoutCustomer
+                    <TableLayoutCustomer fetchDataA={fetchDataA}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
+                    />
+                     <h4 className="text-head-title text-center">General Ticket List</h4>
+                      <CustomerGeneralTableList fetchDataG={fetchDataG}
+                        AllStore={AllStoreGeneral?.data?.length > 0 && AllStoreGeneral?.data}
                     />
                 </>
             ):
@@ -46,7 +58,7 @@ const CustomerTableTicketList = () => {
             
             }
             <div>
-                {(moveLoad || prepLoad || StoreLoad) && <LoaderSpinner />}
+                {(moveLoad || prepLoad || StoreLoad || StoreGRLoad) && <LoaderSpinner />}
             </div>
         </>
     )

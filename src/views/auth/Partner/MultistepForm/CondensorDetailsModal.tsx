@@ -7,7 +7,8 @@
  * the `data` state with the input values
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable, validateCondensorForm } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,11 +25,15 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
-}) => {
-    const [data, setData] = useState({})
+    FetchAgain,
+    commanData
+}:any) => {
+    const [data, setData] = useState<any>({})
+    const isDisabled:any=commanData?.type=='View' ? true: false;
     const [errors, setErrors] = useState({})
     const {id}: any = useParams()
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/condensor/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -53,18 +58,36 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
      * component.
      */
     const handlesave = () => {
-        if(validateCondensorForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/condensor',
-            data,
-            setModal,
-            formD,
-            update,
-            'condensor_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateCondensorForm(data, setErrors)) {
+                handleStoreTable(
+                    'partner/store/condensor',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'condensor_ids',
+                    FetchAgain
+                )
+                }
         }
+       
     }
+    useEffect(()=>{
+if(commanData?.type=='Edit' || commanData?.type=='View'){
+    setData(commanData)
+}
+    },[commanData])
+    useEffect(()=>{
+        if(PutApiResponse?.status===200){
+            messageView("Data Updated Successfully !");
+            setModal(false)
+        }else{
+            messageView(PutApiResponse)
+        }
+            },[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -104,7 +127,7 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6 className='text-center m-2'>Condensor Details</h6>
+                                <h6 className='text-center m-2'>Condenser Details</h6>
                                     {/* <FormItem
                                         label="Asset id*"
                                         className="mx-auto w-1/2"
@@ -125,11 +148,13 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
-                                        <Field
+                                       <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="make"
                                             placeholder="Make"
+                                            value={data?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -143,7 +168,9 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="model"
+                                            value={data?.model}
                                             placeholder="Model"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -157,11 +184,13 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem label="T.R.*" className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="tr"
                                             placeholder="T.R."
+                                            value={data?.tr}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -177,15 +206,17 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <select
                                             id="countries"
+                                            disabled={isDisabled}
                                             name="amc"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       
                                         >
                                             <option selected disabled>Select</option>
-                                            <option>Yes</option>
-                                            <option>No</option>
+                                            <option selected={data?.amc}>Yes</option>
+                                            <option selected={data?.amc}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}
@@ -198,10 +229,12 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    
                                 >
                                     Save
                                 </Button>

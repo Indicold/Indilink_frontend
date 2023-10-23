@@ -83,6 +83,7 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
         if (type === 'Move') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '2')
+            console.log('localStorage.setItem', localStorage.getItem('asset_id'))
             navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
         }
     }

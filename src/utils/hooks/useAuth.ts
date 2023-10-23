@@ -123,6 +123,7 @@ function useAuth() {
             })
         )
         localStorage.removeItem('user_type');
+        localStorage.clear()
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 
@@ -132,7 +133,7 @@ function useAuth() {
     }
 
     return {
-        authenticated: sessionStorage.getItem('access_token'),
+        authenticated: localStorage.getItem('access_token'),
         signIn,
         signUp,
         signOut,

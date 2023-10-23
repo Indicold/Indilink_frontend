@@ -123,10 +123,12 @@ const PartnerBussinessTypePrepare = () => {
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
+        formData.product_category_ids=value1?.map((item:any)=>item?.id);
+        formData.product_type=value?.map((item:any)=>item?.id);
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails(formData)
-            navigate(`/partner-bussiness-type-compliance/${id}`)
+            navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
 
@@ -135,7 +137,7 @@ const PartnerBussinessTypePrepare = () => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
             messageView('Data Updated Successfully!')
             setTimeout(() => {
-                navigate(`/partner-bussiness-type-compliance/${id}`)
+                navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
             }, 2000)
         }
     }, [PrepareResponse])
@@ -161,16 +163,20 @@ const PartnerBussinessTypePrepare = () => {
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
     useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind);
+        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
-    }, [ProductType,formData?.product_category_ids])
+    }, [ProductType?.data])
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
-        setValue(foundItems)
-    }, [ProductTypeList])
+        // console.log("TTTTTTTTTTT66666",ProductTypeList);
+        if(ProductTypeList?.data!==null){
+            const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+            setValue(foundItems)
+        }
+       
+    }, [ProductTypeList?.data])
     return (
         <div className='flex'>
             <ToastContainer />
@@ -197,15 +203,7 @@ const PartnerBussinessTypePrepare = () => {
                         <h6 className="font-medium leading-tight">Compliance Details</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
-                        <h6 className="font-medium leading-tight">Additional submissions</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
+
                 </ol>
 
 
@@ -239,7 +237,7 @@ const PartnerBussinessTypePrepare = () => {
                                 <FormContainer>
                                     <div className="flex">
                                         <FormItem
-                                            label="City"
+                                            label="City*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -278,7 +276,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Address"
+                                            label="Address*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <Field
@@ -325,7 +323,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Types Of Prepare"
+                                            label="Types Of Prepare*"
                                             className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -369,12 +367,13 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Product Category"
+                                            label="Product Category*"
                                             className="rounded-lg pl-[22px] w-1/2"
                                         >
                                             <Autocomplete
                                                 multiple
                                                 limitTags={1}
+                                                disabled={isDisabled}
                                                 id="fixed-tags-demo"
                                                 value={value1}
                                                 onChange={(event, newValue) => {
@@ -447,6 +446,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 multiple
                                                 limitTags={1}
                                                 id="fixed-tags-demo"
+                                                disabled={isDisabled}
                                                 value={value}
                                                 onChange={(event, newValue) => {
                                                     setValue([
@@ -514,7 +514,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Throughput(MT)"
+                                            label="Throughput(MT)*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -538,7 +538,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className=" w-[20%]  input-md right-0 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={item?.id === formData?.throughput_unit_id}>{item?.type}</option>
 
                                                     ))}
@@ -549,7 +549,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Avg. case size"
+                                            label="Avg. case size*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -573,7 +573,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                                     ))}
@@ -599,7 +599,8 @@ const PartnerBussinessTypePrepare = () => {
                                                     handleChange(e)
                                                 }
                                                 name="no_of_docks"
-                                                value={formData?.no_of_docks}
+                                                defaultValue={formData?.no_of_docks || 2}
+                                                // value={formData?.no_of_docks}
                                                 placeholder="Enter Value"
                                                 component={Input}
                                             />
@@ -608,7 +609,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Area (Square Feet)*"
+                                            label="Area (Square Feet)"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -622,6 +623,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     }
                                                     name="area"
                                                     value={formData?.area}
+                                                    disabled={isDisabled}
                                                     placeholder="Area"
                                                 />
                                                 {/* <select
@@ -680,12 +682,12 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="Temperature"
+                                            label="Temperature*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} />
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} />
+                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}
@@ -704,7 +706,7 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                         <FormItem
-                                            label="Batch Size"
+                                            label="Batch Size*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -728,7 +730,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
 
-                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3].includes(item?.id)).map((item: any, index: any) => (
+                                                    {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
                                                         <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                                     ))}

@@ -7,13 +7,15 @@
  * user can enter values in these fields and click the "Save" button to save the data. The modal is
  * displayed conditionally based on the value of the "modal
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { handleStoreTable, validateACUForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -27,16 +29,23 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     formD,
     update,
     setModal,
-    FetchAgain
-}) => {
-    const [data, setData] = useState<any>({})
-    const {id}: any = useParams()
-    const [errors, setErrors] = useState<any>({})
+    FetchAgain,
+    commanData
+}:any) => {
+   
+    const {id}: any = useParams();
+    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const [data, setData] = useState<any>({
+        asset_id:id
+    })
+    const [errors, setErrors] = useState<any>({});
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/acu/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     const {token}:any=getToken()
     const {
@@ -62,7 +71,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        console.log('newData', newData)
+        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` calls the `handleStoreTable` function with specific
@@ -70,20 +79,39 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
      */
     const handlesave = () => {
         console.log("saved", data, validateACUForm(data, setErrors), errors)
-        if(validateACUForm(data, setErrors)) {
-            console.log("validated")
-        handleStoreTable(
-            'partner/store/acu',
-            data,
-            setModal,
-            formD,
-            update,
-            'acu_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            if(validateACUForm(data, setErrors)) {
+                console.log("validated")
+            handleStoreTable(
+                'partner/store/acu',
+                data,
+                setModal,
+                formD,
+                update,
+                'acu_ids',
+                FetchAgain
+            )
+            }
         }
+      
     }
 
+    useEffect(()=>{
+        if(commanData?.type=='Edit' || commanData?.type=='View'){
+            setData(commanData)
+        }
+  
+    },[commanData])
+    useEffect(()=>{
+if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !");
+    setModal(false)
+}else{
+    messageView(PutApiResponse)
+}
+    },[PutApiResponse])
     return (
         <>
             {/* The above code is a TypeScript React component that renders a modal. The modal is
@@ -145,13 +173,15 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem> */}
                                 <div className="flex">
                                     <FormItem label="Make*" className="mx-auto w-1/2">
-                                        <Field
+                                      <Field
                                             type="text"
                                             autoComplete="off"
                                             name="make"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
                                         />
@@ -160,10 +190,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem label="Model*" className="mx-auto w-1/2">
-                                        <Field
+                                       <Field
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            disabled={isDisabled}
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -177,13 +209,23 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="C.F.M.*"
+                                        // label="C.F.M.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                           C.F.M.*
+                                              <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
                                         className="mx-auto w-1/2"
                                     >
-                                        <Field
+                                     <Field
                                             type="number"
                                             autoComplete="off"
                                             name="cmf"
+                                            disabled={isDisabled}
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -194,11 +236,22 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="H.P.*" className="mx-auto w-1/2">
-                                        <Field
+                                    <FormItem 
+                                    label={
+                                        <div className='flex justify-center items-center'>
+                                       H.P.*
+                                          <Tooltip title="Horsepower" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
+                                     className="mx-auto w-1/2">
+                                      <Field
                                             type="number"
                                             autoComplete="off"
                                             name="hp"
+                                            disabled={isDisabled}
+                                            value={data?.hp}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -231,11 +284,23 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem> */}
-                                    <FormItem label="T.R.*" className="mx-auto w-1/2">
-                                        <Field
+                                    <FormItem 
+                                    // label="T.R.*"
+                                    label={
+                                        <div className='flex justify-center items-center'>
+                                     T.R.*
+                                          <Tooltip title="T.R.*" arrow>
+                                            <InfoIcon />
+                                          </Tooltip>
+                                        </div>
+                                      }
+                                    className="mx-auto w-1/2">
+                                   <Field
                                             type="text"
                                             autoComplete="off"
                                             name="tr"
+                                            disabled={isDisabled}
+                                            value={data?.tr}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -265,11 +330,13 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            disabled={isDisabled}
                                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                           
                                         >
                                             <option >Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
-  <option selected={item?.id===data?.defrosting_id} value={item?.id}>{item?.type}</option>
+  <option selected={item?.id===data?.defrosting_id || (formD?.defrosting_id && item?.id === formD?.defrosting_id)} value={item?.id}>{item?.type}</option>
                                             ))}
                                           
                                         </select>
@@ -306,10 +373,12 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                   
                                 >
                                     Save
                                 </Button>

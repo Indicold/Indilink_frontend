@@ -6,7 +6,7 @@
  * function from a custom hook to store the table data. The modal is displayed when the `modal` prop is
  * true.
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
 import { handleStoreTable, messageView, validateCAEquipForm } from '@/store/customeHook/validate'
 import axios from 'axios'
@@ -14,6 +14,8 @@ import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -28,16 +30,20 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     FetchAgain,
-}) => {
+    commanData,
+}:any) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
+    const isDisabled:any=commanData?.type=='View' ? true: false;
     const {id}: any = useParams()
-    const [data, setData] = useState({})
+    const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/ca-equipment/${commanData?.id}`)
+
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
+        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -64,20 +70,40 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function with specific parameters.
      */
     const handlesave = async () => {
-        console.log("asset_idddd", data)
-        if(validateCAEquipForm(data, setErrors)) {
-        handleStoreTable(
-            'partner/store/ca-equipment',
-            data,
-            setModal,
-            formD,
-            update,
-            'ca_equipment_ids',
-            FetchAgain
-        )
+        if(commanData?.type==='Edit'){
+            updateData(data)
+        }else{
+            console.log("asset_idddd", data)
+            if(validateCAEquipForm(data, setErrors)) {
+            handleStoreTable(
+                'partner/store/ca-equipment',
+                data,
+                setModal,
+                formD,
+                update,
+                'ca_equipment_ids',
+                FetchAgain
+            )
+            }
         }
+      
+    }
+    useEffect(()=>{
+        if(commanData?.type==='Edit' || commanData?.type==='View'){
+            setData(commanData)
+        }
+    
+    },[commanData])
+useEffect(()=>{
+    if(PutApiResponse?.status===200){
+    messageView("Data Updated Successfully !")
+        console.log("TTTTTTtytyty",PutApiResponse);
+        
+    }else{
+        messageView(PutApiResponse)
     }
 
+},[PutApiResponse])
     return (
         <>
             <ToastContainer />
@@ -137,14 +163,16 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem> */}
                                 <div className="flex">
-                                    <FormItem label="Make *" className="mx-auto">
+                                    <FormItem label="Make *"   className="w-1/2">
                                         <Field
+                                        disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="make"
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            value={data?.make}
                                             placeholder="Make"
                                             component={Input}
                                         />
@@ -152,11 +180,13 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model *" className="mx-auto">
+                                    <FormItem label="Model *"   className="w-1/2">
                                         <Field
+                                                disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="model"
+                                            value={data?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -170,13 +200,23 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="flex">
                                     <FormItem
-                                        label="C.F.M.*"
-                                        className="me-auto ms-2"
+                                        // label="C.F.M.*"
+                                        label={
+                                            <div className='flex justify-center items-center'>
+                                           C.F.M.*
+                                              <Tooltip title="Cubic Feet Per Minute" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>
+                                          }
+                                        className="w-1/2"
                                     >
                                         <Field
+                                                disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
                                             name="cmf"
+                                            value={data?.cmf}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -192,10 +232,12 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
+                                    disabled={isDisabled}
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    
                                 >
                                     Save
                                 </Button>

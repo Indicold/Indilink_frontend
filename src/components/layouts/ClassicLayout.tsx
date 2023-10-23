@@ -6,6 +6,7 @@ import SideNav from '@/components/template/SideNav'
 import View from '@/views'
 import { useNavigate } from 'react-router-dom'
 import NotificationDropdown from '../template/NotificationDropdown/NotificationDropdown'
+import { useTranslation } from 'react-i18next'
 
 const HeaderActionsStart = () => {
     return (
@@ -36,15 +37,29 @@ const HeaderActionsEnd = () => {
         }
     
     }
+    const { t, i18n }:any = useTranslation();
     let UserType:any=localStorage.getItem('user_type');
+    const handleLanguage=(e:any)=>{
+        i18n.changeLanguage(e.target.value);
+    }
     return (
         <>
+          <select
+                id="countries"
+                onChange={(e:any)=>handleLanguage(e)}
+                className="mr-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+                <option value='en' selected>English</option>
+                <option value='hi' >Hindi</option>
+                <option  value='GB' >German</option>
+            </select>
+            {/* <h4>{t("first name")}</h4> */}
             <select
                 id="countries"
                 onChange={(e:any)=>handleChange(e)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-                <option value='1' selected={UserType==='Partner'}>Partner</option>
+                <option value='1' >Partner</option>
                 <option value='2' selected={UserType==='Customer'}>Customer</option>
                 <option  value='3' selected={UserType==='Investor'}>Investor</option>
             </select>
