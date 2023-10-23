@@ -253,7 +253,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         label={
                                             <div className='flex justify-center items-center'>
                                                 A.M.C.*
-                                                <Tooltip title="A.M.C." arrow>
+                                                <Tooltip title="Annual Maintenance Contract" arrow>
                                                     <InfoIcon />
                                                 </Tooltip>
                                             </div>
