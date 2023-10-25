@@ -118,7 +118,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                     <>
                         <h3 className="mb-1">Set new password</h3>
                         <p>
-                            Your new password must be different from the previous password
+                            localStoragepassword must be different to previos password
                         </p>
                     </>
                 )}
@@ -170,7 +170,6 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                             touched.confirm_password
                                         }
                                         errorMessage={errors.confirm_password==='confirm_password cannot be null' ? 'Confirm password cannot be Empty' : errors.confirm_password}
-                                        className='mt-8'
                                     >
                                         <Field
                                             autoComplete="off"
@@ -183,7 +182,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                                         block
                                         loading={isSubmitting}
                                         variant="solid"
-                                        className='indigo-btn mt-8'
+                                        className='indigo-btn'
                                         type="submit"
                                     >
                                         {isSubmitting

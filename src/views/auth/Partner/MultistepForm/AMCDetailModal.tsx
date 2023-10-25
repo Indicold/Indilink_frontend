@@ -73,6 +73,21 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
         
     }
+
+    const handleISOFormatDate = (inputdate:any) => {
+        let currentFullDate = new Date(inputdate)
+        let month: any = currentFullDate.getMonth()+1;
+        let year = currentFullDate.getFullYear();
+        let date:any = currentFullDate.getDate();
+
+        if(month<10){
+            month=`0${month}`
+        }
+        if(date<10){
+            date=`0${date}`
+        }
+        return `${year}-${month}-${date}`
+    }
     useEffect(()=>{
         if(commanData?.type=='Edit' || commanData?.type=='View'){
             setData(commanData)
@@ -82,6 +97,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                 if(PutApiResponse?.status===200){
                     messageView("Data Updated Successfully !");
                     setModal(false)
+                    FetchAgain();
                 }else{
                     messageView(PutApiResponse)
                 }
@@ -199,7 +215,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="valid_till"
-                                            value={data?.valid_till}
+                                            value={handleISOFormatDate(data?.valid_till)}
                                             placeholder="Valid till"
                                             onChange={(e: any) =>
                                                 handleChange(e)

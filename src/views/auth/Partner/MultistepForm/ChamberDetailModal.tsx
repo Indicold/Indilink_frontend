@@ -41,6 +41,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
+    const [chamNum, setChamNum] = useState<any>('');
+    const [chamName, setChamName] = useState<any>('');
     const [length, setLength] = useState<any>('');
     const [breadth, setBreadth] = useState<any>('');
     const [height, setHeight] = useState('');
@@ -109,6 +111,12 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             setHeight(e.target.value);
             updateFormattedString(length, breadth, e.target.value);
         } 
+        else if (e.target.name === 'chamber_number') {
+            setChamNum(e.target.value);
+        }
+        else if (e.target.name === 'chamber_name') {
+            setChamName(e.target.value);
+        }
         else if (e.target.name === 'pl-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
@@ -336,7 +344,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     }
     useEffect(()=>{
    
-
         
      if(commanData?.type=='Edit' || commanData?.type=='View'){
         setLength(commanData?.chamber_size?.split('x')[0])
@@ -431,7 +438,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Chamber name"
                                             component={Input}
-                                            value={data?.chamber_name}
+                                            value={chamName}
+                                            onChange={(e: any) => handleChange(e)}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_name}

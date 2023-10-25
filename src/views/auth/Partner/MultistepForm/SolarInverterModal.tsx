@@ -93,6 +93,7 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
 if(PutApiResponse?.status===200){
     messageView("Data Updated Successfully !");
     setModal(false)
+    FetchAgain();
 }else{
     messageView(PutApiResponse)
 }

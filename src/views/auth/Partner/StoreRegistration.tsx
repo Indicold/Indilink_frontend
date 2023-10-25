@@ -1734,13 +1734,13 @@ const StoreRegistration = () => {
                                                     <div className="w-[25%] text-center my-auto">
                                                         AMC
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[25%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
                                                     <div className="listt flex w-full bg-white py-4 rounded-[13px]">
-                                                        <div className="w-[22%] text-center my-auto">
+                                                        <div className="w-[25%] text-center my-auto">
                                                             {item?.make}
                                                         </div>
                                                         <div className="w-[25%] text-center my-auto">
@@ -1813,7 +1813,7 @@ const StoreRegistration = () => {
                                                     <div className="w-[20%] text-center my-auto">
                                                         TR
                                                     </div>
-                                                    <div className="w-[16%] text-center my-auto">
+                                                    <div className="w-[20%] text-center my-auto">
                                                     Actions
                                                     </div>
                                                 </div>
@@ -1834,7 +1834,7 @@ const StoreRegistration = () => {
                                                         <div className="w-[20%] text-center my-auto">
                                                             {item?.tr}
                                                         </div>
-                                                        <div className="w-[25%] mx-auto flex">
+                                                        <div className="w-[20%] mx-auto flex">
                                                             <Button
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'ACU')}
