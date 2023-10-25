@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import EditIcon from '@mui/icons-material/Edit';
+import usePutApi from '@/store/customeHook/putApi';
+import { messageView } from '@/store/customeHook/validate';
+import { ToastContainer } from 'react-toastify';
 // Defines the table header with column names.
 const tableHead = {
   asset_id: "Asset ID",
@@ -24,16 +27,18 @@ const tableHead = {
 
 // The TableLayout component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayout = ({ AllStore }: any) => {
+const TableLayout = ({ AllStore,fetchApi }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
   const [Alert,setAlert]=useState<any>(false)
-
+  const [RowData,setRowData]=useState<any>({})
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
     cloneDeep(allData.slice(0, countPerPage))
   );
+
+let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
   // Ref for a search function that filters data based on user input.
   const searchData = useRef(
@@ -118,6 +123,18 @@ const TableLayout = ({ AllStore }: any) => {
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }
   }
+
+  const handleSubmit=(rowData:any)=>{
+    console.log("ttttttt",rowData);
+    
+    setRowData(rowData)
+    setAlert(true)
+  }
+  const handleConfirm=()=>{
+    console.log("tttttttt8888",);
+    
+    PostSubmitDetails({status:"Final"})
+  }
 const handleDocs=(rowData:any)=>{
   navigate(`/documents-list/${rowData?.asset_id}`)
 }
@@ -143,10 +160,10 @@ const handleDocs=(rowData:any)=>{
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          {rowData?.is_registration_complete ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
+          {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
-          <Button className='!p-2' onClick={()=>setAlert(true)}>Submit</Button>
+          <Button className='!p-2' onClick={()=>handleSubmit(rowData)}>Submit</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -168,9 +185,17 @@ const handleDocs=(rowData:any)=>{
   };
 
   // JSX structure for rendering the table and pagination.
-
+useEffect(()=>{
+console.log("SubmitResponse",SubmitResponse);
+messageView(SubmitResponse?.message)
+if(SubmitResponse?.status===200){
+  setAlert(false)
+}
+fetchApi()
+},[SubmitResponse?.status])
   return (
     <>
+    <ToastContainer />
     {Alert && <div
                     id="authentication-modal"
                     tabIndex={-1}
@@ -199,7 +224,7 @@ const handleDocs=(rowData:any)=>{
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
-                                    // onClick={()=>setAlert(false)}
+                                    onClick={handleConfirm}
                                     type="button"
                                     className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                 >

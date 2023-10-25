@@ -215,7 +215,7 @@ console.log("VVVVVVV",id);
     return (
         <div className='flex'>
             <ToastContainer />
-            {makeCustom && <PartnerMoveMakeModal setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
+            {makeCustom && <PartnerMoveMakeModal modal={makeCustom} setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
             <div className='w-1/6'>
             
 

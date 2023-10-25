@@ -289,7 +289,7 @@ if(PutApiResponse?.status===200){
                                     label={
                                         <div className='flex justify-center items-center'>
                                      T.R.*
-                                          <Tooltip title="T.R.*" arrow>
+                                          <Tooltip title="Ton of Refrigeration" arrow>
                                             <InfoIcon />
                                           </Tooltip>
                                         </div>

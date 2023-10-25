@@ -6,13 +6,14 @@
  * fields and click the "Save" button to save the data. The `handleChange` function is used to update
  * the `data` state with the input values
  */
-import { Button, FormItem, Input } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
 import { handleStoreTable, messageView, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import InfoIcon from '@mui/icons-material/Info';
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -183,7 +184,12 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                     </FormItem>
                                 </div>
                                 <div className="flex">
-                                    <FormItem label="T.R.*" className="mx-auto w-1/2">
+                                    <FormItem label={<div className='flex justify-center items-center'>
+                                           T.R.*
+                                              <Tooltip title="Ton of Refrigeration" arrow>
+                                                <InfoIcon />
+                                              </Tooltip>
+                                            </div>} className="mx-auto w-1/2">
                                       <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -201,7 +207,12 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="A.M.C.*"
+                                        label={<div className='flex justify-center items-center'>
+                                        A.M.C.*
+                                           <Tooltip title="Annual Maintenance Contract" arrow>
+                                             <InfoIcon />
+                                           </Tooltip>
+                                         </div>}
                                         className=" w-1/2"
                                     >
                                         <select
