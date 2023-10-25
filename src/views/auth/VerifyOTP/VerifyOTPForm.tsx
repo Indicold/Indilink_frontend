@@ -151,8 +151,9 @@ const handleresend=()=>{
                                 </FormItem>
                             </div>
                         
+                            <div className='mt-6'></div>
                             <span
-                            className='border-none m-2'
+                            className='border-none'
                                 
                               
                                 onClick={handleresend}
