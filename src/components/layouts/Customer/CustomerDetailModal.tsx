@@ -92,7 +92,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                          disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="h-11 border w-full input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProductCategory && ListOfProductCategory?.data?.map((item: any, index: any) => (
@@ -110,7 +110,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                          disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroadCategory && ListOfBroadCategory?.data?.map((item: any, index: any) => (
@@ -130,7 +130,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                          disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (

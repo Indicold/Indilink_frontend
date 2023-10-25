@@ -203,7 +203,7 @@ const MoveSearch = () => {
             The form also includes validation for required fields and handles form submission.
             Depending on the value of the `location.state.extraForm` prop, the form will either
             display an "Update" button or a "Request for Search" button. */}
-            <div className="bg-white">
+            <div className="bg-white p-4">
                 <h4 className=" mb-2 text-head-title pl-[22px] text-center">Move</h4>
                 <div>
                     <Formik
@@ -215,7 +215,7 @@ const MoveSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">Origin Location</h6>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
                                         label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
@@ -224,7 +224,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_country_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full p-2 rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -242,7 +242,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_city_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
@@ -253,7 +253,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="PIN Code"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -285,8 +285,8 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 text-head-title pl-[22px] text-start">Destination Location</h6>
-                                <div className="flex">
+                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start">Destination Location</h6>
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Country*"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
@@ -295,7 +295,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_country_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -313,7 +313,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_city_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCityDest && ListOfCityDest?.data?.map((item: any, index: any) => (
@@ -324,7 +324,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="PIN Code"
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
@@ -356,7 +356,7 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Load Quantity*"
                                         className="rounded-lg pl-[22px] w-1/2"
@@ -365,7 +365,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="text"
-                                            className="w-[80%]"
+                                            className="w-[70%]"
                                             autoComplete="off"
                                             name="load_quantity"
                                             value={formData?.load_quantity}
@@ -376,7 +376,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="unit_id"
-                                            className="!w-[20%] h-11 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="w-[20%] ml-4 p-2 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
@@ -394,7 +394,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border p-2 w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroad && ListOfBroad?.data?.map((item: any, index: any) => (
@@ -405,7 +405,7 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Product Type"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -414,7 +414,7 @@ const MoveSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
@@ -426,7 +426,7 @@ const MoveSearch = () => {
                                    
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Dispatch Date"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -464,7 +464,7 @@ const MoveSearch = () => {
                                 </div>
                       {location?.state?.extraForm &&    <>
 
-                                <div className="flex">
+                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Status Id"
                                         className=" w-1/2 rounded-lg pl-[22px]"
@@ -562,7 +562,7 @@ const MoveSearch = () => {
                                             variant="solid"
                                             type="button"
                                             onClick={handleRoute}
-                                            className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                            className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
                                             Request for Search
                                         </Button>
