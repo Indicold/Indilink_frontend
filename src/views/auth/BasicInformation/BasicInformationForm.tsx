@@ -119,7 +119,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newGst = e.target.value;
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
-        if (newGst.length > 10) {
+        if (newGst.length >= 10) {
+            console.log("5765575");
+            
             setDisabled(false);
         }
       };
@@ -247,6 +249,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                     color: "#fff"// Set the background color here
                 },
             });
+            if(OTPPostDetails?.user_id){
+                setOtpModal(true)
+            }
             OTPPostDetails.message = 'hello'
         }
     }, [OTPPostDetails?.message])

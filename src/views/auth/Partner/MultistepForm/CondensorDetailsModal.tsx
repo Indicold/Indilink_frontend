@@ -85,6 +85,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
         if(PutApiResponse?.status===200){
             messageView("Data Updated Successfully !");
             setModal(false)
+            FetchAgain();
         }else{
             messageView(PutApiResponse)
         }
@@ -226,8 +227,8 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                        
                                         >
                                             <option selected disabled>Select</option>
-                                            <option selected={data?.amc}>Yes</option>
-                                            <option selected={data?.amc}>No</option>
+                                            <option selected={data?.amc == "Yes"}>Yes</option>
+                                            <option selected={data?.amc == "No"}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}

@@ -97,12 +97,14 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 useEffect(()=>{
     if(PutApiResponse?.status===200){
     messageView("Data Updated Successfully !")
-        console.log("TTTTTTtytyty",PutApiResponse);
-        
+        // console.log("TTTTTTtytyty",PutApiResponse);
+        FetchAgain();
+        if(modal){
+            setModal(false)
+        }
     }else{
         messageView(PutApiResponse)
     }
-
 },[PutApiResponse])
     return (
         <>
