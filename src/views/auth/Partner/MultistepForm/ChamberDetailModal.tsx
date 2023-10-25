@@ -336,14 +336,17 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     }
     useEffect(()=>{
    
-     setLength(commanData?.chamber_size?.split('x')[0])
-     setBreadth(commanData?.chamber_size?.split('x')[1])
-     setHeight(commanData?.chamber_size?.split('x')[2])
-     setLengthP(commanData?.pallet_size?.split('x')[0])
-     setBreadthP(commanData?.pallet_size?.split('x')[1])
-     setHeightP(commanData?.pallet_size?.split('x')[2])
+
         
+     if(commanData?.type=='Edit' || commanData?.type=='View'){
+        setLength(commanData?.chamber_size?.split('x')[0])
+        setBreadth(commanData?.chamber_size?.split('x')[1])
+        setHeight(commanData?.chamber_size?.split('x')[2])
+        setLengthP(commanData?.pallet_size?.split('x')[0])
+        setBreadthP(commanData?.pallet_size?.split('x')[1])
+        setHeightP(commanData?.pallet_size?.split('x')[2])
         setData(commanData)
+    }
     },[commanData])
     console.log("565767676",data);
     return (
@@ -405,6 +408,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             name="chamber_number"
                                             placeholder="Chamber no."
                                             component={Input}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             value={data?.chamber_number}
                                         />
                                         <p className="text-[red]">
@@ -420,6 +426,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_name"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             placeholder="Chamber name"
                                             component={Input}
                                             value={data?.chamber_name}

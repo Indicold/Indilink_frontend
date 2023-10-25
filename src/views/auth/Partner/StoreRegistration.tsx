@@ -335,7 +335,7 @@ const StoreRegistration = () => {
     }
 
     const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
-        setEditableFields(!readOnly);
+        // setEditableFields(!readOnly);
         setTableTriggeredAction(true);
         setRowData(rowdata);
         switch(targetModal) {
@@ -1630,10 +1630,10 @@ const StoreRegistration = () => {
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
                                                         {
-                                                            setEditableFields(true);
+                                                            // setEditableFields(true);
                                                             setChamberModal(true);
-                                                            setTableTriggeredAction(false);
-                                                            setRowData({});
+                                                            // setTableTriggeredAction(false);
+                                                            setCommanData({});
                                                         }
                                                     }
                                                 >
