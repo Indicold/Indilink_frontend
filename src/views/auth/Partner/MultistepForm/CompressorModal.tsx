@@ -272,8 +272,8 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             <option selected value="">
                                                 Select
                                             </option>
-                                            <option value="Yes" selected={data?.amc}>Yes</option>
-                                            <option value="No" selected={data?.amc}>No</option>
+                                            <option value="Yes" selected={data?.amc == "Yes"}>Yes</option>
+                                            <option value="No" selected={data?.amc == "No"}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.amc}
