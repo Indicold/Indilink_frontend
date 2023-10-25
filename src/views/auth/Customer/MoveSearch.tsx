@@ -418,10 +418,12 @@ const MoveSearch = () => {
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected>{item?.type}</option>
+                                                <option value={item?.id}>{item?.type}</option>
                                             ))}
 
                                         </select>
+                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
+                                   
                                     </FormItem>
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">

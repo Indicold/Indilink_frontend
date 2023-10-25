@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 // Defines the table header with column names.
 const tableHead = {
-    id:"S.No",
+    // id:"S.No",
     // date: "Date",
     description: "Description",
     status_id:"Status",

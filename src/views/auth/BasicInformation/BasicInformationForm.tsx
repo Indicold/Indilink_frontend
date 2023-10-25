@@ -96,7 +96,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 });
             }
     
-            if (OTPResponse?.status != 401) {
+            if (OTPResponse && OTPResponse?.status != 401) {
                 setTimeout(() => {
                     navigate('/signup-success')
     
@@ -194,12 +194,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             });
         }
 
-        if (OTPResponse?.status != 401) {
+        if (OTPResponse && OTPResponse?.status != 401) {
             setTimeout(() => {
                 navigate('/signup-success')
 
             }, 2000)
         }
+        
     }, [OTPResponse?.message])
 
     /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the

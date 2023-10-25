@@ -2,39 +2,52 @@ import usePostApi from '@/store/customeHook/postApi'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 
-const PartnerMoveMakeModal = ({setModal,fetchList,fetchmake}:any) => {
+const PartnerMoveMakeModal = ({modal,setModal,fetchList,fetchmake}:any) => {
     let {
         result: MakeModelResponse,
         loading,
         sendPostRequest: AddMakeModel,
-    }: any = usePostApi(`master/partner/move/add-make-model`)
-    const [formData, setFormData] = useState({})
-
-    const handleChange = (e:any) => {
-        const newData:any = {...formData}
-        newData[e.target.name] = e.target.value
-        setFormData(newData)
-        console.log("newData", newData)
-    }
-
-    const handleSave = () => {
-        AddMakeModel(formData)
-        setModal(false)
+      }: any = usePostApi(`master/partner/move/add-make-model`);
+      const [formData, setFormData] = useState({});
+      const [effectCount, setEffectCount] = useState(0);
+      
+      const handleChange = (e: any) => {
+        const newData: any = { ...formData };
+        newData[e.target.name] = e.target.value;
+        setFormData(newData);
+        console.log("newData", newData);
+      };
+      
+      const handleSave = () => {
+        AddMakeModel(formData);
+        setModal(false);
         fetchmake();
         fetchList();
-    }
-console.log("MakeModelResponse",MakeModelResponse);
-
-    useEffect(() => {
-        if(MakeModelResponse?.status==200){
-            setModal(false)
-            fetchmake();
-            fetchList();
-            MakeModelResponse = 'asfsd'
-           
+      };
+      
+      console.log("MakeModelResponse", MakeModelResponse);
+      let num = 0;
+      
+      useEffect(() => {
+        if (MakeModelResponse?.status === 200 && effectCount < 10) {
+          setModal(false);
+          fetchList();
+          fetchmake();
+          MakeModelResponse = 'asfsd';
+          num = 1;
+          setEffectCount(effectCount + 1);
         }
-        
-    }, [MakeModelResponse,MakeModelResponse?.message])
+        fetchList();
+      }, [MakeModelResponse, effectCount]);
+      
+      useEffect(() => {
+        fetchList();
+      }, [fetchList]);
+      
+      useEffect(() => {
+        fetchmake();
+      }, [fetchmake]);
+      
 
   return (
     <div>
