@@ -41,7 +41,7 @@ const CustomerTableTicketList = () => {
 
     return (
         <>
-            {AllStore?.data?.length > 0 && (
+            {!AllStore?.data?.length > 0 ? (
                 <>
                     <h4 className="text-head-title text-center">Ticket List</h4>
                     <TableLayoutCustomer fetchDataA={fetchDataA}
@@ -52,7 +52,11 @@ const CustomerTableTicketList = () => {
                         AllStore={AllStoreGeneral?.data?.length > 0 && AllStoreGeneral?.data}
                     />
                 </>
-            )}
+            ):
+            
+            <DataNotFound />
+            
+            }
             <div>
                 {(moveLoad || prepLoad || StoreLoad || StoreGRLoad) && <LoaderSpinner />}
             </div>

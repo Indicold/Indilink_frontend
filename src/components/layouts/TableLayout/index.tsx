@@ -72,7 +72,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
     // Function to update the current page of data.
     setCurrentPage(p);
     const to = countPerPage * p;
-    const from = to - countPerPage;
+    const from = to - countPerPage; 
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 

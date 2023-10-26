@@ -217,10 +217,10 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
         />
       </div>
       <table className='w-full'>
-        <thead>
-          <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
+        <thead className=''>
+          <tr className='bg-black text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
-        <tbody className="trhover bg-white">{tableData()}</tbody>
+        <tbody className="trhover bg-gray-100">{tableData()}</tbody>
       </table>
       <div className='flex justify-center bg-white p-4'>
         <Pagination

@@ -225,3 +225,6 @@ background: var(--surface-surface-black, #1C1C1C);
 .form-item {
     margin-bottom: 0.45rem!important;
 }
+rect{
+    width: 1000px !important;
+}

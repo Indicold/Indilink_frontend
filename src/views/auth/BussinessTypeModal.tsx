@@ -201,7 +201,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                     id="authentication-modal"
                     tabIndex={-1}
                     aria-hidden="true"
-                    className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                    className="my-auto bg-green-100 otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
                     <div className={`relative w-full ${localStorage.getItem('user_type') ===
                                     'Customer' ?"max-w-[900px]" :"max-w-[800px]" }  mt-[50px] max-h-full`}>
@@ -213,14 +213,14 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 <span className="sr-only">Close modal</span>
                             </button>
 
-                            <div className="px-6 py-6 lg:px-8">
-                                <h4 className="text-head-title  mb-4">
+                            <div className=" px-6 py-6 lg:px-8">
+                                <h4 className="text-head-title text-center mb-4">
                                     {localStorage.getItem('user_type') ===
                                     'Customer'
                                         ? 'Request for solution'
                                         : 'Choice on Business'}{' '}
                                 </h4>
-                                <p>You may also change later</p>
+                                <p className='text-center'>You may also change later</p>
 
                                 <div className="flex justify-around grid grid-cols-3 grid-flow-col gap-2">
                        
@@ -243,13 +243,14 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                                                 : ''
                                                         }`,
                                                     }}
-                                                    className="m-4 block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                                                    className="m-4 block rounded-lg hover:bg-gray-200 transition-all duration-1000 p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                                                 >
-                                                    <CiImageOn className="text-6xl mx-auto" />
-                                                    <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                                                    {/* <CiImageOn className="text-6xl mx-auto" /> */}
+                                                      <img className='w-[100px] mx-auto' src="https://cdn-icons-png.flaticon.com/128/10071/10071359.png" alt="" />
+                                                    <h5 className="text-center mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
                                                         {item?.type}
                                                     </h5>
-                                                    <p>sample Caption</p>
+                                                    {/* <p className='text-center'>sample Caption</p> */}
                                                 </div>
                                             )
                                         )
