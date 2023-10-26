@@ -170,6 +170,7 @@ export const handleStoreTable = async (
             }
           if(result?.status==200){
             messageView('Data Updated Successfully!')
+            
           }
           
             setModal(false)

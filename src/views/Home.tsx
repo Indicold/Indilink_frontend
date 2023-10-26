@@ -3,6 +3,7 @@ import UserTypeModal from "./auth/UserTypeModal"
 import { useState } from "react"
 import BussinessTypeModal from "./auth/BussinessTypeModal"
 import { useNavigate } from "react-router-dom"
+import CardLayout from "@/components/layouts/Dashbord/CardLayout"
 
 const Home = () => {
     const [authModal,setAuthModal]=useState<any>(true)
@@ -27,10 +28,8 @@ const Home = () => {
         <>
         {authModal && !localStorage.getItem('user_type') && <UserTypeModal setAuthModal={setAuthModal}/> }
       
-        <div className='w-full flex justify-between'>
-                <h2>Customer Dashboard</h2>
-              
-            </div>
+     
+            <CardLayout title="Customer Dashboard" />
         </>
     )
 }
