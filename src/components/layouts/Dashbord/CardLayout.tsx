@@ -4,7 +4,9 @@ import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import ScatterGeoChart from './GeoBubbleMap';
 import GeoChart from './GeoBubbleMap';
-
+import CircularChart from './CircularChart';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import ForumIcon from '@mui/icons-material/Forum';
 const CardLayout = () => {
     const options :any= {
       series: [{
@@ -149,7 +151,9 @@ const CardLayout = () => {
             <div className="p-6 bg-white shadow rounded-0" key={index}>
       <dl className="space-y-2">
         <dt className="text-bold font-medium text-gray-500">{item} </dt>
-        <dd className="text-bold font-light md:text-4xl"><h2>24</h2></dd>
+        <dd className="text-bold font-light md:text-4xl flex justify-between items-center"><h2>24</h2>
+        <AssessmentIcon sx={{color:"orange",fontSize:"56px"}} />
+        </dd>
         
         <dd className="flex items-center space-x-1 text-sm font-medium text-green-500">
           <span>32.4%</span>
@@ -180,8 +184,8 @@ const CardLayout = () => {
            />
          </div>
        </div> */}
-       <div className="flex justify-around items-center w-full max-w-full px-3">
-         <div>
+       <div className="grid grid-cols-2 my-auto gap-2 w-full px-3">
+         <div className='my-auto'>
            <p className="mb-0 font-sans font-semibold leading-normal text-sm">
              Today's Money
            </p>
@@ -193,8 +197,9 @@ const CardLayout = () => {
            </h5>
 
          </div>
-         <Chart options={optionsProgress} series={optionsProgress.series} type={optionsProgress.chart.type} height={optionsProgress.chart.height} />
+<CircularChart />
 
+         {/* <Chart options={optionsProgress} series={optionsProgress.series} type={optionsProgress.chart.type} height={optionsProgress.chart.height} /> */}
        </div>
      
      </div>
@@ -246,19 +251,16 @@ const CardLayout = () => {
 
 </section>
 <section className="grid gap-6 my-6 w-[35%]  bg-white shadow rounded-2xl">
-<h3 className='ml-4 mt-4'>Audit List</h3>
+<h3 className='ml-4 mt-4 mb-0'>Audit List</h3>
 
-        <div className="p-6 flex flex-col" >
+        <div className="p-6 pt-0  flex flex-col" >
        {[1,2,3,4]?.map((item:any,index:any)=>(
      <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
      <div className="flex-auto p-4">
-       <div className="flex flex-wrap -mx-3">
-       <div className="w-4/12 max-w-full px-3 ml-auto text-right flex-0">
-           <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500 shadow-soft-2xl">
-             <i
-               className="ni ni-money-coins text-lg relative top-3.5 text-white"
-               aria-hidden="true"
-             />
+       <div className="flex flex-wrap ">
+       <div className="w-4/12 max-w-full px-6 ml-auto text-right flex-0">
+           <div className="inline-block w-12 h-12 text-center rounded-lg  shadow-soft-2xl">
+           <ForumIcon sx={{color:"orange",fontSize:"56px"}} />
            </div>
          </div>
          <div className="flex-none w-2/3 max-w-full px-3">
