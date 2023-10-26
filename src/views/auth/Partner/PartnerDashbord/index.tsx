@@ -4,6 +4,7 @@
  * @returns The component is returning a `<div>` element containing a `<h2>` element with the text
  * "Partner Dashboard".
  */
+import CardLayout from '@/components/layouts/Dashbord/CardLayout'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -31,10 +32,11 @@ const PartnerDashbord = () => {
         }
     }
     return (
-        <div>
+        <div className='bg-white p-4 rounded-lg mx-0'>
             <div className="w-full flex justify-between">
                 <h2 className="text-start">Partner Dashboard</h2>
             </div>
+            <CardLayout />
         </div>
     )
 }

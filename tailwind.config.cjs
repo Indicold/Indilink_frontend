@@ -8,6 +8,8 @@ const SAFELIST_COLORS = 'colors'
 module.exports = {
 	mode: 'jit',
 	content:  [
+		
+
 		"./index.html",
     	"./src/**/*.{js,ts,jsx,tsx}", 
 		'./safelist.txt'
@@ -76,6 +78,7 @@ module.exports = {
 			},
 		},
 	plugins: [
+	
 		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		require('./twSafelistGenerator')({
             path: safeListFile,

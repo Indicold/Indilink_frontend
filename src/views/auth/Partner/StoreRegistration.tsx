@@ -335,7 +335,7 @@ const StoreRegistration = () => {
     }
 
     const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
-        setEditableFields(!readOnly);
+        // setEditableFields(!readOnly);
         setTableTriggeredAction(true);
         setRowData(rowdata);
         switch(targetModal) {
@@ -1633,7 +1633,6 @@ const StoreRegistration = () => {
                                                             // setEditableFields(true);
                                                             setChamberModal(true);
                                                             // setTableTriggeredAction(false);
-                                                            // setRowData({});
                                                             setCommanData({});
                                                         }
                                                     }
