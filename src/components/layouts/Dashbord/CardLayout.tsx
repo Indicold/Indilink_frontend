@@ -7,7 +7,7 @@ import GeoChart from './GeoBubbleMap';
 import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
-const CardLayout = () => {
+const CardLayout = ({title}:any) => {
     const options :any= {
       series: [{
         data: [21, 22, 10, 28, 16, 21, 13, 30]
@@ -146,6 +146,10 @@ const CardLayout = () => {
       };
   return (
     <>
+       <div className='bg-white p-4 rounded-lg mx-0'>
+            <div className="w-full flex justify-between">
+                <h2 className="text-start">{title}</h2>
+            </div>
     <section className="grid gap-6 my-6 md:grid-cols-3">
         {['Assets Registered This Week','No of Total Store Assets','Revenue Generating Assets'].map((item:any,index:any)=>(
             <div className="p-6 bg-white shadow rounded-0" key={index}>
@@ -298,6 +302,7 @@ const CardLayout = () => {
 
 
   <GeoChart />
+  </div>
   </>
   )
 }

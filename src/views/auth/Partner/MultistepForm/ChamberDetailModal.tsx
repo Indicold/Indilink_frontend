@@ -438,8 +438,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Chamber name"
                                             component={Input}
-                                            value={chamName}
-                                            onChange={(e: any) => handleChange(e)}
+                                            value={data?.chamber_name}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_name}
