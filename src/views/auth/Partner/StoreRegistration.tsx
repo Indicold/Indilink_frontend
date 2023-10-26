@@ -893,6 +893,7 @@ const StoreRegistration = () => {
                                                 name="total_tonnage"
                                                 onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
@@ -965,6 +966,7 @@ const StoreRegistration = () => {
                                                     name="store_type_id"
                                                     placeholder="Store Category" />
                                             )}
+                                            disabled={location?.state}
                                         />
 
                                         <p className="text-[red]">
@@ -1047,6 +1049,7 @@ const StoreRegistration = () => {
                                                 name="ante_room_area"
                                                 onKeyDown={onkeyDown}
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
@@ -1102,6 +1105,7 @@ const StoreRegistration = () => {
                                                 onKeyDown={onkeyDown}
                                                 name="total_office_space"
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
@@ -1168,6 +1172,7 @@ const StoreRegistration = () => {
                                                 onKeyDown={onkeyDown}
                                                 name="processing_area"
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
@@ -1196,6 +1201,7 @@ const StoreRegistration = () => {
                                                 onKeyDown={onkeyDown}
                                                 name="parking_area"
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
@@ -1519,6 +1525,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                disabled={location?.state}
 
                                             />
 
@@ -1545,6 +1552,7 @@ const StoreRegistration = () => {
                                                 onKeyDown={onkeyDown}
                                                 name="photos_of_asset"
                                                 placeholder="Enter value"
+                                                disabled={location?.state}
                                             />
                                             {/* <select
                                                 disabled={true}
