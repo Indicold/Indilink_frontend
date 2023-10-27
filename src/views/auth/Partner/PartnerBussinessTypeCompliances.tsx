@@ -282,7 +282,7 @@ const PartnerBussinessTypeCompliances = () => {
                     ...item,
                     valid_till: e.target.value,
                     messageText: null,
-                    
+                    licenseNo:"Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -424,7 +424,7 @@ const array1Keys = array1?.map((item) => item?.key);
            return validateMandatoryFields(dateArray,item);
         });
         const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-        const newvalidateLicence:any=array?.filter((item:any)=>item?.valid_till!==null && item?.licenseNo && item?.key_lic)?.length>0 ? true :false;
+        const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
         
         const validLicenseNos:any=array?.filter(
             (item:any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
@@ -432,7 +432,7 @@ const array1Keys = array1?.map((item) => item?.key);
 
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
         console.log("YUUUUUUUUU",array?.filter((item:any)=>item?.messageText),Invalid,newvalidate);
-        if (Invalid && newvalidate) {
+        if (Invalid && newvalidate && newvalidateLicence) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')
