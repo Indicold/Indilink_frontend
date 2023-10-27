@@ -69,6 +69,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'fsssai_lic_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'ISO Certificate',
@@ -79,6 +80,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'iso_cert_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'HACCP',
@@ -89,6 +91,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'haccp_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Pest Control Agency Contract',
@@ -99,6 +102,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'pest_control_agency_contract_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'BRC Audit or any other certification (If Applicable)',
@@ -109,6 +113,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'brc_audit_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Pollution NOC',
@@ -119,6 +124,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'pollution_noc_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Fire Safety NOC',
@@ -129,6 +135,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'fire_safety_noc_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'MCD License (if applicable)',
@@ -139,6 +146,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'mcd_lic_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'UP Cold Storage License',
@@ -149,6 +157,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'up_cond_storage_lic_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Factory License',
@@ -159,6 +168,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'factory_lic_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Panchayat NOC',
@@ -169,6 +179,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'panchayat_noc_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'No Lien Certificate',
@@ -179,6 +190,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'no_lien_cert_license',
             url: null,
             valid_till: null,
+            licenseNo:null
         },
         {
             label: 'Latest Electricity Bill',
@@ -188,6 +200,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'latest_electricity_bill_license',
             url: null,
             valid_till: null,
+            licenseNo:null,
             view: false,
         },
         {
@@ -198,6 +211,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'structural_load_safety_cert_license',
             url: null,
             valid_till: null,
+            licenseNo:null,
             view: false,
 
         },
@@ -209,6 +223,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'insurance_cert_license',
             url: null,
             valid_till: null,
+            licenseNo:null,
             view: false,
         },
         {
@@ -219,6 +234,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'facility_layout_license',
             url: null,
             valid_till: null,
+            licenseNo:null,
             view: false,
         },
         {
@@ -229,6 +245,7 @@ const PartnerBussinessTypeCompliances = () => {
             key_lic: 'storage_temp_record_license',
             url: null,
             valid_till: null,
+            licenseNo:null,
             view: false,
         },
     ];
@@ -264,7 +281,8 @@ const PartnerBussinessTypeCompliances = () => {
                 return {
                     ...item,
                     valid_till: e.target.value,
-                    messageText: null
+                    messageText: null,
+                    
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -308,7 +326,8 @@ const PartnerBussinessTypeCompliances = () => {
                             view: true,
                             url: responseData?.data,
                             message: 'Uploaded',
-                            messageText: 'Valid till date is required'
+                            messageText: 'Valid till date is required',
+                            licenseNo:"Licence No is required"
                         }
                         : itemData
                 )
@@ -349,6 +368,7 @@ const PartnerBussinessTypeCompliances = () => {
                     return {
                         ...itemData,
                         messageText: 'Valid till date is required',
+                        licenseNo:"License no is required"
                     }
                 } else {
                     return {
@@ -404,13 +424,15 @@ const array1Keys = array1?.map((item) => item?.key);
            return validateMandatoryFields(dateArray,item);
         });
         const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+        const newvalidateLicence:any=array?.filter((item:any)=>item?.valid_till!==null && item?.licenseNo && item?.key_lic)?.length>0 ? true :false;
+        
         const validLicenseNos:any=array?.filter(
             (item:any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
         )?.length>0 ? true: false;
 
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        console.log("YUUUUUUUUU",Invalid,newvalidate,array?.filter((item:any)=>item?.messageText));
-        if (Invalid && newvalidate && validLicenseNos) {
+        console.log("YUUUUUUUUU",array?.filter((item:any)=>item?.messageText),Invalid,newvalidate);
+        if (Invalid && newvalidate) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')
@@ -427,13 +449,13 @@ const array1Keys = array1?.map((item) => item?.key);
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        // const updatedArray = array.map((itemData) =>
-        //   item.key_lic === itemData.key_lic
-        //     ? { ...itemData, key_lic: e.target.value }
-        //     : itemData
-        // );
-        // setArray(updatedArray);
-        console.log("TTTTT66TTTT", e.target.name, newData);
+        const updatedArray = array.map((itemData) =>
+          item.key_lic === itemData.key_lic
+            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            : itemData
+        );
+        setArray(updatedArray);
+        console.log("TTTTT66TTTT", e.target.name, updatedArray);
         // console.log("TTTTT66TTTT",newData);
 
     };
@@ -645,11 +667,11 @@ const array1Keys = array1?.map((item) => item?.key);
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                    {/* {item?.messageText && (
+                                                    {item?.licenseNo && (
                                                         <p className="text-[red]">
-                                                            {item?.messageText}
+                                                            {item?.licenseNo}
                                                         </p>
-                                                    )} */}
+                                                    )}
                                                 </FormItem>
                                             </div>
 
