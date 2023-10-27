@@ -164,7 +164,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
         .then(data => {
 
           console.log(data);
-          if(data?.status == true){
+          if(data?.status == 200){
             messageView(data?.message)
             setTimeout(()=>{
               localStorage.removeItem('RememberMe');

@@ -4,6 +4,7 @@
  * @returns The InvestorDashboard component is returning a div element containing a h2 element with the
  * text "Investor Dashboard".
  */
+import CardLayout from '@/components/layouts/Dashbord/CardLayout';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -35,12 +36,10 @@ const InvestorDashbord = () => {
 
     }
     return (
-        <div>
-            <div className='w-full flex justify-between'>
-                <h2>Investor Dashboard</h2>
-              
-            </div>
-        </div>
+        <>
+          
+            <CardLayout title="Investor Dashboard" />
+        </>
     )
 }
 

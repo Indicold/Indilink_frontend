@@ -404,9 +404,13 @@ const array1Keys = array1?.map((item) => item?.key);
            return validateMandatoryFields(dateArray,item);
         });
         const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+        const validLicenseNos:any=array?.filter(
+            (item:any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
+        )?.length>0 ? true: false;
+
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
         console.log("YUUUUUUUUU",Invalid,newvalidate,array?.filter((item:any)=>item?.messageText));
-        if (Invalid && newvalidate) {
+        if (Invalid && newvalidate && validLicenseNos) {
         PostValidTillDetails(dateArray)
         console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')

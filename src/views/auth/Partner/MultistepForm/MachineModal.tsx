@@ -4,7 +4,8 @@
  * @returns The code is returning a React functional component named "MachineModal".
  */
 import { Button, FormItem, Input } from '@/components/ui'
-import { handleStoreTable } from '@/store/customeHook/validate'
+import usePutApi from '@/store/customeHook/putApi'
+import { handleStoreTable, messageView } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,14 +25,16 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     update,
     setModal,
     setFormData,
-    machineId
-}) => {
+    machineId,
+    fetchMachineList
+}:any) => {
     const {id}:any=useParams();
-    const [data, setData] = useState({
+    const [data, setData] = useState<any>({
         asset_id:id
     })
     console.log("formDformDformDformD",formD);
     
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/prepare/machine/${formD?.id}`)
 
     /**
      * The handleChange function updates the state data object with the new value from the input
@@ -51,19 +54,35 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
      * machine.
      */
     const handlesave = () => {
-        handleStoreTable(
-            'partner/prepare/machine',
-            data,
-            setModal,
-            formD,
-            update,
-            'machine_ids',
-        )
-        let arr = machineId;
-        arr.push()
-        setFormData()       
+        if(formD?.type==='Edit'){
+            updateData(formD)
+        }else{
+            handleStoreTable(
+                'partner/prepare/machine',
+                data,
+                setModal,
+                formD,
+                update,
+                'machine_ids',
+                fetchMachineList
+            )
+            let arr = machineId;
+            arr.push()
+            setFormData()  
+            fetchMachineList()  
+        }
+        
     }
-
+    const isDisabled=formD?.type==='View';
+useEffect(()=>{
+    if(PutApiResponse?.status===200){
+        messageView("Data updated successfully !")
+        setModal(false)
+    }else{
+        messageView(PutApiResponse?.message)
+    }
+    fetchMachineList();
+},[PutApiResponse?.message])
     return (
         <>
             <ToastContainer />
@@ -111,9 +130,11 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             type="text"
                                             autoComplete="off"
                                             name="name"
+                                            disabled={isDisabled}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            defaultValue={formD?.name}
                                             placeholder="Name"
                                             component={Input}
                                         />
@@ -126,7 +147,9 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="text"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="type_of_machine"
+                                            defaultValue={formD?.type_of_machine}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -140,8 +163,10 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem label="Make" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="make"
+                                            defaultValue={formD?.make}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -152,8 +177,10 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem label="Model" className="mx-auto w-1/2">
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="model"
+                                            defaultValue={formD?.model}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -170,8 +197,10 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="text"
+                                            disabled={isDisabled}
                                             autoComplete="off"
                                             name="purpose"
+                                            defaultValue={formD?.purpose}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -186,7 +215,9 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="number"
                                             autoComplete="off"
+                                            disabled={isDisabled}
                                             name="power_requirement"
+                                            defaultValue={formD?.power_requirement}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }

@@ -25,7 +25,17 @@ import MachineModal from './MultistepForm/MachineModal' // Import another custom
 import 'react-accessible-accordion/dist/fancy-example.css' // Import CSS styles for an accordion
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Autocomplete, TextField } from '@mui/material'
+import MachineTable from './MachineTable';
+const tableHead = {
+    id: "ID",
+    type_of_machine: "Machine Type",
+    name: "Name",
+    make:"Make",
+  // is_deleted: "Is Deleted",
+  // is_deletedBy: "Is Deleted By",
 
+  Action: "Action"
+};
 // Define the main functional component for PartnerBussinessTypePrepare
 const PartnerBussinessTypePrepare = () => {
     // Get the user's token using a custom hook
@@ -59,6 +69,12 @@ const PartnerBussinessTypePrepare = () => {
         error: PTLError,
     } = useApiFetch<any>('master/customer/store/get-product-type', token)
 
+    const {
+        data: MachineList,
+        loading: MLLoading,
+        // error: PTLError,
+        refetch:fetchMachineList
+    } = useApiFetch<any>(`partner/prepare/components-all/${id}`, token)
 
     const {
         data: DockTypeList,
@@ -231,6 +247,7 @@ const PartnerBussinessTypePrepare = () => {
                                         modal={machineModal}
                                         setModal={setMachineModal}
                                         formD={formData}
+                                        fetchMachineList={fetchMachineList}
                                         update={setFormData}
                                     />
                                 )}
@@ -754,14 +771,15 @@ const PartnerBussinessTypePrepare = () => {
                                                 disabled={isDisabled}
                                                 variant="solid"
                                                 type="button"
-                                                onClick={() =>
+                                                onClick={() =>{
+                                                    setFormData({});
                                                     setMachineModal(true)
-                                                }
+                                                }}
                                                 className="indigo-btn w-[300px] mx-auto rounded-[30px]"
                                             >
                                                 Add Machine
                                             </Button>
-                                            {/* <Field
+                                     {/* <Field
                                 type="text"
                                 autoComplete="off"
                                  onChange={(e:any)=>handleChange(e)}
@@ -774,6 +792,12 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
+                                    {MachineList?.data?.machines?.length>0 && 
+                                    <MachineTable AllStore={MachineList?.data?.machines} tableHead={tableHead} 
+                                           modal={machineModal}
+                                           setFormData={setFormData}
+                                        setModal={setMachineModal} />
+}        
                                     <div className="flex justify-center">
                                         <Button
                                             style={{ borderRadius: '13px' }}

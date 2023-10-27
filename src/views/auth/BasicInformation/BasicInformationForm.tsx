@@ -172,7 +172,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         setSubmitting(false)
         sendPostRequest(ObjectData);
        
-        OTPPostDetails?.message && setOtpModal(true)
+        OTPPostDetails && OTPPostDetails?.status !== 400 ? setOtpModal(true) : null
+        // OTPPostDetails?.message && setOtpModal(true)
         setSubmitting(false)
 
     }

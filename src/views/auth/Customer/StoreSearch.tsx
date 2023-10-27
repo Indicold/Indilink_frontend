@@ -191,7 +191,7 @@ const StoreSearch = () => {
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="">
-                <h4 className=" mb-2 text-head-title text-center">Store</h4>
+                <h4 className=" mb-2 text-head-title text-center">Store </h4>
                 {/* The above code is a TypeScript React component that renders a form using the Formik
                 library. The form contains several input fields and select dropdowns for the user to
                 enter data. The form is wrapped in a Formik component, which handles form state and
@@ -313,7 +313,7 @@ const StoreSearch = () => {
                                             type="number"
                                             autoComplete="off"
                                             onChange={(e: any) => handlechange(e)}
-                                            className="w-[80%]"
+                                            className="w-[60%]"
                                             name="quantity"
                                             value={formData?.quantity}
                                             placeholder="Quantity"
@@ -324,7 +324,7 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="unit_id"
-                                            className="h-11 border w-[20%] rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (
@@ -379,7 +379,7 @@ const StoreSearch = () => {
                                             type="number"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
-                                            className="w-[80%]"
+                                            className="w-[70%]"
                                             min={1}
                                             onKeyDown={onkeyDownOne}
                                             name="storage_duration"
@@ -391,12 +391,12 @@ const StoreSearch = () => {
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}
                                             name="storage_duration_type"
-                                            className="border w-[25%] ml-4 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-[20%] ml-4 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
                                             {ListOfTimeUnits && ListOfTimeUnits?.data?.map((item: any, index: any) =>{if(item.id === 4||item.id === 6||item.id === 7){
                                                 return (
-                                                <option value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>)
+                                                <option className='' value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>)
                                             }})}
                                         </select>
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>

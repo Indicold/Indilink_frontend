@@ -33,12 +33,13 @@ const TableLayout = ({ AllStore,fetchApi }: any) => {
   const [value, setValue] = React.useState("");
   const [Alert,setAlert]=useState<any>(false)
   const [RowData,setRowData]=useState<any>({})
+let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
+
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
     cloneDeep(allData.slice(0, countPerPage))
   );
 
-let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
   // Ref for a search function that filters data based on user input.
   const searchData = useRef(
@@ -190,9 +191,15 @@ console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)
+  fetchApi();
+  const to = countPerPage * currentPage;
+  const from = to - countPerPage; 
+  setCollection(cloneDeep(allData.slice(from, to)));
 }
-fetchApi()
-},[SubmitResponse?.status])
+SubmitResponse=7676;
+fetchApi();
+},[SubmitResponse])
+
   return (
     <>
     <ToastContainer />
