@@ -446,7 +446,7 @@ const { t, i18n }:any = useTranslation();
                                             name="temp_min"
                                             className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Minimum</option>
+                                            <option value='0'>Minimum</option>
                                             {Array(3).fill(0).map((_, index) => (
                                                 <option key={index} value={index * 5} selected={index * 5 === formData?.temp_min}>
                                                     {index * 5}

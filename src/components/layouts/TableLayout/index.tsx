@@ -205,7 +205,15 @@ if(SubmitResponse?.status===200){
 SubmitResponse=7676;
 fetchApi();
 },[SubmitResponse])
-
+React.useEffect(() => {
+  // Update the displayed data when the AllStore prop changes.
+  if (allData) {
+    const to = countPerPage * currentPage;
+    const from = to - countPerPage; 
+      const newCollection = cloneDeep(allData.slice(from, to));
+      setCollection(newCollection);
+  }
+}, [allData]);
   return (
     <>
     <ToastContainer />

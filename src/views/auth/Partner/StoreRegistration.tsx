@@ -114,7 +114,7 @@ const StoreRegistration = () => {
     const [SEModal, setSEModal] = useState<any>(false)
     const [chamberData, setChamberData] = useState<any>([])
     const [CAData, setCAData] = useState<any>([])
-
+    const [isChecked,setIsChecked]=useState<any>(false)
     let [commanData, setCommanData] = useState<any>({})
 
 
@@ -278,7 +278,7 @@ const StoreRegistration = () => {
         }
     }
 
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useState<any>('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
         // console.log("TYYYYYYYY", e.target.name);
@@ -392,6 +392,11 @@ const StoreRegistration = () => {
     useEffect(() => {
 
         if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
+            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
+            setPhone(phoneNumberWithoutCountryCode)
+            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+                setIsChecked(true)
+            }
             setData(fetchDetails?.data)
         }
     }, [fetchDetails])
@@ -497,7 +502,7 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "View" })
         }else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "View" })
+            setCommanData({ ...rowData, types: "View" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
@@ -543,7 +548,7 @@ const StoreRegistration = () => {
         }
         else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "Edit" })
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
@@ -759,6 +764,7 @@ const StoreRegistration = () => {
                                         id="default-checkbox"
                                         type="checkbox"
                                         defaultValue=""
+                                        checked={isChecked}
                                         disabled={location?.state}
                                         onClick={(e: any) => handleCheckbox(e)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"

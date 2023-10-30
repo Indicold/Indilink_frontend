@@ -28,11 +28,11 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
     FetchAgain,
     commanData
-}) => {
+}:any) => {
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
     const {id}: any = useParams();
-    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const isDisabled:any=commanData?.types=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/it-devices/${commanData?.id}`)
 
     useEffect(()=>{
@@ -65,7 +65,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React TypeScript application.
      */
     const handlesave = () => {
-        if(commanData?.type==='Edit'){
+        if(commanData?.types==='Edit'){
             updateData(data)
         }else{
             if(validateITForm(data, setErrors)) {
@@ -83,7 +83,7 @@ const ITDetailModal: React.FC<MajorityHolderModalProps> = ({
        
     }
     useEffect(()=>{
-        if(commanData?.type=='Edit' || commanData?.type=='View'){
+        if(commanData?.types=='Edit' || commanData?.types=='View'){
             setData(commanData)
         }
   
