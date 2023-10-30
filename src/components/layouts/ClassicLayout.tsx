@@ -53,7 +53,7 @@ const HeaderActionsEnd = () => {
                 <option value='hi' >Hindi</option>
                 <option  value='GB' >German</option>
             </select>
-            <h4>{t("first name")}</h4>
+            {/* <h4>{t("first name")}</h4> */}
             <select
                 id="countries"
                 onChange={(e:any)=>handleChange(e)}
