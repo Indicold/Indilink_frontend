@@ -283,6 +283,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                 <FormItem
                                     label="Firm Registered Country"
                                     className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    asterisk={true}
                                 >
                                     <select
                                         disabled={isDisabled}
@@ -303,6 +304,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                 <FormItem
                                     label="Firm Registered State"
                                     className="rounded-lg pl-[22px] w-1/2"
+                                    asterisk={true}
                                 >
                                     <select
                                         disabled={isDisabled}
@@ -326,6 +328,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                 <FormItem
                                     label="Firm Registered Address"
                                     className="rounded-lg pl-[22px] w-1/2"
+                                    asterisk={true}
                                 >
                                     <Field
                                         disabled={isDisabled}
@@ -414,6 +417,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                                 <FormItem
                                     label="Pan Number"
                                     className="rounded-lg pl-[22px] w-1/2"
+                                    asterisk={true}
                                 >
                                     <Field
                                         disabled={isDisabled}
