@@ -83,6 +83,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
 if(PutApiResponse?.status===200){
     messageView("Data Updated Successfully !");
     setModal(false)
+    FetchAgain();
 }else{
     messageView(PutApiResponse)
 }
@@ -239,10 +240,10 @@ if(PutApiResponse?.status===200){
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            <option value="true" selected={data?.internet_enabled === 1}>
+                                            <option value={1} selected={data?.internet_enabled === 1}>
                                                 Yes
                                             </option>
-                                            <option value="false" selected={data?.internet_enabled === 0}>No</option>
+                                            <option value={0} selected={data?.internet_enabled === 0}>No</option>
                                         </select>
                                         <p className="text-[red]">
                                             {errors && errors.internet_enabled}
