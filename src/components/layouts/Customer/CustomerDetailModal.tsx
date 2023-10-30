@@ -10,7 +10,7 @@ import {
 import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
 import { getToken } from '@/store/customeHook/token';
 import useApiFetch from '@/store/customeHook/useApiFetch';
-
+import { useTranslation } from 'react-i18next'
 
 const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
  const {token}:any=getToken()
@@ -57,7 +57,8 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
     const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
         useApiFetch<any>(`master/customer/store/get-unit-type`, token);
 
-  
+        const { t, i18n }:any = useTranslation();
+
   return (
     <div>
          {true && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -72,7 +73,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
             <div className="px-6 py-6 lg:px-8">
               <h4 className="text-head-title text-center mb-4">{localStorage.getItem('user_type')==='Customer' ? "Request search" : "Choice on Business"} </h4>
-              <p>You may also change later</p>
+              <p> {t("You may also change later")}</p>
 
               <div>
                     <Formik

@@ -17,6 +17,8 @@ import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from 
 import usePutApi from '@/store/customeHook/putApi';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
+import { useTranslation } from 'react-i18next'
+
 
 var currentDate = new Date()
 
@@ -182,6 +184,9 @@ const StoreSearch = () => {
         }
     }, [CustomerResponse?.status]);
 
+    
+    const { t, i18n }:any = useTranslation();
+
  
     return (
         <div className='bg-white p-2 rounded-md'>
@@ -191,7 +196,7 @@ const StoreSearch = () => {
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="">
-                <h4 className=" mb-2 text-head-title text-center">Store </h4>
+                <h4 className=" mb-2 text-head-title text-center"> {t("Store")} </h4>
                 {/* The above code is a TypeScript React component that renders a form using the Formik
                 library. The form contains several input fields and select dropdowns for the user to
                 enter data. The form is wrapped in a Formik component, which handles form state and
@@ -211,11 +216,11 @@ const StoreSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer className='gap-4'>
                                 <div className='bg-gray-100 p-2 rounded-md'>
-                                <p className='ml-[23px]'><b>Location</b></p>
+                                <p className='ml-[23px]'><b>{t("Location")} </b></p>
                                 <div className="flex ">
                                    
                                     <FormItem
-                                        label="Country"
+                                        label= {t("Country")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -233,7 +238,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="City"
+                                        label={t("City")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[20px]"
                                     >
                                         <select
@@ -256,7 +261,7 @@ const StoreSearch = () => {
 
                                 <div className="bg-gray-100 mt-4 p-3 rounded-md flex">
                                     <FormItem
-                                        label="Product Type"
+                                        label= {t("Product Type")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -274,7 +279,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Temperature"
+                                        label={t("Temperature")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -305,7 +310,7 @@ const StoreSearch = () => {
                                 </div>
                                 <div className="flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label="Unit"
+                                        label={t("Unit")}
                                         className="mx-auto rounded-lg pl-[22px] w-1/2"
                                     >
                                        <Field
@@ -335,7 +340,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.unit_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Certification"
+                                        label={t("Certification")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -355,7 +360,7 @@ const StoreSearch = () => {
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Date of Storage"
+                                        label= {t("Date Of Storage")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -371,7 +376,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]' >{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Storage Duration"
+                                        label={t("Storage Duration")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -511,7 +516,7 @@ const StoreSearch = () => {
                                         onClick={handleRouteUpdate}
                                         className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
-                                    Update
+                                     {t("Update")}
                                     </Button> :
                                      <Button
                                      disabled={isDisabled}
@@ -522,7 +527,7 @@ const StoreSearch = () => {
                                      onClick={handleRoute}
                                      className="indigo-btn w-[300px] mt-4 mx-auto rounded-[30px]"
                                  >
-                                     Request for Search
+                                     {t("Request for Search")}
                                  </Button>
                                     }
                                     
@@ -532,7 +537,7 @@ const StoreSearch = () => {
                         </Form>
                     </Formik>
                 </div>
-                {isDisabled? 
+                {isDisabled?
                 ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} />:<></>}
             </div>
         </div>

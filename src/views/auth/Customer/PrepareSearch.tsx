@@ -17,7 +17,9 @@ import usePostApi from '@/store/customeHook/postApi';
 import { formatDate, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
+import { useTranslation } from 'react-i18next'
 
+  
 // Define the functional component for PrepareSearch
 const PrepareSearch = () => {
 
@@ -177,6 +179,7 @@ const PrepareSearch = () => {
     }, [CustomerResponse?.status]);
 
 console.log("formatDate",formData?.arrival_date);
+const { t, i18n }:any = useTranslation();
 
     return (
         <div>
@@ -185,7 +188,7 @@ console.log("formatDate",formData?.arrival_date);
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
             <div className="bg-white p-4">
-                <h4 className=" mb-2 text-head-title text-center">Prepare</h4>
+                <h4 className=" mb-2 text-head-title text-center"> {t("Prepare")}</h4>
                 {/* The above code is a form component written in TypeScript and React. It uses the
                 Formik library for form management. The form consists of various input fields and
                 select dropdowns for selecting different categories and options. It also includes
@@ -203,7 +206,7 @@ console.log("formatDate",formData?.arrival_date);
                             <FormContainer>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Product Category"
+                                        label={t("Product Category")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -221,14 +224,14 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Broad Category"
+                                        label= {t("Broad Category")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="broad_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfBroadCategory && ListOfBroadCategory?.data?.map((item: any, index: any) => (
@@ -241,14 +244,14 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Product Type"
+                                        label= {t("Product Type")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_type_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
@@ -259,7 +262,7 @@ console.log("formatDate",formData?.arrival_date);
 
                                     </FormItem>
                                     <FormItem
-                                        label="Service Category"
+                                        label={t("Service Category")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -279,14 +282,14 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Country*"
+                                        label={t("Country*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="country_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -298,14 +301,14 @@ console.log("formatDate",formData?.arrival_date);
                                     </FormItem>
                                     <div className="flex mx-auto w-1/2 rounded-lg pl-[22px]">
                                         <FormItem
-                                            label="State*"
+                                            label={t("State*")}
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
                                                 disabled={isDisabled}
                                                 onChange={(e: any) => handleChange(e)}
                                                 name="state_id"
-                                                className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
                                                 <option>Select</option>
                                                 {ListOfState && ListOfState?.data?.map((item: any, index: any) => (
@@ -316,14 +319,14 @@ console.log("formatDate",formData?.arrival_date);
                                             <p className='text-[red]'>{errors && errors.state_id}</p>
                                         </FormItem>
                                         <FormItem
-                                            label="City*"
+                                            label= {t("City*")} 
                                             className="mx-auto w-1/2 rounded-lg"
                                         >
                                             <select
                                                 disabled={isDisabled}
                                                 onChange={(e: any) => handleChange(e)}
                                                 name="city_id"
-                                                className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
                                                 <option>Select</option>
                                                 {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
@@ -337,7 +340,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Throughput"
+                                        label={t("Throughput")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -366,7 +369,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Avg. Case Size"
+                                        label=  {t("Avg. Case Size")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -399,7 +402,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Estimated Docks"
+                                        label={t("Estimated Docks")}
                                         className="rounded-lg pl-[22px] w-1/2"
                                     >
                                         <Field
@@ -414,7 +417,7 @@ console.log("formatDate",formData?.arrival_date);
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label="Estimated Dispatches"
+                                        label={t("Estimated Dispatches")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -434,7 +437,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Temperature"
+                                        label= {t("Temperature")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -468,7 +471,7 @@ console.log("formatDate",formData?.arrival_date);
 
                                     </FormItem>
                                     <FormItem
-                                        label="Date of Start"
+                                        label= {t("Date of Start")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -486,7 +489,7 @@ console.log("formatDate",formData?.arrival_date);
                              {location?.state?.extraForm &&   <>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Status Id"
+                                        label= {t("Status Id")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
 
@@ -494,7 +497,7 @@ console.log("formatDate",formData?.arrival_date);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="status_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
@@ -505,7 +508,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Comment"
+                                        label={t("Comment")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -525,7 +528,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Contract Name"
+                                        label= {t("Contract Name")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -541,7 +544,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Contract Type"
+                                        label= {t("Contract Type")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -561,7 +564,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Arrival Date"
+                                        label={t("Arrival Date")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -577,7 +580,7 @@ console.log("formatDate",formData?.arrival_date);
                                         <p className='text-[red]'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label="Dispatch Date"
+                                        label= {t("Dispatch Date")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -597,7 +600,7 @@ console.log("formatDate",formData?.arrival_date);
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Contract Upload"
+                                        label= {t("Contract Upload")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <input
@@ -629,7 +632,7 @@ console.log("formatDate",formData?.arrival_date);
                                         onClick={handleRouteUpdate}
                                         className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
                                     >
-                                        Update
+                                        {t("Update")}
                                     </Button> :
                                         <Button
                                             disabled={isDisabled}
@@ -640,7 +643,7 @@ console.log("formatDate",formData?.arrival_date);
                                             onClick={handleRoute}
                                             className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
-                                            Request for Search
+                                              {t("Request for Search")}
                                         </Button>
                                     }
                                 </div>
