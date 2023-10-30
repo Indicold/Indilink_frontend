@@ -1,7 +1,9 @@
+import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView, onkeyDown } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify';
+import InvoiceTableList from './InvoiceTableList';
 
 const Invoice = () => {
     const {token}:any=getToken();
@@ -10,6 +12,9 @@ const Invoice = () => {
         invoice_doc:"",
         invoice_amount:""
     })
+    const { data: ListOfInvoice, loading: LIloading, error: LIerror } =
+    useApiFetch<any>(`partner/invoices`, token);
+
     const handleChange=(e:any)=>{
         const newData:any={...formData};
         if(e.target.name==='invoice_doc'){
@@ -173,7 +178,7 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
 
                     <h5><b>Invoice</b></h5>
 
-                    <p>Please add the Invoice</p>
+                    {/* <p>Please add the Invoice</p> */}
 
                 </div>
 
@@ -191,8 +196,8 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                 </div>
 
             </div>
-
-            <div className=' bg-white  p-4  m-auto w-full h-full'>
+{ListOfInvoice?.data?.length>0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
+            :<div className=' bg-white  p-4  m-auto w-full h-full'>
 
                 <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
 
@@ -220,7 +225,7 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
 
                 </div>
 
-            </div>
+            </div>}
 
         </>
     )

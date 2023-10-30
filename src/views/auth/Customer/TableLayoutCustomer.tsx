@@ -12,7 +12,7 @@ import { messageView } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
-    // id:"S.No",
+    id:"S.No",
     // date: "Date",
     // contract_type: "Contract Type",
     comment:"Comment",
@@ -158,6 +158,9 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
       }
       if (key === 'is_deleted') {
         return <td className='text-center' key={i} >{rowData.is_deleted==1 ? "Close" : 'Open'}</td>;
+      }
+      if (key === 'id') {
+        return <td className='text-center' key={i} >{index+1}</td>;
       }
       if (key === 'status_id') {
         return <td className='text-center' key={i} >{rowData.status_id===1 ? "Pending" : rowData.status_id==2 ? "Review":"Done"}</td>;

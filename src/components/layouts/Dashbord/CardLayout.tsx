@@ -1,8 +1,5 @@
-import React from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
-import ScatterGeoChart from './GeoBubbleMap';
 import GeoChart from './GeoBubbleMap';
 import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -134,16 +131,7 @@ const CardLayout = ({title}:any) => {
       list:[]
   }
       ]
-      const optionsProgress:any = {
-        chart: {
-          // height:"80%",
-          // width:"80%",
-          type: 'radialBar',
-        },
-        series: [70],
-        labels: ['Data'],
-        
-      };
+   
   return (
     <>
        <div className='bg-white p-4 rounded-lg mx-0'>

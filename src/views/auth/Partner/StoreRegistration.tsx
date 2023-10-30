@@ -497,7 +497,7 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "View" })
         }else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "View" })
+            setCommanData({ ...rowData, types: "View" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
@@ -543,7 +543,7 @@ const StoreRegistration = () => {
         }
         else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "Edit" })
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
