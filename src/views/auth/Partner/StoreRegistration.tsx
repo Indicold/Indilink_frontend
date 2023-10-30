@@ -299,6 +299,7 @@ const StoreRegistration = () => {
             const fileInput: any = e.target; // Assuming e.target is the input element
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
+            newData['filetype'] = "file";
             // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
         } else
@@ -312,6 +313,7 @@ const StoreRegistration = () => {
                     fileArray.push(file);
                 }
                 newData[e.target.name] = fileArray;
+                newData['filetype1'] = "file1";
 
             }
             else newData[e.target.name] = e.target.value
@@ -1533,6 +1535,17 @@ const StoreRegistration = () => {
                                         <p className="text-[red]">
                                             {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
+                                        <div className='flex'>
+                                        {dataa?.three_d_view_of_asset?.length>0 && dataa?.three_d_view_of_asset?.map((file: any, index: number) => {                                           
+                                           const imageUrl :any=dataa?.filetype==='file' ?  URL?.createObjectURL(file) :file;
+                                            
+                                            return (
+                                                <div key={index} className='mt-5 m-2'>
+                                                <img src={imageUrl} className='w-[40px] h-auto' />
+                                                </div>
+                                            )
+                                        })}
+                                        </div>
                                     </FormItem>
                                     <FormItem
                                         label="Photo Of Assets*"
@@ -1564,6 +1577,17 @@ const StoreRegistration = () => {
                                         <p className="text-[red]">
                                             {errors && errors.photos_of_asset}
                                         </p>{' '}
+                                        <div className='flex'>
+                                        {dataa?.photos_of_asset?.length>0 && dataa?.photos_of_asset?.map((file: any, index: number) => {                                           
+                                           const imageUrl :any=dataa?.filetype1==='file1' ? URL?.createObjectURL(file) : file;
+                                            
+                                            return (
+                                                <div key={index} className='mt-5 m-2'>
+                                                <img src={imageUrl} className='w-[40px] h-auto' />
+                                                </div>
+                                            )
+                                        })}
+                                        </div>
                                     </FormItem>
                                 </div>
                                 <Accordion>
