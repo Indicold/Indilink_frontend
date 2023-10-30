@@ -19,7 +19,7 @@ const navigationPartnerConfig: NavigationTree[] = [
 {
         key: 'collapseMenu',
         path: '',
-        title: 'Collapse Menu',
+        title: 'Assets',
         translateKey: 'nav.collapseMenu.collapseMenu',
         icon: 'collapseMenu',
         type: NAV_ITEM_TYPE_COLLAPSE,
@@ -28,7 +28,7 @@ const navigationPartnerConfig: NavigationTree[] = [
             {
                 key: 'collapseMenu.item1',
                 path: '/collapse-menu-item-view-1',
-                title: 'Collapse menu item 1',
+                title: 'Add Asset',
                 translateKey: 'nav.collapseMenu.item1',
                 icon: '',
                 type: NAV_ITEM_TYPE_ITEM,
@@ -38,7 +38,7 @@ const navigationPartnerConfig: NavigationTree[] = [
             {
                 key: 'collapseMenu.item2',
                 path: '/asset_list',
-                title: 'Collapse menu item 2',
+                title: 'Assets List',
                 translateKey: 'nav.collapseMenu.item2',
                 icon: '',
                 type: NAV_ITEM_TYPE_ITEM,

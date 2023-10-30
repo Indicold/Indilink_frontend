@@ -1,4 +1,5 @@
 import LoaderSpinner from '@/components/LoaderSpinner'
+import DataNotFound from '@/components/layouts/DataNotFound'
 import DocumentTableList from '@/components/layouts/TableLayout/DocumentTableList'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { getToken } from '@/store/token'
@@ -23,7 +24,7 @@ const AssetsDocumentsTable = () => {
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
-            ) : <h3 className='mx-auto my-auto'>No Data Found</h3>}
+            ) : <DataNotFound title="No Title" url="/collapse-menu-item-view-1" />}
             <div>
                 {/* {StoreRLoad && <LoaderSpinner />} */}
             </div>

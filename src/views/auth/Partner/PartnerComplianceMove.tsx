@@ -75,6 +75,7 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         {
             label: 'Permit',
@@ -85,6 +86,7 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         {
             label: 'PUCC',
@@ -95,6 +97,7 @@ const PartnerComplianceMove = () => {
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         // {
         //     label: 'Fitness Certificate',
@@ -139,7 +142,8 @@ const PartnerComplianceMove = () => {
                 return {
                     ...item,
                     valid_till: e.target.value,
-                    messageText: null
+                    messageText: null,
+                    licenseNo:"Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -159,6 +163,12 @@ const PartnerComplianceMove = () => {
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
+        const updatedArray = array.map((itemData) =>
+          item.key_lic === itemData.key_lic
+            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            : itemData
+        );
+        setArray(updatedArray);
         // const updatedArray = array.map((itemData) =>
         //   item.key_lic === itemData.key_lic
         //     ? { ...itemData, key_lic: e.target.value }
@@ -205,7 +215,8 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
-                              messageText: 'Valid till date is Required'
+                              messageText: 'Valid till date is Required',
+                              licenseNo:"Licence No is required"
                           }
                         : itemData
                 )
@@ -277,9 +288,10 @@ const PartnerComplianceMove = () => {
             return validateMandatoryFields(dateArray,item);
          });
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+         const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
          let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
          console.log("YUUUUUUUUU",Invalid,newvalidate);
-         if (Invalid && newvalidate) {
+         if (Invalid && newvalidate && newvalidateLicence) {
          PostValidTillDetails(dateArray)
          console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
@@ -475,11 +487,11 @@ const PartnerComplianceMove = () => {
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                        {/* {item?.messageText && (
-                                                            <p className="text-[red]">
-                                                                {item?.messageText}
-                                                            </p>
-                                                        )} */}
+                                                    {item?.licenseNo && (
+                                                        <p className="text-[red]">
+                                                            {item?.licenseNo}
+                                                        </p>
+                                                    )}
                                                 </FormItem>
                                             </div>
                                         </>

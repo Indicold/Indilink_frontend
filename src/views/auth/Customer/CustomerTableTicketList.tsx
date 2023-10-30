@@ -55,7 +55,7 @@ const CustomerTableTicketList = () => {
                 </>
             ):
             
-            <DataNotFound />
+            <DataNotFound title="Create Query" url="/collapse-menu-item-view-1" />
             
             }
             <div>
