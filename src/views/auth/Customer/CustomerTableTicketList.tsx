@@ -6,6 +6,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import React from 'react'
 import TableLayoutCustomer from './TableLayoutCustomer'
 import CustomerGeneralTableList from './CustomerGeneralTableList'
+import DataNotFound from '@/components/layouts/DataNotFound'
 
 const CustomerTableTicketList = () => {
     const { token }: any = getToken()
@@ -41,7 +42,7 @@ const CustomerTableTicketList = () => {
 
     return (
         <>
-            {!AllStore?.data?.length > 0 ? (
+            {AllStore?.data?.length > 0 ? (
                 <>
                     <h4 className="text-head-title text-center">Ticket List</h4>
                     <TableLayoutCustomer fetchDataA={fetchDataA}
@@ -54,7 +55,7 @@ const CustomerTableTicketList = () => {
                 </>
             ):
             
-            <DataNotFound />
+            <DataNotFound title="Create Query" url="/collapse-menu-item-view-1" />
             
             }
             <div>

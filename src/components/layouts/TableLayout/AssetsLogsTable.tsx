@@ -16,19 +16,19 @@ import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
 const tableHead = {
   asset_id: "Asset ID",
-  is_registration_complete: "Registration",
-  is_verified: "Verification Status",
+  transition_type: "Transition Type",
+  transition_by: "Transition By",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
   created_at: "Created At",
   updated_at: "Updated At",
-  assetType: "Asset Type",
+  comment: "Comments",
   Action: "Action"
 };
 
-// The TableLayout component takes a prop called AllStore, presumably for rendering data.
+// The AssetsLogsTable component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayout = ({ AllStore,fetchApi }: any) => {
+const AssetsLogsTable = ({ AllStore,fetchApi }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
@@ -126,10 +126,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }
   }
-const handleLogs=(rowData:any)=>{
-  setRowData(rowData)
-  setLogsModal(true)
-}
+
   const handleSubmit=(rowData:any)=>{
     console.log("ttttttt",rowData);
     
@@ -169,7 +166,6 @@ const handleDocs=(rowData:any)=>{
           {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
-          <Button className='!p-2' onClick={()=>handleLogs(rowData)}>Logs</Button>
           <Button className='!p-2' onClick={()=>handleSubmit(rowData)}>Submit</Button>
         </td>;
       }
@@ -209,7 +205,6 @@ fetchApi();
   return (
     <>
     <ToastContainer />
-    {logsModal && <AssetsLogsModal setModal={setLogsModal} RowData={RowData} />}
     {Alert &&
      <div
                     id="authentication-modal"
@@ -259,7 +254,7 @@ fetchApi();
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className=''>
+      <table className='w-full'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
@@ -277,4 +272,4 @@ fetchApi();
   )
 }
 
-export default TableLayout;
+export default AssetsLogsTable;

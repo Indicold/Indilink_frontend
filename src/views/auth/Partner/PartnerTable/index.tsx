@@ -4,6 +4,7 @@
  * imports React.
  */
 import LoaderSpinner from '@/components/LoaderSpinner'
+import DataNotFound from '@/components/layouts/DataNotFound'
 import TableLayout from '@/components/layouts/TableLayout'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
@@ -44,7 +45,7 @@ console.log("TTTTTUUUUUU",AllStore);
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
-            ) : <h3 className='mx-auto my-auto'>No Data Found</h3>}
+            ) :  <DataNotFound title="Create Assets" url="/collapse-menu-item-view-1" />}
             <div>
                 {(moveLoad || prepLoad || StoreLoad) && <LoaderSpinner />}
             </div>
