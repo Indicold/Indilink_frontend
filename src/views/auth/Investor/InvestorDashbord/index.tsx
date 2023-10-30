@@ -7,8 +7,12 @@
 import CardLayout from '@/components/layouts/Dashbord/CardLayout';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
+
+   
 
 const InvestorDashbord = () => {
+    const { t, i18n }:any = useTranslation();
     const navigate = useNavigate()
     /**
      * The handleChange function sets the user_type in localStorage based on the selected value and
@@ -38,7 +42,7 @@ const InvestorDashbord = () => {
     return (
         <>
           
-            <CardLayout title="Investor Dashboard" />
+            <CardLayout title= {t("Investor Dashboard")} />
         </>
     )
 }

@@ -566,7 +566,7 @@ const StoreRegistration = () => {
     }
 
     return (
-        <div className='flex'>
+        <div className='flex'>  
             <div className='w-1/6'>
 
 

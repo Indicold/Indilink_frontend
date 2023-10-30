@@ -85,7 +85,7 @@ const AuthResponse=useSelector((state:any)=>state?.auth)
 
 
     <div className="text-center w-full">
-      <h6 className="title-color">What is Lorem Ipsum?</h6>
+      <h6 className="title-color">What is Lorem Ipsum ?</h6>
       <div className="flex justify-center">
       <p className='text-field'>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
       </div>
@@ -134,21 +134,21 @@ const AuthResponse=useSelector((state:any)=>state?.auth)
 </div>
             </div>
             
-            <div className="col-span-3 flex flex-col justify-center items-center bg-white dark:bg-gray-800">
-            <div className="xl:min-w-[450px] px-8">
-  {AuthResponse?.apiLoginPostReducer?.loading ? (
-    <Loading loading={true} />
-  ) : (
-    <div className="mb-8">
-      {content}
-      {children
-        ? React.cloneElement(children as React.ReactElement, {
-            ...rest,
-          })
-        : null}
-    </div>
-  )}
-</div>
+            <div className="col-span-3 flex flex-col p-4 bg-white dark:bg-gray-800">
+                <div className=" lg:p-10">
+                   {AuthResponse?.apiLoginPostReducer?.loading ? (
+                   <Loading loading={true} />
+                   ) : (
+                       <div className="">
+                            {content}
+                            {children
+                            ? React.cloneElement(children as React.ReactElement, {
+                            ...rest,
+                            })
+                           : null}
+                        </div>
+                    )}
+                </div>
 
             </div>
         </div>

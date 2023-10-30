@@ -4,6 +4,7 @@ import { useState } from "react"
 import BussinessTypeModal from "./auth/BussinessTypeModal"
 import { useNavigate } from "react-router-dom"
 import CardLayout from "@/components/layouts/Dashbord/CardLayout"
+import { useTranslation } from 'react-i18next'
 
 const Home = () => {
     const [authModal,setAuthModal]=useState<any>(true)
@@ -24,12 +25,14 @@ const Home = () => {
         }
 
     }
+
+    const { t, i18n }:any = useTranslation();
     return(
         <>
         {authModal && !localStorage.getItem('user_type') && <UserTypeModal setAuthModal={setAuthModal}/> }
       
      
-            <CardLayout title="Customer Dashboard" />
+            <CardLayout title=  {t("Customer Dashboard")}/>
         </>
     )
 }
