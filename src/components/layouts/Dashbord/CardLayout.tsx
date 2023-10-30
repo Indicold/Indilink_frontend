@@ -257,7 +257,7 @@ const CardLayout = ({title}:any) => {
 <section className="grid gap-6 my-6 w-[35%]  bg-white shadow rounded-2xl">
 <h3 className='ml-4 mt-4 mb-0'>Audit List</h3>
 
-        <div className="p-6 pt-0  flex flex-col" >
+        <div className="p-6 pt-0  flex flex-col">
        {[1,2,3,4]?.map((item:any,index:any)=>(
      <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
      <div className="flex-auto p-4">

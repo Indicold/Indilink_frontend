@@ -168,7 +168,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                          disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="country_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
