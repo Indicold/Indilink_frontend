@@ -156,8 +156,8 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="w-1/2 mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                      <Field
                                             type="text"
                                             autoComplete="off"
@@ -174,7 +174,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="w-1/2 mx-auto">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             autoComplete="off"
@@ -193,8 +193,8 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem label="KVA*" className="w-1/2 mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="KVA*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                        <Field
                                             type="number"
                                             autoComplete="off"
@@ -211,7 +211,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.kva}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Year*" className="w-1/2 mx-auto">
+                                    <FormItem label="Year*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <select
                                             id="countries"
                                             name="year"
@@ -233,8 +233,8 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <div className="w-1/2">
+                                <div className=" m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <div className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto2">
 
                                     </div>
                                 </div>
