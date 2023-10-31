@@ -499,7 +499,7 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "View" })
         }else if (type === 'IOT') {
             setIOTModal(true)
-            setCommanData({ ...rowData, type: "View" })
+            setCommanData({ ...rowData, types: "View" })
         }else if (type === 'IT') {
             setITModal(true)
             setCommanData({ ...rowData, types: "View" })
@@ -544,7 +544,7 @@ const StoreRegistration = () => {
         }
         else if (type === 'IOT') {
             setIOTModal(true)
-            setCommanData({ ...rowData, type: "Edit" })
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'IT') {
             setITModal(true)
@@ -566,7 +566,7 @@ const StoreRegistration = () => {
     }
 
     return (
-        <div className='flex'>
+        <div className='flex'>  
             <div className='w-1/6'>
 
 

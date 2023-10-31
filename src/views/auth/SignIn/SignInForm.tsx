@@ -305,9 +305,9 @@ const SignInForm = (props: SignInFormProps) => {
                             </ActionLink>
                         </div>
                         <div className="flex mt-5">
-                            <hr className='w-[40%] my-auto mx-1' />
+                            <hr className='w-[50%] my-auto mx-1' />
                             Or
-                            <hr className='w-[40%] my-auto mx-1' />
+                            <hr className='w-[50%] my-auto mx-1' />
                         </div>
                         <div className=" mx-auto flex mt-5">
                             <Button

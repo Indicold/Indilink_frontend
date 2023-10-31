@@ -119,12 +119,12 @@ const SignUpForm = (props: SignUpFormProps) => {
                 }}
                 onSubmit={handlesubmit}
             >
-                <Form className="signup-form sm:w-fit md:screen" onSubmit={handlesubmit}>
+                <Form className="signup-form w-[100%]" onSubmit={handlesubmit}>
                     <FormContainer>
                         <div className="sm:flex md:flex lx:flex" >
                             <FormItem
-                                label="First Name"
-                                className="me-auto text-label-title"
+                                label="First Name" 
+                                className="me-auto w-[100%] text-label-title"
                                 asterisk={true}
                             >
                                 <Field
@@ -143,7 +143,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             
                             <FormItem
                                 label="Last Name"
-                                className="me-auto text-label-title"
+                                className="me-auto text-label-title w-[100%]"
                             >
                                 <Field
                                     type="text"
@@ -161,7 +161,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         <div className="">
                             <FormItem
                                 label="Email Address"
-                                className="w-full me-auto text-label-title "
+                                className="w-[100%] text-label-title "
                                 asterisk={true}
                             >
                                 <Field
@@ -205,7 +205,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                         <div className="sm:fle md:flex xl:flex">
                             <FormItem
                                 label="Password"
-                                className="me-auto text-label-title !mb-0"
+                                className="me-auto w-[100%] text-label-title !mb-0"
                                 asterisk={true}
                             >
                                 <Field
@@ -223,7 +223,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                             <FormItem
                                 label="Confirm Password"
-                                className="me-auto text-label-title"
+                                className="me-auto w-[100%] text-label-title"
                                 asterisk={true}
                             >
                                 <Field

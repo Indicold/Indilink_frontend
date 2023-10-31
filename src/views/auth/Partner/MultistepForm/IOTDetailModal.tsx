@@ -26,10 +26,10 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
-    const [data, setData] = useState({})
-    const [errors, setErrors] = useState({})
+    const [data, setData] = useState<any>({})
+    const [errors, setErrors] = useState<any>({})
     const {id}: any = useParams();
-    const isDisabled:any=commanData?.type=='View' ? true: false;
+    const isDisabled:any=commanData?.types=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/iot-devices/${commanData?.id}`)
 
     useEffect(()=>{
@@ -56,7 +56,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
      * React application.
      */
     const handlesave = () => {
-        if(commanData?.type==='Edit'){
+        if(commanData?.types==='Edit'){
             updateData(data)
         }else{
             if(validateIOTForm(data, setErrors)) {
@@ -74,7 +74,7 @@ const IOTDetailModal: React.FC<MajorityHolderModalProps> = ({
        
     }
     useEffect(()=>{
-        if(commanData?.type=='Edit' || commanData?.type=='View'){
+        if(commanData?.types=='Edit' || commanData?.types=='View'){
             setData(commanData)
         }
   

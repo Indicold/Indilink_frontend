@@ -27,7 +27,14 @@ const DataNotFound = ({title,url}:any) => {
                     </div>}
                     <div></div>
                 </div>
-            </div>
+                <div className='ml-[30%]'>0.00</div>
+               </div>
+
+            
+
+              
+
+     
         </>
     )
 }
