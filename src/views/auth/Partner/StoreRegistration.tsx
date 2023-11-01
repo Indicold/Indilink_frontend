@@ -468,8 +468,10 @@ const StoreRegistration = () => {
         const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
         setPhone(phoneNumberWithoutCountryCode)
         if (isChecked && profileData?.data) {
+            setIsChecked(true)
             setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
         } else {
+            setIsChecked(false)
             setPhone('');
             setData({ ...dataa, facility_manager_name: ``, facility_manager_contact: '' })
 

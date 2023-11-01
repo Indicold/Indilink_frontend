@@ -182,7 +182,7 @@ console.log("VVVVVVV",id);
         } else if (isDisabled) {
             // If the form is disabled, navigate to the specified route with state
           setTimeout(()=>{
-            navigate(`/partner-bussiness-type-compliance/${id}`, {
+            navigate(`/partner-move-compliance/${id}`, {
                 state: isDisabled,
             })
           },2000)
