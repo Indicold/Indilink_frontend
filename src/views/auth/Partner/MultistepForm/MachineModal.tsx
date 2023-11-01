@@ -78,6 +78,7 @@ useEffect(()=>{
     if(PutApiResponse?.status===200){
         messageView("Data updated successfully !")
         setModal(false)
+        fetchMachineList();
     }else{
         messageView(PutApiResponse?.message)
     }
