@@ -391,17 +391,7 @@ const StoreRegistration = () => {
 
     // Use useEffect to update form data when fetchDetails changes
 
-    useEffect(() => {
-
-        if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
-            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
-            setPhone(phoneNumberWithoutCountryCode)
-            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
-                setIsChecked(true)
-            }
-            setData(fetchDetails?.data)
-        }
-    }, [fetchDetails])
+  
     useEffect(() => {
 
         const newState: any = { ...dataa };
@@ -584,7 +574,17 @@ const StoreRegistration = () => {
         }
 
     }
+    useEffect(() => {
 
+        if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
+            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
+            setPhone(phoneNumberWithoutCountryCode)
+            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+                setIsChecked(true)
+            }
+            setData(fetchDetails?.data)
+        }
+    }, [fetchDetails?.data])
     return (
         <div className='flex'>  
             <div className='w-1/6'>
@@ -1560,6 +1560,8 @@ const StoreRegistration = () => {
                                             {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
                                         <div className='flex'>
+                                            {console.log("GGHGHGHGH",dataa)
+                                            }
                                         {dataa?.three_d_view_of_asset?.length>0 && dataa?.three_d_view_of_asset?.map((file: any, index: number) => {                                           
                                            const imageUrl :any=dataa?.filetype==='file' ?  URL?.createObjectURL(file) :file;
 
