@@ -5,7 +5,7 @@ const PartnerBusinessTypeSuccess = () => {
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(()=>{
-            navigate('/asset_list')
+            navigate('/admin-assets')
         }, 7000)
     })
     return (

@@ -12,7 +12,7 @@ import DocumentViewModal from '@/views/auth/Partner/AssetsDocumentsTable/Documen
 import DocumentEditModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentEdit';
 // Defines the table header with column names.
 const tableHead = {
-    id: "ID",
+  Id: "ID",
     asset_owner: "Owner",
     doc_id: "Document ID",
   // is_deleted: "Is Deleted",
@@ -27,7 +27,10 @@ const tableHead = {
 // The DocumentTableList component takes a prop called AllStore, presumably for rendering data.
 
 const DocumentTableList = ({ AllStore }: any) => {
-  let allData: any = AllStore;
+  let allData: any = AllStore?.map((item:any, index:any) => ({
+    ...item,
+    Id: index + 1
+  }));
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
   const [modal,setModal]=useState<any>(false)
