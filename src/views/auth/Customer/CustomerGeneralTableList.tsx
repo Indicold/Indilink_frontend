@@ -161,8 +161,8 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
       if (key === 'Action') {
         return <td className='text-center' key={i} >
           {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
-          <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={()=>handleDelete(rowData?.master_query_id)} >Close</Button>
+          {/* <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button> */}
+          <Button className='!p-2' disabled={rowData?.is_deleted===1} onClick={()=>handleDelete(rowData?.master_query_id)} >Close</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
