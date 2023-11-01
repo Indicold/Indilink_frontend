@@ -538,7 +538,7 @@ const array1Keys = array1?.map((item) => item?.key);
 
     }, [fetchDetails?.data])
     return (
-        <div className='flex'>
+        <div className='flex lg:flex-row md:flex-row flex-col'>
             <ToastContainer />
 
             <div className='w-1/6'>
@@ -571,7 +571,7 @@ const array1Keys = array1?.map((item) => item?.key);
 
             </div>
 
-            <div className="bg-white w-5/6">
+            <div className="bg-white w-full md:w-5/6 lg-w-5/6">
                 <ArrowBackIcon role='button' onClick={() => navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">
                     Compliance Details
@@ -586,7 +586,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                             <FormItem
                                                 label={item?.label}
                                                 key={index}
-                                                className=" w-1/2 rounded-lg pl-[22px] text-label-title "
+                                                className=" md:w-1/2 lg:w-1/2 w-[100%] rounded-lg pl-[22px] text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
