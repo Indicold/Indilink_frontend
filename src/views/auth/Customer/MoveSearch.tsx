@@ -219,10 +219,10 @@ const MoveSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">{t("Origin Location")}</h6>
-                                <div className="flex bg-gray-100 p-2 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
                                         label= {t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -240,7 +240,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("From*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -257,10 +257,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("PIN Code")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -275,7 +275,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -290,10 +290,10 @@ const MoveSearch = () => {
                                     </FormItem>
                                 </div>
                                 <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location*")} </h6>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -311,7 +311,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label=  {t("To*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -328,10 +328,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("PIN Code")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -346,7 +346,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -360,10 +360,10 @@ const MoveSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Load Quantity*")}
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -392,7 +392,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Broad Category*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -409,10 +409,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Product Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -430,10 +430,10 @@ const MoveSearch = () => {
                                    
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -450,7 +450,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -468,10 +468,10 @@ const MoveSearch = () => {
                                 </div>
                       {location?.state?.extraForm &&    <>
 
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Status Id"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
                                         <select
@@ -490,7 +490,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Comment")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -509,10 +509,10 @@ const MoveSearch = () => {
                                 </div>
 
 
-                                <div className="flex">
+                                <div className="md:flex lg:flex">
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -528,7 +528,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}

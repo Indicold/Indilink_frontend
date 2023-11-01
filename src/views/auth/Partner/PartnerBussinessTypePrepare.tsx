@@ -194,10 +194,10 @@ const PartnerBussinessTypePrepare = () => {
        
     }, [ProductTypeList?.data])
     return (
-        <div className='flex'>
+        <div className='flexlg:flex md:flex'>
             <ToastContainer />
 
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -234,7 +234,7 @@ const PartnerBussinessTypePrepare = () => {
                 fetchDetailsloading ? (
                 <LoaderSpinner />
             ) : (
-                <div className="bg-white w-5/6">
+                <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
                     <ArrowBackIcon onClick={() => navigate(-1)} />
                     <h4 className=" mb-2 text-head-title text-center">
                         Prepare
@@ -252,12 +252,12 @@ const PartnerBussinessTypePrepare = () => {
                                     />
                                 )}
                                 <FormContainer>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="City*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <div className="border flex  w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
                                                     className="w-full focus:outline-0"
@@ -294,7 +294,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Address*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -314,10 +314,10 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                     </div>
 
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Total Hourly Throughput(MT)*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -341,7 +341,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Types Of Prepare*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
@@ -382,10 +382,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Product Category*"
-                                            className="rounded-lg pl-[22px] w-1/2"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Autocomplete
                                                 multiple
@@ -414,7 +414,10 @@ const PartnerBussinessTypePrepare = () => {
                                                 renderInput={(params) => (
                                                     <TextField {...params}
                                                         name="product_category_ids"
-                                                        placeholder="Product Category" />
+                                                        placeholder="Product Category"
+                                                       
+                                                     />
+                                                    
                                                 )}
                                             />
                                             {/* <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -457,7 +460,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Product Type"
-                                            className="mx-auto !w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Autocomplete
                                                 multiple
@@ -529,10 +532,10 @@ const PartnerBussinessTypePrepare = () => {
 
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Throughput(MT)*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -567,7 +570,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Avg. case size*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -601,10 +604,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="No of Docks"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -627,9 +630,9 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Area (Square Feet)"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
                                                     className="w-full border-0 focus:outline-0"
                                                     type='number'
@@ -697,10 +700,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem> */}
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Temperature*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
                                                 <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
@@ -724,7 +727,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Batch Size*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -759,11 +762,11 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                     </div>
 
-                                    <div className="flex">
+                                    <div className=" m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
 
                                         <FormItem
                                             // label="Machines"
-                                            className=" w-1/2 mx-auto mt-4 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Button
                                                 style={{ borderRadius: '13px' }}

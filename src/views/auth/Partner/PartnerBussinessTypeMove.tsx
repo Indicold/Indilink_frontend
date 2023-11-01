@@ -291,7 +291,7 @@ console.log("VVVVVVV",id);
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            onChange={(e: any) =>
+                                            onChange={(e: any) =>r
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
@@ -314,7 +314,7 @@ console.log("VVVVVVV",id);
                                                 handleChange(e)
                                             }
                                             name="vehicle_model_id"
-                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Model</option>
                                             {vehicalModal &&

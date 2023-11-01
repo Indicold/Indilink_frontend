@@ -124,8 +124,8 @@ useEffect(()=>{
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Machine</h6>
-                                <div className="flex">
-                                <FormItem label="Name" className="mx-auto w-1/2">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <FormItem label="Name" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -142,7 +142,7 @@ useEffect(()=>{
                                
                                     <FormItem
                                         label="Type of Machine"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="text"
@@ -158,9 +158,9 @@ useEffect(()=>{
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     
-                                    <FormItem label="Make" className="mx-auto w-1/2">
+                                    <FormItem label="Make" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -174,7 +174,7 @@ useEffect(()=>{
                                             component={Input}
                                         />
                                     </FormItem>
-                                    <FormItem label="Model" className="mx-auto w-1/2">
+                                    <FormItem label="Model" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -189,11 +189,11 @@ useEffect(()=>{
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                
                                     <FormItem
                                         label="Purpose"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="text"
@@ -210,7 +210,7 @@ useEffect(()=>{
                                     </FormItem>
                                     <FormItem
                                         label="Power requirement"
-                                        className="w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="number"
@@ -227,7 +227,7 @@ useEffect(()=>{
                                     </FormItem>
                                 </div>
                               
-                                <div className='flex'>
+                                <div className=' m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

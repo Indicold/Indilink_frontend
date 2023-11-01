@@ -204,16 +204,16 @@ const { t, i18n }:any = useTranslation();
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Product Category")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProductCategory && ListOfProductCategory?.data?.map((item: any, index: any) => (
@@ -225,7 +225,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label= {t("Broad Category")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -242,10 +242,10 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Product Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -263,13 +263,13 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label={t("Service Category")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="service_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfServiceCategory && ListOfServiceCategory?.data?.filter((item: any) => [12, 13, 14, 15, 16, 17].includes(item?.id)).map((item: any, index: any) => (
@@ -280,16 +280,16 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.service_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="country_id"
-                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-[100%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -299,10 +299,10 @@ const { t, i18n }:any = useTranslation();
                                         </select>
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
-                                    <div className="flex mx-auto w-1/2 rounded-lg pl-[22px]">
+                                    <div className=" md:flex lg:flex pl-3 w-[100%] text-label-title m-auto">
                                         <FormItem
                                             label={t("State*")}
-                                            className="mx-auto w-1/2 rounded-lg"
+                                            className=" w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
@@ -320,7 +320,7 @@ const { t, i18n }:any = useTranslation();
                                         </FormItem>
                                         <FormItem
                                             label= {t("City*")} 
-                                            className="mx-auto w-1/2 rounded-lg"
+                                            className="w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
@@ -338,10 +338,10 @@ const { t, i18n }:any = useTranslation();
                                         </FormItem>
                                     </div>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Throughput")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -370,7 +370,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label=  {t("Avg. Case Size")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -400,10 +400,10 @@ const { t, i18n }:any = useTranslation();
 
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Estimated Docks")}
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -418,7 +418,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label={t("Estimated Dispatches")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -432,19 +432,21 @@ const { t, i18n }:any = useTranslation();
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex ">
+                                <div className="lg:flex md:flex ">
 
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Temperature")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%]  text-label-title m-auto"
                                     >
+                                        <div className='lg:flex gap-2 m-auto md:flex'>
+                                        <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_min"
-                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option value='0'>Minimum</option>
                                             {Array(3).fill(0).map((_, index) => (
@@ -455,24 +457,32 @@ const { t, i18n }:any = useTranslation();
 
 
                                         </select>
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="temp_max"
-                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                        >
-                                            <option>Maximum</option>
-                                            {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index * 5 + 5).map((item: any, index: any) => (
-                                                <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
-                                            ))}
+                                        </div>
+                                            <div className='w-[100%] m-auto pt-2 lg:w-1/2 md:w-1/2'>
+                                            <select
+                                                disabled={isDisabled}
+                                                onChange={(e: any) => handleChange(e)}
+                                                name="temp_max"
+                                                className="p-2 border w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            >
+                                                <option>Maximum</option>
+                                                {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index * 5 + 5).map((item: any, index: any) => (
+                                                    <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
+                                                ))}
 
-                                        </select>
+                                            </select>
+                                            </div>
+                                        </div>
+
+                                       
+                                        
+                                      
                                         <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max : errors.temp_min}</p>
 
                                     </FormItem>
                                     <FormItem
                                         label= {t("Date of Start")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%]  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -487,10 +497,10 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                 </div>
                              {location?.state?.extraForm &&   <>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Status Id")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
                                         <select
@@ -509,7 +519,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label={t("Comment")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -526,10 +536,10 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Contract Name")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -545,7 +555,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label= {t("Contract Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -562,10 +572,10 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -581,7 +591,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -598,10 +608,10 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Contract Upload")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <input
                                             disabled={isDisabled}
@@ -622,7 +632,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 </>}
 
-                                <div className="flex mt-4 justify-center w-[310px] mx-auto">
+                                <div className="lg:flex md:flex mt-4 justify-center w-[310px] mx-auto">
                                     {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
