@@ -225,7 +225,8 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 </h4>
                                 <p className='text-center'>{t("You may also change later")}</p>
 
-                                <div className="justify-around grid grid-cols-4 grid-flow-col gap-2">
+                                <div className={`justify-around grid ${localStorage.getItem('user_type') ===
+                                        'Customer' ? 'grid-cols-4' :'grid-cols-3'}  grid-flow-col gap-2`}>
                        
                                     {data ? (
                                         
