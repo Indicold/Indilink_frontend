@@ -72,6 +72,7 @@ const PartnerComplianceMove = () => {
             key: 'insurance_policy_image',
             key_text: 'insurance_policy_text',
             key_lic:"insurance_policy_license",
+            key_status:"insurance_policy_status",
             view: false,
             url: null,
             valid_till: null,
@@ -83,6 +84,7 @@ const PartnerComplianceMove = () => {
             key: 'permit_image',
             key_text: 'permit_validity_text',
             key_lic:"permit_license",
+            key_status:"permit_status",
             view: false,
             url: null,
             valid_till: null,
@@ -94,6 +96,7 @@ const PartnerComplianceMove = () => {
             key: 'pucc_image',
             key_lic:"pucc_license",
             key_text: 'pucc_validity_text',
+            key_status:"pucc_status",
             view: false,
             url: null,
             valid_till: null,
@@ -325,6 +328,21 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+    useEffect(() => {
+        if (fetchDetails?.data !== null) {
+            const updatedArray = array.map((item: any) =>
+                true && {
+                    ...item,
+                    valid_till: fetchDetails?.data[item?.key_text],
+                    doc_status:fetchDetails?.data[item?.key_status],
+                    // key_lic: fetchDetails?.data[item?.key_lic]
+
+                }
+            )
+            setArray(updatedArray)
+        }
+
+    }, [fetchDetails?.data])
     console.log('DDDDDDDD', array)
     useEffect(() => {
 
@@ -397,7 +415,7 @@ const PartnerComplianceMove = () => {
                     Compliance Details
                 </h4>
                 <div>
-                    <Formik>
+                <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <div className="flex flex-wrap">
@@ -406,7 +424,7 @@ const PartnerComplianceMove = () => {
                                            <FormItem
                                             label={item?.label}
                                             key={index}
-                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
+                                            className="rounded-lg pl-[6px] text-label-title "
                                         >
                                             <input
                                                 disabled={isDisabled}
@@ -493,6 +511,29 @@ const PartnerComplianceMove = () => {
                                                         </p>
                                                     )}
                                                 </FormItem>
+                                                <FormItem
+                                        label="Status"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <select
+                                            disabled
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            name={`${item?.key_status}`}
+                                        >
+                                            <option disabled selected>Select Status</option>
+                                            
+                                                        <option
+                                                            value={1}
+                                                            selected={item?.doc_status===1}
+                                                          
+                                                        >
+                                                         Approved
+                                                        </option>
+                                                
+                                            <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
+                                        </select>
+                                      
+                                    </FormItem>
                                             </div>
                                         </>
                                      
