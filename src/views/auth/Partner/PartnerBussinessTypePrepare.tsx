@@ -26,6 +26,14 @@ import 'react-accessible-accordion/dist/fancy-example.css' // Import CSS styles 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Autocomplete, TextField } from '@mui/material'
 import MachineTable from './MachineTable';
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItemButton,
+    AccordionItemHeading,
+    AccordionItemPanel,
+} from 'react-accessible-accordion'
+
 const tableHead = {
     id: "ID",
     type_of_machine: "Machine Type",
@@ -193,6 +201,9 @@ const PartnerBussinessTypePrepare = () => {
         }
        
     }, [ProductTypeList?.data])
+    useEffect(() => {
+        fetchMachineList();
+    }, [machineModal, MachineList]);
     return (
         <div className='flex'>
             <ToastContainer />
@@ -759,6 +770,20 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                     </div>
 
+                                    <Accordion>
+                                        <AccordionItem>
+                                            <AccordionItemHeading>
+                                                <AccordionItemButton>
+                                                    Machines
+                                                </AccordionItemButton>
+                                            </AccordionItemHeading>
+                                            <AccordionItemPanel>
+                                            {MachineList?.data?.machines?.length > 0 &&
+                                                    <MachineTable AllStore={MachineList?.data?.machines} tableHead={tableHead}
+                                                        modal={machineModal}
+                                                        setFormData={setFormData}
+                                                        setModal={setMachineModal} />
+                                                }
                                     <div className="flex">
 
                                         <FormItem
@@ -767,15 +792,13 @@ const PartnerBussinessTypePrepare = () => {
                                         >
                                             <Button
                                                 style={{ borderRadius: '13px' }}
-                                                block
                                                 disabled={isDisabled}
-                                                variant="solid"
                                                 type="button"
                                                 onClick={() =>{
                                                     setFormData({});
                                                     setMachineModal(true)
                                                 }}
-                                                className="indigo-btn w-[300px] mx-auto rounded-[30px]"
+                                                className="text-white indigo-btn mx-auto rounded-[30px] px-[65px] py-4 my-2"
                                             >
                                                 Add Machine
                                             </Button>
@@ -792,12 +815,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
-                                    {MachineList?.data?.machines?.length>0 && 
-                                    <MachineTable AllStore={MachineList?.data?.machines} tableHead={tableHead} 
-                                           modal={machineModal}
-                                           setFormData={setFormData}
-                                        setModal={setMachineModal} />
-}        
+                                            </AccordionItemPanel>
+                                        </AccordionItem>
+                                    </Accordion>
+
                                     <div className="flex justify-center">
                                         <Button
                                             style={{ borderRadius: '13px' }}

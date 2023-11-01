@@ -170,7 +170,7 @@ const handleDocs=(rowData:any)=>{
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
           <Button className='!p-2' onClick={()=>handleLogs(rowData)}>Logs</Button>
-          <Button className='!p-2' onClick={()=>handleSubmit(rowData)}>Submit</Button>
+          {rowData?.status==='Final' ? null : <Button className='!p-2' onClick={()=>handleSubmit(rowData)}>Submit</Button>}
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
