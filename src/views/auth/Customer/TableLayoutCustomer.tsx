@@ -66,6 +66,16 @@ const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
     }
   }, [value]);
 
+  React.useEffect(() => {
+    // Update the displayed data when the AllStore prop changes.
+    if (allData) {
+      const to = countPerPage * currentPage;
+      const from = to - countPerPage; 
+        const newCollection = cloneDeep(allData.slice(from, to));
+        setCollection(newCollection);
+    }
+  }, [allData]);
+
   const updatePage = (p: any) => {
     // Function to update the current page of data.
     setCurrentPage(p);
@@ -124,6 +134,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
 
 })
   .catch(error => console.log('error', error));
+  fetchDataA();
   }
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the
