@@ -120,9 +120,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
         if (newGst.length >= 10) {
-            console.log("5765575");
-            
+                        
             setDisabled(false);
+        } else {
+            setDisabled(true); 
         }
       };
 
