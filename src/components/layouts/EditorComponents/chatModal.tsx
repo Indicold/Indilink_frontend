@@ -3,18 +3,18 @@ import usePostApi from "@/store/customeHook/postApi";
 import usePutApi from "@/store/customeHook/putApi";
 import { TokenInfo, getToken } from "@/store/customeHook/token";
 import useApiFetch from "@/store/customeHook/useApiFetch";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Field, Form, Formik } from "formik";
 import { useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,EditorData,editorState,contentHistory,convertToRaw}:any) => {
   console.log("doc_iddoc_iddoc_iddoc_id",modal);
-  
+    const {id}:any=useParams()
     const {user_id}:any=TokenInfo();
    let _idVal = localStorage.getItem('_id')
     const [formData,setFormData]=useState<any>({text:""});
-    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`auth/legal/document/${data?.doc_id}`)
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`legal/document/${data?.doc_id}`)
 
     const [open,setOpen]=useState<any>(modal)
     const handleChange=(e:any)=>{
@@ -34,6 +34,7 @@ const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,Edit
         let date = new Date();
         const contentState: any = editorState.getCurrentContent();
         const body: any = {
+            asset_id:id,
           title: EditorData?.data?.title,
           userId: EditorData?.data?.author?.user_id.toString() || user_id.toString(),
           contentHistory: contentHistory,

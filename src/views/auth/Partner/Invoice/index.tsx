@@ -1,10 +1,63 @@
-import { onkeyDown } from '@/store/customeHook/validate';
+import useApiFetch from '@/store/customeHook/useApiFetch';
+import { messageView, onkeyDown } from '@/store/customeHook/validate';
+import { apiUrl, getToken } from '@/store/token';
 import React, { useState } from 'react'
+import { ToastContainer } from 'react-toastify';
+import InvoiceTableList from './InvoiceTableList';
 
 const Invoice = () => {
+    const {token}:any=getToken();
     const [modal, setModal] = useState<any>(false);
+    const [formData,setFormData]=useState<any>({
+        invoice_doc:"",
+        invoice_amount:""
+    })
+    const { data: ListOfInvoice, loading: LIloading, error: LIerror } =
+    useApiFetch<any>(`partner/invoices`, token);
+
+    const handleChange=(e:any)=>{
+        const newData:any={...formData};
+        if(e.target.name==='invoice_doc'){
+            newData[e.target.name]=e.target.files[0]; 
+        }else{
+            newData[e.target.name]=e.target.value;
+        }
+           console.log("6HYFGHKJHJH",newData);
+           
+        setFormData(newData)
+  
+    }
+    const handleSave=(e:any)=>{
+        var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var formdata = new FormData();
+formdata.append("invoice_doc", formData?.invoice_doc);
+formdata.append("invoice_amount", formData?.invoice_amount);
+
+var requestOptions :any= {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/partner/invoice`, requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+    if(result?.status===200){
+        messageView("Invoice Uploaded Successfully !")
+        setModal(false)
+    }else{
+        messageView(result?.message)
+    }
+
+})
+  .catch(error => console.log('error', error));
+    }
     return (
         <>
+        <ToastContainer />
           {modal &&  <div
                 id="authentication-modal"
                 tabIndex={-1}
@@ -86,13 +139,13 @@ const Invoice = () => {
                                                     SVG, PNG, JPG or GIF (MAX. 800x400px)
                                                 </p>
                                             </div>
-                                            <input id="dropzone-file" type="file" className="hidden" />
+                                            <input id="dropzone-file" name='invoice_doc'  onChange={(e:any)=>handleChange(e)} type="file" className="hidden" />
                                         </label>
                                     </div>
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium
                                          text-gray-900 dark:text-white text-start mt-4">Ammount</label>
-                                        <input type="number" onKeyDown={onkeyDown} id="amount"
+                                        <input type="number" onKeyDown={onkeyDown} name='invoice_amount' onChange={(e:any)=>handleChange(e)} id="amount"
                                             className="bg-gray-50 border border-gray-300 text-gray-900
              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
@@ -109,7 +162,7 @@ const Invoice = () => {
 
                                 <div className='m-auto mt-7 text-center w-[100%]'>
 
-                                    <button className='bg-green-600 p-4 w-[90%] rounded-3xl text-white '>Submit</button>
+                                    <button className='bg-green-600 p-4 w-[90%] rounded-3xl text-white ' onClick={handleSave}>Submit</button>
 
                                 </div>
 
@@ -125,7 +178,7 @@ const Invoice = () => {
 
                     <h5><b>Invoice</b></h5>
 
-                    <p>Please add the Invoice</p>
+                    {/* <p>Please add the Invoice</p> */}
 
                 </div>
 
@@ -143,8 +196,8 @@ const Invoice = () => {
                 </div>
 
             </div>
-
-            <div className=' bg-white  p-4  m-auto w-full h-full'>
+{ListOfInvoice?.data?.length>0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
+            :<div className=' bg-white  p-4  m-auto w-full h-full'>
 
                 <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
 
@@ -172,7 +225,7 @@ const Invoice = () => {
 
                 </div>
 
-            </div>
+            </div>}
 
         </>
     )

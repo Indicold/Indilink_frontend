@@ -82,13 +82,13 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     
 
     return (
-        <div className={`{className} w-80 -mt-[350px] sm:-mt-[350px] lg:-mt-[290px] lg:w-[400px]`}>
-            <img className="lg:w-[130px] mt-4 md:w-[25%] w-3/6 mb-4 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
+        <div className='p-2 w-[100%]'> 
+            <img className="lg:w-[130px] mt-4 md:w-[25%] w-1/2 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
              <ToastContainer />
-            <div className="mb-6">
+            <div className="mb-6 ">
                 {emailSent ? (
                     <>
-                        <h3 className="mb-1">Check your email</h3>
+                        <h3 className="mt-2">Check your email</h3>
                         <p>
                             We have sent a password recovery instruction to your
                             email
@@ -96,7 +96,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                     </>
                 ) : (
                     <>
-                        <h4 className="mb-1 text-head-title">Forgot Password?</h4>
+                        <h4 className="mt-2 text-head-title">Forgot Password?</h4>
                         {/* <p className='!text-[#103492]'>
                             Please enter your email address to receive a
                             verification code
@@ -125,7 +125,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 label='Email address*'
                                     invalid={errors.email && touched.email}
                                     errorMessage={errors.email}
-                                    className='w-full'
+                                    className='w-[100%]'
                                 >
                                     <Field
                                         type="email"
@@ -133,6 +133,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                         name="email"
                                         placeholder="eg. johndeo@gmail.com"
                                         component={Input}
+                                        className=''
                                     />
                                 </FormItem>
                             </div>
@@ -143,7 +144,7 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                                 loading={isSubmitting}
                                 variant="solid"
                                 type="submit"
-                                className='indigo-btn w-[94%] mt-4'
+                                className='indigo-btn w-[100%] mt-4'
                             >
                                 {emailSent ? 'Resend' : 'Reset Password'}
                             </Button>

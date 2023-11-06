@@ -9,6 +9,7 @@ import { apiUrl } from '@/store/token';
 import usePostApi from '@/store/customeHook/postApi';
 import { messageView } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
+import ESign from './ESign';
 const DocumentViewModal = ({modal,setModal,data}:any) => {
     console.log("GGGGGG1",data);
     
@@ -16,29 +17,13 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
     const [error,setError]=useState<any>({})
     const {id}:any=useParams();
     const {aud}:any=TokenInfo()
+    const [eSign,setESign]=useState<any>(false)
     const {
         result: commentResponse,
         loading: commentLoading,
         sendPostRequest: Postcomment,
     }: any = usePostApi(`legal/document-comment`)
-    const handlesubmit=()=>{
-        if(!text){
-            setError({text:"This field is required"})
-        }else{
-            const body:any={
-                asset_id:id,
-                doc_id:data?.doc_id,
-                status: "Negotiation",
-                comment:text,
-                comment_created_by:aud
-            }
-            Postcomment(body)
-            setText("")
-            console.log("dat",body);
-    
-        }
-       
-    }
+ 
     useEffect(()=>{
         messageView(commentResponse?.message)
 if(commentResponse?.status===200){
@@ -74,58 +59,26 @@ if(commentResponse?.status===200){
   src={`data:application/pdf;base64,${data?.base64}`}
   width="100%"
   height="500px"
-  frameBorder="0"
 ></iframe>   
-     {/* <Formik
-                initialValues={{ field: true }}
-                onSubmit={() =>
-                    console.log('Submited via my onSubmit function')
-                }
-            >
-                <Form className="py-2 multistep-form-step">
-                    <FormContainer>
+{eSign && <div className='border-2'>
+    <ESign />
+</div>}
+<div className="flex justify-end">
+                       
+                       <Button
+                           block
+                           style={{borderRadius:"13px"}}
                         
-                        <div className="flex items-center">
-                        <FormItem
-                                label="Add Query"
-                                className="rounded-lg pl-[22px] w-1/2"
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    onChange={(e: any) =>{
-                                        setText(e.target.value)
-                                       setError({})
-                                    }
-                                    }
-                                    name="full_name"
-                                    placeholder="Enter Text Here...."
-                                    component={Input}
-                                />
-                                   <p className="text-[red]">
-                                        {error && error?.text}
-                                    </p>
-                            </FormItem>
-                            <Button
-                                block
-                                style={{borderRadius:"13px"}}
-                                // loading={isSubmitting}
-                                // disabled={data?.type==='View'}
-                                variant="solid"
-                                onClick={handlesubmit}
-                                className='indigo-btn mt-8 !w-[30%] mx-auto rounded-xl shadow-lg'
-                            >
-                               
-                                Send Query
-                                   
-                                        </Button>
-                 
-                        </div>
-                       
-                       
-                    </FormContainer>
-                </Form>
-                </Formik> */}
+                           variant="solid"
+                           onClick={()=>setESign(!eSign)}
+                           className='indigo-btn mt-8 !w-[30%]  rounded-xl shadow-lg'
+                       >
+                          
+                           Upload Digital Signature
+                              
+                                   </Button>
+            
+                   </div>
                  
                     </div>
                 </div>

@@ -228,3 +228,11 @@ background: var(--surface-surface-black, #1C1C1C);
 rect{
     width: 1000px !important;
 }
+
+.ellipse-text{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100px !important;
+    max-width: 100px !important;
+  }

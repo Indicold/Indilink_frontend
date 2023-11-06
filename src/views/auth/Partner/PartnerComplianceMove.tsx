@@ -72,9 +72,11 @@ const PartnerComplianceMove = () => {
             key: 'insurance_policy_image',
             key_text: 'insurance_policy_text',
             key_lic:"insurance_policy_license",
+            key_status:"insurance_policy_status",
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         {
             label: 'Permit',
@@ -82,9 +84,11 @@ const PartnerComplianceMove = () => {
             key: 'permit_image',
             key_text: 'permit_validity_text',
             key_lic:"permit_license",
+            key_status:"permit_status",
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         {
             label: 'PUCC',
@@ -92,9 +96,11 @@ const PartnerComplianceMove = () => {
             key: 'pucc_image',
             key_lic:"pucc_license",
             key_text: 'pucc_validity_text',
+            key_status:"pucc_status",
             view: false,
             url: null,
             valid_till: null,
+            licenseNo: null
         },
         // {
         //     label: 'Fitness Certificate',
@@ -139,7 +145,8 @@ const PartnerComplianceMove = () => {
                 return {
                     ...item,
                     valid_till: e.target.value,
-                    messageText: null
+                    messageText: null,
+                    licenseNo:"Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -159,6 +166,12 @@ const PartnerComplianceMove = () => {
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
+        const updatedArray = array.map((itemData) =>
+          item.key_lic === itemData.key_lic
+            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            : itemData
+        );
+        setArray(updatedArray);
         // const updatedArray = array.map((itemData) =>
         //   item.key_lic === itemData.key_lic
         //     ? { ...itemData, key_lic: e.target.value }
@@ -205,7 +218,8 @@ const PartnerComplianceMove = () => {
                               view: true,
                               url: responseData?.data,
                               message: 'Uploaded',
-                              messageText: 'Valid till date is Required'
+                              messageText: 'Valid till date is Required',
+                              licenseNo:"Licence No is required"
                           }
                         : itemData
                 )
@@ -277,9 +291,10 @@ const PartnerComplianceMove = () => {
             return validateMandatoryFields(dateArray,item);
          });
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
+         const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
          let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
          console.log("YUUUUUUUUU",Invalid,newvalidate);
-         if (Invalid && newvalidate) {
+         if (Invalid && newvalidate && newvalidateLicence) {
          PostValidTillDetails(dateArray)
          console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
@@ -313,6 +328,21 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
+    useEffect(() => {
+        if (fetchDetails?.data !== null) {
+            const updatedArray = array.map((item: any) =>
+                true && {
+                    ...item,
+                    valid_till: fetchDetails?.data[item?.key_text],
+                    doc_status:fetchDetails?.data[item?.key_status],
+                    // key_lic: fetchDetails?.data[item?.key_lic]
+
+                }
+            )
+            setArray(updatedArray)
+        }
+
+    }, [fetchDetails?.data])
     console.log('DDDDDDDD', array)
     useEffect(() => {
 
@@ -385,7 +415,7 @@ const PartnerComplianceMove = () => {
                     Compliance Details
                 </h4>
                 <div>
-                    <Formik>
+                <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <div className="flex flex-wrap">
@@ -394,7 +424,7 @@ const PartnerComplianceMove = () => {
                                            <FormItem
                                             label={item?.label}
                                             key={index}
-                                            className=" w-1/2 rounded-lg pl-[22px] text-label-title "
+                                            className="rounded-lg pl-[6px] text-label-title "
                                         >
                                             <input
                                                 disabled={isDisabled}
@@ -475,12 +505,35 @@ const PartnerComplianceMove = () => {
                                   dark:file:bg-gray-700 dark:file:text-gray-400"
                                                         onChange={(e: any) => handleChange(e, item)} />
 
-                                                        {/* {item?.messageText && (
-                                                            <p className="text-[red]">
-                                                                {item?.messageText}
-                                                            </p>
-                                                        )} */}
+                                                    {item?.licenseNo && (
+                                                        <p className="text-[red]">
+                                                            {item?.licenseNo}
+                                                        </p>
+                                                    )}
                                                 </FormItem>
+                                                <FormItem
+                                        label="Status"
+                                        className="w-1/2 text-label-title"
+                                    >
+                                        <select
+                                            disabled
+                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            name={`${item?.key_status}`}
+                                        >
+                                            <option disabled selected>Select Status</option>
+                                            
+                                                        <option
+                                                            value={1}
+                                                            selected={item?.doc_status===1}
+                                                          
+                                                        >
+                                                         Approved
+                                                        </option>
+                                                
+                                            <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
+                                        </select>
+                                      
+                                    </FormItem>
                                             </div>
                                         </>
                                      

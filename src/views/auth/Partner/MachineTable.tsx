@@ -57,6 +57,16 @@ const MachineTable = ({ AllStore, tableHead,setModal,modal,setFormData }: any) =
         }
     }, [value])
 
+    React.useEffect(() => {
+        // Update the displayed data when the AllStore prop changes.
+        if (allData) {
+          const to = countPerPage * currentPage;
+          const from = to - countPerPage; 
+            const newCollection = cloneDeep(allData.slice(from, to));
+            setCollection(newCollection);
+        }
+      }, [allData]);
+
     const updatePage = (p: any) => {
         // Function to update the current page of data.
         setCurrentPage(p)
