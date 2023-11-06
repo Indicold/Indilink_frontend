@@ -20,7 +20,7 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'CustomerMenu',
         path: '',
-        title: 'CustomerMenu Menu',
+        title: 'Customer Query',
         translateKey: 'nav.CustomerMenu.groupMenu',
         icon: 'collapseMenu',
         type: NAV_ITEM_TYPE_COLLAPSE,

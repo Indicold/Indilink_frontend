@@ -12,7 +12,7 @@ import { messageView } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
-    // id:"S.No",
+    id:"S.No",
     // date: "Date",
     // contract_type: "Contract Type",
     comment:"Comment",
@@ -65,6 +65,16 @@ const TableLayoutCustomer = ({ AllStore,fetchDataA }: any) => {
       searchData.current(value);
     }
   }, [value]);
+
+  React.useEffect(() => {
+    // Update the displayed data when the AllStore prop changes.
+    if (allData) {
+      const to = countPerPage * currentPage;
+      const from = to - countPerPage; 
+        const newCollection = cloneDeep(allData.slice(from, to));
+        setCollection(newCollection);
+    }
+  }, [allData]);
 
   const updatePage = (p: any) => {
     // Function to update the current page of data.
@@ -124,6 +134,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
 
 })
   .catch(error => console.log('error', error));
+  fetchDataA();
   }
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the
@@ -159,6 +170,9 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
       if (key === 'is_deleted') {
         return <td className='text-center' key={i} >{rowData.is_deleted==1 ? "Close" : 'Open'}</td>;
       }
+      if (key === 'id') {
+        return <td className='text-center' key={i} >{index+1}</td>;
+      }
       if (key === 'status_id') {
         return <td className='text-center' key={i} >{rowData.status_id===1 ? "Pending" : rowData.status_id==2 ? "Review":"Done"}</td>;
       }
@@ -181,7 +195,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
         return <td className='text-center' key={i} >
           {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={()=>handleDelete(rowData?.master_query_id)}>Close</Button>
+          <Button className='!p-2' disabled={rowData?.is_deleted===1} onClick={()=>handleDelete(rowData?.master_query_id)}>Close</Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -220,7 +234,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
         <thead className=''>
           <tr className='bg-black text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
-        <tbody className="trhover bg-gray-100">{tableData()}</tbody>
+        <tbody className="trhover  bg-white">{tableData()}</tbody>
       </table>
       <div className='flex justify-center bg-white p-4'>
         <Pagination

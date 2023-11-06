@@ -12,25 +12,22 @@ import DocumentViewModal from '@/views/auth/Partner/AssetsDocumentsTable/Documen
 import DocumentEditModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentEdit';
 // Defines the table header with column names.
 const tableHead = {
-  Id: "ID",
-    asset_owner: "Owner",
-    doc_id: "Document ID",
+    id: "S.No",
+    invoice_amount: "Invoice Amount",
+    paid_amount: "Paid Amount",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
   created_at: "Created",
 
   status: "Status",
   updated_at: "Updated At",
-  Action: "Action"
+  Document: "Document"
 };
 
-// The DocumentTableList component takes a prop called AllStore, presumably for rendering data.
+// The InvoiceTableList component takes a prop called AllStore, presumably for rendering data.
 
-const DocumentTableList = ({ AllStore }: any) => {
-  let allData: any = AllStore?.map((item:any, index:any) => ({
-    ...item,
-    Id: index + 1
-  }));
+const InvoiceTableList = ({ AllStore }: any) => {
+  let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
   const [modal,setModal]=useState<any>(false)
@@ -101,17 +98,22 @@ const DocumentTableList = ({ AllStore }: any) => {
     const tableCell = Object.keys(tableHead);
     const columnData = tableCell.map((key, i) => {
       // Renders table cells for each column in the header.
-     
+      if (key === 'id') {
+        return <td className='text-center' key={i} >{index+1}</td>;
+      }
       if (key === 'createdAt') {
         return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
+      }
+      if (key === 'paid_amount') {
+        return <td className='text-center' key={i} >{rowData.paid_amount ? rowData.paid_amount:"Not Available" }</td>;
       }
       if (key === 'updatedAt') {
         return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
       }
-      if (key === 'Action') {
+      if (key === 'Document') {
         return <td className='text-center' key={i} >
-          <Button className='!p-2' onClick={() => handleView(rowData)}><VisibilityIcon /></Button>
-          <Button className='!p-2' onClick={() => handleEdit(rowData)}><TextSnippetIcon /></Button>
+          {/* <Button className='!p-2' onClick={() => handleView(rowData)}><VisibilityIcon /></Button> */}
+          <a role='button' className='!p-2' href={rowData?.invoice_doc[0]}><TextSnippetIcon /></a>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -165,4 +167,4 @@ const DocumentTableList = ({ AllStore }: any) => {
   )
 }
 
-export default DocumentTableList;
+export default InvoiceTableList;

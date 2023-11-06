@@ -1,3 +1,4 @@
+import DataNotFound from '@/components/layouts/DataNotFound';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
@@ -170,7 +171,7 @@ const NotificationPage = () => {
       </p>
     </div>
    </>
-    )) :<h3 className='mx-auto text-center my-auto'>No Data Found</h3>}
+    )) :<DataNotFound title="Notification" url="/collapse-menu-item-view-1" />}
   
  
   

@@ -14,6 +14,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
 import { messageView } from '@/store/customeHook/validate'
+import { useTranslation } from 'react-i18next'
+
 
 const BussinessTypeModal = () => {
     const [assetsType, setAssetsType] = useState<any>(1)
@@ -192,6 +194,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
         }
 
     },[QueryResponse?.data])
+    const { t, i18n }:any = useTranslation();
 
     return (
         <div>
@@ -217,12 +220,13 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 <h4 className="text-head-title text-center mb-4">
                                     {localStorage.getItem('user_type') ===
                                     'Customer'
-                                        ? 'Request for solution'
-                                        : 'Choice on Business'}{' '}
+                                        ? t('Request for solution')
+                                        : t('Choice on Business')}{' '}
                                 </h4>
-                                <p className='text-center'>You may also change later</p>
+                                <p className='text-center'>{t("You may also change later")}</p>
 
-                                <div className="flex justify-around grid grid-cols-3 grid-flow-col gap-2">
+                                <div className={`justify-around grid ${localStorage.getItem('user_type') ===
+                                        'Customer' ? 'grid-cols-4' :'grid-cols-3'}  grid-flow-col gap-2`}>
                        
                                     {data ? (
                                         
@@ -247,8 +251,9 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                                 >
                                                     {/* <CiImageOn className="text-6xl mx-auto" /> */}
                                                       <img className='w-[100px] mx-auto' src="https://cdn-icons-png.flaticon.com/128/10071/10071359.png" alt="" />
-                                                    <h5 className="text-center mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                                                        {item?.type}
+                                                    <h5 className="text-center bg mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                                                        {t(item?.type)}
+                                                     
                                                     </h5>
                                                     {/* <p className='text-center'>sample Caption</p> */}
                                                 </div>
@@ -260,11 +265,11 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 </div>
                              {Bussiness==='General' &&   <div className='flex justify-around w-[80%] mx-auto items-center'>
                                 <FormItem
-                                            label="General Query"
+                                            label={t("General Query")}
                                             className="mx-auto w-1/2"
                                         >
                                        <input type='text'
-                                     className=" h-11 block w-full border border-gray-200 
+                                     className="px-2 h-11 block w-full border border-gray-200 
                                      shadow-sm rounded-md text-sm 
                                      focus:z-10 focus:border-blue-500 focus:ring-blue-500
                                       dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
@@ -272,7 +277,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                           file:bg-gray-100 file:mr-4
                                         file:py-3 file:px-4
                                                dark:file:bg-gray-700 dark:file:text-gray-400"
-                                               placeholder='Enter your query'
+                                               placeholder={t("Enter your query")}
                                     onChange={(e:any)=>setQuery(e.target.value)}
                                        />
                                         </FormItem>
@@ -284,14 +289,14 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         onClick={()=>PostQueryDetails({description:Query})}
                                         className="indigo-btn !w-[30%] mt-6 mx-auto rounded-[30px]"
                                     >
-                                        Send Query
+                                         {t("Send Query")}
                                     </Button>
                                         </div>}
                                 {localStorage.getItem('user_type') ===
                                     'Partner' && Bussiness !== 'Move' && Bussiness!=='general'  && (
                                     <div className="flex">
                                         <FormItem
-                                            label="Select Country"
+                                            label={t("Select Country")}
                                             className="mx-auto w-1/2"
                                         >
                                             <select
@@ -299,9 +304,9 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
-                                                className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
-                                                <option>Select Country</option>
+                                                <option>{t("Select Country")}</option>
                                                 {countryId &&
                                                     countryId?.data?.map(
                                                         (
@@ -318,7 +323,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                             </select>
                                         </FormItem>
                                         <FormItem
-                                            label="Category"
+                                            label={t("Category")}
                                             className="mx-auto w-1/2"
                                         >
                                             <select
@@ -326,9 +331,9 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                                 onChange={(e: any) =>
                                                     handleChange(e)
                                                 }
-                                                className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
-                                                <option>Select</option>
+                                                <option>{t("Category")}</option>
                                                 {CategoryId &&
                                                     CategoryId?.data
                                                         ?.filter(
@@ -366,7 +371,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                     >
-                                        Next
+                                         {t("Next")}
                                     </Button> :
                                     <Button
                                     style={{ borderRadius: '13px' }}
@@ -377,7 +382,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                     onClick={handleRoute}
                                     className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
                                 >
-                                    Next
+                                    {t("Next")}
                                 </Button> 
                                     }
                                 </div>}

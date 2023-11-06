@@ -1,8 +1,5 @@
-import React from 'react'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
-import ScatterGeoChart from './GeoBubbleMap';
 import GeoChart from './GeoBubbleMap';
 import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
@@ -134,16 +131,7 @@ const CardLayout = ({title}:any) => {
       list:[]
   }
       ]
-      const optionsProgress:any = {
-        chart: {
-          // height:"80%",
-          // width:"80%",
-          type: 'radialBar',
-        },
-        series: [70],
-        labels: ['Data'],
-        
-      };
+   
   return (
     <>
        <div className='bg-white p-4 rounded-lg mx-0'>
@@ -257,7 +245,7 @@ const CardLayout = ({title}:any) => {
 <section className="grid gap-6 my-6 w-[35%]  bg-white shadow rounded-2xl">
 <h3 className='ml-4 mt-4 mb-0'>Audit List</h3>
 
-        <div className="p-6 pt-0  flex flex-col" >
+        <div className="p-6 pt-0  flex flex-col">
        {[1,2,3,4]?.map((item:any,index:any)=>(
      <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
      <div className="flex-auto p-4">

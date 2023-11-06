@@ -6,6 +6,8 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import React from 'react'
 import TableLayoutCustomer from './TableLayoutCustomer'
 import CustomerGeneralTableList from './CustomerGeneralTableList'
+import DataNotFound from '@/components/layouts/DataNotFound'
+import { useTranslation } from 'react-i18next'
 
 const CustomerTableTicketList = () => {
     const { token }: any = getToken()
@@ -38,23 +40,24 @@ const CustomerTableTicketList = () => {
 
 
     console.log(AllStoreGeneral)
+    const { t, i18n }:any = useTranslation();
 
     return (
         <>
-            {!AllStore?.data?.length > 0 ? (
+            {AllStore?.data?.length > 0 ? (
                 <>
-                    <h4 className="text-head-title text-center">Ticket List</h4>
+                    <h4 className="text-head-title text-center"> {t("Ticket List")}</h4>
                     <TableLayoutCustomer fetchDataA={fetchDataA}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
-                     <h4 className="text-head-title text-center">General Ticket List</h4>
-                      <CustomerGeneralTableList fetchDataG={fetchDataG}
-                        AllStore={AllStoreGeneral?.data?.length > 0 && AllStoreGeneral?.data}
-                    />
+                     <h4 className="text-head-title text-center"> {t("General Ticket List")}</h4>
+                  {AllStoreGeneral?.data?.length > 0 &&    <CustomerGeneralTableList fetchDataG={fetchDataG}
+                        AllStore={AllStoreGeneral?.data}
+                    />}
                 </>
             ):
             
-            <DataNotFound />
+            <DataNotFound title="Create Query" url="/collapse-menu-item-view-1" />
             
             }
             <div>

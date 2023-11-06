@@ -62,6 +62,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
     const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false)
+    const [invalidPanMessage, showInvalidPanMessage] = useState(false);
 
 
 
@@ -119,11 +120,17 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newGst = e.target.value;
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
-        if (newGst.length >= 10) {
-                        
+        const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+        if (newGst.length == 10 && re.test(newGst)) {
+            // console.log("5765575");
+            
             setDisabled(false);
-        } else {
-            setDisabled(true); 
+            showInvalidPanMessage(false);
+        }
+        else {
+            setDisabled(true);
+            showInvalidPanMessage(true);
         }
       };
 
@@ -357,6 +364,9 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     className=''
                                     max="10"
                                 />
+                                {invalidPanMessage && (
+                                    <div className='text-[red]'>Invalid Pan Number</div>
+                                )}
                             </FormItem>
                         <div className="">
                             <FormItem

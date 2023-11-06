@@ -114,7 +114,7 @@ const StoreRegistration = () => {
     const [SEModal, setSEModal] = useState<any>(false)
     const [chamberData, setChamberData] = useState<any>([])
     const [CAData, setCAData] = useState<any>([])
-
+    const [isChecked,setIsChecked]=useState<any>(false)
     let [commanData, setCommanData] = useState<any>({})
 
 
@@ -278,7 +278,7 @@ const StoreRegistration = () => {
         }
     }
 
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useState<any>('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
         // console.log("TYYYYYYYY", e.target.name);
@@ -299,6 +299,7 @@ const StoreRegistration = () => {
             const fileInput: any = e.target; // Assuming e.target is the input element
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
+            newData['filetype'] = "file";
             // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
         } else
@@ -312,6 +313,7 @@ const StoreRegistration = () => {
                     fileArray.push(file);
                 }
                 newData[e.target.name] = fileArray;
+                newData['filetype1'] = "file1";
 
             }
             else newData[e.target.name] = e.target.value
@@ -389,12 +391,7 @@ const StoreRegistration = () => {
 
     // Use useEffect to update form data when fetchDetails changes
 
-    useEffect(() => {
-
-        if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
-            setData(fetchDetails?.data)
-        }
-    }, [fetchDetails])
+  
     useEffect(() => {
 
         const newState: any = { ...dataa };
@@ -457,15 +454,33 @@ const StoreRegistration = () => {
         setValue1(foundItems)
     }, [StorageType?.data, dataa?.store_type_id])
 
+    useEffect(() => {
+        if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+            const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
+            setPhone(phoneNumberWithoutCountryCode)
+            setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
+            setIsChecked(true)
+        } else {
+            setPhone('');
+            setData({ ...dataa, facility_manager_name: ``, facility_manager_contact: '' })
+            setIsChecked(false);
+
+        }
+    }, [profileData])
+
     const handleCheckbox = (e: any) => {
         const isChecked: any = e.target.checked;
         const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
         setPhone(phoneNumberWithoutCountryCode)
         if (isChecked && profileData?.data) {
+            setIsChecked(true)
             setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
+            setIsChecked(true);
         } else {
+            setIsChecked(false)
             setPhone('');
             setData({ ...dataa, facility_manager_name: ``, facility_manager_contact: '' })
+            setIsChecked(false);
 
         }
 
@@ -494,10 +509,10 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "View" })
         }else if (type === 'IOT') {
             setIOTModal(true)
-            setCommanData({ ...rowData, type: "View" })
+            setCommanData({ ...rowData, types: "View" })
         }else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "View" })
+            setCommanData({ ...rowData, types: "View" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
@@ -539,11 +554,11 @@ const StoreRegistration = () => {
         }
         else if (type === 'IOT') {
             setIOTModal(true)
-            setCommanData({ ...rowData, type: "Edit" })
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'IT') {
             setITModal(true)
-            setCommanData({ ...rowData, type: "Edit" })
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'Generator') {
             setGenModal(true)
@@ -559,9 +574,19 @@ const StoreRegistration = () => {
         }
 
     }
+    useEffect(() => {
 
+        if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
+            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
+            setPhone(phoneNumberWithoutCountryCode)
+            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+                setIsChecked(true)
+            }
+            setData(fetchDetails?.data)
+        }
+    }, [fetchDetails?.data])
     return (
-        <div className='flex'>
+        <div className='flex'>  
             <div className='w-1/6'>
 
 
@@ -759,6 +784,7 @@ const StoreRegistration = () => {
                                         id="default-checkbox"
                                         type="checkbox"
                                         defaultValue=""
+                                        checked={isChecked}
                                         disabled={location?.state}
                                         onClick={(e: any) => handleCheckbox(e)}
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -1533,6 +1559,19 @@ const StoreRegistration = () => {
                                         <p className="text-[red]">
                                             {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
+                                        <div className='flex'>
+                                            {console.log("GGHGHGHGH",dataa)
+                                            }
+                                        {dataa?.three_d_view_of_asset?.length>0 && dataa?.three_d_view_of_asset?.map((file: any, index: number) => {                                           
+                                           const imageUrl :any=dataa?.filetype==='file' ?  URL?.createObjectURL(file) :file;
+
+                                            return (
+                                                <div key={index} className='mt-5 m-2'>
+                                                <img src={imageUrl} className='w-[40px] h-auto' />
+                                                </div>
+                                            )
+                                        })}
+                                        </div>
                                     </FormItem>
                                     <FormItem
                                         label="Photo Of Assets*"
@@ -1564,6 +1603,17 @@ const StoreRegistration = () => {
                                         <p className="text-[red]">
                                             {errors && errors.photos_of_asset}
                                         </p>{' '}
+                                        <div className='flex'>
+                                        {dataa?.photos_of_asset?.length>0 && dataa?.photos_of_asset?.map((file: any, index: number) => {                                           
+                                           const imageUrl :any=dataa?.filetype1==='file1' ? URL?.createObjectURL(file) : file;
+
+                                           return (
+                                                <div key={index} className='mt-5 m-2'>
+                                                <img src={imageUrl} className='w-[40px] h-auto' />
+                                                </div>
+                                            )
+                                        })}
+                                        </div>
                                     </FormItem>
                                 </div>
                                 <Accordion>
