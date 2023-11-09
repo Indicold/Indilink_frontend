@@ -51,9 +51,9 @@ const CustomerTableTicketList = () => {
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                      <h4 className="text-head-title text-center"> {t("General Ticket List")}</h4>
-                      <CustomerGeneralTableList fetchDataG={fetchDataG}
-                        AllStore={AllStoreGeneral?.data?.length > 0 && AllStoreGeneral?.data}
-                    />
+                  {AllStoreGeneral?.data?.length > 0 &&    <CustomerGeneralTableList fetchDataG={fetchDataG}
+                        AllStore={AllStoreGeneral?.data}
+                    />}
                 </>
             ):
             

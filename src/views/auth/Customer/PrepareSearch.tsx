@@ -457,18 +457,16 @@ const { t, i18n }:any = useTranslation();
 
 
                                         </select>
-                                        </div>
-                                            <div className='w-[100%] m-auto pt-2 lg:w-1/2 md:w-1/2'>
-                                            <select
-                                                disabled={isDisabled}
-                                                onChange={(e: any) => handleChange(e)}
-                                                name="temp_max"
-                                                className="p-2 border w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                            >
-                                                <option>Maximum</option>
-                                                {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min) + index * 5 + 5).map((item: any, index: any) => (
-                                                    <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
-                                                ))}
+                                        <select
+                                            disabled={isDisabled}
+                                            onChange={(e: any) => handleChange(e)}
+                                            name="temp_max"
+                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        >
+                                            <option>Maximum</option>
+                                            {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min || 0) + index * 5 + 5).map((item: any, index: any) => (
+                                                <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
+                                            ))}
 
                                             </select>
                                             </div>
