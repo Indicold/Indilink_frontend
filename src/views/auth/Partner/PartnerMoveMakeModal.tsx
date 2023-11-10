@@ -15,7 +15,6 @@ const PartnerMoveMakeModal = ({modal,setModal,fetchList,fetchmake}:any) => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
-        console.log("newData", newData);
       };
       
       const handleSave = () => {
@@ -25,7 +24,6 @@ const PartnerMoveMakeModal = ({modal,setModal,fetchList,fetchmake}:any) => {
         fetchList();
       };
       
-      console.log("MakeModelResponse", MakeModelResponse);
       let num = 0;
       
       useEffect(() => {

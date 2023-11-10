@@ -8,7 +8,6 @@ import LoaderSpinner from '@/components/LoaderSpinner';
 const PrepareTicketList = () => {
   const {token}:any =getToken();
   const { data:PrepareData, loading:PrepareLoad, error } = useApiFetch<any>('customer/prepare/search', token);
-  console.log("FFFFFFF",PrepareData);
  
   return (
     <div>     

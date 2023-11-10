@@ -75,21 +75,17 @@ const BussinessTypeModal = () => {
             country_id: formData?.country_id,
             category_id: formData?.category_id,
         }
-        console.log(
-            localStorage.getItem('asset_id'),
-            typeof localStorage.getItem('asset_id')
-        )
+        
         localStorage.setItem('country_id', formData?.country_id)
         localStorage.setItem('category_id', formData?.category_id)
 
         PostAssetsDetails(body)
       
     }
-    console.log('datadatadata', countryId)
 
     const handleCloseModal = () => {
         setModal(false);
-        console.log("user type close modal", localStorage.getItem('user_type'));
+        
         if (localStorage.getItem('user_type') === 'Customer') {
             navigate('/home')
         }
@@ -101,7 +97,6 @@ const BussinessTypeModal = () => {
         }
     }
 useEffect(()=>{
-    console.log('AssetsResponse',AssetsResponse?.message?.asset_id);
     
 if(AssetsResponse?.message || AssetsResponse?.data){
     messageView(AssetsResponse?.message?.message)
@@ -156,7 +151,6 @@ if(AssetsResponse?.message || AssetsResponse?.data){
         const newData = { ...formData }
         newData[e.target.name] = e.target.value
         setFormData(newData)
-        console.log('datadatadata', countryId)
     }
     /**
      * The function `messageView` displays a success toast message with a custom style and auto-closes
@@ -165,11 +159,9 @@ if(AssetsResponse?.message || AssetsResponse?.data){
      * message. It can be any string or variable that contains the message you want to show.
      */
  
-    console.log('AssetsResponse', AssetsResponse)
 
     /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
   effect is triggered whenever the `AssetsResponse` variable changes. */
-  console.log('ATTTTTT', AssetsResponse?.message?.asset_id)
 
     useEffect(() => {
         if (AssetsResponse?.message?.asset_id) {

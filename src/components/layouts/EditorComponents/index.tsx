@@ -307,7 +307,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     };
     let _idVal = localStorage.getItem('_id')
     let { user_id, email }: any = TokenInfo();
-    console.log("GGGGGGG", data?.doc_id);
 
     const { token }: any = getToken();
     const [contentHistory, setContentHistory] = useState<any>([])
@@ -342,7 +341,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     };
 
     const onChange = (newEditorState: EditorState) => {
-        console.log("newEditorState", newEditorState);
 
         setEditorState(newEditorState);
     };
@@ -546,7 +544,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const handleHeadingClick = (level: any) => {
         // Get the current editor state
         const currentEditorState = editorState;
-        console.log("GGGGGGG6666");
 
         // Define the new block type based on the heading level
         let newBlockType;
@@ -683,7 +680,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         // handlesubmitComment()
         let date = new Date();
         const contentState: any = nextEditorState.getCurrentContent() || editorState.getCurrentContent();
-        console.log("RRRRRRRRR", contentState);
 
         setContentHistory([...contentHistory, {
             author: EditorData?.data?.author,
@@ -708,7 +704,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         updateData(body);
 
     }
-    console.log("TTTTTTTuuuu", EditorData);
 
     useEffect(() => {
         ReFatchApi()
@@ -749,7 +744,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         const printContents: any = document.getElementById("editor").innerHTML;
         const rawContent = convertToRaw(editorState.getCurrentContent());
         const stateToPdfMake = new StateToPdfMake(rawContent);
-        console.log("HHHHHH", stateToPdfMake.generate(), rawContent);
         // Capture the element as an image
         const pdfWidth = 210;
         const pdfHeight = 297;
@@ -782,7 +776,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
             // Calculate the centering position
             const xOffset = (pdfWidth - imgWidth) / 2;
             const yOffset = (pdfHeight - imgHeight) / 2 || 0;
-            console.log("GGGGGGGG", dataURL);
 
             // Add the captured image to the PDF with calculated dimensions and centering
             pdf.addImage(dataURL, 'PNG', 10, 10);
@@ -797,7 +790,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
             // Now you have the Blob data, you can do whatever you want with it
             // For example, you can create a Blob URL to display or download the PDF
             const blobUrl = URL.createObjectURL(blob);
-            console.log(blobUrl); // This will log the Blob URL to the console
         });
         pdfDoc.getBase64((base64: any) => {
             // Now you have the base64-encoded data, you can do whatever you want with it
@@ -808,13 +800,10 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
                 stateToPdfMake: stateToPdfMake
 
             }
-            console.log("GGGGG", obj);
-            console.log(base64); // This will log the base64 data to the console
         });
 
     };
 
-    console.log("EditorData", EditorData);
     function myBlockRenderer(contentBlock: any) {
         const type = contentBlock.getType();
         if (type) {

@@ -23,8 +23,7 @@ const Invoice = () => {
         } else {
             newData[e.target.name] = e.target.value;
         }
-        console.log("6HYFGHKJHJH", newData);
-
+           
         setFormData(newData)
 
     }

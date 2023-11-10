@@ -39,7 +39,6 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -59,7 +58,6 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to solar inverters in a

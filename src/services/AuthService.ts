@@ -41,7 +41,6 @@ export async function fetchData(config:any) {
             body: JSON.stringify(config.data),
         }).then((res)=>res.json())
         
-console.log("tttt",response);
 
        
 
@@ -75,7 +74,7 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
         })
         .then(data => {
           setSubmitting(false)
-          console.log(data);
+          
           if(data?.status == true){
             messageView(data?.message);
             if(dataa?.redirect!==3){
@@ -95,7 +94,6 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
       
 }
 export async function apiVerifyOTP(dataa:any,messageView:any) {
-    console.log(dataa,"dataa");
     
     const data = JSON.stringify({
         email: dataa?.email,
@@ -119,7 +117,6 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
         })
         .then(data => {
 
-          console.log(data);
           if(data?.status == true){
             messageView(data?.message)
             window.location.href="/reset-password"
@@ -138,7 +135,6 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
       
 }
 export async function apiResetPassword(dataa:any,messageView:any) {
-    console.log(dataa,"dataa");
     
     const data = JSON.stringify({
         email: dataa?.email,
@@ -163,7 +159,6 @@ export async function apiResetPassword(dataa:any,messageView:any) {
         })
         .then(data => {
 
-          console.log(data);
           if(data?.status == 200){
             messageView(data?.message)
             setTimeout(()=>{

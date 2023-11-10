@@ -39,7 +39,6 @@ const CustomerTableTicketList = () => {
     }: any = useApiFetch<any>('customer/general/search', token)
 
 
-    console.log(AllStoreGeneral)
     const { t, i18n }:any = useTranslation();
 
     return (

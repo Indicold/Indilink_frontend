@@ -3,7 +3,7 @@ import UserTypeModal from "./auth/UserTypeModal"
 import { useState } from "react"
 import BussinessTypeModal from "./auth/BussinessTypeModal"
 import { useNavigate } from "react-router-dom"
-import CardLayout from "@/components/layouts/Dashbord/CardLayout"
+import CardLayout from "@/components/layouts/Dashbord/DashboardCustomer/CardLayout"
 import { useTranslation } from 'react-i18next'
 
 const Home = () => {

@@ -33,7 +33,6 @@ const PartnerTableAssetsList = () => {
         error: allerr,
         refetch:fetchApi
     }: any = useApiFetch<any>('master/asset', token)
-console.log("TTTTTUUUUUU",AllStore);
 
     return (
         <>

@@ -45,7 +45,6 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     const {token}:any=getToken()
     const {
@@ -71,19 +70,16 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` calls the `handleStoreTable` function with specific
      * parameters.
      */
     const handlesave = () => {
-        console.log("saved", data, validateACUForm(data, setErrors), errors)
         if(commanData?.type==='Edit'){
             updateData(data)
         }else{
             if(validateACUForm(data, setErrors)) {
-                console.log("validated")
             handleStoreTable(
                 'partner/store/acu',
                 data,

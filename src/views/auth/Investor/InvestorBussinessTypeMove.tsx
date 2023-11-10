@@ -28,8 +28,6 @@ const InvestorBussinessTypeMove = () => {
         token
     )
 
-    // Log the fetched data to the console
-    console.log('HHHH555', data)
 
     return (
         <div>

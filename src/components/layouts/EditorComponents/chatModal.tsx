@@ -9,7 +9,6 @@ import { useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,EditorData,editorState,contentHistory,convertToRaw}:any) => {
-  console.log("doc_iddoc_iddoc_iddoc_id",modal);
     const {id}:any=useParams()
     const {user_id}:any=TokenInfo();
    let _idVal = localStorage.getItem('_id')
@@ -63,12 +62,6 @@ const TimeString=(time:any)=>{
 useEffect(()=>{
     setOpen(modal)
 },[modal])
-useEffect(()=>{
-if(PutApiResponse){
-    console.log("PutApiResponse",PutApiResponse)
-}
-},[PutApiResponse])
-console.log("tttttttttt",newfilterArray);
 
   return (
     <div>

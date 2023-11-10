@@ -17,7 +17,6 @@ const userPostLoginSlice = createSlice({
         state.refreshPage=false
       })
       .addCase(userLoginApiPost.fulfilled, (state:any, action) => {
-        console.log("HHHHHHH122",action.payload);
         
         state.loading = false;
         state.responseData = action.payload;
@@ -28,7 +27,6 @@ const userPostLoginSlice = createSlice({
         
       })
       .addCase(userLoginApiPost.rejected, (state:any, action) => {
-        console.log("HHHHHHH1",action);
         state.loading = false;
         state.error = action.error.message;
       });

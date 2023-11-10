@@ -55,7 +55,6 @@ const validate=()=>{
         error.phone_number="Phone number is required"
     }
     
-    console.log('errr', error)
     setError(error)
     return Object.keys(error).length === 0
 }

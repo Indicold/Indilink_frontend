@@ -24,7 +24,7 @@ const sessionSlice = createSlice({
             state.token = null
             localStorage.removeItem('access_token');
             localStorage.removeItem('admin');
-            localStorage.clear()
+            // localStorage.clear()
         },
     },
 })

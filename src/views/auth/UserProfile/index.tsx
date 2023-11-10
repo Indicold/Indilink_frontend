@@ -6,7 +6,6 @@ const UserProfilePage = () => {
   const {owner_user_id}:any=TokenInfo();
     // const token:any=localStorage.getItem('access_token');
     // const decode=jwt_decode(token)
-    // console.log("TTTTTTTTTT",decode);
     const navigate:any=useNavigate();
     const handleChangePassword=()=>{
         localStorage.clear()

@@ -17,6 +17,7 @@ import { messageView, validateMoveCustomerForm } from '@/store/customeHook/valid
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
+import Autocomplete from "react-google-autocomplete"
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
@@ -71,7 +72,6 @@ const MoveSearch = () => {
 
 
         function formatDate(inputDate:any) {
-            console.log("GGGGGGGGGtIME",inputDate);
             
                 const parts = inputDate.split('-'); // Split the input date into parts
                 if (parts.length === 3) {
@@ -86,7 +86,6 @@ const MoveSearch = () => {
     const handleRoute = () => {
         // Check form validation before making a POST request
 
-    console.log(formData)
         if (validateMoveCustomerForm(formData, setErrors)) {
             PostCustomerMoveDetails(formData);
         }
@@ -136,7 +135,6 @@ const MoveSearch = () => {
                 setTimeout(() => {
                     navigate('/ticket_list_move')
                 }, 2000)
-                console.log("GGGGGG88888777", result)
             })
             .catch(error => console.log('error', error));
     }
@@ -144,18 +142,15 @@ const MoveSearch = () => {
     const handleChange = (e: any) => {
         const newData: any = { ...formData };
         if (e.target.name === 'contract_download') {
-            console.log("DDDDDDDDDDDDDDD", e.target.files[0]);
 
             newData[e.target.name] = e.target.files[0];
         } else {
             newData[e.target.name] = e.target.value;
         }
-        console.log("FFFFFFFFFFFF",newData);
         
         setFormData(newData);
     }
     const navigate: any = useNavigate();
-    console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -277,15 +272,19 @@ const MoveSearch = () => {
                                         label={t("GPS")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
+                                        <Autocomplete
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
-                                            autoComplete="off"
                                             name="origin_gps"
                                             value={formData?.origin_gps}
                                             placeholder="Location"
-                                            component={Input}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                const newData = {...formData}
+                                                newData['origin_gps'] = place?.formatted_address
+                                                setFormData(newData)
+                                            }}
                                         />
                                     </FormItem>
                                 </div>
@@ -348,15 +347,19 @@ const MoveSearch = () => {
                                         label={t("GPS")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
+                                        <Autocomplete
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
-                                            autoComplete="off"
                                             name="dest_gps"
                                             value={formData?.dest_gps}
                                             placeholder="Location"
-                                            component={Input}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                const newData = {...formData}
+                                                newData['dest_gps'] = place?.formatted_address
+                                                setFormData(newData)
+                                            }}
                                         />
                                     </FormItem>
                                 </div>

@@ -70,7 +70,6 @@ const BasicInfo = () => {
             newdata[e.target.name] = Array.from(e.target.files);
         }
         setData(newdata);
-        console.log("newdata", newdata);
     }
 
     const navigate = useNavigate()
@@ -104,7 +103,6 @@ const BasicInfo = () => {
     const firmType = 'Private Limited'
 
     const handlesubmit = (e: any) => {
-        console.log("DDDDDDD", data);
   
         if (validateBasicForm(data, setErrors)) {
             var myHeaders = new Headers();
@@ -144,7 +142,7 @@ const BasicInfo = () => {
               body: formdata,
               redirect: "follow",
             };
-            console.log("667677",BasicInfo?.data[0]?.gst_file?.length>0);
+            
             if(BasicInfo?.data[0]?.gst_file?.length>0){
          
                 navigate('/key-management')
@@ -156,7 +154,7 @@ const BasicInfo = () => {
                   if(result?.status==200){
    navigate('/key-management')
                   }
-                  console.log("GGGG",result)})
+                })
                 .catch((error) => {
                   messageView(error?.message)
                 });
@@ -210,7 +208,6 @@ useEffect(()=>{
     }
  
 },[BasicInfo?.data])
-console.log("TTTTTTTTT",data,BasicInfo);
 
     return (
         <div className='flex'>

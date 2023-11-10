@@ -142,7 +142,6 @@ const PartnerBussinessTypePrepare = () => {
         newData[e.target.name] = e.target.value
         setFormData(newData)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
-        console.log("formsdata", formData)
     }
 
     // Define a function to handle form submission and POST request
@@ -194,7 +193,6 @@ const PartnerBussinessTypePrepare = () => {
     const itemsToFind = formData?.product_type;
 
     useEffect(() => {
-        // console.log("TTTTTTTTTTT66666",ProductTypeList);
         if(ProductTypeList?.data!==null){
             const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
             setValue(foundItems)

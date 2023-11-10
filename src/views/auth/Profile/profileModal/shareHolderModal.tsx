@@ -32,7 +32,6 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         setformData(newdata)
-        console.log("changed", newdata)
     }
     const handlesubmit = () => {
         if (validateSHForm(formData, setErrors)) {
@@ -83,7 +82,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
             fetchShare()
         }
     }, [ShareUpadteResponse, ShareUpadteResponse?.message])
-    console.log("RESSSSS", data);
+    
     return (
         <div>
             <ToastContainer />
