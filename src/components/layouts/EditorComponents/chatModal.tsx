@@ -68,6 +68,8 @@ if(PutApiResponse){
     console.log("PutApiResponse",PutApiResponse)
 }
 },[PutApiResponse])
+console.log("tttttttttt",newfilterArray);
+
   return (
     <div>
     {open &&  <>

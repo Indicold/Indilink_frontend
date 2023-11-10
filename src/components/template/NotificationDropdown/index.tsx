@@ -4,12 +4,11 @@ import { getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 
 const NotificationPage = () => {
-    const data:any=[1,2,3,4,5,6,7,8,'9'];
     const {token}:any=getToken();
     const [inputData,setInputData]=useState<any>('')
     const [MapData,setMapData]=useState<any>([])
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    useApiFetch<any>(`master/notifications`, token);
 
     const itemsPerPage:any=4; 
 

@@ -173,6 +173,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             userDesignation: formData?.designation,
             firmType:formData?.firm,
             firmName: formData?.firmName,
+            pincode:formData?.pincode,
+            state: formData?.state,
+            city: formData?.city,
+            address: formData?.address,
 
           }    
 
@@ -438,6 +442,91 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     name="firmName"
                                     placeholder="Firm Name"
                                     onChange={(e: any) => handledfnChange(e,'firmName')}
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                        </div>
+                        <div className="flex">
+                            <FormItem
+                                label="Pin Code"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                  
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="pincode"
+                                    placeholder="Pin Code"
+                                    onChange={(e: any) => handledfChange(e,'pincode')}
+
+                                    
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                            <FormItem
+                                label="State"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="state"
+                                    placeholder="State"
+                                    onChange={(e: any) => handledfnChange(e,'state')}
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                        </div>
+
+                        <div className="flex">
+                            <FormItem
+                                label="City"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                  
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="city"
+                                    placeholder="City"
+                                    onChange={(e: any) => handledfChange(e,'city')}
+
+                                    
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                            <FormItem
+                                label="Address"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="address"
+                                    placeholder="Address"
+                                    onChange={(e: any) => handledfnChange(e,'address')}
                                     component={Input}
                                     className=''
                                 />

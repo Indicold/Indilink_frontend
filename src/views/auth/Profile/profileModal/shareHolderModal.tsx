@@ -6,40 +6,53 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
-
+import { debounce } from 'lodash'
+import { TokenInfo } from '@/store/customeHook/token';
 const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
-
+  const {company_id,company_name}:any=TokenInfo()
+    const [isEmailValid, setIsEmailValid] = useState<any>(false)
+    const [isMobileValid, setIsMobileValid] = useState(false)
+    const [phone, setPhone] = useState<any>('');
     const [error, setErrors] = useState<any>({})
     let { result: SHResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/shareholder`);
     const { result: ShareUpadteResponse, loading: SULoading, sendPostRequest: PostShareUpdateDetails }: any = usePutApi(`auth/shareholder/${formData?.id}`);
-
+    const validateEmailDebounced = debounce(validateEmail, 300)
+    const validateMobileDebounced = debounce(validateMobile, 300)
     const isDisabled: any = false
     const handleChange = (e: any) => {
         const newdata: any = { ...formData };
         newdata[e.target.name] = e.target.value;
+        if(e.target.name === 'shareholder_email'){
+            validateEmailDebounced(e.target.value, setIsEmailValid)
+        }else if (e.target.name === 'phone_number') {
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+             setPhone(e.target.value.replace(/[^0-9]/g, ""))
+        }
         setformData(newdata)
         console.log("changed", newdata)
     }
     const handlesubmit = () => {
         if (validateSHForm(formData, setErrors)) {
             if (formData?.type === 'Edit') {
-                const body:any={
-                    full_name:formData?.full_name,
-                    percentage_holding:formData?.percentage_holding,
-                    address:formData?.address,
-                    phone_number:formData?.phone_number,
-                    shareholder_email:formData?.shareholder_email,
-                    designation:formData?.designation,
-                    din_number:formData?.din_number,
-                    authorized_signatory:formData?.authorized_signatory
+                const object:any={
+                    ...formData,
+                    company_id:company_id?.toString(),
+                    company_name:company_name || "indicold",
+                    full_name:`${formData?.fname} ${formData?.lname}`
                 }
-                PostShareUpdateDetails(body)
+                PostShareUpdateDetails(object)
                 
             } else {
-                SHPostDetails(formData)
+                const object:any={
+                    ...formData,
+                    company_id:company_id?.toString(),
+                    company_name:company_name || "indicold",
+                    full_name:`${formData?.fname} ${formData?.lname}`
+                }
+                SHPostDetails(object)
             }
 
         }
@@ -115,10 +128,9 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                             >
                                 <Form className="py-2 multistep-form-step">
                                     <FormContainer>
-
-                                        <div className="flex">
+                                    <div className="flex">
                                             <FormItem
-                                                label="Share Holder Name"
+                                                label="Share Holder First Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
                                             >
                                                 <Field
@@ -128,18 +140,60 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     onChange={(e: any) =>
                                                         handleChange(e)
                                                     }
-                                                    name="full_name"
-                                                    value={formData?.full_name}
-                                                    placeholder="Share Holder Name"
+                                                    name="fname"
+                                                    value={formData?.fname}
+                                                    placeholder="Share Holder First Name"
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.full_name}
+                                                    {error && error?.fname}
                                                 </p>
                                             </FormItem>
                                             <FormItem
-                                                label="Share Holder Percentage"
+                                                label="Share Holder Last Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                            >
+                                                <Field
+                                                    disabled={formData?.isdisabled}
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    name="lname"
+                                                    value={formData?.lname}
+                                                    placeholder="Share Holder Last Name"
+                                                    component={Input}
+                                                />
+                                                <p className='text-[red]'>
+                                                    {error && error?.lname}
+                                                </p>
+                                            </FormItem>
+                                        </div>
+                                        <div className="flex">
+                                       {!(formData?.type ==="Edit" || formData?.type ==="View") && <FormItem
+                                                label="Password"
+                                                className="rounded-lg pl-[22px] w-1/2"
+                                            >
+                                                <Field
+                                                    disabled={formData?.isdisabled}
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    name="password"
+                                                    value={formData?.password}
+                                                    placeholder="Password"
+                                                    component={Input}
+                                                />
+                                                <p className='text-[red]'>
+                                                    {error && error?.password}
+                                                </p>
+                                            </FormItem>}
+                                            <FormItem
+                                                label="Share Holder Percentage"
+                                                className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'w-full pl-[22px]':'w-1/2 pl-[22px]' }`}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -196,7 +250,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.phone_number}
+                                                    {isMobileValid}
+                                                    {/* {error && error?.phone_number} */}
                                                 </p>
                                             </FormItem>
                                         </div>
@@ -217,9 +272,10 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     placeholder="Share Holder Email address"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
-                                                    {error && error?.shareholder_email}
-                                                </p>
+                                                 <p className="text-[red] normal-case">
+                                    {isEmailValid}
+                                </p>
+                                               
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Designation"
@@ -284,6 +340,29 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
+                                        {/* <div className="flex">
+                                            <FormItem
+                                                label="Password"
+                                                className="rounded-lg pl-[22px] w-1/2"
+                                            >
+                                                <Field
+                                                    disabled={formData?.isdisabled}
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    name="password"
+                                                    value={formData?.password}
+                                                    placeholder="Password"
+                                                    component={Input}
+                                                />
+                                                <p className='text-[red]'>
+                                                    {error && error?.password}
+                                                </p>
+                                            </FormItem>
+                                        
+                                        </div> */}
                                         <div className='flex'>
                                             <Button
                                                 style={{ borderRadius: '13px' }}

@@ -940,8 +940,8 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
 export const validateSHForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
-    if (!formData?.full_name) {
-        newErrors.full_name = 'This Field is required'
+    if (!formData?.fname) {
+        newErrors.fname = 'This Field is required'
     }
 
     if (!formData?.percentage_holding) {

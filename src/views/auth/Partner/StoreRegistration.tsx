@@ -336,58 +336,7 @@ const StoreRegistration = () => {
         // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
     }
 
-    const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
-        // setEditableFields(!readOnly);
-        setTableTriggeredAction(true);
-        setRowData(rowdata);
-        switch(targetModal) {
-            case 'ChamberDetailModal':
-                setChamberModal(true);
-                break
-
-            case 'CAEquipmentsModal':
-                setCAModal(true);
-                break
-
-            case 'CompressorModal':
-                setCompModal(true);
-                break
-
-            case 'ACUModal':
-                setACUModal(true);
-                break
-
-            case 'CondensorDetailsModal':
-                setCondensorModal(true);
-                break
-
-            case 'AMCDetailModal':
-                setAMCModal(true);
-                break
-
-            case 'IOTDetailModal':
-                setIOTModal(true);
-                break
-
-            case 'ITDetailModal':
-                setITModal(true);
-                break
-
-            case 'GeneratorDetailModal':
-                setGenModal(true);
-                break
-
-            case 'MHEDetails':
-                setMHEModal(true);
-                break
-
-            case 'SolarInverterModal':
-                setSEModal(true);
-                break
-
-            default: return;
-        }
-    }
+   
 
     // Use useEffect to update form data when fetchDetails changes
 
@@ -530,6 +479,7 @@ const StoreRegistration = () => {
 
     }
     const handleEdit = (rowData: any, type: any) => {
+        console.log("bghjgjhgh",rowData,type);
         if (type === 'Chamber') {
             setChamberModal(true)
             setCommanData({ ...rowData, type: "Edit" })
@@ -553,8 +503,10 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "Edit" })
         }
         else if (type === 'IOT') {
-            setIOTModal(true)
-            setCommanData({ ...rowData, types: "Edit" })
+            console.log("bghjgjhgh",rowData);
+            
+            // setIOTModal(true)
+            // setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'IT') {
             setITModal(true)
@@ -1616,7 +1568,7 @@ const StoreRegistration = () => {
                                         </div>
                                     </FormItem>
                                 </div>
-                                <Accordion>
+                                <Accordion allowZeroExpanded>
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>

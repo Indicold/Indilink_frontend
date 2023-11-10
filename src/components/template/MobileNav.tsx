@@ -11,6 +11,8 @@ import NavToggle from '@/components/shared/NavToggle'
 import navigationConfig from '@/configs/navigation.config'
 import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
+import navigationInvestorConfig from '@/configs/navigationInvestor.config'
+import navigationPartnerConfig from '@/configs/navigationPartner.config'
 
 const VerticalMenuContent = lazy(
     () => import('@/components/template/VerticalMenuContent')
@@ -85,7 +87,7 @@ const MobileNav = () => {
                                 <VerticalMenuContent
                                     navMode={navMode}
                                     collapsed={sideNavCollapse}
-                                    navigationTree={navigationConfig}
+                                    navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig: localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
                                     routeKey={currentRouteKey}
                                     userAuthority={userAuthority as string[]}
                                     direction={direction}

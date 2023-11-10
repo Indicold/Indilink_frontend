@@ -25,7 +25,7 @@ const dropdownItemList: DropdownList[] = []
 const _NotificationDropdown = ({ className }: CommonProps) => {
     const {token}:any=getToken();
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
     console.log("HHHHHHHH",ListOfNotification);
@@ -84,7 +84,7 @@ console.log(`${timeDifference.minutes} minutes`);
                         Notification
                     </Dropdown.Item>
                     <Dropdown.Item variant="divider" />
-                    {ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
+                    {ListOfNotification?.data?.length>0 ? ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
      <Dropdown.Item variant="header">
      <div className="flex items-center">
      <div className="mt-2 px-6  bg-white rounded-lg w-full">
@@ -105,7 +105,9 @@ Hey! Do you remember about choosing your training regime?
 </div>
      </div>
  </Dropdown.Item>
-                    ))}
+                    )) :
+                    <h6 className='text-center'> There are no notification</h6>
+                    }
            
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
@@ -128,14 +130,14 @@ Hey! Do you remember about choosing your training regime?
                     </Dropdown.Item>
                 ))}
                 {/* <Dropdown.Item variant="divider" /> */}
-                <Dropdown.Item
+              {ListOfNotification?.data?.length>0 &&  <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2 text-end"
                     onClick={handleViewAll}
                 >
                    
                     <span className='text-end'>View All</span>
-                </Dropdown.Item>
+                </Dropdown.Item>}
             </Dropdown>
         </div>
     )

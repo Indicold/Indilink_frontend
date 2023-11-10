@@ -187,6 +187,8 @@ const BasicInfo = () => {
         }
 
     }, [BranchList?.data])
+    console.log("ytytyty",companyDetails);
+    
     useEffect(() => {
         if (companyDetails?.data?.length>0) {
             setData(
@@ -472,7 +474,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
                         {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => setSHModal(true)}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => setSHModal(true)}>+ Add Another Share Holder</button>}
+                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {formDataShare({});setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
                         {error && error.shareholder_ids}
                     </>}
 
@@ -480,7 +482,7 @@ console.log("TTTTTTTTT",data,BasicInfo);
                 {/* branch details */}
                 <div>
                     {!branch && <>
-                        <h4 className="text-head-title text-center">Branch Information6</h4>
+                        <h4 className="text-head-title text-center">Branch Information</h4>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
                         <p className="text-[red]">{error && error.branch_ids}</p>

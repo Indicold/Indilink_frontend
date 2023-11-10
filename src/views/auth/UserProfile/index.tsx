@@ -1,7 +1,9 @@
 import DownloadingIcon from '@mui/icons-material/Downloading';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import { TokenInfo } from '@/store/customeHook/token';
 const UserProfilePage = () => {
+  const {owner_user_id}:any=TokenInfo();
     // const token:any=localStorage.getItem('access_token');
     // const decode=jwt_decode(token)
     // console.log("TTTTTTTTTT",decode);
@@ -28,7 +30,7 @@ const UserProfilePage = () => {
             <h1 className="font-bold text-center text-3xl text-gray-900">
             {/* {data && data?.email} */}
             </h1>
-            <div className="my-5 px-6">
+          {owner_user_id ===0  && <div className="my-5 px-6">
               <NavLink to='/basic-info'
                 // href="/forgot-password"
                 // onClick={handleChangePassword}
@@ -36,7 +38,7 @@ const UserProfilePage = () => {
               >
                Profile Details
               </NavLink>
-            </div>
+            </div>}
             <div className="my-5 px-6">
               <a
                 // href="/forgot-password"
@@ -46,15 +48,15 @@ const UserProfilePage = () => {
                Change Password
               </a>
             </div>
-            <div className="my-5 px-6">
+          {owner_user_id ===0  &&  <div className="my-5 px-6">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
                 className="border-dashed border-2 border-indigo-600 mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
               >
             <DownloadingIcon /> Download NDA
               </a>
-            </div>
-            <div className="my-5 px-6">
+            </div>}
+          {owner_user_id ===0  &&  <div className="my-5 px-6">
               <div role='button'
                 className="border-dashed border-2 border-indigo-600  mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3"
               >
@@ -65,7 +67,7 @@ const UserProfilePage = () => {
                 </label>
                 <input type='file'  id='file' className='hidden'/>
               </div>
-            </div>
+            </div>}
         
             <div className="w-full">
               <h3 className="font-medium text-gray-900 text-left px-6">
