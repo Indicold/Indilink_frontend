@@ -38,7 +38,6 @@ setFormData(newData);
         setTeam(value);
         setModalTeam(true)
     }
-    console.log("data",data?.data,error);
     
     return (
         <div >

@@ -16,7 +16,6 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
  const {token}:any=getToken()
   const [formData,setFormdata]=useState<any>({});
   const [errors, setErrors] = useState<any>({});
-  console.log("setform",message);
   
     // Fetch a list of categories using a custom hook
     const { data: ListOfProductCategory, loading: PCloading, error: PCerror } =

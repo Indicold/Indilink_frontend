@@ -15,7 +15,6 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps> = ({
     setModal,
     Holder,
 }) => {
-    console.log('Holder', Holder)
 
     const [data, setData] = useState({
         Holder: Holder,
@@ -32,7 +31,6 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function handlesave retrieves data from local storage, adds new data to it, and then
@@ -51,7 +49,6 @@ const MajorityHolderModal: React.FC<MajorityHolderModalProps> = ({
         if (!localStorage.getItem('Holder_List')) {
             localStorage.setItem('Holder_List', JSON.stringify([data]))
         }
-        console.log('gggggg')
     }
     /* The above code is using the useEffect hook in a React component. It is setting the state of the
     "data" variable to an object that contains a property called "Holder" with the value of the

@@ -70,7 +70,6 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
         // Handle edit action for different asset types.
         setformData({...rowData,isdisabled:false,type:"Edit"})
         setModal(true)
-        console.log('HHHHHHHHH', rowData)
 
     }
 
@@ -103,7 +102,6 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 )
             }
             if (key === 'contract_download') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -124,7 +122,6 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 )
             }
             if (key === 'comment') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -133,7 +130,6 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 )
             }
             if (key === 'admin') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>

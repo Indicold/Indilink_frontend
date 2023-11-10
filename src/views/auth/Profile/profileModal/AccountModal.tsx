@@ -36,7 +36,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
         }
 
         setData(newdata)
-        console.log("changed")
     }
     const handlesubmit = () => {
         if (validateAccountForm(data, setErrors)) {
@@ -69,18 +68,15 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                             setModal(false)
                         }
                         fetchData()
-                      console.log("Response:", data);
                       // Handle the response data here
                     })
                     .catch((error) => {
                       // Handle any errors here
                       console.error('Error:', error);
                     });
-                console.log("huyt")
                 // AccountUpdatePost(data)
 
             } else {
-                console.log("TTTYTYRghgggjhgj", "5");
                 fetch(`${apiUrl}/auth/account-detail`, {
                     method: 'POST',
                     headers: {
@@ -101,7 +97,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                             setModal(false)
                         }
                         fetchData()
-                      console.log("Response:", data);
                       // Handle the response data here
                     })
                     .catch((error) => {
@@ -114,7 +109,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
 
         }
     }
-    console.log("FFFFFFF", data);
   
     useEffect(() => {
         messageView(Accountesponse?.message)
@@ -138,7 +132,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
             }, 2000)
         }
     }, [AccountUpdateesponse?.status])
-    console.log("DATATTAAA", data);
 
     return (
         <div>

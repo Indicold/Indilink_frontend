@@ -83,7 +83,6 @@ var requestOptions:any = {
 fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
   .then(response => response.text())
   .then((result:any) => {
-    console.log("TTTTTTT",result)
     fetchData();
   })
   .catch(error => console.log('error', error));
@@ -92,7 +91,6 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
         // Handle edit action for different asset types.
         setformData({ ...rowData, isdisabled: false, type: "Edit" })
         setModal(true)
-        console.log('HHHHHHHHH', rowData)
 
     }
 
@@ -115,7 +113,6 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
             .then((result: any) => {
              messageView(result?.message)
              fetchData()
-                console.log(result)
             })
             .catch((error: any) => {
                 console.log('error', error)
@@ -146,7 +143,6 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                 )
             }
             if (key === 'contract_download') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -167,7 +163,6 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                 )
             }
             if (key === 'comment') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -176,7 +171,6 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                 )
             }
             if (key === 'admin') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>

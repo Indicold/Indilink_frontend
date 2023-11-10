@@ -154,7 +154,7 @@ const StoreRegistration = () => {
     const handleRoute = async () => {
         const { token }: any = getToken()
         dataa.store_type_id = value1?.map((item: any) => item?.id)
-        // console.log("T666666", dataa);
+        
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
         formdata.append("city_id", dataa?.city_id);
@@ -185,7 +185,6 @@ const StoreRegistration = () => {
         formdata.append("driver_area_food_resting", dataa?.driver_area_food_resting);
         formdata.append("weight_bridge_id", dataa?.weight_bridge_id);
         formdata.append("road_condition_id", dataa?.road_condition_id);
-        // console.log("5GHGHGHGHG", dataa?.three_d_view_of_asset);
 
         if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
             formdata.append(
@@ -281,7 +280,6 @@ const StoreRegistration = () => {
     const [phone, setPhone] = useState<any>('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
-        // console.log("TYYYYYYYY", e.target.name);
 
         const newData: any = { ...dataa }
         if (e.target.name === 'store_type_id') {
@@ -300,7 +298,6 @@ const StoreRegistration = () => {
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
             newData['filetype'] = "file";
-            // console.log("TTTTTTT787878787", fileArray, fileInput.files);
 
         } else
             if (e.target.name === 'photos_of_asset') {
@@ -319,8 +316,7 @@ const StoreRegistration = () => {
             else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
-        // console.log("e.target.value", `${e.target.nodeName === 'SELECT'} e ${e.target.value}`)
-        // console.log("newData", newData)
+        
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
@@ -332,8 +328,6 @@ const StoreRegistration = () => {
         newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
         setData(newData)
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
-        // console.log("newDataa", newData)
-        // console.log("newVal", newValue?.map((item:any,index:any)=>item?.id))
     }
 
     const handleEditView = (rowdata: any, targetModal: string, readOnly: boolean) => {
@@ -396,10 +390,10 @@ const StoreRegistration = () => {
 
         const newState: any = { ...dataa };
         newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
-        // console.log("no_of_chambers", newState)
+        
         setData(newState)
         setValue(dataa?.store_type_id)
-        // console.log("dataa", dataa)
+        
         if (localStorage.getItem('chamber_ids')) {
             const arr: any = JSON.parse(localStorage.getItem('chamber_ids')) || [];
             if (arr) {
@@ -422,7 +416,7 @@ const StoreRegistration = () => {
                 const body: any = {
                     ids: filteredArray
                 }
-                // console.log("GGGGGG", body, filteredArray);
+                
                 if (arr.length > 0) {
                     sendPostRequestca(body)
                 }
@@ -447,7 +441,6 @@ const StoreRegistration = () => {
 
     const targetArray1: any = StorageType?.data || [];
     const itemsToFind1 = dataa?.store_type_id;
-    // console.log("TTTTTTTTT768786786786867", dataa);
 
     useEffect(() => {
         const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
@@ -485,7 +478,7 @@ const StoreRegistration = () => {
         }
 
     }
-    console.log("TTTTTTT77777777", dataa);
+    
     const handleView = (rowData: any, type: any) => {
         if (type === 'Chamber') {
             setChamberModal(true)
@@ -1560,8 +1553,6 @@ const StoreRegistration = () => {
                                             {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
                                         <div className='flex'>
-                                            {console.log("GGHGHGHGH",dataa)
-                                            }
                                         {dataa?.three_d_view_of_asset?.length>0 && dataa?.three_d_view_of_asset?.map((file: any, index: number) => {                                           
                                            const imageUrl :any=dataa?.filetype==='file' ?  URL?.createObjectURL(file) :file;
 
@@ -2029,7 +2020,7 @@ const StoreRegistration = () => {
                                                 {fetchDetailsAll?.data?.amcs?.map((item: any, index: any) => {
                                                     let date: any = new Date(item?.valid_till)
                                                     date = date?.toLocaleDateString()
-                                                    // console.log("amcs", date)
+                                                    
                                                     return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center my-auto">
                                                             {item?.name_of_service}

@@ -57,7 +57,6 @@ const PartnerComplianceMove = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
-    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
     const {
         result: ValidTillResponse,
@@ -129,7 +128,6 @@ const PartnerComplianceMove = () => {
 
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
-        console.log('FILE', e.target.files[0])
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
@@ -138,7 +136,6 @@ const PartnerComplianceMove = () => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        // console.log("date_change", newData, e.target.value)
 
         const updatedArray = array.map((item: any) => {
             if (e.target.name === item.key_text) {
@@ -161,7 +158,6 @@ const PartnerComplianceMove = () => {
     }
     const handleChange = (e: any, item: any) => {
 
-        console.log("TYYYYYYYYY", e.target.name, item);
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
@@ -178,8 +174,6 @@ const PartnerComplianceMove = () => {
         //     : itemData
         // );
         // setArray(updatedArray);
-        console.log("TTTTT66TTTT", e.target.name, newData);
-        // console.log("TTTTT66TTTT",newData);
 
     };
 
@@ -243,7 +237,6 @@ const PartnerComplianceMove = () => {
                 )
                 setArray(updatedArray) // Update the state with the modified array
             }
-            console.log('Response data:', responseData?.data)
         } catch (error) {
             console.error('Error:', error)
         }
@@ -265,7 +258,6 @@ const PartnerComplianceMove = () => {
             }
     
             if (!data[licenseField] || !data[textField]) {
-                console.log("YYYYYYYYYY",data[licenseField]);
                 
                 // messageView(`Valid Till and License no is mandatory`);
                 return false;
@@ -293,10 +285,9 @@ const PartnerComplianceMove = () => {
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
          const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
          let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-         console.log("YUUUUUUUUU",Invalid,newvalidate);
+         
          if (Invalid && newvalidate && newvalidateLicence) {
          PostValidTillDetails(dateArray)
-         console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
          // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
          }else{
@@ -343,7 +334,7 @@ const PartnerComplianceMove = () => {
         }
 
     }, [fetchDetails?.data])
-    console.log('DDDDDDDD', array)
+    
     useEffect(() => {
 
 
@@ -371,7 +362,6 @@ const PartnerComplianceMove = () => {
                 }
             });
             setDateArray(payload)
-            console.log("Payload:", payload);
         }
 
 

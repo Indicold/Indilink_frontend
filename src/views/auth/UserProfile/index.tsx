@@ -4,7 +4,6 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 const UserProfilePage = () => {
     // const token:any=localStorage.getItem('access_token');
     // const decode=jwt_decode(token)
-    // console.log("TTTTTTTTTT",decode);
     const navigate:any=useNavigate();
     const handleChangePassword=()=>{
         localStorage.clear()

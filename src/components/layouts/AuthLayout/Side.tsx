@@ -16,7 +16,6 @@ const Side = ({ children, content, ...rest }: SideProps) => {
 const AuthResponse=useSelector((state:any)=>state?.auth)    
 
 
-// console.log("GGGGGGG",AuthResponse?.apiLoginPostReducer?.loading);
 
     return (
         <div className="grid lg:grid-cols-6 w-full h-full">

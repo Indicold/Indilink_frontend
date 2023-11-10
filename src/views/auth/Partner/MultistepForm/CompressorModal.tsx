@@ -39,7 +39,6 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
         const newState: any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,7 +57,6 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             newData[e.target.name] = e.target.value
         }
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to compressors in a

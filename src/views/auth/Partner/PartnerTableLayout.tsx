@@ -68,7 +68,6 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
 
     const handleEdit = (rowData: any) => {
         // Handle edit action for different asset types.
-        console.log('HHHHHHHHH', rowData)
 
         if (type === 'Store') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
@@ -83,7 +82,6 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
         if (type === 'Move') {
             localStorage.setItem('assets_list_id', rowData?.asset_id)
             localStorage.setItem('asset_id', '2')
-            console.log('localStorage.setItem', localStorage.getItem('asset_id'))
             navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
         }
     }
@@ -130,7 +128,6 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
                 )
             }
             if (key === 'contract_download') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -151,7 +148,6 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
                 )
             }
             if (key === 'comment') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>
@@ -160,7 +156,6 @@ const TableLayoutPartner = ({ AllStore, tableHead, type }: any) => {
                 )
             }
             if (key === 'admin') {
-                console.log('rowData', rowData)
 
                 return (
                     <td className="text-center" key={i}>

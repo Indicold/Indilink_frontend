@@ -41,7 +41,6 @@ const KeyManagement = () => {
     const navigate = useNavigate()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const handlesubmit = (e:any) => {
-        console.log("submitted")
         navigate('/account-details')
     }
   return (

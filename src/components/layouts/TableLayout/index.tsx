@@ -83,7 +83,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -131,13 +130,11 @@ const handleLogs=(rowData:any)=>{
   setLogsModal(true)
 }
   const handleSubmit=(rowData:any)=>{
-    console.log("ttttttt",rowData);
     
     setRowData(rowData)
     setAlert(true)
   }
   const handleConfirm=()=>{
-    console.log("tttttttt8888",);
     
     PostSubmitDetails({status:"Final"})
   }
@@ -193,7 +190,6 @@ const handleDocs=(rowData:any)=>{
 
   // JSX structure for rendering the table and pagination.
 useEffect(()=>{
-console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)

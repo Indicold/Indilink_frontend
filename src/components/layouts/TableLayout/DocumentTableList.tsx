@@ -84,7 +84,6 @@ const DocumentTableList = ({ AllStore }: any) => {
  
   
   const handleView = (rowData: any) => {
-    console.log("DocumentViewModal",rowData);
     
     // Handle view action for different asset types.
     setModal(true)

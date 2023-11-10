@@ -28,7 +28,6 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
     useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
 
     const { signOut } = useAuth()
-    console.log("HHHHHHHH",ListOfNotification);
     
 const navigate:any=useNavigate();
     const UserAvatar = (
@@ -68,10 +67,6 @@ function calculateTimeDifference(targetDate) {
 const targetDate = "2023-09-15T05:11:27.000Z";
 const timeDifference = calculateTimeDifference(targetDate);
 
-console.log("Time Difference:");
-console.log(`${timeDifference.days} days`);
-console.log(`${timeDifference.hours} hours`);
-console.log(`${timeDifference.minutes} minutes`);
 
     return (
         <div>

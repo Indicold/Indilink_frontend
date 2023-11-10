@@ -97,7 +97,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         else if (e.target.name === 'ch-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
-            // console.log("chamber_size", typeof e.target.value.toString())
             setLength(e.target.value);
             const area:any=e.target.value*breadth;
             newData['floor_area']=area;
@@ -120,7 +119,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         else if (e.target.name === 'pl-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
-            // console.log("chamber_size", typeof e.target.value.toString())
             setLengthP(e.target.value);
             updateFormattedStringP(e.target.value, breadthP, heightP);
         } else if (e.target.name === 'pl-b') {
@@ -149,8 +147,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
      * The `handlesave` function is responsible for saving chamber details by making a POST request to
      * the server with the provided form data.
      */
-    // console.log('newData')
-    // console.log("ididididididid",formD);
 
     const handlesave = async () => {
         var myHeaders = new Headers()
@@ -215,7 +211,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             body: formdata,
             redirect: 'follow',
         }
-        console.log("validateChamberFormvalidateChamberForm", formD)
+        
             if(commanData?.type=='Edit'){
                 try {
                     const response = await fetch(
@@ -223,7 +219,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         requestOptionsUpdate
                     )
                     const result = await response.json()
-                    console.log("VVVVVVV",result);
         
                     if (result?.status) {
                         FetchAgain()
@@ -233,10 +228,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         let arr: any = []
                         if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                         localStorage.setItem('StoreData',JSON.stringify(newD))
-                        console.log("GGGGGG88889", result?.data, newD)
+                        
                         arr.push(result?.data?.id)
                         newD['chamber_ids'] = arr;
-                        console.log("GGGGGG8888",newD?.chamber_ids);
                         
                   // Retrieve existing chamber_ids from local storage
         const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
@@ -261,10 +255,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         update(newD)
                         setModal(false)
                     }
-                    console.log(result?.status)
                 } catch (error: any) {
                     messageView(error.message)
-                    console.log('error', error.message)
                 }
             }else{
 
@@ -274,7 +266,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         requestOptions
                     )
                     const result = await response.json()
-                    console.log("VVVVVVV",result);
         
                     if (result?.status) {
                         FetchAgain()
@@ -284,10 +275,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         let arr: any = []
                         if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                         localStorage.setItem('StoreData',JSON.stringify(newD))
-                        console.log("GGGGGG88889", result?.data, newD)
                         arr.push(result?.data?.id)
                         newD['chamber_ids'] = arr;
-                        console.log("GGGGGG8888",newD?.chamber_ids);
                         
                   // Retrieve existing chamber_ids from local storage
         const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
@@ -312,10 +301,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         update(newD)
                         setModal(false)
                     }
-                    console.log(result?.status)
                 } catch (error: any) {
                     messageView(error.message)
-                    console.log('error', error.message)
                 }}
             }
       
@@ -355,7 +342,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         setData(commanData)
     }
     },[commanData])
-    console.log("565767676",data);
+    
     return (
         <>
             <ToastContainer />

@@ -77,7 +77,6 @@ const MachineTable = ({ AllStore, tableHead,setModal,modal,setFormData }: any) =
 
 
     const handleEdit = (rowData:any) => {
-    console.log("TEXT");
     setFormData({...rowData,type:"Edit"})
     
     // debugger

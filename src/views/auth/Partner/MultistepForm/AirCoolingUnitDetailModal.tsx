@@ -29,7 +29,6 @@ const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` saves data to local storage and closes a modal.
@@ -40,7 +39,6 @@ const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
         setModal(false)
 
-        console.log('gggggg')
     }
     return (
         <>

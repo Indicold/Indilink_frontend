@@ -33,14 +33,12 @@ const PartnerBussinessTypeMove = () => {
     const { token }: any = getToken()
     // Get the AssetsId from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
-console.log("VVVVVVV",id);
 
     // Get the current route location and check if it's disabled
     const location = useLocation()
     const pramas:any=location
 
     const isDisabled = location?.state
-    console.log('location', location?.state)
 
     // Fetch data for vehicle model and make using custom hooks
     const {
@@ -87,9 +85,7 @@ console.log("VVVVVVV",id);
     const handleChange = (e: any) => {
         const newData: any = { ...data }
         if(e.target.name === 'vehicle_make_id') {
-            console.log("makeCustom", makeCustom)
             if(e.target.value === 'other') {
-                console.log("makeCustomm", makeCustom)
                 setMakeCustom(true)
                 setModelCustom(true)
             }
@@ -98,9 +94,7 @@ console.log("VVVVVVV",id);
             }
         }
         if(e.target.name === 'vehicle_model_id') {
-            console.log("makeCustom", makeCustom)
             if(e.target.value === 'other') {
-                console.log("makeCustomm", makeCustom)
                 setModelCustom(true)
             }
             else {
@@ -109,7 +103,7 @@ console.log("VVVVVVV",id);
         }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log("newData", newData)
+        
         if(errors[e.target.name])validateMovePartnerForm(newData, setErrors)
     }
 
@@ -118,7 +112,6 @@ console.log("VVVVVVV",id);
 
     // Define a function to handle form submission
     const handlesave = async () => {
-        console.log('IDDDDDDDDD', ID)
 
         // Check form validation and if the form is not disabled
         if (validateMovePartnerForm(data, setErrors) && !isDisabled) {
@@ -197,12 +190,7 @@ console.log("VVVVVVV",id);
         }
     }, [fetchDetails])
 
-    console.log('INDI01AAAA5INDI01AAAA5', fetchDetails)
 
-    // Log vehicalMake?.data for debugging purposes
-    {
-        console.log('vehicalMake?.data', vehicalMake?.data)
-    }
     const TimeString = (time: any) => {
         const dateTimeString = "2023-09-15T00:00:00.000Z";
         
@@ -210,7 +198,6 @@ console.log("VVVVVVV",id);
         const formattedDate = date.toISOString().split('T')[0];
         return formattedDate
     }
-    console.log("66666666666666",TimeString());
     
     return (
         <div className='flex'>

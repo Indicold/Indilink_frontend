@@ -450,10 +450,9 @@ const array1Keys = array1?.map((item) => item?.key);
         )?.length>0 ? true: false;
 
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        console.log("YUUUUUUUUU",array?.filter((item:any)=>item?.messageText),Invalid,newvalidate);
+        
         if (Invalid && newvalidate && newvalidateLicence) {
         PostValidTillDetails(dateArray)
-        console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
         }else{
@@ -463,7 +462,6 @@ const array1Keys = array1?.map((item) => item?.key);
     }
     const handleChange = (e: any, item: any) => {
 
-        console.log("TYYYYYYYYY", e.target.name, item);
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
@@ -474,8 +472,6 @@ const array1Keys = array1?.map((item) => item?.key);
             : itemData
         );
         setArray(updatedArray);
-        console.log("TTTTT66TTTT", e.target.name, updatedArray);
-        // console.log("TTTTT66TTTT",newData);
 
     };
 
@@ -521,7 +517,6 @@ const array1Keys = array1?.map((item) => item?.key);
         }
 
     }, [fetchDetails?.data])
-    console.log("tryttytyrty", array);
  
 /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
 `fetchDetails.data` value changes. */
@@ -552,7 +547,6 @@ const array1Keys = array1?.map((item) => item?.key);
                 }
             });
             setDateArray(payload)
-            console.log("Payload:", payload);
         }
 
 

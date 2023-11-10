@@ -149,7 +149,6 @@ const PartnerBussinessTypeAdditional = () => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        console.log("date_change", newData, e.target.value)
     }
 
     // Upload the file to the server

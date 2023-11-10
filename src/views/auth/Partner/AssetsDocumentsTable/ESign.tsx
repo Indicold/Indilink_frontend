@@ -18,7 +18,7 @@ const ESign = () => {
       setCanvas(canvas);
       setCanvasVisibility(true);
     }, []);
-  console.log("bhhghghg",canvas);
+  
   return (
     <div className="w-full">
     <SignatureCanvas

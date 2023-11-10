@@ -75,7 +75,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      */
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
-        console.log("OTPPostDetails",OTPPostDetails);
         
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
@@ -123,7 +122,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         if (newGst.length == 10 && re.test(newGst)) {
-            // console.log("5765575");
             
             setDisabled(false);
             showInvalidPanMessage(false);
@@ -188,7 +186,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
     /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
-        console.log(OTPResponse)
         if (OTPResponse?.message) {
             toast.success(OTPResponse?.message, {
                 position: 'top-right', // Position of the toast
@@ -218,7 +215,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     value of `b` or `GSTResponse` changes. */
     useEffect(() => {
         if (GSTResponse?.message) {
-            console.log("GSTResponse", GSTResponse);
 
             toast.success(typeof GSTResponse?.message === 'string'?GSTResponse?.message:"Details fetched successfully.", {
                 position: 'top-right', // Position of the toast
