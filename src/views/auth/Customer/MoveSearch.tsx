@@ -21,7 +21,8 @@ import Autocomplete from "react-google-autocomplete"
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
-
+    const dest_gps:any=localStorage.getItem('dest_gps') || "";
+    const origin_gps:any=localStorage.getItem('origin_gps') || "";
     // Get the user's token using a custom hook
     const { token }: any = getToken();
     const location: any = useLocation();
@@ -29,7 +30,7 @@ const MoveSearch = () => {
     // Define a state variable for the this component
     const [errors, setErrors] = useState<any>({});
     const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>(CustomerMovePayload1);
+    const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps});
     const [message, setMessage] = useState<any>('')
     const [isDisabled, setIsDisabled] = useState<any>(false)
 
@@ -95,7 +96,9 @@ const MoveSearch = () => {
      * authorization headers, and then displays a success message and redirects the user to a ticket
      * list page after a delay.
      */
+   
     const handleRouteUpdate = () => {
+  
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -103,11 +106,11 @@ const MoveSearch = () => {
         formdata.append("origin_country_id", formData?.origin_country_id);
         formdata.append("origin_city_id", formData?.origin_city_id);
         formdata.append("origin_pincode", formData?.origin_pincode);
-        formdata.append("origin_gps", formData?.origin_gps);
+        formdata.append("origin_gps", origin_gps);
         formdata.append("dest_country_id", formData?.dest_country_id);
         formdata.append("dest_city_id", formData?.dest_city_id);
         formdata.append("dest_pincode", formData?.dest_pincode);
-        formdata.append("dest_gps", formData?.dest_gps);
+        formdata.append("dest_gps", dest_gps);
         formdata.append("load_quantity", formData?.load_quantity);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("broad_category_id", formData?.broad_category_id);
@@ -119,6 +122,7 @@ const MoveSearch = () => {
         formdata.append("status_id", formData?.status_id);
         formdata.append("comment", formData?.comment);
         formdata.append("contract_download", formData?.contract_download);
+console.log("FFFFFFF",formData);
 
         var requestOptions: any = {
             method: 'PUT',
@@ -187,6 +191,7 @@ const MoveSearch = () => {
 
     const { t, i18n }:any = useTranslation();
 
+console.log("TYTYTYTYT",formData);
 
     return (
         <div>
@@ -277,13 +282,11 @@ const MoveSearch = () => {
                                             aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_gps"
-                                            value={formData?.origin_gps}
+                                            value={formData?.origin_gps || origin_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
-                                                const newData = {...formData}
-                                                newData['origin_gps'] = place?.formatted_address
-                                                setFormData(newData)
+                                                localStorage.setItem("origin_gps",place?.formatted_address)
                                             }}
                                         />
                                     </FormItem>
@@ -352,13 +355,14 @@ const MoveSearch = () => {
                                             aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_gps"
-                                            value={formData?.dest_gps}
+                                            value={dest_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
-                                                const newData = {...formData}
-                                                newData['dest_gps'] = place?.formatted_address
-                                                setFormData(newData)
+                                                localStorage.setItem("dest_gps",place?.formatted_address)
+                                                // const newData = {...formData}
+                                                // newData['dest_gps'] = place?.formatted_address
+                                                // setFormData({...formData,dest_gps:place?.formatted_address})
                                             }}
                                         />
                                     </FormItem>

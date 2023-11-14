@@ -119,6 +119,7 @@ const Link: React.FC<any> = (props) => {
         setShowTooltip(false);
     };
 
+console.log("TTTTTTTTTTTTT",props.contentState.getEntity(props.entityKey).getData());
 
     return (
         <span
@@ -298,52 +299,10 @@ const Toolbar: React.FC<{
 export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment }: any) => {
     const defaultData = {
         blocks: [
-            {
-                key: "3h390",
-                text: "dummuy",
-                type: "unstyled",
-                depth: 0,
-                inlineStyleRanges: [],
-                entityRanges: [
-                    {
-                        offset: 0,
-                        length: 4,
-                        key: 0,
-                    },
-                ],
-                data: {},
-            },
-            {
-                key: "8task",
-                text: "",
-                type: "unstyled",
-                depth: 0,
-                inlineStyleRanges: [],
-                entityRanges: [
-                    {
-                        offset: 1,
-                        length: 2,
-                        key: 1,
-                    },
-                ],
-                data: {},
-            },
+          
         ],
         entityMap: {
-            0: {
-                type: "LINK",
-                mutability: "MUTABLE",
-                data: {
-                    url: "5445",
-                },
-            },
-            1: {
-                type: "LINK",
-                mutability: "MUTABLE",
-                data: {
-                    url: "we",
-                },
-            },
+            
         },
     };
     let _idVal = localStorage.getItem('_id')

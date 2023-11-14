@@ -1,63 +1,86 @@
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView, onkeyDown } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import InvoiceTableList from './InvoiceTableList';
 
 const Invoice = () => {
-    const {token}:any=getToken();
+    const { token }: any = getToken();
     const [modal, setModal] = useState<any>(false);
-    const [formData,setFormData]=useState<any>({
-        invoice_doc:"",
-        invoice_amount:""
+    const [formData, setFormData] = useState<any>({
+        invoice_doc: "",
+        invoice_amount: ""
     })
-    const { data: ListOfInvoice, loading: LIloading, error: LIerror } =
-    useApiFetch<any>(`partner/invoices`, token);
+    const [error,setErrors]=useState<any>({})
+    const { data: ListOfInvoice, loading: LIloading, error: LIerror,refetch:fetchInvoiceData } =
+        useApiFetch<any>(`partner/invoices`, token);
 
-    const handleChange=(e:any)=>{
-        const newData:any={...formData};
-        if(e.target.name==='invoice_doc'){
-            newData[e.target.name]=e.target.files[0]; 
-        }else{
-            newData[e.target.name]=e.target.value;
+    const handleChange = (e: any) => {
+        const newData: any = { ...formData };
+        if (e.target.name === 'invoice_doc') {
+            newData[e.target.name] = e.target.files[0];
+        } else {
+            newData[e.target.name] = e.target.value;
         }
            
         setFormData(newData)
-  
+
     }
-    const handleSave=(e:any)=>{
+    const handleSave = (e: any) => {
         var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
-var formdata = new FormData();
-formdata.append("invoice_doc", formData?.invoice_doc);
-formdata.append("invoice_amount", formData?.invoice_amount);
+        var formdata = new FormData();
+        formdata.append("invoice_doc", formData?.invoice_doc);
+        formdata.append("invoice_amount", formData?.invoice_amount);
 
-var requestOptions :any= {
-  method: 'POST',
-  headers: myHeaders,
-  body: formdata,
-  redirect: 'follow'
-};
+        var requestOptions: any = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+        if (formData?.invoice_doc && formData?.invoice_amount) {
+            fetch(`${apiUrl}/partner/invoice`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    if (result?.status === 200) {
+                        setFormData({})
+                        messageView("Invoice Uploaded Successfully !")
+                        
+                        setModal(false)
+                        setFormData({
+                            invoice_doc: "",
+                            invoice_amount: ""
+                        })
+                    } else {
+                        messageView(result?.message)
+                    }
+                    fetchInvoiceData()
+                })
+                .catch(error => console.log('error', error));
+        }
+        const errors:any={}
+         if(!formData?.invoice_doc){
+            errors.invoice_doc="Please Upload Invoice Document";
+          
+        }
 
-fetch(`${apiUrl}/partner/invoice`, requestOptions)
-  .then(response => response.json())
-  .then(result =>{
-    if(result?.status===200){
-        messageView("Invoice Uploaded Successfully !")
-        setModal(false)
-    }else{
-        messageView(result?.message)
+         if(!formData?.invoice_amount){
+errors.invoice_amount="Please Enter Invoice Amount";
+         
+        }
+        setErrors(errors)
     }
-
-})
-  .catch(error => console.log('error', error));
-    }
+    console.log("rrrrrrr",error);
+    useEffect(()=>{
+        fetchInvoiceData()
+    },[formData,modal])
     return (
         <>
-        <ToastContainer />
-          {modal &&  <div
+            <ToastContainer />
+            {modal && <div
                 id="authentication-modal"
                 tabIndex={-1}
                 aria-hidden="true"
@@ -78,7 +101,7 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                                     </div>
                                     <div className=' text-white  '>
 
-                                        <button type="button"       onClick={()=>setModal(false)} className="bg-black rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-500 hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                        <button type="button" onClick={() => setModal(false)} className="bg-black rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-500 hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
 
                                             <span className="sr-only">Close menu</span>
 
@@ -135,23 +158,26 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                                                     <span className="font-semibold">Click to upload</span> or drag and drop
                                                 </p>
                                                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                    SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                                    txt,Pdf (MAX. 800x400px)
                                                 </p>
                                             </div>
-                                            <input id="dropzone-file" name='invoice_doc'  onChange={(e:any)=>handleChange(e)} type="file" className="hidden" />
+                                            {/* .xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt, */}
+                                            <input id="dropzone-file" accept=".txt,.pdf" name='invoice_doc' onChange={(e: any) => handleChange(e)} type="file" className="hidden" />
                                         </label>
                                     </div>
+                                    <p className='text-[red]'>{error?.invoice_doc}</p>
+
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium
                                          text-gray-900 dark:text-white text-start mt-4">Ammount</label>
-                                        <input type="number" onKeyDown={onkeyDown} name='invoice_amount' onChange={(e:any)=>handleChange(e)} id="amount"
+                                        <input type="number" onKeyDown={onkeyDown} name='invoice_amount' onChange={(e: any) => handleChange(e)} id="amount"
                                             className="bg-gray-50 border border-gray-300 text-gray-900
              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                dark:focus:border-blue-500" placeholder="Enter your ammount here..." required />
                                     </div>
-
+                                    <p className='text-[red] text-start'>{error?.invoice_amount}</p>
 
                                 </div>
 
@@ -183,8 +209,8 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
 
                 <div className=''>
 
-                    <button type="button" 
-                    onClick={()=>setModal(true)}
+                    <button type="button"
+                        onClick={() => setModal(true)}
                         className="ml-auto mt-auto text-white 
             bg-green-700 hover:bg-green-800 focus:outline-none
              focus:ring-4 focus:ring-green-300 font-medium 
@@ -195,36 +221,36 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                 </div>
 
             </div>
-{ListOfInvoice?.data?.length>0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
-            :<div className=' bg-white  p-4  m-auto w-full h-full'>
+            {ListOfInvoice?.data?.length > 0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
+                : <div className=' bg-white  p-4  m-auto w-full h-full'>
 
-                <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
+                    <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
 
-                <h3 className='text-center p-2'>What is Lorem Ipsum?</h3>
+                    <h3 className='text-center p-2'>What is Lorem Ipsum?</h3>
 
-                <p className='text-center m-auto p-2 w-[55%]'> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, cupiditate a quibusdam. </p>
+                    <p className='text-center m-auto p-2 w-[55%]'> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, cupiditate a quibusdam. </p>
 
-                <div className='flex justify-around'>
+                    <div className='flex justify-around'>
 
-                    <div></div>
+                        <div></div>
 
-                    <div>
+                        <div>
 
-                        <button type="button"
-                              onClick={()=>setModal(true)}
-                            className=" text-white bg-green-700 hover:bg-green-800
+                            <button type="button"
+                                onClick={() => setModal(true)}
+                                className=" text-white bg-green-700 hover:bg-green-800
                   focus:outline-none focus:ring-4 focus:ring-green-300 
                   font-medium rounded-full text-sm px-5 py-2.5 text-center 
                   mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 
                   dark:focus:ring-green-800"><b>+ Invoice</b></button>
 
+                        </div>
+
+                        <div></div>
+
                     </div>
 
-                    <div></div>
-
-                </div>
-
-            </div>}
+                </div>}
 
         </>
     )

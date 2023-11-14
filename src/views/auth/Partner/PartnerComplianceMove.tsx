@@ -398,6 +398,7 @@ const PartnerComplianceMove = () => {
 
 
             </div>
+            
 
             <div className="bg-white w-5/6">
             <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />

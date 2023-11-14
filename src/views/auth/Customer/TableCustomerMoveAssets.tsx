@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
@@ -163,7 +163,7 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -179,7 +179,13 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
   };
 
   // JSX structure for rendering the table and pagination.
-
+  useEffect(() => {
+    if (AllStore) {
+      const to = countPerPage * currentPage;
+      const from = to - countPerPage;
+      setCollection(cloneDeep(allData?.slice(from, to)));
+    }
+  }, [AllStore])
   return (
     <>
       <div className="search bg-white">

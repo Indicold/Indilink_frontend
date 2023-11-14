@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { onkeyDown, validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, onkeyDownOne, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -396,7 +396,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         className="mx-auto w-1/2"
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
+                                            min={1}
+                                            onKeyDown={onkeyDownOne}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
