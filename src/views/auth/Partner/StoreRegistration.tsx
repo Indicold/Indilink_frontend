@@ -1,3 +1,8 @@
+/* The following code is a TypeScript React component that imports various components and custom hooks. It
+sets up a form with multiple steps and modals for each step. It also includes functionality for
+fetching data from an API, handling form validation, and displaying error messages. The code also
+includes various UI components and libraries such as react-router-dom, react-toastify, and
+react-accessible-accordion. */
 import { Button, FormContainer, FormItem, Input, Tooltip } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
@@ -522,6 +527,13 @@ const StoreRegistration = () => {
 
 
     }
+    /**
+     * The function `handleEdit` takes in `rowData` and `type` as parameters and sets the corresponding
+     * modal and data based on the type.
+     * @param {any} rowData - An object containing data related to the row being edited.
+     * @param {any} type - The `type` parameter is a string that determines which modal should be
+     * opened and which data should be passed to it.
+     */
     const handleEdit = (rowData: any, type: any) => {
         if (type === 'Chamber') {
             setChamberModal(true)

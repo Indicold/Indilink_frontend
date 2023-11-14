@@ -28,6 +28,8 @@ interface LoginWithOTPFormProps extends CommonProps {
 
 
 const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
+    /* The below code is a TypeScript React component that handles the functionality of submitting a
+    mobile number and verifying it with an OTP (One-Time Password). */
     const [isSubmitting, setSubmitting] = useState(false)
     const [isNumber, setIsNumber] = useState<any>(true)
     const [seconds, setSeconds] = useState(10);
@@ -39,6 +41,8 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     })
 
 const [errors,setError]=useState<any>({})
+    /* The below code is a TypeScript React component that is destructuring the `props` object to
+    extract certain properties and assign them to variables. */
     const {
         disableSubmit = false,
         className,
@@ -49,6 +53,12 @@ const [errors,setError]=useState<any>({})
     let a = 'false'
 
     const navigate = useNavigate();
+/**
+ * The function `validate` checks if the `phone_number` field in the `formdata` object is empty and
+ * returns true if it is not empty, otherwise it returns false.
+ * @returns a boolean value. It returns true if there are no errors (i.e., the error object is empty),
+ * and false otherwise.
+ */
 const validate=()=>{
     const error:any={};
     if(!formdata?.phone_number){
@@ -58,6 +68,14 @@ const validate=()=>{
     setError(error)
     return Object.keys(error).length === 0
 }
+    /**
+     * The `handlesubmit` function is used to handle form submission, validate the form data, and
+     * perform different actions based on the presence of an OTP value.
+     * @param {any} e - The parameter `e` is an event object. It is typically used in event handlers to
+     * access information about the event that occurred, such as the target element or the event type.
+     * In this case, it is used to prevent the default form submission behavior by calling
+     * `e.preventDefault()`.
+     */
     const handlesubmit = (e: any) => {
         e.preventDefault()
         if(validate()){

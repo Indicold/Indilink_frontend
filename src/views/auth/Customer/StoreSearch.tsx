@@ -240,6 +240,7 @@ const StoreSearch = () => {
                                     <FormItem
                                         label={t("City")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[20px]"
+                                        asterisk={true}
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -263,6 +264,7 @@ const StoreSearch = () => {
                                     <FormItem
                                         label= {t("Product Type")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        asterisk={true}
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -281,6 +283,7 @@ const StoreSearch = () => {
                                     <FormItem
                                         label={t("Temperature")} 
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        asterisk={true}
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -378,6 +381,7 @@ const StoreSearch = () => {
                                     <FormItem
                                         label={t("Storage Duration")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
+                                        asterisk={true}
                                     >
                                         <Field
                                             disabled={isDisabled}

@@ -202,7 +202,7 @@ const { t, i18n }:any = useTranslation();
                             <FormContainer>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Category")}
+                                        label={t("Product Category*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px] "
                                     >
                                         <select
@@ -220,7 +220,7 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Broad Category")}
+                                        label= {t("Broad Category*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -258,7 +258,7 @@ const { t, i18n }:any = useTranslation();
 
                                     </FormItem>
                                     <FormItem
-                                        label={t("Service Category")}
+                                        label={t("Service Category*")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
@@ -336,7 +336,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Throughput")}
+                                        label={t("Throughput*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -365,7 +365,7 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
-                                        label=  {t("Avg. Case Size")}
+                                        label=  {t("Avg. Case Size*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <Field
@@ -433,7 +433,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Temperature")}
+                                        label= {t("Temperature*")}
                                         className="mx-auto w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select

@@ -612,7 +612,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="flex">
                                         <FormItem
-                                            label="No of Docks"
+                                            label="No of Docks*"
                                             className=" w-1/2 rounded-lg pl-[22px]"
                                         >
                                             <Field

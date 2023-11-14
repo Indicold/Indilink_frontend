@@ -57,27 +57,28 @@ i18n
            "Broad Category*":"विस्तृत श्रेणी*",
            "Dispatch Date":"भेजने की तारीख",
            "Arrival Date":"पहुँचने की तारीख",
-           "Product Type*":"उत्पाद का प्रकार",
+           "Product Type*":"उत्पाद का प्रकार*",
            "Comment":"टिप्पणी",
 
            
 
            //Prepare 
-            "Product Category":"उत्पाद श्रेणी",
+            "Product Category*":"उत्पाद श्रेणी*",
             "Broad Category":"विस्तृत श्रेणी",
-            "Service Category":"सेवा श्रेणी",
+            "Service Category*":"सेवा श्रेणी*",
             "State*":"राज्य*",
-            "Throughput":"प्रवाह",
-            "Avg. Case Size":"औसत नाप",
+            "Throughput*":"प्रवाह*",
+            "Avg. Case Size*":"औसत नाप*",
             "Estimated Docks":"अनुमानित गोदियाँ",
             "Estimated Dispatches":"अनुमानित प्रेषण",
           
             "Date of Start":"प्रारंभ की तिथि",
             "Contract Name":" अनुबंध का नाम",
             "Contract Type":"अनुबंध का प्रकार",
+            "Temperature*":"तापमान*",
           
           
-            "General Query":"सामान्य प्रश्न",
+            "General Query*":"सामान्य प्रश्न*",
             "Send Query":"प्रश्न भेजें",
             "Enter your query":"अपना प्रश्न दर्ज करें",
             "Ticket List":"टिकट सूची",

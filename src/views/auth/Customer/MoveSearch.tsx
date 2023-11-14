@@ -414,7 +414,7 @@ const MoveSearch = () => {
                                 </div>
                                 <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type")}
+                                        label= {t("Product Type*")}
                                         className=" w-1/2 rounded-lg pl-[22px]"
                                     >
                                         <select
