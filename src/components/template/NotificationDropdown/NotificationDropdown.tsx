@@ -12,7 +12,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Divider } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { getToken } from '@/store/token'
+import { apiUrl, getToken } from '@/store/token'
+import { messageView } from '@/store/customeHook/validate'
+import { ToastContainer } from 'react-toastify'
 
 type DropdownList = {
     label: string
@@ -66,10 +68,40 @@ function calculateTimeDifference(targetDate) {
 // Example usage:
 const targetDate = "2023-09-15T05:11:27.000Z";
 const timeDifference = calculateTimeDifference(targetDate);
+const handlePutApi=(id:any)=>{
+    console.log("hjjjjjjj",id);
+    
+    var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${token}`);
 
+var raw = JSON.stringify({
+  read_status: 1
+});
+
+var requestOptions:any = {
+  method: 'PUT',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/master/notifications/${id}`, requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+    if(result.status===200){
+        messageView("Status updated Successfully !")
+        navigate('/notification')
+    }else{
+        messageView(result?.message)
+    }
+  })
+  .catch(error => console.log('error', error));
+}
 
     return (
         <div>
+            <ToastContainer />
             <Dropdown
                 menuStyle={{ minWidth: 340 }}
                 renderTitle={UserAvatar}
@@ -80,23 +112,23 @@ const timeDifference = calculateTimeDifference(targetDate);
                     </Dropdown.Item>
                     <Dropdown.Item variant="divider" />
                     {ListOfNotification?.data?.length>0 ? ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
-     <Dropdown.Item variant="header">
-     <div className="flex items-center">
+     <Dropdown.Item variant="header" >
+     <div className="flex items-center border-y-1"  role="button" onClick={()=>handlePutApi(item?.id)}>
      <div className="mt-2 px-6  bg-white rounded-lg w-full">
 <div className=" inline-flex items-center justify-between w-full">
-<div className="inline-flex items-center">
+<div className="inline-flex items-center ">
 <img
-src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/2048px-OOjs_UI_icon_alert-yellow.svg.png"
 alt="Training Icon"
 className="w-6 h-6 mr-3"
 />
-<h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+<p className="mt-1 text-sm">{item?.content}</p>
 </div>
 <p className="text-xs text-gray-500">{item?.created_at}</p>
 </div>
-<p className="mt-1 text-sm">
+{/* <p className="mt-1 text-sm">
 Hey! Do you remember about choosing your training regime?
-</p>
+</p> */}
 </div>
      </div>
  </Dropdown.Item>

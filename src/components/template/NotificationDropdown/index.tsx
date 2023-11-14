@@ -99,19 +99,7 @@ const NotificationPage = () => {
       </h3>
       <form>
   <div className="flex">
-    <label
-      htmlFor="location-search"
-      className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-    >
-      Your Email
-    </label>
   
-    <div
-      id="dropdown-search-city"
-      className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-    >
-     
-    </div>
     <div className="relative w-full">
       <input
         type="search"
@@ -157,17 +145,18 @@ const NotificationPage = () => {
       <div className=" inline-flex items-center justify-between w-full">
         <div className="inline-flex items-center">
           <img
-            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/2048px-OOjs_UI_icon_alert-yellow.svg.png"
             alt="Training Icon"
             className="w-6 h-6 mr-3"
           />
-          <h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+           <p className="mt-1 text-sm">
+           {item?.content}
+      </p>
+          {/* <h3 className="font-bold text-base text-gray-800">{item?.content}</h3> */}
         </div>
         <p className="text-xs text-gray-500">{item?.created_at}</p>
       </div>
-      <p className="mt-1 text-sm">
-        Hey! Do you remember about choosing your training regime?
-      </p>
+     
     </div>
    </>
     )) :<DataNotFound title="Notification" url="/collapse-menu-item-view-1" />}
