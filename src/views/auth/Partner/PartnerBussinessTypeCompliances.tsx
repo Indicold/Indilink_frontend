@@ -594,9 +594,9 @@ const array1Keys = array1?.map((item) => item?.key);
                 <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex flex-wrap w-full">
+                                <div >
                                     {array?.map((item: any, index: any) => (
-                                        <>
+                                        <div className="flex flex-wrap w-full justify-around lg:border-y-0 border-y-2">
                                             <FormItem
                                                 label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
                                                 <p className='ellipse-text'>{item?.label}</p>
@@ -605,7 +605,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                 </Tooltip>
                                               </div> :item?.label}
                                                 key={index}
-                                                className=" rounded-lg pl-[6px] text-label-title "
+                                                className=" rounded-lg text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
@@ -642,11 +642,11 @@ const array1Keys = array1?.map((item) => item?.key);
                                                     )}
                                                 </div>
                                             </FormItem>
-                                            <div className='flex'>
+                                            <div className='flex lg:flex-nowrap flex-wrap'>
                                                 <FormItem
                                                     label="Valid Till"
                                                     key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                    className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='date'
@@ -719,7 +719,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                             </div>
 
 
-                                        </>
+                                        </div>
 
                                     ))}
                                 </div>
