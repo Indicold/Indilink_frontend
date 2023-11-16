@@ -1,12 +1,16 @@
+/* The code is importing the following modules and components: */
 import DataNotFound from '@/components/layouts/DataNotFound';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 
 const NotificationPage = () => {
-    const {token}:any=getToken();
+    const {token}:any=getToken(); // Extracting token for API call
     const [inputData,setInputData]=useState<any>('')
     const [MapData,setMapData]=useState<any>([])
+
+    /* The code is using a custom hook called `useApiFetch` to make an API call to fetch a list of
+    notifications. The hook returns an object with three properties: `data`, `loading`, and `error`. */
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
     useApiFetch<any>(`master/notifications`, token);
 
@@ -20,16 +24,30 @@ const NotificationPage = () => {
   
     const totalPages = Math.ceil(ListOfNotification?.data.length / itemsPerPage);
   
+    /**
+     * The function "handlePageChange" updates the current page number.
+     * @param {any} pageNumber - The pageNumber parameter is the number of the page that the user wants
+     * to navigate to.
+     */
     const handlePageChange = (pageNumber:any) => {
       setCurrentPage(pageNumber);
     };
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+    /**
+     * The function `goToPreviousPage` checks if the current page is greater than 1 and if so, calls
+     * the `handlePageChange` function with the current page minus 1 as the argument.
+     */
     const goToPreviousPage = () => {
         if (currentPage > 1) {
           handlePageChange(currentPage - 1);
         }
       };
     
+      /**
+       * The function `goToNextPage` increments the current page by 1 if it is not already the last
+       * page.
+       */
       const goToNextPage = () => {
         if (currentPage < totalPages) {
           handlePageChange(currentPage + 1);
@@ -83,6 +101,9 @@ const NotificationPage = () => {
     currentItems=results;
   setMapData(results)
   }
+
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+  effect is triggered whenever the value of `ListOfNotification?.data` changes. */
   useEffect(()=>{
     if(ListOfNotification?.data){
       setMapData(ListOfNotification?.data)

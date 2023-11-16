@@ -1,7 +1,11 @@
+/* The code is importing three modules: */
 import { userRegisterPostApi } from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
+/* The code is creating a slice using the `createSlice` function from the `@reduxjs/toolkit` library. A
+slice is a collection of reducer functions and actions that can be used to update a specific portion
+of the Redux store. */
 const userPostOtpSlice = createSlice({
   name: 'dataname',
   initialState: {
@@ -41,4 +45,6 @@ const userPostOtpSlice = createSlice({
   },
 });
 
+/* The line `export const {actions:apiActions,reducer: apiGstDetailsReducer}=userPostOtpSlice` is
+exporting two variables `apiActions` and `apiGstDetailsReducer` from the `userPostOtpSlice` object. */
 export const {actions:apiActions,reducer: apiGstDetailsReducer}=userPostOtpSlice

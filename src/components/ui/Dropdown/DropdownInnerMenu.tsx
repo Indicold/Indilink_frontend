@@ -1,3 +1,4 @@
+/* These lines of code are importing various dependencies and types from different modules and files. */
 import { forwardRef } from 'react'
 import { MenuContextProvider } from './context/menuContext'
 import useUncertainRef from '../hooks/useUncertainRef'
@@ -11,6 +12,8 @@ import type { CommonProps } from '../@types/common'
 import type { DropdownPlacement } from '../@types/placement'
 import type { SyntheticEvent, RefObject, Ref } from 'react'
 
+/* The `export interface DropdownInnerMenuProps` is defining the props that can be passed to the `Menu`
+component. */
 export interface DropdownInnerMenuProps extends CommonProps {
     activeKey?: string
     onSelect?: (eventKey: string, event: SyntheticEvent) => void
@@ -56,6 +59,7 @@ const Menu = forwardRef<HTMLElement, DropdownInnerMenuProps>((props, ref) => {
     } as const
     const initialStyle = exitStyle
 
+    /* This code is returning a JSX element that represents the menu component. */
     return (
         <MenuContextProvider
             value={{

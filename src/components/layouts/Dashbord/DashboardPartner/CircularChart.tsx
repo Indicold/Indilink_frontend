@@ -1,6 +1,10 @@
+// Importing necessary files and modules
 import React from 'react'
 import "./style.css"
+
 const CircularChart = () => {
+  /* The `return` statement in this code is returning JSX (JavaScript XML) code, which represents the
+  structure and content of a React component. */
   return (
     <>
       <div className="flex-wrapper flex">

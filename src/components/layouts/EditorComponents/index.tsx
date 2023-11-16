@@ -1,3 +1,7 @@
+/* The following code is a TypeScript React component that imports various dependencies and libraries for
+creating a rich text editor. It defines a functional component that renders an editor interface with
+various formatting options such as bold, italic, underline, alignment, subscript, superscript,
+highlighting, strikethrough, code, quotes, lists, fonts, headings, links, and more. */
 import React, { useState, useRef, useEffect } from "react";
 import {
     convertToRaw,
@@ -58,9 +62,18 @@ import ChatModal from "./ChatModal";
 import html2canvas from 'html2canvas';
 import { useLocation, useParams } from "react-router-dom";
 
+/* The following code is defining an interface called `LinkData` in TypeScript. This interface has a single
+property called `url` which is of type `string`. This interface can be used to define the structure
+of objects that have a `url` property. */
 interface LinkData {
     url: string;
 }
+
+/* The below code is defining an object called `INLINE_STYLES` in TypeScript. This object contains
+various styles for text transformation and colors. The `UPPERCASE` style transforms text to
+uppercase, the `LOWERCASE` style transforms text to lowercase. The `TEXT_COLOR` style represents a
+class name for applying a text color, and the `HIGHLIGHT_COLOR` style represents a class name for
+applying a highlight color. */
 const INLINE_STYLES = {
     UPPERCASE: { textTransform: 'uppercase' },
     LOWERCASE: { textTransform: 'lowercase' },
@@ -68,6 +81,10 @@ const INLINE_STYLES = {
     HIGHLIGHT_COLOR: 'highlight-color',
 };
 
+/* The following code is defining a constant object called `BLOCK_TYPES` in TypeScript. This object
+contains various block types used in a React application. The block types include different header
+levels (`HEADER_ONE` to `HEADER_SIX`) and an `UNSTYLED` type. These block types can be used to style
+and format text in a React application. */
 const BLOCK_TYPES = {
     HEADER_ONE: 'header-one',
     HEADER_TWO: 'header-two',
@@ -78,18 +95,43 @@ const BLOCK_TYPES = {
     UNSTYLED: 'unstyled',
 
 };
+
+/* The above code is defining a constant object called `BLOCK_STYLES` in TypeScript. This object
+contains four properties, each representing a different text alignment style: `TEXT_ALIGN_LEFT`,
+`TEXT_ALIGN_CENTER`, `TEXT_ALIGN_RIGHT`, and `TEXT_ALIGN_JUSTIFY`. These properties are assigned
+string values that can be used to apply the corresponding text alignment style to elements in a
+React application. */
 const BLOCK_STYLES = {
     TEXT_ALIGN_LEFT: 'text-align-left',
     TEXT_ALIGN_CENTER: 'text-align-center',
     TEXT_ALIGN_RIGHT: 'text-align-right',
     TEXT_ALIGN_JUSTIFY: 'text-align-justify',
 };
+
+/* The below code is defining an interface called `LinkEntity` in TypeScript for a React application.
+The interface has three properties: `type`, `mutability`, and `data`. The `type` property is of type
+string and is set to "LINK". The `mutability` property is also of type string and is set to
+"MUTABLE". The `data` property is of type `LinkData`, which is not defined in the given code
+snippet. */
 interface LinkEntity {
     type: "LINK";
     mutability: "MUTABLE";
     data: LinkData;
 }
 
+/**
+ * The function `findLinkEntities` is used in a TypeScript React application to find and identify link
+ * entities within a content block.
+ * @param {any} contentBlock - The `contentBlock` parameter represents a block of content in a text
+ * editor or document. It contains the text and any associated entities (such as links, mentions, etc.)
+ * within that block.
+ * @param callback - The `callback` parameter is a function that will be called for each entity range
+ * found in the `contentBlock`. It takes two parameters: `start` and `end`, which represent the start
+ * and end positions of the entity range within the `contentBlock`.
+ * @param {any} contentState - The `contentState` parameter represents the current state of the content
+ * in the editor. It contains information about the entities and their types, as well as the text and
+ * styles of the content.
+ */
 function findLinkEntities(
     contentBlock: any,
     callback: (start: number, end: number) => void,
@@ -109,18 +151,24 @@ let url1: any = ''
 const Link: React.FC<any> = (props) => {
 
     const { url, user } = props.contentState.getEntity(props.entityKey).getData();
+    // State variable for managing whether the tooltip will be displayed or not. Initially the tooltip will be hidden
     const [showTooltip, setShowTooltip] = useState(false);
 
+    // Function for handling the mouseEnter event to show the tooltip
     const handleMouseEnter = () => {
         setShowTooltip(true);
     };
 
+    // Function for handling the mouseLeave event to hide the tooltip
     const handleMouseLeave = () => {
         setShowTooltip(false);
     };
 
 console.log("TTTTTTTTTTTTT",props.contentState.getEntity(props.entityKey).getData());
 
+    /* The following code is a TypeScript React component that renders a span element with an underline,
+    cursor pointer, and other styling properties. It also includes event handlers for mouse enter
+    and mouse leave events. */
     return (
         <span
             style={{
@@ -210,6 +258,12 @@ const Toolbar: React.FC<{
     onLowercaseClick,
     onHeadingClick,
 }) => {
+        /* The below code is rendering a toolbar component in a TypeScript React application. The
+        toolbar consists of various buttons that perform different text formatting actions when
+        clicked. These actions include making the text bold, italic, underlined, aligned (left,
+        center, right, justify), subscript, superscript, highlighted, strikethrough, monospace,
+        blockquote, unordered list, ordered list, uppercase, lowercase, and heading (H1-H6). There
+        is also an input field for selecting the text color. */
         return (
             <div>
                 <div>
@@ -308,12 +362,17 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     let _idVal = localStorage.getItem('_id')
     let { user_id, email }: any = TokenInfo();
 
-    const { token }: any = getToken();
+    const { token }: any = getToken(); // Extracting token to use in the API call
     const [contentHistory, setContentHistory] = useState<any>([])
     const { data: EditorData, loading, refetch: ReFatchApi }: any = useApiFetch<any>(`legal/documents-by-id/${data?.doc_id}`, token);
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`legal/document/${data?.doc_id}`)
-    const [commentList, setCommentList] = useState<any>([]);
-    const [modal, setModal] = useState<any>(true)
+    const [commentList, setCommentList] = useState<any>([]); // State variable for managing comment list. Initally, comment list will be empty on component mount
+    const [modal, setModal] = useState<any>(true) // State variable for managing opening and closing of modal. Initially, the modal will be closed on component mount
+
+    /* The following code is creating a decorator for a text editor in a TypeScript React application. The
+    decorator is used to apply different styles or components to specific portions of the text. In
+    this case, the decorator is using a strategy called `findLinkEntities` to find link entities in
+    the text and apply the `Link` component to those entities. */
     const decorator = new CompositeDecorator([
         {
             strategy: findLinkEntities,
@@ -321,6 +380,9 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         },
     ]);
     const initialContentState = convertFromRaw(defaultData);
+
+    /* The following code is declaring a variable `editorRef` using the `useRef` hook in TypeScript with a
+    generic type `Editor | null`. It initializes the value of `editorRef` to `null`. */
     const editorRef = useRef<Editor | null>(null);
 
     const [editorState, setEditorState] = useState(() => {
@@ -334,12 +396,20 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const [textColorSelected, setTextColorSelected] = useState("black");
     const [open, setOpen] = useState<any>(false)
 
+    /**
+     * The `focusEditor` function focuses on the editor element if it exists.
+     */
     const focusEditor = () => {
         if (editorRef.current) {
             editorRef.current.focus();
         }
     };
 
+    /**
+     * The function onChange updates the editor state with a new editor state value.
+     * @param {EditorState} newEditorState - The newEditorState parameter is of type EditorState. It
+     * represents the updated state of an editor component.
+     */
     const onChange = (newEditorState: EditorState) => {
 
         setEditorState(newEditorState);
@@ -349,11 +419,22 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         const content = editorState.getCurrentContent();
     };
 
+    /**
+     * The function `onURLChange` updates the state variables `URLValue` and `Text` with the value of
+     * an input element when its value changes.
+     * @param e - The parameter `e` is of type `React.ChangeEvent<HTMLInputElement>`. This means it is
+     * an event object that is triggered when the value of an input element of type `HTMLInputElement`
+     * changes.
+     */
     const onURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setURLValue(e.target.value);
         setText(e.target.value)
     };
 
+    /**
+     * The function `promptForLink` checks if there is a selected text in the editor and if so, it
+     * shows an input field for the user to enter a URL.
+     */
     const promptForLink = () => {
         const selection = editorState.getSelection();
         if (!selection.isCollapsed()) {
@@ -363,6 +444,11 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         }
     };
 
+    /**
+     * The `confirmLink` function creates a link entity in the editor state, toggles the link on the
+     * selected text, updates the editor state, hides the URL input, clears the URL value, focuses on
+     * the editor, and submits the updated editor state.
+     */
     const confirmLink = () => {
         const contentState = editorState.getCurrentContent();
 
@@ -389,6 +475,11 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setTimeout(focusEditor, 0);
         handleSubmit(nextEditorState)
     };
+
+    /**
+     * The function `handleSubscriptClick` toggles the 'SUBSCRIPT' inline style on the selected text or
+     * the text that will be typed afterward in a TypeScript React editor.
+     */
     const handleSubscriptClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -407,6 +498,11 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         // Update the editor state with the new state
         setEditorState(EditorState.setInlineStyleOverride(newEditorState, newStyle));
     };
+
+    /**
+     * The function `handleSuperscriptClick` toggles the superscript inline style on the selected text
+     * or the text that will be typed afterward in a TypeScript React editor.
+     */
     const handleSuperscriptClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -425,6 +521,13 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         // Update the editor state with the new state
         setEditorState(EditorState.setInlineStyleOverride(newEditorState, newStyle));
     }
+
+    /**
+     * The function `handleHighlightClick` toggles the inline style "HIGHLIGHT" in the editor state.
+     * @param {any} color - The color parameter is the color value that you want to apply to the
+     * highlighted text. It can be any valid CSS color value, such as "red", "#FF0000", or "rgb(255, 0,
+     * 0)".
+     */
     const handleHighlightClick = (color: any) => {
         // Get the current editor state
         // HIGHLIGHT
@@ -442,6 +545,10 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         // setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleStrikethroughClick` toggles the 'STRIKETHROUGH' inline style in a React
+     * TypeScript editor.
+     */
     const handleStrikethroughClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -456,6 +563,9 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleMonospaceClick` toggles the 'CODE' inline style in the editor state.
+     */
     const handleMonospaceClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -470,6 +580,9 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleBlockquoteClick` toggles the blockquote block type in a React editor.
+     */
     const handleBlockquoteClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -484,6 +597,10 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleUnorderedListClick` toggles the block type of the editor state between
+     * 'unordered-list-item' and the current block type.
+     */
     const handleUnorderedListClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -498,6 +615,10 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleOrderedListClick` toggles the block type of the editor state between
+     * 'ordered-list-item' and the current block type.
+     */
     const handleOrderedListClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -512,6 +633,9 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleUppercaseClick` toggles the 'UPPERCASE' inline style in a React editor.
+     */
     const handleUppercaseClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -527,6 +651,9 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     };
 
 
+    /**
+     * The function `handleLowercaseClick` toggles the 'LOWERCASE' inline style in a React editor.
+     */
     const handleLowercaseClick = () => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -541,6 +668,13 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setEditorState(newEditorState);
     };
 
+    /**
+     * The function `handleHeadingClick` is used to toggle the font size of the selected text based on
+     * the heading level.
+     * @param {any} level - The `level` parameter represents the heading level that is clicked. It can
+     * be any number from 1 to 6, where 1 represents the highest level heading (H1) and 6 represents
+     * the lowest level heading (H6).
+     */
     const handleHeadingClick = (level: any) => {
         // Get the current editor state
         const currentEditorState = editorState;
@@ -578,12 +712,24 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
 
 
 
+    /**
+     * The function `onLinkInputKeyDown` triggers the `confirmLink` function when the enter key is
+     * pressed.
+     * @param e - The parameter `e` is of type `React.KeyboardEvent<HTMLInputElement>`. It represents
+     * the keyboard event that occurred.
+     */
     const onLinkInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.which === 13) {
             confirmLink();
         }
     };
 
+    /**
+     * The `removeLink` function is used to remove a link from the selected text in a React editor.
+     * @param e - React.MouseEvent<HTMLButtonElement, MouseEvent> - This is the event object that is
+     * passed when the button is clicked. It contains information about the event, such as the target
+     * element and the type of event (in this case, a mouse click).
+     */
     const removeLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         const selection = editorState.getSelection();
@@ -597,17 +743,34 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         }
     };
 
+    /**
+     * The function `handleBoldClick` toggles the "BOLD" inline style in the editor state.
+     */
     const handleBoldClick = () => {
         setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
     };
 
+    /**
+     * The function `handleItalicClick` toggles the "ITALIC" inline style in the editor state.
+     */
     const handleItalicClick = () => {
         setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
     };
 
+    /**
+     * The function `handleUnderlineClick` toggles the "UNDERLINE" inline style in the editor state.
+     */
     const handleUnderlineClick = () => {
         setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
     };
+
+    /**
+     * The `handleTextAlign` function takes an alignment option as input and applies the corresponding
+     * block style to the selected text in the editor.
+     * @param {any} alignment - The `alignment` parameter is a string that represents the desired text
+     * alignment. It can have one of the following values: 'left', 'center', 'right', or 'justify'.
+     * @returns The function does not explicitly return anything.
+     */
     const handleTextAlign = (alignment: any) => {
         // Determine the block style based on the alignment option
         let blockStyle: any = null;
@@ -665,6 +828,13 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     };
 
 
+    /**
+     * The function `handleTextColor` is used to toggle the text color of the editor state in a
+     * TypeScript React application.
+     * @param {any} color - The `color` parameter is the color value that you want to apply to the
+     * text. It can be any valid CSS color value, such as a color name (e.g., "red"), a hexadecimal
+     * color code (e.g., "#ff0000"), or an RGB value (e.g.,
+     */
     const handleTextColor = (color: any) => {
         setTextColorSelected(color);
         setEditorState(RichUtils.toggleInlineStyle(editorState, "TEXTCOLOR"));
@@ -674,8 +844,16 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const raw = convertToRaw(contentState);
     //   const rawStr = jsonBeautify(raw, null, 2, 50);
     const location: any = useLocation();
-    const { id }: any = useParams()
+    const { id }: any = useParams() // Extracting the endpoint which contains asset id for defining the payload for API call
     const AssetsId: any = location?.state;
+
+    /**
+     * The `handleSubmit` function is used to handle the submission of a form in a TypeScript React
+     * application, updating the content history and sending the updated data to be saved.
+     * @param {any} nextEditorState - The `nextEditorState` parameter is the updated state of the
+     * editor after the user has made changes. It represents the new content and formatting of the
+     * editor.
+     */
     const handleSubmit = (nextEditorState: any) => {
         // handlesubmitComment()
         let date = new Date();
@@ -705,10 +883,16 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
 
     }
 
+    /* The following code is using the useEffect hook in a TypeScript React component. It is calling the
+    ReFatchApi function when the component mounts, as indicated by the empty dependency array passed
+    as the second argument to useEffect. */
     useEffect(() => {
         ReFatchApi()
 
     }, [])
+
+    /* The following code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    value of `EditorData?.data` changes. */
     useEffect(() => {
 
         if (EditorData?.data?.content && EditorData?.data?.content.length > 20) {
@@ -722,6 +906,8 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     }, [EditorData?.data])
 
 
+    /* The following code is using the useEffect hook in a React component. It is checking the value of the
+    variable `PutApiResponse` and performing different actions based on its value. */
     useEffect(() => {
         if (PutApiResponse?.statusCode === 200 || PutApiResponse?.data?.content) {
             let obj: any = {
@@ -804,6 +990,15 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
 
     };
 
+    /**
+     * The function `myBlockRenderer` returns an object with properties `component`, `editable`, and
+     * `props` based on the type of the content block.
+     * @param {any} contentBlock - The `contentBlock` parameter is an object that represents a block of
+     * content in a text editor. It contains information about the type of block, its text content, and
+     * any associated metadata. In this code snippet, the `contentBlock` parameter is used to determine
+     * the type of the block.
+     * @returns The code is returning an object with the properties `editable` set to `false`.
+     */
     function myBlockRenderer(contentBlock: any) {
         const type = contentBlock.getType();
         if (type) {
@@ -817,6 +1012,13 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         }
     }
 
+    /* The following code is a TypeScript React component that renders a text editor with various
+    formatting options. It uses the `Editor` component from the `draft-js` library to provide rich
+    text editing capabilities. The component includes a toolbar with buttons for bold, italic,
+    underline, text alignment, text color, subscript, superscript, highlight, strikethrough,
+    monospace, blockquote, unordered list, ordered list, uppercase, lowercase, and heading styles.
+    It also includes buttons for adding and removing links. The editor supports custom block styles
+    and custom inline styles. The component also includes a modal for displaying */
     return (
         <div className="w-full h-full">
             <ToastContainer />
@@ -993,6 +1195,11 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     );
 };
 
+/* The following code is defining a JavaScript object called `styles` which contains various CSS styles as
+properties. These styles are used for styling a React component in a TypeScript project. The
+`styles` object includes styles for the root element, buttons, URL input container, URL input,
+editor, button, link, and toolbar. These styles define properties such as font family, padding,
+width, margin, border, cursor, color, and text decoration. */
 const styles = {
     root: {
         fontFamily: "'Georgia', serif",

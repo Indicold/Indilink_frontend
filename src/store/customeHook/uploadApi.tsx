@@ -12,6 +12,8 @@ interface UploadResponse {
 }
 
 const useApiUpload = () => {
+  /* The code is using the `useState` hook from React to create two state variables: `response` and
+  `error`. */
   const [response, setResponse] = useState<UploadResponse | null>(null);
   const [error, setError] = useState<AxiosError | null>(null);
 

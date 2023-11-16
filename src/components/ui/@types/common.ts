@@ -4,6 +4,8 @@ import {
     // ElementType
 } from 'react'
 
+/* The `export interface CommonProps` is defining a TypeScript interface called `CommonProps`. This
+interface is used to define the common props that can be passed to React components. */
 export interface CommonProps {
     className?: string
     children?: ReactNode

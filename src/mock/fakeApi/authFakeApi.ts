@@ -1,7 +1,18 @@
+/* The code is importing specific functions and objects from two different libraries: 'miragejs' and
+'lodash'. */
 import { Server, Response } from 'miragejs'
 import uniqueId from 'lodash/uniqueId'
 import isEmpty from 'lodash/isEmpty'
 
+/**
+ * The `authFakeApi` function is a TypeScript function that sets up fake API endpoints for user
+ * authentication, including sign-in, sign-out, sign-up, forgot password, and reset password.
+ * @param {Server} server - The `server` parameter is an instance of a server object that is used to
+ * define the routes and handle the requests.
+ * @param {string} apiPrefix - The `apiPrefix` parameter is a string that represents the prefix for all
+ * API endpoints. It is used to construct the URL for each API endpoint by appending it to the server
+ * URL. For example, if the server URL is `http://localhost:3000` and the `apiPrefix` is
+ */
 export default function authFakeApi(server: Server, apiPrefix: string) {
     server.post(`${apiPrefix}/sign-in`, (schema, { requestBody }) => {
         const { userName, password } = JSON.parse(requestBody)

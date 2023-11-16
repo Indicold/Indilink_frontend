@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // Importing React to define React component and to use hooks
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Importing pagination component for showing table records in multiple pages
+import "rc-pagination/assets/index.css"; // Importing pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
-import { useNavigate } from 'react-router-dom';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import EditIcon from '@mui/icons-material/Edit';
-import usePutApi from '@/store/customeHook/putApi';
-import { messageView } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // For handling navigation
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon to show in Table action column for viewing attached documents to a record
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'; // Importing icon to show in Table action column for viewing a record
+import EditIcon from '@mui/icons-material/Edit'; // Importing icon to show in Table action column for editing a record
+import usePutApi from '@/store/customeHook/putApi'; // Importing custom hook for API call
+import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast message
+import { ToastContainer } from 'react-toastify'; // Importing container to show Toast messages
 import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
 const tableHead = {
@@ -31,10 +31,12 @@ const tableHead = {
 const TableLayout = ({ AllStore,fetchApi }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
+
+  // Defining state variables for managing value, alert, rowdata and modal functionality/data
   const [value, setValue] = React.useState("");
-  const [Alert,setAlert]=useState<any>(false)
-  const [RowData,setRowData]=useState<any>({});
-  const [logsModal,setLogsModal]=useState<any>(false)
+  const [Alert,setAlert]=useState<any>(false) // For showing modal. Initially the modal will be closed when the component mounts
+  const [RowData,setRowData]=useState<any>({}); // Empty because no row has been clicked in the table on component mount
+  const [logsModal,setLogsModal]=useState<any>(false) // Initially the modal will be closed when the component mounts
 let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -135,10 +137,18 @@ const handleLogs=(rowData:any)=>{
     setRowData(rowData)
     setAlert(true)
   }
+  // Function which will hit API to make asset final
   const handleConfirm=()=>{
     
     PostSubmitDetails({status:"Final"})
   }
+  
+/**
+ * The function `handleDocs` navigates to a specific document list page based on the `asset_id`
+ * property of the `rowData` object.
+ * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is of
+ * type `any`, which means it can be any type of data.
+ */
 const handleDocs=(rowData:any)=>{
   navigate(`/documents-list/${rowData?.asset_id}`)
 }
@@ -189,7 +199,8 @@ const handleDocs=(rowData:any)=>{
     ));
   };
 
-  // JSX structure for rendering the table and pagination.
+/* The following code is using the useEffect hook in a React component. It is triggering the effect
+whenever the value of SubmitResponse changes. */
 useEffect(()=>{
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
@@ -211,6 +222,8 @@ React.useEffect(() => {
       setCollection(newCollection);
   }
 }, [allData]);
+
+  // JSX structure for rendering the table and pagination.
   return (
     <>
     <ToastContainer />

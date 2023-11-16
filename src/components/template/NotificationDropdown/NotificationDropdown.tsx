@@ -1,3 +1,5 @@
+/* These are import statements in TypeScript React. They are used to import various components, hooks,
+icons, and utility functions from different files and libraries. */
 import Avatar from '@/components/ui/Avatar'
 import Dropdown from '@/components/ui/Dropdown'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
@@ -16,6 +18,17 @@ import { apiUrl, getToken } from '@/store/token'
 import { messageView } from '@/store/customeHook/validate'
 import { ToastContainer } from 'react-toastify'
 
+/**
+ * The above type represents a dropdown list item in a TypeScript React application, containing a
+ * label, path, and icon.
+ * @property {string} label - A string that represents the label or display text for the dropdown list
+ * item. This is typically the text that is shown to the user in the dropdown menu.
+ * @property {string} path - The `path` property in the `DropdownList` type represents the path or URL
+ * that the dropdown list item should navigate to when clicked. It is of type `string`.
+ * @property icon - The `icon` property in the `DropdownList` type represents a JSX element. JSX is a
+ * syntax extension for JavaScript that allows you to write HTML-like code within your JavaScript code.
+ * In this case, the `icon` property is expected to be a JSX element, which can be a component or
+ */
 type DropdownList = {
     label: string
     path: string
@@ -25,13 +38,21 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _NotificationDropdown = ({ className }: CommonProps) => {
-    const {token}:any=getToken();
+    const {token}:any=getToken(); // Extracting token for API call
+
+    /* The line `const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
+        useApiFetch<any>(`master/notifications`, token);` is using the `useApiFetch` custom hook to
+    fetch data from the `master/notifications` endpoint. */
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
     useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
     
 const navigate:any=useNavigate();
+
+    /* The `UserAvatar` constant is a JSX element that represents the avatar or icon for the user in
+    the notification dropdown. It consists of a `Stack` component from the Material-UI library,
+    which is used to stack multiple components horizontally or vertically. */
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
         <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
@@ -40,9 +61,21 @@ const navigate:any=useNavigate();
     
       </Stack>
     )
+/**
+ * The handleViewAll function navigates to the '/notification' page.
+ */
 const handleViewAll=()=>{
     navigate('/notification')
 }
+
+/**
+ * The function calculates the time difference between the current date and a target date, returning
+ * the number of days, hours, and minutes.
+ * @param targetDate - The targetDate parameter is a string representing a specific date and time in a
+ * valid format, such as "2022-12-31T23:59:59".
+ * @returns an object with properties for the number of days, hours, and minutes remaining until the
+ * target date.
+ */
 function calculateTimeDifference(targetDate) {
   const currentDate = new Date();
   const target = new Date(targetDate);

@@ -1,3 +1,4 @@
+/* The code is importing various components and functions from different files and libraries. */
 import React, { cloneElement, useEffect, useState } from 'react'
 import Avatar from '@/components/ui/Avatar'
 import Logo from '@/components/template/Logo'
@@ -8,15 +9,22 @@ import { useSelector } from 'react-redux'
 
 
 
+/* The `interface SideProps` is defining the props that can be passed to the `Side` component. It
+extends the `CommonProps` interface, which likely contains common props used throughout the
+application. */
 interface SideProps extends CommonProps {
     content?: React.ReactNode
 }
 
 const Side = ({ children, content, ...rest }: SideProps) => {
+/* The line `const AuthResponse=useSelector((state:any)=>state?.auth)` is using the `useSelector` hook
+from the `react-redux` library to select a specific piece of state from the Redux store. */
 const AuthResponse=useSelector((state:any)=>state?.auth)    
 
 
 
+    /* The `return` statement is returning JSX code that represents the structure and content of the
+    `Side` component. */
     return (
         <div className="grid lg:grid-cols-6 w-full h-full">
             <div
@@ -157,4 +165,4 @@ const AuthResponse=useSelector((state:any)=>state?.auth)
     )
 }
 
-export default Side
+export default Side // For using the component in other files

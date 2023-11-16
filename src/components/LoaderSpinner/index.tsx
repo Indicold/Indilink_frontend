@@ -1,5 +1,9 @@
 import React from 'react'
 
+/**
+ * The LoaderSpinner component is a React component that displays a spinning loader animation.
+ * @returns The LoaderSpinner component is returning a JSX element.
+ */
 const LoaderSpinner = () => {
   return (
     <div className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">

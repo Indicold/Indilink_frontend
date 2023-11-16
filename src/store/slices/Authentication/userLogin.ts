@@ -1,6 +1,9 @@
+/* The code is importing two modules: `userLoginApiPost` from the `userThunk` file in the `store`
+directory, and `createSlice` from the `@reduxjs/toolkit` library. */
 import { userLoginApiPost} from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
 
+/* The code is creating a slice of the Redux store for handling user login API requests. */
 const userPostLoginSlice = createSlice({
   name: 'userPostLoginSlice/post',
   initialState: {
@@ -33,4 +36,6 @@ const userPostLoginSlice = createSlice({
   },
 });
 
+/* `export const {actions:apiActions,reducer: apiLoginPostReducer}=userPostLoginSlice` is exporting two
+variables from the `userPostLoginSlice` object. */
 export const {actions:apiActions,reducer: apiLoginPostReducer}=userPostLoginSlice

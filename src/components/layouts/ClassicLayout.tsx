@@ -1,3 +1,4 @@
+/* These lines of code are importing various components and hooks from different files. */
 import Header from '@/components/template/Header'
 import SideNavToggle from '@/components/template/SideNavToggle'
 import MobileNav from '@/components/template/MobileNav'
@@ -8,6 +9,10 @@ import { useNavigate } from 'react-router-dom'
 import NotificationDropdown from '../template/NotificationDropdown/NotificationDropdown'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * The `HeaderActionsStart` function returns a JSX element that includes the `MobileNav` and
+ * `SideNavToggle` components.
+ */
 const HeaderActionsStart = () => {
     
     return (
@@ -21,8 +26,27 @@ const HeaderActionsStart = () => {
 
 
 
+/**
+ * The `HeaderActionsEnd` component is a React component that renders a language dropdown menu, a user
+ * type dropdown menu, a notification dropdown, and a user dropdown.
+ * @returns The `HeaderActionsEnd` component is returning a JSX fragment containing a select element
+ * for language selection, a select element for user type selection, a `NotificationDropdown`
+ * component, and a `UserDropdown` component.
+ */
 const HeaderActionsEnd = () => {
+    /* `const navigate = useNavigate();` is using the `useNavigate` hook from the `react-router-dom`
+    library to get the `navigate` function. This function can be used to programmatically navigate
+    to different routes in the application. In this code, the `navigate` function is used to
+    redirect the user to different dashboards based on the selected user type in the dropdown menu. */
     const navigate = useNavigate();
+
+    /**
+     * The handleChange function sets the user_type in localStorage based on the selected value and
+     * navigates to a specific page.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the function, such as a change event on an
+     * input element.
+     */
     const handleChange=(e:any)=>{
         if(e.target.value==1){
             localStorage.setItem('user_type','Partner')
@@ -38,8 +62,20 @@ const HeaderActionsEnd = () => {
         }
     
     }
+
+    /* The line `const { t, i18n }:any = useTranslation();` is using the `useTranslation` hook from the
+    `react-i18next` library to get the `t` and `i18n` functions. */
     const { t, i18n }:any = useTranslation();
     let UserType:any=localStorage.getItem('user_type');
+
+    /**
+     * The function `handleLanguage` changes the language in an i18n library based on the value of the
+     * target element.
+     * @param {any} e - The parameter "e" is an event object. It is typically used in event handlers to
+     * access information about the event that occurred, such as the target element that triggered the
+     * event. In this case, it is used to access the value of the target element, which is expected to
+     * be a language code
+     */
     const handleLanguage=(e:any)=>{
         i18n.changeLanguage(e.target.value);
     }
@@ -71,6 +107,8 @@ const HeaderActionsEnd = () => {
     )
 }
 
+/* The `ClassicLayout` function is a React component that returns a JSX element. It represents the
+layout of the application and includes various components such as `SideNav`, `Header`, and `View`. */
 const ClassicLayout = () => {
     return (
         <div className="app-layout-classic flex flex-auto flex-col">
