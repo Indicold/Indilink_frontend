@@ -21,6 +21,7 @@ const Layout = () => {
     const layoutType = useAppSelector((state) => state.theme.layout.type)
     const { authenticated } = useAuth()
     const { signOut } = useAuth()
+    const navigate:any=useNavigate();
     useLocale()
 
     const AppLayout = useMemo(() => {
@@ -45,6 +46,7 @@ const Layout = () => {
               if (now > expirationTime) {
                 console.error('Token is expired');
                 signOut(); // Log out the user if the token is expired
+                navigate('/')
               }
             } catch (error:any) {
               console.error('Error decoding token:', error.message);

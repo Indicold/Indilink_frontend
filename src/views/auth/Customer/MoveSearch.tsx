@@ -190,7 +190,10 @@ console.log("FFFFFFF",formData);
 
 
     const { t, i18n }:any = useTranslation();
-
+useEffect(()=>{
+localStorage.removeItem('dest_gps');
+localStorage.removeItem('origin_gps');
+},[])
 console.log("TYTYTYTYT",formData);
 
     return (

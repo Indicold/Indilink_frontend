@@ -134,7 +134,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
 
                                 <div className='w-[90%] p-2 m-auto text-center '>
                                     <div className="flex items-center justify-center w-full">
-                                        <label
+                                        {!formData?.invoice_doc ?<label
                                             htmlFor="dropzone-file"
                                             className="flex h-[100px] flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                                         >
@@ -163,19 +163,26 @@ errors.invoice_amount="Please Enter Invoice Amount";
                                             </div>
                                             {/* .xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt, */}
                                             <input id="dropzone-file" accept=".txt,.pdf" name='invoice_doc' onChange={(e: any) => handleChange(e)} type="file" className="hidden" />
-                                        </label>
+                                        </label> :
+                                        <label
+                                        htmlFor="dropzone-file"
+                                        className="flex h-[100px] flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                                    >
+                                        <img src="https://cdn.dribbble.com/users/17001/screenshots/10468474/media/c2bd5fcfe101519bc5d5f5345843938a.gif" className='w-[100%] h-[100%]' alt="" />
+                                </label>
+                                        }
                                     </div>
                                     <p className='text-[red]'>{error?.invoice_doc}</p>
 
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium
-                                         text-gray-900 dark:text-white text-start mt-4">Ammount</label>
+                                         text-gray-900 dark:text-white text-start mt-4">Amount</label>
                                         <input type="number" onKeyDown={onkeyDown} name='invoice_amount' onChange={(e: any) => handleChange(e)} id="amount"
                                             className="bg-gray-50 border border-gray-300 text-gray-900
              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-               dark:focus:border-blue-500" placeholder="Enter your ammount here..." required />
+               dark:focus:border-blue-500" placeholder="Enter your amount here..." required />
                                     </div>
                                     <p className='text-[red] text-start'>{error?.invoice_amount}</p>
 

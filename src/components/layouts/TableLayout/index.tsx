@@ -111,6 +111,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
+      // navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('country_id', rowData?.country_id)

@@ -73,8 +73,8 @@ const NotificationPage = () => {
     for (const item of ListOfNotification?.data) {
       
       // Convert item name to lowercase and search query to lowercase for case-insensitive matching
-      const itemName = item.name.toLowerCase();
-      const searchQuery = query.toLowerCase();
+      const itemName = item?.content?.toLowerCase();
+      const searchQuery = query?.toLowerCase();
   
       if (itemName.includes(searchQuery)) {
         results.push(item);
