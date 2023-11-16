@@ -552,10 +552,10 @@ const array1Keys = array1?.map((item) => item?.key);
 
     }, [fetchDetails?.data])
     return (
-        <div className='flex lg:flex-row md:flex-row flex-col'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
 
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -596,7 +596,7 @@ const array1Keys = array1?.map((item) => item?.key);
                             <FormContainer>
                                 <div >
                                     {array?.map((item: any, index: any) => (
-                                        <div className="flex flex-wrap w-full justify-around lg:border-y-0 border-y-2">
+                                        <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
                                             <FormItem
                                                 label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
                                                 <p className='ellipse-text'>{item?.label}</p>
@@ -605,7 +605,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                 </Tooltip>
                                               </div> :item?.label}
                                                 key={index}
-                                                className=" rounded-lg text-label-title "
+                                                className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
