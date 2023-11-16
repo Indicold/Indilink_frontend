@@ -1,7 +1,7 @@
 {
   "name": "elstar-lite",
   "private": true,
-  "homepage": "http://v4.vector3.digital",
+  "homepage": "http://prepod.indilink.indicold.in",
   "version": "2.0.0",
   "scripts": {
     "start": "vite",
@@ -67,6 +67,7 @@
     "react-portal": "^4.2.2",
     "react-quill": "^0.0.2",
     "react-redux": "^8.0.5",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.9.0",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.2",
