@@ -2,7 +2,7 @@
 import classNames from 'classnames'
 import { APP_NAME } from '@/constants/app.constant'
 import type { CommonProps } from '@/@types/common'
-import logo from "../../assets/styles/logo.png"
+import logo from "../../../public/img/images/logimg.png"
 
 /* The `interface LogoProps` is defining the props that can be passed to the `Logo` component. */
 interface LogoProps extends CommonProps {
@@ -44,7 +44,7 @@ const Logo = (props: LogoProps) => {
                 style={{padding:"20px",width:"150px"}}
                 // src={`${LOGO_SRC_PATH}logo-${mode}-${type}.png`}
                 alt={`${APP_NAME} logo`}
-                src='img/images/logimg.png'
+                src={logo}
             />
         </div>
     )
