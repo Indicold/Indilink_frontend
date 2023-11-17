@@ -43,7 +43,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -73,7 +72,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
         if(commanData?.type==='Edit'){
             updateData(data)
         }else{
-            console.log("asset_idddd", data)
             if(validateCAEquipForm(data, setErrors)) {
             handleStoreTable(
                 'partner/store/ca-equipment',
@@ -97,7 +95,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 useEffect(()=>{
     if(PutApiResponse?.status===200){
     messageView("Data Updated Successfully !")
-        // console.log("TTTTTTtytyty",PutApiResponse);
         FetchAgain();
         if(modal){
             setModal(false)

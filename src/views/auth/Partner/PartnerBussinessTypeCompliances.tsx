@@ -451,10 +451,9 @@ const array1Keys = array1?.map((item) => item?.key);
         )?.length>0 ? true: false;
 
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        console.log("YUUUUUUUUU",array?.filter((item:any)=>item?.messageText),Invalid,newvalidate);
+        
         if (Invalid && newvalidate && newvalidateLicence) {
         PostValidTillDetails(dateArray)
-        console.log("KEYJHJHKHKHKHK");
         navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
         }else{
@@ -464,7 +463,6 @@ const array1Keys = array1?.map((item) => item?.key);
     }
     const handleChange = (e: any, item: any) => {
 
-        console.log("TYYYYYYYYY", e.target.name, item);
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
@@ -475,8 +473,6 @@ const array1Keys = array1?.map((item) => item?.key);
             : itemData
         );
         setArray(updatedArray);
-        console.log("TTTTT66TTTT", e.target.name, updatedArray);
-        // console.log("TTTTT66TTTT",newData);
 
     };
 
@@ -522,7 +518,6 @@ const array1Keys = array1?.map((item) => item?.key);
         }
 
     }, [fetchDetails?.data])
-    console.log("tryttytyrty", array);
  
 /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
 `fetchDetails.data` value changes. */
@@ -553,17 +548,16 @@ const array1Keys = array1?.map((item) => item?.key);
                 }
             });
             setDateArray(payload)
-            console.log("Payload:", payload);
         }
 
 
     }, [fetchDetails?.data])
     const { t, i18n }:any = useTranslation();
     return (
-        <div className='flex lg:flex-row md:flex-row flex-col'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
 
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -602,9 +596,9 @@ const array1Keys = array1?.map((item) => item?.key);
                 <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex flex-wrap w-full">
+                                <div >
                                     {array?.map((item: any, index: any) => (
-                                        <>
+                                        <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
                                             <FormItem
                                                 label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
                                                 <p className='ellipse-text'>{item?.label}</p>
@@ -613,7 +607,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                 </Tooltip>
                                               </div> :item?.label}
                                                 key={index}
-                                                className=" rounded-lg pl-[6px] text-label-title "
+                                                className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
@@ -650,11 +644,11 @@ const array1Keys = array1?.map((item) => item?.key);
                                                     )}
                                                 </div>
                                             </FormItem>
-                                            <div className='flex'>
+                                            <div className='flex lg:flex-nowrap flex-wrap'>
                                                 <FormItem
                                                     label={t("Valid Till")}
                                                     key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                    className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='date'
@@ -727,7 +721,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                             </div>
 
 
-                                        </>
+                                        </div>
 
                                     ))}
                                 </div>

@@ -21,7 +21,6 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState({
         Team: Team,
     })
-    console.log('Team', Team)
 
     /**
      * The handleChange function updates the state data object with the new value from the input
@@ -35,7 +34,6 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` saves data to the local storage in JSON format.
@@ -53,7 +51,6 @@ const KeyTeamModal: React.FC<MajorityHolderModalProps> = ({
         if (!localStorage.getItem('Team_List')) {
             localStorage.setItem('Team_List', JSON.stringify([data]))
         }
-        console.log('gggggg')
     }
     /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
         `useEffect` hook is used to update the state of the `data` object whenever the `Team` prop

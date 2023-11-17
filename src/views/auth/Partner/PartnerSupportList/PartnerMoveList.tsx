@@ -23,7 +23,7 @@ const PartnerMoveList = () => {
         loading: MoveLoad,
         error,
     } = useApiFetch<any>('partner/move', token)
-    console.log('FFFFFFF', MoveData)
+    
     return (
         <>
              <h4 className="text-head-title text-center">

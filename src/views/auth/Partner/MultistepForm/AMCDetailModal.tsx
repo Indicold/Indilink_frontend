@@ -38,7 +38,6 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state with the new value of the input field.

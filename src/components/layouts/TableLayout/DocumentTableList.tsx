@@ -84,7 +84,6 @@ const DocumentTableList = ({ AllStore }: any) => {
  
   
   const handleView = (rowData: any) => {
-    console.log("DocumentViewModal",rowData);
     
     // Handle view action for different asset types.
     setModal(true)
@@ -117,7 +116,7 @@ const DocumentTableList = ({ AllStore }: any) => {
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -141,7 +140,7 @@ const DocumentTableList = ({ AllStore }: any) => {
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}

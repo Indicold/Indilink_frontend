@@ -22,6 +22,8 @@ import usePostApi from '@/store/customeHook/postApi'
 import usePutApi from '@/store/customeHook/putApi';
 import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
+import ReactGoogleAutocomplete from 'react-google-autocomplete';
+import axios from 'axios';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -53,6 +55,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [seconds, setSeconds] = useState(10);
     const [formData, setFormData] = useState(selector?.details?.data);
     const [GSTRes, setGSTRes] = useState({});
+    const [Address,setAddress]=useState<any>("")
+    const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+   const [postalCode,setPostalCode]=useState<any>('')
     let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`auth/getOTP`);
     let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`auth/getGstDetails`);
     const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`auth/verifyOTP`);
@@ -75,7 +81,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      */
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
-        console.log("OTPPostDetails",OTPPostDetails);
         
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
@@ -123,7 +128,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 
         if (newGst.length == 10 && re.test(newGst)) {
-            // console.log("5765575");
             
             setDisabled(false);
             showInvalidPanMessage(false);
@@ -150,17 +154,38 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
       const handledfnChange = (e: any,key:any) => {
         const newGst = e.target.value;
-        const newData = { ...formData, [key]: newGst };
-        setFormData(newData);
+        if(key==='address'){
+console.log("jhghghghghg",e);
+
+        }else{
+            const newData = { ...formData, [key]: newGst };
+            setFormData(newData); 
+        }
+  
       }
-      
+      const handleButtonClick = async () => {
+    
+          const apiUrls = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+    fetch(apiUrls)
+    .then((response) => response.json())
+      .then((data) => {
+        setPostalCode(data?.address?.postcode)
+        console.log("TTTTTTTTTT77777",data?.address?.postcode);
+        
+      })
+     
+      };
 
 
     /**
      * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
      * where it collects form data and sends a POST request with the data to a server.
      */
+    const Add:any=Address?.split(',')
+    console.log("TTTTTTTTTT767667",Add);
     const handlesubmit = () => {
+      
+        
         let ObjectData:any={
             first_name:formData?.first_name,
             last_name:formData?.last_name,
@@ -173,6 +198,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             userDesignation: formData?.designation,
             firmType:formData?.firm,
             firmName: formData?.firmName,
+            pincode:postalCode,
+            state:Add[1],
+            city:Add[0],
+            address: Address,
 
           }    
 
@@ -185,10 +214,12 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         setSubmitting(false)
 
     }
+    useEffect(()=>{
+        handleButtonClick()
+    },[longitude,latitude])
 
     /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
-        console.log(OTPResponse)
         if (OTPResponse?.message) {
             toast.success(OTPResponse?.message, {
                 position: 'top-right', // Position of the toast
@@ -218,7 +249,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     value of `b` or `GSTResponse` changes. */
     useEffect(() => {
         if (GSTResponse?.message) {
-            console.log("GSTResponse", GSTResponse);
 
             toast.success(typeof GSTResponse?.message === 'string'?GSTResponse?.message:"Details fetched successfully.", {
                 position: 'top-right', // Position of the toast
@@ -277,6 +307,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         return () => clearInterval(timer);
 
     }, [seconds]);
+console.log("TTTTTTTTTTTT00",Address);
 
 
     return (
@@ -407,7 +438,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Firm Type"
 
-                                className='me-auto text-label-title'
+                                className='w-1/2 text-label-title'
                                 asterisk={true}
                             >
                                   
@@ -428,7 +459,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             <FormItem
                                 label="Firm Name"
 
-                                className='me-auto text-label-title'
+                                className='w-1/2 text-label-title'
                                 asterisk={true}
                             >
                                 
@@ -445,6 +476,107 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                             </FormItem>
 
                         </div>
+                        <div className="flex">
+                            {/* <FormItem
+                                label="Pin Code"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                  
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="pincode"
+                                    placeholder="Pin Code"
+                                    onChange={(e: any) => handledfChange(e,'pincode')}
+
+                                    
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem> */}
+
+                            <FormItem
+                                label="Geo Location"
+
+                                className='me-auto w-full text-label-title'
+                                asterisk={true}
+                            >
+                                  <ReactGoogleAutocomplete
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            aria-disabled={isDisabled}
+                                            onChange={(e: any) => handledfnChange(e,'address')}
+                                            name="dest_gps"
+                                            // value={dest_gps}
+                                            placeholder="Location"
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                setAddress(place?.formatted_address);
+                                                setLatitude(place?.geometry?.location?.lat());
+                                                setLongitude(place?.geometry?.location?.lng());
+                                                console.log("TTTTTTTTTTTTTTThh",place?.geometry?.location?.lat());
+                                            //    setFormData({...formData,dest_gps:place?.formatted_address})
+                                            }}
+                                        />
+                                
+                                {/* <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="state"
+                                    placeholder="State"
+                                    onChange={(e: any) => handledfnChange(e,'state')}
+                                    component={Input}
+                                    className=''
+                                /> */}
+                              
+                            </FormItem>
+
+                        </div>
+
+                        {/* <div className="flex">
+                            <FormItem
+                                label="City"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                  
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="city"
+                                    placeholder="City"
+                                    onChange={(e: any) => handledfChange(e,'city')}
+
+                                    
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                            <FormItem
+                                label="Address"
+
+                                className='me-auto text-label-title'
+                                asterisk={true}
+                            >
+                                
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    name="address"
+                                    placeholder="Address"
+                                    onChange={(e: any) => handledfnChange(e,'address')}
+                                    component={Input}
+                                    className=''
+                                />
+                              
+                            </FormItem>
+
+                        </div> */}
 
 
 

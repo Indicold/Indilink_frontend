@@ -32,7 +32,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({
         asset_id:id
     })
-    console.log("formDformDformDformD",formD);
     
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/prepare/machine/${formD?.id}`)
 
@@ -47,7 +46,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared

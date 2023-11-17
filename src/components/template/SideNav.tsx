@@ -64,10 +64,8 @@ const SideNav = () => {
 
         return navMode
     }
-console.log("navigationConfig",navigationConfig,navigationPartnerConfig);
 
 let val='';
-console.log("bBBBBBB",val);
 
 useEffect(()=>{
 let val=localStorage.getItem('user_type');

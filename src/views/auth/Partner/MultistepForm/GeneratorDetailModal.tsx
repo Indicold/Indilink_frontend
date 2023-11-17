@@ -38,7 +38,6 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id =id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,7 +57,6 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The handlesave function calls the handleStoreTable function with specific parameters.

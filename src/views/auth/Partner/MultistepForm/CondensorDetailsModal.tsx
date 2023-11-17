@@ -39,7 +39,6 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -52,7 +51,6 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` is used to handle saving data to a store table in a React

@@ -12,7 +12,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Divider } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { getToken } from '@/store/token'
+import { apiUrl, getToken } from '@/store/token'
+import { messageView } from '@/store/customeHook/validate'
+import { ToastContainer } from 'react-toastify'
 
 type DropdownList = {
     label: string
@@ -25,12 +27,12 @@ const dropdownItemList: DropdownList[] = []
 const _NotificationDropdown = ({ className }: CommonProps) => {
     const { token }: any = getToken();
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-        useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
-    console.log("HHHHHHHH", ListOfNotification);
-
-    const navigate: any = useNavigate();
+    console.log("HHHHHHHH",ListOfNotification);
+    
+const navigate:any=useNavigate();
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
             <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
@@ -64,49 +66,50 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
         };
     }
 
-    // Example usage:
-    const targetDate = "2023-09-15T05:11:27.000Z";
-    const timeDifference = calculateTimeDifference(targetDate);
+// Example usage:
+const targetDate = "2023-09-15T05:11:27.000Z";
+const timeDifference = calculateTimeDifference(targetDate);
 
-    console.log("Time Difference:");
-    console.log(`${timeDifference.days} days`);
-    console.log(`${timeDifference.hours} hours`);
-    console.log(`${timeDifference.minutes} minutes`);
+console.log("Time Difference:");
+console.log(`${timeDifference.days} days`);
+console.log(`${timeDifference.hours} hours`);
+console.log(`${timeDifference.minutes} minutes`);
 
     return (
         <div>
+            <ToastContainer />
             <Dropdown
                 menuStyle={{ minWidth: 340 }}
                 renderTitle={UserAvatar}
                 placement="bottom-end"
             >
-                <Dropdown.Item variant="header" className='mt-2 px-6 font-bold text-base text-gray-800'>
-                    Notification
-                </Dropdown.Item>
-                <Dropdown.Item variant="divider" />
-                {ListOfNotification?.data?.slice(0, 4).map((item: any, index: any) => (
-                    <Dropdown.Item variant="header">
-                        <div className="flex items-center">
-                            <div className="mt-2 px-6  bg-gray-50 p-2 rounded-lg w-full">
-                                <div className=" inline-flex items-center justify-between w-full">
-                                    <div className="inline-flex items-center">
-                                        <img
-                                            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
-                                            alt="Training Icon"
-                                            className="w-6 h-6 mr-3"
-                                        />
-                                        <h3 className="font-semibold text-sm text-gray-800">{item?.name}</h3>
-                                    </div>
-                                    <p className="text-xs text-gray-500">{item?.created_at}</p>
-                                </div>
-                                <p className="mt-1 text-sm">
-                                    Hey! Do you remember about choosing your training regime?
-                                </p>
-                            </div>
-                        </div>
+                    <Dropdown.Item variant="header" className='mt-2 px-6 font-bold text-base text-gray-800'>
+                        Notification
                     </Dropdown.Item>
-                ))}
-
+                    <Dropdown.Item variant="divider" />
+                    {ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
+     <Dropdown.Item variant="header">
+     <div className="flex items-center">
+     <div className="mt-2 px-6  bg-white rounded-lg w-full">
+<div className=" inline-flex items-center justify-between w-full">
+<div className="inline-flex items-center">
+<img
+src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+alt="Training Icon"
+className="w-6 h-6 mr-3"
+/>
+<h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+</div>
+<p className="text-xs text-gray-500">{item?.created_at}</p>
+</div>
+<p className="mt-1 text-sm">
+Hey! Do you remember about choosing your training regime?
+</p>
+</div>
+     </div>
+ </Dropdown.Item>
+                    ))}
+           
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
                     <Dropdown.Item
@@ -128,14 +131,14 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
                     </Dropdown.Item>
                 ))}
                 {/* <Dropdown.Item variant="divider" /> */}
-                <Dropdown.Item
+              {ListOfNotification?.data?.length>0 &&  <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2 text-end"
                     onClick={handleViewAll}
                 >
 
                     <span className='text-end'>View All</span>
-                </Dropdown.Item>
+                </Dropdown.Item>}
             </Dropdown>
         </div>
     )

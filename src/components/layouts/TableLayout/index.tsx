@@ -83,7 +83,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -112,6 +111,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
+      // navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -131,13 +131,11 @@ const handleLogs=(rowData:any)=>{
   setLogsModal(true)
 }
   const handleSubmit=(rowData:any)=>{
-    console.log("ttttttt",rowData);
     
     setRowData(rowData)
     setAlert(true)
   }
   const handleConfirm=()=>{
-    console.log("tttttttt8888",);
     
     PostSubmitDetails({status:"Final"})
   }
@@ -176,7 +174,7 @@ const handleDocs=(rowData:any)=>{
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -193,7 +191,6 @@ const handleDocs=(rowData:any)=>{
 
   // JSX structure for rendering the table and pagination.
 useEffect(()=>{
-console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)
@@ -261,7 +258,7 @@ React.useEffect(() => {
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}

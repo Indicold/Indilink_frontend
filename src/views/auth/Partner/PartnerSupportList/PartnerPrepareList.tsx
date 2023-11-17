@@ -22,7 +22,6 @@ const PartnerPrepareList = () => {
         loading: PrepareLoad,
         error,
     } = useApiFetch<any>('partner/prepare', token)
-    console.log('FFFFFFF', PrepareData)
 
     return (
         <>

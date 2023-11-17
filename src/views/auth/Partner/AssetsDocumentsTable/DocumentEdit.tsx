@@ -10,7 +10,6 @@ import usePostApi from '@/store/customeHook/postApi';
 import { messageView } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 const DocumentEditModal = ({modal,setModal,data}:any) => {
-    console.log("GGGGGG1",data);
     
     const [text,setText]=useState<any>('')
     const [error,setError]=useState<any>({})
@@ -34,7 +33,6 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
             }
             Postcomment(body)
             setText("")
-            console.log("dat",body);
     
         }
        
@@ -44,7 +42,6 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
         messageView(commentResponse?.message)
 if(commentResponse?.status===200){
     setModal(false)
-    console.log("GGGGGGGG",commentResponse);
     
 }
     },[commentResponse])

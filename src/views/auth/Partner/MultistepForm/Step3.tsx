@@ -14,7 +14,6 @@ const Step3 = (props:any) => {
         //     setAdditionalLocations(e.target.value);
         // }
         setFormData(newData);
-        console.log("newData",newData);
         
             }
         

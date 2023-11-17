@@ -88,7 +88,6 @@ const PrepareSearch = () => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
-        console.log("FFFFFFFFFF", newData);
 
     }
 
@@ -148,12 +147,10 @@ const PrepareSearch = () => {
                 setTimeout(() => {
                     navigate('/ticket_list_prepare')
                 }, 2000)
-                console.log("GGGGGG88888777", result)
             })
             .catch(error => console.log('error', error));
     }
     const navigate: any = useNavigate();
-    console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -178,7 +175,6 @@ const PrepareSearch = () => {
         }
     }, [CustomerResponse?.status]);
 
-console.log("formatDate",formData?.arrival_date);
 const { t, i18n }:any = useTranslation();
 
     return (

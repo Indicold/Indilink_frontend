@@ -9,7 +9,6 @@ import CustomerDetailModal from '@/components/layouts/Customer/CustomerDetailMod
 const StoreTicketList = () => {
     const {token}:any =getToken();
     const { data:Store, loading:StoreLoad, error } = useApiFetch<any>('customer/store/search', token);
-    console.log("FFFFFFF",Store);
    
   return (
     <div>

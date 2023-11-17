@@ -11,7 +11,6 @@ import { messageView } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 import ESign from './ESign';
 const DocumentViewModal = ({modal,setModal,data}:any) => {
-    console.log("GGGGGG1",data);
     
     const [text,setText]=useState<any>('')
     const [error,setError]=useState<any>({})
@@ -28,7 +27,6 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
         messageView(commentResponse?.message)
 if(commentResponse?.status===200){
     setModal(false)
-    console.log("GGGGGGGG",commentResponse);
     
 }
     },[commentResponse])

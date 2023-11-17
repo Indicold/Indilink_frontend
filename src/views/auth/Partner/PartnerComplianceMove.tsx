@@ -8,6 +8,7 @@ import {
     FormContainer,
     FormItem,
     Input,
+    Tooltip,
 } from '@/components/ui'
 import { useTranslation } from 'react-i18next'
 import { getToken } from '@/store/customeHook/token'
@@ -23,6 +24,7 @@ import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
 import { messageView } from '@/store/customeHook/validate'
+import InfoIcon from '@mui/icons-material/Info';
 const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -58,7 +60,6 @@ const PartnerComplianceMove = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
-    console.log('TTTTTTTTTT', apiUrls, fetchDetails)
 
     const {
         result: ValidTillResponse,
@@ -130,7 +131,6 @@ const PartnerComplianceMove = () => {
 
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
-        console.log('FILE', e.target.files[0])
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
@@ -139,7 +139,6 @@ const PartnerComplianceMove = () => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        // console.log("date_change", newData, e.target.value)
 
         const updatedArray = array.map((item: any) => {
             if (e.target.name === item.key_text) {
@@ -162,7 +161,6 @@ const PartnerComplianceMove = () => {
     }
     const handleChange = (e: any, item: any) => {
 
-        console.log("TYYYYYYYYY", e.target.name, item);
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
@@ -179,8 +177,6 @@ const PartnerComplianceMove = () => {
         //     : itemData
         // );
         // setArray(updatedArray);
-        console.log("TTTTT66TTTT", e.target.name, newData);
-        // console.log("TTTTT66TTTT",newData);
 
     };
 
@@ -244,7 +240,6 @@ const PartnerComplianceMove = () => {
                 )
                 setArray(updatedArray) // Update the state with the modified array
             }
-            console.log('Response data:', responseData?.data)
         } catch (error) {
             console.error('Error:', error)
         }
@@ -266,7 +261,6 @@ const PartnerComplianceMove = () => {
             }
     
             if (!data[licenseField] || !data[textField]) {
-                console.log("YYYYYYYYYY",data[licenseField]);
                 
                 // messageView(`Valid Till and License no is mandatory`);
                 return false;
@@ -294,10 +288,9 @@ const PartnerComplianceMove = () => {
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
          const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
          let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-         console.log("YUUUUUUUUU",Invalid,newvalidate);
+         
          if (Invalid && newvalidate && newvalidateLicence) {
          PostValidTillDetails(dateArray)
-         console.log("KEYJHJHKHKHKHK");
          navigate('/asset_success')
          // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
          }else{
@@ -344,7 +337,7 @@ const PartnerComplianceMove = () => {
         }
 
     }, [fetchDetails?.data])
-    console.log('DDDDDDDD', array)
+    
     useEffect(() => {
 
 
@@ -372,7 +365,6 @@ const PartnerComplianceMove = () => {
                 }
             });
             setDateArray(payload)
-            console.log("Payload:", payload);
         }
 
 
@@ -380,10 +372,10 @@ const PartnerComplianceMove = () => {
     const { t, i18n }:any = useTranslation();
 
     return (
-        <div className='flex'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
 
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -411,8 +403,9 @@ const PartnerComplianceMove = () => {
 
 
             </div>
+            
 
-            <div className="bg-white w-5/6">
+            <div className="bg-white w-full md:w-5/6 lg-w-5/6">
             <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">
                     Compliance Details
@@ -421,124 +414,132 @@ const PartnerComplianceMove = () => {
                 <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex flex-wrap">
+                                <div>
                                     {array?.map((item: any, index: any) => (
-                                        <>
+                                       <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
+                                       <FormItem
+                                           label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
+                                           <p className='ellipse-text'>{item?.label}</p>
+                                           <Tooltip title={item?.label} className='bg-[#000000]' arrow>
+                                             <InfoIcon />
+                                           </Tooltip>
+                                         </div> :item?.label}
+                                           key={index}
+                                           className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
+                                       >
+                                           <input
+                                               disabled={isDisabled}
+                                               type="file"  accept="image/png, image/jpeg"
+                                               name={item?.key}
+                                               id="file-input"
+                                               className="block border border-gray-200 
+                   shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                              file:bg-transparent file:border-0
+                        file:bg-gray-100 file:mr-4
+                      file:py-3 file:px-4
+                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               onChange={(e: any) =>
+                                                   handleFileChange(e, item)
+                                               }
+                                           />
+
+                                           <div className="flex">
+                                               {item?.message && (
+                                                   <p className="text-[green]">
+                                                       Status:{item?.message}
+                                                   </p>
+                                               )}
+                                               {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
+                                               {item?.view && (
+                                                   <span className="align-right" ><a
+                                                       href={`${item?.url}`}
+                                                       target="_blank"
+                                                       download={false}
+                                                   >
+                                                       View
+                                                   </a>
+                                                   </span>
+                                               )}
+                                           </div>
+                                       </FormItem>
+                                       <div className='flex lg:flex-nowrap flex-wrap'>
                                            <FormItem
-                                            label={item?.label}
-                                            key={index}
-                                            className="rounded-lg pl-[6px] text-label-title "
-                                        >
-                                            <input
+                                               label="Valid Till"
+                                               key={index}
+                                               className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                           >
+
+                                               <input type='date'
                                                 disabled={isDisabled}
-                                                type="file"
-                                                accept="image/png, image/jpeg"
-                                                name={item?.key}
-                                                id="file-input"
-                                                className="!w-full block w-full border border-gray-200 
-                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                   file:bg-transparent file:border-0
-                             file:bg-gray-100 file:mr-4
-                           file:py-3 file:px-4
-                                  dark:file:bg-gray-700 dark:file:text-gray-400"
-                                                onChange={(e: any) =>
-                                                    handleFileChange(e, item)
-                                                }
-                                            />
-                                          
-                                            <div className="flex">
-                                                {item?.message && (
-                                                    <p className="text-[green]">
-                                                        Status:{item?.message}
-                                                    </p>
-                                                )}
-                                                {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
-                                                {item?.view && (
-                                                    <a
-                                                        href={`${item?.url}`}
-                                                        target="_blank"
-                                                        download={false}
-                                                    >
-                                                        View
-                                                    </a>
-                                                )}
-                                            </div>
-                                        </FormItem>
-                                        <div className='flex'>
-                                                <FormItem
-                                                    label="Valid Till"
-                                                    key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-                                                >
+                                               placeholder='Valid Till' name={item?.key_text}
+                                                   defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
+                   shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                              file:bg-transparent file:border-0
+                        file:bg-gray-100 file:mr-4
+                      file:py-3 file:px-4
+                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                   onChange={handleDateChange} />
 
-                                                    <input type='date'
-                                                     disabled={isDisabled}
-                                                    placeholder='Valid Till' name={item?.key_text}
-                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
-                        shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                   file:bg-transparent file:border-0
-                             file:bg-gray-100 file:mr-4
-                           file:py-3 file:px-4
-                                  dark:file:bg-gray-700 dark:file:text-gray-400"
-                                                        onChange={handleDateChange} />
+                                               {item?.messageText && (
+                                                   <p className="text-[red]">
+                                                       {item?.messageText}
+                                                   </p>
+                                               )}
+                                           </FormItem>
+                                           <FormItem
+                                               label="Licence No"
+                                               key={index}
+                                               className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                           >
 
-                                                    {item?.messageText && (
-                                                        <p className="text-[red]">
-                                                            {item?.messageText}
-                                                        </p>
-                                                    )}
-                                                </FormItem>
-                                                <FormItem
-                                                    label="Licence No"
-                                                    key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-                                                >
+                                               <input type='text'
+                                                disabled={isDisabled}
+                                               placeholder='Licence No' name={`${item?.key_lic}`}
+                                                   defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
+                                                   className="!w-full h-11 block w-full border border-gray-200 
+                   shadow-sm rounded-md text-sm 
+                   focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                    dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                              file:bg-transparent file:border-0
+                        file:bg-gray-100 file:mr-4
+                      file:py-3 file:px-4
+                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                   onChange={(e: any) => handleChange(e, item)} />
 
-                                                    <input type='text'
-                                                     disabled={isDisabled}
-                                                    placeholder='Licence No' name={`${item?.key_lic}`}
-                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
-                                                        className="!w-full h-11 block w-full border border-gray-200 
-                        shadow-sm rounded-md text-sm 
-                        focus:z-10 focus:border-blue-500 focus:ring-blue-500
-                         dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                                   file:bg-transparent file:border-0
-                             file:bg-gray-100 file:mr-4
-                           file:py-3 file:px-4
-                                  dark:file:bg-gray-700 dark:file:text-gray-400"
-                                                        onChange={(e: any) => handleChange(e, item)} />
+                                               {item?.licenseNo && (
+                                                   <p className="text-[red]">
+                                                       {item?.licenseNo}
+                                                   </p>
+                                               )}
+                                           </FormItem>
+                                           <FormItem
+                                   label="Status"
+                                   className="w-1/2 text-label-title"
+                               >
+                                   <select
+                                       disabled
+                                       className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       name={`${item?.key_status}`}
+                                                                       
+                                   >
+                                       <option disabled selected>Select Status</option>
+                                       
+                                                   <option
+                                                       value={1}
+                                                       selected={item?.doc_status===1}
+                                                     
+                                                   >
+                                                    Approved
+                                                   </option>
+                                           
+                                       <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
+                                   </select>
+                                 
+                               </FormItem>
+                                       </div>
 
-                                                    {item?.licenseNo && (
-                                                        <p className="text-[red]">
-                                                            {item?.licenseNo}
-                                                        </p>
-                                                    )}
-                                                </FormItem>
-                                                <FormItem
-                                        label="Status"
-                                        className="w-1/2 text-label-title"
-                                    >
-                                        <select
-                                            disabled
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            name={`${item?.key_status}`}
-                                        >
-                                            <option disabled selected>Select Status</option>
-                                            
-                                                        <option
-                                                            value={1}
-                                                            selected={item?.doc_status===1}
-                                                          
-                                                        >
-                                                         Approved
-                                                        </option>
-                                                
-                                            <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
-                                        </select>
-                                      
-                                    </FormItem>
-                                            </div>
-                                        </>
+
+                                   </div>
                                      
                                     ))}
                                 </div>
