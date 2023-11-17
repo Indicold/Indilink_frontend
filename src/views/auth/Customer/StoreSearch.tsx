@@ -310,7 +310,7 @@ const StoreSearch = () => {
                                 </div>
                                 <div className="md:flex lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label={t("Unit")}
+                                        label={t("Unit*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
@@ -337,7 +337,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.unit_id}</p>
+                                        <p className='text-[red]'>{errors && errors.quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Certification")}

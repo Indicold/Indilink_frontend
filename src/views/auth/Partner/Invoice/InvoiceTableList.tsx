@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
@@ -75,7 +75,11 @@ const InvoiceTableList = ({ AllStore }: any) => {
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
-
+useEffect(()=>{
+  const to = countPerPage;
+  const from = to - countPerPage;
+  setCollection(cloneDeep(allData.slice(0, to)));
+},[AllStore])
   const navigate = useNavigate();
 
  

@@ -8,14 +8,14 @@ import CustomerDetailModal from '@/components/layouts/Customer/CustomerDetailMod
 
 const StoreTicketList = () => {
     const {token}:any =getToken();
-    const { data:Store, loading:StoreLoad, error } = useApiFetch<any>('customer/store/search', token);
+    const { data:Store, loading:StoreLoad, error,refetch:fetchagain } = useApiFetch<any>('customer/store/search', token);
    
   return (
     <div>
         
       <>
         <h4 className='text-head-title text-center'>Store Ticket List</h4>
-        {Store?.data?.length>0 ? <TableLayoutCustomer AllStore={Store?.data?.length>0 && Store?.data}/>
+        {Store?.data?.length>0 ? <TableLayoutCustomer fetchagain={fetchagain} AllStore={Store?.data?.length>0 && Store?.data}/>
         :<p>No data found.</p>}
       </>
       <div>
