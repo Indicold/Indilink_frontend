@@ -486,7 +486,6 @@ const StoreRegistration = () => {
      * opened and which data should be passed to it.
      */
     const handleEdit = (rowData: any, type: any) => {
-        console.log("bghjgjhgh",rowData,type);
         if (type === 'Chamber') {
             setChamberModal(true)
             setCommanData({ ...rowData, type: "Edit" })
@@ -510,7 +509,6 @@ const StoreRegistration = () => {
             setCommanData({ ...rowData, type: "Edit" })
         }
         else if (type === 'IOT') {
-            console.log("bghjgjhgh",rowData);
             
             setIOTModal(true)
             setCommanData({ ...rowData, types: "Edit" })

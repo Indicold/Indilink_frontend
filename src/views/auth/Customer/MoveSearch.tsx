@@ -126,7 +126,6 @@ const MoveSearch = () => {
         formdata.append("status_id", formData?.status_id);
         formdata.append("comment", formData?.comment);
         formdata.append("contract_download", formData?.contract_download);
-console.log("FFFFFFF",formData);
 
         var requestOptions: any = {
             method: 'PUT',
@@ -198,7 +197,6 @@ useEffect(()=>{
 localStorage.removeItem('dest_gps');
 localStorage.removeItem('origin_gps');
 },[])
-console.log("TYTYTYTYT",formData);
 
     return (
         <div>

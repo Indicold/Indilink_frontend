@@ -43,7 +43,6 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
     useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
-    console.log("HHHHHHHH",ListOfNotification);
     
 const navigate:any=useNavigate();
 

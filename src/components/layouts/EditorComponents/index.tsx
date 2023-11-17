@@ -164,8 +164,6 @@ const Link: React.FC<any> = (props) => {
         setShowTooltip(false);
     };
 
-console.log("TTTTTTTTTTTTT",props.contentState.getEntity(props.entityKey).getData());
-
     /* The following code is a TypeScript React component that renders a span element with an underline,
     cursor pointer, and other styling properties. It also includes event handlers for mouse enter
     and mouse leave events. */

@@ -43,7 +43,6 @@ const Invoice = () => {
     const handleChange = (e: any) => {
         const newData: any = { ...formData };
         if (e.target.name === 'invoice_doc') {
-            console.log("TTTTTTTfiii",e.target.files[0]?.name);
             
             newData[e.target.name] = e.target.files[0];
         } else {

@@ -78,6 +78,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false) // Initially the OTP modal will be closed when the component mounts
     const [invalidPanMessage, showInvalidPanMessage] = useState(false);
+    const [invalidGSTMessage, showInvalidGSTMessage] = useState(false);
 
 
 
@@ -135,10 +136,24 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        const reGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;        
 
-        if (newGst.length == 10 && re.test(newGst)) {
+        if (key === 'gst') {
+            if (newGst.length == 15 && reGST.test(newGst)) {
+                showInvalidGSTMessage(false);
+                newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
+                return;
+            }
+            else {
+                setDisabled(true);
+                showInvalidGSTMessage(true);
+                return;
+            }
+        }
+
+        if (newGst.length == 10 && re.test(newGst) && key === 'panNo') {
             
-            newData?.designation || newData?.designation === '' ? setDisabled(false) : setDisabled(true)            
+            newData?.gst && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
             showInvalidPanMessage(false);
         }
         else {
@@ -153,7 +168,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
 
-        newData?.panNo && e.target.value !== '' ? setDisabled(false) : setDisabled(true)
+        newData?.gst && newData?.gst.length == 15 && newData?.panNo && newData?.panNo.length == 10 && e.target.value !== '' ? setDisabled(false) : setDisabled(true)
       }
 
       
@@ -233,8 +248,6 @@ console.log("jhghghghghg",e);
           
         setSubmitting(false)
         sendPostRequest(ObjectData);
-
-        console.log("OTP Post Details in handlesubmit ",OTPPostDetails)
        
         OTPPostDetails && OTPPostDetails?.status !== 400 && ObjectData && ObjectData?.firmType !== "" && ObjectData?.firmName !== "" ? setOtpModal(true) : null
         // OTPPostDetails?.message && setOtpModal(true)
@@ -365,7 +378,11 @@ console.log("jhghghghghg",e);
                                             <input type='text' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
                                         </div>
                                     </div>
-                                    <button type="submit" className="indigo-btn mt-3 rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get Started!</button>
+                                    <button
+                                        type="submit"
+                                        className="indigo-btn mt-3 rounded-[13px] p-4 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        disabled={otp === ''}
+                                    >Get Started!</button>
                                     <div className="text-field text-center">
                                     If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? seconds < 10 ? `00:0${seconds}` : `00:${seconds}` : 'Resend OTP'}</a>
                                     </div>
@@ -392,18 +409,22 @@ console.log("jhghghghghg",e);
                         <FormItem
                             label="GST Number"
                             className='text-start cin-number text-label-title'
+                            asterisk={true}
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
                                 name="gst"
                                 placeholder="GST No"
-                              
+                                onChange={(e: any) => handleChange(e,'gst')}
                                 component={Input}
                                 className=''
                                 max="15"
                                 maxLength={15}
                             />
+                            {invalidGSTMessage && (
+                                    <div className='text-[red]'>Invalid GST Number</div>
+                                )}
                         </FormItem>
 
                         <FormItem
