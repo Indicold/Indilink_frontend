@@ -9,6 +9,9 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { Field } from 'formik'
 import { useState } from 'react'
+
+/* The `interface MajorityHolderModalProps` defines the props that the `AirCoolingUnitDetailModal`
+component expects to receive. It specifies two props: */
 interface MajorityHolderModalProps {
     modal: boolean
     setModal: React.Dispatch<React.SetStateAction<boolean>>

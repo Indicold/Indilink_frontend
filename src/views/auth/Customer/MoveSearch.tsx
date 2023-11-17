@@ -25,6 +25,10 @@ const MoveSearch = () => {
     const origin_gps:any=localStorage.getItem('origin_gps') || "";
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+
+    /* The above code is declaring a constant variable named "location" and assigning it the value
+    returned by the "useLocation()" function. The type of the "location" variable is set to "any",
+    meaning it can hold any type of value. */
     const location: any = useLocation();
 
     // Define a state variable for the this component

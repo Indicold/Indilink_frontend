@@ -34,11 +34,16 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 }:any) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
     const isDisabled:any=commanData?.type=='View' ? true: false;
-    const {id}: any = useParams()
+    const {id}: any = useParams() // Extracting active URL endpoint to define payload for API call
     const [data, setData] = useState<any>({})
-    const [errors, setErrors] = useState<any>({})
+    const [errors, setErrors] = useState<any>({}) // State variable to store errors during form validations
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/ca-equipment/${commanData?.id}`)
 
+    /* The above code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id

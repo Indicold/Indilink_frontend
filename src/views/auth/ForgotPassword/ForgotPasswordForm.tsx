@@ -5,24 +5,33 @@
  */
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
-import Input from '@/components/ui/Input'
-import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input' // Custom input field to show in form
+import Button from '@/components/ui/Button' // Custom button to show in page
 import Alert from '@/components/ui/Alert'
 import ActionLink from '@/components/shared/ActionLink'
 import { apiForgotPassword } from '@/services/AuthService'
 import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
-import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
+import { Field, Form, Formik } from 'formik' // For rendering form and form fields
+import * as Yup from 'yup' // For defining Form validations
 import type { CommonProps } from '@/@types/common'
 import type { AxiosError } from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'; // For showing toast messages
 import 'react-toastify/dist/ReactToastify.css';
 
+/* The `interface ForgotPasswordFormProps` is defining the props that can be passed to the
+`ForgotPasswordForm` component. It extends the `CommonProps` interface, which likely contains common
+props used across multiple components. */
 interface ForgotPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
     signInUrl?: string
 }
 
+/**
+ * The `ForgotPasswordFormSchema` type represents the shape of data expected for a forgot password
+ * form, which includes an email field of type string.
+ * @property {string} email - The `email` property is a string that represents the user's email
+ * address.
+ */
 type ForgotPasswordFormSchema = {
     email: string
 }

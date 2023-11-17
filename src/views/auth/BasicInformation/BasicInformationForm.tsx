@@ -48,26 +48,35 @@ const validationSchema = Yup.object().shape({
 })
 
 const BasicInformationForm = (props: BasicInformationFormProps) => {
+    /* The above code is using the `useSelector` hook from the React Redux library to select a specific
+    piece of state from the Redux store. It is passing a callback function to `useSelector` that
+    takes the `state` as an argument and returns the `auth` property from the state object. The `?.`
+    operator is used to safely access the `auth` property in case it is undefined or null. */
     const selector = useSelector((state: any) => state?.auth)
-    const [isSubmitting, setSubmitting] = useState(false)
+    const [isSubmitting, setSubmitting] = useState(false) // State variable to check whether the form submission is in process or not
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(10);
-    const [formData, setFormData] = useState(selector?.details?.data);
+    const [formData, setFormData] = useState(selector?.details?.data); // State variable for formData management
     const [GSTRes, setGSTRes] = useState({});
     const [Address,setAddress]=useState<any>("")
     const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
    const [postalCode,setPostalCode]=useState<any>('')
+
+    /* The above code is using hooks in a TypeScript React component. It is using the `usePostApi` hook
+    to make a POST request to the `auth/getOTP` endpoint and storing the response in the
+    `OTPPostDetails` variable. It is also tracking the loading state of the request using the
+    `loading` variable. */
     let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`auth/getOTP`);
     let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`auth/getGstDetails`);
     const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`auth/verifyOTP`);
     const { className }:any = props
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // For handling navigation
 
     const autoFilldata:any = GSTResponse?.message;
-    const [otpModal, setOtpModal] = useState(false)
+    const [otpModal, setOtpModal] = useState(false) // Initially the OTP modal will be closed when the component mounts
     const [invalidPanMessage, showInvalidPanMessage] = useState(false);
 
 
@@ -129,7 +138,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
 
         if (newGst.length == 10 && re.test(newGst)) {
             
-            setDisabled(false);
+            newData?.designation || newData?.designation === '' ? setDisabled(false) : setDisabled(true)            
             showInvalidPanMessage(false);
         }
         else {
@@ -143,6 +152,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newGst = e.target.value;
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
+
+        newData?.panNo && e.target.value !== '' ? setDisabled(false) : setDisabled(true)
       }
 
       
@@ -170,7 +181,6 @@ console.log("jhghghghghg",e);
     .then((response) => response.json())
       .then((data) => {
         setPostalCode(data?.address?.postcode)
-        console.log("TTTTTTTTTT77777",data?.address?.postcode);
         
       })
      
@@ -182,10 +192,25 @@ console.log("jhghghghghg",e);
      * where it collects form data and sends a POST request with the data to a server.
      */
     const Add:any=Address?.split(',')
-    console.log("TTTTTTTTTT767667",Add);
+    
     const handlesubmit = () => {
       
-        
+        if (!postalCode || postalCode === "") {
+            toast.error("Please select GeoLocation again", {
+                position: 'top-right', // Position of the toast
+                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                style: {
+                    background: '#FFB017',fontSize:"bold",
+                    color: "#fff"// Set the background color here
+                },
+            });
+            return;
+        }
         let ObjectData:any={
             first_name:formData?.first_name,
             last_name:formData?.last_name,
@@ -208,8 +233,10 @@ console.log("jhghghghghg",e);
           
         setSubmitting(false)
         sendPostRequest(ObjectData);
+
+        console.log("OTP Post Details in handlesubmit ",OTPPostDetails)
        
-        OTPPostDetails && OTPPostDetails?.status !== 400 ? setOtpModal(true) : null
+        OTPPostDetails && OTPPostDetails?.status !== 400 && ObjectData && ObjectData?.firmType !== "" && ObjectData?.firmName !== "" ? setOtpModal(true) : null
         // OTPPostDetails?.message && setOtpModal(true)
         setSubmitting(false)
 
@@ -307,7 +334,6 @@ console.log("jhghghghghg",e);
         return () => clearInterval(timer);
 
     }, [seconds]);
-console.log("TTTTTTTTTTTT00",Address);
 
 
     return (
@@ -376,6 +402,7 @@ console.log("TTTTTTTTTTTT00",Address);
                                 component={Input}
                                 className=''
                                 max="15"
+                                maxLength={15}
                             />
                         </FormItem>
 
@@ -394,6 +421,7 @@ console.log("TTTTTTTTTTTT00",Address);
                                     component={Input}
                                     className=''
                                     max="10"
+                                    maxLength={10}
                                 />
                                 {invalidPanMessage && (
                                     <div className='text-[red]'>Invalid Pan Number</div>

@@ -13,11 +13,11 @@ import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom ho
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
+import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for API call
 import { formatDate, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next' // For language translation
 
   
 // Define the functional component for PrepareSearch

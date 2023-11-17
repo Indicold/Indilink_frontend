@@ -20,6 +20,7 @@ import { updateFormData } from '@/store/slices/Authentication/userDetails'
 
 import { debounce } from 'lodash'
 import {
+    onkeyDownOne,
     validateEmail,
     validateForm,
     validateMobile,
@@ -82,7 +83,19 @@ const SignUpForm = (props: SignUpFormProps) => {
         }
         newData[e.target.name] = e.target.value
         setFormData(newData)
-        if(error[e.target.name] || formData?.password !== formData?.confirm_password)validateForm(newData, setError)
+        if(error[e.target.name] || e.target.name === "password" || e.target.name === "confirm_password")validateForm(newData, setError)
+    }
+
+    const handleTermConditionChange = (e: any) => {
+        const newData: any = { ... formData }
+        if (e.target.checked) {
+            newData['term_condition'] = "on"
+        }
+        else {
+            newData['term_condition'] = "off"
+        }
+        validateForm(newData, setError)
+        setFormData(newData)
     }
 
     /**
@@ -192,6 +205,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     placeholder="Phone number"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
+                                    onKeyDown={onkeyDownOne}
                                 />
                                 <p className="text-[red] normal-case">
                                     {isMobileValid
@@ -229,6 +243,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="confirm_password"
+                                    maxLength={16}
                                     placeholder="Confirm Password"
                                     onChange={(e: any) => handleChange(e)}
                                     component={PasswordInput}
@@ -244,7 +259,8 @@ const SignUpForm = (props: SignUpFormProps) => {
                                 type="checkbox"
                                 className="me-1 w-5"
                                 name="term_condition"
-                                onClick={(e: any) => handleChange(e)}
+                                onClick={(e: any) => handleTermConditionChange(e)}
+                                checked={formData?.term_condition === "on" ? true: false}
                             />
                             <p className="m-1">
                                 <span>I agree to </span>

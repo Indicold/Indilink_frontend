@@ -31,7 +31,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
 }: any) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState<any>({})
-    const { id }: any = useParams();
+    const { id }: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled: any = commanData?.type == 'View' ? true : false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/compressors/${commanData?.id}`)
 

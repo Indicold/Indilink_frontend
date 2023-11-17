@@ -1,3 +1,5 @@
+/* The code is importing various dependencies and components that are used in the `InvoiceTableList`
+component. */
 import React, { useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
