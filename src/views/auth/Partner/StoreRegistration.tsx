@@ -498,8 +498,8 @@ const StoreRegistration = () => {
         else if (type === 'IOT') {
             console.log("bghjgjhgh",rowData);
             
-            // setIOTModal(true)
-            // setCommanData({ ...rowData, types: "Edit" })
+            setIOTModal(true)
+            setCommanData({ ...rowData, types: "Edit" })
         }
         else if (type === 'IT') {
             setITModal(true)
