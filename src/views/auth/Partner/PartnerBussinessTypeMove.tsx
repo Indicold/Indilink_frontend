@@ -6,6 +6,7 @@
  * and submission. The form data is sent to an API endpoint for further processing. The component also
  * includes routing functionality to navigate to different routes based on the form submission.
  */
+
 import React, { useEffect, useState } from 'react'
 import {
     Button,
@@ -199,6 +200,8 @@ const PartnerBussinessTypeMove = () => {
         const formattedDate = date.toISOString().split('T')[0];
         return formattedDate
     }
+    const { t, i18n }:any = useTranslation();
+
     
     return (
         <div className='lg:flex md:flex'>

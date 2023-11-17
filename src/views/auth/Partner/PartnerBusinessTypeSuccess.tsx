@@ -11,8 +11,9 @@ const PartnerBusinessTypeSuccess = () => {
     })
     const { t, i18n }:any = useTranslation();
     return (
-        <div className='flex'>
-            <div className='w-1/6'>
+        <div className='lg:flex md:flex'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6
+'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -41,11 +42,12 @@ const PartnerBusinessTypeSuccess = () => {
 
 
             </div>
-            <div className="bg-white w-5/6">
+            <div className="bg-white w-[100%] lg:w-5/6">
                 <h4 className="mb-2 text-head-title text-center p-4">
                      {t("Registration Successfull")}
                 </h4>
-                <div>
+                <img src='./img/images/indicoldside.png' className='w-[50%] m-auto' alt="" />
+                <div className='p-6'>
                     <p className='text-center'>{t(" Asset Registration is successfull. You will be redirected to asset list page within few seconds.")}</p>
                 </div>
             </div>

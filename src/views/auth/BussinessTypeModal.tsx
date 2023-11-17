@@ -218,7 +218,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 <p className='text-center'>{t("You may also change later")}</p>
 
                                 <div className={`justify-around grid ${localStorage.getItem('user_type') ===
-                                        'Customer' ? 'grid-cols-4' :'grid-cols-3'}  grid-flow-col gap-2`}>
+                                        'Customer' ? 'lg:grid-cols-4 mt-4 mb-4 grid grid-cols-1 w-[100%]' :'mt-4 mb-4 grid grid-cols-1 w-[100%] lg:grid-cols-3'} gap-6`}>
                        
                                     {data ? (
                                         
@@ -239,7 +239,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                                                 : ''
                                                         }`,
                                                     }}
-                                                    className="m-4 block rounded-lg hover:bg-gray-200 transition-all duration-1000 p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
+                                                    className=" w-[100%] block rounded-lg hover:bg-gray-200 transition-all duration-1000 p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
                                                 >
                                                     {/* <CiImageOn className="text-6xl mx-auto" /> */}
                                                       <img className='w-[100px] mx-auto' src="https://cdn-icons-png.flaticon.com/128/10071/10071359.png" alt="" />
@@ -286,10 +286,10 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         </div>}
                                 {localStorage.getItem('user_type') ===
                                     'Partner' && Bussiness !== 'Move' && Bussiness!=='general'  && (
-                                    <div className="flex">
+                                    <div className="lg:flex">
                                         <FormItem
                                             label={t("Select Country")}
-                                            className="mx-auto w-1/2"
+                                            className="mx-auto w-[100%] lg:w-1/2"
                                         >
                                             <select
                                                 name="country_id"
@@ -316,7 +316,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         </FormItem>
                                         <FormItem
                                             label={t("Category")}
-                                            className="mx-auto w-1/2"
+                                            className="mx-auto w-[100%] lg:w-1/2"
                                         >
                                             <select
                                                 name="category_id"
