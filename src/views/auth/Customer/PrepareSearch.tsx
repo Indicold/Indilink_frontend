@@ -202,7 +202,7 @@ const { t, i18n }:any = useTranslation();
                             <FormContainer>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Category")}
+                                        label={t("Product Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -220,7 +220,7 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Broad Category")}
+                                        label= {t("Broad Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -240,7 +240,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type")}
+                                        label= {t("Product Type*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -255,10 +255,10 @@ const { t, i18n }:any = useTranslation();
                                             ))}
 
                                         </select>
-
+                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Service Category")}
+                                        label={t("Service Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -336,7 +336,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Throughput")}
+                                        label={t("Throughput*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -365,7 +365,7 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
-                                        label=  {t("Avg. Case Size")}
+                                        label=  {t("Avg. Case Size*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -398,7 +398,7 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Estimated Docks")}
+                                        label={t("Estimated Docks*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -413,7 +413,7 @@ const { t, i18n }:any = useTranslation();
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label={t("Estimated Dispatches")}
+                                        label={t("Estimated Dispatches*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -433,16 +433,16 @@ const { t, i18n }:any = useTranslation();
                                 </div>
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Temperature")}
-                                        className="pl-3 w-[100%]  text-label-title m-auto"
+                                        label= {t("Temperature*")}
+                                        className="pl-3 !w-[100%]  text-label-title m-auto"
                                     >
                                         <div className='lg:flex gap-2 m-auto md:flex'>
-                                        <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
+                                        <div className='w-[100%] m-auto  '>
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_min"
-                                            className="p-2 border w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border  mt-4 lg:w-1/2 md:w-1/2 w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option value='0'>Minimum</option>
                                             {Array(3).fill(0).map((_, index) => (
@@ -457,7 +457,7 @@ const { t, i18n }:any = useTranslation();
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="temp_max"
-                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="p-2 border  mt-4 lg:w-1/2 md:w-1/2 w-[100%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Maximum</option>
                                             {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min || 0) + index * 5 + 5).map((item: any, index: any) => (

@@ -9,6 +9,7 @@ import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import InvoiceTableList from './InvoiceTableList';
+import LoaderSpinner from '@/components/LoaderSpinner';
 
 const Invoice = () => {
     /* The following code is written in TypeScript and React. It is destructuring the `token` property from
@@ -18,6 +19,7 @@ const Invoice = () => {
 
     // State variable for modal opening and closing. Initially, the modal will be closed when the component mounts
     const [modal, setModal] = useState<any>(false);
+    const [loader,setLoader]=useState<any>(false)
     const [formData, setFormData] = useState<any>({
         invoice_doc: "",
         invoice_amount: ""
@@ -76,10 +78,13 @@ const Invoice = () => {
             redirect: 'follow'
         };
         if (formData?.invoice_doc && formData?.invoice_amount) {
+            setLoader(true)
             fetch(`${apiUrl}/partner/invoice`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    setLoader(false)
                     if (result?.status === 200) {
+                      
                         setFormData({})
                         messageView("Invoice Uploaded Successfully !")
                         
@@ -89,11 +94,14 @@ const Invoice = () => {
                             invoice_amount: ""
                         })
                     } else {
+                        
                         messageView(result?.message)
                     }
                     fetchInvoiceData()
                 })
-                .catch(error => console.log('error', error));
+                .catch(error =>{
+                    setLoader(false)
+                    console.log('error', error)});
         }
         const errors:any={}
          if(!formData?.invoice_doc){
@@ -119,6 +127,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
     invoices. */
     return (
         <>
+        {loader && <LoaderSpinner />}
             <ToastContainer />
             {modal && <div
                 id="authentication-modal"

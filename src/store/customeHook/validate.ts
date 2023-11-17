@@ -811,9 +811,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This Field is required'
     }
-    // if (!formData?.certification_id) {
-    //     newErrors.certification_id = 'This Field is required'
-    // }
+    if (!formData?.quantity) {
+        newErrors.quantity = 'This Field is required'
+    }
     if (!formData?.unit_id) {
         newErrors.unit_id = 'This Field is required'
     }
@@ -911,6 +911,9 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     }
     if (!formData?.temp_max) {
         newErrors.temp_max = 'This Field is required'
+    }
+    if (!formData?.product_type_id) {
+        newErrors.product_type_id = 'This Field is required'
     }
 
     setErrors(newErrors)

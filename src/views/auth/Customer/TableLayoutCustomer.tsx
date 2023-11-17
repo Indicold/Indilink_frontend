@@ -23,7 +23,7 @@ const tableHead = {
 
 // The TableLayoutCustomer component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayoutCustomer = ({ AllStore, fetchDataA }: any) => {
+const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
   const { token }: any = getToken();
   let allData: any = AllStore || [];
   const countPerPage = 10;
@@ -124,11 +124,11 @@ const TableLayoutCustomer = ({ AllStore, fetchDataA }: any) => {
       .then((result: any) => {
 
         messageView(result?.message)
-        fetchDataA()
+        refetchAgain()
 
       })
       .catch(error => console.log('error', error));
-    fetchDataA();
+    refetchAgain();
   }
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the

@@ -15,15 +15,22 @@ import CustomerDetailModal from '@/components/layouts/Customer/CustomerDetailMod
  * true.
  */
 const StoreTicketList = () => {
-    const {token}:any =getToken(); // Extracting token for API call
-    const { data:Store, loading:StoreLoad, error } = useApiFetch<any>('customer/store/search', token);
+    /* The line `const {token}:any =getToken();` is extracting the `token` value from the `getToken()`
+    function and assigning it to the `token` variable. The `:any` type annotation is used to specify
+    that the `token` variable can have any type. */
+    const {token}:any =getToken();
+
+    /* The line `const { data:Store, loading:StoreLoad, error,refetch:fetchagain } =
+    useApiFetch<any>('customer/store/search', token);` is using the `useApiFetch` custom hook to
+    fetch data from an API endpoint. */
+    const { data:Store, loading:StoreLoad, error,refetch:fetchagain } = useApiFetch<any>('customer/store/search', token);
    
   return (
     <div>
         
       <>
         <h4 className='text-head-title text-center'>Store Ticket List</h4>
-        {Store?.data?.length>0 ? <TableLayoutCustomer AllStore={Store?.data?.length>0 && Store?.data}/>
+        {Store?.data?.length>0 ? <TableLayoutCustomer fetchagain={fetchagain} AllStore={Store?.data?.length>0 && Store?.data}/>
         :<p>No data found.</p>}
       </>
       <div>
