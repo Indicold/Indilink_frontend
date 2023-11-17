@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
    
 
 const InvestorDashbord = () => {
-    const { t, i18n }:any = useTranslation();
+  
     const navigate = useNavigate()
     /**
      * The handleChange function sets the user_type in localStorage based on the selected value and
@@ -39,6 +39,8 @@ const InvestorDashbord = () => {
         }
 
     }
+
+    const { t, i18n }:any = useTranslation();
     return (
         <>
           

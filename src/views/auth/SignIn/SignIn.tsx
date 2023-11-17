@@ -9,7 +9,7 @@ import SignInForm from './SignInForm'
 const SignIn = () => {
     return (
         
-             <div className=' w-[100%] p-2 md:m-auto '>
+             <div className=' w-[100%] p-2 md:m-auto'>
             <div className="md:m-auto">
               
                 

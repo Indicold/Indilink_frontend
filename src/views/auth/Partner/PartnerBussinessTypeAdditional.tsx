@@ -1,6 +1,7 @@
 /*
  * The above code is a TypeScript React component that handles additional submissions for a partner's business type.
  */
+import { useTranslation } from 'react-i18next'
 import {
     Button,
     Dropdown,
@@ -222,7 +223,7 @@ const PartnerBussinessTypeAdditional = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-
+    const { t, i18n }:any = useTranslation();
     // Render the component JSX
     return (
         <div className='flex'>
@@ -236,7 +237,7 @@ const PartnerBussinessTypeAdditional = () => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+        <h6 className="font-medium leading-tight">{t("Asset Specifications")} </h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
@@ -245,7 +246,7 @@ const PartnerBussinessTypeAdditional = () => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
+        <h6 className="font-medium leading-tight pt-2">{t("Compliance Details")}</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
 

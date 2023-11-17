@@ -6,6 +6,7 @@
  * and submission. The form data is sent to an API endpoint for further processing. The component also
  * includes routing functionality to navigate to different routes based on the form submission.
  */
+
 import React, { useEffect, useState } from 'react'
 import {
     Button,
@@ -21,6 +22,7 @@ import {
     messageView,
     validateMovePartnerForm,
 } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
+import { useTranslation } from 'react-i18next'
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import 'react-toastify/dist/ReactToastify.css' // Import CSS for toast notifications
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
@@ -198,12 +200,14 @@ const PartnerBussinessTypeMove = () => {
         const formattedDate = date.toISOString().split('T')[0];
         return formattedDate
     }
+    const { t, i18n }:any = useTranslation();
+
     
     return (
-        <div className='flex'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
             {makeCustom && <PartnerMoveMakeModal modal={makeCustom} setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -213,7 +217,7 @@ const PartnerBussinessTypeMove = () => {
                 <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+        <h6 className="font-medium leading-tight">{t("Asset Specifications")} </h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
@@ -222,7 +226,7 @@ const PartnerBussinessTypeMove = () => {
                 <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Compliance Details</h6>
+        <h6 className="font-medium leading-tight">{t("Compliance Details")}</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
 </ol>
@@ -231,7 +235,7 @@ const PartnerBussinessTypeMove = () => {
 
 
             </div>
-            <div className="bg-white w-5/6">
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
             <ArrowBackIcon onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">Move</h4>
                 <div>
@@ -243,10 +247,10 @@ const PartnerBussinessTypeMove = () => {
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Make*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -254,7 +258,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
-                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Make</option>
                                             {vehicalMake &&
@@ -278,7 +282,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            onChange={(e: any) =>
+                                            onChange={(e: any) =>r
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
@@ -293,7 +297,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Model*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -301,7 +305,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_model_id"
-                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Model</option>
                                             {vehicalModal &&
@@ -381,10 +385,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div> */}
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Get Chassis No from RC*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -404,7 +408,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Emission norms"
-                                        className="w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -423,10 +427,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="MFG Month/Year"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -446,7 +450,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Vehicle Class"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -465,10 +469,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Vehicle number"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -488,7 +492,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Actual Payload (in kg)"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -508,10 +512,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Crate Capacity (in Numbers)"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -532,7 +536,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Length"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -552,10 +556,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Width"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -576,7 +580,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Height"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -596,10 +600,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="GV Weight"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -621,7 +625,7 @@ const PartnerBussinessTypeMove = () => {
                                     <FormItem
                                         label="Unladen Weight in RC
 "
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -642,10 +646,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Get Engine No"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -665,7 +669,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Side Door"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -674,7 +678,7 @@ const PartnerBussinessTypeMove = () => {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -694,10 +698,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Hatch Window"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -706,7 +710,7 @@ const PartnerBussinessTypeMove = () => {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -727,7 +731,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Dual Temperature"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -736,7 +740,7 @@ const PartnerBussinessTypeMove = () => {
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -756,10 +760,10 @@ const PartnerBussinessTypeMove = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="RC (Upload clear picture)"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <input
                                             type="file"  
@@ -777,7 +781,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Get RC Number from RC"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -797,7 +801,7 @@ const PartnerBussinessTypeMove = () => {
                                     </FormItem>
                                 </div>
 
-                                <div className="flex">
+                                <div className="  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     
                                     {/* <FormItem
                                         label="Fitness Certificate Valid Till*"
@@ -829,7 +833,7 @@ const PartnerBussinessTypeMove = () => {
                                         type="button"
                                         disabled
                                         onClick={()=>navigate(-1)}
-                                        className="indigo-btn mt-2 !w-[200px] !bg-gray-300 mx-auto rounded-[30px]"
+                                        className="indigo-btn  !w-[200px] !bg-gray-300 mx-auto rounded-[30px]"
                                     >
                                         Prev
                                     </Button>
@@ -839,7 +843,7 @@ const PartnerBussinessTypeMove = () => {
                                         variant="solid"
                                         type="button"
                                         onClick={handlesave}
-                                        className="indigo-btn m-4 !w-[200px] mx-auto rounded-[30px]"
+                                        className="indigo-btn !w-[200px] mx-auto rounded-[30px]"
                                     >
                                         Next
                                     </Button>

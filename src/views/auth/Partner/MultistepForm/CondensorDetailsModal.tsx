@@ -146,8 +146,8 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="mx-auto w-1/2">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                        <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -164,7 +164,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -182,13 +182,13 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem label={<div className='flex justify-center items-center'>
                                            T.R.*
                                               <Tooltip title="Ton of Refrigeration" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
-                                            </div>} className="mx-auto w-1/2">
+                                            </div>} className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -212,7 +212,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                              <InfoIcon />
                                            </Tooltip>
                                          </div>}
-                                        className=" w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             id="countries"
@@ -221,7 +221,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="bg-gray-50 border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        
                                         >
                                             <option selected disabled>Select</option>
@@ -235,7 +235,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                 </div>
                                 <div className="flex !justify-items-start">
                                 </div>
-                                <div className='flex justify-center'>
+                                <div className='flex mt-2 justify-center'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

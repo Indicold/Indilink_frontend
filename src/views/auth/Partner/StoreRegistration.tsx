@@ -1,5 +1,6 @@
 import { Button, FormContainer, FormItem, Input, Tooltip } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import ChamberDetailModal from './MultistepForm/ChamberDetailModal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -35,7 +36,8 @@ import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Chip } from '@mui/material'
+import { Chip } from '@mui/material';
+import { t } from 'i18next'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -530,9 +532,11 @@ const StoreRegistration = () => {
             setData(fetchDetails?.data)
         }
     }, [fetchDetails?.data])
+
+    const { t, i18n }:any = useTranslation();
     return (
-        <div className='flex'>  
-            <div className='w-1/6'>
+        <div className='lg:flex md:flex'>  
+            <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -542,7 +546,7 @@ const StoreRegistration = () => {
                                 <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+                        <h6 className="font-medium leading-tight">  {t("Asset Specifications")}</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
                     <li className="mb-10 ml-6">
@@ -551,7 +555,7 @@ const StoreRegistration = () => {
                                 <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Compliance Details</h6>
+                        <h6 className="font-medium leading-tight">{t("Compliance Details")}</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
 
@@ -569,10 +573,10 @@ const StoreRegistration = () => {
                 WeighBridgeloading ||
                 RoadConditionloading ||
                 fetchDetailsloading) && <LoaderSpinner />}
-            <div className="bg-white p-4 rounded w-5/6">
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
                 <ToastContainer />
                 <ArrowBackIcon onClick={() => navigate(-1)} />
-                <h4 className="text-center text-head-title">Store</h4>
+                <h4 className="text-center text-head-title"> {t("Store")}</h4>
                 <Formik
                     initialValues={{ field: true }}
                     onSubmit={() =>
@@ -580,7 +584,7 @@ const StoreRegistration = () => {
                     }
                 >
                     {({ handleSubmit }) => (
-                        <Form className="py-2 ">
+                        <Form className="py-2  ">
 
                             {chamberModal && (
                                 <ChamberDetailModal
@@ -724,7 +728,7 @@ const StoreRegistration = () => {
                             )}
 
                             <FormContainer>
-                                <div className="flex items-center mb-4">
+                                <div className="flex  items-center mb-4">
                                     <input
                                         id="default-checkbox"
                                         type="checkbox"
@@ -738,17 +742,19 @@ const StoreRegistration = () => {
                                         htmlFor="default-checkbox"
                                         className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                     >
-                                        Are You Facility Manager
+                                        {t("Are You Facility Manager")}
+                                        
                                     </label>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Facility Manager*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Facility Manager*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
                                             type="text"
+                                            className="w-[100%]"
                                             autoComplete="off"
                                             name="facility_manager_name"
                                             onChange={(e: any) =>
@@ -764,8 +770,8 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Contact Number*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Contact Number*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -791,10 +797,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="City*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("City*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -826,8 +832,8 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Address*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Address*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -846,10 +852,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Total Tonnage(MT)*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Total Tonnage(MT)*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -879,8 +885,8 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Type of Store*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Type Of Store*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         {/* <select
                                             disabled={location?.state}
@@ -945,10 +951,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Type of Cold Storage*"
-                                        className="w-1/2 text-label-title"
+                                        label={t("Type of Cold Storage*")}
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1003,12 +1009,12 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem> */}
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Ante Room - Area (Square feet)*"
-                                        className="w-1/2 text-label-title"
+                                        label={t("Ante Room - Area (Square feet)*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.ante_room_area}
@@ -1034,8 +1040,8 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Total number of docks*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Total number of docks*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -1057,12 +1063,12 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Total office space(Square feet)*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Total office space(Square feet)*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={
@@ -1091,8 +1097,8 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Type of docks*"
-                                        className="w-1/2 text-label-title"
+                                        label=  {t("Type of docks*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1126,12 +1132,12 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Processing Area(Square feet)*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Processing Area(Square feet)*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.processing_area}
@@ -1157,10 +1163,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Parking Area(Square feet)*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Parking Area(Square feet)*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
@@ -1186,10 +1192,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Type of Refrigeration*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Type of Refrigeration*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1224,8 +1230,8 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Year of Installation*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Year of Installation*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
                                         <select
@@ -1274,10 +1280,10 @@ const StoreRegistration = () => {
                                 </div>
 
 
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Internet"
-                                        className="w-1/2 text-label-title"
+                                        label={t("Internet")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1306,8 +1312,8 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Wifi"
-                                        className="w-1/2 text-label-title"
+                                        label={t("Wifi")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1336,10 +1342,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="CCTV"
-                                        className="w-1/2 text-label-title"
+                                        label={t("CCTV")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1368,8 +1374,8 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                     <FormItem
-                                        label="Driver Area for Food and Resting"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Driver Area for Food and Resting")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1403,10 +1409,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Weighbridge*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Weighbridge*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <div>
                                             <select
@@ -1443,8 +1449,8 @@ const StoreRegistration = () => {
                                         </div>
                                     </FormItem>
                                     <FormItem
-                                        label="Road condition from main road*"
-                                        className="w-1/2 text-label-title"
+                                        label= {t("Road condition from main road*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1479,12 +1485,12 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 mb-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="3D Photo*"
-                                        className="w-1/2 text-label-title"
+                                        label=  {t("3D Photo*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 multiple
                                                 name="three_d_view_of_asset"
@@ -1517,10 +1523,10 @@ const StoreRegistration = () => {
                                         </div>
                                     </FormItem>
                                     <FormItem
-                                        label="Photo Of Assets*"
-                                        className="w-1/2 text-label-title"
+                                        label={t("Photo Of Assets*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex  w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
                                                 multiple
                                                 className="w-2/3 border-0 focus:outline-0"
@@ -1563,7 +1569,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Chambers
+                                                 {t("Chambers")}
                                                 <p className='text-[red]'>{errors?.chamber_ids}</p>
 
                                             </AccordionItemButton>
@@ -1625,7 +1631,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 ))}
 
-                                            </div> : <p className="text-center">Currently there are no chambers.</p>}
+                                            </div> : <p className="text-center">{t("Currently there are no chambers.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1638,7 +1644,7 @@ const StoreRegistration = () => {
                                                         }
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -1646,7 +1652,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                CA Equipments
+                                                {t("CA Equipments")}
                                                 <p className='text-[red]'>{errors?.ca_equipment_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -1694,7 +1700,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 ))}
 
-                                            </div> : <p className="text-center">Currently there are no CA Equipments.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no CA Equipments.")} </p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1705,7 +1711,7 @@ const StoreRegistration = () => {
                                                        
                                                     }
                                                 >
-                                                    Add details
+                                                      {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -1713,7 +1719,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Compressors
+                                                  {t("Compressors")}
                                                 <p className='text-[red]'>{errors?.compressor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -1773,7 +1779,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 ))}
 
-                                            </div> : <p className="text-center">Currently there are no Compressors.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no Compressors.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1784,7 +1790,8 @@ const StoreRegistration = () => {
                                                        
                                                     }
                                                 >
-                                                    Add details
+                                                    {t("Add details")}
+                                                    
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -1792,7 +1799,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                ACU
+                                                {t("ACU")}
                                                 <p className='text-[red]'>{errors?.acu_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -1852,7 +1859,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 ))}
 
-                                            </div> : <p className="text-center">Currently there are no ACUs.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no ACUs.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1863,7 +1870,7 @@ const StoreRegistration = () => {
                                                      
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -1871,7 +1878,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Condenser
+                                                {t("Condenser")}
                                                 <p className='text-[red]'>{errors?.condensor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -1925,7 +1932,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 ))}
 
-                                            </div> : <p className="text-center">Currently there are no Condenser.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no Condenser.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -1938,7 +1945,7 @@ const StoreRegistration = () => {
                                                         
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -1946,7 +1953,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Annual Maintenance Contract
+                                                 {t("Annual Maintenance Contract")}
                                                 <p className='text-[red]'>{errors?.amc_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -2002,7 +2009,7 @@ const StoreRegistration = () => {
                                                         </div>
                                                     </div>)
                                                 })}
-                                            </div> : <p className="text-center">Currently there are no AMCs.</p>}
+                                            </div> : <p className="text-center">{t("Currently there are no AMCs.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -2013,7 +2020,7 @@ const StoreRegistration = () => {
                                                     
                                                     }
                                                 >
-                                                    Add details
+                                                         {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2021,7 +2028,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                IOT Devices
+                                                 {t("IOT Devices")}
                                                 <p className='text-[red]'>{errors?.iot_devices_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -2072,7 +2079,7 @@ const StoreRegistration = () => {
                                                             </Button>
                                                         </div>
                                                 </div>))}
-                                            </div> : <p className="text-center">Currently there are no IOT Devices.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no IOT Devices.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -2083,7 +2090,7 @@ const StoreRegistration = () => {
                                                         
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2091,7 +2098,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                IT Devices
+                                                 {t("IT Devices")}
                                                 <p className='text-[red]'>{errors?.it_devices_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -2142,7 +2149,7 @@ const StoreRegistration = () => {
                                                             </Button>
                                                         </div>
                                                 </div>))}
-                                            </div> : <p className="text-center">Currently there are no IT Devices.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no IT Devices.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -2153,7 +2160,7 @@ const StoreRegistration = () => {
                                                      
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details ")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2161,7 +2168,7 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Generator
+                                                 {t("Generator")}
                                                 <p className='text-[red]'>{errors?.generator_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -2212,7 +2219,7 @@ const StoreRegistration = () => {
                                                             </Button>
                                                         </div>
                                                 </div>))}
-                                            </div> : <p className="text-center">Currently there are no generators.</p>}
+                                            </div> : <p className="text-center"> {t("Currently there are no generators.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -2223,7 +2230,7 @@ const StoreRegistration = () => {
                                                     
                                                     }
                                                 >
-                                                    Add details
+                                                    {t("Add details ")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2276,7 +2283,7 @@ const StoreRegistration = () => {
                                                             </Button>
                                                         </div>
                                                 </div>))}
-                                            </div> : <p className="text-center">Currently there are no MHEs.</p>}
+                                            </div> : <p className="text-center">{t("Currently there are no MHEs.")}</p>}
                                             <div className="flex">
                                                 <button
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
@@ -2287,7 +2294,7 @@ const StoreRegistration = () => {
                                                     
                                                     }
                                                 >
-                                                    Add details
+                                                  {t("Add details")}  
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2295,7 +2302,8 @@ const StoreRegistration = () => {
                                     <AccordionItem>
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
-                                                Solar Inverters
+                                            {t("Solar Inverters")}
+                                               
                                                 <p className='text-[red]'>{errors?.solar_invertor_ids}</p>
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -2340,7 +2348,7 @@ const StoreRegistration = () => {
                                                             </Button>
                                                         </div>
                                                     </div>))}</div>
-                                            </div> : <p className="text-center">Currently there are no solar inverters.</p>}
+                                            </div> : <p className="text-center">{t("Currently there are no solar inverters.")} </p>}
 
                                             <div className="flex">
                                                 <button
@@ -2351,7 +2359,7 @@ const StoreRegistration = () => {
                                                     }
                                                     }
                                                 >
-                                                    Add details
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2368,8 +2376,8 @@ const StoreRegistration = () => {
                                         onClick={() => navigate(-1)}
                                         className="indigo-btn mt-2 !w-[140px] !bg-gray-300 mx-auto rounded-[30px]"
                                     >
-                                        Prev
-                                    </Button>
+                                         {t("Prev")}
+                                     </Button>
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block
@@ -2378,7 +2386,8 @@ const StoreRegistration = () => {
                                         onClick={handleRoute}
                                         className="indigo-btn mt-2 !w-[140px] mx-auto rounded-[30px]"
                                     >
-                                        Next
+                                        {t("Next")}
+                                        
                                     </Button>
                                 </div>
                             </FormContainer>

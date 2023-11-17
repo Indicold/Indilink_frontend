@@ -161,8 +161,9 @@ useEffect(()=>{
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make *"   className="w-1/2">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make *"
+                                       className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                         disabled={isDisabled}
                                             type="text"
@@ -179,7 +180,8 @@ useEffect(()=>{
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model *"   className="w-1/2">
+                                    <FormItem label="Model *" 
+                                      className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                                 disabled={isDisabled}
                                             type="text"
@@ -197,7 +199,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         // label="C.F.M.*"
                                         label={
@@ -208,7 +210,7 @@ useEffect(()=>{
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="w-1/2"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <Field
                                                 disabled={isDisabled}
@@ -235,7 +237,7 @@ useEffect(()=>{
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto mt-2 rounded-[30px]"
                                     
                                 >
                                     Save
