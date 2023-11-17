@@ -28,7 +28,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     machineId,
     fetchMachineList
 }:any) => {
-    const {id}:any=useParams();
+    const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
     const [data, setData] = useState<any>({
         asset_id:id
     })

@@ -1,17 +1,40 @@
+/* The code is importing various modules and components from different libraries. */
 import { Button } from "@/components/ui";
 import { useRef, useCallback, useState, useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
+
+/**
+ * The `ESign` function is a React component that renders a signature canvas, allows the user to clear
+ * and save the signature, and displays the saved signature as an image.
+ * @returns The code is returning JSX code that represents the structure and content of the component's
+ * rendered output. It includes a `<div>` element with the class name "w-full" as the root element.
+ * Inside the `<div>`, there is a `<SignatureCanvas>` component with a `ref` attribute set to `padRef`
+ * and a `canvasProps` attribute with width and height properties.
+ */
 const ESign = () => {
+    /* The line `const padRef :any= useRef(null);` is creating a reference to the SignatureCanvas
+    component using the `useRef` hook from React. The `padRef` variable is initialized with `null`
+    as its initial value. This reference can be used to access the methods and properties of the
+    SignatureCanvas component, such as `clear()` and `toDataURL()`. */
     const padRef :any= useRef(null);
+
+    /* The code is using the `useState` hook from React to create two state variables: `canvas` and
+    `canvasVisibility`. */
     const [canvas, setCanvas] = useState<string | undefined>(undefined);
     const [canvasVisibility, setCanvasVisibility] = useState(false);
   
+    /* The `clearSignatureCanvas` function is a callback function created using the `useCallback` hook
+    from React. It is responsible for clearing the signature canvas and resetting the canvas state
+    variables. */
     const clearSignatureCanvas = useCallback(() => {
       padRef?.current?.clear();
       setCanvas(undefined);
       setCanvasVisibility(false);
     }, []);
   
+    /* The `handleGetCanvas` function is a callback function created using the `useCallback` hook from
+    React. It is responsible for getting the data URL of the signature canvas and updating the
+    canvas state variables. */
     const handleGetCanvas = useCallback(() => {
       const canvas = padRef?.current?.toDataURL();
   
@@ -19,6 +42,8 @@ const ESign = () => {
       setCanvasVisibility(true);
     }, []);
   
+  /* The `return` statement is returning JSX code that represents the structure and content of the
+  component's rendered output. */
   return (
     <div className="w-full">
     <SignatureCanvas

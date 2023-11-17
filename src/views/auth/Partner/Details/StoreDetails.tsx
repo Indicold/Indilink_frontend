@@ -1,10 +1,17 @@
+/* The code is importing three things: */
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { getToken } from '@/store/token';
 import { useLocation, useParams } from 'react-router-dom'
 
+/**
+ * The `StoreDetails` function is a React component that displays details of a store, including an
+ * image, contact information, and status.
+ * @returns The component `StoreDetails` is returning JSX elements that make up the UI of the
+ * component. It includes div containers, headings, images, and text elements.
+ */
 const StoreDetails = () => {
-    const {id}:any=useParams();
-    const {token}:any=getToken();
+    const {id}:any=useParams(); // Extracting endpoint of active URL to define payload for API call
+    const {token}:any=getToken(); // Extracting token info to define payload for API call
     // const {state}:any=useLocation();
     let state:any="Store"
     const {
@@ -12,7 +19,6 @@ const StoreDetails = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(state==='Store' ? `partner/store/${id}`: state==='Move' ? `partner/store/${id}` :`partner/store/${id}`, token)
-  console.log("TTTTTTTTTTTTTTTTT66666666",fetchDetails);
   
     return (
     <div>

@@ -32,13 +32,16 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
-    const { token }: any = getToken()
+    const { token }: any = getToken() // Extracting token to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const {
         data: RackingType,
         loading: RackingTypeLoading,
         error: RackingTypeError,
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
+
+    /* The below code is a TypeScript React component. It defines multiple state variables using the
+    useState hook. */
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [chamNum, setChamNum] = useState<any>('');
@@ -54,7 +57,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({
         staircase:true
     })
-    const {id}:any=useParams();
+    const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
     const [errors, setErrors] = useState<any>({})
     let chamber_sizee = ''
 
@@ -543,7 +546,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem
                                      label={
                                         <div className='flex justify-center items-center'>
-                                          Photo of entrance
+                                          Photo of entrance*
                                           <Tooltip title="Select multiple files" arrow>
                                             <InfoIcon />
                                           </Tooltip>
@@ -628,9 +631,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        {/* <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
-                                        </p>
+                                        </p> */}
                                     </FormItem>
 
                                     <FormItem

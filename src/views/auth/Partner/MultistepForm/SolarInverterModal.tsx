@@ -35,6 +35,9 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/solar-invertor/${commanData?.id}`)
 
+    /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
+    `useEffect` hook is used to set the initial state of the `data` variable when the component is
+    first rendered. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id

@@ -1,3 +1,5 @@
+/* The code is importing various components, hooks, and libraries from different files and packages.
+Here is a breakdown of what each import statement is doing: */
 import { Button, FormContainer, FormItem, Input } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { ToastContainer } from 'react-toastify'
@@ -10,6 +12,9 @@ import usePostApi from '@/store/customeHook/postApi';
 import { messageView } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 import ESign from './ESign';
+
+/* The code defines a functional component called `DocumentViewModal`. It takes three props as input:
+`modal`, `setModal`, and `data`. */
 const DocumentViewModal = ({modal,setModal,data}:any) => {
     
     const [text,setText]=useState<any>('')

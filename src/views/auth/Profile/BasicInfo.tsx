@@ -185,7 +185,6 @@ const BasicInfo = () => {
         }
 
     }, [BranchList?.data])
-    console.log("ytytyty",companyDetails);
     
     useEffect(() => {
         if (companyDetails?.data?.length>0) {

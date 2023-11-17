@@ -1,5 +1,5 @@
 /* 
-* The above code is a TypeScript React component that represents a login form with OTP (One-Time
+* The following code is a TypeScript React component that represents a login form with OTP (One-Time
 * Password) functionality. It imports various components from different files and libraries, such as
 * Input, Button, FormItem, FormContainer, ActionLink, Field, Form, Formik, ToastContainer, and toast. 
 */
@@ -16,7 +16,11 @@ import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl } from '@/store/customeHook/token'
+import { onkeyDownOne } from '@/store/customeHook/validate'
 
+/* The below code is defining an interface called `LoginWithOTPFormProps` in TypeScript for a React
+component. This interface extends another interface called `CommonProps` and adds three optional
+properties: `disableSubmit`, `forgotPasswordUrl`, and `signUpUrl`. */
 interface LoginWithOTPFormProps extends CommonProps {
     disableSubmit?: boolean
     forgotPasswordUrl?: string
@@ -151,6 +155,22 @@ const validate=()=>{
         if (verifyResponse?.status) {
             if (verifyResponse.message.accessToken) localStorage.setItem('access_token', verifyResponse.message.accessToken);
 
+            if (verifyResponse?.message) {
+                toast.success(verifyResponse?.message, {
+                    position: 'top-right', // Position of the toast
+                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        background: '#FFB017', fontSize: "bold",
+                        color: "#fff"// Set the background color here
+                    },
+                });
+            }
+
             navigate('/home')
         }
 
@@ -190,7 +210,7 @@ const validate=()=>{
 
                         >
                             <Field
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="rounded-[13px]"
                                 name="phone_number"
@@ -198,6 +218,8 @@ const validate=()=>{
                                 value={formdata?.phone_number}
                                 onChange={handleChange}
                                 component={Input}
+                                onKeyDown={onkeyDownOne}
+                                maxLength={10}
                             />
                            <p className="text-[red]">{errors?.phone_number}
                             </p>
@@ -216,6 +238,7 @@ const validate=()=>{
                                     placeholder="Enter Your OTP"
                                     onChange={handleChange}
                                     component={Input}
+                                    type="number"
                                 // component={PasswordInput}
                                 />
                                   <p className="text-[red]">{errors?.OTP}
@@ -248,6 +271,7 @@ const validate=()=>{
                                 variant="solid"
                                 type="submit"
                                 className='bg-[#3f8cfe] indigo-btn w-[40%] mx-auto rounded-[30px] mt-2'
+                                disabled={!formdata?.otp}
                             >
                                 {isSubmitting ? 'Signing in...' : 'Verify OTP'}
                             </Button>}

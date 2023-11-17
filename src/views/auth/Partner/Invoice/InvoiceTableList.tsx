@@ -1,6 +1,7 @@
+/* The code is importing various dependencies and components for the InvoiceTableList component. */
 import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
+import Pagination from "rc-pagination"; // Importing pagination component to show table records in multiple pages
 import "rc-pagination/assets/index.css";
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
