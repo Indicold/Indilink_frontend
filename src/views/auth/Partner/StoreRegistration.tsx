@@ -1,5 +1,6 @@
 import { Button, FormContainer, FormItem, Input, Tooltip } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import ChamberDetailModal from './MultistepForm/ChamberDetailModal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -35,8 +36,8 @@ import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Chip } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import { Chip } from '@mui/material';
+import { t } from 'i18next'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -586,6 +587,8 @@ const StoreRegistration = () => {
             setData(fetchDetails?.data)
         }
     }, [fetchDetails?.data])
+
+    const { t, i18n }:any = useTranslation();
     return (
         <div className='lg:flex md:flex'>  
             <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
@@ -598,7 +601,7 @@ const StoreRegistration = () => {
                                 <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+                        <h6 className="font-medium leading-tight">  {t("Asset Specifications")}</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
                     <li className="mb-10 ml-6">
@@ -607,7 +610,7 @@ const StoreRegistration = () => {
                                 <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Compliance Details</h6>
+                        <h6 className="font-medium leading-tight">{t("Compliance Details")}</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
 
