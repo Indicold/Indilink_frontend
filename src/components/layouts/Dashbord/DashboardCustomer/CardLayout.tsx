@@ -228,11 +228,11 @@ const CardLayout = ({title}:any) => {
   
     </div>
 
-  <div className='flex justify-around'>
-  <section className="grid gap-6 my-6 w-[60%]">
-        <div className="p-6 bg-white shadow rounded-2xl" >
+  <div className='lg:flex justify-around'>
+  <section className="grid gap-6 my-6 w-[100%] lg:w-[60%]">
+        <div className=" bg-white shadow rounded-2xl" >
   <h3 className='ml-4 mt-4'>Payables</h3>
-    <div className='flex justify-around items-center'>
+    <div className='flex mt-6 p-2 justify-around items-center'>
       <div>
         <h5>69%</h5>
         <p>from pre. month</p>
@@ -257,7 +257,7 @@ const CardLayout = ({title}:any) => {
 
 
 </section>
-<section className="grid gap-6 my-6 w-[35%]  bg-white shadow rounded-2xl">
+<section className="grid gap-6 my-6 w-[100%] lg:w-[35%]  bg-white shadow rounded-2xl">
 <h3 className='ml-4 mt-4 mb-0'>Audit List</h3>
 
         <div className="p-6 pt-0  flex flex-col">

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const PartnerBusinessTypeSuccess = () => {
     const navigate = useNavigate();
@@ -8,9 +9,11 @@ const PartnerBusinessTypeSuccess = () => {
             navigate('/admin-assets')
         }, 7000)
     })
+    const { t, i18n }:any = useTranslation();
     return (
-        <div className='flex'>
-            <div className='w-1/6'>
+        <div className='lg:flex md:flex'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6
+'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -20,7 +23,7 @@ const PartnerBusinessTypeSuccess = () => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+        <h6 className="font-medium leading-tight">{t("Asset Specifications")} </h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
@@ -29,7 +32,7 @@ const PartnerBusinessTypeSuccess = () => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight pt-2">Compliance Details</h6>
+        <h6 className="font-medium leading-tight pt-2">{t("Compliance Details")}</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
 
@@ -39,12 +42,13 @@ const PartnerBusinessTypeSuccess = () => {
 
 
             </div>
-            <div className="bg-white w-5/6">
+            <div className="bg-white w-[100%] lg:w-5/6">
                 <h4 className="mb-2 text-head-title text-center p-4">
-                    Registration Successfull
+                     {t("Registration Successfull")}
                 </h4>
-                <div>
-                    <p className='text-center'>Asset Registration is successfull. You will be redirected to asset list page within few seconds.</p>
+                <img src='./img/images/indicoldside.png' className='w-[50%] m-auto' alt="" />
+                <div className='p-6'>
+                    <p className='text-center'>{t(" Asset Registration is successfull. You will be redirected to asset list page within few seconds.")}</p>
                 </div>
             </div>
         </div>

@@ -173,7 +173,7 @@ const handleDocs=(rowData:any)=>{
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='text-center flex gap-2' key={i} >
           {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
@@ -277,12 +277,16 @@ React.useEffect(() => {
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className=''>
+
+      <div className='overflow-auto'>
+      <table className='w-[100%]'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
+      
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}

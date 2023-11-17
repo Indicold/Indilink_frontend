@@ -6,7 +6,7 @@ import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-import { HiOutlineLogout, HiOutlineUser,AiFillBell } from 'react-icons/hi'
+import { HiOutlineLogout, HiOutlineUser, AiFillBell } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
 import Badge from '@mui/material/Badge';
 import Stack from '@mui/material/Stack';
@@ -38,15 +38,12 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _NotificationDropdown = ({ className }: CommonProps) => {
-    const {token}:any=getToken(); // Extracting token for API call
-
-    /* The line `const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-        useApiFetch<any>(`master/notifications`, token);` is using the `useApiFetch` custom hook to
-    fetch data from the `master/notifications` endpoint. */
+    const { token }: any = getToken();
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
     useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
+    console.log("HHHHHHHH",ListOfNotification);
     
 const navigate:any=useNavigate();
 
@@ -55,82 +52,45 @@ const navigate:any=useNavigate();
     which is used to stack multiple components horizontally or vertically. */
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
-        <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
-          <NotificationsIcon className='!text-[30px]'  color="action" />
-        </Badge>
-    
-      </Stack>
-    )
-/**
- * The handleViewAll function navigates to the '/notification' page.
- */
-const handleViewAll=()=>{
-    navigate('/notification')
-}
+            <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
+                <NotificationsIcon className='!text-[30px]' color="action" />
+            </Badge>
 
-/**
- * The function calculates the time difference between the current date and a target date, returning
- * the number of days, hours, and minutes.
- * @param targetDate - The targetDate parameter is a string representing a specific date and time in a
- * valid format, such as "2022-12-31T23:59:59".
- * @returns an object with properties for the number of days, hours, and minutes remaining until the
- * target date.
- */
-function calculateTimeDifference(targetDate) {
-  const currentDate = new Date();
-  const target = new Date(targetDate);
-  
-  // Calculate the time difference in milliseconds
-  const timeDifference = target - currentDate;
-  
-  if (timeDifference < 0) {
-    return "Target date has passed";
-  }
-  
-  const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-  const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-  return {
-    days,
-    hours,
-    minutes,
-  };
-}
+        </Stack>
+    )
+    const handleViewAll = () => {
+        navigate('/notification')
+    }
+    function calculateTimeDifference(targetDate) {
+        const currentDate = new Date();
+        const target = new Date(targetDate);
+
+        // Calculate the time difference in milliseconds
+        const timeDifference = target - currentDate;
+
+        if (timeDifference < 0) {
+            return "Target date has passed";
+        }
+
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        return {
+            days,
+            hours,
+            minutes,
+        };
+    }
 
 // Example usage:
 const targetDate = "2023-09-15T05:11:27.000Z";
 const timeDifference = calculateTimeDifference(targetDate);
-const handlePutApi=(id:any)=>{
-    console.log("hjjjjjjj",id);
-    
-    var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Authorization", `Bearer ${token}`);
 
-var raw = JSON.stringify({
-  read_status: 1
-});
-
-var requestOptions:any = {
-  method: 'PUT',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch(`${apiUrl}/master/notifications/${id}`, requestOptions)
-  .then(response => response.json())
-  .then(result =>{
-    if(result.status===200){
-        messageView("Status updated Successfully !")
-        navigate('/notification')
-    }else{
-        messageView(result?.message)
-    }
-  })
-  .catch(error => console.log('error', error));
-}
+console.log("Time Difference:");
+console.log(`${timeDifference.days} days`);
+console.log(`${timeDifference.hours} hours`);
+console.log(`${timeDifference.minutes} minutes`);
 
     return (
         <div>
@@ -144,30 +104,28 @@ fetch(`${apiUrl}/master/notifications/${id}`, requestOptions)
                         Notification
                     </Dropdown.Item>
                     <Dropdown.Item variant="divider" />
-                    {ListOfNotification?.data?.length>0 ? ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
-     <Dropdown.Item variant="header" >
-     <div className="flex items-center border-y-1"  role="button" onClick={()=>handlePutApi(item?.id)}>
+                    {ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
+     <Dropdown.Item variant="header">
+     <div className="flex items-center">
      <div className="mt-2 px-6  bg-white rounded-lg w-full">
 <div className=" inline-flex items-center justify-between w-full">
-<div className="inline-flex items-center ">
+<div className="inline-flex items-center">
 <img
-src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/2048px-OOjs_UI_icon_alert-yellow.svg.png"
+src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
 alt="Training Icon"
 className="w-6 h-6 mr-3"
 />
-<p className="mt-1 text-sm">{item?.content}</p>
+<h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
 </div>
 <p className="text-xs text-gray-500">{item?.created_at}</p>
 </div>
-{/* <p className="mt-1 text-sm">
+<p className="mt-1 text-sm">
 Hey! Do you remember about choosing your training regime?
-</p> */}
+</p>
 </div>
      </div>
  </Dropdown.Item>
-                    )) :
-                    <h6 className='text-center'> There are no notification</h6>
-                    }
+                    ))}
            
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
@@ -176,8 +134,8 @@ Hey! Do you remember about choosing your training regime?
                         eventKey={item.label}
                         className="mb-1 px-0"
                     >
-                        <Link 
-                            className="flex h-full w-full px-2" 
+                        <Link
+                            className="flex h-full w-full px-2"
                             to={item.path}
                         >
                             <span className="flex gap-2 items-center w-full">
@@ -195,7 +153,7 @@ Hey! Do you remember about choosing your training regime?
                     className="gap-2 text-end"
                     onClick={handleViewAll}
                 >
-                   
+
                     <span className='text-end'>View All</span>
                 </Dropdown.Item>}
             </Dropdown>
