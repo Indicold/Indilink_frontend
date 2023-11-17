@@ -12,7 +12,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom ho
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
+import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
 import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';

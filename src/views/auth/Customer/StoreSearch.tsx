@@ -14,8 +14,8 @@ import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Impo
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
 import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
-import usePutApi from '@/store/customeHook/putApi';
-import { ToastContainer } from 'react-toastify';
+import usePutApi from '@/store/customeHook/putApi'; // Custom hook for PUT API requests
+import { ToastContainer } from 'react-toastify'; // Importing container to show toast messages
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 import { useTranslation } from 'react-i18next'
 

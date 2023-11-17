@@ -6,6 +6,7 @@ import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
 const CardLayout = ({ title }: any) => {
+  /* The `options` object is used to configure the appearance and behavior of a bar chart. */
   const options: any = {
     series: [{
       data: [21, 22, 10, 28, 16, 21, 13, 30]
@@ -48,6 +49,8 @@ const CardLayout = ({ title }: any) => {
     }
   };
 
+  /* The `series` constant is an array that contains an object. This object represents a series of data
+  for a chart. */
   const series: any = [
     {
       name: 'Actual',
@@ -133,6 +136,8 @@ const CardLayout = ({ title }: any) => {
     }
   ]
 
+  /* The above code is a TypeScript React component that renders a dashboard with various sections and
+  charts. */
   return (
     <>
       <div className='bg-white p-4 rounded-lg mx-0'>
