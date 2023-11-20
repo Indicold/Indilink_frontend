@@ -83,7 +83,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -112,6 +111,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
+      // navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -131,13 +131,11 @@ const handleLogs=(rowData:any)=>{
   setLogsModal(true)
 }
   const handleSubmit=(rowData:any)=>{
-    console.log("ttttttt",rowData);
     
     setRowData(rowData)
     setAlert(true)
   }
   const handleConfirm=()=>{
-    console.log("tttttttt8888",);
     
     PostSubmitDetails({status:"Final"})
   }
@@ -165,7 +163,7 @@ const handleDocs=(rowData:any)=>{
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='text-center flex gap-2' key={i} >
           {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
@@ -176,7 +174,7 @@ const handleDocs=(rowData:any)=>{
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -193,7 +191,6 @@ const handleDocs=(rowData:any)=>{
 
   // JSX structure for rendering the table and pagination.
 useEffect(()=>{
-console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)
@@ -261,18 +258,22 @@ React.useEffect(() => {
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className=''>
+
+      <div className='overflow-auto'>
+      <table className='w-[100%]'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
+      
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}

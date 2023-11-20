@@ -4,7 +4,7 @@
  * @returns The InvestorDashboard component is returning a div element containing a h2 element with the
  * text "Investor Dashboard".
  */
-import CardLayout from '@/components/layouts/Dashbord/CardLayout';
+import CardLayout from '@/components/layouts/Dashbord/DashboardInvestor/CardLayout';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next'
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next'
    
 
 const InvestorDashbord = () => {
-    const { t, i18n }:any = useTranslation();
+  
     const navigate = useNavigate()
     /**
      * The handleChange function sets the user_type in localStorage based on the selected value and
@@ -39,6 +39,8 @@ const InvestorDashbord = () => {
         }
 
     }
+
+    const { t, i18n }:any = useTranslation();
     return (
         <>
           

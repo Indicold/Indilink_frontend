@@ -6,6 +6,7 @@
  * and submission. The form data is sent to an API endpoint for further processing. The component also
  * includes routing functionality to navigate to different routes based on the form submission.
  */
+
 import React, { useEffect, useState } from 'react'
 import {
     Button,
@@ -21,6 +22,7 @@ import {
     messageView,
     validateMovePartnerForm,
 } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
+import { useTranslation } from 'react-i18next'
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import 'react-toastify/dist/ReactToastify.css' // Import CSS for toast notifications
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
@@ -33,14 +35,12 @@ const PartnerBussinessTypeMove = () => {
     const { token }: any = getToken()
     // Get the AssetsId from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
-console.log("VVVVVVV",id);
 
     // Get the current route location and check if it's disabled
     const location = useLocation()
     const pramas:any=location
 
     const isDisabled = location?.state
-    console.log('location', location?.state)
 
     // Fetch data for vehicle model and make using custom hooks
     const {
@@ -87,9 +87,7 @@ console.log("VVVVVVV",id);
     const handleChange = (e: any) => {
         const newData: any = { ...data }
         if(e.target.name === 'vehicle_make_id') {
-            console.log("makeCustom", makeCustom)
             if(e.target.value === 'other') {
-                console.log("makeCustomm", makeCustom)
                 setMakeCustom(true)
                 setModelCustom(true)
             }
@@ -98,9 +96,7 @@ console.log("VVVVVVV",id);
             }
         }
         if(e.target.name === 'vehicle_model_id') {
-            console.log("makeCustom", makeCustom)
             if(e.target.value === 'other') {
-                console.log("makeCustomm", makeCustom)
                 setModelCustom(true)
             }
             else {
@@ -109,7 +105,7 @@ console.log("VVVVVVV",id);
         }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log("newData", newData)
+        
         if(errors[e.target.name])validateMovePartnerForm(newData, setErrors)
     }
 
@@ -118,7 +114,6 @@ console.log("VVVVVVV",id);
 
     // Define a function to handle form submission
     const handlesave = async () => {
-        console.log('IDDDDDDDDD', ID)
 
         // Check form validation and if the form is not disabled
         if (validateMovePartnerForm(data, setErrors) && !isDisabled) {
@@ -197,12 +192,7 @@ console.log("VVVVVVV",id);
         }
     }, [fetchDetails])
 
-    console.log('INDI01AAAA5INDI01AAAA5', fetchDetails)
 
-    // Log vehicalMake?.data for debugging purposes
-    {
-        console.log('vehicalMake?.data', vehicalMake?.data)
-    }
     const TimeString = (time: any) => {
         const dateTimeString = "2023-09-15T00:00:00.000Z";
         
@@ -210,13 +200,14 @@ console.log("VVVVVVV",id);
         const formattedDate = date.toISOString().split('T')[0];
         return formattedDate
     }
-    console.log("66666666666666",TimeString());
+    const { t, i18n }:any = useTranslation();
+
     
     return (
-        <div className='flex'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
             {makeCustom && <PartnerMoveMakeModal modal={makeCustom} setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -226,7 +217,7 @@ console.log("VVVVVVV",id);
                 <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+        <h6 className="font-medium leading-tight">{t("Asset Specifications")} </h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
@@ -235,7 +226,7 @@ console.log("VVVVVVV",id);
                 <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z"/>
             </svg>
         </span>
-        <h6 className="font-medium leading-tight">Compliance Details</h6>
+        <h6 className="font-medium leading-tight">{t("Compliance Details")}</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
 </ol>
@@ -244,7 +235,7 @@ console.log("VVVVVVV",id);
 
 
             </div>
-            <div className="bg-white w-5/6">
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
             <ArrowBackIcon onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">Move</h4>
                 <div>
@@ -256,10 +247,10 @@ console.log("VVVVVVV",id);
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Make*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -267,7 +258,7 @@ console.log("VVVVVVV",id);
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
-                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Make</option>
                                             {vehicalMake &&
@@ -291,7 +282,7 @@ console.log("VVVVVVV",id);
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            onChange={(e: any) =>
+                                            onChange={(e: any) =>r
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
@@ -306,7 +297,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Model*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -314,7 +305,7 @@ console.log("VVVVVVV",id);
                                                 handleChange(e)
                                             }
                                             name="vehicle_model_id"
-                                            className="border flex h-11 w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Model</option>
                                             {vehicalModal &&
@@ -394,10 +385,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div> */}
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Get Chassis No from RC*"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -417,7 +408,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Emission norms"
-                                        className="w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -436,10 +427,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="MFG Month/Year"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -459,7 +450,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Vehicle Class"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -478,10 +469,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Vehicle number"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -501,7 +492,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Actual Payload (in kg)"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -521,10 +512,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Crate Capacity (in Numbers)"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -545,7 +536,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Length"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -565,10 +556,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Width"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -589,7 +580,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Height"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -609,10 +600,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="GV Weight"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -634,7 +625,7 @@ console.log("VVVVVVV",id);
                                     <FormItem
                                         label="Unladen Weight in RC
 "
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -655,10 +646,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Get Engine No"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -678,7 +669,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Side Door"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -687,7 +678,7 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -707,10 +698,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Hatch Window"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -719,7 +710,7 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -740,7 +731,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Dual Temperature"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -749,7 +740,7 @@ console.log("VVVVVVV",id);
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option
                                                 value="true"
@@ -769,10 +760,10 @@ console.log("VVVVVVV",id);
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="RC (Upload clear picture)"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <input
                                             type="file"  
@@ -790,7 +781,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                     <FormItem
                                         label="Get RC Number from RC"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -810,7 +801,7 @@ console.log("VVVVVVV",id);
                                     </FormItem>
                                 </div>
 
-                                <div className="flex">
+                                <div className="  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     
                                     {/* <FormItem
                                         label="Fitness Certificate Valid Till*"
@@ -842,7 +833,7 @@ console.log("VVVVVVV",id);
                                         type="button"
                                         disabled
                                         onClick={()=>navigate(-1)}
-                                        className="indigo-btn mt-2 !w-[200px] !bg-gray-300 mx-auto rounded-[30px]"
+                                        className="indigo-btn  !w-[200px] !bg-gray-300 mx-auto rounded-[30px]"
                                     >
                                         Prev
                                     </Button>
@@ -852,7 +843,7 @@ console.log("VVVVVVV",id);
                                         variant="solid"
                                         type="button"
                                         onClick={handlesave}
-                                        className="indigo-btn m-4 !w-[200px] mx-auto rounded-[30px]"
+                                        className="indigo-btn !w-[200px] mx-auto rounded-[30px]"
                                     >
                                         Next
                                     </Button>

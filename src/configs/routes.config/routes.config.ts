@@ -322,4 +322,11 @@ export const protectedRoutes = [
         component: lazy(() => import('@/views/auth/Partner/AssetsDocumentsTable/index')),
         authority: [],
     },
+    {
+
+        key: 'assetsdetails',
+        path: `/assets-details/:id`,
+        component: lazy(() => import('@/views/auth/Partner/Details/StoreDetails')),
+        authority: [],
+    },
 ]

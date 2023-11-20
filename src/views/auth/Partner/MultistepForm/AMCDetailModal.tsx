@@ -38,7 +38,6 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state with the new value of the input field.
@@ -163,10 +162,10 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Name of service*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="text"
@@ -186,7 +185,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Vendor*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             type="text"
@@ -205,10 +204,10 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Valid till*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="date"
@@ -228,7 +227,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Fixed cost(Rs)*"
-                                        className=" w-1/2"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             type="number"
@@ -247,7 +246,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex ">
+                                <div className="m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex ">
                                 </div>
                                 <div className='flex'>
                                 <Button

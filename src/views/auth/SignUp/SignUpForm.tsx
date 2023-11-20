@@ -73,7 +73,7 @@ const SignUpForm = (props: SignUpFormProps) => {
      */
     const handleChange = (e: any) => {
         const newData: any = { ...formData }
-        console.log("IsEmailValid", isEmailValid)
+        
         if (e.target.name === 'email') {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         } else if (e.target.name === 'phone_number') {
@@ -92,7 +92,6 @@ const SignUpForm = (props: SignUpFormProps) => {
      */
     const handlesubmit = (e: any) => {
         e.preventDefault()
-        console.log(error)
         // validateForm(formData, setError)
         if (validateForm(formData, setError)) {
             setSubmitting(true)

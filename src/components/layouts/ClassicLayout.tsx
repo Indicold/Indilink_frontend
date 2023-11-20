@@ -52,7 +52,7 @@ const HeaderActionsEnd = () => {
             >
                 <option value='en' selected>English</option>
                 <option value='hi' >Hindi</option>
-                <option  value='GB' >German</option>
+                <option  value='nep' >Nepali</option>
             </select>
             {/* <h4>{t("first name")}</h4> */}
             <select

@@ -17,7 +17,6 @@ const userPostOtpSlice = createSlice({
         state.error = null;
       })
       .addCase(userRegisterPostApi.fulfilled, (state:any, action) => {
-        console.log("HHHHHHH122",action.payload);
         
         state.loading = false;
         state.responseData = action.payload;
@@ -36,7 +35,6 @@ const userPostOtpSlice = createSlice({
         });
       })
       .addCase(userRegisterPostApi.rejected, (state:any, action) => {
-        console.log("HHHHHHH1",action);
         state.loading = false;
         state.error = action.error.message;
       });

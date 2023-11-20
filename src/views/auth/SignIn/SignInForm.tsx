@@ -68,7 +68,6 @@ const SignInForm = (props: SignInFormProps) => {
     const LoginResponse = useSelector(
         (state: any) => state?.auth?.apiLoginPostReducer
     )
-    console.log('LOGIN', LoginResponse?.responseData?.message)
 
     const {
         disableSubmit = false,
@@ -86,16 +85,6 @@ const SignInForm = (props: SignInFormProps) => {
     const navigate: any = useNavigate()
     const handlesubmit = (e: any) => {
         e.preventDefault()
-        console.log(
-            'HGFFGDFGD',
-            validateForm(
-                {
-                    email: formData?.email,
-                    passwordlGN: formData?.password,
-                },
-                setError
-            )
-        )
 
         if (validateFormLogin(formData)) {
             
@@ -128,7 +117,6 @@ const SignInForm = (props: SignInFormProps) => {
                   
 
                     }else{
-                    console.log("res", data)
 
                         messageView(data?.message)
 
@@ -137,7 +125,6 @@ const SignInForm = (props: SignInFormProps) => {
                 })
                 .catch((err) => {
                     setSubmitting(false)
-                    console.log("err", err)
                 })
 
         }

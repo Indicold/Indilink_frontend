@@ -1,7 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { payloadSearchCustomer } from '@/views/auth/Customer/StoreSearch';
 const ThankYouModal = ({message,setModal,setFormData}:any) => {
-  console.log("FFFFF",message);
   
   return (
     <div>

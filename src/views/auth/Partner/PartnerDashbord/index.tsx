@@ -4,7 +4,7 @@
  * @returns The component is returning a `<div>` element containing a `<h2>` element with the text
  * "Partner Dashboard".
  */
-import CardLayout from '@/components/layouts/Dashbord/CardLayout'
+import CardLayout from '@/components/layouts/Dashbord/DashboardPartner/CardLayout'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'

@@ -14,7 +14,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
     const [error, setErrors] = useState<any>({})
     let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/branch`);
     const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`auth/branch/${formData?.id}`);
-    const [phone, setPhone] = useState('')
+    const [phone, setPhone] = useState(formData?.branch_phone || '')
 
     const isDisabled: any = false;
     const handleChange = (e: any) => {
@@ -28,7 +28,6 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             newdata[e.target.name] = e.target.value;
         }
         setformData(newdata)
-        console.log("changed", newdata)
     }
     const handlesubmit = () => {
         if (validateBranchForm(formData, setErrors)) {

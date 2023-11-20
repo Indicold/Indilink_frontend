@@ -38,7 +38,6 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` saves data to local storage and closes a modal.
@@ -48,7 +47,6 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({
             localStorage.setItem('Register_List', JSON.stringify(data))
         }
         setModal(false)
-        console.log('gggggg')
     }
 
     return (

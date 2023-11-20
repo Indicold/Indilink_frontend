@@ -39,18 +39,17 @@ const CustomerTableTicketList = () => {
     }: any = useApiFetch<any>('customer/general/search', token)
 
 
-    console.log(AllStoreGeneral)
     const { t, i18n }:any = useTranslation();
 
     return (
         <>
             {AllStore?.data?.length > 0 ? (
                 <>
-                    <h4 className="text-head-title text-center"> {t("Ticket List")}</h4>
+                    <h4 className="text-head-title mb-4 text-center"> {t("Ticket List")}</h4>
                     <TableLayoutCustomer fetchDataA={fetchDataA}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
-                     <h4 className="text-head-title text-center"> {t("General Ticket List")}</h4>
+                     <h4 className="text-head-title mt-6 text-center"> {t("General Ticket List")}</h4>
                   {AllStoreGeneral?.data?.length > 0 &&    <CustomerGeneralTableList fetchDataG={fetchDataG}
                         AllStore={AllStoreGeneral?.data}
                     />}

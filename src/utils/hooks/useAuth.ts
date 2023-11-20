@@ -78,7 +78,6 @@ function useAuth() {
             const resp = await apiSignUp(values)
             if (resp.data) {
                 const { token } = resp.data
-                console.log("5656565",resp.data);
                 
                 dispatch(signInSuccess(token))
                 if (resp.data.user) {
@@ -123,7 +122,7 @@ function useAuth() {
             })
         )
         localStorage.removeItem('user_type');
-        localStorage.clear()
+        // localStorage.clear()
         navigate(appConfig.unAuthenticatedEntryPath)
     }
 

@@ -4,7 +4,7 @@ import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
 import { Link, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-import { HiOutlineLogout, HiOutlineUser,AiFillBell } from 'react-icons/hi'
+import { HiOutlineLogout, HiOutlineUser, AiFillBell } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
 import Badge from '@mui/material/Badge';
 import Stack from '@mui/material/Stack';
@@ -12,7 +12,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Divider } from '@mui/material'
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { getToken } from '@/store/token'
+import { apiUrl, getToken } from '@/store/token'
+import { messageView } from '@/store/customeHook/validate'
+import { ToastContainer } from 'react-toastify'
 
 type DropdownList = {
     label: string
@@ -23,9 +25,9 @@ type DropdownList = {
 const dropdownItemList: DropdownList[] = []
 
 const _NotificationDropdown = ({ className }: CommonProps) => {
-    const {token}:any=getToken();
+    const { token }: any = getToken();
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    useApiFetch<any>(`master/notifications`, token);
 
     const { signOut } = useAuth()
     console.log("HHHHHHHH",ListOfNotification);
@@ -33,36 +35,36 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
 const navigate:any=useNavigate();
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
-        <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
-          <NotificationsIcon className='!text-[30px]'  color="action" />
-        </Badge>
-    
-      </Stack>
+            <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
+                <NotificationsIcon className='!text-[30px]' color="action" />
+            </Badge>
+
+        </Stack>
     )
-const handleViewAll=()=>{
-    navigate('/notification')
-}
-function calculateTimeDifference(targetDate) {
-  const currentDate = new Date();
-  const target = new Date(targetDate);
-  
-  // Calculate the time difference in milliseconds
-  const timeDifference = target - currentDate;
-  
-  if (timeDifference < 0) {
-    return "Target date has passed";
-  }
-  
-  const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
-  const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
-  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  
-  return {
-    days,
-    hours,
-    minutes,
-  };
-}
+    const handleViewAll = () => {
+        navigate('/notification')
+    }
+    function calculateTimeDifference(targetDate) {
+        const currentDate = new Date();
+        const target = new Date(targetDate);
+
+        // Calculate the time difference in milliseconds
+        const timeDifference = target - currentDate;
+
+        if (timeDifference < 0) {
+            return "Target date has passed";
+        }
+
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        return {
+            days,
+            hours,
+            minutes,
+        };
+    }
 
 // Example usage:
 const targetDate = "2023-09-15T05:11:27.000Z";
@@ -75,6 +77,7 @@ console.log(`${timeDifference.minutes} minutes`);
 
     return (
         <div>
+            <ToastContainer />
             <Dropdown
                 menuStyle={{ minWidth: 340 }}
                 renderTitle={UserAvatar}
@@ -114,8 +117,8 @@ Hey! Do you remember about choosing your training regime?
                         eventKey={item.label}
                         className="mb-1 px-0"
                     >
-                        <Link 
-                            className="flex h-full w-full px-2" 
+                        <Link
+                            className="flex h-full w-full px-2"
                             to={item.path}
                         >
                             <span className="flex gap-2 items-center w-full">
@@ -128,14 +131,14 @@ Hey! Do you remember about choosing your training regime?
                     </Dropdown.Item>
                 ))}
                 {/* <Dropdown.Item variant="divider" /> */}
-                <Dropdown.Item
+              {ListOfNotification?.data?.length>0 &&  <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2 text-end"
                     onClick={handleViewAll}
                 >
-                   
+
                     <span className='text-end'>View All</span>
-                </Dropdown.Item>
+                </Dropdown.Item>}
             </Dropdown>
         </div>
     )

@@ -19,7 +19,7 @@ import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
 import { useTranslation } from 'react-i18next'
 
-  
+
 // Define the functional component for PrepareSearch
 const PrepareSearch = () => {
 
@@ -41,7 +41,7 @@ const PrepareSearch = () => {
     // Fetch a list of countries using a custom hook
     const { data: ListOfBroadCategory, loading: BCloading, error: BCerror } =
         useApiFetch<any>(`master/customer/store/get-broad-category`, token);
-    
+
     const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
         useApiFetch<any>(`customer/get-responses/3/${location?.state?.data?.id}`, token);
 
@@ -88,7 +88,6 @@ const PrepareSearch = () => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
-        console.log("FFFFFFFFFF", newData);
 
     }
 
@@ -148,12 +147,10 @@ const PrepareSearch = () => {
                 setTimeout(() => {
                     navigate('/ticket_list_prepare')
                 }, 2000)
-                console.log("GGGGGG88888777", result)
             })
             .catch(error => console.log('error', error));
     }
     const navigate: any = useNavigate();
-    console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -178,8 +175,7 @@ const PrepareSearch = () => {
         }
     }, [CustomerResponse?.status]);
 
-console.log("formatDate",formData?.arrival_date);
-const { t, i18n }:any = useTranslation();
+    const { t, i18n }: any = useTranslation();
 
     return (
         <div>
@@ -204,16 +200,16 @@ const { t, i18n }:any = useTranslation();
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Product Category")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="product_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfProductCategory && ListOfProductCategory?.data?.map((item: any, index: any) => (
@@ -224,8 +220,8 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Broad Category")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        label={t("Broad Category")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -242,10 +238,10 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        label={t("Product Type")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -263,13 +259,13 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label={t("Service Category")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="service_category_id"
-                                            className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfServiceCategory && ListOfServiceCategory?.data?.filter((item: any) => [12, 13, 14, 15, 16, 17].includes(item?.id)).map((item: any, index: any) => (
@@ -280,16 +276,16 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.service_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="country_id"
-                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border w-[100%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -299,10 +295,10 @@ const { t, i18n }:any = useTranslation();
                                         </select>
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
-                                    <div className="flex mx-auto w-1/2 rounded-lg pl-[22px]">
+                                    <div className=" md:flex lg:flex pl-3 w-[100%] text-label-title m-auto">
                                         <FormItem
                                             label={t("State*")}
-                                            className="mx-auto w-1/2 rounded-lg"
+                                            className=" w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
@@ -319,8 +315,8 @@ const { t, i18n }:any = useTranslation();
                                             <p className='text-[red]'>{errors && errors.state_id}</p>
                                         </FormItem>
                                         <FormItem
-                                            label= {t("City*")} 
-                                            className="mx-auto w-1/2 rounded-lg"
+                                            label={t("City*")}
+                                            className="w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
@@ -338,10 +334,10 @@ const { t, i18n }:any = useTranslation();
                                         </FormItem>
                                     </div>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Throughput")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -369,8 +365,8 @@ const { t, i18n }:any = useTranslation();
                                         <p className='text-[red]'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
-                                        label=  {t("Avg. Case Size")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        label={t("Avg. Case Size")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -400,10 +396,10 @@ const { t, i18n }:any = useTranslation();
 
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Estimated Docks")}
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -418,7 +414,7 @@ const { t, i18n }:any = useTranslation();
                                     </FormItem>
                                     <FormItem
                                         label={t("Estimated Dispatches")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -432,47 +428,64 @@ const { t, i18n }:any = useTranslation();
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex ">
+                                <div className="lg:flex md:flex ">
 
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Temperature")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        label={t("Temperature")}
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="temp_min"
-                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                        >
-                                            <option value='0'>Minimum</option>
-                                            {Array(3).fill(0).map((_, index) => (
-                                                <option key={index} value={index * 5} selected={index * 5 === formData?.temp_min}>
-                                                    {index * 5}
-                                                </option>
-                                            ))}
+                                        <div className='lg:flex gap-6 m-auto md:flex'>
+                                            <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
+                                                <select
+                                                    disabled={isDisabled}
+                                                    onChange={(e: any) => handleChange(e)}
+                                                    name="temp_min"
+                                                    className="p-2 border w-[100%] mb-3 lg:mt-3 input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                >
+                                                    <option value='0'>Minimum</option>
+                                                    {Array(3).fill(0).map((_, index) => (
+                                                        <option key={index} value={index * 5} selected={index * 5 === formData?.temp_min}>
+                                                            {index * 5}
+                                                        </option>
+                                                    ))}
 
 
-                                        </select>
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="temp_max"
-                                            className="p-2 border w-[50%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                        >
-                                            <option>Maximum</option>
-                                            {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min || 0) + index * 5 + 5).map((item: any, index: any) => (
-                                                <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
-                                            ))}
+                                                </select>
+                                                
+                                            </div>
 
-                                        </select>
+                                            <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
+                                            <select
+                                                    disabled={isDisabled}
+                                                    onChange={(e: any) => handleChange(e)}
+                                                    name="temp_max"
+                                                    className="p-2 border w-[100%] input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                >
+                                                    <option>Maximum</option>
+                                                    {Array(3).fill(0).map((_, index) => parseInt(formData?.temp_min || 0) + index * 5 + 5).map((item: any, index: any) => (
+                                                        <option value={parseInt(item) + 5} selected={parseInt(item) + 5 === formData?.temp_max}>{parseInt(item)}</option>
+                                                    ))}
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
                                         <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max : errors.temp_min}</p>
 
                                     </FormItem>
+                                 
+                                </div>
+
+                                <div className="bg-gray-100 p-2 mt-4 rounded-md">
+                                  
                                     <FormItem
-                                        label= {t("Date of Start")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        label={t("Date of Start")}
+                                        className="pl-3 w-[100%]  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -486,143 +499,143 @@ const { t, i18n }:any = useTranslation();
                                         />
                                     </FormItem>
                                 </div>
-                             {location?.state?.extraForm &&   <>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
-                                    <FormItem
-                                        label= {t("Status Id")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="status_id"
-                                            className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                {location?.state?.extraForm && <>
+                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                        <FormItem
+                                            label={t("Status Id")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <option>Select</option>
-                                            {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
 
-                                            ))}
-                                        </select>
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label={t("Comment")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
+                                            <select
+                                                disabled={isDisabled}
+                                                onChange={(e: any) => handleChange(e)}
+                                                name="status_id"
+                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            >
+                                                <option>Select</option>
+                                                {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
+                                                    <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
 
-                                            name="comment"
-                                            value={formData?.comment}
-                                            placeholder="comment"
-                                            component={Input}
-                                        />
+                                                ))}
+                                            </select>
+                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                        </FormItem>
+                                        <FormItem
+                                            label={t("Comment")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <Field
+                                                disabled={isDisabled}
+                                                type="text"
+                                                onChange={(e: any) => handleChange(e)}
+                                                autoComplete="off"
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
-                                    <FormItem
-                                        label= {t("Contract Name")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="contract_name"
-                                            value={formData?.contract_name}
-                                            placeholder="Contract name"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label= {t("Contract Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
+                                                name="comment"
+                                                value={formData?.comment}
+                                                placeholder="comment"
+                                                component={Input}
+                                            />
 
-                                            name="contract_type"
-                                            value={formData?.contract_type}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
+                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        </FormItem>
+                                    </div>
+                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                        <FormItem
+                                            label={t("Contract Name")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <Field
+                                                disabled={isDisabled}
+                                                type="text"
+                                                onChange={(e: any) => handleChange(e)}
+                                                autoComplete="off"
+                                                name="contract_name"
+                                                value={formData?.contract_name}
+                                                placeholder="Contract name"
+                                                component={Input}
+                                            />
+                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                        </FormItem>
+                                        <FormItem
+                                            label={t("Contract Type")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <Field
+                                                disabled={isDisabled}
+                                                type="text"
+                                                onChange={(e: any) => handleChange(e)}
+                                                autoComplete="off"
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
-                                    <FormItem
-                                        label={t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="arrival_date"
-                                            value={formData?.arrival_date}
-                                            placeholder="Arrival Date"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
+                                                name="contract_type"
+                                                value={formData?.contract_type}
+                                                placeholder="Contract Type"
+                                                component={Input}
+                                            />
 
-                                            name="dispatch_date"
-                                            value={formData?.dispatch_date}
-                                            placeholder="Contract Type"
-                                            component={Input}
-                                        />
+                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        </FormItem>
+                                    </div>
+                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                        <FormItem
+                                            label={t("Arrival Date")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <Field
+                                                disabled={isDisabled}
+                                                type="date"
+                                                onChange={(e: any) => handleChange(e)}
+                                                autoComplete="off"
+                                                name="arrival_date"
+                                                value={formData?.arrival_date}
+                                                placeholder="Arrival Date"
+                                                component={Input}
+                                            />
+                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                        </FormItem>
+                                        <FormItem
+                                            label={t("Dispatch Date")}
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <Field
+                                                disabled={isDisabled}
+                                                type="date"
+                                                onChange={(e: any) => handleChange(e)}
+                                                autoComplete="off"
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
-                                    <FormItem
-                                        label= {t("Contract Upload")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
-                                    >
-                                        <input
-                                            disabled={isDisabled}
-                                            type="file"
-                                            name="contract_download"
-                                            id="file-input"
-                                            className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                name="dispatch_date"
+                                                value={formData?.dispatch_date}
+                                                placeholder="Contract Type"
+                                                component={Input}
+                                            />
+
+                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        </FormItem>
+                                    </div>
+                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                        <FormItem
+                                            label={t("Contract Upload")}
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        >
+                                            <input
+                                                disabled={isDisabled}
+                                                type="file"
+                                                name="contract_download"
+                                                id="file-input"
+                                                className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                         file:bg-transparent file:border-0
                                         file:bg-gray-100 file:mr-4
                                         file:py-3 file:px-4
                                         dark:file:bg-gray-700 dark:file:text-gray-400"
-                                            onChange={(e: any) => handleChange(e)}
-                                        />
+                                                onChange={(e: any) => handleChange(e)}
+                                            />
 
-                                        <p className='text-[red]'>{errors && errors.date}</p>
-                                    </FormItem>
+                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                        </FormItem>
 
-                                </div>
+                                    </div>
                                 </>}
 
-                                <div className="flex mt-4 justify-center w-[310px] mx-auto">
+                                <div className="lg:flex md:flex mt-4 justify-center w-[310px] mx-auto">
                                     {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}
@@ -630,7 +643,7 @@ const { t, i18n }:any = useTranslation();
                                         variant="solid"
                                         type="button"
                                         onClick={handleRouteUpdate}
-                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
+                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled ? '!hidden' : ''}`}
                                     >
                                         {t("Update")}
                                     </Button> :
@@ -643,7 +656,7 @@ const { t, i18n }:any = useTranslation();
                                             onClick={handleRoute}
                                             className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
-                                              {t("Request for Search")}
+                                            {t("Request for Search")}
                                         </Button>
                                     }
                                 </div>
@@ -651,8 +664,8 @@ const { t, i18n }:any = useTranslation();
                         </Form>
                     </Formik>
                 </div>
-                {isDisabled? 
-                ApprovedAssets?.data?.length>0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} />:<></>}
+                {isDisabled ?
+                    ApprovedAssets?.data?.length > 0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} /> : <></>}
             </div>
         </div>
     )
