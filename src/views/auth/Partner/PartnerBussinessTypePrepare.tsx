@@ -636,7 +636,7 @@ const PartnerBussinessTypePrepare = () => {
                                     </div>
                                     <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
-                                            label="No of Docks"
+                                            label="No of Docks*"
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
