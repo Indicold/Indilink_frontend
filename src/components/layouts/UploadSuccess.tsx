@@ -1,5 +1,10 @@
 import React from 'react'
 
+/**
+ * The UploadSuccess component renders a checkmark and star icons in a div.
+ * @returns The UploadSuccess component is returning a div element with multiple SVG elements inside.
+ * The SVG elements are used to display a checkmark and star icons.
+ */
 const UploadSuccess = () => {
   return (
     <div className="checkmark">

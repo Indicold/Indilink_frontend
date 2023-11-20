@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react'; // Importing React to define React component and to use hooks
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Importing pagination component for showing table records in multiple pages
+import "rc-pagination/assets/index.css"; // Importing pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
-import { useNavigate } from 'react-router-dom';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import { useNavigate } from 'react-router-dom'; // For handling navigation
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon to show in Table action column for viewing attached documents to a record
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DocumentViewModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentViewModal';
 import DocumentEditModal from '@/views/auth/Partner/AssetsDocumentsTable/DocumentEdit';
@@ -32,6 +32,8 @@ const DocumentTableList = ({ AllStore }: any) => {
     Id: index + 1
   }));
   const countPerPage = 10;
+  
+  /* The code snippet is using React hooks to define and initialize state variables. */
   const [value, setValue] = React.useState("");
   const [modal,setModal]=useState<any>(false)
   const [modalEdit,setModalEdit]=useState<any>(false)

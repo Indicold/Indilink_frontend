@@ -1,3 +1,4 @@
+/* The code is importing various components and functions from different files and libraries. */
 import { Button } from '@/components/ui'
 import React from 'react'
 import AssetsLogsTable from './AssetsLogsTable'
@@ -7,13 +8,18 @@ import DataNotFound from '../DataNotFound'
 import LoaderSpinner from '@/components/LoaderSpinner'
 
 const AssetsLogsModal = ({setModal,RowData}:any) => {
-    const {token}:any=getToken();
+    const {token}:any=getToken(); // Extracting token for API call
+
+    /* The code is using the `useApiFetch` custom hook to make an API call to fetch data related to
+    asset logs. */
     const {
         data: AllStore,
         loading: StoreRLoad,
         error: allerr,
         refetch:fetchApi
     }: any = useApiFetch<any>(`partner/asset-logs/${RowData?.asset_id}`, token)
+    
+  /* The `return` statement is returning JSX code that will be rendered as HTML by React. */
   return (
     <>
    

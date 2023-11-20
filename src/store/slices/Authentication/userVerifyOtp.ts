@@ -1,7 +1,11 @@
+/* These lines of code are importing certain modules and functions from external libraries and files. */
 import { userverifyOTPPostApi } from '@/store/userThunk';
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
+/* The code is creating a slice using the `createSlice` function from the `@reduxjs/toolkit` library. A
+slice is a portion of the Redux store that contains the state and reducers for a specific feature or
+domain of your application. */
 const userPostverifyOtpSlice = createSlice({
   name: 'dataname',
   initialState: {
@@ -55,4 +59,7 @@ const userPostverifyOtpSlice = createSlice({
   },
 });
 
+/* The line `export const {actions:apiActions,reducer: apiPostverifyOtpReducer}=userPostverifyOtpSlice`
+is exporting two variables `apiActions` and `apiPostverifyOtpReducer` from the
+`userPostverifyOtpSlice` slice. */
 export const {actions:apiActions,reducer: apiPostverifyOtpReducer}=userPostverifyOtpSlice

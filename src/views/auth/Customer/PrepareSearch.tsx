@@ -13,11 +13,11 @@ import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom ho
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
+import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for API call
 import { formatDate, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next' // For language translation
 
 
 // Define the functional component for PrepareSearch
@@ -202,7 +202,7 @@ const PrepareSearch = () => {
                             <FormContainer>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Category")}
+                                        label={t("Product Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -220,7 +220,7 @@ const PrepareSearch = () => {
                                         <p className='text-[red]'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Broad Category")}
+                                        label={t("Broad Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -240,7 +240,7 @@ const PrepareSearch = () => {
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Type")}
+                                        label={t("Product Type*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -255,10 +255,10 @@ const PrepareSearch = () => {
                                             ))}
 
                                         </select>
-
+                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Service Category")}
+                                        label={t("Service Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -336,7 +336,7 @@ const PrepareSearch = () => {
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Throughput")}
+                                        label={t("Throughput*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -365,7 +365,7 @@ const PrepareSearch = () => {
                                         <p className='text-[red]'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Avg. Case Size")}
+                                        label={t("Avg. Case Size*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -398,7 +398,7 @@ const PrepareSearch = () => {
                                 </div>
                                 <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Estimated Docks")}
+                                        label={t("Estimated Docks*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -413,7 +413,7 @@ const PrepareSearch = () => {
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label={t("Estimated Dispatches")}
+                                        label={t("Estimated Dispatches*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -433,7 +433,7 @@ const PrepareSearch = () => {
                                 </div>
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Temperature")}
+                                        label={t("Temperature*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <div className='lg:flex gap-6 m-auto md:flex'>

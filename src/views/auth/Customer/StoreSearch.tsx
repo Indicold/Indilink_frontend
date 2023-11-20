@@ -14,8 +14,8 @@ import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Impo
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
 import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
-import usePutApi from '@/store/customeHook/putApi';
-import { ToastContainer } from 'react-toastify';
+import usePutApi from '@/store/customeHook/putApi'; // Import a custom hook for making PUT requests
+import { ToastContainer } from 'react-toastify'; // Import container for showing toast messages
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 import { useTranslation } from 'react-i18next'
 
@@ -310,7 +310,7 @@ const StoreSearch = () => {
                                 </div>
                                 <div className="md:flex lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label={t("Unit")}
+                                        label={t("Unit*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
@@ -337,7 +337,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.unit_id}</p>
+                                        <p className='text-[red]'>{errors && errors.quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Certification")}

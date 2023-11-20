@@ -7,15 +7,24 @@
  * user can enter values in these fields and click the "Save" button to save the data. The modal is
  * displayed conditionally based on the value of the "modal
  */
-import { Button, FormItem, Input, Tooltip } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui' // Importing custom UI components
 import { getToken } from '@/store/customeHook/token'
-import useApiFetch from '@/store/customeHook/useApiFetch'
+import useApiFetch from '@/store/customeHook/useApiFetch' // Custom hook for API call
 import { handleStoreTable, messageView, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import InfoIcon from '@mui/icons-material/Info';
-import usePutApi from '@/store/customeHook/putApi'
+import InfoIcon from '@mui/icons-material/Info'; // Info icon for designing tooltip
+import usePutApi from '@/store/customeHook/putApi' // Custom hook for API call
+
+/* The above code is defining an interface called MajorityHolderModalProps. This interface has several
+properties:
+- modal: a boolean value indicating whether a modal is open or not
+- formD: any type, representing the form data
+- update: a React dispatch function to update the state of a boolean value
+- chamber: any type, representing the chamber data
+- setModal: a React dispatch function to update the state of a boolean value
+- FetchAgain: any type, representing a function to fetch data again. */
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -33,7 +42,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     commanData
 }:any) => {
    
-    const {id}: any = useParams();
+    const {id}: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const [data, setData] = useState<any>({
         asset_id:id
@@ -41,12 +50,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     const [errors, setErrors] = useState<any>({});
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/acu/${commanData?.id}`)
 
+    /* The above code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
     }, [])
-    const {token}:any=getToken()
+    const {token}:any=getToken() // Extracting token for API call
     const {
         data: DfTypeList,
         loading: DfLoading,
@@ -94,6 +108,8 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
       
     }
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    value of the `commanData` variable changes. */
     useEffect(()=>{
         if(commanData?.type=='Edit' || commanData?.type=='View'){
             setData(commanData)

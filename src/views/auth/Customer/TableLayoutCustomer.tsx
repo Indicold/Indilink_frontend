@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Import pagination component to show table records in multiple pages
+import "rc-pagination/assets/index.css"; // Import pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
-import { ToastContainer } from 'react-toastify';
-import { messageView } from '@/store/customeHook/validate';
+import { ToastContainer } from 'react-toastify'; // Import container to show toast messages in container
+import { messageView } from '@/store/customeHook/validate'; // Import custom function to show toast messages
 
 // Defines the table header with column names.
 const tableHead = {
@@ -23,7 +23,7 @@ const tableHead = {
 
 // The TableLayoutCustomer component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayoutCustomer = ({ AllStore, fetchDataA }: any) => {
+const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
   const { token }: any = getToken();
   let allData: any = AllStore || [];
   const countPerPage = 10;
@@ -124,11 +124,11 @@ const TableLayoutCustomer = ({ AllStore, fetchDataA }: any) => {
       .then((result: any) => {
 
         messageView(result?.message)
-        fetchDataA()
+        refetchAgain()
 
       })
       .catch(error => console.log('error', error));
-    fetchDataA();
+    refetchAgain();
   }
   /**
    * The function `handleView` navigates to different routes based on the `asset_type_id` of the

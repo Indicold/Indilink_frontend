@@ -12,7 +12,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom ho
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
+import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
 import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
@@ -25,6 +25,10 @@ const MoveSearch = () => {
     const origin_gps:any=localStorage.getItem('origin_gps') || "";
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+
+    /* The above code is declaring a constant variable named "location" and assigning it the value
+    returned by the "useLocation()" function. The type of the "location" variable is set to "any",
+    meaning it can hold any type of value. */
     const location: any = useLocation();
 
     // Define a state variable for the this component
@@ -122,7 +126,6 @@ const MoveSearch = () => {
         formdata.append("status_id", formData?.status_id);
         formdata.append("comment", formData?.comment);
         formdata.append("contract_download", formData?.contract_download);
-console.log("FFFFFFF",formData);
 
         var requestOptions: any = {
             method: 'PUT',
@@ -194,7 +197,6 @@ useEffect(()=>{
 localStorage.removeItem('dest_gps');
 localStorage.removeItem('origin_gps');
 },[])
-console.log("TYTYTYTYT",formData);
 
     return (
         <div>

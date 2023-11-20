@@ -1,3 +1,4 @@
+/* These lines of code are importing various icons and components from external libraries. */
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart from "react-apexcharts";
 import GeoChart from './GeoBubbleMap';
@@ -5,6 +6,9 @@ import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
 const CardLayout = ({title}:any) => {
+    /* The `options` object is used to configure the appearance and behavior of a bar chart. It
+    contains various properties that define the chart's settings, such as the series data, chart
+    type, height, plot options, data labels, legend, and x-axis categories. */
     const options :any= {
       series: [{
         data: [21, 22, 10, 28, 16, 21, 13, 30]
@@ -47,6 +51,13 @@ const CardLayout = ({title}:any) => {
       }
       };
 
+     /* The `series` variable is an array that contains an object. This object represents the data for
+     a chart series. It has a `name` property set to 'Actual' and a `data` property that is an array
+     of objects. Each object in the `data` array represents a data point on the chart. It has
+     properties such as `x` (representing the x-axis value), `y` (representing the y-axis value),
+     and `goals` (representing an array of goal objects). Each goal object has properties such as
+     `name`, `value`, `strokeHeight`, `strokeWidth`, `strokeLineCap`, and `strokeColor`. These
+     properties define the appearance and behavior of the goal line on the chart. */
      const series:any= [
         {
           name: 'Actual',
@@ -117,6 +128,10 @@ const CardLayout = ({title}:any) => {
           ]
         }
       ]
+      /* The `dataList` constant is an array of objects. Each object represents a category or section
+      of data. Each object has a `title` property that represents the title or name of the category,
+      and a `list` property that is an empty array. This structure is used to store and display data
+      in a structured manner, where each category can have its own list of items. */
       const dataList:any=[
         {
           title:"Analytics",

@@ -9,8 +9,12 @@ import CustomerGeneralTableList from './CustomerGeneralTableList'
 import DataNotFound from '@/components/layouts/DataNotFound'
 import { useTranslation } from 'react-i18next'
 
+/* The code defines a functional component called `CustomerTableTicketList`. Inside the component, it
+performs several API calls using the `useApiFetch` custom hook to fetch data from different
+endpoints. The fetched data is stored in variables such as `Store`, `Move`, `Prepare`, `AllStore`,
+and `AllStoreGeneral`. */
 const CustomerTableTicketList = () => {
-    const { token }: any = getToken()
+    const { token }: any = getToken() // Extracting token for API call
     const {
         data: Store,
         loading: StoreLoad,
@@ -46,7 +50,7 @@ const CustomerTableTicketList = () => {
             {AllStore?.data?.length > 0 ? (
                 <>
                     <h4 className="text-head-title mb-4 text-center"> {t("Ticket List")}</h4>
-                    <TableLayoutCustomer fetchDataA={fetchDataA}
+                    <TableLayoutCustomer refetchAgain={fetchDataA}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                      <h4 className="text-head-title mt-6 text-center"> {t("General Ticket List")}</h4>

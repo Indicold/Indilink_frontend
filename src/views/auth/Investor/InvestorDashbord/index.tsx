@@ -11,6 +11,11 @@ import { useTranslation } from 'react-i18next'
 
    
 
+/**
+ * The `InvestorDashboard` component is a TypeScript React component that renders a card layout with
+ * the title "Investor Dashboard" and allows the user to select a user type, which is then stored in
+ * localStorage and navigates to a specific page based on the selected value.
+ */
 const InvestorDashbord = () => {
   
     const navigate = useNavigate()

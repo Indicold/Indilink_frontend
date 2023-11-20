@@ -1,25 +1,50 @@
+/* The following code is a TypeScript React component that imports various modules and components. It uses
+a custom hook called `useApiFetch` from the `useApiFetch` file in the `customeHook` directory. It
+also imports functions `messageView`, `onkeyDown`, and `onkeyDownOne` from the `validate` file in
+the `customeHook` directory. It imports variables `apiUrl` and `getToken` from the `token` file in
+the `store` directory. */
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import InvoiceTableList from './InvoiceTableList';
+import LoaderSpinner from '@/components/LoaderSpinner';
 
 const Invoice = () => {
-    const { token }: any = getToken();
+    /* The following code is written in TypeScript and React. It is destructuring the `token` property from
+    the result of calling the `getToken()` function. The `token` variable is then assigned the value
+    of the `token` property. The type of `token` is specified as `any`. */
+    const { token }: any = getToken(); // Extracting token for API call
+
+    // State variable for modal opening and closing. Initially, the modal will be closed when the component mounts
     const [modal, setModal] = useState<any>(false);
+    const [loader,setLoader]=useState<any>(false)
     const [formData, setFormData] = useState<any>({
         invoice_doc: "",
         invoice_amount: ""
-    })
+    }) // State variable for managing form data
     const [error,setErrors]=useState<any>({})
+
+    /* The following code is using the `useApiFetch` hook to fetch a list of invoices from the
+    `partner/invoices` endpoint. It is destructuring the response object into variables
+    `ListOfInvoice`, `LIloading`, `LIerror`, and `fetchInvoiceData`. `ListOfInvoice` will contain
+    the fetched data, `LIloading` will indicate if the data is still loading, `LIerror` will contain
+    any error that occurred during the fetch, and `fetchInvoiceData` is a function that can be used
+    to refetch the data. */
     const { data: ListOfInvoice, loading: LIloading, error: LIerror,refetch:fetchInvoiceData } =
         useApiFetch<any>(`partner/invoices`, token);
 
+    /**
+     * The handleChange function updates the formData state based on the value or file selected in an
+     * input field.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the change, such as a user input or a file
+     * selection.
+     */
     const handleChange = (e: any) => {
         const newData: any = { ...formData };
         if (e.target.name === 'invoice_doc') {
-            console.log("TTTTTTTfiii",e.target.files[0]?.name);
             
             newData[e.target.name] = e.target.files[0];
         } else {
@@ -29,6 +54,15 @@ const Invoice = () => {
         setFormData(newData)
 
     }
+
+    /**
+     * The `handleSave` function is responsible for sending a POST request to upload an invoice
+     * document and amount, and it also performs validation checks for the form data.
+     * @param {any} e - The parameter `e` is an event object that represents the event that triggered
+     * the function. It is commonly used in event handlers to access information about the event, such
+     * as the target element or the event type. In this case, it is not being used in the function, so
+     * it can be removed
+     */
     const handleSave = (e: any) => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
@@ -44,10 +78,13 @@ const Invoice = () => {
             redirect: 'follow'
         };
         if (formData?.invoice_doc && formData?.invoice_amount) {
+            setLoader(true)
             fetch(`${apiUrl}/partner/invoice`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    setLoader(false)
                     if (result?.status === 200) {
+                      
                         setFormData({})
                         messageView("Invoice Uploaded Successfully !")
                         
@@ -57,11 +94,14 @@ const Invoice = () => {
                             invoice_amount: ""
                         })
                     } else {
+                        
                         messageView(result?.message)
                     }
                     fetchInvoiceData()
                 })
-                .catch(error => console.log('error', error));
+                .catch(error =>{
+                    setLoader(false)
+                    console.log('error', error)});
         }
         const errors:any={}
          if(!formData?.invoice_doc){
@@ -75,12 +115,19 @@ errors.invoice_amount="Please Enter Invoice Amount";
         }
         setErrors(errors)
     }
-    console.log("rrrrrrr",error);
+    
+    /* The below code is using the useEffect hook in a React component. It is specifying a function to
+    be executed when the component mounts or when the dependencies (formData and modal) change.
+    Inside the function, it is calling the fetchInvoiceData function. */
     useEffect(()=>{
         fetchInvoiceData()
     },[formData,modal])
+
+    /* The following code is a TypeScript React component that renders an invoice form and a list of
+    invoices. */
     return (
         <>
+        {loader && <LoaderSpinner />}
             <ToastContainer />
             {modal && <div
                 id="authentication-modal"

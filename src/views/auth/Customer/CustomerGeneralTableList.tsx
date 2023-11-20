@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
+import Pagination from "rc-pagination"; // Importing pagination component to show records in multiple pages
 import "rc-pagination/assets/index.css";
 import { cloneDeep } from 'lodash';
-import "rc-pagination/assets/index.css";
+import "rc-pagination/assets/index.css"; // Importing pagination styles
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
-import { messageView } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
+import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast messages
+import { ToastContainer } from 'react-toastify'; // Importing container to show toast messages
 
 // Defines the table header with column names.
 const tableHead = {

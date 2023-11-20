@@ -257,7 +257,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                 </div>
                              {Bussiness==='General' &&   <div className='flex justify-around w-[80%] mx-auto items-center'>
                                 <FormItem
-                                            label={t("General Query")}
+                                            label={t("General Query*")}
                                             className="mx-auto w-1/2"
                                         >
                                        <input type='text'
@@ -280,6 +280,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
                                         type="button"
                                         onClick={()=>PostQueryDetails({description:Query})}
                                         className="indigo-btn !w-[30%] mt-6 mx-auto rounded-[30px]"
+                                        disabled={Query === ''}
                                     >
                                          {t("Send Query")}
                                     </Button>

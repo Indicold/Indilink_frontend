@@ -177,15 +177,28 @@ const PartnerBussinessTypePrepare = () => {
     }, [fetchDetails])
  
 
+    /* The above code is using the useEffect hook in a React component. It is updating the formData
+    state by spreading the existing formData and updating the product_type and product_category_ids
+    properties based on the values in the "value" array. It is mapping over the "value" array and
+    extracting the "id" property from each item, and then assigning the resulting array to the
+    product_type property in the formData state. */
     useEffect(() => {
         setFormData({ ...formData, product_type: value?.map((item: any) => item?.id), product_category_ids: value1?.map((item: any) => item?.id) })
     }, [value])
 
+    /* The above code is using the `useEffect` hook in a React component. It is setting the values of
+    certain properties in the `formData` object. Specifically, it is setting the values of
+    `throughput_unit_id`, `avg_case_size_unit_id`, and `batch_size_unit_id` to 1, 2, and 1
+    respectively. This code is executed only once, when the component is mounted, as indicated by
+    the empty dependency array `[]` passed as the second argument to `useEffect`. */
     useEffect(() => {
         setFormData({ ...formData, throughput_unit_id: 1, avg_case_size_unit_id: 2, batch_size_unit_id: 1 })
     }, [])
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
+
+    /* The above code is a useEffect hook in a TypeScript React component. It is used to perform some
+    logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
         const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
@@ -193,6 +206,8 @@ const PartnerBussinessTypePrepare = () => {
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    `ProductTypeList.data` changes. */
     useEffect(() => {
         if(ProductTypeList?.data!==null){
             const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
@@ -200,9 +215,12 @@ const PartnerBussinessTypePrepare = () => {
         }
        
     }, [ProductTypeList?.data])
+
+    /* The above code is using the useEffect hook in a TypeScript React component. It is calling the
+    fetchMachineList function when the machineModal or MachineList variables change. */
     useEffect(() => {
         fetchMachineList();
-    }, [machineModal, MachineList]);
+    }, [machineModal]);
     const { t, i18n }:any = useTranslation();
 
     return (

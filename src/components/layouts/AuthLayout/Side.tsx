@@ -1,3 +1,4 @@
+/* The code is importing various dependencies and components that are needed in the `Side` component. */
 import React from 'react'
 import type { CommonProps } from '@/@types/common'
 import Loading from '@/components/shared/Loading'
@@ -6,6 +7,9 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 
 
+/* The `interface SideProps` is defining the props that can be passed to the `Side` component. It
+extends the `CommonProps` interface, which likely contains common props used throughout the
+application. */
 interface SideProps extends CommonProps {
     content?: React.ReactNode
 }
@@ -15,10 +19,14 @@ interface IntrinsicElements {
 }
 
 const Side = ({ children, content, ...rest }: SideProps) => {
+/* The line `const AuthResponse=useSelector((state:any)=>state?.auth)` is using the `useSelector` hook
+from the `react-redux` library to select a specific piece of state from the Redux store. */
 const AuthResponse=useSelector((state:any)=>state?.auth)    
 
 
 
+    /* The `return` statement is returning JSX code that represents the structure and content of the
+    `Side` component. */
     return (
         <div className="grid lg:grid-cols-6 w-full h-full">
             <div
@@ -95,4 +103,4 @@ const AuthResponse=useSelector((state:any)=>state?.auth)
     )
 }
 
-export default Side
+export default Side // For using the component in other files

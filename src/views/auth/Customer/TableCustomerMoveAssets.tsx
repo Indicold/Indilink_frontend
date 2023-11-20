@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Import pagination component to show table records in multiple pages
+import "rc-pagination/assets/index.css"; // Import pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.

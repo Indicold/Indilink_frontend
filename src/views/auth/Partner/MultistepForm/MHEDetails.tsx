@@ -28,12 +28,17 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
+    /* The code snippet is using the `useState` hook to define two state variables: `data` and
+    `errors`. */
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams();
+    const {id}: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/mhe/${commanData?.id}`)
 
+    /* The `useEffect` hook in the code snippet is used to update the state `data` when the component
+    mounts. It runs only once when the component is first rendered, as indicated by the empty
+    dependency array `[]` as the second argument. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
@@ -73,6 +78,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
       
     }
  
+    /* The `useEffect` hook in the code snippet is used to update the state `data` when the
+    `commanData` prop changes. It runs whenever the `commanData` prop changes, as indicated by the
+    dependency array `[commanData]` as the second argument. */
     useEffect(()=>{
         if(commanData?.type=='Edit' || commanData?.type=='View'){
             setData(commanData)

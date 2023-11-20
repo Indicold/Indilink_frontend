@@ -21,11 +21,22 @@ import type { CommonProps } from '@/@types/common'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+/* The `interface ResetPasswordFormProps` is defining the props that can be passed to the
+`ResetPasswordForm` component. It extends the `CommonProps` interface, which likely includes common
+props used throughout the application. */
 interface ResetPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
     signInUrl?: string
 }
 
+/**
+ * The above type represents the schema for a reset password form in TypeScript React, which includes
+ * fields for password and confirm password.
+ * @property {string} password - A string representing the new password that the user wants to set.
+ * @property {string} confirm_password - The `confirm_password` property is used to store the value
+ * entered by the user to confirm their new password. It is typically used in a password reset form to
+ * ensure that the user has entered the same password correctly twice.
+ */
 type ResetPasswordFormSchema = {
     password: string
     confirm_password: string
@@ -105,6 +116,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
         });
     }
 
+    /* The following code is a TypeScript React component that renders a form for resetting a password. */
     return (
         <div className={className}>
                   <ToastContainer />

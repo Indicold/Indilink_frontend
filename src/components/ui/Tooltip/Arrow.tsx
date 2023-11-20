@@ -1,3 +1,4 @@
+/* The code is importing two things: */
 import classNames from 'classnames'
 import {
     BsFillCaretDownFill,
@@ -20,12 +21,16 @@ export type ArrowPlacement =
     | 'left-start'
     | 'left-end'
 
+/* The `interface ArrowProps` is defining the type of props that the `Arrow` component expects. It
+specifies that the component expects three props: `placement`, `colorDark`, and `color`. */
 interface ArrowProps {
     placement: ArrowPlacement
     colorDark: string
     color: string
 }
 
+/* The code defines a functional component called `Arrow` that takes in three props: `placement`,
+`color`, and `colorDark`. */
 const Arrow = ({ placement, color, colorDark }: ArrowProps) => {
     const arrowDefaultClass = `absolute text-${color} dark:text-${colorDark}`
 

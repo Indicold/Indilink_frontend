@@ -82,7 +82,7 @@ const BasicInfo = () => {
         useApiFetch<any>(`auth/get-company-for-basic-details`, token);
 
     const { data: ListOfState, loading: LOSloading, error: LOSerror } =
-        useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id}`, token);
+        useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id || 101}`, token);
 
     const { data: BasicInfo, loading: LIloading, error: BIerror } =
         useApiFetch<any>(`auth/basic-details`, token);
@@ -185,7 +185,6 @@ const BasicInfo = () => {
         }
 
     }, [BranchList?.data])
-    console.log("ytytyty",companyDetails);
     
     useEffect(() => {
         if (companyDetails?.data?.length>0) {
@@ -484,7 +483,7 @@ useEffect(()=>{
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
                         <p className="text-[red]">{error && error.branch_ids}</p>
                     </>}
-                    <button className='w-full bg-gray-400 rounded-lg py-2' onClick={() => setBranchModal(true)}>+ Add Branch Details</button>
+                    <button className='w-full bg-gray-400 rounded-lg py-2' onClick={() =>{setformDataBranch({}); setBranchModal(true)}}>+ Add Branch Details</button>
                 </div>
 
                 {/* final submit button */}

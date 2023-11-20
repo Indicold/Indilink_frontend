@@ -48,8 +48,8 @@ export const validateForm = (formData: any, setError: any) => {
         errorss.password = 'Password is required'
     }
 
-    if (!formData?.term_condition) {
-        errorss.term_condition = 'Please Accept Term & condition'
+    if (formData?.term_condition === "off" || !formData?.term_condition) {
+        errorss.term_condition = 'Please Accept Terms & Conditions'
     }
 
 
@@ -475,13 +475,13 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.racking_type_id = 'This Field is required'
     }
 
-    if (formData?.photo_of_entrance?.length < 1) {
+    if (formData?.photo_of_entrance?.length < 1 || !formData?.photo_of_entrance) {
         newErrors.photo_of_entrance = 'This Field is required'
     }
 
-    // if (!formData?.photo_of_chamber) {
-    //     newErrors.photo_of_chamber = 'This Field is required'
-    // }
+    if (!formData?.photo_of_chamber || formData?.photo_of_chamber?.length < 1) {
+        newErrors.photo_of_chamber = 'This Field is required'
+    }
 
     if (!formData?.no_of_floors) {
         newErrors.no_of_floors = 'This Field is required'
@@ -811,9 +811,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This Field is required'
     }
-    // if (!formData?.certification_id) {
-    //     newErrors.certification_id = 'This Field is required'
-    // }
+    if (!formData?.quantity) {
+        newErrors.quantity = 'This Field is required'
+    }
     if (!formData?.unit_id) {
         newErrors.unit_id = 'This Field is required'
     }
@@ -911,6 +911,9 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     }
     if (!formData?.temp_max) {
         newErrors.temp_max = 'This Field is required'
+    }
+    if (!formData?.product_type_id) {
+        newErrors.product_type_id = 'This Field is required'
     }
 
     setErrors(newErrors)

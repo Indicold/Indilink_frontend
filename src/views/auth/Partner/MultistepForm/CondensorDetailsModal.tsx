@@ -32,9 +32,14 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({})
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams() // Extracting active URL endpoint to define payload for API call
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/condensor/${commanData?.id}`)
 
+    /* The following code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id

@@ -20,7 +20,7 @@ const RefrigerationDetailModal: React.FC<MajorityHolderModalProps> = ({
     modal,
     setModal,
 }) => {
-    const { token }: any = getToken()
+    const { token }: any = getToken() // Extracting token for API call
 
     const { data, loading, error } = useApiFetch<any>(
         'master/partner/store/type-of-cold-storage',
