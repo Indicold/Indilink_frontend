@@ -220,7 +220,7 @@ const PartnerBussinessTypePrepare = () => {
     fetchMachineList function when the machineModal or MachineList variables change. */
     useEffect(() => {
         fetchMachineList();
-    }, [machineModal, MachineList]);
+    }, [machineModal]);
     const { t, i18n }:any = useTranslation();
 
     return (
