@@ -70,10 +70,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'fsssai_lic_text',
             view: false,
             key_lic: 'fsssai_lic_license',
-            key_status:"fsssai_lic_status",
+            key_status: "fsssai_lic_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'ISO Certificate',
@@ -82,10 +82,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'iso_cert_text',
             view: false,
             key_lic: 'iso_cert_license',
-            key_status:"iso_cert_status",
+            key_status: "iso_cert_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'HACCP',
@@ -94,10 +94,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'haccp_text',
             view: false,
             key_lic: 'haccp_license',
-            key_status:"haccp_status",
+            key_status: "haccp_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Pest Control Agency Contract',
@@ -106,10 +106,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'pest_control_agency_contract_text',
             view: false,
             key_lic: 'pest_control_agency_contract_license',
-            key_status:"pest_control_agency_contract_status",
+            key_status: "pest_control_agency_contract_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'BRC Audit or any other certification (If Applicable)',
@@ -118,10 +118,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'brc_audit_text',
             view: false,
             key_lic: 'brc_audit_license',
-            key_status:"brc_audit_status",
+            key_status: "brc_audit_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Pollution NOC',
@@ -130,10 +130,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'pollution_noc_text',
             view: false,
             key_lic: 'pollution_noc_license',
-            key_status:"fire_safety_noc_status",
+            key_status: "fire_safety_noc_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Fire Safety NOC',
@@ -142,10 +142,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'fire_safety_noc_text',
             view: false,
             key_lic: 'fire_safety_noc_license',
-            key_status:"pollution_noc_status",
+            key_status: "pollution_noc_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'MCD License (if applicable)',
@@ -154,10 +154,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'mcd_lic_text',
             view: false,
             key_lic: 'mcd_lic_license',
-            key_status:"mcd_lic_status",
+            key_status: "mcd_lic_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'UP Cold Storage License',
@@ -166,10 +166,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'up_cond_storage_lic_text',
             view: false,
             key_lic: 'up_cond_storage_lic_license',
-            key_status:"up_cond_storage_lic_status",
+            key_status: "up_cond_storage_lic_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Factory License',
@@ -178,10 +178,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'factory_lic_text',
             view: false,
             key_lic: 'factory_lic_license',
-            key_status:"factory_lic_status",
+            key_status: "factory_lic_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Panchayat NOC',
@@ -190,10 +190,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'panchayat_noc_text',
             view: false,
             key_lic: 'panchayat_noc_license',
-            key_status:"panchayat_noc_status",
+            key_status: "panchayat_noc_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'No Lien Certificate',
@@ -202,10 +202,10 @@ const PartnerBussinessTypeCompliances = () => {
             view: false,
             key: 'no_lien_cert',
             key_lic: 'no_lien_cert_license',
-            key_status:"no_lien_cert_status",
+            key_status: "no_lien_cert_status",
             url: null,
             valid_till: null,
-            licenseNo:null
+            licenseNo: null
         },
         {
             label: 'Latest Electricity Bill',
@@ -213,10 +213,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'latest_electricity_bill_text',
             key: 'latest_electricity_bill',
             key_lic: 'latest_electricity_bill_license',
-            key_status:"latest_electricity_bill_status",
+            key_status: "latest_electricity_bill_status",
             url: null,
             valid_till: null,
-            licenseNo:null,
+            licenseNo: null,
             view: false,
         },
         {
@@ -225,10 +225,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'structural_load_safety_cert_text',
             key: 'structural_load_safety_cert',
             key_lic: 'structural_load_safety_cert_license',
-            key_status:"structural_load_safety_cert_status",
+            key_status: "structural_load_safety_cert_status",
             url: null,
             valid_till: null,
-            licenseNo:null,
+            licenseNo: null,
             view: false,
 
         },
@@ -238,10 +238,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'insurance_cert_text',
             key: 'insurance_cert',
             key_lic: 'insurance_cert_license',
-            key_status:"insurance_cert_status",
+            key_status: "insurance_cert_status",
             url: null,
             valid_till: null,
-            licenseNo:null,
+            licenseNo: null,
             view: false,
         },
         {
@@ -250,10 +250,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'facility_layout_text',
             key: 'facility_layout',
             key_lic: 'facility_layout_license',
-            key_status:"facility_layout_status",
+            key_status: "facility_layout_status",
             url: null,
             valid_till: null,
-            licenseNo:null,
+            licenseNo: null,
             view: false,
         },
         {
@@ -262,10 +262,10 @@ const PartnerBussinessTypeCompliances = () => {
             key_text: 'storage_temp_record_text',
             key: 'storage_temp_record',
             key_lic: 'storage_temp_record_license',
-            key_status:"storage_temp_record_status",
+            key_status: "storage_temp_record_status",
             url: null,
             valid_till: null,
-            licenseNo:null,
+            licenseNo: null,
             view: false,
         },
     ];
@@ -284,7 +284,7 @@ const PartnerBussinessTypeCompliances = () => {
         'asset_id': id,
         'asset_type_id': localStorage.getItem('asset_id')
     })
-    const [isValid,setIsValid]=useState<any>(false)
+    const [isValid, setIsValid] = useState<any>(false)
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
         setSelectedFile(e.target.files[0])
@@ -295,14 +295,14 @@ const PartnerBussinessTypeCompliances = () => {
         let newData = { ...dateArray }
         newData[e.target.name] = e.target.value
         setDateArray(newData)
-        
+
         const updatedArray = array.map((item: any) => {
             if (e.target.name === item.key_text) {
                 return {
                     ...item,
                     valid_till: e.target.value,
                     messageText: null,
-                    licenseNo:"Licence No is required"
+                    licenseNo: "Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -347,7 +347,7 @@ const PartnerBussinessTypeCompliances = () => {
                             url: responseData?.data,
                             message: 'Uploaded',
                             messageText: 'Valid till date is required',
-                            licenseNo:"Licence No is required"
+                            licenseNo: "Licence No is required"
                         }
                         : itemData
                 )
@@ -388,7 +388,7 @@ const PartnerBussinessTypeCompliances = () => {
                     return {
                         ...itemData,
                         messageText: 'Valid till date is required',
-                        licenseNo:"License no is required"
+                        licenseNo: "License no is required"
                     }
                 } else {
                     return {
@@ -412,11 +412,11 @@ const PartnerBussinessTypeCompliances = () => {
 
         return error
     }
-    function validateMandatoryFields(data:any, fieldName:any) {
+    function validateMandatoryFields(data: any, fieldName: any) {
         if (data[fieldName]) {
             const licenseField = `${fieldName}_license`;
             const textField = `${fieldName}_text`;
-    
+
             if (!data[licenseField] || !data[textField]) {
                 // messageView(`Valid Till and License no is mandatory`);
                 return false;
@@ -424,39 +424,39 @@ const PartnerBussinessTypeCompliances = () => {
         } else {
             // The field is not provided, so its corresponding 'license' and 'text' fields are not mandatory.
         }
-    
+
         return true; // Fields are valid or not applicable
     }
-    
+
     // You can add functions like isValidLicense and isValidDate to check the validity of the license and date fields.
-    
+
     // Handle route navigation
     const handleRoute = () => {
-        
-       // Extract keys from dateArray and slice from index 2
-const slicedKeys = Object.keys(dateArray);
 
-// Extract keys from array1 items
-const array1Keys = array1?.map((item) => item?.key);
+        // Extract keys from dateArray and slice from index 2
+        const slicedKeys = Object.keys(dateArray);
+
+        // Extract keys from array1 items
+        const array1Keys = array1?.map((item) => item?.key);
         const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
-        
-      const isValids:any= matchingKeys?.map((item:any)=>{
-           return validateMandatoryFields(dateArray,item);
-        });
-        const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-        const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
-        
-        const validLicenseNos:any=array?.filter(
-            (item:any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
-        )?.length>0 ? true: false;
 
-        let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-        
+        const isValids: any = matchingKeys?.map((item: any) => {
+            return validateMandatoryFields(dateArray, item);
+        });
+        const newvalidate: any = array?.filter((item: any) => item?.messageText)?.length > 0 ? false : true;
+        const newvalidateLicence: any = array?.filter((item: any) => item?.licenseNo)?.length > 0 ? false : true;
+
+        const validLicenseNos: any = array?.filter(
+            (item: any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
+        )?.length > 0 ? true : false;
+
+        let Invalid: any = isValids?.filter((item: any) => item === false)?.length > 0 ? false : true;
+
         if (Invalid && newvalidate && newvalidateLicence) {
-        PostValidTillDetails(dateArray)
-        navigate('/asset_success')
-        // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
-        }else{
+            PostValidTillDetails(dateArray)
+            navigate('/asset_success')
+            // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
+        } else {
             messageView(`Valid Till and License no is mandatory`);
         }
 
@@ -468,9 +468,9 @@ const array1Keys = array1?.map((item) => item?.key);
         newData[e.target.name] = e.target.value
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
-          item.key_lic === itemData.key_lic
-            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
-            : itemData
+            item.key_lic === itemData.key_lic
+                ? { ...itemData, key_lic: e.target.value, licenseNo: null }
+                : itemData
         );
         setArray(updatedArray);
 
@@ -509,7 +509,7 @@ const array1Keys = array1?.map((item) => item?.key);
                 true && {
                     ...item,
                     valid_till: fetchDetails?.data[item?.key_text],
-                    doc_status:fetchDetails?.data[item?.key_status],
+                    doc_status: fetchDetails?.data[item?.key_status],
                     // key_lic: fetchDetails?.data[item?.key_lic]
 
                 }
@@ -518,9 +518,9 @@ const array1Keys = array1?.map((item) => item?.key);
         }
 
     }, [fetchDetails?.data])
- 
-/* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
-`fetchDetails.data` value changes. */
+
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    `fetchDetails.data` value changes. */
     useEffect(() => {
 
 
@@ -552,7 +552,7 @@ const array1Keys = array1?.map((item) => item?.key);
 
 
     }, [fetchDetails?.data])
-    const { t, i18n }:any = useTranslation();
+    const { t, i18n }: any = useTranslation();
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -590,31 +590,32 @@ const array1Keys = array1?.map((item) => item?.key);
             <div className="bg-white w-full md:w-5/6 lg-w-5/6">
                 <ArrowBackIcon role='button' onClick={() => navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">
-                     {t("Compliance Details")}
+                    {t("Compliance Details")}
                 </h4>
                 <div>
-                <Formik>
+                    <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div >
+                                <div className='p-3'>
                                     {array?.map((item: any, index: any) => (
-                                        <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
+                                        <div className=" rounded-lg bg-gray-100 p-2 mt-2 lg:flex-nowrap md:flex-nowrap flex-wrap w-[100%] justify-around lg:border-y-0 border-y-2">
+                                            <div className='lg:flex md:flex'>
                                             <FormItem
-                                                label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
-                                                <p className='ellipse-text'>{item?.label}</p>
-                                                <Tooltip title={item?.label} className='bg-[#000000]' arrow>
-                                                  <InfoIcon />
-                                                </Tooltip>
-                                              </div> :item?.label}
+                                                label={item?.label?.length > 30 ? <div className='flex justify-center items-center bg-dark'>
+                                                    <p className='ellipse-text'>{item?.label}</p>
+                                                    <Tooltip title={item?.label} className='bg-[#000000]' arrow>
+                                                        <InfoIcon />
+                                                    </Tooltip>
+                                                </div> : item?.label}
                                                 key={index}
-                                                className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
+                                                className="w-[100%] pl-2 rounded-lg text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
-                                                    type="file"  accept="image/png, image/jpeg"
+                                                    type="file" accept="image/png, image/jpeg"
                                                     name={item?.key}
                                                     id="file-input"
-                                                    className="block border border-gray-200 
+                                                    className="block border w-[100%] border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
@@ -625,7 +626,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                     }
                                                 />
 
-                                                <div className="flex">
+                                                <div className="">
                                                     {item?.message && (
                                                         <p className="text-[green]">
                                                             Status:{t(item?.message)}
@@ -638,23 +639,22 @@ const array1Keys = array1?.map((item) => item?.key);
                                                             target="_blank"
                                                             download={false}
                                                         >
-                                                             {t("View")}
-                                                        </a>    
+                                                            {t("View")}
+                                                        </a>
                                                         </span>
                                                     )}
                                                 </div>
                                             </FormItem>
-                                            <div className='flex lg:flex-nowrap flex-wrap'>
-                                                <FormItem
+                                            <FormItem
                                                     label={t("Valid Till")}
                                                     key={index}
-                                                    className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                    className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='date'
-                                                     disabled={isDisabled}
-                                                    placeholder={t("Valid Till")} name={item?.key_text}
-                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="h-11 block w-full border border-gray-200 
+                                                        disabled={isDisabled}
+                                                        placeholder={t("Valid Till")} name={item?.key_text}
+                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
@@ -668,17 +668,20 @@ const array1Keys = array1?.map((item) => item?.key);
                                                         </p>
                                                     )}
                                                 </FormItem>
+                                            </div>
+                                            <div className= 'md:flex lg:flex'>
+                                             
                                                 <FormItem
                                                     label={t("Licence No")}
                                                     key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                    className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='text'
-                                                     disabled={isDisabled}
-                                                    placeholder={t("Licence No")} name={`${item?.key_lic}`}
+                                                        disabled={isDisabled}
+                                                        placeholder={t("Licence No")} name={`${item?.key_lic}`}
                                                         defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
-                                                        className="h-11 block w-full border border-gray-200 
+                                                        className="h-11 pl-3 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm 
                         focus:z-10 focus:border-blue-500 focus:ring-blue-500
                          dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
@@ -695,33 +698,35 @@ const array1Keys = array1?.map((item) => item?.key);
                                                     )}
                                                 </FormItem>
                                                 <FormItem
-                                        label={t("Status")}
-                                        className="w-1/2 text-label-title"
-                                    >
-                                        <select
-                                            disabled
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            name={`${item?.key_status}`}
-                                                                            
-                                        >
-                                            <option disabled selected>{t("Select Status")}</option>
-                                            
+                                                    label={t("Status")}
+                                                    className="w-[100%] pl-2  text-label-title"
+                                                >
+                                                    <select
+                                                        disabled
+                                                        className="border border-gray-300 h-11 pl-2 pr-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        name={`${item?.key_status}`}
+
+                                                    >
+                                                        <option disabled selected>{t("Select Status")}</option>
+
                                                         <option
                                                             value={1}
-                                                            selected={item?.doc_status===1}
-                                                          
+                                                            selected={item?.doc_status === 1}
+
                                                         >
-                                                         {t("Approved")}
+                                                            {t("Approved")}
                                                         </option>
-                                                
-                                            <option value={0}  selected={item?.doc_status===0}>{t("Not Approved")}</option>
-                                        </select>
-                                      
-                                    </FormItem>
+
+                                                        <option value={0} selected={item?.doc_status === 0}>{t("Not Approved")}</option>
+                                                    </select>
+
+                                                </FormItem>
                                             </div>
 
 
                                         </div>
+                                       
+
 
                                     ))}
                                 </div>
@@ -746,7 +751,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                         onClick={handleRoute}
                                         className="indigo-btn !w-[200px] m-4 mx-auto rounded-[30px]"
                                     >
-                                         {t("Save")}
+                                        {t("Save")}
                                     </Button>
                                 </div>
                             </FormContainer>
