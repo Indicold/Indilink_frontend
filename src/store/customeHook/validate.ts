@@ -211,7 +211,7 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
     if (!formData?.city_id) {
-        newErrors.city_id = 'City ID is required'
+        newErrors.city_id = 'City is required'
     }
 
     if (!formData?.address) {
@@ -226,11 +226,11 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
             newErrors.hourly_throughput = 'Hourly throughput is required'
         }
     }
-    if (!formData?.prepare_type_id) {
-        newErrors.prepare_type_id = 'Prepare type id is required'
+    if (!formData?.prepare_type_id || formData?.prepare_type_id == 'Types Of Prepare') {
+        newErrors.prepare_type_id = 'Prepare type is required'
     }
     if (formData?.product_category_ids?.length == 0) {
-        newErrors.product_category_ids = 'Product category ids is required'
+        newErrors.product_category_ids = 'Product category is required'
     }
     if (!formData?.throughput) {
         if (formData?.throughput==='') {
@@ -260,9 +260,14 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
         //     newErrors.type_of_dock_id = 'Type of Dock id is required'
         // }
     if (!formData?.temperature_min) {
-        newErrors.temperature_min = 'Min Temperature is required'
+        if (!formData?.temperature_max) {
+            newErrors.temperature_min = 'Min and Max Temperatures are required'
+        }
+        else {
+            newErrors.temperature_min = 'Min Temperature is required'
+        }
     }
-    if (!formData?.temperature_max) {
+    if (!formData?.temperature_max && formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature is required'
     }
     if (!formData?.batch_size) {
