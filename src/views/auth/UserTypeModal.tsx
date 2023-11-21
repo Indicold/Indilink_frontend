@@ -149,7 +149,7 @@ const UserTypeModal = ({ setAuthModal }:any) => {
                              <img className='w-[120px]  mx-auto' src="https://cdn-icons-png.flaticon.com/128/10071/10071359.png" alt="" />
                            </div>
                            <div>
-                             <h5>Costomer</h5>
+                             <h5>Customer</h5>
                              
                              <p className='text-align'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse pariatur temporibus.</p>
                            
