@@ -479,26 +479,8 @@ const array1Keys = array1?.map((item) => item?.key);
     // Use useEffect to update file upload items when fetchDetails changes
     /* The above code is a commented out `useEffect` hook in a TypeScript React component. It appears to
     be updating an array of items based on some data fetched from an API. */
-    useEffect(() => {
-        if (fetchDetails?.data !== null) {
-            const newData = {
-                ...fetchDetails?.data,
-            }
-
-            const updatedArray = array.map((item) =>
-                newData[item.key]
-                    ? {
-                        ...item,
-                        view: true,
-                        url: newData[item.key],
-                        message: 'Uploaded',
-                    }
-                    : item
-            )
-
-            setArray(updatedArray)
-        }
-    }, [fetchDetails])
+ 
+    
     useEffect(() => {
 
         window.scrollTo(0, 0)
@@ -518,7 +500,34 @@ const array1Keys = array1?.map((item) => item?.key);
         }
 
     }, [fetchDetails?.data])
- 
+    useEffect(() => {
+        if (fetchDetails?.data !== null) {
+            const newData = {
+                ...fetchDetails?.data,
+            }
+
+            const updatedArray = array.map((item:any) =>{
+                if(newData[item.key]){
+                    console.log("TYYTYT",true,item.key,newData[item.key]);
+                    
+                    return {
+                        ...item,
+                        view: true,
+                        url: newData[item.key],
+                        message: 'Uploaded',
+                    }
+                }else{
+                    console.log("TYYTYT",false);
+                    return item
+                }
+            }
+               
+            )
+            console.log("TYYTYT2",updatedArray);
+            setArray(updatedArray)
+        }
+    }, [fetchDetails])
+    console.log("fetchDetails",array);
 /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
 `fetchDetails.data` value changes. */
     useEffect(() => {
@@ -631,6 +640,8 @@ const array1Keys = array1?.map((item) => item?.key);
                                                             Status:{t(item?.message)}
                                                         </p>
                                                     )}
+                                                    {console.log("TYTRYRTYR",item)
+                                                    }
                                                     {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                     {item?.view && (
                                                         <span className="align-right" ><a
