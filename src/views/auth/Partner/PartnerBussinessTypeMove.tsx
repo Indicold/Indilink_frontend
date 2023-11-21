@@ -418,7 +418,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="emission_norms"
-                                            value={data?.emission_norms}
+                                            value={data?.emission_norms !=="undefined" ? data?.emission_norms :null}
                                             placeholder="Emission norms"
                                             component={Input}
                                         />
@@ -456,7 +456,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            value={data?.vehicle_class}
+                                            value={data?.vehicle_class !=="undefined" ? data?.vehicle_class :null}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
