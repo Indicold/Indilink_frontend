@@ -10,9 +10,6 @@ const compat = new FlatCompat({
 
 module.exports = [
 
-    // mimic ESLintRC-style extends
-    ...compat.extends("standard", "example"),
-
     // mimic environments
     ...compat.env({
         es2020: true,
