@@ -30,15 +30,19 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
 }:any) => {
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams();
+    const {id}: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/generator/${commanData?.id}`)
 
+    /* The following code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. This code is
+    executed only once, when the component is mounted, as the dependency array [] is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id =id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -58,7 +62,6 @@ const GeneratorDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The handlesave function calls the handleStoreTable function with specific parameters.
@@ -156,8 +159,8 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="w-1/2 mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                      <Field
                                             type="text"
                                             autoComplete="off"
@@ -174,7 +177,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="w-1/2 mx-auto">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             autoComplete="off"
@@ -193,8 +196,8 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem label="KVA*" className="w-1/2 mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="KVA*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                        <Field
                                             type="number"
                                             autoComplete="off"
@@ -211,7 +214,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.kva}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Year*" className="w-1/2 mx-auto">
+                                    <FormItem label="Year*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <select
                                             id="countries"
                                             name="year"
@@ -233,8 +236,8 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <div className="w-1/2">
+                                <div className=" m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <div className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto2">
 
                                     </div>
                                 </div>

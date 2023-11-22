@@ -8,6 +8,8 @@ const API_URL = apiUrl;
 
 
 
+/* The code is creating an async thunk function called `userRegisterPostApi`. An async thunk is a
+special type of function that can be used with Redux Toolkit to handle asynchronous actions. */
 export const userRegisterPostApi = createAsyncThunk(
   'api/postData',
   async (formData) => {
@@ -22,6 +24,9 @@ export const userRegisterPostApi = createAsyncThunk(
     return data;
   }
 );
+
+/* The code is creating an async thunk function called `usergetOTPPostApi`. An async thunk is a special
+type of function that can be used with Redux Toolkit to handle asynchronous actions. */
 export const usergetOTPPostApi = createAsyncThunk(
   'api/postData',
   async (formData) => {
@@ -37,6 +42,8 @@ export const usergetOTPPostApi = createAsyncThunk(
   }
 );
 
+/* The code is creating an async thunk function called `userverifyOTPPostApi`. This function is used to
+make an API request to verify an OTP (One-Time Password). */
 export const userverifyOTPPostApi = createAsyncThunk(
   'api/postData',
   async (formData) => {
@@ -52,6 +59,8 @@ export const userverifyOTPPostApi = createAsyncThunk(
   }
 );
 
+/* The code is creating an async thunk function called `userLoginApiPost`. This function is used to
+make an API request to login a user. */
 export const userLoginApiPost = createAsyncThunk(
   'api/postData',
   async (formData) => {

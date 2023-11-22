@@ -1,6 +1,10 @@
+/* The code is importing the `lazy` function from the `react` library and the `Routes` type from the
+`@/@types/routes` module. */
 import { lazy } from 'react'
 import type { Routes } from '@/@types/routes'
 
+/* The `authRoute` constant is an array of route objects. Each route object represents a specific route
+in the application. */
 const authRoute: Routes = [
     {
         key: 'signIn',

@@ -30,12 +30,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
         const newdata:any={...data};
         newdata[e.target.name]=e.target.value;
         setData(newdata)
-        console.log("changed")
     }
     const handlesubmit=()=>{
         if(validateKeyForm(data,setErrors)){
             if(data?.type==='Edit'){
-                console.log("huyt")
                 KeyUpdatePost(data)
             }else{
                
@@ -44,7 +42,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
             fetchData()
         }
     }
-    console.log("FFFFFFF",data);
+    
     useEffect(()=>{
         messageView(Keyesponse?.message)
         if(Keyesponse?.status==200){

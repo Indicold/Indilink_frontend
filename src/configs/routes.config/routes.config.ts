@@ -1,9 +1,20 @@
+/* The code is importing the `lazy` function from the `react` library, the `authRoute` object from the
+`authRoute` file, and the `Routes` type from the `@/types/routes` module. */
 import { lazy } from 'react'
 import authRoute from './authRoute'
 import type { Routes } from '@/@types/routes'
 
+/* The code `export const publicRoutes: Routes = [...authRoute]` is creating a constant variable named
+`publicRoutes` of type `Routes`. It is assigning the value of `authRoute` to `publicRoutes` using
+the spread operator (`...`). This means that `publicRoutes` will contain all the elements of
+`authRoute` as individual elements in an array. */
 export const publicRoutes: Routes = [...authRoute]
 
+/* The above code is exporting an array called `protectedRoutes`. Each element in the array represents
+a route in a web application. Each route has properties such as `key`, `path`, `component`, and
+`authority`. The `key` is a unique identifier for the route, the `path` is the URL path for the
+route, the `component` is the component that should be rendered when the route is accessed, and the
+`authority` is an array of roles or permissions required to access the route. */
 export const protectedRoutes = [
     {
         key: 'home',
@@ -320,6 +331,13 @@ export const protectedRoutes = [
         key: 'assetsdocumentlist',
         path: `/documents-list/:id`,
         component: lazy(() => import('@/views/auth/Partner/AssetsDocumentsTable/index')),
+        authority: [],
+    },
+    {
+
+        key: 'assetsdetails',
+        path: `/assets-details/:id`,
+        component: lazy(() => import('@/views/auth/Partner/Details/StoreDetails')),
         authority: [],
     },
 ]

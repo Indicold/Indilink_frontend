@@ -1,15 +1,18 @@
+/* The code is importing the following modules and components: */
 import DataNotFound from '@/components/layouts/DataNotFound';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 
 const NotificationPage = () => {
-    const data:any=[1,2,3,4,5,6,7,8,'9'];
-    const {token}:any=getToken();
+    const {token}:any=getToken(); // Extracting token for API call
     const [inputData,setInputData]=useState<any>('')
     const [MapData,setMapData]=useState<any>([])
+
+    /* The code is using a custom hook called `useApiFetch` to make an API call to fetch a list of
+    notifications. The hook returns an object with three properties: `data`, `loading`, and `error`. */
     const { data: ListOfNotification, loading: Notificationloading, error: PCerror } =
-    useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    useApiFetch<any>(`master/notifications`, token);
 
     const itemsPerPage:any=4; 
 
@@ -21,16 +24,30 @@ const NotificationPage = () => {
   
     const totalPages = Math.ceil(ListOfNotification?.data.length / itemsPerPage);
   
+    /**
+     * The function "handlePageChange" updates the current page number.
+     * @param {any} pageNumber - The pageNumber parameter is the number of the page that the user wants
+     * to navigate to.
+     */
     const handlePageChange = (pageNumber:any) => {
       setCurrentPage(pageNumber);
     };
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+    /**
+     * The function `goToPreviousPage` checks if the current page is greater than 1 and if so, calls
+     * the `handlePageChange` function with the current page minus 1 as the argument.
+     */
     const goToPreviousPage = () => {
         if (currentPage > 1) {
           handlePageChange(currentPage - 1);
         }
       };
     
+      /**
+       * The function `goToNextPage` increments the current page by 1 if it is not already the last
+       * page.
+       */
       const goToNextPage = () => {
         if (currentPage < totalPages) {
           handlePageChange(currentPage + 1);
@@ -74,8 +91,8 @@ const NotificationPage = () => {
     for (const item of ListOfNotification?.data) {
       
       // Convert item name to lowercase and search query to lowercase for case-insensitive matching
-      const itemName = item.name.toLowerCase();
-      const searchQuery = query.toLowerCase();
+      const itemName = item?.content?.toLowerCase();
+      const searchQuery = query?.toLowerCase();
   
       if (itemName.includes(searchQuery)) {
         results.push(item);
@@ -84,6 +101,9 @@ const NotificationPage = () => {
     currentItems=results;
   setMapData(results)
   }
+
+  /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+  effect is triggered whenever the value of `ListOfNotification?.data` changes. */
   useEffect(()=>{
     if(ListOfNotification?.data){
       setMapData(ListOfNotification?.data)
@@ -100,19 +120,7 @@ const NotificationPage = () => {
       </h3>
       <form>
   <div className="flex">
-    <label
-      htmlFor="location-search"
-      className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-    >
-      Your Email
-    </label>
   
-    <div
-      id="dropdown-search-city"
-      className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-    >
-     
-    </div>
     <div className="relative w-full">
       <input
         type="search"
@@ -158,17 +166,18 @@ const NotificationPage = () => {
       <div className=" inline-flex items-center justify-between w-full">
         <div className="inline-flex items-center">
           <img
-            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/OOjs_UI_icon_alert-yellow.svg/2048px-OOjs_UI_icon_alert-yellow.svg.png"
             alt="Training Icon"
             className="w-6 h-6 mr-3"
           />
-          <h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+           <p className="mt-1 text-sm">
+           {item?.content}
+      </p>
+          {/* <h3 className="font-bold text-base text-gray-800">{item?.content}</h3> */}
         </div>
         <p className="text-xs text-gray-500">{item?.created_at}</p>
       </div>
-      <p className="mt-1 text-sm">
-        Hey! Do you remember about choosing your training regime?
-      </p>
+     
     </div>
    </>
     )) :<DataNotFound title="Notification" url="/collapse-menu-item-view-1" />}

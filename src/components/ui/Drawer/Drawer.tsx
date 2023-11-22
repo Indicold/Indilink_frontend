@@ -1,3 +1,4 @@
+/* These lines of code are importing various dependencies and types for the Drawer component. */
 import classNames from 'classnames'
 import Modal from 'react-modal'
 import CloseButton from '../CloseButton'
@@ -5,6 +6,7 @@ import { motion } from 'framer-motion'
 import type ReactModal from 'react-modal'
 import type { MouseEvent, ReactNode } from 'react'
 
+/* The `DrawerProps` interface is defining the props that can be passed to the `Drawer` component. */
 export interface DrawerProps extends ReactModal.Props {
     bodyClass?: string
     closable?: boolean
@@ -21,6 +23,8 @@ export interface DrawerProps extends ReactModal.Props {
 }
 
 const Drawer = (props: DrawerProps) => {
+    /* This code is using object destructuring to extract the properties from the `props` object passed
+    to the `Drawer` component. */
     const {
         bodyOpenClassName,
         bodyClass,
@@ -44,12 +48,28 @@ const Drawer = (props: DrawerProps) => {
         ...rest
     } = props
 
+    /**
+     * The function `onCloseClick` is a TypeScript function that takes a MouseEvent and calls the
+     * `onClose` function if it exists.
+     * @param e - MouseEvent<HTMLSpanElement> - This is the event object that is passed when the close
+     * button is clicked. It is of type MouseEvent and specifically for the HTMLSpanElement element.
+     */
     const onCloseClick = (e: MouseEvent<HTMLSpanElement>) => {
         onClose?.(e)
     }
 
+    /* The line `const renderCloseButton = <CloseButton onClick={onCloseClick} />` is creating a
+    variable `renderCloseButton` that holds the JSX element `<CloseButton onClick={onCloseClick}
+    />`. This JSX element represents the `CloseButton` component with the `onClick` prop set to the
+    `onCloseClick` function. This variable is later used to render the close button in the `Drawer`
+    component. */
     const renderCloseButton = <CloseButton onClick={onCloseClick} />
 
+    /**
+     * The function `getStyle` returns an object with different styles based on the value of the
+     * `placement` variable.
+     * @returns The function `getStyle` returns an object with the following properties:
+     */
     const getStyle = (): {
         dimensionClass?: string
         contentStyle?: {
@@ -89,8 +109,14 @@ const Drawer = (props: DrawerProps) => {
         }
     }
 
+    /* The line `const { dimensionClass, contentStyle, motionStyle } = getStyle()` is using object
+    destructuring to extract the properties `dimensionClass`, `contentStyle`, and `motionStyle` from
+    the object returned by the `getStyle()` function. This allows us to use these properties
+    directly in the `return` statement of the `Drawer` component. */
     const { dimensionClass, contentStyle, motionStyle } = getStyle()
 
+    /* The `return` statement is rendering the `Modal` component from the `react-modal` library. The
+    `Modal` component is used to create a modal dialog box. */
     return (
         <Modal
             className={{

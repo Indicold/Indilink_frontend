@@ -5,13 +5,19 @@
  * @returns The UserTypeModal component is being returned.
  */
 import { Button } from '@/components/ui'
+import usePostApi from '@/store/customeHook/postApi'
 import React, { useEffect, useState } from 'react'
 import { CiImageOn } from "react-icons/ci"
 import { useNavigate } from 'react-router-dom'
 const UserTypeModal = ({ setAuthModal }:any) => {
   const [modal, setModal] = useState(true)
   const navigate = useNavigate()
-  const [Bussiness, setBussiness] = useState('')
+  const [Bussiness, setBussiness] = useState('');
+  let {
+    result:UserResponse,
+    loading,
+    sendPostRequest: PostDefaultUserType,
+  }: any = usePostApi(`partner/updateUsertype`);
   /**
    * The function `handleUserType` sets the user type based on the input value and performs different
    * actions depending on the user type.
@@ -21,21 +27,25 @@ const UserTypeModal = ({ setAuthModal }:any) => {
   const handleUserType = (value: any) => {
     setBussiness(value)
     if (value == 'Investor') {
+      PostDefaultUserType({usertype:"3"})
       navigate('/investor-dashbord')
       localStorage.setItem('user_type','Investor')
 
     }
     if (value == 'Partner') {
+      PostDefaultUserType({usertype:"1"})
       navigate('/partner-dashbord')
       localStorage.setItem('user_type','Partner')
 
     }
     if (value == 'Customer') {
+      PostDefaultUserType({usertype:"2"})
       navigate('/home')
       localStorage.setItem('user_type','Customer')
       setAuthModal(false)
     }
   }
+ console.log("YYYYYYYYYY",Bussiness);
  
   return (
     <div className=' '>
@@ -72,7 +82,7 @@ const UserTypeModal = ({ setAuthModal }:any) => {
                   </h5> */}
                    <img className='w-[100px] mx-auto' src="https://cdn-icons-png.flaticon.com/128/10071/10071359.png" alt="" />
                   <h5 className="mb-2 my-2 text-center text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                    Costomer
+                    Customer
                   </h5>
 {/* 
                   <p>

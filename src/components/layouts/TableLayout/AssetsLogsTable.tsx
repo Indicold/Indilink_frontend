@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // Importing React to define React component and to use hooks
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Importing pagination component for showing table records in multiple pages
+import "rc-pagination/assets/index.css"; // Importing pagination component styles
 import { cloneDeep } from 'lodash';
-import "rc-pagination/assets/index.css";
+import "rc-pagination/assets/index.css"; // Importing styles for UI
 import { Button } from '@/components/ui'; // Imports a Button component.
-import { useNavigate } from 'react-router-dom';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import EditIcon from '@mui/icons-material/Edit';
-import usePutApi from '@/store/customeHook/putApi';
-import { messageView } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // For handling navigation
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon to show in Table action column for viewing attached documents to a record
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'; // Importing icon to show in Table action column for viewing a record
+import EditIcon from '@mui/icons-material/Edit'; // Importing icon to show in Table action column for editing a record
+import usePutApi from '@/store/customeHook/putApi'; // Importing custom hook for API call
+import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast message
+import { ToastContainer } from 'react-toastify'; // Importing container to show Toast messages
 import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
 const tableHead = {
@@ -31,12 +31,20 @@ const tableHead = {
 const AssetsLogsTable = ({ AllStore,fetchApi }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
+
+  /* These lines of code are using the `useState` hook from React to create state variables in a
+  functional component. */
   const [value, setValue] = React.useState("");
   const [Alert,setAlert]=useState<any>(false)
   const [RowData,setRowData]=useState<any>({});
   const [logsModal,setLogsModal]=useState<any>(false)
+
+/* The line of code is using object destructuring to extract the `result`, `loading`, and
+`sendPostRequest` properties from the return value of the `usePutApi` custom hook. */
 let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
+  /* The code snippet is using the `useState` hook from React to create state variables `currentPage`
+  and `collection` in a functional component for handling pagination. */
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
     cloneDeep(allData.slice(0, countPerPage))
@@ -83,7 +91,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -127,17 +134,33 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
     }
   }
 
+  /**
+   * The handleSubmit function updates the rowData state and sets the alert state to true.
+   * @param {any} rowData - The rowData parameter is of type "any", which means it can accept any data
+   * type. It is used to pass the data that needs to be set as the new value for the rowData state
+   * variable.
+   */
   const handleSubmit=(rowData:any)=>{
-    console.log("ttttttt",rowData);
     
     setRowData(rowData)
     setAlert(true)
   }
+
+  /**
+   * The handleConfirm function calls the PostSubmitDetails function with a status of "Final".
+   * Function will hit API to make the asset final
+   */
   const handleConfirm=()=>{
-    console.log("tttttttt8888",);
     
     PostSubmitDetails({status:"Final"})
   }
+
+/**
+ * The function `handleDocs` navigates to a specific document list page based on the `asset_id`
+ * property of the `rowData` object.
+ * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is of
+ * type `any`, which means it can be any type of data.
+ */
 const handleDocs=(rowData:any)=>{
   navigate(`/documents-list/${rowData?.asset_id}`)
 }
@@ -172,7 +195,7 @@ const handleDocs=(rowData:any)=>{
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -187,9 +210,9 @@ const handleDocs=(rowData:any)=>{
     ));
   };
 
-  // JSX structure for rendering the table and pagination.
+/* The above code is using the useEffect hook in a React component. It is triggering the effect
+whenever the value of SubmitResponse changes. */
 useEffect(()=>{
-console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)
@@ -202,6 +225,7 @@ SubmitResponse=7676;
 fetchApi();
 },[SubmitResponse])
 
+// JSX structure for rendering the table and pagination.
   return (
     <>
     <ToastContainer />
@@ -248,7 +272,7 @@ fetchApi();
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}

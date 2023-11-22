@@ -12,6 +12,7 @@ import {
     FormItem,
     Input,
 } from '@/components/ui' // Import UI components
+import { useTranslation } from 'react-i18next'
 import { Field, Form, Formik } from 'formik' // Import Formik for form handling
 import { useLocation, useNavigate, useParams } from 'react-router-dom' // Import routing related hooks
 import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom hook for handling tokens
@@ -142,7 +143,6 @@ const PartnerBussinessTypePrepare = () => {
         newData[e.target.name] = e.target.value
         setFormData(newData)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
-        console.log("formsdata", formData)
     }
 
     // Define a function to handle form submission and POST request
@@ -177,15 +177,28 @@ const PartnerBussinessTypePrepare = () => {
     }, [fetchDetails])
  
 
+    /* The above code is using the useEffect hook in a React component. It is updating the formData
+    state by spreading the existing formData and updating the product_type and product_category_ids
+    properties based on the values in the "value" array. It is mapping over the "value" array and
+    extracting the "id" property from each item, and then assigning the resulting array to the
+    product_type property in the formData state. */
     useEffect(() => {
         setFormData({ ...formData, product_type: value?.map((item: any) => item?.id), product_category_ids: value1?.map((item: any) => item?.id) })
     }, [value])
 
+    /* The above code is using the `useEffect` hook in a React component. It is setting the values of
+    certain properties in the `formData` object. Specifically, it is setting the values of
+    `throughput_unit_id`, `avg_case_size_unit_id`, and `batch_size_unit_id` to 1, 2, and 1
+    respectively. This code is executed only once, when the component is mounted, as indicated by
+    the empty dependency array `[]` passed as the second argument to `useEffect`. */
     useEffect(() => {
         setFormData({ ...formData, throughput_unit_id: 1, avg_case_size_unit_id: 2, batch_size_unit_id: 1 })
     }, [])
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
+
+    /* The above code is a useEffect hook in a TypeScript React component. It is used to perform some
+    logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
         const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
@@ -193,22 +206,28 @@ const PartnerBussinessTypePrepare = () => {
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    `ProductTypeList.data` changes. */
     useEffect(() => {
-        // console.log("TTTTTTTTTTT66666",ProductTypeList);
         if(ProductTypeList?.data!==null){
             const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
             setValue(foundItems)
         }
        
     }, [ProductTypeList?.data])
+
+    /* The above code is using the useEffect hook in a TypeScript React component. It is calling the
+    fetchMachineList function when the machineModal or MachineList variables change. */
     useEffect(() => {
         fetchMachineList();
-    }, [machineModal, MachineList]);
+    }, [machineModal]);
+    const { t, i18n }:any = useTranslation();
+
     return (
-        <div className='flex'>
+        <div className='flexlg:flex md:flex'>
             <ToastContainer />
 
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -218,7 +237,7 @@ const PartnerBussinessTypePrepare = () => {
                                 <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2ZM7 2h4v3H7V2Zm5.7 8.289-3.975 3.857a1 1 0 0 1-1.393 0L5.3 12.182a1.002 1.002 0 1 1 1.4-1.436l1.328 1.289 3.28-3.181a1 1 0 1 1 1.392 1.435Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Asset Specifications</h6>
+                        <h6 className="font-medium leading-tight">{t("Asset Specifications")} </h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
                     <li className="mb-10 ml-6">
@@ -227,7 +246,7 @@ const PartnerBussinessTypePrepare = () => {
                                 <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
                             </svg>
                         </span>
-                        <h6 className="font-medium leading-tight">Compliance Details</h6>
+                        <h6 className="font-medium leading-tight">{t("Compliance Details")}</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
 
@@ -245,7 +264,7 @@ const PartnerBussinessTypePrepare = () => {
                 fetchDetailsloading ? (
                 <LoaderSpinner />
             ) : (
-                <div className="bg-white w-5/6">
+                <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
                     <ArrowBackIcon onClick={() => navigate(-1)} />
                     <h4 className=" mb-2 text-head-title text-center">
                         Prepare
@@ -263,12 +282,12 @@ const PartnerBussinessTypePrepare = () => {
                                     />
                                 )}
                                 <FormContainer>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="City*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <div className="border flex  w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
                                                     className="w-full focus:outline-0"
@@ -305,7 +324,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Address*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -325,10 +344,10 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                     </div>
 
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Total Hourly Throughput(MT)*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -352,7 +371,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Types Of Prepare*"
-                                            className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
@@ -393,10 +412,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Product Category*"
-                                            className="rounded-lg pl-[22px] w-1/2"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Autocomplete
                                                 multiple
@@ -425,7 +444,10 @@ const PartnerBussinessTypePrepare = () => {
                                                 renderInput={(params) => (
                                                     <TextField {...params}
                                                         name="product_category_ids"
-                                                        placeholder="Product Category" />
+                                                        placeholder="Product Category"
+                                                       
+                                                     />
+                                                    
                                                 )}
                                             />
                                             {/* <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -468,7 +490,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Product Type"
-                                            className="mx-auto !w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Autocomplete
                                                 multiple
@@ -540,10 +562,10 @@ const PartnerBussinessTypePrepare = () => {
 
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Throughput(MT)*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -578,7 +600,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Avg. case size*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -612,10 +634,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem>
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
-                                            label="No of Docks"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            label="No of Docks*"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -638,9 +660,9 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Area (Square Feet)"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                            <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
                                                     className="w-full border-0 focus:outline-0"
                                                     type='number'
@@ -708,10 +730,10 @@ const PartnerBussinessTypePrepare = () => {
                                             </p>
                                         </FormItem> */}
                                     </div>
-                                    <div className="flex">
+                                    <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                         <FormItem
                                             label="Temperature*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
                                                 <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
@@ -735,7 +757,7 @@ const PartnerBussinessTypePrepare = () => {
                                         </FormItem>
                                         <FormItem
                                             label="Batch Size*"
-                                            className=" w-1/2 rounded-lg pl-[22px]"
+                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className="border flex justify-between h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
@@ -788,7 +810,7 @@ const PartnerBussinessTypePrepare = () => {
 
                                         <FormItem
                                             // label="Machines"
-                                            className=" w-1/2 mx-auto mt-4 rounded-lg pl-[22px]"
+                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <Button
                                                 style={{ borderRadius: '13px' }}

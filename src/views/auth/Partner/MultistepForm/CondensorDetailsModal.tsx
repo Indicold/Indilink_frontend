@@ -32,14 +32,18 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({})
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams() // Extracting active URL endpoint to define payload for API call
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/condensor/${commanData?.id}`)
 
+    /* The following code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -52,7 +56,6 @@ const CondensorDetailsModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
 
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` is used to handle saving data to a store table in a React
@@ -148,8 +151,8 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="mx-auto w-1/2">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                        <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -166,7 +169,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -184,13 +187,13 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem label={<div className='flex justify-center items-center'>
                                            T.R.*
                                               <Tooltip title="Ton of Refrigeration" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
-                                            </div>} className="mx-auto w-1/2">
+                                            </div>} className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -214,7 +217,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                              <InfoIcon />
                                            </Tooltip>
                                          </div>}
-                                        className=" w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             id="countries"
@@ -223,7 +226,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="bg-gray-50 border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        
                                         >
                                             <option selected disabled>Select</option>
@@ -237,7 +240,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                 </div>
                                 <div className="flex !justify-items-start">
                                 </div>
-                                <div className='flex justify-center'>
+                                <div className='flex mt-2 justify-center'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

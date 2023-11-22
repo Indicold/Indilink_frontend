@@ -14,8 +14,8 @@ import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Impo
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
 import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
-import usePutApi from '@/store/customeHook/putApi';
-import { ToastContainer } from 'react-toastify';
+import usePutApi from '@/store/customeHook/putApi'; // Import a custom hook for making PUT requests
+import { ToastContainer } from 'react-toastify'; // Import container for showing toast messages
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
 import { useTranslation } from 'react-i18next'
 
@@ -216,12 +216,12 @@ const StoreSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer className='gap-4'>
                                 <div className='bg-gray-100 p-2 rounded-md'>
-                                <p className='ml-[23px]'><b>{t("Location")} </b></p>
-                                <div className="flex ">
+                                <p className='pl-3'><b>{t("Location")} </b></p>
+                                <div className="md:flex lg:flex ">
                                    
                                     <FormItem
                                         label= {t("Country")} 
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -239,7 +239,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("City")} 
-                                        className="mx-auto w-1/2 rounded-lg pl-[20px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -259,10 +259,10 @@ const StoreSearch = () => {
                                 </div>
 
 
-                                <div className="bg-gray-100 mt-4 p-3 rounded-md flex">
+                                <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex md:flex">
                                     <FormItem
                                         label= {t("Product Type")} 
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -280,7 +280,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Temperature")} 
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -308,10 +308,10 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.temperature}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 mt-4 rounded-md p-2">
+                                <div className="md:flex lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label={t("Unit")}
-                                        className="mx-auto rounded-lg pl-[22px] w-1/2"
+                                        label={t("Unit*")}
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             disabled={isDisabled}
@@ -337,11 +337,11 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.unit_id}</p>
+                                        <p className='text-[red]'>{errors && errors.quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Certification")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -358,10 +358,10 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.certification_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Date Of Storage")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -377,7 +377,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Storage Duration")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}

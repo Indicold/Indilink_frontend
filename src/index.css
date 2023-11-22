@@ -142,7 +142,7 @@ padding-right: 2rem !important;
     bottom: -4.2rem !important;
 }
 .input:disabled {
-    background-color: inherit !important;
+    /* background-color: inherit !important; */
 }
 .input-wrapper, .input-md{
 padding-right: 0px !important;
@@ -235,4 +235,17 @@ rect{
     overflow: hidden;
     width: 100px !important;
     max-width: 100px !important;
+  }
+  .carousel .control-dots .dot {
+    width: 16px !important; /* Customize dot width */
+    height: 16px !important; /* Customize dot height */
+    margin: 0 5px; /* Adjust margin between dots */
+    border-radius: 50%; /* Make dots circular */
+    background-color: #9ca3af !important; /* Customize dot color */
+    opacity: 0.8; /* Adjust dot opacity */
+  }
+  
+  /* Active dot styles */
+  .carousel .control-dots .dot.selected {
+    background-color: #f00; /* Customize active dot color */
   }

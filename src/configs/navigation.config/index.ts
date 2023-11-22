@@ -1,3 +1,4 @@
+/* The code is importing constants and types from different files. */
 import {
     NAV_ITEM_TYPE_TITLE,
     NAV_ITEM_TYPE_ITEM,
@@ -5,6 +6,9 @@ import {
 } from '@/constants/navigation.constant'
 import type { NavigationTree } from '@/@types/navigation'
 
+/* The code is defining an array called `navigationConfig` which contains objects representing the
+navigation menu items. Each object represents a menu item and has properties such as `key`, `path`,
+`title`, `translateKey`, `icon`, `type`, `authority`, and `subMenu`. */
 const navigationConfig: NavigationTree[] = [
     {
         key: 'home',

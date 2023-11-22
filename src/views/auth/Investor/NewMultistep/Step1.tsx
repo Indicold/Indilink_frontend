@@ -6,6 +6,7 @@ import { Button, FormContainer, FormItem, Input } from "@/components/ui"
 import { Field, Form, Formik } from "formik"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next'
 
 interface Props {
     additionalLocations: number;
@@ -61,9 +62,11 @@ const Step1 = (props:any) => {
             
           }
     }
+    const { t, i18n }:any = useTranslation();
     return (
         <div  className="bg-white">
-            <h4 className=" mb-2 text-head-title text-center">Investor</h4>
+            <h4 className=" mb-2 text-head-title text-center">{t("Investor")}
+</h4>
             {/* The above code is a form component written in TypeScript and React using the Formik
             library. It renders a form with various input fields and radio buttons. The form has
             initial values set for the "field" property. It also has an onSubmit function that logs
@@ -84,15 +87,15 @@ const Step1 = (props:any) => {
 
                     <FormContainer>
                         <FormItem
-                            label="Ammount Of Investment"
-                            className='mx-auto text-label-title pl-[22px] pl-[22px]'
+                            label={t("Ammount Of Investment")}
+                            className='mx-auto text-label-title pl-[22px]'
                         >
                             <Field
                                 type="text"
                                 autoComplete="off"
                                 name="Cold_Storage_Name"
                                 onChange={(e:any)=>handlechange(e)}
-                                placeholder="Cold Storage Name"
+                                placeholder={t("Cold Storage Name")}
                                 component={Input}
                             />
                         </FormItem>
@@ -113,7 +116,8 @@ const Step1 = (props:any) => {
   </select>
                         </FormItem> */}
                         <FormItem
-                            label="Bussiness Type"
+                            label= {t("Bussiness Type")}
+
                             className='mx-auto text-label-title pl-[22px]'
                         >
                             <div className="flex">
@@ -130,7 +134,8 @@ const Step1 = (props:any) => {
                           htmlFor="default-radio-1"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                          Store
+                          {t("Store")}
+
                         </label>
                       </div>
                       <div className="flex m-2 items-center mb-4 border-2 p-2 rounded-lg">
@@ -147,7 +152,8 @@ const Step1 = (props:any) => {
                           htmlFor="default-radio-2"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                          Move
+                           {t("Move")}
+
                         </label>
                       </div>
                       <div className="flex m-2 items-center mb-4 border-2 p-2 rounded-lg">
@@ -164,14 +170,15 @@ const Step1 = (props:any) => {
                           htmlFor="default-radio-2"
                           className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                          Prepare
+                          {t("Prepare")}
+
                         </label>
                       </div>
                       </div>
                         </FormItem>
                         <div className="flex">
                         <FormItem
-                            label="Type"
+                            label={t("Type")}
                             className=' text-label-title pl-[22px]'
                         >
     <label className='themeSwitcherTwo shadow-card relative inline-flex cursor-pointer select-none items-center justify-center rounded-md bg-white p-1'>
@@ -185,7 +192,8 @@ const Step1 = (props:any) => {
             !isChecked ? 'text-primary bg-[#f4f7ff]' : 'text-body-color'
           }`}
         >
-          Active
+           {t("Active")}
+
         </span>
         <span
           className={`flex items-center space-x-[6px] rounded py-2 px-[18px] text-sm font-medium ${
@@ -193,7 +201,8 @@ const Step1 = (props:any) => {
           }`}
         >
          
-       Passive
+        {t("Passive")}
+
         </span>
       </label>
                         </FormItem>
@@ -201,7 +210,7 @@ const Step1 = (props:any) => {
                         </div>
                         
                         <FormItem
-                            label="Area Of Land"
+                            label={t("Area Of Land")}
                             className=' text-label-title pl-[22px]'
                         >
                             <Field
@@ -209,13 +218,13 @@ const Step1 = (props:any) => {
                                 autoComplete="off"
                                 name="city"
                                 onChange={(e:any)=>handlechange(e)}
-                                placeholder="Area of Land"
+                                placeholder={t("Area Of Land")}
                                 component={Input}
                             />
                         </FormItem>
                       
                         <FormItem
-                            label="Location"
+                            label={t("Location")}
                             className='mx-auto text-label-title pl-[22px]'
                         >
                             <Field
@@ -236,7 +245,8 @@ const Step1 = (props:any) => {
                                   onClick={handleRoute}
                                   className='indigo-btn w-[300px] mx-auto rounded-[30px]'
                               >
-                                  Next
+                                  {t("Next")}
+
                               </Button>
                               </div>
                     </FormContainer>

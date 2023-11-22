@@ -1,7 +1,16 @@
+/* The code is importing the necessary dependencies for the component. */
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import img from "../../../public/img/images/indicoldside.png"
+
+/* The code defines a functional component called `DataNotFound`. It takes two props, `title` and
+`url`, which are of type `any`. */
 const DataNotFound = ({title,url}:any) => {
+    /* `const navigate:any=useNavigate();` is assigning the `useNavigate()` hook to the `navigate`
+    variable. The `useNavigate()` hook is used for programmatic navigation in React Router. It
+    returns a navigate function that can be used to navigate to different routes programmatically.
+    In this case, the `navigate` function is being used in the `onClick` event handler of a button
+    to navigate to a specific URL when the button is clicked. */
     const navigate:any=useNavigate();
     return (
 
@@ -27,7 +36,7 @@ const DataNotFound = ({title,url}:any) => {
                     </div>}
                     <div></div>
                 </div>
-                <div className='ml-[30%]'>0.00</div>
+                {/* <div className='ml-[30%]'>0.00</div> */}
                </div>
 
             

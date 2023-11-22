@@ -38,11 +38,6 @@ export const validateForm = (formData: any, setError: any) => {
     const errorss: any = {}
 
     if (formData?.password !== formData?.confirm_password) {
-        console.log(
-            'formData?.password !== formData?.confirm_password',
-            formData?.password,
-            formData?.confirm_password
-        )
 
         errorss.password = 'Passwords do not match'
     }
@@ -53,8 +48,8 @@ export const validateForm = (formData: any, setError: any) => {
         errorss.password = 'Password is required'
     }
 
-    if (!formData?.term_condition) {
-        errorss.term_condition = 'Please Accept Term & condition'
+    if (formData?.term_condition === "off" || !formData?.term_condition) {
+        errorss.term_condition = 'Please Accept Terms & Conditions'
     }
 
 
@@ -179,7 +174,6 @@ export const handleStoreTable = async (
             if (newD[name]) arr = [...newD[name]]
             arr.push(result?.date?.id)
             newD[name] = arr
-            console.log("CACGFG",formD);
             
             update(newD)
                       // Retrieve existing chamber_ids from local storage
@@ -202,7 +196,6 @@ if (!existingChamberIdsJSON) {
 }
 
 
-            console.log("formdataa: ", formD, name, arr, newD); 
             setTimeout(() => {
                 setModal(false)
             }, 2000)
@@ -211,7 +204,6 @@ if (!existingChamberIdsJSON) {
         }
     } catch (error: any) {
         messageView(error.message)
-        console.log('error', error.message)
     }
 }
 
@@ -219,7 +211,7 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
     if (!formData?.city_id) {
-        newErrors.city_id = 'City ID is required'
+        newErrors.city_id = 'City is required'
     }
 
     if (!formData?.address) {
@@ -234,11 +226,11 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
             newErrors.hourly_throughput = 'Hourly throughput is required'
         }
     }
-    if (!formData?.prepare_type_id) {
-        newErrors.prepare_type_id = 'Prepare type id is required'
+    if (!formData?.prepare_type_id || formData?.prepare_type_id == 'Types Of Prepare') {
+        newErrors.prepare_type_id = 'Prepare type is required'
     }
     if (formData?.product_category_ids?.length == 0) {
-        newErrors.product_category_ids = 'Product category ids is required'
+        newErrors.product_category_ids = 'Product category is required'
     }
     if (!formData?.throughput) {
         if (formData?.throughput==='') {
@@ -268,9 +260,14 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
         //     newErrors.type_of_dock_id = 'Type of Dock id is required'
         // }
     if (!formData?.temperature_min) {
-        newErrors.temperature_min = 'Min Temperature is required'
+        if (!formData?.temperature_max) {
+            newErrors.temperature_min = 'Min and Max Temperatures are required'
+        }
+        else {
+            newErrors.temperature_min = 'Min Temperature is required'
+        }
     }
-    if (!formData?.temperature_max) {
+    if (!formData?.temperature_max && formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature is required'
     }
     if (!formData?.batch_size) {
@@ -288,24 +285,20 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     //     newErrors.area = 'Area is required'
     // }
     // Add more specific validation rules for other fields
-    console.log('errr', newErrors)
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
 export const validateStorePartnerForm = (formData: any, setErrors: any) => {
-    console.log('partner store validation', formData)
 
     const newErrors: any = {}
 
     if (!formData?.weight_bridge_id) {
         newErrors.weight_bridge_id = 'Weigh Bridge is required'
-        console.log("err weigh:", newErrors.weight_bridge_id)
     }
     if (!formData?.road_condition_id || formData?.road_condition_id === '') {
         newErrors.road_condition_id = 'Please select road condition'
-        console.log("err road:", newErrors.road_condition_id)
     }
 
     if (!formData?.city_id) {
@@ -448,13 +441,11 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
         newErrors.chassis_no = 'This Field is required'
     }
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
 export const validateChamberForm = (formData: any, setErrors: any) => {
-    console.log("validateChamberForm", formData);
     const newErrors: any = {}
 
     if (!formData?.chamber_number) {
@@ -470,7 +461,6 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
     }
     
     if (formData?.chamber_size?.length < 5) {
-        console.log('formdata_chamber', formData?.chamber_size?.length)
         newErrors.chamber_size = 'Enter all details'
     }
 
@@ -483,7 +473,6 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
     }
     
     if (formData?.pallet_size?.length < 5) {
-        console.log('formdata_chamber', formData?.chamber_size?.length)
         newErrors.chamber_size = 'Enter all details'
     }
 
@@ -491,13 +480,13 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.racking_type_id = 'This Field is required'
     }
 
-    if (formData?.photo_of_entrance?.length < 1) {
+    if (formData?.photo_of_entrance?.length < 1 || !formData?.photo_of_entrance) {
         newErrors.photo_of_entrance = 'This Field is required'
     }
 
-    // if (!formData?.photo_of_chamber) {
-    //     newErrors.photo_of_chamber = 'This Field is required'
-    // }
+    if (!formData?.photo_of_chamber || formData?.photo_of_chamber?.length < 1) {
+        newErrors.photo_of_chamber = 'This Field is required'
+    }
 
     if (!formData?.no_of_floors) {
         newErrors.no_of_floors = 'This Field is required'
@@ -523,13 +512,11 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.photos_of_asset = 'This Field is required'
     }
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
 export const validateCAEquipForm = (formData: any, setErrors: any) => {
-    console.log("validateChamberForm", formData);
     const newErrors: any = {}
 
     if (!formData?.asset_id) {
@@ -549,7 +536,6 @@ export const validateCAEquipForm = (formData: any, setErrors: any) => {
     }
 
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -582,7 +568,6 @@ export const validateCompressorForm = (formData: any, setErrors: any) => {
     }
 
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -831,9 +816,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This Field is required'
     }
-    // if (!formData?.certification_id) {
-    //     newErrors.certification_id = 'This Field is required'
-    // }
+    if (!formData?.quantity) {
+        newErrors.quantity = 'This Field is required'
+    }
     if (!formData?.unit_id) {
         newErrors.unit_id = 'This Field is required'
     }
@@ -850,7 +835,7 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This Field is required'
     }
-    console.log('errr', newErrors)
+    
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -885,7 +870,7 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
     if (formData?.unit_id && !formData?.unit_id) {
         newErrors.unit_id = 'Unit is required'
     }
-    console.log('errr', newErrors)
+    
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -932,16 +917,18 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temp_max) {
         newErrors.temp_max = 'This Field is required'
     }
+    if (!formData?.product_type_id) {
+        newErrors.product_type_id = 'This Field is required'
+    }
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 export const validateSHForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
-    if (!formData?.full_name) {
-        newErrors.full_name = 'This Field is required'
+    if (!formData?.fname) {
+        newErrors.fname = 'This Field is required'
     }
 
     if (!formData?.percentage_holding) {
@@ -970,7 +957,6 @@ export const validateSHForm = (formData: any, setErrors: any) => {
     }
    
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -1001,7 +987,6 @@ export const validateBranchForm = (formData: any, setErrors: any) => {
   
    
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -1035,7 +1020,6 @@ export const validateBasicForm = (data: any, setErrors: any) => {
   
    
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -1081,7 +1065,6 @@ export const validateKeyForm = (data: any, setErrors: any) => {
   
    
 
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -1108,7 +1091,6 @@ export const validateAccountForm = (data: any, setErrors: any) => {
         newErrors.branch_name = 'This Field is required'
     }
   
-    console.log('errr', newErrors)
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }

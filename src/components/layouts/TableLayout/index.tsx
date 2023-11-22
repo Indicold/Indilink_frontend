@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // Importing React to define React component and to use hooks
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
-import "rc-pagination/assets/index.css";
+import Pagination from "rc-pagination"; // Importing pagination component for showing table records in multiple pages
+import "rc-pagination/assets/index.css"; // Importing pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
-import { useNavigate } from 'react-router-dom';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import EditIcon from '@mui/icons-material/Edit';
-import usePutApi from '@/store/customeHook/putApi';
-import { messageView } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom'; // For handling navigation
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon to show in Table action column for viewing attached documents to a record
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'; // Importing icon to show in Table action column for viewing a record
+import EditIcon from '@mui/icons-material/Edit'; // Importing icon to show in Table action column for editing a record
+import usePutApi from '@/store/customeHook/putApi'; // Importing custom hook for API call
+import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast message
+import { ToastContainer } from 'react-toastify'; // Importing container to show Toast messages
 import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
 const tableHead = {
@@ -31,10 +31,12 @@ const tableHead = {
 const TableLayout = ({ AllStore,fetchApi }: any) => {
   let allData: any = AllStore;
   const countPerPage = 10;
+
+  // Defining state variables for managing value, alert, rowdata and modal functionality/data
   const [value, setValue] = React.useState("");
-  const [Alert,setAlert]=useState<any>(false)
-  const [RowData,setRowData]=useState<any>({});
-  const [logsModal,setLogsModal]=useState<any>(false)
+  const [Alert,setAlert]=useState<any>(false) // For showing modal. Initially the modal will be closed when the component mounts
+  const [RowData,setRowData]=useState<any>({}); // Empty because no row has been clicked in the table on component mount
+  const [logsModal,setLogsModal]=useState<any>(false) // Initially the modal will be closed when the component mounts
 let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -83,7 +85,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    console.log("TTTTTTTTTTTT",rowData,`/partner-registration/${rowData?.asset_id}`);
     
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -112,6 +113,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
+      // navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Prepare') {
       localStorage.setItem('country_id', rowData?.country_id)
@@ -131,16 +133,22 @@ const handleLogs=(rowData:any)=>{
   setLogsModal(true)
 }
   const handleSubmit=(rowData:any)=>{
-    console.log("ttttttt",rowData);
     
     setRowData(rowData)
     setAlert(true)
   }
+  // Function which will hit API to make asset final
   const handleConfirm=()=>{
-    console.log("tttttttt8888",);
     
     PostSubmitDetails({status:"Final"})
   }
+  
+/**
+ * The function `handleDocs` navigates to a specific document list page based on the `asset_id`
+ * property of the `rowData` object.
+ * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is of
+ * type `any`, which means it can be any type of data.
+ */
 const handleDocs=(rowData:any)=>{
   navigate(`/documents-list/${rowData?.asset_id}`)
 }
@@ -165,7 +173,7 @@ const handleDocs=(rowData:any)=>{
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='text-center flex gap-2' key={i} >
           {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
@@ -176,7 +184,7 @@ const handleDocs=(rowData:any)=>{
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -191,9 +199,9 @@ const handleDocs=(rowData:any)=>{
     ));
   };
 
-  // JSX structure for rendering the table and pagination.
+/* The following code is using the useEffect hook in a React component. It is triggering the effect
+whenever the value of SubmitResponse changes. */
 useEffect(()=>{
-console.log("SubmitResponse",SubmitResponse);
 messageView(SubmitResponse?.message)
 if(SubmitResponse?.status===200){
   setAlert(false)
@@ -214,6 +222,8 @@ React.useEffect(() => {
       setCollection(newCollection);
   }
 }, [allData]);
+
+  // JSX structure for rendering the table and pagination.
   return (
     <>
     <ToastContainer />
@@ -261,18 +271,22 @@ React.useEffect(() => {
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className=''>
+
+      <div className='overflow-auto'>
+      <table className='w-[100%]'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
+      
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}

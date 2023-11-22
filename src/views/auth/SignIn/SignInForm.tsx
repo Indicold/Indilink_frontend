@@ -54,6 +54,8 @@ const validationSchema = Yup.object().shape({
 })
 
 const SignInForm = (props: SignInFormProps) => {
+    /* The below code is a TypeScript React component that defines a form with three state variables:
+    `isSubmitting`, `formData`, and `error`. */
     const [isSubmitting, setSubmitting] = useState(false)
     const [formData, setFormData] = useState<any>({
         email: '',
@@ -64,12 +66,22 @@ const SignInForm = (props: SignInFormProps) => {
         email: '',
         password: '',
     })
+
+    /* The below code is using the useDispatch hook from the React-Redux library to get a reference to
+    the dispatch function. The dispatch function is used to send actions to the Redux store,
+    triggering state updates. */
     const dispatch = useDispatch()
+
+    /* The below code is using the useSelector hook from the React Redux library to access the
+    `apiLoginPostReducer` state from the `auth` slice of the Redux store. The value of
+    `LoginResponse` will be the result of the selector function, which is the `apiLoginPostReducer`
+    state. */
     const LoginResponse = useSelector(
         (state: any) => state?.auth?.apiLoginPostReducer
     )
-    console.log('LOGIN', LoginResponse?.responseData?.message)
 
+    /* The below code is a TypeScript React component that is destructuring the `props` object to
+    extract certain properties and assign them to variables. */
     const {
         disableSubmit = false,
         className,
@@ -86,16 +98,6 @@ const SignInForm = (props: SignInFormProps) => {
     const navigate: any = useNavigate()
     const handlesubmit = (e: any) => {
         e.preventDefault()
-        console.log(
-            'HGFFGDFGD',
-            validateForm(
-                {
-                    email: formData?.email,
-                    passwordlGN: formData?.password,
-                },
-                setError
-            )
-        )
 
         if (validateFormLogin(formData)) {
             
@@ -128,7 +130,6 @@ const SignInForm = (props: SignInFormProps) => {
                   
 
                     }else{
-                    console.log("res", data)
 
                         messageView(data?.message)
 
@@ -137,7 +138,6 @@ const SignInForm = (props: SignInFormProps) => {
                 })
                 .catch((err) => {
                     setSubmitting(false)
-                    console.log("err", err)
                 })
 
         }

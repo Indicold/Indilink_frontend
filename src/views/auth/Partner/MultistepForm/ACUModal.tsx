@@ -7,15 +7,24 @@
  * user can enter values in these fields and click the "Save" button to save the data. The modal is
  * displayed conditionally based on the value of the "modal
  */
-import { Button, FormItem, Input, Tooltip } from '@/components/ui'
+import { Button, FormItem, Input, Tooltip } from '@/components/ui' // Importing custom UI components
 import { getToken } from '@/store/customeHook/token'
-import useApiFetch from '@/store/customeHook/useApiFetch'
+import useApiFetch from '@/store/customeHook/useApiFetch' // Custom hook for API call
 import { handleStoreTable, messageView, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import InfoIcon from '@mui/icons-material/Info';
-import usePutApi from '@/store/customeHook/putApi'
+import InfoIcon from '@mui/icons-material/Info'; // Info icon for designing tooltip
+import usePutApi from '@/store/customeHook/putApi' // Custom hook for API call
+
+/* The above code is defining an interface called MajorityHolderModalProps. This interface has several
+properties:
+- modal: a boolean value indicating whether a modal is open or not
+- formD: any type, representing the form data
+- update: a React dispatch function to update the state of a boolean value
+- chamber: any type, representing the chamber data
+- setModal: a React dispatch function to update the state of a boolean value
+- FetchAgain: any type, representing a function to fetch data again. */
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -33,7 +42,7 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     commanData
 }:any) => {
    
-    const {id}: any = useParams();
+    const {id}: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const [data, setData] = useState<any>({
         asset_id:id
@@ -41,13 +50,17 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     const [errors, setErrors] = useState<any>({});
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/acu/${commanData?.id}`)
 
+    /* The above code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
-    const {token}:any=getToken()
+    const {token}:any=getToken() // Extracting token for API call
     const {
         data: DfTypeList,
         loading: DfLoading,
@@ -71,19 +84,16 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The function `handlesave` calls the `handleStoreTable` function with specific
      * parameters.
      */
     const handlesave = () => {
-        console.log("saved", data, validateACUForm(data, setErrors), errors)
         if(commanData?.type==='Edit'){
             updateData(data)
         }else{
             if(validateACUForm(data, setErrors)) {
-                console.log("validated")
             handleStoreTable(
                 'partner/store/acu',
                 data,
@@ -98,6 +108,8 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
       
     }
 
+    /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
+    value of the `commanData` variable changes. */
     useEffect(()=>{
         if(commanData?.type=='Edit' || commanData?.type=='View'){
             setData(commanData)
@@ -172,8 +184,8 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="mx-auto w-1/2">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             autoComplete="off"
@@ -190,7 +202,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="mx-auto w-1/2">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                        <Field
                                             type="text"
                                             autoComplete="off"
@@ -208,7 +220,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         // label="C.F.M.*"
                                         label={
@@ -219,7 +231,7 @@ if(PutApiResponse?.status===200){
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                      <Field
                                             type="number"
@@ -246,7 +258,7 @@ if(PutApiResponse?.status===200){
                                           </Tooltip>
                                         </div>
                                       }
-                                     className="mx-auto w-1/2">
+                                     className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="number"
                                             autoComplete="off"
@@ -264,7 +276,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     {/* <FormItem
                                         label="A.M.C.*"
                                         className="mx-auto w-1/2"
@@ -295,7 +307,7 @@ if(PutApiResponse?.status===200){
                                           </Tooltip>
                                         </div>
                                       }
-                                    className="mx-auto w-1/2">
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                    <Field
                                             type="text"
                                             autoComplete="off"
@@ -314,7 +326,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem>
                                     <FormItem
                                         label="Defrosting*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         {/* <Field
                                             type="text"
@@ -332,7 +344,7 @@ if(PutApiResponse?.status===200){
                                                 handleChange(e)
                                             }
                                             disabled={isDisabled}
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            className="bg-gray-50 border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                            
                                         >
                                             <option >Select</option>
@@ -347,7 +359,7 @@ if(PutApiResponse?.status===200){
                                     </FormItem>
                                 </div>
 
-                                <div className="flex">
+                                <div className="  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                 {/* <FormItem
                                         label="Discharge Outlet Pipe - GI*"
                                         className=" w-1/2"
@@ -368,9 +380,8 @@ if(PutApiResponse?.status===200){
                                     </FormItem> */}
                                  
                                 </div>
-                                <div className="flex">
-                                </div>
-<div className='flex'>
+                              
+                                <div className='  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

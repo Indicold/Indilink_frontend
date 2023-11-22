@@ -1,5 +1,5 @@
 /* 
-* The above code is a TypeScript React component that represents a login form with OTP (One-Time
+* The following code is a TypeScript React component that represents a login form with OTP (One-Time
 * Password) functionality. It imports various components from different files and libraries, such as
 * Input, Button, FormItem, FormContainer, ActionLink, Field, Form, Formik, ToastContainer, and toast. 
 */
@@ -16,7 +16,11 @@ import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl } from '@/store/customeHook/token'
+import { onkeyDownOne } from '@/store/customeHook/validate'
 
+/* The below code is defining an interface called `LoginWithOTPFormProps` in TypeScript for a React
+component. This interface extends another interface called `CommonProps` and adds three optional
+properties: `disableSubmit`, `forgotPasswordUrl`, and `signUpUrl`. */
 interface LoginWithOTPFormProps extends CommonProps {
     disableSubmit?: boolean
     forgotPasswordUrl?: string
@@ -28,6 +32,8 @@ interface LoginWithOTPFormProps extends CommonProps {
 
 
 const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
+    /* The below code is a TypeScript React component that handles the functionality of submitting a
+    mobile number and verifying it with an OTP (One-Time Password). */
     const [isSubmitting, setSubmitting] = useState(false)
     const [isNumber, setIsNumber] = useState<any>(true)
     const [seconds, setSeconds] = useState(10);
@@ -39,6 +45,8 @@ const LoginWithOTPForm = (props: LoginWithOTPFormProps) => {
     })
 
 const [errors,setError]=useState<any>({})
+    /* The below code is a TypeScript React component that is destructuring the `props` object to
+    extract certain properties and assign them to variables. */
     const {
         disableSubmit = false,
         className,
@@ -49,16 +57,29 @@ const [errors,setError]=useState<any>({})
     let a = 'false'
 
     const navigate = useNavigate();
+/**
+ * The function `validate` checks if the `phone_number` field in the `formdata` object is empty and
+ * returns true if it is not empty, otherwise it returns false.
+ * @returns a boolean value. It returns true if there are no errors (i.e., the error object is empty),
+ * and false otherwise.
+ */
 const validate=()=>{
     const error:any={};
     if(!formdata?.phone_number){
         error.phone_number="Phone number is required"
     }
     
-    console.log('errr', error)
     setError(error)
     return Object.keys(error).length === 0
 }
+    /**
+     * The `handlesubmit` function is used to handle form submission, validate the form data, and
+     * perform different actions based on the presence of an OTP value.
+     * @param {any} e - The parameter `e` is an event object. It is typically used in event handlers to
+     * access information about the event that occurred, such as the target element or the event type.
+     * In this case, it is used to prevent the default form submission behavior by calling
+     * `e.preventDefault()`.
+     */
     const handlesubmit = (e: any) => {
         e.preventDefault()
         if(validate()){
@@ -134,6 +155,22 @@ const validate=()=>{
         if (verifyResponse?.status) {
             if (verifyResponse.message.accessToken) localStorage.setItem('access_token', verifyResponse.message.accessToken);
 
+            if (verifyResponse?.message) {
+                toast.success(verifyResponse?.message, {
+                    position: 'top-right', // Position of the toast
+                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    style: {
+                        background: '#FFB017', fontSize: "bold",
+                        color: "#fff"// Set the background color here
+                    },
+                });
+            }
+
             navigate('/home')
         }
 
@@ -173,7 +210,7 @@ const validate=()=>{
 
                         >
                             <Field
-                                type="text"
+                                type="tel"
                                 autoComplete="off"
                                 className="rounded-[13px]"
                                 name="phone_number"
@@ -181,6 +218,8 @@ const validate=()=>{
                                 value={formdata?.phone_number}
                                 onChange={handleChange}
                                 component={Input}
+                                onKeyDown={onkeyDownOne}
+                                maxLength={10}
                             />
                            <p className="text-[red]">{errors?.phone_number}
                             </p>
@@ -199,6 +238,7 @@ const validate=()=>{
                                     placeholder="Enter Your OTP"
                                     onChange={handleChange}
                                     component={Input}
+                                    type="number"
                                 // component={PasswordInput}
                                 />
                                   <p className="text-[red]">{errors?.OTP}
@@ -231,6 +271,7 @@ const validate=()=>{
                                 variant="solid"
                                 type="submit"
                                 className='bg-[#3f8cfe] indigo-btn w-[40%] mx-auto rounded-[30px] mt-2'
+                                disabled={!formdata?.otp}
                             >
                                 {isSubmitting ? 'Signing in...' : 'Verify OTP'}
                             </Button>}

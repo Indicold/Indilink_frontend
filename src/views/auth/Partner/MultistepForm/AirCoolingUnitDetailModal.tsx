@@ -9,6 +9,9 @@
 import { Button, FormItem, Input } from '@/components/ui'
 import { Field } from 'formik'
 import { useState } from 'react'
+
+/* The `interface MajorityHolderModalProps` defines the props that the `AirCoolingUnitDetailModal`
+component expects to receive. It specifies two props: */
 interface MajorityHolderModalProps {
     modal: boolean
     setModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +32,6 @@ const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        console.log('newData', newData)
     }
     /**
      * The function `handlesave` saves data to local storage and closes a modal.
@@ -40,7 +42,6 @@ const AirCoolingUnitDetailModal: React.FC<MajorityHolderModalProps> = ({
         }
         setModal(false)
 
-        console.log('gggggg')
     }
     return (
         <>

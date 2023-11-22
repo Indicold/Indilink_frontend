@@ -1,64 +1,135 @@
+/* The following code is a TypeScript React component that imports various modules and components. It uses
+a custom hook called `useApiFetch` from the `useApiFetch` file in the `customeHook` directory. It
+also imports functions `messageView`, `onkeyDown`, and `onkeyDownOne` from the `validate` file in
+the `customeHook` directory. It imports variables `apiUrl` and `getToken` from the `token` file in
+the `store` directory. */
 import useApiFetch from '@/store/customeHook/useApiFetch';
-import { messageView, onkeyDown } from '@/store/customeHook/validate';
+import { messageView, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import InvoiceTableList from './InvoiceTableList';
+import LoaderSpinner from '@/components/LoaderSpinner';
 
 const Invoice = () => {
-    const {token}:any=getToken();
-    const [modal, setModal] = useState<any>(false);
-    const [formData,setFormData]=useState<any>({
-        invoice_doc:"",
-        invoice_amount:""
-    })
-    const { data: ListOfInvoice, loading: LIloading, error: LIerror } =
-    useApiFetch<any>(`partner/invoices`, token);
+    /* The following code is written in TypeScript and React. It is destructuring the `token` property from
+    the result of calling the `getToken()` function. The `token` variable is then assigned the value
+    of the `token` property. The type of `token` is specified as `any`. */
+    const { token }: any = getToken(); // Extracting token for API call
 
-    const handleChange=(e:any)=>{
-        const newData:any={...formData};
-        if(e.target.name==='invoice_doc'){
-            newData[e.target.name]=e.target.files[0]; 
-        }else{
-            newData[e.target.name]=e.target.value;
+    // State variable for modal opening and closing. Initially, the modal will be closed when the component mounts
+    const [modal, setModal] = useState<any>(false);
+    const [loader,setLoader]=useState<any>(false)
+    const [formData, setFormData] = useState<any>({
+        invoice_doc: "",
+        invoice_amount: ""
+    }) // State variable for managing form data
+    const [error,setErrors]=useState<any>({})
+
+    /* The following code is using the `useApiFetch` hook to fetch a list of invoices from the
+    `partner/invoices` endpoint. It is destructuring the response object into variables
+    `ListOfInvoice`, `LIloading`, `LIerror`, and `fetchInvoiceData`. `ListOfInvoice` will contain
+    the fetched data, `LIloading` will indicate if the data is still loading, `LIerror` will contain
+    any error that occurred during the fetch, and `fetchInvoiceData` is a function that can be used
+    to refetch the data. */
+    const { data: ListOfInvoice, loading: LIloading, error: LIerror,refetch:fetchInvoiceData } =
+        useApiFetch<any>(`partner/invoices`, token);
+
+    /**
+     * The handleChange function updates the formData state based on the value or file selected in an
+     * input field.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the change, such as a user input or a file
+     * selection.
+     */
+    const handleChange = (e: any) => {
+        const newData: any = { ...formData };
+        if (e.target.name === 'invoice_doc') {
+            
+            newData[e.target.name] = e.target.files[0];
+        } else {
+            newData[e.target.name] = e.target.value;
         }
-           console.log("6HYFGHKJHJH",newData);
            
         setFormData(newData)
-  
+
     }
-    const handleSave=(e:any)=>{
+
+    /**
+     * The `handleSave` function is responsible for sending a POST request to upload an invoice
+     * document and amount, and it also performs validation checks for the form data.
+     * @param {any} e - The parameter `e` is an event object that represents the event that triggered
+     * the function. It is commonly used in event handlers to access information about the event, such
+     * as the target element or the event type. In this case, it is not being used in the function, so
+     * it can be removed
+     */
+    const handleSave = (e: any) => {
         var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
-var formdata = new FormData();
-formdata.append("invoice_doc", formData?.invoice_doc);
-formdata.append("invoice_amount", formData?.invoice_amount);
+        var formdata = new FormData();
+        formdata.append("invoice_doc", formData?.invoice_doc);
+        formdata.append("invoice_amount", formData?.invoice_amount);
 
-var requestOptions :any= {
-  method: 'POST',
-  headers: myHeaders,
-  body: formdata,
-  redirect: 'follow'
-};
+        var requestOptions: any = {
+            method: 'POST',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow'
+        };
+        if (formData?.invoice_doc && formData?.invoice_amount) {
+            setLoader(true)
+            fetch(`${apiUrl}/partner/invoice`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setLoader(false)
+                    if (result?.status === 200) {
+                      
+                        setFormData({})
+                        messageView("Invoice Uploaded Successfully !")
+                        
+                        setModal(false)
+                        setFormData({
+                            invoice_doc: "",
+                            invoice_amount: ""
+                        })
+                    } else {
+                        
+                        messageView(result?.message)
+                    }
+                    fetchInvoiceData()
+                })
+                .catch(error =>{
+                    setLoader(false)
+                    console.log('error', error)});
+        }
+        const errors:any={}
+         if(!formData?.invoice_doc){
+            errors.invoice_doc="Please Upload Invoice Document";
+          
+        }
 
-fetch(`${apiUrl}/partner/invoice`, requestOptions)
-  .then(response => response.json())
-  .then(result =>{
-    if(result?.status===200){
-        messageView("Invoice Uploaded Successfully !")
-        setModal(false)
-    }else{
-        messageView(result?.message)
+         if(!formData?.invoice_amount){
+errors.invoice_amount="Please Enter Invoice Amount";
+         
+        }
+        setErrors(errors)
     }
+    
+    /* The below code is using the useEffect hook in a React component. It is specifying a function to
+    be executed when the component mounts or when the dependencies (formData and modal) change.
+    Inside the function, it is calling the fetchInvoiceData function. */
+    useEffect(()=>{
+        fetchInvoiceData()
+    },[formData,modal])
 
-})
-  .catch(error => console.log('error', error));
-    }
+    /* The following code is a TypeScript React component that renders an invoice form and a list of
+    invoices. */
     return (
         <>
-        <ToastContainer />
-          {modal &&  <div
+        {loader && <LoaderSpinner />}
+            <ToastContainer />
+            {modal && <div
                 id="authentication-modal"
                 tabIndex={-1}
                 aria-hidden="true"
@@ -79,7 +150,7 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                                     </div>
                                     <div className=' text-white  '>
 
-                                        <button type="button"       onClick={()=>setModal(false)} className="bg-black rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-500 hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                                        <button type="button" onClick={() => setModal(false)} className="bg-black rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-500 hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
 
                                             <span className="sr-only">Close menu</span>
 
@@ -112,7 +183,7 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
 
                                 <div className='w-[90%] p-2 m-auto text-center '>
                                     <div className="flex items-center justify-center w-full">
-                                        <label
+                                     <label
                                             htmlFor="dropzone-file"
                                             className="flex h-[100px] flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                                         >
@@ -136,23 +207,30 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                                                     <span className="font-semibold">Click to upload</span> or drag and drop
                                                 </p>
                                                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                                                    SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                                    txt,Pdf (MAX. 800x400px)
                                                 </p>
                                             </div>
-                                            <input id="dropzone-file" name='invoice_doc'  onChange={(e:any)=>handleChange(e)} type="file" className="hidden" />
-                                        </label>
+                                            {/* .xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt, */}
+                                            <input id="dropzone-file" accept=".txt,.pdf" name='invoice_doc' onChange={(e: any) => handleChange(e)} type="file" className="hidden" />
+                                        </label> 
+                                   
+                                        
                                     </div>
+                                    <p>{formData?.invoice_doc?.name}</p>
+
+                                    <p className='text-[red]'>{error?.invoice_doc}</p>
+
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium
-                                         text-gray-900 dark:text-white text-start mt-4">Ammount</label>
-                                        <input type="number" onKeyDown={onkeyDown} name='invoice_amount' onChange={(e:any)=>handleChange(e)} id="amount"
+                                         text-gray-900 dark:text-white text-start mt-4">Amount</label>
+                                        <input type="number" onKeyDown={onkeyDownOne} name='invoice_amount' onChange={(e: any) => handleChange(e)} id="amount"
                                             className="bg-gray-50 border border-gray-300 text-gray-900
              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
                dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-               dark:focus:border-blue-500" placeholder="Enter your ammount here..." required />
+               dark:focus:border-blue-500" placeholder="Enter your amount here..." required />
                                     </div>
-
+                                    <p className='text-[red] text-start'>{error?.invoice_amount}</p>
 
                                 </div>
 
@@ -184,8 +262,8 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
 
                 <div className=''>
 
-                    <button type="button" 
-                    onClick={()=>setModal(true)}
+                    <button type="button"
+                        onClick={() => setModal(true)}
                         className="ml-auto mt-auto text-white 
             bg-green-700 hover:bg-green-800 focus:outline-none
              focus:ring-4 focus:ring-green-300 font-medium 
@@ -196,36 +274,36 @@ fetch(`${apiUrl}/partner/invoice`, requestOptions)
                 </div>
 
             </div>
-{ListOfInvoice?.data?.length>0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
-            :<div className=' bg-white  p-4  m-auto w-full h-full'>
+            {ListOfInvoice?.data?.length > 0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
+                : <div className=' bg-white  p-4  m-auto w-full h-full'>
 
-                <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
+                    <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
 
-                <h3 className='text-center p-2'>What is Lorem Ipsum?</h3>
+                    <h3 className='text-center p-2'>What is Lorem Ipsum?</h3>
 
-                <p className='text-center m-auto p-2 w-[55%]'> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, cupiditate a quibusdam. </p>
+                    <p className='text-center m-auto p-2 w-[55%]'> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, cupiditate a quibusdam. </p>
 
-                <div className='flex justify-around'>
+                    <div className='flex justify-around'>
 
-                    <div></div>
+                        <div></div>
 
-                    <div>
+                        <div>
 
-                        <button type="button"
-                              onClick={()=>setModal(true)}
-                            className=" text-white bg-green-700 hover:bg-green-800
+                            <button type="button"
+                                onClick={() => setModal(true)}
+                                className=" text-white bg-green-700 hover:bg-green-800
                   focus:outline-none focus:ring-4 focus:ring-green-300 
                   font-medium rounded-full text-sm px-5 py-2.5 text-center 
                   mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 
                   dark:focus:ring-green-800"><b>+ Invoice</b></button>
 
+                        </div>
+
+                        <div></div>
+
                     </div>
 
-                    <div></div>
-
-                </div>
-
-            </div>}
+                </div>}
 
         </>
     )

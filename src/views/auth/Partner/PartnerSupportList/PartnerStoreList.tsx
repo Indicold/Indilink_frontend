@@ -24,7 +24,6 @@ const PartnerStoreList = () => {
         loading: StoreLoad,
         error,
     } = useApiFetch<any>('partner/store', token)
-    console.log('FFFFFFF', Store)
 
     return (
         <>

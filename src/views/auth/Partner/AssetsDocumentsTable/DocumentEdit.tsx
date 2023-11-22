@@ -1,3 +1,5 @@
+/* The code is importing various components and hooks from different files and libraries. Here is a
+breakdown of what each import statement is doing: */
 import { Button, FormContainer, FormItem, Input } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { ToastContainer } from 'react-toastify'
@@ -10,17 +12,22 @@ import usePostApi from '@/store/customeHook/postApi';
 import { messageView } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 const DocumentEditModal = ({modal,setModal,data}:any) => {
-    console.log("GGGGGG1",data);
     
     const [text,setText]=useState<any>('')
     const [error,setError]=useState<any>({})
-    const {id}:any=useParams();
-    const {aud}:any=TokenInfo()
+    const {id}:any=useParams(); // For extracting endpoint of the active URL for defining API payload
+    const {aud}:any=TokenInfo() // For extracting user info to define in payload for API call
     const {
         result: commentResponse,
         loading: commentLoading,
         sendPostRequest: Postcomment,
     }: any = usePostApi(`legal/document-comment`)
+
+    /**
+     * The function handlesubmitComment is used to handle the submission of a comment, where it checks
+     * if the text field is empty and displays an error message if it is, otherwise it creates a
+     * comment object and calls the Postcomment function to post the comment.
+     */
     const handlesubmitComment=()=>{
         if(!text){
             setError({text:"This field is required"})
@@ -34,17 +41,17 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
             }
             Postcomment(body)
             setText("")
-            console.log("dat",body);
     
         }
        
     }
     
+    /* The `useEffect` hook is used to perform side effects in a functional component. In this case,
+    the `useEffect` hook is being used to handle the response from the `commentResponse` variable. */
     useEffect(()=>{
         messageView(commentResponse?.message)
 if(commentResponse?.status===200){
     setModal(false)
-    console.log("GGGGGGGG",commentResponse);
     
 }
     },[commentResponse])

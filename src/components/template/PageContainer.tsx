@@ -1,3 +1,4 @@
+/* The code is importing various dependencies and types for the PageContainer component. */
 import { Suspense } from 'react'
 import classNames from 'classnames'
 import Container from '@/components/shared/Container'
@@ -11,10 +12,21 @@ import type { Meta } from '@/@types/routes'
 import type { ElementType, ComponentPropsWithRef } from 'react'
 import type { FooterPageContainerType } from '@/components/template/Footer'
 
+/* The `export interface PageContainerProps extends CommonProps, Meta` statement is defining the props
+interface for the `PageContainer` component. It extends the `CommonProps` and `Meta` interfaces,
+which are likely defined elsewhere in the codebase. Additionally, it adds an optional prop
+`contained` of type boolean. */
 export interface PageContainerProps extends CommonProps, Meta {
     contained?: boolean
 }
 
+/**
+ * The function `CustomHeader` is a TypeScript React component that renders a custom header component
+ * based on the provided `header` prop.
+ * @param  - The `CustomHeader` function is a React component that takes in a `header` prop and other
+ * props of type `T`. The `header` prop is expected to be a React element type (`ElementType`), and the
+ * other props are expected to be the props that can be passed to the `
+ */
 const CustomHeader = <T extends ElementType>({
     header,
     ...props
@@ -25,7 +37,11 @@ const CustomHeader = <T extends ElementType>({
     return <Header {...props} />
 }
 
+/* The code defines a functional component called `PageContainer` that takes in a single prop `props`
+of type `PageContainerProps`. */
 const PageContainer = (props: PageContainerProps) => {
+    /* The code is using object destructuring to extract specific properties from the `props` object
+    passed to the `PageContainer` component. */
     const {
         pageContainerType = 'default',
         children,
@@ -35,6 +51,8 @@ const PageContainer = (props: PageContainerProps) => {
         footer = true,
     } = props
 
+    /* The `return` statement in the code is rendering the JSX elements that make up the
+    `PageContainer` component. */
     return (
         <div className="h-full flex flex-auto flex-col justify-between">
             <main className="h-full">

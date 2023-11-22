@@ -1,6 +1,8 @@
 // registrationSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/* The `interface RegistrationState` is defining the shape of the state object for the `registration`
+slice. It specifies the types of the properties `loading`, `error`, and `data`. */
 interface RegistrationState {
   loading: boolean;
   error: string | null;
@@ -16,6 +18,8 @@ interface RegistrationState {
   };
 }
 
+/* The `initialState` constant is defining the initial state of the `registration` slice. It is an
+object of type `RegistrationState` which has three properties: `loading`, `error`, and `data`. */
 const initialState: RegistrationState = {
   loading: false,
   error: null,
@@ -31,6 +35,8 @@ const initialState: RegistrationState = {
   },
 };
 
+/* The `const registrationSlice = createSlice({ ... })` statement is creating a slice of the Redux
+store called "registration". */
 const registrationSlice = createSlice({
   name: 'registration',
   initialState,
@@ -53,6 +59,11 @@ const registrationSlice = createSlice({
   },
 });
 
+/* The statement `export const { registerStart, registerSuccess, registerFailure, updateFormData } =
+registrationSlice.actions;` is exporting the action creators from the `registrationSlice` slice. */
 export const { registerStart, registerSuccess, registerFailure, updateFormData } = registrationSlice.actions;
 
+/* `export default registrationSlice.reducer;` is exporting the reducer function from the
+`registrationSlice` slice. This allows the reducer to be imported and used in the Redux store
+configuration. */
 export default registrationSlice.reducer;

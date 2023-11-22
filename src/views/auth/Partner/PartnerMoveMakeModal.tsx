@@ -15,39 +15,45 @@ const PartnerMoveMakeModal = ({modal,setModal,fetchList,fetchmake}:any) => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
-        console.log("newData", newData);
       };
       
       const handleSave = () => {
         AddMakeModel(formData);
-        setModal(false);
-        fetchmake();
-        fetchList();
+       
+        // fetchmake();
+        // fetchList();
       };
       
-      console.log("MakeModelResponse", MakeModelResponse);
-      let num = 0;
+      // let num = 0;
       
-      useEffect(() => {
-        if (MakeModelResponse?.status === 200 && effectCount < 10) {
-          setModal(false);
-          fetchList();
-          fetchmake();
-          MakeModelResponse = 'asfsd';
-          num = 1;
-          setEffectCount(effectCount + 1);
-        }
-        fetchList();
-      }, [MakeModelResponse, effectCount]);
+      // useEffect(() => {
+      //   if (MakeModelResponse?.status === 200 && effectCount < 10) {
+      //     setModal(false);
+      //     fetchList();
+      //     fetchmake();
+      //     MakeModelResponse = 'asfsd';
+      //     num = 1;
+      //     setEffectCount(effectCount + 1);
+      //   }
+      //   fetchList();
+      // }, [MakeModelResponse, effectCount]);
       
-      useEffect(() => {
-        fetchList();
-      }, [fetchList]);
+      // useEffect(() => {
+      //   fetchList();
+      // }, [fetchList]);
       
-      useEffect(() => {
-        fetchmake();
-      }, [fetchmake]);
+      // useEffect(() => {
+      //   fetchmake();
+      // }, [fetchmake]);
       
+useEffect(()=>{
+  if(MakeModelResponse?.status === 200){
+    fetchmake();
+    fetchList();
+    setModal(false);
+  }
+ 
+},[MakeModelResponse?.message])
 
   return (
     <div>

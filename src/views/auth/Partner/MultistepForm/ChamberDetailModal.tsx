@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { onkeyDown, validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, onkeyDownOne, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -32,13 +32,16 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
-    const { token }: any = getToken()
+    const { token }: any = getToken() // Extracting token to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const {
         data: RackingType,
         loading: RackingTypeLoading,
         error: RackingTypeError,
     } = useApiFetch<any>('master/partner/store/get-racking-type', token)
+
+    /* The below code is a TypeScript React component. It defines multiple state variables using the
+    useState hook. */
     const [response, setResponse] = useState(null)
     const [error, setError] = useState(null)
     const [chamNum, setChamNum] = useState<any>('');
@@ -54,7 +57,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({
         staircase:true
     })
-    const {id}:any=useParams();
+    const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
     const [errors, setErrors] = useState<any>({})
     let chamber_sizee = ''
 
@@ -97,7 +100,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         else if (e.target.name === 'ch-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
-            // console.log("chamber_size", typeof e.target.value.toString())
             setLength(e.target.value);
             const area:any=e.target.value*breadth;
             newData['floor_area']=area;
@@ -120,7 +122,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         else if (e.target.name === 'pl-l') {
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
-            // console.log("chamber_size", typeof e.target.value.toString())
             setLengthP(e.target.value);
             updateFormattedStringP(e.target.value, breadthP, heightP);
         } else if (e.target.name === 'pl-b') {
@@ -149,8 +150,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
      * The `handlesave` function is responsible for saving chamber details by making a POST request to
      * the server with the provided form data.
      */
-    // console.log('newData')
-    // console.log("ididididididid",formD);
 
     const handlesave = async () => {
         var myHeaders = new Headers()
@@ -215,7 +214,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             body: formdata,
             redirect: 'follow',
         }
-        console.log("validateChamberFormvalidateChamberForm", formD)
+        
             if(commanData?.type=='Edit'){
                 try {
                     const response = await fetch(
@@ -223,7 +222,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         requestOptionsUpdate
                     )
                     const result = await response.json()
-                    console.log("VVVVVVV",result);
         
                     if (result?.status) {
                         FetchAgain()
@@ -233,10 +231,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         let arr: any = []
                         if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                         localStorage.setItem('StoreData',JSON.stringify(newD))
-                        console.log("GGGGGG88889", result?.data, newD)
+                        
                         arr.push(result?.data?.id)
                         newD['chamber_ids'] = arr;
-                        console.log("GGGGGG8888",newD?.chamber_ids);
                         
                   // Retrieve existing chamber_ids from local storage
         const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
@@ -261,10 +258,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         update(newD)
                         setModal(false)
                     }
-                    console.log(result?.status)
                 } catch (error: any) {
                     messageView(error.message)
-                    console.log('error', error.message)
                 }
             }else{
 
@@ -274,7 +269,6 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         requestOptions
                     )
                     const result = await response.json()
-                    console.log("VVVVVVV",result);
         
                     if (result?.status) {
                         FetchAgain()
@@ -284,10 +278,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         let arr: any = []
                         if (newD[`chamber_ids`]) arr = [...newD[`chamber_ids`]]
                         localStorage.setItem('StoreData',JSON.stringify(newD))
-                        console.log("GGGGGG88889", result?.data, newD)
                         arr.push(result?.data?.id)
                         newD['chamber_ids'] = arr;
-                        console.log("GGGGGG8888",newD?.chamber_ids);
                         
                   // Retrieve existing chamber_ids from local storage
         const existingChamberIdsJSON = localStorage.getItem('chamber_ids');
@@ -312,10 +304,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         update(newD)
                         setModal(false)
                     }
-                    console.log(result?.status)
                 } catch (error: any) {
                     messageView(error.message)
-                    console.log('error', error.message)
                 }}
             }
       
@@ -355,7 +345,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         setData(commanData)
     }
     },[commanData])
-    console.log("565767676",data);
+    
     return (
         <>
             <ToastContainer />
@@ -403,13 +393,15 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     Chamber
                                 </h6>
                                 
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Chamber No*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
+                                            min={1}
+                                            onKeyDown={onkeyDownOne}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
@@ -426,7 +418,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Chamber name *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="text"
@@ -445,10 +437,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Chamber Size(Meter) *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                          {/* <Field
                                             type="number"
@@ -473,7 +465,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="No. of pallets *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     ><Field
                                             type="number"
                                             autoComplete="off"
@@ -491,10 +483,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Pallet size(MM)*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                           {/* <Field
                                             type="text"
@@ -520,7 +512,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Racking Type *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             name="racking_type_id"
@@ -549,18 +541,18 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     
                                     <FormItem
                                      label={
                                         <div className='flex justify-center items-center'>
-                                          Photo of entrance
+                                          Photo of entrance*
                                           <Tooltip title="Select multiple files" arrow>
                                             <InfoIcon />
                                           </Tooltip>
                                         </div>
                                       }
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         
                                         <input
@@ -592,7 +584,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <input
                                             type="file"
@@ -612,7 +604,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         // label="Photo of chamber from gate *"
                                         label={
@@ -623,7 +615,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         
                                         <input
@@ -639,9 +631,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        {/* <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
-                                        </p>
+                                        </p> */}
                                     </FormItem>
 
                                     <FormItem
@@ -654,7 +646,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <input
                                             type="file"
@@ -674,10 +666,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="No. of floors *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                    <Field
                                             type="number"
@@ -699,7 +691,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Floor area (Square Feet) *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                           <Field
                                               disabled={isDisabled}
@@ -720,10 +712,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Temperature range (°C) *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                             {/* <Field
                                             type="text"
@@ -746,7 +738,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Height of each floor (Feet) *"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     ><Field
                                             type="text"
                                             autoComplete="off"
@@ -766,10 +758,10 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                 </div>
 
-                                <div className="flex">
+                                <div className=" m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Staircase (Yes/No)"
-                                        className="w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <div className='border-2 flex justify-around p-4'>
                                          <span className=" text-center ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -801,7 +793,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className='flex'>
+                                <div className=' m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

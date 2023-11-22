@@ -1,3 +1,5 @@
+/* These lines of code are importing various components, hooks, and functions from different files and
+libraries. Here's a breakdown of what each import statement is doing: */
 import { Button, FormContainer, FormItem, Input } from "@/components/ui";
 import usePostApi from "@/store/customeHook/postApi";
 import usePutApi from "@/store/customeHook/putApi";
@@ -9,14 +11,25 @@ import { useAnimate } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,EditorData,editorState,contentHistory,convertToRaw}:any) => {
-  console.log("doc_iddoc_iddoc_iddoc_id",modal);
-    const {id}:any=useParams()
-    const {user_id}:any=TokenInfo();
+    const {id}:any=useParams() // Extracting the endpoint from the link for API call
+    const {user_id}:any=TokenInfo(); // Extracting user_id from token for defining API payload
    let _idVal = localStorage.getItem('_id')
-    const [formData,setFormData]=useState<any>({text:""});
+    const [formData,setFormData]=useState<any>({text:""}); // State variable for formData management
+
+    /* The line of code `const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest:
+    updateData }: any = usePutApi(`legal/document/${data?.doc_id}`)` is using object destructuring
+    to extract specific properties from the return value of the `usePutApi` hook. */
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`legal/document/${data?.doc_id}`)
 
     const [open,setOpen]=useState<any>(modal)
+
+    /**
+     * The handleChange function updates the formData state object with the new value entered in an
+     * input field.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
+     * function. It represents the event that triggered the function, such as a change event on an
+     * input field.
+     */
     const handleChange=(e:any)=>{
         const newData={...formData};
         newData[e.target.name]=e.target.value;
@@ -24,6 +37,10 @@ const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,Edit
     }
 
  
+    /**
+     * The `handleComment` function updates the comment list and sends a request to update the data
+     * with the new comment.
+     */
     const handleComment=()=>{
         const obj:any={
           user:user,
@@ -56,18 +73,26 @@ const ChatModal = ({data,modal,setModal,setCommentList,commentList,url,user,Edit
       
       }
 const newfilterArray:any=commentList?.filter((item:any,index:any)=>item?.replyfor===url) || [];
+/**
+ * The TimeString function takes a time value and returns a formatted string representation of the date
+ * and time.
+ * @param {any} time - The `time` parameter is a value that represents a specific point in time. It can
+ * be in various formats such as a string, a number, or a Date object.
+ * @returns The function `TimeString` returns a string representation of the provided `time` argument
+ * in a localized format.
+ */
 const TimeString=(time:any)=>{
     let date=new Date(time);
     return date.toLocaleString()
 }
+/* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+`useEffect` hook is being used to update the state variable `open` whenever the value of the `modal`
+prop changes. */
 useEffect(()=>{
     setOpen(modal)
 },[modal])
-useEffect(()=>{
-if(PutApiResponse){
-    console.log("PutApiResponse",PutApiResponse)
-}
-},[PutApiResponse])
+
+  /* The below code is a TypeScript React component that renders a modal for adding comments. */
   return (
     <div>
     {open &&  <>

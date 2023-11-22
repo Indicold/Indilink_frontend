@@ -28,17 +28,21 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
+    /* The code snippet is using the `useState` hook to define two state variables: `data` and
+    `errors`. */
     const [data, setData] = useState<any>({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams();
+    const {id}: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/mhe/${commanData?.id}`)
 
+    /* The `useEffect` hook in the code snippet is used to update the state `data` when the component
+    mounts. It runs only once when the component is first rendered, as indicated by the empty
+    dependency array `[]` as the second argument. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState, data)
     }, [])
     /**
      * The handleChange function updates the state data object with the new value from the input field.
@@ -50,7 +54,6 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
-        // console.log('newData', newData, data)
     }
     /**
      * The handlesave function is used to handle saving data to a store table in a React
@@ -75,6 +78,9 @@ const MHEDetailsModal: React.FC<MajorityHolderModalProps> = ({
       
     }
  
+    /* The `useEffect` hook in the code snippet is used to update the state `data` when the
+    `commanData` prop changes. It runs whenever the `commanData` prop changes, as indicated by the
+    dependency array `[commanData]` as the second argument. */
     useEffect(()=>{
         if(commanData?.type=='Edit' || commanData?.type=='View'){
             setData(commanData)
@@ -150,8 +156,8 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                      <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -168,7 +174,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="mx-auto">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             autoComplete="off"
@@ -186,8 +192,8 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
-                                    <FormItem label="Load*" className="me-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Load*" className="pl-3 w-[100%] text-label-title m-auto">
                                        <Field
                                             type="number"
                                             autoComplete="off"
@@ -205,7 +211,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className='flex'>
+                                <div className=' m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

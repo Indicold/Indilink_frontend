@@ -34,7 +34,6 @@ const Step2: React.FC<Props> = (props: any) => {
             setNumChambers(e.target.value);
         }
         setFormData(newData);
-        console.log("HHHH", newData);
 
     }
     const handlechamber = (index: any) => {

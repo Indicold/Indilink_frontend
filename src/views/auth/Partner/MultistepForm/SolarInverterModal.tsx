@@ -35,11 +35,13 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/solar-invertor/${commanData?.id}`)
 
+    /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
+    `useEffect` hook is used to set the initial state of the `data` variable when the component is
+    first rendered. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -59,7 +61,6 @@ const SolarInverterModal: React.FC<MajorityHolderModalProps> = ({
         }
 
         setData(newData)
-        // console.log('newData', newData)
     }
     /**
      * The handlesave function is used to handle saving data related to solar inverters in a
@@ -158,8 +159,8 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make*" className="mx-auto">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="text"
                                             autoComplete="off"
@@ -176,7 +177,7 @@ if(PutApiResponse?.status===200){
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model*" className="mx-auto">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                     <Field
                                             type="text"
                                             autoComplete="off"
@@ -194,10 +195,10 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Capacity*"
-                                        className="me-auto ms-2"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                      <Field
                                             type="number"
@@ -216,7 +217,7 @@ if(PutApiResponse?.status===200){
                                         </p>
                                     </FormItem>
                                 </div>
-<div className='flex'>
+<div className='m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block

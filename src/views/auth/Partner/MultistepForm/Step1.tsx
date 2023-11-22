@@ -1,3 +1,6 @@
+/* The above code is a TypeScript React component that imports various UI components from
+"@/components/ui" and other dependencies. It also imports two custom modals, MajorityHolderModal and
+KeyTeamModal. */
 import { Button, FormContainer, FormItem, Input } from "@/components/ui"
 import { Field, Form, Formik } from "formik"
 import { useState } from "react"
@@ -9,6 +12,10 @@ interface Props {
     additionalLocations: number;
   }
 const Step1 = (props:any) => {
+    /* The following code is a TypeScript React code snippet. It declares a constant variable `token` and
+    assigns it the value returned by the `getToken()` function. The `getToken()` function is
+    expected to return an object with a `token` property. The `any` type is used to indicate that
+    the `token` variable can have any type. */
     const {token}:any=getToken();
     
     const [modal,setModal]=useState<any>(false);
@@ -38,7 +45,6 @@ setFormData(newData);
         setTeam(value);
         setModalTeam(true)
     }
-    console.log("data",data?.data,error);
     
     return (
         <div >

@@ -1,8 +1,11 @@
+/* The first line `import 'react-toastify/dist/ReactToastify.css';` is importing the CSS file for the
+React Toastify library. This CSS file contains the styles needed to display toast notifications. */
 import 'react-toastify/dist/ReactToastify.css';
 import { payloadSearchCustomer } from '@/views/auth/Customer/StoreSearch';
 const ThankYouModal = ({message,setModal,setFormData}:any) => {
-  console.log("FFFFF",message);
   
+  /* The `return` statement is returning JSX (JavaScript XML) code, which is used to define the
+  structure and content of a React component. */
   return (
     <div>
            {message?.status && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">

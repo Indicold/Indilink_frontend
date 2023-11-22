@@ -34,16 +34,20 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 }:any) => {
     const { token }: any = getToken() // Replace this with your actual token retrieval logic
     const isDisabled:any=commanData?.type=='View' ? true: false;
-    const {id}: any = useParams()
+    const {id}: any = useParams() // Extracting active URL endpoint to define payload for API call
     const [data, setData] = useState<any>({})
-    const [errors, setErrors] = useState<any>({})
+    const [errors, setErrors] = useState<any>({}) // State variable to store errors during form validations
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/ca-equipment/${commanData?.id}`)
 
+    /* The above code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
 
     /**
@@ -73,7 +77,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
         if(commanData?.type==='Edit'){
             updateData(data)
         }else{
-            console.log("asset_idddd", data)
             if(validateCAEquipForm(data, setErrors)) {
             handleStoreTable(
                 'partner/store/ca-equipment',
@@ -97,7 +100,6 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
 useEffect(()=>{
     if(PutApiResponse?.status===200){
     messageView("Data Updated Successfully !")
-        // console.log("TTTTTTtytyty",PutApiResponse);
         FetchAgain();
         if(modal){
             setModal(false)
@@ -164,8 +166,9 @@ useEffect(()=>{
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
-                                    <FormItem label="Make *"   className="w-1/2">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                    <FormItem label="Make *"
+                                       className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                         disabled={isDisabled}
                                             type="text"
@@ -182,7 +185,8 @@ useEffect(()=>{
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model *"   className="w-1/2">
+                                    <FormItem label="Model *" 
+                                      className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                                 disabled={isDisabled}
                                             type="text"
@@ -200,7 +204,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         // label="C.F.M.*"
                                         label={
@@ -211,7 +215,7 @@ useEffect(()=>{
                                               </Tooltip>
                                             </div>
                                           }
-                                        className="w-1/2"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <Field
                                                 disabled={isDisabled}
@@ -238,7 +242,7 @@ useEffect(()=>{
                                     variant="solid"
                                     onClick={handlesave}
                                     type="button"
-                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    className="indigo-btn !w-[40%] mx-auto mt-2 rounded-[30px]"
                                     
                                 >
                                     Save

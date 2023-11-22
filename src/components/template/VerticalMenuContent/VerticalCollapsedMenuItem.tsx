@@ -1,3 +1,5 @@
+/* These import statements are importing various components and types from different files and
+libraries. */
 import Menu from '@/components/ui/Menu'
 import Dropdown from '@/components/ui/Dropdown'
 import AuthorityCheck from '@/components/shared/AuthorityCheck'
@@ -8,24 +10,37 @@ import type { CommonProps } from '@/@types/common'
 import type { Direction } from '@/@types/theme'
 import type { NavigationTree } from '@/@types/navigation'
 
+/* The `interface DefaultItemProps` is defining the props that can be passed to the `DefaultItem`
+component. */
 interface DefaultItemProps extends CommonProps {
     nav: NavigationTree
     onLinkClick?: (link: { key: string; title: string; path: string }) => void
     userAuthority: string[]
 }
 
+/* The `interface CollapsedItemProps` is extending the `DefaultItemProps` interface and adding an
+additional property `direction` of type `Direction`. This allows the `CollapsedItem` component to
+receive the `direction` prop along with the other props defined in `DefaultItemProps`. */
 interface CollapsedItemProps extends DefaultItemProps {
     direction: Direction
 }
 
+/* The `interface VerticalCollapsedMenuItemProps` is extending the `CollapsedItemProps` interface and
+adding an additional optional property `sideCollapsed` of type `boolean`. This allows the
+`VerticalCollapsedMenuItem` component to receive the `sideCollapsed` prop along with the other props
+defined in `CollapsedItemProps`. */
 interface VerticalCollapsedMenuItemProps extends CollapsedItemProps {
     sideCollapsed?: boolean
 }
 
+/* The line `const { MenuItem, MenuCollapse } = Menu` is destructuring the `Menu` object and extracting
+the `MenuItem` and `MenuCollapse` components from it. This allows us to use these components
+directly without having to reference them through the `Menu` object. */
 const { MenuItem, MenuCollapse } = Menu
 
+/* The `DefaultItem` function component is rendering a menu item with a collapsible sub-menu. It
+receives the following props: */
 const DefaultItem = ({ nav, onLinkClick, userAuthority }: DefaultItemProps) => {
-console.log("gggg4545",nav.authority);
    
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
@@ -88,12 +103,19 @@ console.log("gggg4545",nav.authority);
     )
 }
 
+/* The `CollapsedItem` function component is rendering a menu item with a collapsible sub-menu. It
+receives the following props: */
 const CollapsedItem = ({
     nav,
     onLinkClick,
     userAuthority,
     direction,
 }: CollapsedItemProps) => {
+    /* The `const menuItem` is creating a JSX element that represents a single menu item. It is using
+    the `MenuItem` component from the `Menu` library and passing it the `key` and `eventKey` props
+    from the `nav` object. It also includes the `VerticalMenuIcon` component, which displays an icon
+    based on the `icon` prop from the `nav` object. The `className` prop is set to "mb-2", which
+    adds a margin-bottom of 2 units to the menu item. */
     const menuItem = (
         <MenuItem key={nav.key} eventKey={nav.key} className="mb-2">
             <VerticalMenuIcon icon={nav.icon} />
@@ -151,6 +173,14 @@ const CollapsedItem = ({
     )
 }
 
+/**
+ * The function `VerticalCollapsedMenuItem` returns a collapsed or default item based on the value of
+ * the `sideCollapsed` prop.
+ * @param {VerticalCollapsedMenuItemProps}  - - `VerticalCollapsedMenuItemProps`: This is the
+ * type/interface for the props that the `VerticalCollapsedMenuItem` component accepts.
+ * @returns either the `CollapsedItem` component or the `DefaultItem` component based on the value of
+ * the `sideCollapsed` prop.
+ */
 const VerticalCollapsedMenuItem = ({
     sideCollapsed,
     ...rest

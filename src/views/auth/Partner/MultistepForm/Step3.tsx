@@ -1,3 +1,6 @@
+/* The above code is importing various components from different modules and libraries. It is using
+TypeScript with React to create a form container and form items. It is also importing the Field,
+Form, and Formik components from the Formik library. The useState hook from React is also imported. */
 import { FormContainer, FormItem, Input } from "@/components/ui"
 import { Field, Form, Formik } from "formik"
 import { useState } from "react";
@@ -7,6 +10,13 @@ const Step3 = (props:any) => {
     const [formData, setFormData] = useState({
     });
     
+    /**
+     * The function `handlechange` is used to update the `formData` object with the new value from the
+     * input field.
+     * @param {any} e - The parameter `e` is an event object that is passed to the `handlechange`
+     * function. It represents the event that triggered the function, such as a change event on an
+     * input field.
+     */
     const handlechange=(e:any)=>{
         const newData:any={...formData};
         newData[e.target.name]=e.target.value;
@@ -14,7 +24,6 @@ const Step3 = (props:any) => {
         //     setAdditionalLocations(e.target.value);
         // }
         setFormData(newData);
-        console.log("newData",newData);
         
             }
         

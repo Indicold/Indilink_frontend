@@ -28,17 +28,23 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
     FetchAgain,
     commanData
 }:any) => {
+    /* The above code is using the useState hook in a React component to create two state variables:
+    "data" and "errors". */
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
-    const {id}: any = useParams()
+    const {id}: any = useParams() // Extracting active URL endpoint to define payload for API call
     const isDisabled:any=commanData?.type=='View' ? true: false;
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/store/amc/${commanData?.id}`)
 
+    /* The above code is using the useEffect hook in a React component. It is creating a new state
+    object by copying the existing data object using the spread operator. Then, it is updating the
+    asset_id property of the new state object with the value of the id variable. Finally, it is
+    setting the new state object as the updated state using the setData function. The useEffect hook
+    is triggered only once, when the component is mounted, as the dependency array is empty. */
     useEffect(()=>{
         const newState:any = { ...data };
         newState.asset_id = id
         setData(newState)
-        // console.log("AssetsId", localStorage.getItem('AssetsId'), newState)
     }, [])
     /**
      * The handleChange function updates the state with the new value of the input field.
@@ -74,6 +80,14 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         
     }
 
+    /**
+     * The function `handleISOFormatDate` takes an input date and returns it in ISO format
+     * (YYYY-MM-DD).
+     * @param {any} inputdate - The inputdate parameter is the date that you want to convert to ISO
+     * format. It can be in any valid date format that can be parsed by the JavaScript Date object.
+     * @returns The function `handleISOFormatDate` returns a string in the format "YYYY-MM-DD"
+     * representing the input date.
+     */
     const handleISOFormatDate = (inputdate:any) => {
         let currentFullDate = new Date(inputdate)
         let month: any = currentFullDate.getMonth()+1;
@@ -163,10 +177,10 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Name of service*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="text"
@@ -186,7 +200,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Vendor*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             type="text"
@@ -205,10 +219,10 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Valid till*"
-                                        className="mx-auto w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             type="date"
@@ -228,7 +242,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     </FormItem>
                                     <FormItem
                                         label="Fixed cost(Rs)*"
-                                        className=" w-1/2"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             type="number"
@@ -247,7 +261,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="flex ">
+                                <div className="m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex ">
                                 </div>
                                 <div className='flex'>
                                 <Button

@@ -12,23 +12,29 @@ import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom ho
 import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi';
+import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
 import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
+import Autocomplete from "react-google-autocomplete"
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
-
+    const dest_gps:any=localStorage.getItem('dest_gps') || "";
+    const origin_gps:any=localStorage.getItem('origin_gps') || "";
     // Get the user's token using a custom hook
     const { token }: any = getToken();
+
+    /* The above code is declaring a constant variable named "location" and assigning it the value
+    returned by the "useLocation()" function. The type of the "location" variable is set to "any",
+    meaning it can hold any type of value. */
     const location: any = useLocation();
 
     // Define a state variable for the this component
     const [errors, setErrors] = useState<any>({});
     const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>(CustomerMovePayload1);
+    const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps});
     const [message, setMessage] = useState<any>('')
     const [isDisabled, setIsDisabled] = useState<any>(false)
 
@@ -71,7 +77,6 @@ const MoveSearch = () => {
 
 
         function formatDate(inputDate:any) {
-            console.log("GGGGGGGGGtIME",inputDate);
             
                 const parts = inputDate.split('-'); // Split the input date into parts
                 if (parts.length === 3) {
@@ -86,7 +91,6 @@ const MoveSearch = () => {
     const handleRoute = () => {
         // Check form validation before making a POST request
 
-    console.log(formData)
         if (validateMoveCustomerForm(formData, setErrors)) {
             PostCustomerMoveDetails(formData);
         }
@@ -96,7 +100,9 @@ const MoveSearch = () => {
      * authorization headers, and then displays a success message and redirects the user to a ticket
      * list page after a delay.
      */
+   
     const handleRouteUpdate = () => {
+  
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${token}`);
 
@@ -104,11 +110,11 @@ const MoveSearch = () => {
         formdata.append("origin_country_id", formData?.origin_country_id);
         formdata.append("origin_city_id", formData?.origin_city_id);
         formdata.append("origin_pincode", formData?.origin_pincode);
-        formdata.append("origin_gps", formData?.origin_gps);
+        formdata.append("origin_gps", origin_gps);
         formdata.append("dest_country_id", formData?.dest_country_id);
         formdata.append("dest_city_id", formData?.dest_city_id);
         formdata.append("dest_pincode", formData?.dest_pincode);
-        formdata.append("dest_gps", formData?.dest_gps);
+        formdata.append("dest_gps", dest_gps);
         formdata.append("load_quantity", formData?.load_quantity);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("broad_category_id", formData?.broad_category_id);
@@ -136,7 +142,6 @@ const MoveSearch = () => {
                 setTimeout(() => {
                     navigate('/ticket_list_move')
                 }, 2000)
-                console.log("GGGGGG88888777", result)
             })
             .catch(error => console.log('error', error));
     }
@@ -144,18 +149,15 @@ const MoveSearch = () => {
     const handleChange = (e: any) => {
         const newData: any = { ...formData };
         if (e.target.name === 'contract_download') {
-            console.log("DDDDDDDDDDDDDDD", e.target.files[0]);
 
             newData[e.target.name] = e.target.files[0];
         } else {
             newData[e.target.name] = e.target.value;
         }
-        console.log("FFFFFFFFFFFF",newData);
         
         setFormData(newData);
     }
     const navigate: any = useNavigate();
-    console.log("GGG88888GGG", location?.state);
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -191,7 +193,10 @@ const MoveSearch = () => {
 
 
     const { t, i18n }:any = useTranslation();
-
+useEffect(()=>{
+localStorage.removeItem('dest_gps');
+localStorage.removeItem('origin_gps');
+},[])
 
     return (
         <div>
@@ -219,10 +224,10 @@ const MoveSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">{t("Origin Location")}</h6>
-                                <div className="flex bg-gray-100 p-2 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
                                         label= {t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -240,7 +245,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("From*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -257,10 +262,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.origin_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("PIN Code")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -275,25 +280,27 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
+                                        <Autocomplete
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
-                                            autoComplete="off"
                                             name="origin_gps"
-                                            value={formData?.origin_gps}
+                                            value={formData?.origin_gps || origin_gps}
                                             placeholder="Location"
-                                            component={Input}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                localStorage.setItem("origin_gps",place?.formatted_address)
+                                            }}
                                         />
                                     </FormItem>
                                 </div>
                                 <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location*")} </h6>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -311,7 +318,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label=  {t("To*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -328,10 +335,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.dest_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("PIN Code")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -346,24 +353,29 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <Field
-                                            disabled={isDisabled}
+                                        <Autocomplete
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
-                                            autoComplete="off"
                                             name="dest_gps"
-                                            value={formData?.dest_gps}
+                                            value={dest_gps}
                                             placeholder="Location"
-                                            component={Input}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                localStorage.setItem("dest_gps",place?.formatted_address)
+                                                // const newData = {...formData}
+                                                // newData['dest_gps'] = place?.formatted_address
+                                                // setFormData({...formData,dest_gps:place?.formatted_address})
+                                            }}
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Load Quantity*")}
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -392,7 +404,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Broad Category*")}
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -409,10 +421,10 @@ const MoveSearch = () => {
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Product Type")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -430,10 +442,10 @@ const MoveSearch = () => {
                                    
                                     </FormItem>
                                 </div>
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -450,7 +462,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -468,10 +480,10 @@ const MoveSearch = () => {
                                 </div>
                       {location?.state?.extraForm &&    <>
 
-                                <div className="flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Status Id"
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
                                         <select
@@ -490,7 +502,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Comment")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -509,10 +521,10 @@ const MoveSearch = () => {
                                 </div>
 
 
-                                <div className="flex">
+                                <div className="md:flex lg:flex">
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -528,7 +540,7 @@ const MoveSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Arrival Date")}
-                                        className=" w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}

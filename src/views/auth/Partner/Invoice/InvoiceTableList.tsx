@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+/* The code is importing various dependencies and components for the InvoiceTableList component. */
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
-import Pagination from "rc-pagination";
+import Pagination from "rc-pagination"; // Importing pagination component to show table records in multiple pages
 import "rc-pagination/assets/index.css";
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
@@ -75,13 +76,16 @@ const InvoiceTableList = ({ AllStore }: any) => {
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
-
+useEffect(()=>{
+  const to = countPerPage;
+  const from = to - countPerPage;
+  setCollection(cloneDeep(allData.slice(0, to)));
+},[AllStore])
   const navigate = useNavigate();
 
  
   
   const handleView = (rowData: any) => {
-    console.log("DocumentViewModal",rowData);
     
     // Handle view action for different asset types.
     setModal(true)
@@ -119,7 +123,7 @@ const InvoiceTableList = ({ AllStore }: any) => {
       return <td key={i} className='text-center'>{rowData[key]}</td>;
     });
 
-    return <tr key={index}>{columnData}</tr>;
+    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>;
   };
 
   const tableData = () => {
@@ -143,7 +147,7 @@ const InvoiceTableList = ({ AllStore }: any) => {
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
-          placeholder="Search Campaign"
+          placeholder="Search here..."
           value={value}
           className='p-2 border-2 m-2'
           onChange={e => setValue(e.target.value)}
