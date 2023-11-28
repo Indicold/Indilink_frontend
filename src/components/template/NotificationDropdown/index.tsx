@@ -113,12 +113,12 @@ const NotificationPage = () => {
       return (
     <div>
    <div className=" grid place-items-center">
-  <div className="lg:w-full sm:w-full w-full   rounded-xl mx-auto  p-10 ">
-    <div className="inline-flex items-center justify-between w-full">
+  <div className="lg:w-full sm:w-full w-full rounded-xl mx-auto p-1 ">
+    <div className="lg:inline-flex items-center justify-between w-full">
       <h3 className="font-bold text-xl sm:text-2xl text-gray-800 dark:text-white">
         Notifications
       </h3>
-      <form>
+      <form className='mt-10 lg:!mt-2'>
   <div className="flex">
   
     <div className="relative w-full">
