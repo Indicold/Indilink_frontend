@@ -134,6 +134,7 @@ const PartnerComplianceMove = () => {
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
+    const today = new Date().toISOString().split('T')[0];
 
     const handleDateChange = (e:any) => {
         let newData = {...dateArray}
@@ -470,6 +471,7 @@ const PartnerComplianceMove = () => {
                                            >
 
                                                <input type='date'
+                                               min={today}
                                                 disabled={isDisabled}
                                                placeholder='Valid Till' name={item?.key_text}
                                                    defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 

@@ -146,6 +146,7 @@ const PartnerBussinessTypeAdditional = () => {
         handleUpload(item, e.target.files[0])
     }
 
+    const today = new Date().toISOString().split('T')[0];
     const handleDateChange = (e:any) => {
         let newData = {...dateArray}
         newData[e.target.name] = e.target.value
@@ -310,12 +311,13 @@ const PartnerBussinessTypeAdditional = () => {
                                             </div>
                                         </FormItem>
                                         <FormItem
+                                           
                                             label="Valid Till"
                                             key={index}
                                             className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === ''?'invisible':'visible'}`}
                                         >
                                      
-                                            <input type='date' placeholder='Valid Till' name={`${item?.key}_text`}  
+                                            <input type='date' min={today} placeholder='Valid Till' name={`${item?.key}_text`}  
                                             defaultValue={fetchDetails?.data[item?.key_text]}  className="!w-full h-11 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
