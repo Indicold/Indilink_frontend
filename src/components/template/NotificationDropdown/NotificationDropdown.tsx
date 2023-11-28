@@ -82,20 +82,42 @@ const navigate:any=useNavigate();
         };
     }
 
-// Example usage:
-const targetDate = "2023-09-15T05:11:27.000Z";
-const timeDifference = calculateTimeDifference(targetDate);
-
-console.log("Time Difference:");
-console.log(`${timeDifference.days} days`);
-console.log(`${timeDifference.hours} hours`);
-console.log(`${timeDifference.minutes} minutes`);
-
+    function getNotificationTime(timestamp:any) {
+        const now = new Date().getTime();
+        const notificationDate = new Date(timestamp).getTime();
+    
+        const diff = now - notificationDate;
+    
+        const seconds = Math.floor(diff / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+    
+        if (seconds < 60) {
+            return 'Just now';
+        } else if (minutes === 1) {
+            return '1 minute ago';
+        } else if (minutes < 60) {
+            return `${minutes} minutes ago`;
+        } else if (hours === 1) {
+            return '1 hour ago';
+        } else if (hours < 24) {
+            return `${hours} hours ago`;
+        } else if (days === 1) {
+            return 'Yesterday';
+        } else if (days < 30) {
+            return `${days} days ago`;
+        } else {
+            return `${months} months ago`;
+        }
+    }
+    
     return (
         <div>
             <ToastContainer />
             <Dropdown
-                menuStyle={{ minWidth: 340 }}
+                menuStyle={{ minWidth: 300 }}
                 renderTitle={UserAvatar}
                 placement="bottom-end"
             >
@@ -114,13 +136,13 @@ src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
 alt="Training Icon"
 className="w-6 h-6 mr-3"
 />
-<h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
+<h3 className="font-bold text-base text-gray-800">{item?.content}</h3>
 </div>
-<p className="text-xs text-gray-500">{item?.created_at}</p>
+<p className="text-xs text-gray-500">{getNotificationTime(parseInt(item?.created_at))}</p>
 </div>
-<p className="mt-1 text-sm">
+{/* <p className="mt-1 text-sm">
 Hey! Do you remember about choosing your training regime?
-</p>
+</p> */}
 </div>
      </div>
  </Dropdown.Item>

@@ -92,19 +92,19 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
     
-    if (rowData?.assetType === 'Store') {
+    if (rowData?.asset_type_id === 1) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       localStorage.setItem('asset_id', '1')
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: false })
     }
-    if (rowData?.assetType === 'Prepare') {
+    if (rowData?.asset_type_id === 3) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       localStorage.setItem('asset_id', '3')
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: false })
     }
-    if (rowData?.assetType === 'Move') {
+    if (rowData?.asset_type_id === 2) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       localStorage.setItem('asset_id', '2')
@@ -113,20 +113,22 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
   };
   
   const handleView = (rowData: any) => {
+    console.log("TUYTUTU",rowData);
+    
     // Handle view action for different asset types.
-    if (rowData?.assetType === 'Store') {
+    if (rowData?.asset_type_id === 1) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('asset_id', '1')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-registration/${rowData?.asset_id}`, { state: true })
     }
-    if (rowData?.assetType === 'Prepare') {
+    if (rowData?.asset_type_id === 3) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('asset_id', '3')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
     }
-    if (rowData?.assetType === 'Move') {
+    if (rowData?.asset_type_id === 2) {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('asset_id', '2')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
@@ -185,7 +187,7 @@ const handleDocs=(rowData:any)=>{
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='text-center flex' key={i} >
           {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
@@ -278,12 +280,14 @@ fetchApi();
           onChange={e => setValue(e.target.value)}
         />
       </div>
+      <div className='overflow-auto'>
       <table className='w-full'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}
