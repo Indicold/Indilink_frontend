@@ -487,15 +487,9 @@ const PartnerBussinessTypeCompliances = () => {
         
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
-<<<<<<< HEAD
           item.key_lic === itemData.key_lic
             ? { ...itemData, key_lic: e.target.name, licenseNoVal: e.target.value, licenseNo:null }
             : itemData
-=======
-            item.key_lic === itemData.key_lic
-                ? { ...itemData, key_lic: e.target.value, licenseNo: null }
-                : itemData
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
         );
         setArray(updatedArray);
 
@@ -599,13 +593,9 @@ const PartnerBussinessTypeCompliances = () => {
 
 
     }, [fetchDetails?.data])
-<<<<<<< HEAD
     const { t, i18n }:any = useTranslation();
     console.log("TTTTTTTTTTT",array);
     
-=======
-    const { t, i18n }: any = useTranslation();
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -649,16 +639,10 @@ const PartnerBussinessTypeCompliances = () => {
                     <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-<<<<<<< HEAD
-                                <div className="flex flex-wrap w-full" >
-                                    {array?.map((item: any, index: any) => (
-                                        <div className="flex flex-wrap w-full justify-around lg:border-y-0 border-y-2">
-=======
                                 <div className='p-3'>
                                     {array?.map((item: any, index: any) => (
                                         <div className=" rounded-lg bg-gray-100 p-2 mt-2 lg:flex-nowrap md:flex-nowrap flex-wrap w-[100%] justify-around lg:border-y-0 border-y-2">
                                             <div className='lg:flex md:flex'>
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
                                             <FormItem
                                                 label={item?.label?.length > 30 ? <div className='flex justify-center items-center bg-dark'>
                                                     <p className='ellipse-text'>{item?.label}</p>
@@ -667,11 +651,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                     </Tooltip>
                                                 </div> : item?.label}
                                                 key={index}
-<<<<<<< HEAD
-                                                className="lg:w-1/3 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
-=======
                                                 className="w-[100%] pl-2 rounded-lg text-label-title "
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
                                             >
                                                 <input
                                                     disabled={isDisabled}
@@ -714,13 +694,8 @@ const PartnerBussinessTypeCompliances = () => {
                                            
                                                     label={t("Valid Till")}
                                                     key={index}
-<<<<<<< HEAD
-                                                    className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-                                                    >
-=======
                                                     className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
 
                                                     <input type='date'
                                                      min={today}
@@ -746,11 +721,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                 <FormItem
                                                     label={t("Licence No")}
                                                     key={index}
-<<<<<<< HEAD
-                                                     className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-=======
                                                     className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
                                                 >
 
                                                     <input type='text'
