@@ -29,16 +29,21 @@ const tableHead = {
 
 // The TableLayout component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayout = ({ AllStore,fetchApi }: any) => {
+const TableLayout = ({ AllStore, fetchApi }: any) => {
+
   let allData: any = AllStore;
+  
+  // Sort by ID For Latest Date
+   allData.sort((b:any,a:any)=>a.id-b.id)
+
   const countPerPage = 10;
 
   // Defining state variables for managing value, alert, rowdata and modal functionality/data
   const [value, setValue] = React.useState("");
-  const [Alert,setAlert]=useState<any>(false) // For showing modal. Initially the modal will be closed when the component mounts
-  const [RowData,setRowData]=useState<any>({}); // Empty because no row has been clicked in the table on component mount
-  const [logsModal,setLogsModal]=useState<any>(false) // Initially the modal will be closed when the component mounts
-let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
+  const [Alert, setAlert] = useState<any>(false) // For showing modal. Initially the modal will be closed when the component mounts
+  const [RowData, setRowData] = useState<any>({}); // Empty because no row has been clicked in the table on component mount
+  const [logsModal, setLogsModal] = useState<any>(false) // Initially the modal will be closed when the component mounts
+  let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmitDetails }: any = usePutApi(`partner/asset-status-update/${RowData?.asset_id}`)
 
   const [currentPage, setCurrentPage] = React.useState(1);
   const [collection, setCollection] = React.useState(
@@ -78,7 +83,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
     // Function to update the current page of data.
     setCurrentPage(p);
     const to = countPerPage * p;
-    const from = to - countPerPage; 
+    const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 
@@ -86,7 +91,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
 
   const handleEdit = (rowData: any) => {
     // Handle edit action for different asset types.
-    
+
     if (rowData?.assetType === 'Store') {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('assets_list_id', rowData?.asset_id)
@@ -106,7 +111,7 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: false })
     }
   };
-  
+
   const handleView = (rowData: any) => {
     // Handle view action for different asset types.
     if (rowData?.assetType === 'Store') {
@@ -129,30 +134,30 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
       navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
     }
   }
-const handleLogs=(rowData:any)=>{
-  setRowData(rowData)
-  setLogsModal(true)
-}
-  const handleSubmit=(rowData:any)=>{
-    
+  const handleLogs = (rowData: any) => {
+    setRowData(rowData)
+    setLogsModal(true)
+  }
+  const handleSubmit = (rowData: any) => {
+
     setRowData(rowData)
     setAlert(true)
   }
   // Function which will hit API to make asset final
-  const handleConfirm=()=>{
-    
-    PostSubmitDetails({status:"Final"})
+  const handleConfirm = () => {
+
+    PostSubmitDetails({ status: "Final" })
   }
-  
-/**
- * The function `handleDocs` navigates to a specific document list page based on the `asset_id`
- * property of the `rowData` object.
- * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is of
- * type `any`, which means it can be any type of data.
- */
-const handleDocs=(rowData:any)=>{
-  navigate(`/documents-list/${rowData?.asset_id}`)
-}
+
+  /**
+   * The function `handleDocs` navigates to a specific document list page based on the `asset_id`
+   * property of the `rowData` object.
+   * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is of
+   * type `any`, which means it can be any type of data.
+   */
+  const handleDocs = (rowData: any) => {
+    navigate(`/documents-list/${rowData?.asset_id}`)
+  }
   const tableRows = (rowData: any, index: any) => {
     // Generates table rows based on data.
     const tableCell = Object.keys(tableHead);
@@ -175,11 +180,11 @@ const handleDocs=(rowData:any)=>{
       }
       if (key === 'Action') {
         return <td className='text-center flex gap-2' key={i} >
-          {rowData?.status==='Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
+          {rowData?.status === 'Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
-          <Button className='!p-2' onClick={()=>handleLogs(rowData)}>Logs</Button>
-          {rowData?.status==='Final' ? null : <Button className='!p-2' onClick={()=>handleSubmit(rowData)}>Submit</Button>}
+          <Button className='!p-2' onClick={() => handleLogs(rowData)}>Logs</Button>
+          {rowData?.status === 'Final' ? null : <Button className='!p-2' onClick={() => handleSubmit(rowData)}>Submit</Button>}
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -200,75 +205,88 @@ const handleDocs=(rowData:any)=>{
     ));
   };
 
-/* The following code is using the useEffect hook in a React component. It is triggering the effect
-whenever the value of SubmitResponse changes. */
-useEffect(()=>{
-messageView(SubmitResponse?.message)
-if(SubmitResponse?.status===200){
-  setAlert(false)
-  fetchApi();
-  const to = countPerPage * currentPage;
-  const from = to - countPerPage; 
-  setCollection(cloneDeep(allData.slice(from, to)));
-}
-SubmitResponse=7676;
-fetchApi();
-},[SubmitResponse])
-React.useEffect(() => {
-  // Update the displayed data when the AllStore prop changes.
-  if (allData) {
-    const to = countPerPage * currentPage;
-    const from = to - countPerPage; 
+  /* The following code is using the useEffect hook in a React component. It is triggering the effect
+  whenever the value of SubmitResponse changes. */
+  useEffect(() => {
+    messageView(SubmitResponse?.message)
+    if (SubmitResponse?.status === 200) {
+      setAlert(false)
+      fetchApi();
+      const to = countPerPage * currentPage;
+      const from = to - countPerPage;
+      setCollection(cloneDeep(allData.slice(from, to)));
+    }
+    SubmitResponse = 7676;
+    fetchApi();
+  }, [SubmitResponse])
+
+  
+
+ 
+
+
+
+
+
+
+  React.useEffect(() => {
+    // Update the displayed data when the AllStore prop changes.
+
+ 
+
+    if (allData) {
+      const to = countPerPage * currentPage;
+      const from = to - countPerPage;
       const newCollection = cloneDeep(allData.slice(from, to));
       setCollection(newCollection);
-  }
-}, [allData]);
+    }
+  }, [allData]);
 
   // JSX structure for rendering the table and pagination.
   return (
     <>
-    <ToastContainer />
-    {logsModal && <AssetsLogsModal setModal={setLogsModal} RowData={RowData} />}
-    {Alert &&
-     <div
-                    id="authentication-modal"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
-                >
-                    <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
-                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                      
-                            <div className="px-6 py-6 lg:px-8">
-                                <h6 className="text-center"> You cannot make changes after submitting.</h6>
-                                    
-                                
-<div className='flex mt-4'>
-                                <Button
-                                    style={{ borderRadius: '13px' }}
-                                    block
-                                    variant="solid"
-                                    onClick={()=>setAlert(false)}
-                                    type="button"
-                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
-                                >
-                                    Cancel
-                                </Button>
-                                <Button
-                                    style={{ borderRadius: '13px' }}
-                                    block
-                                    variant="solid"
-                                    onClick={handleConfirm}
-                                    type="button"
-                                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
-                                >
-                                    Submit
-                                </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>}
+      <ToastContainer />
+      {logsModal && <AssetsLogsModal setModal={setLogsModal} RowData={RowData} />}
+      {Alert &&
+        <div
+          id="authentication-modal"
+          tabIndex={-1}
+          aria-hidden="true"
+          className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        >
+          <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+              <div className="px-6 py-6 lg:px-8">
+                <h6 className="text-center"> You cannot make changes after submitting.</h6>
+
+
+                <div className='flex mt-4'>
+                  <Button
+                    style={{ borderRadius: '13px' }}
+                    block
+                    variant="solid"
+                    onClick={() => setAlert(false)}
+                    type="button"
+                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    style={{ borderRadius: '13px' }}
+                    block
+                    variant="solid"
+                    onClick={handleConfirm}
+                    type="button"
+                    className="indigo-btn !w-[30%] mx-auto rounded-[30px]"
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>}
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
         <input
@@ -280,14 +298,14 @@ React.useEffect(() => {
       </div>
 
       <div className='overflow-auto'>
-      <table className='w-[100%]'>
-        <thead>
-          <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
-        </thead>
-        <tbody className="trhover bg-white">{tableData()}</tbody>
-      </table>
+        <table className='w-[100%]'>
+          <thead>
+            <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
+          </thead>
+          <tbody className="trhover bg-white">{tableData()}</tbody>
+        </table>
       </div>
-      
+
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}
