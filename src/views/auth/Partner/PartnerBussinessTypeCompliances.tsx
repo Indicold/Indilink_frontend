@@ -26,6 +26,7 @@ import usePostApi from '@/store/customeHook/postApi'
 import { messageView } from '@/store/customeHook/validate'
 import { faL } from '@fortawesome/free-solid-svg-icons'
 import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -61,6 +62,8 @@ const PartnerBussinessTypeCompliances = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/partner-upload-doc-new`)
+
 
     let array1 = [
         {
@@ -318,10 +321,12 @@ const PartnerBussinessTypeCompliances = () => {
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()
-        formData.append(item?.key, file)
+        formData.append('doc_path', file)
         formData.append('key', item?.key)
         formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
+        formData.append('doc_expire_at', 'null')
+        formData.append('doc_license', 'null')
 
         const headers = new Headers()
         headers.append('Authorization', `Bearer ${token}`)
@@ -334,7 +339,7 @@ const PartnerBussinessTypeCompliances = () => {
 
         try {
             const response = await fetch(
-                `${apiUrl}/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/partner-upload-doc-new`,
                 config
             )
             const responseData = await response.json()
@@ -344,7 +349,7 @@ const PartnerBussinessTypeCompliances = () => {
                         ? {
                             ...itemData,
                             view: true,
-                            url: responseData?.data,
+                            url: responseData?.data[0]?.doc_path[0],
                             message: 'Uploaded',
                             messageText: 'Valid till date is required',
                             licenseNo:"Licence No is required"
@@ -453,6 +458,17 @@ const array1Keys = array1?.map((item) => item?.key);
         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
         
         if (Invalid && newvalidate && newvalidateLicence) {
+            const newarray:any=array?.map((item:any,index:any)=>{
+                return {
+                    asset_id:id,
+                    doc_name:item?.key,
+                    doc_expire_at:item?.valid_till,
+                    doc_license:item?.licenseNoVal
+                }
+            });
+            updateData({data:JSON.stringify(newarray)})
+            console.log("TTTTTT7777TTTTTT",newarray);
+
         PostValidTillDetails(dateArray)
         navigate('/asset_success')
         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
@@ -466,15 +482,18 @@ const array1Keys = array1?.map((item) => item?.key);
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
+        console.log("GGGGGGGGGG",e.target.name,e.target.value);
+        
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
           item.key_lic === itemData.key_lic
-            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            ? { ...itemData, key_lic: e.target.name, licenseNoVal: e.target.value, licenseNo:null }
             : itemData
         );
         setArray(updatedArray);
 
     };
+    console.log("TTTTTTTT66666TTTT",dateArray);
 
     // Use useEffect to update file upload items when fetchDetails changes
     /* The above code is a commented out `useEffect` hook in a TypeScript React component. It appears to
@@ -558,10 +577,24 @@ const array1Keys = array1?.map((item) => item?.key);
             });
             setDateArray(payload)
         }
+        if (fetchDetails?.data !== null) {
+            const updatedArray = array.map((item: any) =>
+                true && {
+                    ...item,
+                    valid_till: fetchDetails?.data[item?.key_text],
+                    doc_status:fetchDetails?.data[item?.key_status],
+                    licenseNoVal: fetchDetails?.data[item?.key_lic]
+
+                }
+            )
+            setArray(updatedArray)
+        }
 
 
     }, [fetchDetails?.data])
     const { t, i18n }:any = useTranslation();
+    console.log("TTTTTTTTTTT",array);
+    
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -596,7 +629,7 @@ const array1Keys = array1?.map((item) => item?.key);
 
             </div>
 
-            <div className="bg-white w-full md:w-5/6 lg-w-5/6">
+            <div className="bg-white w-[100%] lg:w-5/6">
                 <ArrowBackIcon role='button' onClick={() => navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">
                      {t("Compliance Details")}
@@ -605,9 +638,9 @@ const array1Keys = array1?.map((item) => item?.key);
                 <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div >
+                                <div className="flex flex-wrap w-full" >
                                     {array?.map((item: any, index: any) => (
-                                        <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
+                                        <div className="flex flex-wrap w-full justify-around lg:border-y-0 border-y-2">
                                             <FormItem
                                                 label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
                                                 <p className='ellipse-text'>{item?.label}</p>
@@ -616,7 +649,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                 </Tooltip>
                                               </div> :item?.label}
                                                 key={index}
-                                                className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
+                                                className="lg:w-1/3 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
                                             >
                                                 <input
                                                     disabled={isDisabled}
@@ -660,7 +693,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                     label={t("Valid Till")}
                                                     key={index}
                                                     className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
-                                                >
+                                                    >
 
                                                     <input type='date'
                                                      disabled={isDisabled}
@@ -682,7 +715,7 @@ const array1Keys = array1?.map((item) => item?.key);
                                                 <FormItem
                                                     label={t("Licence No")}
                                                     key={index}
-                                                    className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                     className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='text'
