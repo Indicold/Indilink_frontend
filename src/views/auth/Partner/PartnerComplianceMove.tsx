@@ -25,6 +25,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
 import { messageView } from '@/store/customeHook/validate'
 import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 const PartnerComplianceMove = () => {
     // Get the user's token
     const { token }: any = getToken()
@@ -66,6 +67,8 @@ const PartnerComplianceMove = () => {
         loading: ValidTillLoading,
         sendPostRequest: PostValidTillDetails,
     }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/partner-upload-doc-new`)
+
 
     let array1 = [
         {
@@ -164,19 +167,15 @@ const PartnerComplianceMove = () => {
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
+        console.log("GGGGGGGGGG",e.target.name,e.target.value);
+        
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
           item.key_lic === itemData.key_lic
-            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            ? { ...itemData, key_lic: e.target.name, licenseNoVal: e.target.value, licenseNo:null }
             : itemData
         );
         setArray(updatedArray);
-        // const updatedArray = array.map((itemData) =>
-        //   item.key_lic === itemData.key_lic
-        //     ? { ...itemData, key_lic: e.target.value }
-        //     : itemData
-        // );
-        // setArray(updatedArray);
 
     };
 
@@ -187,10 +186,12 @@ const PartnerComplianceMove = () => {
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()
-        formData.append(item?.key, file)
+        formData.append('doc_path', file)
         formData.append('key', item?.key)
         formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
+        formData.append('doc_expire_at', 'null')
+        formData.append('doc_license', 'null')
 
         const headers = new Headers()
         headers.append('Authorization', `Bearer ${token}`)
@@ -203,7 +204,7 @@ const PartnerComplianceMove = () => {
 
         try {
             const response = await fetch(
-                `${apiUrl}/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/partner-upload-doc-new`,
                 config
             )
             const responseData = await response.json()
@@ -211,18 +212,16 @@ const PartnerComplianceMove = () => {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
                         ? {
-                              ...itemData,
-                              view: true,
-                              url: responseData?.data,
-                              message: 'Uploaded',
-                              messageText: 'Valid till date is Required',
-                              licenseNo:"Licence No is required"
-                          }
+                            ...itemData,
+                            view: true,
+                            url: responseData?.data[0]?.doc_path[0],
+                            message: 'Uploaded',
+                            messageText: 'Valid till date is required',
+                            licenseNo:"Licence No is required"
+                        }
                         : itemData
                 )
 
-                const isFormValid:any=updatedArray?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-                localStorage.setItem('isFormValid', isFormValid);
                 setArray(updatedArray) // Update the state with the modified array
             } else if (
                 responseData?.status == 400 ||
@@ -231,11 +230,12 @@ const PartnerComplianceMove = () => {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
                         ? {
-                              ...itemData,
-                              view: false,
-                              url: responseData?.data,
-                              message: 'Error While Uploading',
-                          }
+                            ...itemData,
+                            view: false,
+                            key_lic: "",
+                            url: responseData?.data,
+                            message: 'Error While Uploading',
+                        }
                         : itemData
                 )
                 setArray(updatedArray) // Update the state with the modified array
@@ -287,15 +287,32 @@ const PartnerComplianceMove = () => {
          });
          const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
          const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
+         
+         const validLicenseNos:any=array?.filter(
+             (item:any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
+         )?.length>0 ? true: false;
+ 
          let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
          
          if (Invalid && newvalidate && newvalidateLicence) {
+             const newarray:any=array?.map((item:any,index:any)=>{
+                 return {
+                     asset_id:id,
+                     doc_name:item?.key,
+                     doc_expire_at:item?.valid_till,
+                     doc_license:item?.licenseNoVal
+                 }
+             });
+             updateData({data:JSON.stringify(newarray)})
+             console.log("TTTTTT7777TTTTTT",newarray);
+ 
          PostValidTillDetails(dateArray)
          navigate('/asset_success')
          // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
          }else{
              messageView(`Valid Till and License no is mandatory`);
          }
+ 
      }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -365,6 +382,18 @@ const PartnerComplianceMove = () => {
                 }
             });
             setDateArray(payload)
+        }
+        if (fetchDetails?.data !== null) {
+            const updatedArray = array.map((item: any) =>
+                true && {
+                    ...item,
+                    valid_till: fetchDetails?.data[item?.key_text],
+                    doc_status:fetchDetails?.data[item?.key_status],
+                    licenseNoVal: fetchDetails?.data[item?.key_lic]
+
+                }
+            )
+            setArray(updatedArray)
         }
 
 
