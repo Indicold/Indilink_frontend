@@ -146,35 +146,8 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
                             </div>
                         </div>
                     </Dropdown.Item>
-<<<<<<< HEAD
-                    <Dropdown.Item variant="divider" />
-                    {ListOfNotification?.data?.slice(0,4).map((item:any,index:any)=>(
-     <Dropdown.Item variant="header">
-     <div className="flex items-center">
-     <div className="mt-2 px-6  bg-white rounded-lg w-full">
-<div className=" inline-flex items-center justify-between w-full">
-<div className="inline-flex items-center">
-<img
-src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
-alt="Training Icon"
-className="w-6 h-6 mr-3"
-/>
-<h3 className="font-bold text-base text-gray-800">{item?.content}</h3>
-</div>
-<p className="text-xs text-gray-500">{getNotificationTime(parseInt(item?.created_at))}</p>
-</div>
-{/* <p className="mt-1 text-sm">
-Hey! Do you remember about choosing your training regime?
-</p> */}
-</div>
-     </div>
- </Dropdown.Item>
-                    ))}
-           
-=======
                 ))}
 
->>>>>>> fa376da6b723ca9435857e486232c87e37034834
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
                     <Dropdown.Item
