@@ -181,7 +181,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
       const handledfnChange = (e: any,key:any) => {
         const newGst = e.target.value;
         if(key==='address'){
-console.log("jhghghghghg",e);
 
         }else{
             const newData = { ...formData, [key]: newGst };
@@ -565,7 +564,6 @@ console.log("jhghghghghg",e);
                                                 setAddress(place?.formatted_address);
                                                 setLatitude(place?.geometry?.location?.lat());
                                                 setLongitude(place?.geometry?.location?.lng());
-                                                console.log("TTTTTTTTTTTTTTThh",place?.geometry?.location?.lat());
                                             //    setFormData({...formData,dest_gps:place?.formatted_address})
                                             }}
                                         />

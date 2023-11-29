@@ -187,10 +187,10 @@ const PartnerBussinessTypeMove = () => {
 
     // Load data into the form when fetchDetails has data
     useEffect(() => {
-        if (fetchDetails?.data) {
-            setData(fetchDetails?.data)
+        if (fetchDetails?.data?.move) {
+            setData(fetchDetails?.data?.move)
         }
-    }, [fetchDetails])
+    }, [fetchDetails?.data?.move])
 
 
     const TimeString = (time: any) => {

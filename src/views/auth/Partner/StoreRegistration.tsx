@@ -404,7 +404,7 @@ const StoreRegistration = () => {
     }, [StorageType?.data, dataa?.store_type_id])
 
     useEffect(() => {
-        if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+        if(profileData?.data[0]?.phone_number===fetchDetails?.data?.store?.facility_manager_contact){
             const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
             setPhone(phoneNumberWithoutCountryCode)
             setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
@@ -534,16 +534,18 @@ const StoreRegistration = () => {
     useEffect(() => {
 
         if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
-            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
+            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.store?.facility_manager_contact?.replace('+91', '');
             setPhone(phoneNumberWithoutCountryCode)
-            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.store?.facility_manager_contact){
                 setIsChecked(true)
             }
-            setData(fetchDetails?.data)
+            setData(fetchDetails?.data?.store)
         }
-    }, [fetchDetails?.data])
+    }, [fetchDetails?.data?.store])
 
     const { t, i18n }:any = useTranslation();
+    console.log("YFGHFFHFH",fetchDetails?.data,profileData?.data);
+    
     return (
         <div className='lg:flex md:flex'>  
             <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>

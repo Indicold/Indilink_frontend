@@ -113,7 +113,6 @@ let { result: SubmitResponse, loading: SubmitLoading, sendPostRequest: PostSubmi
   };
   
   const handleView = (rowData: any) => {
-    console.log("TUYTUTU",rowData);
     
     // Handle view action for different asset types.
     if (rowData?.asset_type_id === 1) {
