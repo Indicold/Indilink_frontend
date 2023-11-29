@@ -11,12 +11,9 @@ import {
     Tooltip,
 } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
-import useApiUpload from '@/store/customeHook/uploadApi'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { apiUrl } from '@/store/token'
-import axios from 'axios'
 import { useTranslation } from 'react-i18next'
-import { File } from 'buffer'
 import { Field, Form, Formik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -24,26 +21,23 @@ import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
 import { messageView } from '@/store/customeHook/validate'
-import { faL } from '@fortawesome/free-solid-svg-icons'
 import InfoIcon from '@mui/icons-material/Info';
 import usePutApi from '@/store/customeHook/putApi'
 const PartnerBussinessTypeCompliances = () => {
     // Get the user's token
-    const { token }: any = getToken()
-    const { id }: any = useParams()
+    const { t, i18n }:any = useTranslation();
+    const { token }: any = getToken();
+    const { id }: any = useParams();
+    const navigate = useNavigate();
     // Get the current location
-    const location = useLocation()
+    const location = useLocation();
 
     // Initialize a boolean variable based on the location state (default to false)
     const isDisabled = location?.state || false
 
-    // Initialize state variables for file upload
-    const [selectedFile, setSelectedFile] = useState<any>(null)
-    const [response, setResponse] = useState(null)
-    const [error, setError] = useState(null)
+
 
     // Get asset IDs from local storage
-    const AssetsId: any = localStorage.getItem('assets_list_id')
     const AssetsType: any = localStorage.getItem('asset_id')
 
     // Determine the API URL based on the asset type
@@ -59,10 +53,8 @@ const PartnerBussinessTypeCompliances = () => {
     // Fetch details using the determined API URL
     const {
         data: fetchDetails,
-        loading: fetchDetailsloading,
-        error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
-    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/partner-upload-doc-new`)
+    const { result: PutApiResponse, sendPostRequest: updateData }: any = usePutApi(`partner/partner-upload-doc-new`)
 
 
     let array1 = [
@@ -275,11 +267,11 @@ const PartnerBussinessTypeCompliances = () => {
 
 
 
-    const {
-        result: ValidTillResponse,
-        loading: ValidTillLoading,
-        sendPostRequest: PostValidTillDetails,
-    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+    // const {
+    //     result: ValidTillResponse,
+    //     loading: ValidTillLoading,
+    //     sendPostRequest: PostValidTillDetails,
+    // }: any = usePostApi(`partner/register-partner-upload-doc-text`)
 
     // Initialize state variable for the file upload items
     const [array, setArray] = useState(array1)
@@ -290,7 +282,6 @@ const PartnerBussinessTypeCompliances = () => {
     const [isValid, setIsValid] = useState<any>(false)
     // Handle changes in the file input
     const handleFileChange = (e: any, item: any) => {
-        setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
 
@@ -350,10 +341,13 @@ const PartnerBussinessTypeCompliances = () => {
                         ? {
                             ...itemData,
                             view: true,
+                            licenseNoVal:null,
+                            valid_till:null,
                             url: responseData?.data[0]?.doc_path[0],
                             message: 'Uploaded',
                             messageText: 'Valid till date is required',
                             licenseNo: "Licence No is required"
+                          
                         }
                         : itemData
                 )
@@ -381,84 +375,21 @@ const PartnerBussinessTypeCompliances = () => {
         }
     }
 
-    // Access the navigate function from React Router
-    const navigate = useNavigate()
-    const validateData = () => {
-        let error: any = false;
 
-        const updatedArray = array.map((itemData: any) => {
-            if (itemData?.url) {
-                if (itemData?.valid_till === null || itemData?.valid_till === '' || itemData?.valid_till === undefined) {
-
-                    error = true
-                    return {
-                        ...itemData,
-                        messageText: 'Valid till date is required',
-                        licenseNo: "License no is required"
-                    }
-                } else {
-                    return {
-                        ...itemData,
-                        messageText: '',
-                    }
-                }
-            }
-
-        }
-
-        )
-        // setArray(updatedArray)
-        // let isValid = updatedArray?.some((item: any) => {
-        //     if ((item?.valid_till === null ||
-        //         item?.valid_till === undefined ||
-        //         item?.valid_till === '') && item?.url)
-        //         return true
-        // });
-
-
-        return error
-    }
-    function validateMandatoryFields(data: any, fieldName: any) {
-        if (data[fieldName]) {
-            const licenseField = `${fieldName}_license`;
-            const textField = `${fieldName}_text`;
-
-            if (!data[licenseField] || !data[textField]) {
-                // messageView(`Valid Till and License no is mandatory`);
-                return false;
-            }
-        } else {
-            // The field is not provided, so its corresponding 'license' and 'text' fields are not mandatory.
-        }
-
-        return true; // Fields are valid or not applicable
-    }
-
-    // You can add functions like isValidLicense and isValidDate to check the validity of the license and date fields.
-
+   
     // Handle route navigation
     const handleRoute = () => {
+        const validData:any = array?.find((item:any)=>{
+            
+if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
+    console.log("UUUUUUUUU",item);
 
-        // Extract keys from dateArray and slice from index 2
-        const slicedKeys = Object.keys(dateArray);
-
-        // Extract keys from array1 items
-        const array1Keys = array1?.map((item) => item?.key);
-        const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
-
-        const isValids: any = matchingKeys?.map((item: any) => {
-            return validateMandatoryFields(dateArray, item);
-        });
-        const newvalidate: any = array?.filter((item: any) => item?.messageText)?.length > 0 ? false : true;
-        const newvalidateLicence: any = array?.filter((item: any) => item?.licenseNo)?.length > 0 ? false : true;
-
-        const validLicenseNos: any = array?.filter(
-            (item: any) => slicedKeys.includes(item?.key_lic) && dateArray[item?.key_lic] !== '' && dateArray[item?.key_lic] !== null
-        )?.length > 0 ? true : false;
-
-        let Invalid: any = isValids?.filter((item: any) => item === false)?.length > 0 ? false : true;
-
-        if (Invalid && newvalidate && newvalidateLicence) {
+   return item
+}
+        })
+        if(validData){
+            messageView(`Valid Till and License no is mandatory`);
+        }else{
             const newarray:any=array?.map((item:any,index:any)=>{
                 return {
                     asset_id:id,
@@ -468,22 +399,16 @@ const PartnerBussinessTypeCompliances = () => {
                 }
             });
             updateData({data:JSON.stringify(newarray)})
-            console.log("TTTTTT7777TTTTTT",newarray);
 
-        PostValidTillDetails(dateArray)
+        // PostValidTillDetails(dateArray)
         navigate('/asset_success')
-        // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
-        }else{
-            messageView(`Valid Till and License no is mandatory`);
         }
-
     }
     const handleChange = (e: any, item: any) => {
 
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
-        console.log("GGGGGGGGGG",e.target.name,e.target.value);
         
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
@@ -494,7 +419,6 @@ const PartnerBussinessTypeCompliances = () => {
         setArray(updatedArray);
 
     };
-    console.log("TTTTTTTT66666TTTT",dateArray);
 
     // Use useEffect to update file upload items when fetchDetails changes
     /* The above code is a commented out `useEffect` hook in a TypeScript React component. It appears to
@@ -505,49 +429,8 @@ const PartnerBussinessTypeCompliances = () => {
 
         window.scrollTo(0, 0)
     }, [])
-    useEffect(() => {
-        if (fetchDetails?.data !== null) {
-            const updatedArray = array.map((item: any) =>
-                true && {
-                    ...item,
-                    valid_till: fetchDetails?.data[item?.key_text],
-                    doc_status: fetchDetails?.data[item?.key_status],
-                    // key_lic: fetchDetails?.data[item?.key_lic]
+ 
 
-                }
-            )
-            setArray(updatedArray)
-        }
-
-    }, [fetchDetails?.data])
-    useEffect(() => {
-        if (fetchDetails?.data !== null) {
-            const newData = {
-                ...fetchDetails?.data,
-            }
-
-            const updatedArray = array.map((item:any) =>{
-                if(newData[item.key]){
-                    console.log("TYYTYT",true,item.key,newData[item.key]);
-                    
-                    return {
-                        ...item,
-                        view: true,
-                        url: newData[item.key],
-                        message: 'Uploaded',
-                    }
-                }else{
-                    console.log("TYYTYT",false);
-                    return item
-                }
-            }
-               
-            )
-            console.log("TYYTYT2",updatedArray);
-            setArray(updatedArray)
-        }
-    }, [fetchDetails])
-    console.log("fetchDetails",array);
 /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
 `fetchDetails.data` value changes. */
     useEffect(() => {
@@ -578,24 +461,65 @@ const PartnerBussinessTypeCompliances = () => {
             });
             setDateArray(payload)
         }
-        if (fetchDetails?.data !== null) {
-            const updatedArray = array.map((item: any) =>
-                true && {
-                    ...item,
-                    valid_till: fetchDetails?.data[item?.key_text],
-                    doc_status:fetchDetails?.data[item?.key_status],
-                    licenseNoVal: fetchDetails?.data[item?.key_lic]
+        if (fetchDetails?.data?.store !== null) {
+          
+            const updatedFixedArray :any= [...array];
 
-                }
-            )
-            setArray(updatedArray)
+            fetchDetails?.data?.docs?.forEach((item:any)=> {
+      const { doc_name, doc_expire_at,doc_license,doc_path,doc_status } = item;
+      const index = updatedFixedArray.findIndex((obj:any)=> obj?.key === doc_name);
+      const isoDateString = doc_expire_at;
+  
+      // Convert ISO date string to Date object
+      const isoDate = new Date(isoDateString);
+      
+      // Get year, month, and day
+      const year = isoDate.getFullYear();
+      const month = String(isoDate.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+      const day = String(isoDate.getDate()).padStart(2, '0');
+      
+      // Formatted date in "YYYY-MM-DD" format
+      const formattedDate = `${year}-${month}-${day}`;
+    
+      if (index !== -1) {
+        updatedFixedArray[index] = { ...updatedFixedArray[index],valid_till:formattedDate,doc_status:doc_status,licenseNoVal:doc_license !=null ? doc_license: null,url:doc_path[0],message:"Uploaded",view:true };
+      }
+    });
+     
+        setArray(updatedFixedArray)
+
+        }
+        if (fetchDetails?.data?.prepare !== null) {
+          
+            const updatedFixedArray :any= [...array];
+
+            fetchDetails?.data?.docs?.forEach((item:any)=> {
+      const { doc_name, doc_expire_at,doc_license,doc_path,doc_status } = item;
+      const index = updatedFixedArray.findIndex((obj:any)=> obj?.key === doc_name);
+      const isoDateString = doc_expire_at;
+  
+      // Convert ISO date string to Date object
+      const isoDate = new Date(isoDateString);
+      
+      // Get year, month, and day
+      const year = isoDate.getFullYear();
+      const month = String(isoDate.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+      const day = String(isoDate.getDate()).padStart(2, '0');
+      
+      // Formatted date in "YYYY-MM-DD" format
+      const formattedDate = `${year}-${month}-${day}`;
+    
+      if (index !== -1) {
+        updatedFixedArray[index] = { ...updatedFixedArray[index],valid_till:formattedDate,doc_status:doc_status,licenseNoVal:doc_license !=null ? doc_license: null,url:doc_path[0],message:"Uploaded",view:true };
+      }
+    });
+     
+        setArray(updatedFixedArray)
+
         }
 
 
-    }, [fetchDetails?.data])
-    const { t, i18n }:any = useTranslation();
-    console.log("TTTTTTTTTTT",array);
-    
+    }, [fetchDetails?.data?.docs])
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -675,8 +599,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                             Status:{t(item?.message)}
                                                         </p>
                                                     )}
-                                                    {console.log("TYTRYRTYR",item)
-                                                    }
+                                                   
                                                     {/* <button type='button' onClick={() => handleUpload(item)}>Upload</button> */}
                                                     {item?.view && (
                                                         <span className="align-right" ><a
@@ -701,7 +624,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                      min={today}
                                                         disabled={isDisabled}
                                                         placeholder={t("Valid Till")} name={item?.key_text}
-                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 
+                                                        defaultValue={item?.valid_till} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 
                         shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
                                    file:bg-transparent file:border-0
                              file:bg-gray-100 file:mr-4
@@ -727,7 +650,7 @@ const PartnerBussinessTypeCompliances = () => {
                                                     <input type='text'
                                                         disabled={isDisabled}
                                                         placeholder={t("Licence No")} name={`${item?.key_lic}`}
-                                                        defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
+                                                        defaultValue={item?.licenseNoVal}
                                                         className="h-11 pl-3 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm 
                         focus:z-10 focus:border-blue-500 focus:ring-blue-500

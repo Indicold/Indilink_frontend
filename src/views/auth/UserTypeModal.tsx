@@ -45,7 +45,6 @@ const UserTypeModal = ({ setAuthModal }:any) => {
       setAuthModal(false)
     }
   }
- console.log("YYYYYYYYYY",Bussiness);
  
   return (
     <div className=' '>
