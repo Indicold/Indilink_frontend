@@ -151,7 +151,7 @@ const PartnerBussinessTypePrepare = () => {
         formData.product_type=value?.map((item:any)=>item?.id);
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
-            PostPrepareRegisterDetails(formData)
+            PostPrepareRegisterDetails({...formData,asset_id:id})
             navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
@@ -171,8 +171,8 @@ const PartnerBussinessTypePrepare = () => {
 
     // Load data into the form when fetchDetails has data
     useEffect(() => {
-        if (fetchDetails?.data) {
-            setFormData(fetchDetails?.data)
+        if (fetchDetails?.data?.prepare) {
+            setFormData(fetchDetails?.data?.prepare)
         }
     }, [fetchDetails])
  
