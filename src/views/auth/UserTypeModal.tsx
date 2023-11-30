@@ -43,11 +43,19 @@ const UserTypeModal = ({ setAuthModal }:any) => {
     if (value == 'Customer') {
       PostDefaultUserType({usertype:2})
       navigate('/home')
-      localStorage.get('user_type','Customer')
+      localStorage.setItem('user_type','Customer')
       setAuthModal(false)
     }
   }
- 
+ useEffect(()=>{
+if(default_user_type===1){
+  localStorage.setItem('user_type','Partner')
+}else if(default_user_type===3){
+  localStorage.setItem('user_type','Investor')
+}else if(default_user_type===2){
+  localStorage.setItem('user_type','Customer')
+}
+ },[])
   return (
     <div className=' '>
       {modal && !default_user_type && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="invisible md:visible lg:visible bg-emerald-50 my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
