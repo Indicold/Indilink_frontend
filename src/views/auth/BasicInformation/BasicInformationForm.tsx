@@ -241,6 +241,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             state:Add[1],
             city:Add[0],
             address: Address,
+            coordinates:[latitude,longitude]
 
           }    
 
