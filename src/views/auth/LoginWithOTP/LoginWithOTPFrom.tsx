@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl } from '@/store/customeHook/token'
 import { onkeyDownOne } from '@/store/customeHook/validate'
-
+import jwt_decode from "jwt-decode";
 /* The below code is defining an interface called `LoginWithOTPFormProps` in TypeScript for a React
 component. This interface extends another interface called `CommonProps` and adds three optional
 properties: `disableSubmit`, `forgotPasswordUrl`, and `signUpUrl`. */
@@ -170,8 +170,15 @@ const validate=()=>{
                     },
                 });
             }
+           const {default_user_type}:any= jwt_decode(verifyResponse.message.accessToken)
+if(default_user_type===1){
 
-            navigate('/home')
+}else if(default_user_type===2){
+
+}else{
+    navigate('/home')
+}
+         
         }
 
     }, [verifyResponse?.message])
