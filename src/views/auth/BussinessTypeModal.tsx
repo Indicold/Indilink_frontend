@@ -51,6 +51,8 @@ const BussinessTypeModal = () => {
     const [Bussiness, setBussiness] = useState('')
     const [formData, setFormData] = useState<any>({})
     const [Query,setQuery]=useState<any>('')
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
 
     /**
      * The `handleRoute` function sets various values in local storage based on user type and business
@@ -74,6 +76,7 @@ const BussinessTypeModal = () => {
                 Bussiness === 'Store' ? 1 : Bussiness === 'Move' ? 2 : 3,
             country_id: formData?.country_id,
             category_id: formData?.category_id,
+            coordinates:[latitude,longitude]
         }
         
         localStorage.setItem('country_id', formData?.country_id)
@@ -187,7 +190,20 @@ if(AssetsResponse?.message || AssetsResponse?.data){
 
     },[QueryResponse?.data])
     const { t, i18n }:any = useTranslation();
-
+useEffect(()=>{
+    function showPosition(position:any) {
+        console.log("TTTTTT",position.coords.latitude,position.coords.longitude);
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude)
+       
+      }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else { 
+        console.log("Geolocation is not supported by this browser.");
+        
+      }
+},[])
     return (
         <div>
             <ToastContainer />

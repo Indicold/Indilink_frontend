@@ -15,6 +15,7 @@ import useResponsive from '@/utils/hooks/useResponsive'
 import { useAppSelector } from '@/store'
 import navigationInvestorConfig from '@/configs/navigationInvestor.config'
 import navigationPartnerConfig from '@/configs/navigationPartner.config'
+import { TokenInfo } from '@/store/customeHook/token'
 
 /* The code is using the `lazy` function from React to dynamically import the `VerticalMenuContent`
 component from the file located at `@/components/template/VerticalMenuContent`. */
@@ -40,7 +41,7 @@ const MobileNavToggle = withHeaderItem<
 
 const MobileNav = () => {
     const [isOpen, setIsOpen] = useState(false)
-
+const {default_user_type}:any=TokenInfo()
     // Function to open drawer
     const openDrawer = () => {
         setIsOpen(true)
@@ -118,7 +119,7 @@ const MobileNav = () => {
                                 <VerticalMenuContent
                                     navMode={navMode}
                                     collapsed={sideNavCollapse}
-                                    navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig: localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
+                                    navigationTree={default_user_type===1 ? navigationPartnerConfig: default_user_type===3 ? navigationInvestorConfig : navigationConfig }
                                     routeKey={currentRouteKey}
                                     userAuthority={userAuthority as string[]}
                                     direction={direction}

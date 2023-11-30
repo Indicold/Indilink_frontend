@@ -6,12 +6,14 @@
  */
 import { Button } from '@/components/ui'
 import usePostApi from '@/store/customeHook/postApi'
+import { TokenInfo } from '@/store/customeHook/token'
 import React, { useEffect, useState } from 'react'
 import { CiImageOn } from "react-icons/ci"
 import { useNavigate } from 'react-router-dom'
 const UserTypeModal = ({ setAuthModal }:any) => {
   const [modal, setModal] = useState(true)
   const navigate = useNavigate()
+  const {default_user_type}:any=TokenInfo()
   const [Bussiness, setBussiness] = useState('');
   let {
     result:UserResponse,
@@ -27,28 +29,36 @@ const UserTypeModal = ({ setAuthModal }:any) => {
   const handleUserType = (value: any) => {
     setBussiness(value)
     if (value == 'Investor') {
-      PostDefaultUserType({usertype:"3"})
+      PostDefaultUserType({usertype:3})
       navigate('/investor-dashbord')
       localStorage.setItem('user_type','Investor')
 
     }
     if (value == 'Partner') {
-      PostDefaultUserType({usertype:"1"})
+      PostDefaultUserType({usertype:1})
       navigate('/partner-dashbord')
       localStorage.setItem('user_type','Partner')
 
     }
     if (value == 'Customer') {
-      PostDefaultUserType({usertype:"2"})
+      PostDefaultUserType({usertype:2})
       navigate('/home')
       localStorage.setItem('user_type','Customer')
       setAuthModal(false)
     }
   }
- 
+ useEffect(()=>{
+if(default_user_type===1){
+  localStorage.setItem('user_type','Partner')
+}else if(default_user_type===3){
+  localStorage.setItem('user_type','Investor')
+}else if(default_user_type===2){
+  localStorage.setItem('user_type','Customer')
+}
+ },[])
   return (
     <div className=' '>
-      {modal && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="invisible md:visible lg:visible bg-emerald-50 my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      {modal && !default_user_type && <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="invisible md:visible lg:visible bg-emerald-50 my-auto otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div className="relative w-[70%] h-[400px]  max-w-[800px] mt-[50px] max-h-full">
           <div className="relative h-[400px] rounded-[20px] shadow dark:bg-gray-700 px-4-py-4 bg-gray-50">
             {/* <button onClick={() => setModal(false)} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
