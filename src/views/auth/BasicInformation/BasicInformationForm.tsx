@@ -140,29 +140,29 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         const reGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;        
 
-        if (key === 'gst') {
-            if (newGst.length == 15 && reGST.test(newGst)) {
-                showInvalidGSTMessage(false);
-                newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
-                return;
-            }
-            else {
-                setDisabled(true);
-                showInvalidGSTMessage(true);
-            }
+        // if (key === 'gst') {
+        //     if (newGst.length == 15 && reGST.test(newGst)) {
+        //         showInvalidGSTMessage(false);
+        //         newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
+        //         return;
+        //     }
+        //     else {
+        //         setDisabled(true);
+        //         showInvalidGSTMessage(true);
+        //     }
 
-            if (newGst.length != 0) {
-                setGstValidationMessage("Invalid GST Number");
-            }
-            else {
-                setGstValidationMessage("GST Number is required");
-            }
-        }
+        //     if (newGst.length != 0) {
+        //         setGstValidationMessage("Invalid GST Number");
+        //     }
+        //     else {
+        //         setGstValidationMessage("GST Number is required");
+        //     }
+        // }
 
-        else {
+        // else {
             if (newGst.length == 10 && re.test(newGst)) {
             
-                newData?.gst && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
+                (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
                 showInvalidPanMessage(false);
                 return;
             }
@@ -177,7 +177,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             else {
                 setPanValidationMessage("Pan Number is required");
             }
-        }
+        // }
 
       };
 
@@ -427,7 +427,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                         <FormItem
                             label="GST Number"
                             className='text-start cin-number text-label-title'
-                            asterisk={true}
                         >
                             <Field
                                 type="text"
