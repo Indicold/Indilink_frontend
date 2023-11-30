@@ -27,19 +27,19 @@ const UserTypeModal = ({ setAuthModal }:any) => {
   const handleUserType = (value: any) => {
     setBussiness(value)
     if (value == 'Investor') {
-      PostDefaultUserType({usertype:"3"})
+      PostDefaultUserType({usertype:3})
       navigate('/investor-dashbord')
       localStorage.setItem('user_type','Investor')
 
     }
     if (value == 'Partner') {
-      PostDefaultUserType({usertype:"1"})
+      PostDefaultUserType({usertype:1})
       navigate('/partner-dashbord')
       localStorage.setItem('user_type','Partner')
 
     }
     if (value == 'Customer') {
-      PostDefaultUserType({usertype:"2"})
+      PostDefaultUserType({usertype:2})
       navigate('/home')
       localStorage.setItem('user_type','Customer')
       setAuthModal(false)
