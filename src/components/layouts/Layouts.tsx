@@ -55,7 +55,8 @@ const Layout = () => {
             try {
               // Decode the token
               const decodedToken :any= jwt_decode(token);
-              const expirationTime = decodedToken.exp * 1000; // Convert seconds to milliseconds
+              const expirationTime = decodedToken.exp; // Convert seconds to milliseconds
+      console.log("TTTTTTTTTTTautologout",expirationTime,now,now > expirationTime);
       
               if (now > expirationTime) {
                 console.error('Token is expired');

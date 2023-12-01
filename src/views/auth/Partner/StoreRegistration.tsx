@@ -44,6 +44,7 @@ import TextField from '@mui/material/TextField';
 import { Chip } from '@mui/material';
 import { t } from 'i18next'
 import Autocompletem from "react-google-autocomplete"
+import { getCordinates } from '@/store/token'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -153,7 +154,8 @@ const StoreRegistration = () => {
         each_floor_hight: '',
         address: address
     })
-
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
     const [errors, setErrors] = useState<any>({})
 
     // Access the navigate function from React Router
@@ -196,6 +198,8 @@ const StoreRegistration = () => {
         formdata.append("driver_area_food_resting", dataa?.driver_area_food_resting);
         formdata.append("weight_bridge_id", dataa?.weight_bridge_id);
         formdata.append("road_condition_id", dataa?.road_condition_id);
+        formdata.append("addr_longitude",longitude);
+        formdata.append("addr_latitude",latitude);
 
         if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
             formdata.append(
@@ -876,6 +880,8 @@ const StoreRegistration = () => {
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("Address",place?.formatted_address);
                                                 setAddressUpdateCount((val) => val + 1);
+                                                setLatitude(place?.geometry?.location?.lat());
+                                                setLongitude(place?.geometry?.location?.lng());
                                             }}
                                         />
 <p className="text-[red]">
