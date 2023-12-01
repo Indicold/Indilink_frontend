@@ -21,25 +21,7 @@ if (environment !== 'production' && appConfig.enableMock) {
     mockServer({ environment })
 }
 function App() {
-    // const {exp}:any=TokenInfo();
-    // const { signOut } = useAuth()
-    // useEffect(() => {
-    //     // Function to check token expiration
-        
-    //       if (exp) {
-    //         const now = new Date().getTime() / 1000; // Convert to seconds
-          
-    // console.log('TTTTTTTTTT8887',now,exp);
-    //         if (1999685335 > exp) {
-    //             signOut()
-             
-    //         }
-    //       }
-    
-    
-    
-      
-    //   }, []);
+
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>

@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { onkeyDown, onkeyDownOne, validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, onkeyDownDimension, onkeyDownOne, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -695,7 +695,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                           <Field
                                               disabled={isDisabled}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="floor_area"
                                             onChange={(e: any) =>
@@ -704,7 +704,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Enter Value"
                                             component={Input}
                                             value={data?.floor_area || formD?.floor_area}
-                                           
+                                            onKeyDown={onkeyDownDimension}
                                         />
                                       
                                         <p className="text-[red]">

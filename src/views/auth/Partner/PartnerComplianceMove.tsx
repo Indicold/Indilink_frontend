@@ -25,10 +25,13 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
 import { messageView } from '@/store/customeHook/validate'
 import InfoIcon from '@mui/icons-material/Info';
+import usePutApi from '@/store/customeHook/putApi'
 const PartnerComplianceMove = () => {
     // Get the user's token
-    const { token }: any = getToken()
-      const {id}:any=useParams()
+    const { token }: any = getToken();
+      const {id}:any=useParams();
+    const { t, i18n }:any = useTranslation();
+
     // Get the current location
     const location = useLocation()
 
@@ -61,11 +64,13 @@ const PartnerComplianceMove = () => {
         error: fetchDetailsSerror,
     } = useApiFetch<any>(apiUrls, token)
 
-    const {
-        result: ValidTillResponse,
-        loading: ValidTillLoading,
-        sendPostRequest: PostValidTillDetails,
-    }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+    // const {
+    //     result: ValidTillResponse,
+    //     loading: ValidTillLoading,
+    //     sendPostRequest: PostValidTillDetails,
+    // }: any = usePostApi(`partner/register-partner-upload-doc-text`)
+    const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/partner-upload-doc-new`)
+
 
     let array1 = [
         {
@@ -104,22 +109,7 @@ const PartnerComplianceMove = () => {
             valid_till: null,
             licenseNo: null
         },
-        // {
-        //     label: 'Fitness Certificate',
-        //     placeholder: 'Upload',
-        //     key: 'fitness_cert',
-        //     view: false,
-        //     url: null,
-        //     valid_till: null,
-        // },
-        // {
-        //     label: 'No Entry Permit',
-        //     placeholder: 'Upload',
-        //     key: 'no_entry_permit',
-        //     view: false,
-        //     url: null,
-        //     valid_till: null,
-        // },
+       
     ]
 
     // Initialize state variable for the file upload items
@@ -134,6 +124,7 @@ const PartnerComplianceMove = () => {
         setSelectedFile(e.target.files[0])
         handleUpload(item, e.target.files[0])
     }
+    const today = new Date().toISOString().split('T')[0];
 
     const handleDateChange = (e:any) => {
         let newData = {...dateArray}
@@ -164,19 +155,14 @@ const PartnerComplianceMove = () => {
 
         const newData: any = { ...dateArray }
         newData[e.target.name] = e.target.value
+        
         setDateArray(newData)
         const updatedArray = array.map((itemData) =>
           item.key_lic === itemData.key_lic
-            ? { ...itemData, key_lic: e.target.value,  licenseNo:null }
+            ? { ...itemData, key_lic: e.target.name, licenseNoVal: e.target.value, licenseNo:null }
             : itemData
         );
         setArray(updatedArray);
-        // const updatedArray = array.map((itemData) =>
-        //   item.key_lic === itemData.key_lic
-        //     ? { ...itemData, key_lic: e.target.value }
-        //     : itemData
-        // );
-        // setArray(updatedArray);
 
     };
 
@@ -187,10 +173,12 @@ const PartnerComplianceMove = () => {
         let asset_type_id = localStorage.getItem('asset_id')
         const { token } = getToken()
         const formData = new FormData()
-        formData.append(item?.key, file)
+        formData.append('doc_path', file)
         formData.append('key', item?.key)
         formData.append('asset_id', id)
         formData.append('asset_type_id', asset_type_id || '1')
+        formData.append('doc_expire_at', 'null')
+        formData.append('doc_license', 'null')
 
         const headers = new Headers()
         headers.append('Authorization', `Bearer ${token}`)
@@ -203,7 +191,7 @@ const PartnerComplianceMove = () => {
 
         try {
             const response = await fetch(
-                `${apiUrl}/partner/register-partner-upload-doc`,
+                `${apiUrl}/partner/partner-upload-doc-new`,
                 config
             )
             const responseData = await response.json()
@@ -211,18 +199,18 @@ const PartnerComplianceMove = () => {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
                         ? {
-                              ...itemData,
-                              view: true,
-                              url: responseData?.data,
-                              message: 'Uploaded',
-                              messageText: 'Valid till date is Required',
-                              licenseNo:"Licence No is required"
-                          }
+                            ...itemData,
+                            view: true,
+                            licenseNoVal:null,
+                            valid_till:null,
+                            url: responseData?.data[0]?.doc_path[0],
+                            message: 'Uploaded',
+                            messageText: 'Valid till date is required',
+                            licenseNo:"Licence No is required"
+                        }
                         : itemData
                 )
 
-                const isFormValid:any=updatedArray?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-                localStorage.setItem('isFormValid', isFormValid);
                 setArray(updatedArray) // Update the state with the modified array
             } else if (
                 responseData?.status == 400 ||
@@ -231,11 +219,12 @@ const PartnerComplianceMove = () => {
                 const updatedArray = array.map((itemData: any) =>
                     itemData.key === item.key
                         ? {
-                              ...itemData,
-                              view: false,
-                              url: responseData?.data,
-                              message: 'Error While Uploading',
-                          }
+                            ...itemData,
+                            view: false,
+                            key_lic: "",
+                            url: responseData?.data,
+                            message: 'Error While Uploading',
+                        }
                         : itemData
                 )
                 setArray(updatedArray) // Update the state with the modified array
@@ -247,55 +236,34 @@ const PartnerComplianceMove = () => {
 
     // Access the navigate function from React Router
     const navigate = useNavigate()
-    function validateMandatoryFields(data:any, fieldName:any) {
-        if (data[fieldName]) {
-            let licenseField = `${fieldName}_license`;
-            let textField = `${fieldName}_text`;
-            if(fieldName==='insurance_policy_image'){
-                licenseField="insurance_policy_license";
-                textField="insurance_policy_text";
-            }
-            if(fieldName==='permit_image'){
-                licenseField="permit_license";
-                textField="permit_validity_text";
-            }
-    
-            if (!data[licenseField] || !data[textField]) {
-                
-                // messageView(`Valid Till and License no is mandatory`);
-                return false;
-            }
-            
-        } else {
-            // The field is not provided, so its corresponding 'license' and 'text' fields are not mandatory.
-        }
-    
-        return true; // Fields are valid or not applicable
-    }
+ 
     // Handle route navigation
     const handleRoute = () => {
-        
-        // Extract keys from dateArray and slice from index 2
- const slicedKeys = Object.keys(dateArray);
+        const validData:any = array?.find((item:any)=>{
+            
+            if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
+                console.log("UUUUUUUUU",item);
+            
+               return item
+            }
+                    })
+                    if(validData){
+                        messageView(`Valid Till and License no is mandatory`);
+                    }else{
+                        const newarray:any=array?.map((item:any,index:any)=>{
+                            return {
+                                asset_id:id,
+                                doc_name:item?.key,
+                                doc_expire_at:item?.valid_till,
+                                doc_license:item?.licenseNoVal
+                            }
+                        });
+                        updateData({data:JSON.stringify(newarray)})
+            
+                    // PostValidTillDetails(dateArray)
+                    navigate('/asset_success')
+                    }
  
- // Extract keys from array1 items
- const array1Keys = array1?.map((item) => item?.key);
-         const matchingKeys = array1Keys.filter((key) => slicedKeys.includes(key))
-         
-       const isValids:any= matchingKeys?.map((item:any)=>{
-            return validateMandatoryFields(dateArray,item);
-         });
-         const newvalidate:any=array?.filter((item:any)=>item?.messageText)?.length>0  ? false : true;
-         const newvalidateLicence:any=array?.filter((item:any)=>item?.licenseNo)?.length>0 ? false : true;
-         let Invalid:any=isValids?.filter((item:any)=>item===false)?.length>0 ? false : true;
-         
-         if (Invalid && newvalidate && newvalidateLicence) {
-         PostValidTillDetails(dateArray)
-         navigate('/asset_success')
-         // navigate(`/partner-bussiness-type-additional/${id}`, { state: isDisabled })
-         }else{
-             messageView(`Valid Till and License no is mandatory`);
-         }
      }
 
     // Use useEffect to update file upload items when fetchDetails changes
@@ -322,21 +290,7 @@ const PartnerComplianceMove = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
-    useEffect(() => {
-        if (fetchDetails?.data !== null) {
-            const updatedArray = array.map((item: any) =>
-                true && {
-                    ...item,
-                    valid_till: fetchDetails?.data[item?.key_text],
-                    doc_status:fetchDetails?.data[item?.key_status],
-                    // key_lic: fetchDetails?.data[item?.key_lic]
 
-                }
-            )
-            setArray(updatedArray)
-        }
-
-    }, [fetchDetails?.data])
     
     useEffect(() => {
 
@@ -366,10 +320,36 @@ const PartnerComplianceMove = () => {
             });
             setDateArray(payload)
         }
+        if (fetchDetails?.data?.move !== null) {
+          
+            const updatedFixedArray :any= [...array];
 
+            fetchDetails?.data?.docs?.forEach((item:any)=> {
+      const { doc_name, doc_expire_at,doc_license,doc_path,doc_status } = item;
+      const index = updatedFixedArray.findIndex((obj:any)=> obj?.key === doc_name);
+      const isoDateString = doc_expire_at;
+  
+      // Convert ISO date string to Date object
+      const isoDate = new Date(isoDateString);
+      
+      // Get year, month, and day
+      const year = isoDate.getFullYear();
+      const month = String(isoDate.getMonth() + 1).padStart(2, '0'); // Month is zero-indexed
+      const day = String(isoDate.getDate()).padStart(2, '0');
+      
+      // Formatted date in "YYYY-MM-DD" format
+      const formattedDate = `${year}-${month}-${day}`;
+    
+      if (index !== -1) {
+        updatedFixedArray[index] = { ...updatedFixedArray[index],valid_till:formattedDate,doc_status:doc_status,licenseNoVal:doc_license !=null ? doc_license: null,url:doc_path[0],message:"Uploaded",view:true };
+      }
+    });
+     
+        setArray(updatedFixedArray)
+
+        }
 
     }, [fetchDetails?.data])
-    const { t, i18n }:any = useTranslation();
 
     return (
         <div className='lg:flex md:flex'>
@@ -414,10 +394,11 @@ const PartnerComplianceMove = () => {
                 <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div>
+                                <div className='p-3'>
                                     {array?.map((item: any, index: any) => (
-                                       <div className="flex lg:flex-nowrap md:flex-nowrap flex-wrap w-full justify-around lg:border-y-0 border-y-2">
-                                       <FormItem
+                                       <div className="rounded-lg bg-gray-100 p-2 mt-2 lg:flex-nowrap md:flex-nowrap flex-wrap w-[100%] justify-around lg:border-y-0 border-y-2">
+                                      <div className='lg:flex md:flex'>
+                                      <FormItem
                                            label={item?.label?.length>30 ? <div className='flex justify-center items-center bg-dark'>
                                            <p className='ellipse-text'>{item?.label}</p>
                                            <Tooltip title={item?.label} className='bg-[#000000]' arrow>
@@ -425,19 +406,19 @@ const PartnerComplianceMove = () => {
                                            </Tooltip>
                                          </div> :item?.label}
                                            key={index}
-                                           className="lg:w-1/2 md:w-1/2 w-full rounded-lg pl-[22px] text-label-title "
+                                           className="w-[100%] pl-2 rounded-lg text-label-title"
                                        >
                                            <input
                                                disabled={isDisabled}
                                                type="file"  accept="image/png, image/jpeg"
                                                name={item?.key}
                                                id="file-input"
-                                               className="block border border-gray-200 
-                   shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                              file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                      file:py-3 file:px-4
-                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                               className="block border w-[100%] border-gray-200 
+                                               shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                          file:bg-transparent file:border-0
+                                                    file:bg-gray-100 file:mr-4
+                                                  file:py-3 file:px-4
+                                                         dark:file:bg-gray-700 dark:file:text-gray-400"
                                                onChange={(e: any) =>
                                                    handleFileChange(e, item)
                                                }
@@ -462,22 +443,22 @@ const PartnerComplianceMove = () => {
                                                )}
                                            </div>
                                        </FormItem>
-                                       <div className='flex lg:flex-nowrap flex-wrap'>
-                                           <FormItem
+                                       <FormItem
                                                label="Valid Till"
                                                key={index}
-                                               className={` !w-full rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                               className={` w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                            >
 
                                                <input type='date'
+                                               min={today}
                                                 disabled={isDisabled}
                                                placeholder='Valid Till' name={item?.key_text}
-                                                   defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_text]} className="!w-full h-11 block w-full border border-gray-200 
-                   shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                              file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                      file:py-3 file:px-4
-                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                   defaultValue={item?.valid_till} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 
+                                                   shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                              file:bg-transparent file:border-0
+                                                        file:bg-gray-100 file:mr-4
+                                                      file:py-3 file:px-4
+                                                             dark:file:bg-gray-700 dark:file:text-gray-400"
                                                    onChange={handleDateChange} />
 
                                                {item?.messageText && (
@@ -486,24 +467,27 @@ const PartnerComplianceMove = () => {
                                                    </p>
                                                )}
                                            </FormItem>
+                                      </div>
+                                       <div className='lg:flex md:flex'>
+                                          
                                            <FormItem
                                                label="Licence No"
                                                key={index}
-                                               className={`w-1/2 rounded-lg pl-[22px] text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                               className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                            >
 
                                                <input type='text'
                                                 disabled={isDisabled}
                                                placeholder='Licence No' name={`${item?.key_lic}`}
-                                                   defaultValue={fetchDetails?.data && fetchDetails?.data[item?.key_lic]}
-                                                   className="!w-full h-11 block w-full border border-gray-200 
-                   shadow-sm rounded-md text-sm 
-                   focus:z-10 focus:border-blue-500 focus:ring-blue-500
-                    dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
-                              file:bg-transparent file:border-0
-                        file:bg-gray-100 file:mr-4
-                      file:py-3 file:px-4
-                             dark:file:bg-gray-700 dark:file:text-gray-400"
+                                                   defaultValue={item?.licenseNoVal}
+                                                   className="h-11 pl-3 block w-full border border-gray-200 
+                                                   shadow-sm rounded-md text-sm 
+                                                   focus:z-10 focus:border-blue-500 focus:ring-blue-500
+                                                    dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400
+                                                              file:bg-transparent file:border-0
+                                                        file:bg-gray-100 file:mr-4
+                                                      file:py-3 file:px-4
+                                                             dark:file:bg-gray-700 dark:file:text-gray-400"
                                                    onChange={(e: any) => handleChange(e, item)} />
 
                                                {item?.licenseNo && (
@@ -514,11 +498,11 @@ const PartnerComplianceMove = () => {
                                            </FormItem>
                                            <FormItem
                                    label="Status"
-                                   className="w-1/2 text-label-title"
+                                   className="w-[100%] pl-2 rounded-lg text-label-title"
                                >
                                    <select
                                        disabled
-                                       className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       className="border border-gray-300 h-11 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        name={`${item?.key_status}`}
                                                                        
                                    >

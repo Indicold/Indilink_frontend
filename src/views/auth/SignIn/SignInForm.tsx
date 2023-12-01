@@ -27,7 +27,7 @@ import { messageView, validateForm } from '@/store/customeHook/validate'
 import axios from 'axios'
 import { apiUrl } from '@/store/customeHook/token'
 import { ToastContainer } from 'react-toastify'
-
+import jwt_decode from "jwt-decode";
 const API_URL = apiUrl;
 
 interface SignInFormProps extends CommonProps {
@@ -125,7 +125,16 @@ const SignInForm = (props: SignInFormProps) => {
                         localStorage.setItem('access_token', data.message.accessToken);
                     messageView("Login Successfully")
                     setTimeout(()=>{
-                        navigate('/home')
+                        const {default_user_type}:any= jwt_decode(data.message.accessToken)
+                        if(default_user_type===1){
+                            localStorage.setItem('user_type','Partner')
+                            navigate('/partner-dashbord')
+                        }else if(default_user_type===3){
+                            localStorage.setItem('user_type','Investor')
+                            navigate('/investor-dashbord')
+                        }else{
+                            navigate('/home')
+                        }
                     },2000)
                   
 

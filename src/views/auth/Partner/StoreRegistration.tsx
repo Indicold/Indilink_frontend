@@ -43,6 +43,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Chip } from '@mui/material';
 import { t } from 'i18next'
+import Autocompletem from "react-google-autocomplete"
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 // Define the StoreRegistration component
@@ -128,6 +129,9 @@ const StoreRegistration = () => {
     // Fetch the current location
     const location = useLocation()
 
+    const address:any = localStorage.getItem('Address') || "";
+    const [addressUpdateCount, setAddressUpdateCount] = useState(0);
+
     // Initialize state variables for form data and errors
     const [dataa, setData] = useState<any>({
         store_type_id: value1,
@@ -147,7 +151,7 @@ const StoreRegistration = () => {
         temp_range_min: 0,
         temp_range_max: 0,
         each_floor_hight: '',
-        
+        address: address
     })
 
     const [errors, setErrors] = useState<any>({})
@@ -293,6 +297,9 @@ const StoreRegistration = () => {
             // console.log("TTTTTT6565656", e.target.value);
 
         }
+        if (e.target.name === "address" && (localStorage.getItem('Address') !== null)) {
+            newData[e.target.name] = localStorage.getItem('Address')
+        }
 
         if (e.target.name === 'facility_manager_contact') {
             if (e.target.value.length <= 10) {
@@ -363,6 +370,7 @@ const StoreRegistration = () => {
 
         }
 
+        if (localStorage.getItem('Address') !== null) localStorage.removeItem('Address')
     }, [])
     useEffect(() => {
         if (localStorage.getItem('ca_equipment_ids')) {
@@ -404,7 +412,7 @@ const StoreRegistration = () => {
     }, [StorageType?.data, dataa?.store_type_id])
 
     useEffect(() => {
-        if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+        if(profileData?.data[0]?.phone_number===fetchDetails?.data?.store?.facility_manager_contact){
             const phoneNumberWithoutCountryCode = profileData?.data[0].phone_number?.replace('+91', '');
             setPhone(phoneNumberWithoutCountryCode)
             setData({ ...dataa, facility_manager_name: `${profileData?.data[0].first_name} ${profileData?.data[0].last_name}`, facility_manager_contact: profileData?.data[0].phone_number })
@@ -416,6 +424,14 @@ const StoreRegistration = () => {
 
         }
     }, [profileData])
+
+    useEffect(() => {
+        if (localStorage.getItem('Address') !== null) {
+            const newData = {...dataa};
+            newData['address'] = localStorage.getItem('Address');
+            setData(newData)
+        }
+    }, [localStorage, localStorage.getItem('Address'), addressUpdateCount])
 
     const handleCheckbox = (e: any) => {
         const isChecked: any = e.target.checked;
@@ -534,16 +550,18 @@ const StoreRegistration = () => {
     useEffect(() => {
 
         if (fetchDetails?.data !== null && fetchDetails?.data !== undefined) {
-            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.facility_manager_contact?.replace('+91', '');
+            const phoneNumberWithoutCountryCode :any= fetchDetails?.data?.store?.facility_manager_contact?.replace('+91', '');
             setPhone(phoneNumberWithoutCountryCode)
-            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.facility_manager_contact){
+            if(profileData?.data[0]?.phone_number===fetchDetails?.data?.store?.facility_manager_contact){
                 setIsChecked(true)
             }
-            setData(fetchDetails?.data)
+            setData(fetchDetails?.data?.store)
         }
-    }, [fetchDetails?.data])
+    }, [fetchDetails?.data?.store])
 
     const { t, i18n }:any = useTranslation();
+    console.log("YFGHFFHFH",fetchDetails?.data,profileData?.data);
+    
     return (
         <div className='lg:flex md:flex'>  
             <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
@@ -845,19 +863,22 @@ const StoreRegistration = () => {
                                         label= {t("Address*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <Field
+                                        <Autocompletem
+                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
                                             disabled={location?.state}
-                                            type="text"
-                                            autoComplete="off"
                                             name="address"
                                             value={dataa?.address}
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
                                             placeholder="Address"
-                                            component={Input}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                localStorage.setItem("Address",place?.formatted_address);
+                                                setAddressUpdateCount((val) => val + 1);
+                                            }}
                                         />
-                                        <p className="text-[red]">
+<p className="text-[red]">
                                             {errors && errors.address}
                                         </p>
                                     </FormItem>
