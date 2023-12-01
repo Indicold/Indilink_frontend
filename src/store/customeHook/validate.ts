@@ -309,16 +309,17 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.address = 'Address is required'
     }
 
-    if (!formData?.total_tonnage ) {
-        if (formData?.total_tonnage==='') {
-            newErrors.total_tonnage = 'Total Tonnage is required'
-        }
-        if (formData?.total_tonnage<0) {
-            newErrors.total_tonnage ='Total Tonnage is required'
-        }
+    if (!formData?.total_tonnage || formData?.total_tonnage==='' || formData?.total_tonnage<=0) {
+        // if (formData?.total_tonnage==='') {
+        //     newErrors.total_tonnage = 'Total Tonnage is required'
+        // }
+        // if (formData?.total_tonnage<0) {
+        //     newErrors.total_tonnage ='Total Tonnage is required'
+        // }
+        newErrors.total_tonnage ='Total Tonnage is required'
     }
 
-    if (formData?.store_type_id?.length == 0) {
+    if (formData?.store_type_id?.length == 0 || !formData?.store_type_id) {
         newErrors.store_type_id = 'Store Type is required'
     }
 
@@ -330,17 +331,18 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     //     newErrors.no_of_chambers = 'Number of Chambers is required'
     // }
 
-    if (!formData?.ante_room_area) {
-        if (formData?.ante_room_area==='') {
-            newErrors.ante_room_area = 'Ante Room Area is required'
-        }
-        if (formData?.ante_room_area<0) {
-            newErrors.ante_room_area = 'Ante Room Area is required'
-        }
+    if (!formData?.ante_room_area || formData?.ante_room_area==='' || formData?.ante_room_area<=0) {
+        // if (formData?.ante_room_area==='') {
+        //     newErrors.ante_room_area = 'Ante Room Area is required'
+        // }
+        // if (formData?.ante_room_area<0) {
+        //     newErrors.ante_room_area = 'Ante Room Area is required'
+        // }
+        newErrors.ante_room_area = 'Ante Room Area is required'
     }
    
 
-    if (formData?.total_number_of_docks==='' || formData?.total_number_of_docks<0) {
+    if (!formData?.total_number_of_docks || formData?.total_number_of_docks==='' || formData?.total_number_of_docks<0) {
         // if (formData?.total_number_of_docks==='') {
         //     newErrors.total_number_of_docks = 'Total Number of Docks is required'
         // }
@@ -350,35 +352,38 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.total_number_of_docks = 'Total Number of Docks is required'
     }
 
-    if (!formData?.total_office_space ) {
-        if (formData?.total_office_space==='') {
-            newErrors.total_office_space = 'Total Office Space is required'
-        }
-        if (formData?.total_office_space<0) {
-            newErrors.total_office_space = 'Total Office Space is required'
-        }
+    if (!formData?.total_office_space || formData?.total_office_space==='' || formData?.total_office_space<=0 ) {
+        // if (formData?.total_office_space==='') {
+        //     newErrors.total_office_space = 'Total Office Space is required'
+        // }
+        // if (formData?.total_office_space<=0) {
+        //     newErrors.total_office_space = 'Total Office Space is required'
+        // }
+        newErrors.total_office_space = 'Total Office Space is required'
     }
 
     if (!formData?.type_of_dock_id) {
         newErrors.type_of_dock_id = 'Type of Dock is required'
     }
 
-    if (!formData?.processing_area) {
-        if (formData?.processing_area==='') {
-            newErrors.processing_area = 'Processing Area is required'
-        }
-        if (formData?.processing_area<0) {
-            newErrors.processing_area = 'Processing Area is required'
-        }
+    if (!formData?.processing_area || formData?.processing_area==='' || formData?.processing_area<=0) {
+        // if (formData?.processing_area==='') {
+        //     newErrors.processing_area = 'Processing Area is required'
+        // }
+        // if (formData?.processing_area<0) {
+        //     newErrors.processing_area = 'Processing Area is required'
+        // }
+        newErrors.processing_area = 'Processing Area is required'
     }
 
-    if (!formData?.parking_area ) {
-        if (formData?.parking_area==='') {
-            newErrors.parking_area = 'Parking Area is required'
-        }
-        if (formData?.parking_area<0) {
-            newErrors.parking_area = 'Parking Area is required'
-        }
+    if (!formData?.parking_area || formData?.parking_area==='' || formData?.parking_area<=0) {
+        // if (formData?.parking_area==='') {
+        //     newErrors.parking_area = 'Parking Area is required'
+        // }
+        // if (formData?.parking_area<0) {
+        //     newErrors.parking_area = 'Parking Area is required'
+        // }
+        newErrors.parking_area = 'Parking Area is required'
     }
 
     if (!formData?.type_of_refrigeration_id) {
@@ -402,11 +407,11 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.road_condition_id = 'Road Condition is required'
     }
 
-    if(formData?.three_d_view_of_asset?.length === 0) {
+    if(!formData?.three_d_view_of_asset || formData?.three_d_view_of_asset?.length === 0) {
         newErrors.three_d_view_of_asset = 'This Field is required'
     }
 
-    if(formData?.photos_of_asset?.length === 0) {
+    if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
         newErrors.photos_of_asset = 'This Field is required'
     }
 
