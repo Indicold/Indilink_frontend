@@ -79,6 +79,8 @@ const PartnerBussinessTypeMove = () => {
 
     const [makeCustom, setMakeCustom] = useState<any>(false)
     const [modelCustom, setModelCustom] = useState<any>(false)
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
 
     // Get the navigate function from the routing hook
     const navigate = useNavigate()
@@ -145,6 +147,8 @@ const PartnerBussinessTypeMove = () => {
             formdata.append('dual_temp_bulkhead', data?.dual_temp_bulkhead)
             formdata.append('rc_no', data?.rc_no)
             formdata.append('rc_image', data?.rc_image)
+            formdata.append("addr_longitude",longitude);
+            formdata.append("addr_latitude",latitude);
 
             // Prepare request options for the POST request
             var requestOptions: any = {
@@ -202,7 +206,20 @@ const PartnerBussinessTypeMove = () => {
     }
     const { t, i18n }:any = useTranslation();
 
-    
+    useEffect(()=>{
+        function showPosition(position:any) {
+            console.log("TTTTTT",position.coords.latitude,position.coords.longitude);
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude)
+           
+          }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else { 
+            console.log("Geolocation is not supported by this browser.");
+            
+          }
+    },[])
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />

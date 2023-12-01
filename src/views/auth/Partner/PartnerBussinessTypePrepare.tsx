@@ -116,6 +116,8 @@ const PartnerBussinessTypePrepare = () => {
     const fixedOptions1: any = [];
     const [value1, setValue1] = React.useState([...fixedOptions1]);
     const [addressUpdateCount, setAddressUpdateCount] = useState(0);
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
     // Define state variable and function for form data
     const [formData, setFormData] = useState<any>({
         asset_id:id,
@@ -133,8 +135,10 @@ const PartnerBussinessTypePrepare = () => {
         batch_size: '',
         machine_ids: '',
         area: '',
+        addr_longitude:longitude,
+        addr_latitude:latitude
     })
-
+    
     // Define state variable for form validation errors
     const [errors, setErrors] = useState<any>({})
 
@@ -159,6 +163,8 @@ const PartnerBussinessTypePrepare = () => {
     const handleRoute = () => {
         formData.product_category_ids=value1?.map((item:any)=>item?.id);
         formData.product_type=value?.map((item:any)=>item?.id);
+        formData.addr_longitude=longitude
+        formData.addr_latitude=latitude
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails({...formData,asset_id:id})
@@ -241,6 +247,7 @@ const PartnerBussinessTypePrepare = () => {
         }
     }, [localStorage, localStorage.getItem('partnerPrepareAddress'), addressUpdateCount])
     const { t, i18n }:any = useTranslation();
+console.log("TYTYTYTYYU7878",latitude,longitude);
 
     return (
         <div className='flexlg:flex md:flex'>
@@ -358,6 +365,9 @@ const PartnerBussinessTypePrepare = () => {
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("partnerPrepareAddress",place?.formatted_address);
                                                 setAddressUpdateCount((val) => val + 1);
+                                                setLatitude(place?.geometry?.location?.lat());
+                                                setLongitude(place?.geometry?.location?.lng());
+                                          
                                             }}
                                         />
 <p className="text-[red]">
