@@ -481,6 +481,9 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                      />
                                                     
                                                 )}
+                                                
+                                     disabled={location?.state}
+                                    getOptionDisabled={(option) => value1.indexOf(option) !== -1}
                                             />
                                             {/* <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
@@ -553,6 +556,8 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                         name="product_type"
                                                         placeholder="Product Type" />
                                                 )}
+                                                disabled={location?.state}
+                                    getOptionDisabled={(option) => value.indexOf(option) !== -1}
                                             />
                                             {/*                                             
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">

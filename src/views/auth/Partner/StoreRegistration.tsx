@@ -952,12 +952,14 @@ const StoreRegistration = () => {
                                                     )
                                                 )}
                                         </select> */}
-                                        <Autocomplete
+                                        {/* <Autocomplete
                                             multiple
                                             limitTags={1}
                                             id="fixed-tags-demo"
                                             value={value1}
+                                            
                                             onChange={(event, newValue) => {
+                                              
                                                 setValue1([
                                                     ...fixedOptions1,
                                                     ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
@@ -965,6 +967,7 @@ const StoreRegistration = () => {
                                                 handlechange(event)
                                             }}
                                             options={StorageType ? StorageType?.data : []}
+                                           
                                             getOptionLabel={(option: any) => option?.type}
                                             renderTags={(tagValue, getTagProps) =>
                                                 tagValue.map((option, index) => (
@@ -973,6 +976,7 @@ const StoreRegistration = () => {
                                                         {...getTagProps({ index })}
                                                         disabled={fixedOptions1.indexOf(option) !== -1}
                                                     />
+                                                   
                                                 ))
                                             }
                                             renderInput={(params) => (
@@ -981,7 +985,38 @@ const StoreRegistration = () => {
                                                     placeholder="Store Category" />
                                             )}
                                             disabled={location?.state}
+                                        /> */}
+
+                                    <Autocomplete
+                                    multiple
+                                    limitTags={1}
+                                    id="fixed-tags-demo"
+                                    value={value1}
+                                    onChange={(event, newValue) => {
+                                        setValue1([
+                                        ...fixedOptions1,
+                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
+                                        ]);
+                                        handlechange(event);
+                                    }}
+                                    options={StorageType ? StorageType?.data : []}
+                                    getOptionLabel={(option: any) => option?.type}
+                                    renderTags={(tagValue, getTagProps) =>
+                                        tagValue.map((option, index) => (
+                                        <Chip
+                                            label={option?.type}
+                                            {...getTagProps({ index })}
+                                            disabled={fixedOptions1.indexOf(option) !== -1}
                                         />
+                                        ))
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField {...params} name="store_type_id" placeholder="Store Category" />
+                                    )}
+                                    disabled={location?.state}
+                                    getOptionDisabled={(option) => value1.indexOf(option) !== -1}
+                                    />
+
 
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}
