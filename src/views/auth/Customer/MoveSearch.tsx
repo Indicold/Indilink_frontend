@@ -360,7 +360,7 @@ localStorage.removeItem('origin_gps');
                                             aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_gps"
-                                            value={dest_gps}
+                                            value={formData?.dest_gps || dest_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {

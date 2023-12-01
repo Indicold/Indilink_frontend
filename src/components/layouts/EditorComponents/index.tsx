@@ -61,6 +61,7 @@ import ChatModal from "./ChatModal";
 // import UploadModal from "./UploadModal";
 import html2canvas from 'html2canvas';
 import { useLocation, useParams } from "react-router-dom";
+import usePostApi from "@/store/customeHook/postApi";
 
 /* The following code is defining an interface called `LinkData` in TypeScript. This interface has a single
 property called `url` which is of type `string`. This interface can be used to define the structure
@@ -359,7 +360,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     };
     let _idVal = localStorage.getItem('_id')
     let { user_id, email }: any = TokenInfo();
-
     const { token }: any = getToken(); // Extracting token to use in the API call
     const [contentHistory, setContentHistory] = useState<any>([])
     const { data: EditorData, loading, refetch: ReFatchApi }: any = useApiFetch<any>(`legal/documents-by-id/${data?.doc_id}`, token);
@@ -386,6 +386,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const [editorState, setEditorState] = useState(() => {
         return EditorState.createWithContent(initialContentState, decorator);
     });
+    
     const [showURLInput, setShowURLInput] = useState(false);
     const [urlValue, setURLValue] = useState("");
     const [textSize, setTextSize] = useState(16);
@@ -393,7 +394,8 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const [textColor, setTextColor] = useState("black");
     const [textColorSelected, setTextColorSelected] = useState("black");
     const [open, setOpen] = useState<any>(false)
-
+    const { result: postNegotiationResponse, sendPostRequest: postNegotiation } = usePostApi(`legal/document-negotiation`);
+ 
     /**
      * The `focusEditor` function focuses on the editor element if it exists.
      */
@@ -471,6 +473,14 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setShowURLInput(false);
         setURLValue("");
         setTimeout(focusEditor, 0);
+        const body:any={
+            asset_id:id,
+            asset_owner:data?.asset_owner,
+            doc_id:data?.doc_id
+        }
+        console.log("Body",body,data);
+        
+        postNegotiation(body)
         handleSubmit(nextEditorState)
     };
 
@@ -842,7 +852,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const raw = convertToRaw(contentState);
     //   const rawStr = jsonBeautify(raw, null, 2, 50);
     const location: any = useLocation();
-    const { id }: any = useParams() // Extracting the endpoint which contains asset id for defining the payload for API call
+    const { id,aud }: any = useParams() // Extracting the endpoint which contains asset id for defining the payload for API call
     const AssetsId: any = location?.state;
 
     /**
@@ -1010,6 +1020,12 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         }
     }
 
+    useEffect(()=>{
+        if(postNegotiationResponse){
+            messageView(postNegotiationResponse?.message)
+        }
+
+    },[postNegotiationResponse?.message])
     /* The following code is a TypeScript React component that renders a text editor with various
     formatting options. It uses the `Editor` component from the `draft-js` library to provide rich
     text editing capabilities. The component includes a toolbar with buttons for bold, italic,

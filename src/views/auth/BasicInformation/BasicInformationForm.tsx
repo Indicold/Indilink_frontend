@@ -78,6 +78,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false) // Initially the OTP modal will be closed when the component mounts
     const [invalidPanMessage, showInvalidPanMessage] = useState(false);
+    const [panValidationMessage, setPanValidationMessage] = useState("Pan Number is required");
+    const [gstValidationMessage, setGstValidationMessage] = useState("GST Number is required");
     const [invalidGSTMessage, showInvalidGSTMessage] = useState(false);
 
 
@@ -138,28 +140,45 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         const reGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;        
 
-        if (key === 'gst') {
-            if (newGst.length == 15 && reGST.test(newGst)) {
-                showInvalidGSTMessage(false);
-                newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
+        // if (key === 'gst') {
+        //     if (newGst.length == 15 && reGST.test(newGst)) {
+        //         showInvalidGSTMessage(false);
+        //         newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
+        //         return;
+        //     }
+        //     else {
+        //         setDisabled(true);
+        //         showInvalidGSTMessage(true);
+        //     }
+
+        //     if (newGst.length != 0) {
+        //         setGstValidationMessage("Invalid GST Number");
+        //     }
+        //     else {
+        //         setGstValidationMessage("GST Number is required");
+        //     }
+        // }
+
+        // else {
+            if (newGst.length == 10 && re.test(newGst)) {
+            
+                (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
+                showInvalidPanMessage(false);
                 return;
             }
             else {
                 setDisabled(true);
-                showInvalidGSTMessage(true);
-                return;
+                showInvalidPanMessage(true);
             }
-        }
-
-        if (newGst.length == 10 && re.test(newGst) && key === 'panNo') {
             
-            newData?.gst && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
-            showInvalidPanMessage(false);
-        }
-        else {
-            setDisabled(true);
-            showInvalidPanMessage(true);
-        }
+            if (newGst.length != 0) {
+                setPanValidationMessage("Invalid Pan Number");
+            }
+            else {
+                setPanValidationMessage("Pan Number is required");
+            }
+        // }
+
       };
 
 
@@ -409,7 +428,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                         <FormItem
                             label="GST Number"
                             className='text-start cin-number text-label-title'
-                            asterisk={true}
                         >
                             <Field
                                 type="text"
@@ -423,7 +441,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 maxLength={15}
                             />
                             {invalidGSTMessage && (
-                                    <div className='text-[red]'>Invalid GST Number</div>
+                                    <div className='text-[red]'>{gstValidationMessage}</div>
                                 )}
                         </FormItem>
 
@@ -445,7 +463,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     maxLength={10}
                                 />
                                 {invalidPanMessage && (
-                                    <div className='text-[red]'>Invalid Pan Number</div>
+                                    <div className='text-[red]'>{panValidationMessage}</div>
                                 )}
                             </FormItem>
                         <div className="">

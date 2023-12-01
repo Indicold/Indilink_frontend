@@ -34,6 +34,7 @@ import {
     AccordionItemHeading,
     AccordionItemPanel,
 } from 'react-accessible-accordion'
+import Autocompletem from "react-google-autocomplete";
 
 const tableHead = {
     id: "ID",
@@ -106,17 +107,20 @@ const PartnerBussinessTypePrepare = () => {
     const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
         useApiFetch<any>(`master/customer/store/get-unit-type`, token);
 
-    // Define a sample payload for the POST request
+    const address:any = localStorage.getItem('partnerPrepareAddress') || ''
+    
+        // Define a sample payload for the POST request
 
     const fixedOptions: any = [];
     const [value, setValue] = React.useState([...fixedOptions]);
     const fixedOptions1: any = [];
     const [value1, setValue1] = React.useState([...fixedOptions1]);
+    const [addressUpdateCount, setAddressUpdateCount] = useState(0);
     // Define state variable and function for form data
     const [formData, setFormData] = useState<any>({
         asset_id:id,
         city_id: '',
-        address: '',
+        address: address,
         hourly_throughput: '',
         prepare_type_id: '',
         product_category_ids: '',
@@ -140,7 +144,13 @@ const PartnerBussinessTypePrepare = () => {
     // Define a function to handle form input changes
     const handleChange = (e: any) => {
         const newData = { ...formData }
-        newData[e.target.name] = e.target.value
+
+        if (e.target.name === "address" && (localStorage.getItem('partnerPrepareAddress') !== null)) {
+            newData[e.target.name] = localStorage.getItem('partnerPrepareAddress')
+        }
+        else {
+            newData[e.target.name] = e.target.value
+        }
         setFormData(newData)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
     }
@@ -193,6 +203,7 @@ const PartnerBussinessTypePrepare = () => {
     the empty dependency array `[]` passed as the second argument to `useEffect`. */
     useEffect(() => {
         setFormData({ ...formData, throughput_unit_id: 1, avg_case_size_unit_id: 2, batch_size_unit_id: 1 })
+        if (localStorage.getItem('partnerPrepareAddress') !== null) localStorage.removeItem('partnerPrepareAddress')
     }, [])
     const targetArray1: any = ProductType?.data || [];
     const itemsToFind1 = formData?.product_category_ids;
@@ -221,6 +232,14 @@ const PartnerBussinessTypePrepare = () => {
     useEffect(() => {
         fetchMachineList();
     }, [machineModal]);
+
+    useEffect(() => {
+        if (localStorage.getItem('partnerPrepareAddress') !== null) {
+            const newData = {...formData};
+            newData['address'] = localStorage.getItem('partnerPrepareAddress');
+            setFormData(newData)
+        }
+    }, [localStorage, localStorage.getItem('partnerPrepareAddress'), addressUpdateCount])
     const { t, i18n }:any = useTranslation();
 
     return (
@@ -326,19 +345,22 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Address*"
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <Field
+                                            <Autocompletem
                                                 disabled={isDisabled}
-                                                type="text"
-                                                autoComplete="off"
-                                                name="address"
-                                                onChange={(e: any) =>
-                                                    handleChange(e)
-                                                }
-                                                placeholder="Address"
-                                                value={formData?.address}
-                                                component={Input}
-                                            />
-                                            <p className="text-[red]">
+                                                className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            name="address"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            placeholder="Address"
+                                            value={formData?.address}
+                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            onPlaceSelected={(place) => {
+                                                localStorage.setItem("partnerPrepareAddress",place?.formatted_address);
+                                                setAddressUpdateCount((val) => val + 1);
+                                            }}
+                                        />
+<p className="text-[red]">
                                                 {errors && errors.address}
                                             </p>
                                         </FormItem>
