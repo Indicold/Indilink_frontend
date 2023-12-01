@@ -37,6 +37,7 @@ const MoveSearch = () => {
     const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps});
     const [message, setMessage] = useState<any>('')
     const [isDisabled, setIsDisabled] = useState<any>(false)
+    const [addressUpdateCount, setAddressUpdateCount] = useState(0);
 
     // Fetch a list of countries using a custom hook
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
@@ -198,6 +199,20 @@ localStorage.removeItem('dest_gps');
 localStorage.removeItem('origin_gps');
 },[])
 
+useEffect(() => {
+    const newData = {...formData};
+    var formValuesUpdated = false;
+    if (localStorage.getItem('dest_gps') !== null) {
+        newData['dest_gps'] = localStorage.getItem('dest_gps');
+        formValuesUpdated = true;
+    }
+    if (localStorage.getItem('origin_gps') !== null) {
+        newData['origin_gps'] = localStorage.getItem('origin_gps');
+        formValuesUpdated = true;
+    }
+    if (formValuesUpdated) setFormData(newData)
+}, [addressUpdateCount])
+
     return (
         <div>
             <ToastContainer />
@@ -292,6 +307,7 @@ localStorage.removeItem('origin_gps');
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("origin_gps",place?.formatted_address)
+                                                setAddressUpdateCount((val) => val + 1);
                                             }}
                                         />
                                     </FormItem>
@@ -365,6 +381,7 @@ localStorage.removeItem('origin_gps');
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("dest_gps",place?.formatted_address)
+                                                setAddressUpdateCount((val) => val + 1);
                                                 // const newData = {...formData}
                                                 // newData['dest_gps'] = place?.formatted_address
                                                 // setFormData({...formData,dest_gps:place?.formatted_address})
