@@ -439,6 +439,10 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         e.preventDefault(); 
       }
  }
+ export function textContainsNumber(text:any) {
+    const regex = /\d/;
+    return regex.test(text);
+}
 export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
@@ -450,10 +454,19 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
         newErrors.vehicle_model_id = 'This Field is required'
     }
 
-    if (!formData?.chassis_no) {
-        newErrors.chassis_no = 'This Field is required'
+    if (formData?.chassis_no  && !textContainsNumber(formData?.chassis_no)) {
+        newErrors.chassis_no = 'Please Enter Valid Chassis No'
     }
-
+    if (formData?.engine_no  && !textContainsNumber(formData?.engine_no)) {
+        newErrors.engine_no = 'Please Enter Valid Engine No'
+    }
+    if (formData?.rc_no  && !textContainsNumber(formData?.rc_no)) {
+        newErrors.rc_no = 'Please Enter Valid RC No'
+    }
+    
+    if (formData?.vehicle_no && !textContainsNumber(formData?.vehicle_no)) {
+        newErrors.vehicle_no = 'Please Enter Valid Vehical No'
+    }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }

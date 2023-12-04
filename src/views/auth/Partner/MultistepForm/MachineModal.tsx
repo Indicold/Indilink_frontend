@@ -47,6 +47,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
+        update(newData)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared
@@ -90,7 +91,10 @@ useEffect(()=>{
         messageView(PutApiResponse?.message)
     }
     fetchMachineList();
-},[PutApiResponse?.message])
+},[PutApiResponse,PutApiResponse?.message])
+useEffect(()=>{
+setData(formD)
+},[])
     return (
         <>
             <ToastContainer />

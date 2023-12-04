@@ -6,7 +6,7 @@ const PartnerBusinessTypeSuccess = () => {
     const navigate = useNavigate();
     useEffect(() => {
         setTimeout(()=>{
-            navigate('/admin-assets')
+            navigate('/asset_list')
         }, 7000)
     })
     const { t, i18n }:any = useTranslation();

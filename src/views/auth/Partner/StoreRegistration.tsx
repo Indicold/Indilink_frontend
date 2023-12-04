@@ -166,7 +166,7 @@ const StoreRegistration = () => {
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        if (dataa?.store_type_id) dataa.store_type_id = value1?.map((item: any) => item?.id)
+        dataa.store_type_id = value1?.map((item: any) => item?.id)
         
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
@@ -562,16 +562,6 @@ const StoreRegistration = () => {
             setData(fetchDetails?.data?.store)
         }
     }, [fetchDetails?.data?.store])
-
-    useEffect(() => {
-        const newData = {...dataa}
-        var store_ids = []
-        for (const value of value1?.map((item: any) => item?.id)) {
-            store_ids.push(value);
-        }
-        newData['store_type_id'] = store_ids;
-        setData(newData)
-    }, [value1])
 
     const { t, i18n }:any = useTranslation();
     console.log("YFGHFFHFH",fetchDetails?.data,profileData?.data);
@@ -972,7 +962,7 @@ const StoreRegistration = () => {
                                                     ...fixedOptions1,
                                                     ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
                                                 ]);
-                                                // handlechange(event)
+                                                handlechange(event)
                                             }}
                                             options={StorageType ? StorageType?.data : []}
                                             getOptionLabel={(option: any) => option?.type}
@@ -991,6 +981,7 @@ const StoreRegistration = () => {
                                                     placeholder="Store Category" />
                                             )}
                                             disabled={location?.state}
+                                            getOptionDisabled={(option) => value1.indexOf(option) !== -1}
                                         />
 
                                         <p className="text-[red]">
@@ -1012,7 +1003,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option disabled selected>
+                                            <option selected>
                                                 Choose Cold Storage
                                             </option>
                                             {ColdStorageType &&
@@ -1156,7 +1147,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option disabled selected>
+                                            <option selected>
                                                 Choose Dock Storage
                                             </option>
                                             {DocksType &&
@@ -1253,7 +1244,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option disabled selected>
+                                            <option selected>
                                                 Choose Cold Storage
                                             </option>
                                             {RefType &&
@@ -1290,7 +1281,7 @@ const StoreRegistration = () => {
                                             }
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
-                                            <option disabled selected>
+                                            <option selected>
                                                 Choose Year of Installation
                                             </option>
                                             {true &&
