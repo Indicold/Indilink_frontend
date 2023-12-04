@@ -444,7 +444,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="emission_norms"
-                                            value={data?.emission_norms !=="undefined" ? data?.emission_norms :null}
+                                            value={data?.emission_norms !=="undefined" ? data?.emission_norms :""}
                                             placeholder="Emission norms"
                                             component={Input}
                                         />
@@ -485,7 +485,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            value={data?.vehicle_class !=="undefined" ? data?.vehicle_class :null}
+                                            value={data?.vehicle_class !=="undefined" ? data?.vehicle_class :""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -528,7 +528,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.actual_payload}
+                                            value={data?.actual_payload  || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -555,7 +555,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="create_capacity"
-                                            value={data?.create_capacity}
+                                            value={data?.create_capacity || ""}
                                             placeholder="Crate Capacity"
                                             component={Input}
                                         />
@@ -572,7 +572,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.length}                          
+                                            value={data?.length || ""}                          
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -599,7 +599,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="width"
-                                            value={data?.width}
+                                            value={data?.width || ""}
                                             placeholder="Width"
                                             component={Input}
                                         />
@@ -616,7 +616,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.hight}
+                                            value={data?.hight || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -643,7 +643,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="gv_weight"
-                                            value={data?.gv_weight}
+                                            value={data?.gv_weight || ""}
                                             placeholder="GV Weight"
                                             component={Input}
                                         />
@@ -661,7 +661,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.unladen_weight_in_rc}
+                                            value={data?.unladen_weight_in_rc || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
