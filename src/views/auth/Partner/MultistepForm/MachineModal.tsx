@@ -48,6 +48,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
         setData(newData)
         update(newData)
+        if (error[e.target.name])validateMachineForm(newData, setError)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared
