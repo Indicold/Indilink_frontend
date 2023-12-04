@@ -209,6 +209,7 @@ if (!existingChamberIdsJSON) {
 
 export const validatePrepareForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
+console.log("dfghjk",formData);
 
     if (!formData?.city_id) {
         newErrors.city_id = 'City is required'
@@ -270,12 +271,15 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     if (!formData?.temperature_max && formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature is required'
     }
+    if (formData?.temperature_max===formData?.temperature_min) {
+        newErrors.temperature_min = 'Max Temperature should greater then Min Temperature'
+    }
     if (!formData?.batch_size) {
         if (formData?.batch_size==='') {
-            newErrors.batch_size = 'Batch_size is required'
+            newErrors.batch_size = 'Batch size is required'
         }
         if (formData?.batch_size<0) {
-            newErrors.batch_size = 'Batch_size is required'
+            newErrors.batch_size = 'Batch size is required'
         }
     }
     // if (!formData?.machine_ids) {
@@ -286,6 +290,25 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     // }
     // Add more specific validation rules for other fields
 
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+export const validateBasicInfoForm = (formData: any, setErrors: any) => {
+    const newErrors: any = {}
+
+    if (!formData?.panNo) {
+        newErrors.panNo = 'This Field is required'
+    }
+
+    if (!formData?.address) {
+        newErrors.address = 'Address is required'
+    }
+
+        if (formData?.throughput==='') {
+            newErrors.throughput = 'Throughput is required'
+        }
+     
+   
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
@@ -453,7 +476,9 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     if (!formData?.vehicle_model_id) {
         newErrors.vehicle_model_id = 'This Field is required'
     }
-
+if(!formData?.chassis_no){
+    newErrors.chassis_no = 'This Field is required'
+}
     if (formData?.chassis_no  && !textContainsNumber(formData?.chassis_no)) {
         newErrors.chassis_no = 'Please Enter Valid Chassis No'
     }
@@ -1119,6 +1144,46 @@ export const validateAccountForm = (data: any, setErrors: any) => {
   
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
+}
+
+export const validateMakeModelForm = (formData: any, setError: any) => {
+    let newErrors:any = {}
+
+    if (!formData?.make || formData?.make == '') {
+        newErrors.make = 'This Field is required'
+    }
+    if (!formData?.model || formData?.model == '') {
+        newErrors.model = 'This Field is required'
+    }
+
+    setError(newErrors)
+    return Object.keys(newErrors).length === 0
+}
+
+export const validateMachineForm = (formData: any, setError: any) => {
+    let newErrors:any = {}
+
+    if (!formData?.name || formData?.name == '') {
+        newErrors.name = 'This Field is required'
+    }
+    if (!formData?.type_of_machine || formData?.type_of_machine == '') {
+        newErrors.type_of_machine = 'This Field is required'
+    }
+    if (!formData?.make || formData?.make == '') {
+        newErrors.make = 'This Field is required'
+    }
+    if (!formData?.model || formData?.model == '') {
+        newErrors.model = 'This Field is required'
+    }
+    if (!formData?.purpose || formData?.purpose == '') {
+        newErrors.purpose = 'This Field is required'
+    }
+    if (!formData?.power_requirement || formData?.power_requirement == '') {
+        newErrors.power_requirement = 'This Field is required'
+    }
+
+    setError(newErrors)
+    return Object.keys(newErrors).length === 0
 }
 
 

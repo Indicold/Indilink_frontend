@@ -5,7 +5,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateMachineForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -32,6 +32,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     const [data, setData] = useState<any>({
         asset_id:id
     })
+    const [error, setError] = useState<any>({})
     
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/prepare/machine/${formD?.id}`)
 
@@ -47,34 +48,41 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
         setData(newData)
         update(newData)
+        if (error[e.target.name])validateMachineForm(newData, setError)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared
      * machine.
      */
     const handlesave = () => {
-        if(formD?.type==='Edit'){
-            updateData(data)
-        }else{
-            handleStoreTable(
-                'partner/prepare/machine',
-                data,
-                setModal,
-                formD,
-                update,
-                'machine_ids',
-                fetchMachineList
-            )
-            let arr = machineId;
-            arr.push()
-            setFormData()  
-            fetchMachineList()  
+        if (validateMachineForm(data, setError)) {
+            if(formD?.type==='Edit'){
+                updateData(data)
+            }else{
+                handleStoreTable(
+                    'partner/prepare/machine',
+                    data,
+                    setModal,
+                    formD,
+                    update,
+                    'machine_ids',
+                    fetchMachineList
+                )
+                let arr = machineId;
+                arr.push()
+                setFormData()  
+                fetchMachineList()  
+            }
         }
         
     }
     const isDisabled=formD?.type==='View';
-    console.log("YYYYYYYY",formD,data);
-    
+
+    useEffect(() => {
+        if (formD?.type==='Edit') {
+            setData(formD)
+        }
+    }, [formD])
 useEffect(()=>{
     if(PutApiResponse?.status===200){
         messageView("Data updated successfully !")
@@ -130,7 +138,7 @@ setData(formD)
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Machine</h6>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
-                                <FormItem label="Name" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
+                                <FormItem label="Name*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -143,10 +151,13 @@ setData(formD)
                                             placeholder="Name"
                                             component={Input}
                                         />
+                                        {error?.name && (
+                                            <p className='text-[red]'>{error?.name}</p>
+                                        )}
                                     </FormItem>
                                
                                     <FormItem
-                                        label="Type of Machine"
+                                        label="Type of Machine*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -161,11 +172,14 @@ setData(formD)
                                             placeholder="Type of Machine"
                                             component={Input}
                                         />
+                                        {error?.type_of_machine && (
+                                            <p className='text-[red]'>{error?.type_of_machine}</p>
+                                        )}
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     
-                                    <FormItem label="Make" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
+                                    <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -178,8 +192,11 @@ setData(formD)
                                             placeholder="Make"
                                             component={Input}
                                         />
+                                        {error?.make && (
+                                            <p className='text-[red]'>{error?.make}</p>
+                                        )}
                                     </FormItem>
-                                    <FormItem label="Model" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
+                                    <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             disabled={isDisabled}
@@ -192,12 +209,15 @@ setData(formD)
                                             placeholder="Model"
                                             component={Input}
                                         />
+                                        {error?.model && (
+                                            <p className='text-[red]'>{error?.model}</p>
+                                        )}
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                
                                     <FormItem
-                                        label="Purpose"
+                                        label="Purpose*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -212,9 +232,12 @@ setData(formD)
                                             placeholder="Purpose"
                                             component={Input}
                                         />
+                                        {error?.purpose && (
+                                            <p className='text-[red]'>{error?.purpose}</p>
+                                        )}
                                     </FormItem>
                                     <FormItem
-                                        label="Power requirement"
+                                        label="Power requirement*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -229,11 +252,14 @@ setData(formD)
                                             placeholder="Power requirement"
                                             component={Input}
                                         />
+                                        {error?.power_requirement && (
+                                            <p className='text-[red]'>{error?.power_requirement}</p>
+                                        )}
                                     </FormItem>
                                 </div>
                               
                                 <div className=' m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
-                                <Button
+                                {!isDisabled && <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
@@ -242,7 +268,7 @@ setData(formD)
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                 >
                                     Save
-                                </Button>
+                                </Button>}
                                 </div>
                             </div>
                         </div>

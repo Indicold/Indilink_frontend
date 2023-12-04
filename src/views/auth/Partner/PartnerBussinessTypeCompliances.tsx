@@ -297,7 +297,7 @@ const PartnerBussinessTypeCompliances = () => {
                     ...item,
                     valid_till: e.target.value,
                     messageText: null,
-                    licenseNo: "Licence No is required"
+                    // licenseNo: "Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -305,6 +305,8 @@ const PartnerBussinessTypeCompliances = () => {
         });
         setArray(updatedArray);
     };
+    console.log("TTTTTTTTT",array[0]);
+    
 
     // Handle the file upload
     const handleUpload = async (item: any, file: any) => {
@@ -381,7 +383,7 @@ const PartnerBussinessTypeCompliances = () => {
     const handleRoute = () => {
         const validData:any = array?.find((item:any)=>{
             
-if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
+if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !item?.licenseNoVal)){
     console.log("UUUUUUUUU",item);
 
    return item
@@ -650,7 +652,7 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
                                                     <input type='text'
                                                         disabled={isDisabled}
                                                         placeholder={t("Licence No")} name={`${item?.key_lic}`}
-                                                        defaultValue={item?.licenseNoVal}
+                                                        defaultValue={!(item?.licenseNoVal=='null' || item?.licenseNoVal==null) ? item?.licenseNoVal :"" }
                                                         className="h-11 pl-3 block w-full border border-gray-200 
                         shadow-sm rounded-md text-sm 
                         focus:z-10 focus:border-blue-500 focus:ring-blue-500
@@ -687,7 +689,8 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
                                                             {t("Approved")}
                                                         </option>
 
-                                                        <option value={0} selected={item?.doc_status === 0}>{t("Not Approved")}</option>
+                                                        <option value={0} selected={item?.doc_status === 2}>{t("Not Approved")}</option>
+                                                        <option value={0} selected={item?.doc_status === 0}>{t("Pending")}</option>
                                                     </select>
 
                                                 </FormItem>
