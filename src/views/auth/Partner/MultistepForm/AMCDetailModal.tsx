@@ -57,6 +57,9 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
         setData(newData)
     }
+
+    const today = new Date().toISOString().split('T')[0];
+
     /**
      * The function `handlesave` is used to handle saving data to a store table in a React
      * application using TypeScript.
@@ -229,6 +232,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="valid_till"
+                                            min={today}
                                             value={handleISOFormatDate(data?.valid_till)}
                                             placeholder="Valid till"
                                             onChange={(e: any) =>
