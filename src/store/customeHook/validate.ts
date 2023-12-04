@@ -492,6 +492,9 @@ if(!formData?.chassis_no){
     if (formData?.vehicle_no && !textContainsNumber(formData?.vehicle_no)) {
         newErrors.vehicle_no = 'Please Enter Valid Vehical No'
     }
+    if(!formData?.vehicle_no){
+        newErrors.vehicle_no = 'This Field is required'
+    }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
