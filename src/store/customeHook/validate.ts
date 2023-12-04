@@ -1146,6 +1146,46 @@ export const validateAccountForm = (data: any, setErrors: any) => {
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
+export const validateMakeModelForm = (formData: any, setError: any) => {
+    let newErrors:any = {}
+
+    if (!formData?.make || formData?.make == '') {
+        newErrors.make = 'This Field is required'
+    }
+    if (!formData?.model || formData?.model == '') {
+        newErrors.model = 'This Field is required'
+    }
+
+    setError(newErrors)
+    return Object.keys(newErrors).length === 0
+}
+
+export const validateMachineForm = (formData: any, setError: any) => {
+    let newErrors:any = {}
+
+    if (!formData?.name || formData?.name == '') {
+        newErrors.name = 'This Field is required'
+    }
+    if (!formData?.type_of_machine || formData?.type_of_machine == '') {
+        newErrors.type_of_machine = 'This Field is required'
+    }
+    if (!formData?.make || formData?.make == '') {
+        newErrors.make = 'This Field is required'
+    }
+    if (!formData?.model || formData?.model == '') {
+        newErrors.model = 'This Field is required'
+    }
+    if (!formData?.purpose || formData?.purpose == '') {
+        newErrors.purpose = 'This Field is required'
+    }
+    if (!formData?.power_requirement || formData?.power_requirement == '') {
+        newErrors.power_requirement = 'This Field is required'
+    }
+
+    setError(newErrors)
+    return Object.keys(newErrors).length === 0
+}
+
 
 export const fieldsToAppendForPrepare: any = [
     'product_category_id',

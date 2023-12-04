@@ -51,11 +51,13 @@ i18n
            "Product Type":"उत्पाद का प्रकार",
            "Temperature":"तापमान",
            "Unit":"इकाई",
+           "Unit*":"इकाई*",
            "Certification":"प्रमाणीकरण",
            "Date Of Storage":"भण्डारण की तिथि",
            "Storage Duration":"भंडारण अवधि",
            "Request for Search":"खोज के लिए अनुरोध",
            "Origin Location":"मूल स्थान",
+           "Storage Duration*":"भंडारण अवधि*",
           
            "From*":"कहा से*",
            "GPS":"GPS",
