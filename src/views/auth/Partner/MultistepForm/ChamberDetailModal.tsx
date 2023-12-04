@@ -155,6 +155,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         var myHeaders = new Headers()
         myHeaders.append('Authorization', `Bearer ${token}`)
 
+        if(commanData?.type === 'View') {
+            setModal(false);
+            return;
+        }
+
         var formdata = new FormData()
         formdata.append('asset_id', data?.asset_id)
         formdata.append('chamber_number', data?.chamber_number)
@@ -523,7 +528,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                          
                                         >
-                                            <option>Select</option>
+                                            <option disabled selected>Select</option>
                                             {RackingType &&
                                                 RackingType?.data?.map(
                                                     (item: any, index: any) => (
@@ -609,7 +614,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of chamber from gate *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of chamber from gate *
+                                          Photo of chamber from gate
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -640,7 +645,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of the chamber from one corner *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of the chamber from one corner *
+                                          Photo of the chamber from one corner
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -661,9 +666,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        {/* <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
-                                        </p>
+                                        </p> */}
                                     </FormItem>
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
@@ -803,7 +808,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                    
                                 >
-                                    Save
+                                    {commanData?.type === "View" ? "Close" : "Save"}
                                 </Button>
                                 </div>
                             </div>

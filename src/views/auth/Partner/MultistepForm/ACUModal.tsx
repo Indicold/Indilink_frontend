@@ -347,7 +347,7 @@ if(PutApiResponse?.status===200){
                                             className="bg-gray-50 border h-11 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                            
                                         >
-                                            <option >Select</option>
+                                            <option disabled selected>Select</option>
                                             {DfTypeList && DfTypeList?.data?.map((item:any,index:any)=>(
   <option selected={item?.id===data?.defrosting_id || (formD?.defrosting_id && item?.id === formD?.defrosting_id)} value={item?.id}>{item?.type}</option>
                                             ))}

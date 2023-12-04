@@ -217,7 +217,7 @@ const PartnerBussinessTypePrepare = () => {
     /* The above code is a useEffect hook in a TypeScript React component. It is used to perform some
     logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
     }, [ProductType?.data])
     const targetArray: any = ProductTypeList?.data || [];
@@ -227,7 +227,7 @@ const PartnerBussinessTypePrepare = () => {
     `ProductTypeList.data` changes. */
     useEffect(() => {
         if(ProductTypeList?.data!==null){
-            const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+            const foundItems: any = itemsToFind?.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
             setValue(foundItems)
         }
        
@@ -360,11 +360,11 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 handleChange(e)
                                             }
                                             placeholder="Address"
-                                            value={formData?.address}
+                                            defaultValue={formData?.address}
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("partnerPrepareAddress",place?.formatted_address);
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
                                                 setLatitude(place?.geometry?.location?.lat());
                                                 setLongitude(place?.geometry?.location?.lng());
                                           
@@ -854,7 +854,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 disabled={isDisabled}
                                                 type="button"
                                                 onClick={() =>{
-                                                    setFormData({});
+                                                    setFormData({asset_id:id});
                                                     setMachineModal(true)
                                                 }}
                                                 className="text-white indigo-btn mx-auto rounded-[30px] px-[65px] py-4 my-2"

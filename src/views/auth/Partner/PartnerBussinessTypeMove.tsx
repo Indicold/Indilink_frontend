@@ -220,6 +220,15 @@ const PartnerBussinessTypeMove = () => {
             
           }
     },[])
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Add padding if necessary
+
+    // Calculate the minimum allowed date (one year ago)
+    const minDate = `${currentYear - 1}-${currentMonth}`;
+
+    // Format the current month and year as 'YYYY-MM'
+    const maxDate = `${currentYear}-${currentMonth}`;
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -460,6 +469,9 @@ const PartnerBussinessTypeMove = () => {
                                             value={data?.mfg_month_year || '2023-05'}
                                             placeholder="MFG Month/Year"
                                             component={Input}
+                                            min={minDate} // Set the minimum allowed date to one year ago
+                                            max={maxDate} 
+                                            
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.mfg_month_year}

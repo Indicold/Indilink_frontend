@@ -242,7 +242,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Select</option>
+                                            <option disabled selected>Select</option>
                                             <option value={1} selected={data?.internet_enabled === 1}>
                                                 Yes
                                             </option>

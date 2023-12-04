@@ -46,6 +46,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         const newData: any = { ...data }
         newData[e.target.name] = e.target.value
         setData(newData)
+        update(newData)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared
@@ -53,7 +54,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
      */
     const handlesave = () => {
         if(formD?.type==='Edit'){
-            updateData(formD)
+            updateData(data)
         }else{
             handleStoreTable(
                 'partner/prepare/machine',
@@ -72,6 +73,8 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         
     }
     const isDisabled=formD?.type==='View';
+    console.log("YYYYYYYY",formD,data);
+    
 useEffect(()=>{
     if(PutApiResponse?.status===200){
         messageView("Data updated successfully !")
@@ -81,7 +84,10 @@ useEffect(()=>{
         messageView(PutApiResponse?.message)
     }
     fetchMachineList();
-},[PutApiResponse?.message])
+},[PutApiResponse,PutApiResponse?.message])
+useEffect(()=>{
+setData(formD)
+},[])
     return (
         <>
             <ToastContainer />
