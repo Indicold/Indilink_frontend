@@ -479,7 +479,7 @@ const PartnerComplianceMove = () => {
                                                <input type='text'
                                                 disabled={isDisabled}
                                                placeholder='Licence No' name={`${item?.key_lic}`}
-                                                   defaultValue={item?.licenseNoVal}
+                                               defaultValue={!(item?.licenseNoVal=='null' || item?.licenseNoVal==null) ? item?.licenseNoVal :"" }
                                                    className="h-11 pl-3 block w-full border border-gray-200 
                                                    shadow-sm rounded-md text-sm 
                                                    focus:z-10 focus:border-blue-500 focus:ring-blue-500
