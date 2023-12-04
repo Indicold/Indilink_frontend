@@ -360,11 +360,11 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 handleChange(e)
                                             }
                                             placeholder="Address"
-                                            value={formData?.address}
+                                            defaultValue={formData?.address}
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("partnerPrepareAddress",place?.formatted_address);
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
                                                 setLatitude(place?.geometry?.location?.lat());
                                                 setLongitude(place?.geometry?.location?.lng());
                                           
@@ -854,7 +854,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 disabled={isDisabled}
                                                 type="button"
                                                 onClick={() =>{
-                                                    setFormData({});
+                                                    setFormData({asset_id:id});
                                                     setMachineModal(true)
                                                 }}
                                                 className="text-white indigo-btn mx-auto rounded-[30px] px-[65px] py-4 my-2"

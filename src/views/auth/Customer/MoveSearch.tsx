@@ -199,19 +199,19 @@ localStorage.removeItem('dest_gps');
 localStorage.removeItem('origin_gps');
 },[])
 
-useEffect(() => {
-    const newData = {...formData};
-    var formValuesUpdated = false;
-    if (localStorage.getItem('dest_gps') !== null) {
-        newData['dest_gps'] = localStorage.getItem('dest_gps');
-        formValuesUpdated = true;
-    }
-    if (localStorage.getItem('origin_gps') !== null) {
-        newData['origin_gps'] = localStorage.getItem('origin_gps');
-        formValuesUpdated = true;
-    }
-    if (formValuesUpdated) setFormData(newData)
-}, [addressUpdateCount])
+// useEffect(() => {
+//     const newData = {...formData};
+//     var formValuesUpdated = false;
+//     if (localStorage.getItem('dest_gps') !== null) {
+//         newData['dest_gps'] = localStorage.getItem('dest_gps');
+//         formValuesUpdated = true;
+//     }
+//     if (localStorage.getItem('origin_gps') !== null) {
+//         newData['origin_gps'] = localStorage.getItem('origin_gps');
+//         formValuesUpdated = true;
+//     }
+//     if (formValuesUpdated) setFormData(newData)
+// }, [addressUpdateCount])
 
     return (
         <div>
@@ -302,12 +302,12 @@ useEffect(() => {
                                             aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_gps"
-                                            value={formData?.origin_gps || origin_gps}
+                                            defaultValue={formData?.origin_gps || origin_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("origin_gps",place?.formatted_address)
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
                                             }}
                                         />
                                     </FormItem>
@@ -376,12 +376,12 @@ useEffect(() => {
                                             aria-disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_gps"
-                                            value={formData?.dest_gps || dest_gps}
+                                            defaultValue={formData?.dest_gps || dest_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("dest_gps",place?.formatted_address)
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
                                                 // const newData = {...formData}
                                                 // newData['dest_gps'] = place?.formatted_address
                                                 // setFormData({...formData,dest_gps:place?.formatted_address})
