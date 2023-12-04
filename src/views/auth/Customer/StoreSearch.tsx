@@ -238,7 +238,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("City")} 
+                                        label={t("City*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -261,7 +261,7 @@ const StoreSearch = () => {
 
                                 <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex md:flex">
                                     <FormItem
-                                        label= {t("Product Type")} 
+                                        label= {t("Product Type*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -279,7 +279,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Temperature")} 
+                                        label={t("Temperature*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -376,7 +376,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]' >{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Storage Duration")}
+                                        label={t("Storage Duration*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
