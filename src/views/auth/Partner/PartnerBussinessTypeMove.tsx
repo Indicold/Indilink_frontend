@@ -225,7 +225,7 @@ const PartnerBussinessTypeMove = () => {
     const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Add padding if necessary
 
     // Calculate the minimum allowed date (one year ago)
-    const minDate = `${currentYear - 1}-${currentMonth}`;
+    const minDate = `${currentYear - 20}-${currentMonth}`;
 
     // Format the current month and year as 'YYYY-MM'
     const maxDate = `${currentYear}-${currentMonth}`;
@@ -424,7 +424,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="chassis_no"
-                                            value={data?.chassis_no}
+                                            value={data?.chassis_no !=undefined ? data?.chassis_no :""}
                                             placeholder="Get Chassis No from RC"
                                             component={Input}
                                         />
@@ -511,7 +511,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_no"
-                                            value={data?.vehicle_no}
+                                            value={!(data?.vehicle_no =="undefined" || data?.vehicle_no ==undefined) ? data?.vehicle_no :""}
                                             placeholder="Vehicle number"
                                             component={Input}
                                         />
@@ -688,7 +688,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="engine_no"
-                                            value={data?.engine_no}
+                                            value={!(data?.engine_no ==undefined || data?.engine_no =="undefined") ? data?.engine_no :""}
                                             placeholder="Get Engine No"
                                             component={Input}
                                         />
@@ -816,7 +816,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            value={data?.rc_no}
+                                            value={!(data?.rc_no=="undefined" || data?.rc_no==undefined) ? data?.rc_no :""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }

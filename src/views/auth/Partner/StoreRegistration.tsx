@@ -1671,7 +1671,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center">{t("Currently there are no chambers.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
                                                         {
@@ -1740,7 +1740,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no CA Equipments.")} </p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCAModal(true)
@@ -1802,12 +1802,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'Compressors')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'Compressors')}
                                                             >
@@ -1819,7 +1821,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no Compressors.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -1899,7 +1901,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no ACUs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -1972,7 +1974,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no Condenser.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2049,7 +2051,7 @@ const StoreRegistration = () => {
                                                 })}
                                             </div> : <p className="text-center">{t("Currently there are no AMCs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2119,7 +2121,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no IOT Devices.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2189,7 +2191,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no IT Devices.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({})
@@ -2259,7 +2261,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no generators.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2323,7 +2325,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center">{t("Currently there are no MHEs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2389,7 +2391,7 @@ const StoreRegistration = () => {
                                             </div> : <p className="text-center">{t("Currently there are no solar inverters.")} </p>}
 
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setSEModal(true)

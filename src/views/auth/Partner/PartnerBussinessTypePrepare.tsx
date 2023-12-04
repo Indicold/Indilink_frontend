@@ -125,12 +125,12 @@ const PartnerBussinessTypePrepare = () => {
         address: address,
         hourly_throughput: '',
         prepare_type_id: '',
-        product_category_ids: '',
+        product_category_ids:value1,
         product_type: value || [],
         throughput: '',
         avg_case_size: '',
         temperature: '',
-        no_of_docks: '',
+        no_of_docks: '2',
         type_of_dock_id: '',
         batch_size: '',
         machine_ids: '',
@@ -146,18 +146,26 @@ const PartnerBussinessTypePrepare = () => {
     const navigate = useNavigate()
 
     // Define a function to handle form input changes
-    const handleChange = (e: any) => {
+    const handleChange = (e: any,key:any,arr:any) => {
         const newData = { ...formData }
+console.log("YUUUUUUUU",formData?.product_category_ids,newData?.product_category_ids,value1);
 
         if (e.target.name === "address" && (localStorage.getItem('partnerPrepareAddress') !== null)) {
             newData[e.target.name] = localStorage.getItem('partnerPrepareAddress')
+            
+
+        }else if(key==='product_category_ids'){
+            newData['product_category_ids']=arr;
         }
         else {
             newData[e.target.name] = e.target.value
         }
         setFormData(newData)
+        console.log("tyui",newData,e.target,key);
+        if(errors[key]) validatePrepareForm(newData, setErrors)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
     }
+console.log("7687686786",formData?.product_category_ids);
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
@@ -319,7 +327,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     className="w-full focus:outline-0"
                                                     name="city_id"
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'city_id',[])
                                                     }
                                                 >
                                                     <option>Select City</option>
@@ -357,7 +365,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
                                             name="address"
                                             onChange={(e: any) =>
-                                                handleChange(e)
+                                                handleChange(e,'address',[])
                                             }
                                             placeholder="Address"
                                             defaultValue={formData?.address}
@@ -389,7 +397,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 autoComplete="off"
                                                 name="hourly_throughput"
                                                 onChange={(e: any) =>
-                                                    handleChange(e)
+                                                    handleChange(e,'hourly_throughput',[])
                                                 }
                                                 placeholder="Enter value"
                                                 value={formData?.hourly_throughput}
@@ -411,7 +419,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     className="w-full focus:outline-0"
                                                     name="prepare_type_id"
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'prepare_type_id',[])
                                                     }
                                                 >
                                                     <option>
@@ -460,7 +468,10 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                         ...fixedOptions1,
                                                         ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
                                                     ]);
-                                                    handleChange(event)
+                                                    handleChange(event,'product_category_ids',[
+                                                        ...fixedOptions1,
+                                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
+                                                    ])
                                                 }}
                                                 options={ProductType ? ProductType?.data : []}
                                                 getOptionLabel={(option: any) => option?.name}
@@ -482,7 +493,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     
                                                 )}
                                                 
-                                     disabled={location?.state}
+                                    //  disabled={location?.state}
                                     getOptionDisabled={(option) => value1.indexOf(option) !== -1}
                                             />
                                             {/* <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -538,12 +549,12 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                         ...fixedOptions,
                                                         ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
                                                     ]);
-                                                    handleChange(event)
+                                                    handleChange(event,'product_type',[])
                                                 }}
                                                 options={ProductTypeList ? ProductTypeList?.data : []}
                                                 getOptionLabel={(option: any) => option?.type}
                                                 renderTags={(tagValue, getTagProps) =>
-                                                    tagValue.map((option, index) => (
+                                                    tagValue.map((option:any, index:any) => (
                                                         <Chip
                                                             label={option?.type}
                                                             {...getTagProps({ index })}
@@ -556,7 +567,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                         name="product_type"
                                                         placeholder="Product Type" />
                                                 )}
-                                                disabled={location?.state}
+                                                // disabled={location?.state}
                                     getOptionDisabled={(option) => value.indexOf(option) !== -1}
                                             />
                                             {/*                                             
@@ -612,7 +623,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'throughput',[])
                                                     }
                                                     name="throughput"
                                                     value={formData?.throughput}
@@ -620,7 +631,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'throughput_unit_id',[])}
                                                     name="throughput_unit_id"
                                                     className=" w-[20%]  input-md right-0 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
@@ -647,7 +658,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'avg_case_size',[])
                                                     }
                                                     name="avg_case_size"
                                                     value={formData?.avg_case_size}
@@ -655,7 +666,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'avg_case_size_unit_id',[])}
                                                     name="avg_case_size_unit_id"
                                                     className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
@@ -683,10 +694,10 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 min={0}
                                                 onKeyDown={onkeyDown}
                                                 onChange={(e: any) =>
-                                                    handleChange(e)
+                                                    handleChange(e,'no_of_docks',[])
                                                 }
                                                 name="no_of_docks"
-                                                defaultValue={formData?.no_of_docks || 2}
+                                                defaultValue={formData?.no_of_docks}
                                                 // value={formData?.no_of_docks}
                                                 placeholder="Enter Value"
                                                 component={Input}
@@ -706,7 +717,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'area',[])
                                                     }
                                                     name="area"
                                                     value={formData?.area}
@@ -773,8 +784,8 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                             className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}
@@ -804,7 +815,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'batch_size',[])
                                                     }
                                                     name="batch_size"
                                                     value={formData?.batch_size}
@@ -812,7 +823,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'batch_size_unit_id',[])}
                                                     name="batch_size_unit_id"
                                                     className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
