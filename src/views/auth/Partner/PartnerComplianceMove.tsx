@@ -137,7 +137,7 @@ const PartnerComplianceMove = () => {
                     ...item,
                     valid_till: e.target.value,
                     messageText: null,
-                    licenseNo:"Licence No is required"
+                    // licenseNo:"Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -241,7 +241,7 @@ const PartnerComplianceMove = () => {
     const handleRoute = () => {
         const validData:any = array?.find((item:any)=>{
             
-            if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
+            if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !item?.licenseNoVal)){
                 console.log("UUUUUUUUU",item);
             
                return item
@@ -516,7 +516,9 @@ const PartnerComplianceMove = () => {
                                                     Approved
                                                    </option>
                                            
-                                       <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
+      
+                                                   <option value={0} selected={item?.doc_status === 2}>{t("Not Approved")}</option>
+                                                        <option value={0} selected={item?.doc_status === 0}>{t("Pending")}</option>
                                    </select>
                                  
                                </FormItem>
