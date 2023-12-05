@@ -87,6 +87,8 @@ i18n
             "Avg. Case Size*":"औसत नाप*",
             "Estimated Docks":"अनुमानित गोदियाँ",
             "Estimated Dispatches":"अनुमानित प्रेषण",
+            "Estimated Docks*":"अनुमानित गोदियाँ*",
+            "Estimated Dispatches*":"अनुमानित प्रेषण*",
           
             "Date of Start":"प्रारंभ की तिथि",
             "Contract Name":" अनुबंध का नाम",

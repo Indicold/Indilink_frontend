@@ -299,7 +299,7 @@ localStorage.removeItem('origin_gps');
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
-                                            aria-disabled={isDisabled}
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_gps"
                                             defaultValue={formData?.origin_gps || origin_gps}
@@ -373,7 +373,7 @@ localStorage.removeItem('origin_gps');
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
-                                            aria-disabled={isDisabled}
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_gps"
                                             defaultValue={formData?.dest_gps || dest_gps}
@@ -440,7 +440,7 @@ localStorage.removeItem('origin_gps');
                                 </div>
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type")}
+                                        label= {t("Product Type*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
