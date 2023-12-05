@@ -501,6 +501,7 @@ if(!formData?.chassis_no){
 
 export const validateChamberForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
+console.log("TTTTTTTTTT77777",formData['ch-l'],formData['ch-b'],formData['ch-h'],formData?.chamber_size?.length);
 
     if (!formData?.chamber_number) {
         newErrors.chamber_number = 'This Field is required'
@@ -513,9 +514,9 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
     if (!formData?.chamber_size) {
         newErrors.chamber_size = 'This Field is required'
     }
-    
-    if (formData?.chamber_size?.length < 5) {
-        newErrors.chamber_size = 'Enter all details'
+  
+    if (!formData?.chamber_size || formData?.chamber_size.length < 4 || !formData['ch-l'] || !formData['ch-b'] || !formData['ch-h']) {
+        newErrors.chamber_size = 'Enter all details';
     }
 
     if (!formData?.no_of_pallets) {
@@ -526,8 +527,8 @@ export const validateChamberForm = (formData: any, setErrors: any) => {
         newErrors.pallet_size = 'This Field is required'
     }
     
-    if (formData?.pallet_size?.length < 5) {
-        newErrors.chamber_size = 'Enter all details'
+    if (!formData?.pallet_size || formData?.pallet_size?.length < 4 || !formData['pl-l'] || !formData['pl-b'] || !formData['pl-h']) {
+        newErrors.pallet_size = 'Enter all details'
     }
 
     if (!formData?.racking_type_id) {

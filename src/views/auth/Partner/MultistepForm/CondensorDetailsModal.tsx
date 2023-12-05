@@ -195,7 +195,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                               </Tooltip>
                                             </div>} className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
-                                            type="text"
+                                            type="number"
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="tr"
