@@ -101,16 +101,19 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
             setLength(e.target.value);
+            validateChamberForm(newData, setErrors)
             const area:any=e.target.value*breadth;
             newData['floor_area']=area;
             updateFormattedString(e.target.value, breadth, height);
         } else if (e.target.name === 'ch-b') {
             setBreadth(e.target.value);
+            validateChamberForm(newData, setErrors)
             const area:any=e.target.value*length;
             newData['floor_area']=area;
             updateFormattedString(length, e.target.value, height);
         } else if (e.target.name === 'ch-h') {
             setHeight(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedString(length, breadth, e.target.value);
         } 
         else if (e.target.name === 'chamber_number') {
@@ -123,18 +126,21 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
             setLengthP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(e.target.value, breadthP, heightP);
         } else if (e.target.name === 'pl-b') {
             setBreadthP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(lengthP, e.target.value, heightP);
         } else if (e.target.name === 'pl-h') {
             setHeightP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(lengthP, breadthP, e.target.value);
         }else
         if(e.target.name==='staircase'){
           
             // setData({...data,staircase:e.target.checked})
-            newData[e.target.name]=e.target.checked ? true :false;
+            newData[e.target.name]=e.target.checked ? 1 :0;
         }
         else {
             newData[e.target.name] = e.target.value
@@ -143,6 +149,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             validateChamberForm(newData, setErrors)
 
         }
+        console.log("fhgfhf",newData);
+        
         setData(newData)
         
     }

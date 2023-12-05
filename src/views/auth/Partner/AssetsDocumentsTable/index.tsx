@@ -18,7 +18,7 @@ const AssetsDocumentsTable = () => {
     }: any = useApiFetch<any>(`legal/document-final/${id}`, token)
   return (
     <div>
-      <h2>Doument List</h2>
+      <h2>Document List</h2>
 
       {AllStore?.data?.length > 0 ? (
                 <>
