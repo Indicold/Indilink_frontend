@@ -219,7 +219,7 @@ useEffect(()=>{
                                     >
                                         <Field
                                                 disabled={isDisabled}
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="cmf"
                                             value={data?.cmf}

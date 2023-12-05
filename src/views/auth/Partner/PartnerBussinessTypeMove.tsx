@@ -71,6 +71,23 @@ const PartnerBussinessTypeMove = () => {
         pucc_validity: '',
         chassis_no: '',
         fitness_validity: '',
+        mfg_month_year:'',
+        vehicle_class:'',
+        emission_norms:'',
+        actual_payload:'',
+        create_capacity:'',
+        length: '',
+width: '',
+hight: '',
+gv_weight: '',
+unladen_weight_in_rc: '',
+engine_no: '',
+side_door: '',
+hatch_window: '',
+dual_temp_bulkhead: '',
+rc_no: '',
+rc_image: '',
+vehicle_no:''
     }
 
     // Define state variables for form data and errors
@@ -500,7 +517,7 @@ const PartnerBussinessTypeMove = () => {
                                 </div>
                                 <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Vehicle number"
+                                        label="Vehicle number*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -688,7 +705,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="engine_no"
-                                            value={!(data?.engine_no ==undefined || data?.engine_no =="undefined") ? data?.engine_no :""}
+                                            value={!(data?.engine_no ==undefined) ? data?.engine_no :""}
                                             placeholder="Get Engine No"
                                             component={Input}
                                         />
