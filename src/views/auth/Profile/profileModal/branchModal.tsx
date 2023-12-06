@@ -112,6 +112,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -132,6 +133,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Address"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -154,6 +156,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch GST"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -174,6 +177,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Head"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -196,6 +200,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Email Address"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -216,6 +221,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Phone Number"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}

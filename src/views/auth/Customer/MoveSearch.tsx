@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
-import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
+import { messageView, validateMoveCustomerForm, onkeyDownPincode } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
@@ -291,6 +291,7 @@ localStorage.removeItem('origin_gps');
                                             value={formData?.origin_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
+                                            onKeyDown={onkeyDownPincode}
                                         />
                                     </FormItem>
                                     <FormItem
@@ -312,7 +313,7 @@ localStorage.removeItem('origin_gps');
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location*")} </h6>
+                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location")} </h6>
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}
@@ -365,6 +366,7 @@ localStorage.removeItem('origin_gps');
                                             value={formData?.dest_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
+                                            onKeyDown={onkeyDownPincode}
                                         />
                                     </FormItem>
                                     <FormItem

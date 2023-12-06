@@ -62,7 +62,7 @@ i18n
            "From*":"कहा से*",
            "GPS":"GPS",
            "PIN Code":"पिन कोड",
-           "Destination Location*":"गंतव्य स्थान*",
+           "Destination Location":"गंतव्य स्थान",
            "To*":"कहा तक*",
            "Load Quantity*":"भार मात्रा*",
            "Broad Category*":"विस्तृत श्रेणी*",

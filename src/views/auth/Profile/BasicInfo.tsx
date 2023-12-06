@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -350,7 +350,7 @@ useEffect(()=>{
                                 >
                                     <Field
                                         disabled={isDisabled}
-                                        type="text"
+                                        type="number"
                                         autoComplete="off"
                                         onChange={(e: any) =>
                                             handleChange(e)
@@ -359,6 +359,7 @@ useEffect(()=>{
                                         value={data?.pin_code}
                                         placeholder="Firm Registered PIN Code"
                                         component={Input}
+                                        onKeyDown={onkeyDownPincode}
                                     />
                                     <p className="text-[red]">
                                         {error && error.pin_code}

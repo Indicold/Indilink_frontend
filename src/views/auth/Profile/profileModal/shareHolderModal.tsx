@@ -131,6 +131,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder First Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -176,7 +177,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
-                                                    type="text"
+                                                    type="password"
                                                     autoComplete="off"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -193,6 +194,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Percentage"
                                                 className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'w-full pl-[22px]':'w-1/2 pl-[22px]' }`}
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -215,6 +217,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Address"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -235,6 +238,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Phone Number"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -249,7 +253,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {isMobileValid}
+                                                    {isMobileValid ? isMobileValid : error?.phone_number}
                                                     {/* {error && error?.phone_number} */}
                                                 </p>
                                             </FormItem>
@@ -258,6 +262,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Email address"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -272,13 +277,14 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     component={Input}
                                                 />
                                                  <p className="text-[red] normal-case">
-                                    {isEmailValid}
+                                    {isEmailValid ? isEmailValid : error?.shareholder_email}
                                 </p>
                                                
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Designation"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -301,6 +307,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="DIN Number"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -321,6 +328,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Authorised Signatory"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}

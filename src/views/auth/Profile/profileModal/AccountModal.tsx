@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownBankacNum, onkeyDownBankifscCode, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -183,6 +183,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Account Name"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -201,6 +202,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Account Number"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -213,6 +215,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.account_number}
                                                         placeholder="Account Number"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownBankacNum}
                                                     />
                                                     <p className='text-[red]'>{error && error.account_number}</p>
                                                 </FormItem>
@@ -221,6 +224,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Bank Name"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -239,6 +243,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Bank IFSC Code"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -251,6 +256,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownBankifscCode}
                                                     />
                                                     <p className='text-[red]'>{error && error.bank_ifsc}</p>
                                                 </FormItem>
@@ -259,6 +265,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Branch Name"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -275,13 +282,15 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     <p className='text-[red]'>{error && error.branch_name}</p>
                                                 </FormItem>
                                                 <FormItem
-                                                    label="Cancel Cheque"
+                                                    label="Cancelled Cheque"
                                                     className="rounded-lg pl-[22px] w-1/2"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                    disabled={data?.isdisabled}
                                                         multiple
                                                         type="file"
+                                                        accept="image/png, image/jpeg"
                                                         className="w-full"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
@@ -294,7 +303,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
 
 
                                                     <p className="text-[red]">
-                                                        {error && error.gst_file}
+                                                        {error && error.cancelled_cheque}
                                                     </p>
                                                 </FormItem>
                                             </div>
