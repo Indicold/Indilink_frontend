@@ -128,7 +128,7 @@ export let CustomerMovePayload1 = {
     dest_city_id: '',
     dest_pincode: '',
     dest_gps: '',
-    unit_id:'',
+    unit_id:2,
     load_quantity: '',
     broad_category_id: '',
     product_type_id: '',

@@ -54,7 +54,7 @@ const StoreRegistration = () => {
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
     const { id }: any = useParams()
-    const fixedOptions1: any = [1,2];
+    const fixedOptions1: any = [];
     const [value1, setValue1] = useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
     const {
@@ -413,7 +413,7 @@ const StoreRegistration = () => {
     const itemsToFind1 = dataa?.store_type_id;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(typeof item?.id === 'string' ? `${item?.id}` :item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(`${item?.id}`)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
     }, [StorageType?.data, dataa?.store_type_id])
 
