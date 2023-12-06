@@ -88,6 +88,7 @@ const PrepareSearch = () => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
+        if(errors[e.target.name])validatePrepareCustomerForm(newData, setErrors)
 
     }
 
@@ -159,6 +160,8 @@ const PrepareSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
+            console.log("TTTT6666TTTT",location?.state?.data);
+            
             setFormData(location?.state?.data);
             setIsDisabled(location?.state?.disabled)
         }
@@ -492,7 +495,7 @@ const PrepareSearch = () => {
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
-                                            value={formData?.date_of_start}
+                                            value={new Date(formData?.date_of_start).toISOString().split('T')[0]}
                                             name="date_of_start"
                                             placeholder="Date of Start"
                                             component={Input}
@@ -502,7 +505,7 @@ const PrepareSearch = () => {
                                 {location?.state?.extraForm && <>
                                     <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
-                                            label={t("Status Id")}
+                                            label={t("Status")}
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
 
@@ -575,7 +578,7 @@ const PrepareSearch = () => {
                                             <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div>
-                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    {/* <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Arrival Date")}
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
@@ -586,7 +589,7 @@ const PrepareSearch = () => {
                                                 onChange={(e: any) => handleChange(e)}
                                                 autoComplete="off"
                                                 name="arrival_date"
-                                                value={formData?.arrival_date}
+                                                value={formData?.arrival_date && new Date(formData?.arrival_date).toISOString().split('T')[0]}
                                                 placeholder="Arrival Date"
                                                 component={Input}
                                             />
@@ -603,15 +606,15 @@ const PrepareSearch = () => {
                                                 autoComplete="off"
 
                                                 name="dispatch_date"
-                                                value={formData?.dispatch_date}
-                                                placeholder="Contract Type"
+                                                value={formData?.dispatch_date && new Date(formData?.arrival_date).toISOString().split('T')[0]}
+                                                // placeholder="Contract Type"
                                                 component={Input}
                                             />
 
                                             <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                         </FormItem>
-                                    </div>
-                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    </div> */}
+                                    {/* <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Contract Upload")}
                                             className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
@@ -632,7 +635,7 @@ const PrepareSearch = () => {
                                             <p className='text-[red]'>{errors && errors.date}</p>
                                         </FormItem>
 
-                                    </div>
+                                    </div> */}
                                 </>}
 
                                 <div className="lg:flex md:flex mt-4 justify-center w-[310px] mx-auto">
