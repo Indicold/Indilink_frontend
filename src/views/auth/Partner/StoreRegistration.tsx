@@ -411,7 +411,7 @@ const StoreRegistration = () => {
     const itemsToFind1 = dataa?.store_type_id;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(`${item?.id}`)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
     }, [StorageType?.data, dataa?.store_type_id])
 
