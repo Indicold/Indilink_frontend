@@ -46,7 +46,6 @@ import { t } from 'i18next'
 import Autocompletem from "react-google-autocomplete"
 import { getCordinates } from '@/store/token'
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
 // Define the StoreRegistration component
 const StoreRegistration = () => {
     // Fetch the user's token
@@ -55,7 +54,7 @@ const StoreRegistration = () => {
     // Get the assets list ID from local storage
     const AssetsId: any = localStorage.getItem('assets_list_id')
     const { id }: any = useParams()
-    const fixedOptions1: any = [];
+    const fixedOptions1: any = [1,2];
     const [value1, setValue1] = useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
     const {
@@ -135,7 +134,7 @@ const StoreRegistration = () => {
 
     // Initialize state variables for form data and errors
     const [dataa, setData] = useState<any>({
-        store_type_id: value1,
+        store_type_id: value1 || [],
         three_d_view_of_asset: [],
         photos_of_asset: [],
         total_tonnage: '',
@@ -152,7 +151,9 @@ const StoreRegistration = () => {
         temp_range_min: 0,
         temp_range_max: 0,
         each_floor_hight: '',
-        address: address
+        address: address,
+        photos_of_asset_type:false,
+        three_d_view_of_asset_type:false
     })
     const [longitude,setLongitude]=useState<any>(null)
     const [latitude,setLatitude]=useState<any>(null)
@@ -166,7 +167,7 @@ const StoreRegistration = () => {
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        dataa.store_type_id = value1?.map((item: any) => item?.id)
+        dataa['store_type_id'] = value1?.map((item: any) => item?.id) || []
         
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
@@ -201,13 +202,13 @@ const StoreRegistration = () => {
         formdata.append("addr_longitude",longitude);
         formdata.append("addr_latitude",latitude);
 
-        if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
+        if (dataa?.three_d_view_of_asset_type && dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
             formdata.append(
                 'three_d_view_of_asset',
                 value
             )
         }
-        if (dataa?.photos_of_asset) for (const value of dataa?.photos_of_asset) {
+        if (dataa?.photos_of_asset_type &&  dataa?.photos_of_asset) for (const value of dataa?.photos_of_asset) {
             formdata.append(
                 'photos_of_asset',
                 value
@@ -316,6 +317,7 @@ const StoreRegistration = () => {
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
             newData['filetype'] = "file";
+            newData['three_d_view_of_asset_type']=true;
 
         } else
             if (e.target.name === 'photos_of_asset') {
@@ -329,7 +331,7 @@ const StoreRegistration = () => {
                 }
                 newData[e.target.name] = fileArray;
                 newData['filetype1'] = "file1";
-
+                newData['photos_of_asset_type']=true;
             }
             else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
@@ -411,7 +413,7 @@ const StoreRegistration = () => {
     const itemsToFind1 = dataa?.store_type_id;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(typeof item?.id === 'string' ? `${item?.id}` :item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
     }, [StorageType?.data, dataa?.store_type_id])
 
