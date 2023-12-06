@@ -271,7 +271,10 @@ console.log("dfghjk",formData);
     if (!formData?.temperature_max && formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature is required'
     }
-    if (formData?.temperature_max===formData?.temperature_min) {
+    if (formData?.temperature_max < formData?.temperature_min) {
+        newErrors.temperature_min = 'Max Temperature should be greater then Min Temperature'
+    }
+    if (formData?.temperature_max && formData?.temperature_min && formData?.temperature_max===formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature should greater then Min Temperature'
     }
     if (!formData?.batch_size) {

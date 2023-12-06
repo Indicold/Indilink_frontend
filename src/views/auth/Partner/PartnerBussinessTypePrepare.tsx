@@ -138,6 +138,7 @@ const PartnerBussinessTypePrepare = () => {
         addr_longitude:longitude,
         addr_latitude:latitude
     })
+    const [machineData,setMachineData]=useState<any>({})
     
     // Define state variable for form validation errors
     const [errors, setErrors] = useState<any>({})
@@ -225,9 +226,9 @@ console.log("7687686786",formData?.product_category_ids);
     /* The above code is a useEffect hook in a TypeScript React component. It is used to perform some
     logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
-        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(typeof item?.id === 'string' ? `${item?.id}` :item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
         setValue1(foundItems)
-    }, [ProductType?.data])
+    }, [ProductType?.data,itemsToFind1?.length])
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
@@ -235,11 +236,11 @@ console.log("7687686786",formData?.product_category_ids);
     `ProductTypeList.data` changes. */
     useEffect(() => {
         if(ProductTypeList?.data!==null){
-            const foundItems: any = itemsToFind?.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
+            const foundItems: any = itemsToFind?.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes( typeof item?.id === 'string' ? `${item?.id}` :item?.id )) : targetArray?.filter((item: any) => item?.id === itemsToFind);
             setValue(foundItems)
         }
        
-    }, [ProductTypeList?.data])
+    }, [ProductTypeList?.data,itemsToFind?.length])
 
     /* The above code is using the useEffect hook in a TypeScript React component. It is calling the
     fetchMachineList function when the machineModal or MachineList variables change. */
@@ -253,7 +254,7 @@ console.log("7687686786",formData?.product_category_ids);
             newData['address'] = localStorage.getItem('partnerPrepareAddress');
             setFormData(newData)
         }
-    }, [localStorage, localStorage.getItem('partnerPrepareAddress'), addressUpdateCount])
+    }, [localStorage, localStorage.getItem('partnerPrepareAddress')])
     const { t, i18n }:any = useTranslation();
 console.log("TYTYTYTYYU7878",latitude,longitude);
 
@@ -310,9 +311,9 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                     <MachineModal
                                         modal={machineModal}
                                         setModal={setMachineModal}
-                                        formD={formData}
+                                        formD={machineData}
                                         fetchMachineList={fetchMachineList}
-                                        update={setFormData}
+                                        update={setMachineData}
                                     />
                                 )}
                                 <FormContainer>
@@ -851,7 +852,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                             {MachineList?.data?.machines?.length > 0 &&
                                                     <MachineTable AllStore={MachineList?.data?.machines} tableHead={tableHead}
                                                         modal={machineModal}
-                                                        setFormData={setFormData}
+                                                        setFormData={setMachineData}
                                                         setModal={setMachineModal} />
                                                 }
                                     <div className="flex">
@@ -865,7 +866,7 @@ console.log("TYTYTYTYYU7878",latitude,longitude);
                                                 disabled={isDisabled}
                                                 type="button"
                                                 onClick={() =>{
-                                                    setFormData({asset_id:id});
+                                                    // setFormData({asset_id:id});
                                                     setMachineModal(true)
                                                 }}
                                                 className="text-white indigo-btn mx-auto rounded-[30px] px-[65px] py-4 my-2"

@@ -644,9 +644,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        {/* <p className="text-[red]">
+                                        <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
-                                        </p> */}
+                                        </p>
                                     </FormItem>
 
                                     <FormItem

@@ -235,9 +235,12 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
 
     const tableData = () => {
         // Generates table data rows.
-        return collection.map((rowData: any, index: any) =>
-            tableRows(rowData, index)
-        )
+        // return collection.map((rowData: any, index: any) =>
+        //     tableRows(rowData, index)
+        // )
+        return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
+      <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
+    </tr>;
     }
 
     const headRow = () => {
