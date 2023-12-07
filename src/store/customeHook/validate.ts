@@ -271,7 +271,10 @@ console.log("dfghjk",formData);
     if (!formData?.temperature_max && formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature is required'
     }
-    if (formData?.temperature_max===formData?.temperature_min) {
+    if (formData?.temperature_max < formData?.temperature_min) {
+        newErrors.temperature_min = 'Max Temperature should be greater then Min Temperature'
+    }
+    if (formData?.temperature_max && formData?.temperature_min && formData?.temperature_max===formData?.temperature_min) {
         newErrors.temperature_min = 'Max Temperature should greater then Min Temperature'
     }
     if (!formData?.batch_size) {
@@ -437,6 +440,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
         newErrors.photos_of_asset = 'This Field is required'
     }
+console.log("TTTTTT7767867",newErrors);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors

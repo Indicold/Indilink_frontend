@@ -31,9 +31,9 @@ export const payloadSearchCustomer: any = {
     temperature_type_id: 1,
     unit_id: 1,
     certification_id: '',
-    date: `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`,
+    date:`${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()+1}`,
     storage_duration: '',
-    storage_duration_type: 1,
+    storage_duration_type: 4,
     quantity: ''
 }
 
@@ -86,7 +86,7 @@ const StoreSearch = () => {
     const [modal, setModal] = useState<any>(!false);
     const [message,setMessage]=useState<any>('')
     const [errors, setErrors] = useState<any>({});
-
+    const today = new Date().toISOString().split('T')[0];
     // Define a function to handle form submission
     const handleRoute = () => {
 
@@ -109,6 +109,7 @@ const StoreSearch = () => {
             newData[e.target.name] = e.target.value;
         }
         setFormData(newData);
+        if(errors[e.target.name])validateStoreCustomerForm(newData, setErrors)
     }
     /**
      * The `handleRouteUpdate` function sends a PUT request to update a customer store search and then
@@ -365,11 +366,12 @@ const StoreSearch = () => {
                                     >
                                         <Field
                                             disabled={isDisabled}
+                                            min={today}
                                             type="date"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             name="date"
-                                            value={formData?.date}
+                                            value={new Date(formData?.date).toISOString().split('T')[0]}
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />

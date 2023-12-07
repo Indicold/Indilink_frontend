@@ -1,6 +1,7 @@
 /* The code is importing three things: */
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { getToken } from '@/store/token';
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom'
 
 /**
@@ -12,14 +13,27 @@ import { useLocation, useParams } from 'react-router-dom'
 const StoreDetails = () => {
     const {id}:any=useParams(); // Extracting endpoint of active URL to define payload for API call
     const {token}:any=getToken(); // Extracting token info to define payload for API call
-    // const {state}:any=useLocation();
-    let state:any="Store"
+    const location:any=useLocation();
+    const [assetDetails,setAssetsDetails]=useState<any>({})
+    let state:any=location?.state?.type;
+    console.log("yyyyyyy",state);
+    
     const {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(state==='Store' ? `partner/store/${id}`: state==='Move' ? `partner/store/${id}` :`partner/store/${id}`, token)
-  
+    } = useApiFetch<any>(state==='Store' ? `partner/store/${id}`: state==='Move' ? `partner/move/${id}` :`partner/prepare/${id}`, token)
+  useEffect(()=>{
+if(fetchDetails?.data?.store){
+    setAssetsDetails(fetchDetails?.data?.store)
+}
+if(fetchDetails?.data?.move){
+    setAssetsDetails(fetchDetails?.data?.move)
+}
+if(fetchDetails?.data?.prepare){
+    setAssetsDetails(fetchDetails?.data?.prepare)
+}
+  },[])
     return (
     <div>
       <div className='bg-blue-100 p-4 rounded-lg mx-0'>
@@ -39,8 +53,8 @@ const StoreDetails = () => {
             </div>
             <div className='bg-white p-4 rounded-lg mx-0'>
                 <div className="w-[100%] pl-4 mt-10 mb-2">
-                    <h2 className="text-xl">Title</h2>
-                    <h2 className="text-gray-400 text-lg">Caption</h2>
+                    <h2 className="text-xl">{location?.state?.type} Type Assets</h2>
+                    <h2 className="text-gray-400 text-lg">{id}</h2>
                 </div>
  
  
@@ -50,13 +64,13 @@ const StoreDetails = () => {
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Asset Type :</h2>
-                                    <h2 className="text-gray-400 text-sm">Lorem Ipsum</h2>
+                                    <h2 className="text-gray-400 text-sm">{location?.state?.type}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Year Running</h2>
-                                    <h2 className="text-gray-400 text-sm">4</h2>
+                                    <h2 className="text-sm">Installation Year</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.installation_year}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
@@ -68,13 +82,13 @@ const StoreDetails = () => {
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Founder</h2>
-                                    <h2 className="text-gray-400 text-sm">Even Yates</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_name || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Tranparancy</h2>
-                                    <h2 className="text-gray-400 text-sm">Lorem Ipsum</h2>
+                                    <h2 className="text-gray-400 text-sm">N/A</h2>
                                 </div>
                             </div>
                         </div>
@@ -85,25 +99,25 @@ const StoreDetails = () => {
  
  
                                 <h2 className="text-xl">Contact</h2>
-                                <h2 className="text-gray-400 text-sm">New Delhi , Inida </h2>
+                                <h2 className="text-gray-400 text-sm">{assetDetails?.address || ""}</h2>
  
  
                             </div>
                             <div className='m-auto'>
-                                <p>ravi@gmail.com</p>
+                                {/* <p>ravi@gmail.com</p> */}
  
                             </div>
                             <div className='m-auto'>
-                                <p>+919393939393</p>
+                                <p>{assetDetails?.facility_manager_contact || 'N/A'}</p>
                             </div>
-                            <div className='m-auto'>
+                            {/* <div className='m-auto'>
                                 <p>www.ravi.com</p>
-                            </div>
+                            </div> */}
                         </div>
  
                         <div className='p-4'>
                             <h2 className="text-xl">Status</h2>
-                            <h2 className="text-yellow-500 text-sm">Medium</h2>
+                            <h2 className="text-yellow-500 text-sm">{assetDetails?.is_verified || 'Pending'}</h2>
  
                         </div>
  
@@ -114,10 +128,10 @@ const StoreDetails = () => {
                     <div className='w-[25%] p-10'>
                         <div className='m-auto'>
                         <button type="button" className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Quote</button></div>
-                        <div className='flex m-auto mt-4 bg-black gap-4'>
-                            <div m-auto>1<img src="" alt="" /></div>
-                            <div m-auto>1<img src="" alt="" /></div>
-                            <div m-auto>1<img src="" alt="" /></div>
+                        <div className='flex m-auto mt-4 gap-4'>
+                            <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
+                            <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
+                            <div m-auto>3<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
                         </div>
                     </div>
                 </div>

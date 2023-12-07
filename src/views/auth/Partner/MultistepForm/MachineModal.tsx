@@ -27,13 +27,13 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     setFormData,
     machineId,
     fetchMachineList
-}:any) => {
-    const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
+}: any) => {
+    const { id }: any = useParams(); // Extracting active URL endpoint to define payload for API call
     const [data, setData] = useState<any>({
-        asset_id:id
+        asset_id: id
     })
     const [error, setError] = useState<any>({})
-    
+
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`partner/prepare/machine/${formD?.id}`)
 
     /**
@@ -48,7 +48,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         newData[e.target.name] = e.target.value
         setData(newData)
         update(newData)
-        if (error[e.target.name])validateMachineForm(newData, setError)
+        if (error[e.target.name]) validateMachineForm(newData, setError)
     }
     /**
      * The handlesave function is used to handle saving data related to a partner's prepared
@@ -56,46 +56,68 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
      */
     const handlesave = () => {
         if (validateMachineForm(data, setError)) {
-            if(formD?.type==='Edit'){
-                updateData(data)
-            }else{
+            if (formD?.type === 'Edit') {
+                updateData({ ...data, asset_id: id })
+            } else {
+                const object: any = {
+                    name: data?.name,
+                    type_of_machine: data?.type_of_machine,
+                    make: data?.make,
+                    model: data?.model,
+                    purpose: data?.purpose,
+                    power_requirement: data?.power_requirement,
+                    asset_id: id
+                }
+                console.log("TY77777", object, data);
+
                 handleStoreTable(
                     'partner/prepare/machine',
-                    data,
+                    object,
                     setModal,
-                    formD,
+                    object,
                     update,
                     'machine_ids',
                     fetchMachineList
                 )
+                setData({
+                    name: "",
+                    type_of_machine: "",
+                    make: "",
+                    model: "",
+                    purpose: "",
+                    power_requirement: "",
+                    asset_id: id
+                })
                 let arr = machineId;
                 arr.push()
-                setFormData()  
-                fetchMachineList()  
+
+                fetchMachineList()
             }
         }
-        
+
     }
-    const isDisabled=formD?.type==='View';
+    console.log("TTTTTTTTTTTT",data);
+    
+    const isDisabled = formD?.type === 'View';
 
     useEffect(() => {
-        if (formD?.type==='Edit') {
+        if (formD?.type === 'Edit') {
             setData(formD)
         }
     }, [formD])
-useEffect(()=>{
-    if(PutApiResponse?.status===200){
-        messageView("Data updated successfully !")
-        setModal(false)
+    useEffect(() => {
+        if (PutApiResponse?.status === 200) {
+            messageView("Data updated successfully !")
+            setModal(false)
+            fetchMachineList();
+        } else {
+            messageView(PutApiResponse?.message)
+        }
         fetchMachineList();
-    }else{
-        messageView(PutApiResponse?.message)
-    }
-    fetchMachineList();
-},[PutApiResponse,PutApiResponse?.message])
-useEffect(()=>{
-setData(formD)
-},[])
+    }, [PutApiResponse, PutApiResponse?.message])
+    useEffect(() => {
+        setData(formD)
+    }, [])
     return (
         <>
             <ToastContainer />
@@ -138,7 +160,7 @@ setData(formD)
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center">Machine</h6>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
-                                <FormItem label="Name*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
+                                    <FormItem label="Name*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
                                             autoComplete="off"
@@ -155,7 +177,7 @@ setData(formD)
                                             <p className='text-[red]'>{error?.name}</p>
                                         )}
                                     </FormItem>
-                               
+
                                     <FormItem
                                         label="Type of Machine*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
@@ -178,7 +200,7 @@ setData(formD)
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
-                                    
+
                                     <FormItem label="Make*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="text"
@@ -215,7 +237,7 @@ setData(formD)
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
-                               
+
                                     <FormItem
                                         label="Purpose*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
@@ -257,18 +279,18 @@ setData(formD)
                                         )}
                                     </FormItem>
                                 </div>
-                              
+
                                 <div className=' m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex'>
-                                {!isDisabled && <Button
-                                    style={{ borderRadius: '13px' }}
-                                    block
-                                    variant="solid"
-                                    onClick={handlesave}
-                                    type="button"
-                                    className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
-                                >
-                                    Save
-                                </Button>}
+                                    {!isDisabled && <Button
+                                        style={{ borderRadius: '13px' }}
+                                        block
+                                        variant="solid"
+                                        onClick={handlesave}
+                                        type="button"
+                                        className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
+                                    >
+                                        Save
+                                    </Button>}
                                 </div>
                             </div>
                         </div>
