@@ -206,6 +206,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                     onChange={(e) => setValue(e.target.value)}
                 />
             </div>
+            <div className='overflow-auto'>
             <table className="w-full">
                 <thead>
                     <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
@@ -214,6 +215,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 </thead>
                 <tbody className="trhover bg-white">{tableData()}</tbody>
             </table>
+            </div>
             <div className="flex justify-center bg-white p-4">
                 <Pagination
                     pageSize={countPerPage}

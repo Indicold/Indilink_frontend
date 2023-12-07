@@ -110,10 +110,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                 <Form className="py-2 multistep-form-step">
                     <FormContainer>
                         
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Name"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -133,7 +133,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Email Address"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -152,10 +152,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Designation"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -175,7 +175,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Address"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -194,19 +194,19 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] lg:flex md:flex">
                         
-                            <div className="flex">
+                            <div className="w-[100%]">
                             <FormItem
                                     label="City"
-                                    className="rounded-lg pl-[22px] !w-1/2"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
                                 >
 
                                             <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="city_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfcity && ListOfcity?.data?.map((item: any, index: any) => (
@@ -220,13 +220,13 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 </FormItem>
                                 <FormItem
                                     label="State"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
                                 >
                                          <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="state_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="h-11 border input input-md  focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfState && ListOfState?.data?.map((item: any, index: any) => (
@@ -240,16 +240,16 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 </FormItem>
                             </div>
                             
-                            <div className="flex">
+                            <div className="w-[100%]">
                             <FormItem
                                     label="Country"
-                                    className="rounded-lg pl-[22px]"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
                                 >
                                         <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="country_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -263,7 +263,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 </FormItem>
                                 <FormItem
                                     label="PIN Code"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
                                 >
                                     <Field
                                         disabled={data?.isdisabled}
@@ -283,10 +283,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 </FormItem>
                             </div>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -306,7 +306,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Contact no."
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -325,10 +325,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                             {/* <FormItem
                                 label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -346,13 +346,13 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem> */}
                             <FormItem
                                 label="Platform Role"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] text-label-title m-auto"
                             >
                                        <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="platform_role_id"
-                                        className="h-11 border input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className=" border input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfRole && ListOfRole?.data?.map((item: any, index: any) => (
@@ -365,7 +365,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className='flex'>
+                        <div className='flex gap-8 p-8'>
                             <Button
                                 style={{ borderRadius: '13px' }}
                                 block
@@ -373,7 +373,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 type="button"
                                 role='button'
                                 onClick={()=>setModal(false)}
-                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                className="indigo-btn  !bg-gray-500 m-4 mx-auto rounded-[30px]"
                             >
                                 Cancel
                             </Button>
@@ -384,7 +384,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 disabled={data?.type==='View'}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
                             >
                                
                                 Submit

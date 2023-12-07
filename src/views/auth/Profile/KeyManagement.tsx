@@ -44,9 +44,9 @@ const KeyManagement = () => {
         navigate('/account-details')
     }
   return (
-    <div className='flex'>
+    <div className='lg:flex md:flex'>
         {/* stepper start */}
-            <div className='w-1/6'>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -98,7 +98,7 @@ const KeyManagement = () => {
             {/* stepper end */}
 
 
-        <div className="mb-4 w-5/6 bg-white">
+        <div className="bg-white w-[100%] lg:w-5/6">
             <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} />
             <h4 className="text-head-title text-center">Key Management Personnel</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
@@ -119,7 +119,7 @@ const KeyManagement = () => {
 
                         </div>
                         {ListOfKey?.data && <KeyTable modal={modal} setModal={setModal} formData={data} setformData={setData} AllStore={ListOfKey?.data} tableHead={tableHead} />}
-                <div className='flex'>
+                <div className='flex gap-6'>
                             <Button
                                 style={{ borderRadius: '13px' }}
                                 block
@@ -127,7 +127,7 @@ const KeyManagement = () => {
                                 type="button"
                                 role='button'
                                 onClick={()=>navigate(-1)}
-                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                className="indigo-btn !bg-gray-500 m-4 mx-auto rounded-[30px]"
                             >
                                 Prev
                             </Button>
@@ -138,7 +138,7 @@ const KeyManagement = () => {
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
                             >
                                 Save 
                                         </Button>
