@@ -14,7 +14,7 @@ import { TokenInfo } from '@/store/customeHook/token';
 const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
   const {company_id,company_name}:any=TokenInfo()
     const [isEmailValid, setIsEmailValid] = useState<any>(false)
-    const [isMobileValid, setIsMobileValid] = useState(false)
+    const [isMobileValid, setIsMobileValid] = useState<any>(false)
     const [phone, setPhone] = useState<any>('');
     const [error, setErrors] = useState<any>({})
     let { result: SHResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/shareholder`);
@@ -35,7 +35,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
         if(error[e.target.name])validateSHForm(newdata, setErrors)
     }
     const handlesubmit = () => {
-        if (validateSHForm(formData, setErrors)) {
+        if (validateSHForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
             if (formData?.type === 'Edit') {
                 const object:any={
                     ...formData,
