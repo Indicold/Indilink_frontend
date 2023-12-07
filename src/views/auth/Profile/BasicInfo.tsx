@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -350,7 +350,7 @@ useEffect(()=>{
                                 >
                                     <Field
                                         disabled={isDisabled}
-                                        type="text"
+                                        type="number"
                                         autoComplete="off"
                                         onChange={(e: any) =>
                                             handleChange(e)
@@ -359,6 +359,7 @@ useEffect(()=>{
                                         value={data?.pin_code}
                                         placeholder="Firm Registered PIN Code"
                                         component={Input}
+                                        onKeyDown={onkeyDownPincode}
                                     />
                                     <p className="text-[red]">
                                         {error && error.pin_code}
@@ -470,9 +471,7 @@ useEffect(()=>{
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
                         {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                        <div className='text-center mt-6'>
-                        {SareList?.data?.length < 1 ? <button className='text-white p-3 bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {formDataShare({});setSHModal(true)}}>+ Add  Share Holder</button> : <button className='text-white mt-auto p-3 bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
-                        </div>
+                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({});setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
                         {error && error.shareholder_ids}
                     </div>}
 

@@ -28,6 +28,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             newdata[e.target.name] = e.target.value;
         }
         setformData(newdata)
+        if(error[e.target.name])validateBranchForm(newdata, setErrors)
     }
     const handlesubmit = () => {
         if (validateBranchForm(formData, setErrors)) {
@@ -111,7 +112,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                         <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch Name"
-                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -131,7 +133,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Address"
-                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -154,6 +157,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch GST"
                                                 className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                               
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -174,6 +179,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Head"
                                                 className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -196,6 +202,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Email Address"
                                                 className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                          
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -216,6 +224,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Phone Number"
                                                 className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                              
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}

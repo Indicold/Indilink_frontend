@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownPincode, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -16,7 +16,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
     useApiFetch<any>(`master/get-countries`, token);
     const { data: ListOfState, loading: LSloading, error: LSerror } =
-    useApiFetch<any>(`master/get-state-by-Id/${data?.country_id}`, token);
+    useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id}`, token);
 
     const { data: ListOfcity, loading: Lcloading, error: Lcerror } =
     useApiFetch<any>(`master/get-city-by-countryId/${data?.country_id}`, token);
@@ -114,6 +114,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                         <FormItem
                                 label="Name"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                            //  className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -134,6 +136,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                 label="Email Address"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -156,6 +160,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                         <FormItem
                                 label="Designation"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -176,6 +182,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                 label="Address"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -200,6 +208,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                     label="Country"
                                     className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
                                 >
                                         <select
                                         disabled={data?.isdisabled}
@@ -220,6 +229,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 <FormItem
                                     label="State"
                                     className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
                                 >
                                          <select
                                         disabled={data?.isdisabled}
@@ -244,6 +254,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                     label="City"
                                     className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
                                 >
 
                                             <select
@@ -265,10 +276,12 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 <FormItem
                                     label="PIN Code"
                                     className="pl-3 w-[100%] text-label-title m-auto"
+                                    // className="rounded-lg pl-[22px] w-1/2"
+                                    asterisk={true}
                                 >
                                     <Field
                                         disabled={data?.isdisabled}
-                                        type="text"
+                                        type="number"
                                         autoComplete="off"
                                         onChange={(e: any) =>
                                             handleChange(e)
@@ -277,6 +290,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         value={data?.pin_code}
                                         placeholder="PIN Code"
                                         component={Input}
+                                        onKeyDown={onkeyDownPincode}
                                     />
                                       <p className="text-[red]">
                                         {error && error.pin_code}
@@ -291,6 +305,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                         <FormItem
                                 label="Aadhar Card"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -311,6 +327,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                 label="Contact no."
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -351,6 +369,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <FormItem
                                 label="Platform Role"
                                 className="pl-3 w-[100%] text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                        <select
                                         disabled={data?.isdisabled}

@@ -32,6 +32,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         setformData(newdata)
+        if(error[e.target.name])validateSHForm(newdata, setErrors)
     }
     const handlesubmit = () => {
         if (validateSHForm(formData, setErrors)) {
@@ -131,6 +132,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder First Name"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -176,7 +179,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
-                                                    type="text"
+                                                    type="password"
                                                     autoComplete="off"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -193,6 +196,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Percentage"
                                                 className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto':'pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto' }`}
+                                                // className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'w-full pl-[22px]':'w-1/2 pl-[22px]' }`}
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -215,6 +220,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Address"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -235,6 +242,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Phone Number"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -249,7 +258,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {isMobileValid}
+                                                    {isMobileValid ? isMobileValid : error?.phone_number}
                                                     {/* {error && error?.phone_number} */}
                                                 </p>
                                             </FormItem>
@@ -258,6 +267,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Share Holder Email address"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -272,13 +283,15 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                     component={Input}
                                                 />
                                                  <p className="text-[red] normal-case">
-                                    {isEmailValid}
+                                    {isEmailValid ? isEmailValid : error?.shareholder_email}
                                 </p>
                                                
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Designation"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -301,6 +314,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="DIN Number"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -321,6 +336,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             <FormItem
                                                 label="Authorised Signatory"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}

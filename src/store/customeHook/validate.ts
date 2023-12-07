@@ -466,6 +466,21 @@ console.log("TTTTTT7767867",newErrors);
         e.preventDefault(); 
       }
  }
+ export const onkeyDownBankacNum=(e:any)=>{
+    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==18 || e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
+        e.preventDefault();
+    }
+ }
+ export const onkeyDownBankifscCode=(e:any)=>{
+    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==11 || e.key === '-' || e.key === '+' || e.key === 'e') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
+        e.preventDefault();
+    }
+ }
+ export const onkeyDownPincode=(e:any)=>{
+    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==6 || e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
+        e.preventDefault();
+    }
+ }
  export function textContainsNumber(text:any) {
     const regex = /\d/;
     return regex.test(text);
@@ -1064,7 +1079,7 @@ export const validateBasicForm = (data: any, setErrors: any) => {
         newErrors.address = 'This Field is required'
     }
 
-    if (data?.gst_number && data?.gst_file?.length<1) {
+    if (typeof(data?.gst_number)==='string' && data?.gst_number!=='' && data?.gst_file?.length<1) {
         newErrors.gst_file = 'Gst file is required'
     }
     if (data?.shareholder_ids?.length<1) {
@@ -1098,7 +1113,7 @@ export const validateKeyForm = (data: any, setErrors: any) => {
     }
 
     if (!data?.address) {
-        newErrors.address = 'Gst file is required'
+        newErrors.address = 'This Field is required'
     }
     if (!data?.country_id) {
         newErrors.country_id = 'This Field is required'
@@ -1118,7 +1133,7 @@ export const validateKeyForm = (data: any, setErrors: any) => {
     if (!data?.contact_number) {
         newErrors.contact_number = 'This Field is required'
     }
-    if (!data?.platform_role_id) {
+    if (!data?.platform_role_id || data?.platform_role_id == 'Select') {
         newErrors.platform_role_id = 'This Field is required'
     }
   
@@ -1146,8 +1161,14 @@ export const validateAccountForm = (data: any, setErrors: any) => {
     if (!data?.bank_ifsc) {
         newErrors.bank_ifsc = 'This Field is required'
     }
+    if (data?.bank_ifsc && !textContainsNumber(data?.bank_ifsc)) {
+        newErrors.bank_ifsc = 'Please enter valid IFSC'
+    }
     if (!data?.branch_name) {
         newErrors.branch_name = 'This Field is required'
+    }
+    if (!data?.cancelled_cheque || data?.cancelled_cheque?.length<1) {
+        newErrors.cancelled_cheque = 'This Field is required'
     }
   
     setErrors(newErrors)

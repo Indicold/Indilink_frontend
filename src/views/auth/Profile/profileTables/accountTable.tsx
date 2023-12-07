@@ -84,6 +84,7 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
   .then(response => response.text())
   .then((result:any) => {
     fetchData();
+    messageView("Deleted Successfully");
   })
   .catch(error => console.log('error', error));
     }

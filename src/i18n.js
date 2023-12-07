@@ -62,7 +62,7 @@ i18n
            "From*":"कहा से*",
            "GPS":"GPS",
            "PIN Code":"पिन कोड",
-           "Destination Location*":"गंतव्य स्थान*",
+           "Destination Location":"गंतव्य स्थान",
            "To*":"कहा तक*",
            "Load Quantity*":"भार मात्रा*",
            "Broad Category*":"विस्तृत श्रेणी*",
@@ -87,6 +87,8 @@ i18n
             "Avg. Case Size*":"औसत नाप*",
             "Estimated Docks":"अनुमानित गोदियाँ",
             "Estimated Dispatches":"अनुमानित प्रेषण",
+            "Estimated Docks*":"अनुमानित गोदियाँ*",
+            "Estimated Dispatches*":"अनुमानित प्रेषण*",
           
             "Date of Start":"प्रारंभ की तिथि",
             "Contract Name":" अनुबंध का नाम",
