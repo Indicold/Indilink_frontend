@@ -274,7 +274,8 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                     onChange={(e) => setValue(e.target.value)}
                 />
             </div>
-            <table className="w-full">
+<div className='overflow-auto'>
+<table className="w-full">
                 <thead>
                     <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
                         {headRow()}
@@ -282,6 +283,7 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                 </thead>
                 <tbody className="trhover bg-white">{tableData()}</tbody>
             </table>
+</div>
             <div className="flex justify-center bg-white p-4">
                 <Pagination
                     pageSize={countPerPage}

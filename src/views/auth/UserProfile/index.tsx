@@ -15,9 +15,9 @@ const UserProfilePage = () => {
     }
   return (
     <>
-    <div className="container mx-auto my-24">
+    <div className="container mt-20">
       <div>
-        <div className="bg-white relative shadow rounded-lg w-5/6 md:w-5/6  lg:w-full xl:w-full mx-auto">
+        <div className="bg-white pt-4 relative shadow rounded-lg w-[100%] xl:w-full mx-auto">
           <div className="flex justify-center">
             <img
               src="https://avatars0.githubusercontent.com/u/35900628?v=4"
@@ -33,7 +33,7 @@ const UserProfilePage = () => {
               <NavLink to='/basic-info'
                 // href="/forgot-password"
                 // onClick={handleChangePassword}
-                className="text-white mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
+                className="text-white mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
               >
                Profile Details
               </NavLink>
@@ -42,22 +42,22 @@ const UserProfilePage = () => {
               <a
                 // href="/forgot-password"
                 onClick={handleChangePassword}
-                className="text-white mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
+                className="text-white mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 indigo-btn "
               >
                Change Password
               </a>
             </div>
-          {owner_user_id ===0  &&  <div className="my-5 px-6">
+          {owner_user_id ===0  &&  <div className="my-5 px-6 ">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
-                className="border-dashed border-2 border-indigo-600 mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
+                className="border-dashed border-2 border-indigo-600 mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
               >
             <DownloadingIcon /> Download NDA
               </a>
             </div>}
           {owner_user_id ===0  &&  <div className="my-5 px-6">
               <div role='button'
-                className="border-dashed border-2 border-indigo-600  mx-auto w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3"
+                className="border-dashed border-2 border-indigo-600  mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3"
               >
                 <label htmlFor="file">
                     <DriveFolderUploadIcon/>

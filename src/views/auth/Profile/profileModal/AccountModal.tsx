@@ -179,11 +179,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                     <Form className="py-2 multistep-form-step">
                                         <FormContainer>
 
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Account Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -201,8 +200,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 </FormItem>
                                                 <FormItem
                                                     label="Account Number"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -220,11 +218,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     <p className='text-[red]'>{error && error.account_number}</p>
                                                 </FormItem>
                                             </div>
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Bank Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -242,8 +239,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 </FormItem>
                                                 <FormItem
                                                     label="Bank IFSC Code"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -261,11 +257,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     <p className='text-[red]'>{error && error.bank_ifsc}</p>
                                                 </FormItem>
                                             </div>
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Branch Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -282,9 +277,8 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     <p className='text-[red]'>{error && error.branch_name}</p>
                                                 </FormItem>
                                                 <FormItem
-                                                    label="Cancelled Cheque"
-                                                    className="rounded-lg pl-[22px] w-1/2"
-                                                    asterisk={true}
+                                                    label="Cancel Cheque"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                    disabled={data?.isdisabled}
@@ -307,7 +301,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     </p>
                                                 </FormItem>
                                             </div>
-                                            <div className='flex'>
+                                            <div className='flex gap-8 pl-10 pr-10'>
                                                 <Button
                                                     style={{ borderRadius: '13px' }}
                                                     block
@@ -315,7 +309,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     type="button"
                                                     role='button'
                                                     onClick={() => setModal(false)}
-                                                    className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                                    className="indigo-btn !bg-gray-500 m-4 mx-auto rounded-[30px]"
                                                 >
                                                     Cancel
                                                 </Button>
@@ -326,7 +320,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     disabled={data?.isdisabled}
                                                     variant="solid"
                                                     onClick={handlesubmit}
-                                                    className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                                    className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
                                                 >
                                                     Save
 

@@ -94,7 +94,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                 className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
             >
                 <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
-                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div className="relative bg-white rounded-lg pt-4 pb-4 shadow dark:bg-gray-700">
                         <button
                             onClick={() => setModal(false)}
                             type="button"
@@ -128,10 +128,11 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                             >
                                 <Form className="py-2 multistep-form-step">
                                     <FormContainer>
-                                    <div className="flex">
+                                    <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Share Holder First Name"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -152,7 +153,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Last Name"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -171,10 +172,10 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                        {!(formData?.type ==="Edit" || formData?.type ==="View") && <FormItem
                                                 label="Password"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -194,7 +195,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>}
                                             <FormItem
                                                 label="Share Holder Percentage"
-                                                className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'w-full pl-[22px]':'w-1/2 pl-[22px]' }`}
+                                                className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto':'pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto' }`}
+                                                // className={`rounded-lg  ${(formData?.type ==="Edit" || formData?.type ==="View")? 'w-full pl-[22px]':'w-1/2 pl-[22px]' }`}
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -214,10 +216,11 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Share Holder Address"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -238,7 +241,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Phone Number"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -259,10 +263,11 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Share Holder Email address"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -284,7 +289,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>
                                             <FormItem
                                                 label="Share Holder Designation"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -304,10 +310,11 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="DIN Number"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -328,7 +335,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>
                                             <FormItem
                                                 label="Authorised Signatory"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                // className="rounded-lg pl-[22px] w-1/2"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -348,10 +356,10 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        {/* <div className="flex">
+                                        {/* <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Password"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -371,7 +379,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                             </FormItem>
                                         
                                         </div> */}
-                                        <div className='flex'>
+                                        <div className='m-auto mt-2 rounded-md p-2 gap-6 w-[80%] md:flex lg:flex'>
                                             <Button
                                                 style={{ borderRadius: '13px' }}
                                                 block
@@ -379,7 +387,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 type="button"
                                                 role='button'
                                                 onClick={() => setModal(false)}
-                                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                                className="!lg:w:1/2 sm:w:1/2 md:w:1/2 indigo-btn !bg-gray-500 indigo-btn mt-4 mx-auto rounded-xl shadow-lg"
                                             >
                                                 Cancel
                                             </Button>
@@ -390,7 +398,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                 disabled={formData?.type === 'View'}
                                                 variant="solid"
                                                 onClick={handlesubmit}
-                                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                                className='indigo-btn mt-4 w-[100%] lg:w:1/2 mx-auto rounded-xl shadow-lg'
                                             >
                                                 {formData?.type === 'Edit'
                                                     ? 'Update'

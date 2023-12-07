@@ -107,7 +107,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                             </svg>
                             <span className="sr-only">Close modal</span>
                         </button>
-                        <div>
+                        <div className='pb-4 pt-4'>
                             <h4 className="text-head-title text-center">Branch Information</h4>
                             <Formik
                                 initialValues={{ field: true }}
@@ -118,7 +118,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                 <Form className="py-2 multistep-form-step">
                                     <FormContainer>
 
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
@@ -162,10 +162,11 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch GST"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                               
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -186,7 +187,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Head"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -206,10 +207,11 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch Email Address"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                          
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -230,7 +232,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Phone Number"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                              
                                                 asterisk={true}
                                             >
                                                 <Field
@@ -251,7 +254,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className='flex'>
+                                        <div className='flex pl-4 pr-8'>
                                             <Button
                                                 style={{ borderRadius: '13px' }}
                                                 block
@@ -259,7 +262,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 type="button"
                                                 role='button'
                                                 onClick={() => setModal(false)}
-                                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                                className="indigo-btn !bg-gray-500 m-4 rounded-[30px]"
                                             >
                                                 Cancel
                                             </Button>
@@ -270,7 +273,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 disabled={formData?.isdisabled}
                                                 variant="solid"
                                                 onClick={handlesubmit}
-                                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                                className='indigo-btn mt-4 rounded-xl shadow-lg'
                                             >
                                                 Save & Next
                                             </Button>
