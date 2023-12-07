@@ -195,6 +195,12 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
     }, [AllStore]);
     // JSX structure for rendering the table and pagination.
 
+    React.useEffect(() => {
+        if (!modal) { // If modal is closed, data has to be removed from the form
+            setformData({})
+        }
+    }, [modal])
+
     return (
         <>
             <div className="search bg-white">
