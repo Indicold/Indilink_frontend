@@ -28,6 +28,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             newdata[e.target.name] = e.target.value;
         }
         setformData(newdata)
+        if(error[e.target.name])validateBranchForm(newdata, setErrors)
     }
     const handlesubmit = () => {
         if (validateBranchForm(formData, setErrors)) {

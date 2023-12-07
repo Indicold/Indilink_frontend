@@ -16,7 +16,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
     useApiFetch<any>(`master/get-countries`, token);
     const { data: ListOfState, loading: LSloading, error: LSerror } =
-    useApiFetch<any>(`master/get-state-by-Id/${data?.country_id}`, token);
+    useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id}`, token);
 
     const { data: ListOfcity, loading: Lcloading, error: Lcerror } =
     useApiFetch<any>(`master/get-city-by-countryId/${data?.country_id}`, token);

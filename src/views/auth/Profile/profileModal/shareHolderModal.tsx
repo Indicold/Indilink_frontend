@@ -32,6 +32,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         setformData(newdata)
+        if(error[e.target.name])validateSHForm(newdata, setErrors)
     }
     const handlesubmit = () => {
         if (validateSHForm(formData, setErrors)) {
