@@ -102,16 +102,16 @@ const KeyManagement = () => {
             <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} />
             <h4 className="text-head-title text-center">Key Management Personnel</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
-            <div className='flex flex-end'>
+            <div className='mt-8 flex align-right'>
                     
                             <Button
-                                block
+                                // block
                                 style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={()=>setModal(true)}
-                                className='indigo-btn mt-1 !w-1/3 ml-auto rounded-xl shadow-lg'
+                                className='indigo-btn rounded-xl shadow-lg'
                             >
                               
                                    + Add Key Management Personnel

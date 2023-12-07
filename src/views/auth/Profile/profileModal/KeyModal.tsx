@@ -194,28 +194,27 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] lg:flex md:flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]">
                         
-                            <div className="w-[100%]">
+                        <div className="w-[100%] lg:flex">
                             <FormItem
-                                    label="City"
+                                    label="Country"
                                     className="pl-3 w-[100%] text-label-title m-auto"
                                 >
-
-                                            <select
+                                        <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
-                                        name="city_id"
+                                        name="country_id"
                                         className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
-                                        {ListOfcity && ListOfcity?.data?.map((item: any, index: any) => (
-                                            <option value={item?.id} selected={item?.id === data?.city_id}>{item?.name}</option>
+                                        {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
+                                            <option value={item?.id} selected={item?.id === data?.country_id}>{item?.name}</option>
 
                                         ))}
                                     </select>
                                     <p className="text-[red]">
-                                        {error && error.city_id}
+                                        {error && error.country_id}
                                     </p>
                                 </FormItem>
                                 <FormItem
@@ -238,27 +237,29 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         {error && error.state_id}
                                     </p>
                                 </FormItem>
-                            </div>
-                            
-                            <div className="w-[100%]">
+                               
+                            </div>        
+
+                            <div className="lg:flex w-[100%]">
                             <FormItem
-                                    label="Country"
+                                    label="City"
                                     className="pl-3 w-[100%] text-label-title m-auto"
                                 >
-                                        <select
+
+                                            <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
-                                        name="country_id"
+                                        name="city_id"
                                         className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
-                                        {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                            <option value={item?.id} selected={item?.id === data?.country_id}>{item?.name}</option>
+                                        {ListOfcity && ListOfcity?.data?.map((item: any, index: any) => (
+                                            <option value={item?.id} selected={item?.id === data?.city_id}>{item?.name}</option>
 
                                         ))}
                                     </select>
                                     <p className="text-[red]">
-                                        {error && error.country_id}
+                                        {error && error.city_id}
                                     </p>
                                 </FormItem>
                                 <FormItem
@@ -281,7 +282,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         {error && error.pin_code}
                                     </p>
                                 </FormItem>
+                               
                             </div>
+                            
+                           
                         </div>
                         <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
