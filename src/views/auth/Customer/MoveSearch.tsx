@@ -316,7 +316,7 @@ localStorage.removeItem('origin_gps');
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location*")} </h6>
+                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location")} </h6>
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}

@@ -440,6 +440,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
         newErrors.photos_of_asset = 'This Field is required'
     }
+console.log("TTTTTT7767867",newErrors);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
