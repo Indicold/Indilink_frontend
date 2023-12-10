@@ -1,17 +1,9 @@
-/* The code is importing three things: */
-import useApiFetch from '@/store/customeHook/useApiFetch'
+import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
-import { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom'
-
-/**
- * The `StoreDetails` function is a React component that displays details of a store, including an
- * image, contact information, and status.
- * @returns The component `StoreDetails` is returning JSX elements that make up the UI of the
- * component. It includes div containers, headings, images, and text elements.
- */
-const StoreDetails = () => {
+import React, { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom';
+const PrepareDetails = () => {
     const {id}:any=useParams(); // Extracting endpoint of active URL to define payload for API call
     const {token}:any=getToken(); // Extracting token info to define payload for API call
     const location:any=useLocation();
@@ -23,7 +15,7 @@ const StoreDetails = () => {
         data: fetchDetails,
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
-    } = useApiFetch<any>(`partner/store/${id}`, token);
+    } = useApiFetch<any>(`partner/prepare/${id}`, token)
     const handleAccept=()=>{
         var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -75,13 +67,14 @@ const StoreDetails = () => {
       });
       }
   useEffect(()=>{
-if(fetchDetails?.data?.store){
-    setAssetsDetails(fetchDetails?.data?.store)
+
+if(fetchDetails?.data?.prepare){
+    setAssetsDetails(fetchDetails?.data?.prepare)
 }
 
-  },[fetchDetails?.data?.store])
-    return (
-    <div>
+  },[fetchDetails?.data?.prepare])
+  return (
+<div>
       <div className='bg-blue-100 p-4 rounded-lg mx-0'>
                 <div className="w-[100%] mt-10 mb-10 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
@@ -99,7 +92,7 @@ if(fetchDetails?.data?.store){
             </div>
             <div className='bg-white p-4 rounded-lg mx-0'>
                 <div className="w-[100%] pl-4 mt-10 mb-2">
-                    <h2 className="text-xl">Store Type Assets</h2>
+                    <h2 className="text-xl">Prepare Type Assets</h2>
                     <h2 className="text-gray-400 text-lg">{id}</h2>
                 </div>
  
@@ -110,81 +103,79 @@ if(fetchDetails?.data?.store){
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Asset Type :</h2>
-                                    <h2 className="text-gray-400 text-sm">Store</h2>
+                                    <h2 className="text-gray-400 text-sm">Prepare</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Address</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Total Tonnage</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_tonnage}</h2>
+                                    <h2 className="text-sm">Hourly Throughput</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hourly_throughput || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">No Of Chamber</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.no_of_chambers || 0}</h2>
+                                    <h2 className="text-sm">Prepare Type</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.prepare_type_id || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Ante Room Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.ante_room_area || 'N/A'}</h2>
+                                    <h2 className="text-sm">Throughput</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.throughput}</h2>
                                 </div>
                             </div>
+                            
                         </div>
                         <div className='flex'>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Total office space</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_office_space || 'N/A'}</h2>
+                                    <h2 className="text-sm">avg Case Size</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.avg_case_size}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Type of dock</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.type_of_dock_id}</h2>
+                                    <h2 className="text-sm">No of Docks</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.no_of_docks || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Processing Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.processing_area}</h2>
+                                    <h2 className="text-sm">Minimum Temperature</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_min || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Parking Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.parking_area || 0}</h2>
+                                    <h2 className="text-sm">Maximum Temperature</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_max || 'N/A'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Installation Year</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.installation_year || 'N/A'}</h2>
+                                    <h2 className="text-sm">Batch Size</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.batch_size}</h2>
                                 </div>
                             </div>
+                            <div className='m-auto'>
+                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                    <h2 className="text-sm">Area</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.area}</h2>
+                                </div>
+                            </div>
+                            
                         </div>
-                        <div className='flex justify-start'>
-                            <div className=''>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Facility Manager Name</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_name || 'N/A'}</h2>
-                                </div>
-                            </div >
-                            <div className=''>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
-                                    <h2 className="text-sm">Facility Manager Contact</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_contact || 'N/A'}</h2>
-                                </div>
-                            </div>
-                           
-                        </div>
+                     
+ 
+                   
+ 
+ 
  
  
                     </div>
@@ -196,7 +187,8 @@ if(fetchDetails?.data?.store){
                             <button type="button" onClick={handleReject} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Reject
                             </button>
-                            </div>
+                         </div>
+                       
                         <div className='flex m-auto mt-4 gap-4'>
                             <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
                             <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
@@ -204,7 +196,7 @@ if(fetchDetails?.data?.store){
                         </div>
                     </div>
                 </div>
- 
+               
  
  
  
@@ -213,4 +205,4 @@ if(fetchDetails?.data?.store){
   )
 }
 
-export default StoreDetails
+export default PrepareDetails

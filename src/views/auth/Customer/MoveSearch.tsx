@@ -216,6 +216,7 @@ localStorage.removeItem('origin_gps');
 //     }
 //     if (formValuesUpdated) setFormData(newData)
 // }, [addressUpdateCount])
+console.log("wertyuio", new Date(formData?.arrival_date));
 
     return (
         <div>
@@ -496,10 +497,11 @@ localStorage.removeItem('origin_gps');
                                             min={today}
                                             autoComplete="off"
                                             name="arrival_date"
-                                            // onFocus={(e:any) => (e.target.type = "date")}
-                                            // onBlur={(e:any) => (e.target.type = "text")}
-                                            value={formData?.arrival_date && new Date(formData?.arrival_date).toISOString().split('T')[0]}
-
+                                            value={
+    (formData?.arrival_date && new Date(formData?.arrival_date) !='Invalid Date')
+      ? new Date(formData?.arrival_date).toISOString().split('T')[0]
+      : '' // Set a default value if formData.arrival_date is undefined/null
+  }
                                             placeholder="Arrival Dtate"
                                             component={Input}
                                         />

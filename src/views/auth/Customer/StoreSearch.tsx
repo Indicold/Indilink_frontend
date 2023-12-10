@@ -371,7 +371,7 @@ const StoreSearch = () => {
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             name="date"
-                                            value={new Date(formData?.date).toISOString().split('T')[0]}
+                                            value={new Date(formData?.date) !='Invalid Date' ?  new Date(formData?.date).toISOString().split('T')[0] :''}
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
