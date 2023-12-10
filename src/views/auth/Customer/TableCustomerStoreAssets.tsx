@@ -167,6 +167,15 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
     }
   
   }
+  const handleDocs = (rowData: any) => {
+  
+    if (rowData?.asset_type_id==1) {
+
+      navigate(`/documents-list/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
+
+    }
+  
+  }
 
 
 
@@ -201,6 +210,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
         <Button className='!p-3 pt-0 pb-0' onClick={() => handleAccept(rowData)}>Accept</Button>
         <Button className='!p-2' onClick={() => handleReject(rowData)}>Reject</Button>
         <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
+        <Button className='!p-2' onClick={() => handleDocs(rowData)}>Docs</Button>
       </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;

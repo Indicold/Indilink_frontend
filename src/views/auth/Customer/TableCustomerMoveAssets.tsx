@@ -158,6 +158,15 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
    * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is
    * used to determine the `asset_type_id` and pass it to the appropriate navigation route.
    */
+  const handleDocs = (rowData: any) => {
+  
+    if (rowData?.asset_type_id==2) {
+
+      navigate(`/documents-list/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
+
+    }
+  
+  }
   const handleView = (rowData: any) => {
     if (rowData?.asset_type_id==3) {
       navigate(`/assetsprepare-details/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
@@ -210,6 +219,8 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
           <Button className='!p-3 pt-0 pb-0' onClick={() => handleAccept(rowData)}>Accept</Button>
           <Button className='!p-2' onClick={() => handleReject(rowData)}>Reject</Button>
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
+          <Button className='!p-2' onClick={() => handleDocs(rowData)}>Docs</Button>
+
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
