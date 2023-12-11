@@ -15,7 +15,7 @@ import { messageView } from '@/store/customeHook/validate'
 
 // The AccountTable component takes a prop called AllStore, presumably for rendering data.
 
-const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, modal,fetchData }: any) => {
+const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, modal, fetchData }: any) => {
     let allData: any = AllStore
     const { token }: any = getToken()
     const countPerPage = 5
@@ -70,23 +70,23 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
     }
 
     const navigate = useNavigate()
-    const handleDelete=(id:any)=>{
+    const handleDelete = (id: any) => {
         var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${token}`);
+        myHeaders.append("Authorization", `Bearer ${token}`);
 
-var requestOptions:any = {
-  method: 'DELETE',
-  headers: myHeaders,
-  redirect: 'follow'
-};
+        var requestOptions: any = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
 
-fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
-  .then(response => response.text())
-  .then((result:any) => {
-    fetchData();
-    messageView("Deleted Successfully");
-  })
-  .catch(error => console.log('error', error));
+        fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
+            .then(response => response.text())
+            .then((result: any) => {
+                fetchData();
+                messageView("Deleted Successfully");
+            })
+            .catch(error => console.log('error', error));
     }
     const handleEdit = (rowData: any) => {
         // Handle edit action for different asset types.
@@ -112,8 +112,8 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
         fetch(`${apiUrl}/auth/account-detail-default/${rowData?.id}`, requestOptions)
             .then(response => response.json())
             .then((result: any) => {
-             messageView(result?.message)
-             fetchData()
+                messageView(result?.message)
+                fetchData()
             })
             .catch((error: any) => {
                 console.log('error', error)
@@ -202,7 +202,7 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center" key={i}>
+                    <td className=" flex justify-center p-2 gap-3" key={i}>
                         <Button
                             className="!p-3 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}
@@ -239,20 +239,22 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
         // return collection.map((rowData: any, index: any) =>
         //     tableRows(rowData, index)
         // )
-        return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
-      <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
-    </tr>;
+        return collection?.length > 0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) : <tr>
+            <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
+        </tr>;
     }
+    
 
     const headRow = () => {
         // Generates the header row.
         return Object.values(tableHead).map((title: any, index: any) => (
-            <td key={index} className="text-center">
-                {title}
+            
+            <td key={index} className="text-center ">
+                {title} 
             </td>
         ))
     }
-  
+
     React.useEffect(() => {
         // Update the displayed data when the AllStore prop changes.
         if (AllStore) {
@@ -264,7 +266,7 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
 
     return (
         <>
-        <ToastContainer />
+            <ToastContainer />
             <div className="search bg-white">
                 <label className="font-bold m-4">Search:</label>
                 <input
@@ -274,16 +276,16 @@ fetch(`${apiUrl}/auth/account-detail/${id}`, requestOptions)
                     onChange={(e) => setValue(e.target.value)}
                 />
             </div>
-<div className='overflow-auto'>
-<table className="w-full">
-                <thead>
-                    <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
-                        {headRow()}
-                    </tr>
-                </thead>
-                <tbody className="trhover bg-white">{tableData()}</tbody>
-            </table>
-</div>
+            <div className='overflow-auto'>
+                <table className="w-[100%]">
+                    <thead className=' w-[100%]'>
+                        <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[45px]">
+                            {headRow()}
+                        </tr>
+                    </thead>
+                    <tbody className="trhover bg-white">{tableData()}</tbody>
+                </table>
+            </div>
             <div className="flex justify-center bg-white p-4">
                 <Pagination
                     pageSize={countPerPage}

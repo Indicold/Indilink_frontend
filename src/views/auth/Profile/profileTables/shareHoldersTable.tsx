@@ -135,7 +135,7 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="text-center flex gap-2" key={i}>
                         <Button
                             className="!p-3 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}

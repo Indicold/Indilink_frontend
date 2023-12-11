@@ -169,7 +169,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div>
-                                <h4 className="text-head-title text-center">Account Details</h4>
+                                <h4 className="text-head-title pt-4 text-center">Account Details</h4>
                                 <Formik
                                     initialValues={{ field: true }}
                                     onSubmit={() =>
@@ -301,7 +301,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     </p>
                                                 </FormItem>
                                             </div>
-                                            <div className='flex gap-8 pl-10 pr-10'>
+                                            <div className='flex gap-8 lg:pl-20 lg:pr-20 pl-10 pr-10'>
                                                 <Button
                                                     style={{ borderRadius: '13px' }}
                                                     block

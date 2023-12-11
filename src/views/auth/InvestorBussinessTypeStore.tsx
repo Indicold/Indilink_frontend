@@ -50,14 +50,14 @@ const InvestorBussinessTypeStore = () => {
     return (
         <div className="bg-white">
             <h4 className=" mb-2 text-head-title text-center">Investor</h4>
-            <div>
+            <div className='p-3'>
                 <Formik>
                     <Form className="py-2 multistep-form-step">
                         <FormContainer>
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                 <FormItem
                                     label="Location"
-                                    className="mx-auto pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <Field
                                         type="text"
@@ -69,7 +69,7 @@ const InvestorBussinessTypeStore = () => {
                                 </FormItem>
                                 <FormItem
                                     label="Amount"
-                                    className="mx-auto pl-[22px] w-1/2 rounded-lg"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <div className="flex h-11 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                         <input
@@ -84,12 +84,12 @@ const InvestorBussinessTypeStore = () => {
                                     </div>
                                 </FormItem>
                             </div>
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                 <FormItem
                                     label="Mezzanine structure"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
-                                    <div className="border flex h-11 w-fit input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                    <div className="border flex w-fit input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                         <select>
                                             <option>Pallets</option>
                                             <option>B</option>
@@ -103,7 +103,7 @@ const InvestorBussinessTypeStore = () => {
                                 </FormItem>
                                 <FormItem
                                     label="Storage Type"
-                                    className="mx-auto pl-[22px] w-1/2 rounded-lg"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <select className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                         <option>Select Storage</option>
@@ -121,10 +121,10 @@ const InvestorBussinessTypeStore = () => {
                                     </select>
                                 </FormItem>
                             </div>
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                 <FormItem
                                     label="Temperature Profile"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <div className="border flex h-11 w-fit input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                         <select>
@@ -140,12 +140,12 @@ const InvestorBussinessTypeStore = () => {
                                 </FormItem>
                                 <FormItem
                                     label="Land"
-                                    className="mx-auto pl-[22px] w-1/2 rounded-lg"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <select
                                         name="islandavailable"
                                         onChange={(e: any) => handleChange(e)}
-                                        className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         <option value="Yes">Yes</option>
@@ -167,14 +167,14 @@ const InvestorBussinessTypeStore = () => {
                                     />
                                 </FormItem>
                             )}
-                            <div className="flex justify-center">
+                            <div className="flex pt-4 w-[50%] m-auto">
                                 <Button
                                     style={{ borderRadius: '13px' }}
                                     block
                                     variant="solid"
                                     type="button"
                                     //   onClick={handleRoute}
-                                    className="indigo-btn mb-4 w-[300px] mx-auto rounded-[30px]"
+                                    className="indigo-btn mb-4 w-[300px] mx-auto text-center rounded-[30px]"
                                 >
                                     Research for search
                                 </Button>

@@ -33,7 +33,7 @@ const InvestorBussinessTypeMove = () => {
         <div>
             <div className="bg-white">
                 <h4 className=" mb-2 text-head-title text-center">Investor</h4>
-                <div>
+                <div className='p-3'>
                     {/* The above code is a form component written in TypeScript and React using the Formik library.
         It renders a form with multiple input fields and selects. The form is divided into three
         sections, each containing two input fields. The options for the selects are dynamically
@@ -41,19 +41,19 @@ const InvestorBussinessTypeMove = () => {
                     <Formik>
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Asset Class"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px] "
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <select className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <select className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <option>Select</option>
                                             <option>B</option>
                                         </select>
                                     </FormItem>
                                     <FormItem
                                         label="Type of Investment"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <option>Select</option>
@@ -61,10 +61,10 @@ const InvestorBussinessTypeMove = () => {
                                         </select>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Commitment on offer from IndiCold and ROI"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <option>Option</option>
@@ -73,7 +73,7 @@ const InvestorBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Storage Type"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <option>Select</option>
@@ -91,12 +91,12 @@ const InvestorBussinessTypeMove = () => {
                                         </select>
                                     </FormItem>
                                 </div>
-                                <div className="flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
                                         label="Temperature Profile"
-                                        className="rounded-lg pl-[22px] w-1/2"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
+                                        <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <select>
                                                 <option>Unit</option>
                                                 <option>B</option>
@@ -113,7 +113,7 @@ const InvestorBussinessTypeMove = () => {
                                     </FormItem>
                                     <FormItem
                                         label="Possible Trucking"
-                                        className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -128,7 +128,7 @@ const InvestorBussinessTypeMove = () => {
                                         </div>
                                     </FormItem>
                                 </div>
-                                <div className="flex justify-center">
+                                <div className="flex w-[50%] m-auto mt-6 justify-center">
                                     <Button
                                         style={{ borderRadius: '13px' }}
                                         block
