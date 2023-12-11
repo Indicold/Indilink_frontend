@@ -127,8 +127,8 @@ const PartnerBussinessTypePrepare = () => {
         address: address,
         hourly_throughput: '',
         prepare_type_id: '',
-        product_category_ids: selectedOptions1 || [],
-        product_type: selectedOptions || [],
+        product_category_ids: selectedOptions || [],
+        product_type: selectedOptions1 || [],
         throughput: '',
         avg_case_size: '',
         temperature: '',
@@ -197,13 +197,16 @@ console.log("7687686786",formData?.product_category_ids);
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
-        formData.product_category_ids=selectedOptions1 || [];
-        formData.product_type=selectedOptions || [];
-        formData.addr_longitude=longitude
-        formData.addr_latitude=latitude
-        let isValid = validatePrepareForm(formData, setErrors)
+        // formData.product_category_ids=selectedOptions || [];
+        // formData.product_type=selectedOptions1 || [];
+        const data = {...formData}
+        data.product_category_ids = selectedOptions || [];
+        data.product_type = selectedOptions1 || [];
+        data.addr_longitude=longitude
+        data.addr_latitude=latitude
+        let isValid = validatePrepareForm(data, setErrors)
         if (isValid) {
-            PostPrepareRegisterDetails({...formData,asset_id:id})
+            PostPrepareRegisterDetails({...data,asset_id:id})
             navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
