@@ -5,13 +5,16 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, onkeyDownPincode, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownAadhar, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
+import { debounce } from 'lodash'
 const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     const navigate:any=useNavigate();
     const [error,setErrors]=useState<any>({})
+    const [isEmailValid, setIsEmailValid] = useState<any>(false)
+    const [isMobileValid, setIsMobileValid] = useState<any>(false)
     const {token}:any=getToken();
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
     useApiFetch<any>(`master/get-countries`, token);
@@ -26,13 +29,22 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     let { result: Keyesponse, loading: KeyLoading, sendPostRequest: KeyPostDetails }: any = usePostApi(`auth/key-mgmt`);
     let { result: KeyUpdateesponse, loading: KeyUpdateLoading, sendPostRequest: KeyUpdatePost }: any = usePutApi(`auth/key-mgmt/${data?.id}`);
     
+    const validateEmailDebounced = debounce(validateEmail, 300)
+    const validateMobileDebounced = debounce(validateMobile, 300)
+    
     const handleChange = (e:any) => {
         const newdata:any={...data};
         newdata[e.target.name]=e.target.value;
+        if(e.target.name==='contact_number') {
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+        }
+        if(e.target.name==='person_email') {
+            validateEmailDebounced(e.target.value, setIsEmailValid)
+        }
         setData(newdata)
     }
     const handlesubmit=()=>{
-        if(validateKeyForm(data,setErrors)){
+        if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){
             if(data?.type==='Edit'){
                 KeyUpdatePost(data)
             }else{
@@ -152,7 +164,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     component={Input}
                                 />
                                  <p className="text-[red]">
-                                        {error && error.person_email}
+                                        {isEmailValid ? isEmailValid : error?.person_email}
                                     </p>
                             </FormItem>
                         </div>
@@ -319,6 +331,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     value={data?.aadhar}
                                     placeholder="Aadhar Card"
                                     component={Input}
+                                    onKeyDown={onkeyDownAadhar}
                                 />
                                  <p className="text-[red]">
                                         {error && error.aadhar}
@@ -341,9 +354,10 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     value={data?.contact_number}
                                     placeholder="Contact no."
                                     component={Input}
+                                    maxLength={10}
                                 />
                                  <p className="text-[red]">
-                                        {error && error.contact_number}
+                                        {isMobileValid ? isMobileValid : error?.contact_number}
                                     </p>
                             </FormItem>
                         </div>

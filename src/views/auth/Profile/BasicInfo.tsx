@@ -471,7 +471,7 @@ useEffect(()=>{
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
                         {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({});setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
+                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
                         {error && error.shareholder_ids}
                     </div>}
 

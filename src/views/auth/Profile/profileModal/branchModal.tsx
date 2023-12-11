@@ -5,16 +5,21 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateBranchForm } from '@/store/customeHook/validate';
+import { messageView, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
+import { debounce } from 'lodash'
 const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetchBranch }: any) => {
 
     const [error, setErrors] = useState<any>({})
     let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/branch`);
     const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`auth/branch/${formData?.id}`);
     const [phone, setPhone] = useState(formData?.branch_phone || '')
+    const [isEmailValid, setIsEmailValid] = useState<any>(false)
+    const [isMobileValid, setIsMobileValid] = useState<any>(false)
+    const validateEmailDebounced = debounce(validateEmail, 300)
+    const validateMobileDebounced = debounce(validateMobile, 300)
 
     const isDisabled: any = false;
     const handleChange = (e: any) => {
@@ -22,16 +27,20 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
         if(e.target.name === 'branch_phone') {
             if(e.target.value.length<=10)  {
                 newdata[e.target.name] = e.target.value
-                setPhone(e.target.value);
+                if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+                setPhone(e.target.value.replace(/[^0-9]/g, ""));
             }
         } else {
             newdata[e.target.name] = e.target.value;
+            if(e.target.name === 'branch_head'){
+                validateEmailDebounced(e.target.value, setIsEmailValid)
+            }
         }
         setformData(newdata)
         if(error[e.target.name])validateBranchForm(newdata, setErrors)
     }
     const handlesubmit = () => {
-        if (validateBranchForm(formData, setErrors)) {
+        if (validateBranchForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
             if (formData?.type === 'Edit') {
                 PostBranchUpdateDetails(formData)
             }else{
@@ -218,7 +227,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.branch_head}
+                                                    {isEmailValid ? isEmailValid : error?.branch_head}
                                                 </p>
                                             </FormItem>
                                             <FormItem
@@ -241,7 +250,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.branch_phone}
+                                                    {isMobileValid ? isMobileValid : error?.branch_phone}
                                                 </p>
                                             </FormItem>
                                         </div>

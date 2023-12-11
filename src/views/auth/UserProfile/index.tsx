@@ -2,8 +2,11 @@ import DownloadingIcon from '@mui/icons-material/Downloading';
 import { NavLink, useNavigate } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { TokenInfo } from '@/store/customeHook/token';
+import { apiUrl, getToken } from '@/store/token';
+import { messageView } from '@/store/customeHook/validate';
 const UserProfilePage = () => {
-  const {owner_user_id}:any=TokenInfo();
+  const {token}:any=getToken()
+  const {owner_user_id,is_nda_signed}:any=TokenInfo();
     // const token:any=localStorage.getItem('access_token');
     // const decode=jwt_decode(token)
     const navigate:any=useNavigate();
@@ -12,6 +15,29 @@ const UserProfilePage = () => {
 
         navigate('/forgot-password')
 
+    }
+    const handleUploadNda=(e:any)=>{
+      var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var formdata = new FormData();
+formdata.append("nda_doc", e?.target?.files[0]);
+
+var requestOptions :any= {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+    messageView(result?.message)
+  })
+  .catch(error =>{
+    messageView(error?.message || error?.error)
+  });
     }
   return (
     <>
@@ -47,6 +73,7 @@ const UserProfilePage = () => {
                Change Password
               </a>
             </div>
+        {is_nda_signed !==1 &&    <>
           {owner_user_id ===0  &&  <div className="my-5 px-6 ">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
@@ -64,10 +91,10 @@ const UserProfilePage = () => {
             Upload NDA
 
                 </label>
-                <input type='file'  id='file' className='hidden'/>
+                <input type='file'  id='file' className='hidden' onChange={(e:any)=>handleUploadNda(e)}/>
               </div>
             </div>}
-        
+        </>}
             <div className="w-full">
               <h3 className="font-medium text-gray-900 text-left px-6">
                 Recent activites

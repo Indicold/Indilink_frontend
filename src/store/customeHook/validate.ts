@@ -481,6 +481,11 @@ console.log("TTTTTT7767867",newErrors);
         e.preventDefault();
     }
  }
+ export const onkeyDownAadhar=(e:any)=>{
+    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==12 || e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
+        e.preventDefault();
+    }
+ }
  export function textContainsNumber(text:any) {
     const regex = /\d/;
     return regex.test(text);
@@ -1127,8 +1132,14 @@ export const validateKeyForm = (data: any, setErrors: any) => {
     if (!data?.pin_code) {
         newErrors.pin_code = 'This Field is required'
     }
+    if (data?.pin_code && data?.pin_code?.length < 6) {
+        newErrors.pin_code = 'Please enter valid pincode'
+    }
     if (!data?.aadhar) {
         newErrors.aadhar = 'This Field is required'
+    }
+    if (data?.aadhar && data?.aadhar?.length < 12) {
+        newErrors.aadhar = 'Please enter valid Aadhar ID'
     }
     if (!data?.contact_number) {
         newErrors.contact_number = 'This Field is required'
