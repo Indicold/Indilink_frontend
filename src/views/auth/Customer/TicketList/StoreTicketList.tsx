@@ -30,7 +30,7 @@ const StoreTicketList = () => {
         
       <>
         <h4 className='text-head-title text-center'>Store Ticket List</h4>
-        {Store?.data?.length>0 ? <TableLayoutCustomer fetchagain={fetchagain} AllStore={Store?.data?.length>0 && Store?.data}/>
+        {Store?.data?.length>0 ? <TableLayoutCustomer refetchAgain={fetchagain} AllStore={Store?.data?.length>0 && Store?.data}/>
         :<p>No data found.</p>}
       </>
       <div>

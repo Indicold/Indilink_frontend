@@ -990,11 +990,16 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     if (formData?.case_size && !formData?.case_size_unit_id) {
         newErrors.case_size = 'Unit is required'
     }
-    if (!formData?.temp_min) {
+    if (!formData?.temp_min && formData?.temp_max && formData?.temp_max !== '0') {
         newErrors.temp_min = 'This Field is required'
     }
-    if (!formData?.temp_max) {
-        newErrors.temp_max = 'This Field is required'
+    if (!formData?.temp_max || formData?.temp_max === '0') {
+        if (!formData?.temp_min) {
+            newErrors.temp_max = 'Minimum and Maximum Temperatures are required'
+        }
+        else {
+            newErrors.temp_max = 'Maximum Temperature is required'
+        }
     }
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This Field is required'
