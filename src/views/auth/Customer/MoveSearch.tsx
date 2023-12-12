@@ -47,7 +47,7 @@ const MoveSearch = () => {
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.origin_country_id}`, token);
 
-        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
         useApiFetch<any>(`customer/get-responses/2/${location?.state?.data?.id}`, token);
 
     // Fetch a list of cities based on the selected country
@@ -584,7 +584,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                     </Formik>
                 </div>
                 {isDisabled? 
-                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} />:<></>}
+                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination"; // Import pagination component to show table records in multiple pages
 import "rc-pagination/assets/index.css"; // Import pagination component styles
@@ -25,7 +25,7 @@ const tableHead = {
 
 // The TableCustomerStoreAssets component takes a prop called AllStore, presumably for rendering data.
 
-const TableCustomerStoreAssets = ({ AllStore }: any) => {
+const TableCustomerStoreAssets = ({ AllStore,fetchAgain }: any) => {
   const {token}:any=getToken();
   let allData: any = AllStore;
   const countPerPage = 10;
@@ -71,7 +71,11 @@ const TableCustomerStoreAssets = ({ AllStore }: any) => {
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
-
+useEffect(()=>{
+  const to = countPerPage * currentPage;
+  const from = to - countPerPage;
+  setCollection(cloneDeep(allData.slice(from, to)));
+},[allData])
   const navigate = useNavigate();
 
   /**
@@ -101,6 +105,7 @@ fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -126,6 +131,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)

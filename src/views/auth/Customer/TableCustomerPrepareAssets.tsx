@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination"; // Import pagination component to show table records in multiple pages
 import "rc-pagination/assets/index.css"; // Import pagination component styles
@@ -25,7 +25,7 @@ Action: "Action"
 
 // The TableCustomerPrepareAssets component takes a prop called AllStore, presumably for rendering data.
 
-const TableCustomerPrepareAssets = ({ AllStore }: any) => {
+const TableCustomerPrepareAssets = ({ AllStore,fetchAgain }: any) => {
   const {token}:any=getToken();
   let allData: any = AllStore;
   const countPerPage = 10;
@@ -71,6 +71,12 @@ const TableCustomerPrepareAssets = ({ AllStore }: any) => {
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
+  
+  useEffect(()=>{
+    const to = countPerPage * currentPage;
+    const from = to - countPerPage;
+    setCollection(cloneDeep(allData.slice(from, to)));
+  },[allData])
 
   const navigate = useNavigate();
 
@@ -101,6 +107,7 @@ fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -126,6 +133,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -217,8 +225,8 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-        <Button className='!p-3 pt-0 pb-0' onClick={() => handleAccept(rowData)}>Accept</Button>
-        <Button className='!p-2' onClick={() => handleReject(rowData)}>Reject</Button>
+        <Button className='!p-3 pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
+        <Button className='!p-2' disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
         <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
         <Button className='!p-2' onClick={() => handleDocs(rowData)}>Docs</Button>
       </td>;

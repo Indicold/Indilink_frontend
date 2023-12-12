@@ -25,7 +25,7 @@ Action: "Action"
 
 // The TableCustomerMoveAssets component takes a prop called AllStore, presumably for rendering data.
 
-const TableCustomerMoveAssets = ({ AllStore }: any) => {
+const TableCustomerMoveAssets = ({ AllStore,fetchAgain }: any) => {
     const {token}:any=getToken();
   let allData: any = AllStore;
   const countPerPage = 10;
@@ -72,6 +72,11 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 
+  useEffect(()=>{
+    const to = countPerPage * currentPage;
+    const from = to - countPerPage;
+    setCollection(cloneDeep(allData.slice(from, to)));
+  },[allData])
   const navigate = useNavigate();
 
   /**
@@ -101,6 +106,7 @@ fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -126,6 +132,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
