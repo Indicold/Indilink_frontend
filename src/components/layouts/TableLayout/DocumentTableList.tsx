@@ -93,6 +93,10 @@ const DocumentTableList = ({ AllStore }: any) => {
   
   }
   const handleEdit=(rowData:any)=>{
+    if(rowData?.master_query_id){
+      localStorage.setItem('master_query_id',rowData?.master_query_id);
+      localStorage.setItem('assets_list_id',rowData?.asset_id);
+    }
     setModalEdit(true)
     setData(rowData)
   }

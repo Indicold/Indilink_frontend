@@ -359,7 +359,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         },
     };
     let _idVal = localStorage.getItem('_id')
-    let { user_id, email }: any = TokenInfo();
+    let { user_id, email,aud }: any = TokenInfo();
     const { token }: any = getToken(); // Extracting token to use in the API call
     const [contentHistory, setContentHistory] = useState<any>([])
     const { data: EditorData, loading, refetch: ReFatchApi }: any = useApiFetch<any>(`legal/documents-by-id/${data?.doc_id}`, token);
@@ -473,15 +473,32 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
         setShowURLInput(false);
         setURLValue("");
         setTimeout(focusEditor, 0);
-        const body:any={
-            asset_id:id,
-            asset_owner:data?.asset_owner,
-            doc_id:data?.doc_id
-        }
-        console.log("Body",body,data);
-        
-        postNegotiation(body)
+       
+      
         handleSubmit(nextEditorState)
+        if(localStorage.getItem('user_type')==='Customer'){
+            const body:any={
+                asset_id:localStorage.getItem('assets_list_id'),
+                asset_owner:aud,
+                doc_id:data?.doc_id
+            }
+            console.log("454545",body);
+            setTimeout(()=>{
+                postNegotiation(body)
+
+            },2000)
+        }else{
+            const body:any={
+                asset_id:id,
+                asset_owner:data?.asset_owner,
+                doc_id:data?.doc_id
+            }
+            setTimeout(()=>{
+                postNegotiation(body)
+
+            },2000)
+
+        }
     };
 
     /**
@@ -852,7 +869,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const raw = convertToRaw(contentState);
     //   const rawStr = jsonBeautify(raw, null, 2, 50);
     const location: any = useLocation();
-    const { id,aud }: any = useParams() // Extracting the endpoint which contains asset id for defining the payload for API call
+    const { id }: any = useParams() // Extracting the endpoint which contains asset id for defining the payload for API call
     const AssetsId: any = location?.state;
 
     /**
@@ -872,22 +889,41 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
             content: JSON.stringify(convertToRaw(contentState)),
             docUpdatedAt: date
         }])
-        const body: any = {
-            title: EditorData?.data?.title,
-            userId: EditorData?.data?.author?.user_id?.toString() || user_id?.toString(),
-            contentHistory: [...contentHistory, {
-                author: EditorData?.data?.author,
-                content: JSON.stringify(convertToRaw(contentState)),
-                docUpdatedAt: date
-            }],
-            commentList: commentList,
-            collaborators: EditorData?.data?.collaborators || [],
+    
+if(localStorage.getItem('user_type')==='Customer'){
+    const body: any = {
+        title: EditorData?.data?.title,
+        userId: EditorData?.data?.author?.user_id?.toString() || user_id?.toString(),
+        contentHistory: [...contentHistory, {
+            author: EditorData?.data?.author,
             content: JSON.stringify(convertToRaw(contentState)),
-            password: EditorData?.data?.password,
-            asset_id: id
-        };
+            docUpdatedAt: date
+        }],
+        commentList: commentList,
+        collaborators: EditorData?.data?.collaborators || [],
+        content: JSON.stringify(convertToRaw(contentState)),
+        password: EditorData?.data?.password,
+        asset_id:localStorage.getItem('assets_list_id')
+    };
+    updateData(body);
+}else{
+    const body: any = {
+        title: EditorData?.data?.title,
+        userId: EditorData?.data?.author?.user_id?.toString() || user_id?.toString(),
+        contentHistory: [...contentHistory, {
+            author: EditorData?.data?.author,
+            content: JSON.stringify(convertToRaw(contentState)),
+            docUpdatedAt: date
+        }],
+        commentList: commentList,
+        collaborators: EditorData?.data?.collaborators || [],
+        content: JSON.stringify(convertToRaw(contentState)),
+        password: EditorData?.data?.password,
+        asset_id: id
+    };
+    updateData(body);
 
-        updateData(body);
+}
 
     }
 

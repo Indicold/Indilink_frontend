@@ -162,7 +162,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
   
     if (rowData?.asset_type_id==3) {
 
-      navigate(`/documents-list/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
+      navigate(`/customer-documents-list/${rowData?.master_query_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
 
     }
   
