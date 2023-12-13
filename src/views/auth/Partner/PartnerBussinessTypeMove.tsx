@@ -247,10 +247,10 @@ vehicle_no:''
     // Format the current month and year as 'YYYY-MM'
     const maxDate = `${currentYear}-${currentMonth}`;
     return (
-        <div className='lg:flex md:flex'>
+        <div className='lg:flex'>
             <ToastContainer />
             {makeCustom && <PartnerMoveMakeModal modal={makeCustom} setModal={setMakeCustom} fetchList={fetchList} fetchmake={fetchmake} />}
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className=' w-[100%] pl-[10%] lg:pl-0 md:pl-4 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -278,7 +278,7 @@ vehicle_no:''
 
 
             </div>
-            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-[100%] lg:w-5/6">
             <ArrowBackIcon onClick={()=>navigate(-1)} />
                 <h4 className=" mb-2 text-head-title text-center p-4">Move</h4>
                 <div>
@@ -290,10 +290,10 @@ vehicle_no:''
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Make*"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -340,7 +340,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Model*"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -428,10 +428,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div> */}
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Get Chassis No from RC*"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -451,7 +451,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Emission norms"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -470,10 +470,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="MFG Month/Year"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -496,7 +496,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Vehicle Class"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -515,10 +515,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Vehicle number*"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -538,7 +538,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Actual Payload (in kg)"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -558,10 +558,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Crate Capacity (in Numbers)"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -582,7 +582,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Length"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -602,10 +602,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Width"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -626,7 +626,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Height"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -646,10 +646,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="GV Weight"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -671,7 +671,7 @@ vehicle_no:''
                                     <FormItem
                                         label="Unladen Weight in RC
 "
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -692,10 +692,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Get Engine No"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -715,7 +715,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Side Door"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -744,10 +744,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="Hatch Window"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -777,7 +777,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Dual Temperature"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -806,10 +806,10 @@ vehicle_no:''
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label="RC (Upload clear picture)"
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <input
                                             type="file"  
@@ -827,7 +827,7 @@ vehicle_no:''
                                     </FormItem>
                                     <FormItem
                                         label="Get RC Number from RC"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -847,7 +847,7 @@ vehicle_no:''
                                     </FormItem>
                                 </div>
 
-                                <div className="  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     
                                     {/* <FormItem
                                         label="Fitness Certificate Valid Till*"

@@ -523,10 +523,10 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
 
     }, [fetchDetails?.data?.docs])
     return (
-        <div className='lg:flex md:flex'>
+        <div className='lg:flex'>
             <ToastContainer />
 
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -567,8 +567,8 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
                             <FormContainer>
                                 <div className='p-3'>
                                     {array?.map((item: any, index: any) => (
-                                        <div className=" rounded-lg bg-gray-100 p-2 mt-2 lg:flex-nowrap md:flex-nowrap flex-wrap w-[100%] justify-around lg:border-y-0 border-y-2">
-                                            <div className='lg:flex md:flex'>
+                                        <div className=" rounded-lg bg-gray-100 p-2 mt-2 lg:flex-nowrap  flex-wrap w-[100%] justify-around lg:border-y-0 border-y-2">
+                                            <div className='lg:flex'>
                                             <FormItem
                                                 label={item?.label?.length > 30 ? <div className='flex justify-center items-center bg-dark'>
                                                     <p className='ellipse-text'>{item?.label}</p>
@@ -641,7 +641,7 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
                                                     )}
                                                 </FormItem>
                                             </div>
-                                            <div className= 'md:flex lg:flex'>
+                                            <div className='lg:flex'>
                                              
                                                 <FormItem
                                                     label={t("Licence No")}

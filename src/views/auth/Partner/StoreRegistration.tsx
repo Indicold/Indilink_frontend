@@ -559,9 +559,9 @@ const StoreRegistration = () => {
 
     
     return (
-        <div className='lg:flex md:flex'>  
+        <div className='lg:flex'>  
        {loaderPost && <LoaderSpinner />}
-            <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className= ' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -598,7 +598,8 @@ const StoreRegistration = () => {
                 WeighBridgeloading ||
                 RoadConditionloading ||
                 fetchDetailsloading) && <LoaderSpinner />}
-            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-5/6 lg:w-5/6">
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:[100%]
+             lg:w-5/6">
                 <ToastContainer />
                 <ArrowBackIcon onClick={() => navigate(-1)} />
                 <h4 className="text-center text-head-title"> {t("Store")}</h4>
@@ -771,10 +772,10 @@ const StoreRegistration = () => {
                                         
                                     </label>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Facility Manager*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -796,7 +797,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Contact Number*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -822,10 +823,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("City*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -858,7 +859,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Address*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Autocompletem
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
@@ -882,10 +883,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Total Tonnage(MT)*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
 
                                         <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
@@ -916,7 +917,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Type Of Store*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                          <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption(!multiOption)}>
       <div className="relative inline-block w-full text-left">
@@ -967,7 +968,7 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label={t("Type of Cold Storage*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
@@ -1025,10 +1026,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem> */}
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label={t("Ante Room - Area (Square feet)*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -1057,7 +1058,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Total number of docks*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={location?.state}
@@ -1079,10 +1080,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Total office space(Square feet)*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -1114,7 +1115,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label=  {t("Type of docks*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1148,10 +1149,10 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Processing Area(Square feet)*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -1180,7 +1181,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Parking Area(Square feet)*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -1208,10 +1209,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Type of Refrigeration*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1247,7 +1248,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Year of Installation*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
 
                                         <select
@@ -1296,10 +1297,10 @@ const StoreRegistration = () => {
                                 </div>
 
 
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label={t("Internet")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1329,7 +1330,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Wifi")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1358,10 +1359,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto rounded-md mt-2 p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label={t("CCTV")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1391,7 +1392,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Driver Area for Food and Resting")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1425,10 +1426,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label= {t("Weighbridge*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div>
                                             <select
@@ -1466,7 +1467,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label= {t("Road condition from main road*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={location?.state}
@@ -1501,10 +1502,10 @@ const StoreRegistration = () => {
                                         </p>{' '}
                                     </FormItem>
                                 </div>
-                                <div className="bg-gray-100 m-auto mt-2 mb-2 rounded-md p-2 w-[100%] md:flex lg:flex">
+                                <div className="bg-gray-100 m-auto mt-2 mb-2 rounded-md p-2 w-[100%]  lg:flex">
                                     <FormItem
                                         label=  {t("3D Photo*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input
@@ -1540,7 +1541,7 @@ const StoreRegistration = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Photo Of Assets*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <div className="border flex  w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                             <input

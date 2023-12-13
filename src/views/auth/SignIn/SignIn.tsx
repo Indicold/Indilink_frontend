@@ -13,7 +13,7 @@ const SignIn = () => {
             <div className="md:m-auto">
               
                 
-                <img className="w-[140px] lg:w-[130px] md:w-3/6 mb-4 object-cover object-center rounded-[3%] " alt="hero" src="./img/images/logimg.png" />
+                <img className="w-[140px] lg:w-[130px]  mb-4 object-cover object-center rounded-[3%] " alt="hero" src="./img/images/logimg.png" />
                 <h4 className=" font-bold text-xl mb-1/2 sm:text-head-title md:text-head-title lg:text-head-title xl:text-head-title">Login!</h4>
                 {/*  */}
             </div>

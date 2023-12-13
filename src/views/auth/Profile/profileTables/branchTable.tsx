@@ -85,7 +85,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             // Renders table cells for each column in the header.
             if (key === 'contract_name') {
                 return (
-                    <td key={i} className="text-center">
+                    <td key={i} className="text-center my-2 h-[35px]">
                         {rowData.contract_name
                             ? rowData.contract_name
                             : 'Not Available'}
@@ -124,7 +124,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             if (key === 'comment') {
 
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="text-center my-2 h-[35px]" key={i}>
                         {rowData?.comment ? rowData?.comment : 'Not Available'}
                     </td>
                 )
@@ -132,7 +132,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             if (key === 'admin') {
 
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="text-center my-2 h-[35px]" key={i}>
                         {rowData?.admin?.first_name
                             ? `${rowData?.admin?.first_name} ${rowData?.admin?.last_name}`
                             : 'Not Available'}
@@ -141,9 +141,9 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="text-center flex gap-2" key={i}>
                         <Button
-                            className="!p-3 pt-0 pb-0"
+                            className="!p-3"
                             onClick={() => handleEdit(rowData)}
                         >
                             Edit
@@ -207,9 +207,9 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 />
             </div>
             <div className='overflow-auto'>
-            <table className="w-full">
+            <table className="w-screen">
                 <thead>
-                    <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
+                    <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[45px]">
                         {headRow()}
                     </tr>
                 </thead>

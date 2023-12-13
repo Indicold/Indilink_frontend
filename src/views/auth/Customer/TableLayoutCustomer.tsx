@@ -26,6 +26,7 @@ const tableHead = {
 const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
   const { token }: any = getToken();
   let allData: any = AllStore || [];
+  
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
 
@@ -194,7 +195,7 @@ const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
         return <td className='text-center' key={i} >{rowData?.admin?.first_name ? `${rowData?.admin?.first_name} ${rowData?.admin?.last_name}` : 'Not Available'}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='flex justify-center p-1 gap-3' key={i} >
           {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
           <Button className='!p-2' disabled={rowData?.is_deleted === 1} onClick={() => handleDelete(rowData?.master_query_id)}>Close</Button>

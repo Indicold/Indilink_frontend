@@ -135,7 +135,7 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="text-center flex gap-2" key={i}>
                         <Button
                             className="!p-3 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}
@@ -209,7 +209,7 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                 />
             </div>
            <div className='overflow-auto'>
-           <table className="w-full  ">
+           <table className="w-screen">
                 <thead>
                     <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
                         {headRow()}

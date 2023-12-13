@@ -27,7 +27,13 @@ const tableHead = {
 
 const TableCustomerStoreAssets = ({ AllStore,fetchAgain }: any) => {
   const {token}:any=getToken();
-  let allData: any = AllStore;
+  // let allData: any = AllStore;
+  let allData: any =AllStore?.map((item:any, index:any) => ({
+    ...item,
+    Id: index + 1,
+    updated_at:new Date(item?.updated_at).toLocaleDateString(),
+    created_at:new Date(item?.created_at).toLocaleDateString()
+  })) || [];
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
 
@@ -212,11 +218,11 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
         return <td className='text-center' key={i} >{rowData?.admin?.first_name  ? `${rowData?.admin?.first_name } ${rowData?.admin?.last_name}` : 'Not Available'}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
-        <Button className='!p-3 pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
-        <Button className='!p-2' disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
-        <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-        <Button className='!p-2' onClick={() => handleDocs(rowData)}>Docs</Button>
+        return <td className='text-center flex gap-2 p-1' key={i} >
+        <Button className='!p-3 m-auto pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
+        <Button className='!p-2 m-auto' disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
+        <Button className='!p-2 m-auto' onClick={() => handleView(rowData)}>View</Button>
+        <Button className='!p-2 m-auto' onClick={() => handleDocs(rowData)}>Docs</Button>
       </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -252,12 +258,14 @@ return collection?.length>0 ? collection?.map((rowData: any, index: any) => tabl
           onChange={e => setValue(e.target.value)}
         />
       </div>
-      <table className='w-full'>
+      <div className='overflow-auto'>
+      <table className='w-screen'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}

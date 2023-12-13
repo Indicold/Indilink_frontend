@@ -209,10 +209,10 @@ useEffect(()=>{
 },[BasicInfo?.data])
 
     return (
-        <div className='lg:flex md:flex'>
+        <div className='lg:flex'>
             <ToastContainer />
             {/* stepper start */}
-            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -277,17 +277,17 @@ useEffect(()=>{
                     <Form className="py-2 multistep-form-step">
                         <FormContainer>
 
-                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
                                 <FormItem
                                     label="Firm Registered Country"
-                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3  w-[100%] lg:w-1/2  text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <select
                                         disabled={isDisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="country_id"
-                                        className="h-11 border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -301,7 +301,7 @@ useEffect(()=>{
                                 </FormItem>
                                 <FormItem
                                     label="Firm Registered State"
-                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <select
@@ -322,10 +322,10 @@ useEffect(()=>{
                                 </FormItem>
 
                             </div>
-                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
                                 <FormItem
                                     label="Firm Registered Address"
-                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <Field
@@ -346,7 +346,7 @@ useEffect(()=>{
                                 </FormItem>
                                 <FormItem
                                     label="Firm Registered PIN Code"
-                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                 >
                                     <Field
                                         disabled={isDisabled}
@@ -366,10 +366,10 @@ useEffect(()=>{
                                     </p>
                                 </FormItem>
                             </div>
-                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
                                 <FormItem
                                     label="GST Number"
-                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                 >
                                     <Field
                                         disabled={isDisabled}
@@ -415,7 +415,7 @@ useEffect(()=>{
 
                                 <FormItem
                                     label="Pan Number"
-                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <Field
@@ -467,11 +467,14 @@ useEffect(()=>{
 
                 {/* share holder details */}
                 {firmType === 'Private Limited' &&
-                    <div className='pt-10 '>
+                    <div className='pt-10'>
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
                         {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
+                     <div className='text-center'>
+                     {SareList?.data?.length < 1 ? <button className=' bg-gray-400 rounded-lg p-4 text-white m-auto' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className=' bg-gray-400 text-white rounded-lg p-4 m-auto' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
+
+                     </div>
                         {error && error.shareholder_ids}
                     </div>}
 
@@ -491,7 +494,7 @@ useEffect(()=>{
                 </div>
 
                 {/* final submit button */}
-                <div className='flex'>
+                <div className='flex pl-6 pr-6'>
                     <Button
                         style={{ borderRadius: '13px' }}
                         block
@@ -500,7 +503,7 @@ useEffect(()=>{
                         type="button"
                         role='button'
                         onClick={() => navigate(-1)}
-                        className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                        className="indigo-btn  !bg-gray-500 m-4  rounded-[30px]"
                     >
                         Prev
                     </Button>
@@ -511,7 +514,7 @@ useEffect(()=>{
                         // disabled={isDisabled}
                         variant="solid"
                         onClick={handlesubmit}
-                        className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                        className='indigo-btn mt-4 rounded-xl shadow-lg'
                     >
                         {isSubmitting
                             ? 'Saving...'

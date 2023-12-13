@@ -11,8 +11,8 @@ const PartnerBusinessTypeSuccess = () => {
     })
     const { t, i18n }:any = useTranslation();
     return (
-        <div className='lg:flex md:flex'>
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6
+        <div className='lg:flex '>
+            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6
 '>
             
 

@@ -133,7 +133,7 @@ const SignUpForm = (props: SignUpFormProps) => {
             >
                 <Form className="signup-form w-[100%]" onSubmit={handlesubmit}>
                     <FormContainer>
-                        <div className="sm:flex md:flex lx:flex" >
+                        <div className=" lg:flex" >
                             <FormItem
                                 label="First Name" 
                                 className="me-auto w-[100%] text-label-title"
@@ -215,7 +215,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                             </FormItem>
                         </div>
 
-                        <div className="sm:fle md:flex xl:flex">
+                        <div className="lg:flex">
                             <FormItem
                                 label="Password"
                                 className="me-auto w-[100%] text-label-title !mb-0"

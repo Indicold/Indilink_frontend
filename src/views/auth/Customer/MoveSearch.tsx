@@ -244,10 +244,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
                                 <h6 className=" mb-2 pl-[22px] text-head-title text-start">{t("Origin Location")}</h6>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
                                         label= {t("Country*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -265,7 +265,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label= {t("From*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -282,10 +282,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                         <p className='text-[red]'>{errors && errors.origin_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("PIN Code")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -301,7 +301,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
@@ -319,10 +319,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                 </div>
                                 <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location")} </h6>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -340,7 +340,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label=  {t("To*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -357,10 +357,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                         <p className='text-[red]'>{errors && errors.dest_city_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("PIN Code")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -376,7 +376,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label={t("GPS")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
@@ -396,10 +396,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Load Quantity*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -428,7 +428,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label= {t("Broad Category*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -445,7 +445,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Product Type*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
@@ -466,10 +466,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                    
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Dispatch Date")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -488,7 +488,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label= {t("Arrival Date")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -509,10 +509,10 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                 </div>
                       {location?.state?.extraForm &&    <>
 
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label="Status"
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
 
                                         <select
@@ -531,7 +531,7 @@ console.log("wertyuio", new Date(formData?.arrival_date));
                                     </FormItem>
                                     <FormItem
                                         label= {t("Comment")}
-                                        className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}

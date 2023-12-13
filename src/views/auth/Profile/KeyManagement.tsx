@@ -44,9 +44,9 @@ const KeyManagement = () => {
         navigate('/account-details')
     }
   return (
-    <div className='lg:flex md:flex'>
+    <div className='lg:flex '>
         {/* stepper start */}
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -102,16 +102,16 @@ const KeyManagement = () => {
             <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} />
             <h4 className="text-head-title text-center">Key Management Personnel</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
-            <div className='mt-8 flex align-right'>
+            <div className='mt-8 text-center'>
                     
                             <Button
-                                // block
+                                block
                                 style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={()=>setModal(true)}
-                                className='indigo-btn rounded-xl shadow-lg'
+                                className='indigo-btn lg:!w-[40%] !w-[80%] m-auto rounded-xl shadow-lg'
                             >
                               
                                    + Add Key Management Personnel
@@ -119,7 +119,7 @@ const KeyManagement = () => {
 
                         </div>
                         {ListOfKey?.data && <KeyTable modal={modal} setModal={setModal} formData={data} setformData={setData} AllStore={ListOfKey?.data} tableHead={tableHead} />}
-                <div className='flex gap-6'>
+                <div className='flex gap-6 pl-8 pr-8'>
                             <Button
                                 style={{ borderRadius: '13px' }}
                                 block

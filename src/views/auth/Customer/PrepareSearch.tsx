@@ -203,10 +203,10 @@ const PrepareSearch = () => {
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Product Category*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -224,7 +224,7 @@ const PrepareSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Broad Category*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -241,10 +241,10 @@ const PrepareSearch = () => {
                                         <p className='text-[red]'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Product Type*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -262,7 +262,7 @@ const PrepareSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Service Category*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -298,7 +298,7 @@ const PrepareSearch = () => {
                                         </select>
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
-                                    <div className=" md:flex lg:flex pl-3 w-[100%] text-label-title m-auto">
+                                    <div className="  lg:flex pl-3 w-[100%] text-label-title m-auto">
                                         <FormItem
                                             label={t("State*")}
                                             className=" w-[100%] text-label-title m-auto"
@@ -337,10 +337,10 @@ const PrepareSearch = () => {
                                         </FormItem>
                                     </div>
                                 </div>
-                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Throughput*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -369,7 +369,7 @@ const PrepareSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Avg. Case Size*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -399,10 +399,10 @@ const PrepareSearch = () => {
 
                                     </FormItem>
                                 </div>
-                                <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label={t("Estimated Docks*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -417,7 +417,7 @@ const PrepareSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Estimated Dispatches*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -431,7 +431,7 @@ const PrepareSearch = () => {
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="lg:flex md:flex ">
+                                <div className="lg:flex  ">
 
                                 </div>
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
@@ -439,8 +439,8 @@ const PrepareSearch = () => {
                                         label={t("Temperature*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
-                                        <div className='lg:flex gap-6 m-auto md:flex'>
-                                            <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
+                                        <div className='lg:flex gap-6 m-auto '>
+                                            <div className='w-[100%] m-auto lg:w-1/2  '>
                                                 <select
                                                     disabled={isDisabled}
                                                     onChange={(e: any) => handleChange(e)}
@@ -459,7 +459,7 @@ const PrepareSearch = () => {
                                                 
                                             </div>
 
-                                            <div className='w-[100%] m-auto lg:w-1/2 md:w-1/2 '>
+                                            <div className='w-[100%] m-auto lg:w-1/2  '>
                                             <select
                                                     disabled={isDisabled}
                                                     onChange={(e: any) => handleChange(e)}
@@ -503,10 +503,10 @@ const PrepareSearch = () => {
                                     </FormItem>
                                 </div>
                                 {location?.state?.extraForm && <>
-                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Status")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
 
                                             <select
@@ -525,7 +525,7 @@ const PrepareSearch = () => {
                                         </FormItem>
                                         <FormItem
                                             label={t("Comment")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -542,10 +542,10 @@ const PrepareSearch = () => {
                                             <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div>
-                                    <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Contract Name")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -561,7 +561,7 @@ const PrepareSearch = () => {
                                         </FormItem>
                                         <FormItem
                                             label={t("Contract Type")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -578,10 +578,10 @@ const PrepareSearch = () => {
                                             <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div>
-                                    {/* <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Arrival Date")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -597,7 +597,7 @@ const PrepareSearch = () => {
                                         </FormItem>
                                         <FormItem
                                             label={t("Dispatch Date")}
-                                            className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <Field
                                                 disabled={isDisabled}
@@ -614,10 +614,10 @@ const PrepareSearch = () => {
                                             <p className='text-[red]'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div> */}
-                                    {/* <div className="lg:flex md:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                    {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Contract Upload")}
-                                            className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                            className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <input
                                                 disabled={isDisabled}
@@ -638,7 +638,7 @@ const PrepareSearch = () => {
                                     </div> */}
                                 </>}
 
-                                <div className="lg:flex md:flex mt-4 justify-center w-[310px] mx-auto">
+                                <div className="lg:flex  mt-4 justify-center w-[310px] mx-auto">
                                     {location?.state?.extraForm ? <Button
                                         disabled={isDisabled}
                                         style={{ borderRadius: '13px' }}

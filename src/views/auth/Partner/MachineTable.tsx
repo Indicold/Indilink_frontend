@@ -100,7 +100,7 @@ const MachineTable = ({ AllStore, tableHead,setModal,modal,setFormData }: any) =
          
             if (key === 'Action') {
                 return (
-                    <td className="text-center" key={i}>
+                    <td className="flex justify-center p-2 gap-3" key={i}>
                         <Button
                         type='button'
                             className="!p-3 pt-0 pb-0"

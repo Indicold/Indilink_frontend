@@ -27,7 +27,14 @@ updated_at: "Updated At",
 
 const CustomerGeneralTableList = ({ AllStore,fetchDataG }: any) => {
      const {token}:any=getToken()
-  let allData: any = AllStore || [];
+  // let allData: any = AllStore || [];
+  let allData: any =AllStore?.map((item:any, index:any) => ({
+    ...item,
+    Id: index + 1,
+    updated_at:new Date(item?.updated_at).toLocaleDateString(),
+    created_at:new Date(item?.created_at).toLocaleDateString()
+  })) || [];
+
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
 
