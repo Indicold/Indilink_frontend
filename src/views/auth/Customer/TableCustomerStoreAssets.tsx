@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import throttle from "lodash/throttle";
 import Pagination from "rc-pagination"; // Import pagination component to show table records in multiple pages
 import "rc-pagination/assets/index.css"; // Import pagination component styles
@@ -25,7 +25,7 @@ const tableHead = {
 
 // The TableCustomerStoreAssets component takes a prop called AllStore, presumably for rendering data.
 
-const TableCustomerStoreAssets = ({ AllStore }: any) => {
+const TableCustomerStoreAssets = ({ AllStore,fetchAgain }: any) => {
   const {token}:any=getToken();
   // let allData: any = AllStore;
   let allData: any =AllStore?.map((item:any, index:any) => ({
@@ -77,7 +77,11 @@ const TableCustomerStoreAssets = ({ AllStore }: any) => {
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
-
+useEffect(()=>{
+  const to = countPerPage * currentPage;
+  const from = to - countPerPage;
+  setCollection(cloneDeep(allData.slice(from, to)));
+},[allData])
   const navigate = useNavigate();
 
   /**
@@ -107,6 +111,7 @@ fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -132,6 +137,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       messageView(result?.message)
 
     }
+    fetchAgain()
   })
   .catch((error:any) =>{
     messageView(error?.message)
@@ -174,10 +180,10 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
   
   }
   const handleDocs = (rowData: any) => {
-  
+  localStorage.setItem('assets_list_id',rowData?.asset_id)
     if (rowData?.asset_type_id==1) {
 
-      navigate(`/documents-list/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
+      navigate(`/customer-documents-list/${rowData?.master_query_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
 
     }
   
@@ -212,9 +218,9 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
         return <td className='text-center' key={i} >{rowData?.admin?.first_name  ? `${rowData?.admin?.first_name } ${rowData?.admin?.last_name}` : 'Not Available'}</td>;
       }
       if (key === 'Action') {
-        return <td className='  flex gap-2 p-1' key={i} >
-        <Button className='!p-3 pt-0 m-auto pb-0' onClick={() => handleAccept(rowData)}>Accept</Button>
-        <Button className='!p-2 m-auto' onClick={() => handleReject(rowData)}>Reject</Button>
+        return <td className='text-center flex gap-2 p-1' key={i} >
+        <Button className='!p-3 m-auto pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
+        <Button className='!p-2 m-auto' disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
         <Button className='!p-2 m-auto' onClick={() => handleView(rowData)}>View</Button>
         <Button className='!p-2 m-auto' onClick={() => handleDocs(rowData)}>Docs</Button>
       </td>;

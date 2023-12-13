@@ -63,7 +63,7 @@ const StoreSearch = () => {
     const { data: ListOfTemp, loading: LTloading, error: Lterror } =
         useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
         
-    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
     useApiFetch<any>(`customer/get-responses/1/${location?.state?.data?.id}`, token);
 
     // Fetch a list of certification types using a custom hook
@@ -540,7 +540,7 @@ const StoreSearch = () => {
                     </Formik>
                 </div>
                 {isDisabled?
-                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} />:<></>}
+                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
             </div>
         </div>
     )

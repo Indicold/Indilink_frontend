@@ -335,6 +335,13 @@ export const protectedRoutes = [
     },
     {
 
+        key: 'customereditdocumentlist',
+        path: `/customer-documents-list/:id`,
+        component: lazy(() => import('@/views/auth/Partner/AssetsDocumentsTable/CustomerDocumentEditTable')),
+        authority: [],
+    },
+    {
+
         key: 'assetsdetails',
         path: `/assets-details/:id`,
         component: lazy(() => import('@/views/auth/Partner/Details/StoreDetails')),
