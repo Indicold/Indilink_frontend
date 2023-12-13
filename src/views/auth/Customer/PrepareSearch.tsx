@@ -42,7 +42,7 @@ const PrepareSearch = () => {
     const { data: ListOfBroadCategory, loading: BCloading, error: BCerror } =
         useApiFetch<any>(`master/customer/store/get-broad-category`, token);
 
-    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
         useApiFetch<any>(`customer/get-responses/3/${location?.state?.data?.id}`, token);
 
     // Fetch a list of countries using a custom hook
@@ -668,7 +668,7 @@ const PrepareSearch = () => {
                     </Formik>
                 </div>
                 {isDisabled ?
-                    ApprovedAssets?.data?.length > 0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} /> : <></>}
+                    ApprovedAssets?.data?.length > 0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} /> : <></>}
             </div>
         </div>
     )
