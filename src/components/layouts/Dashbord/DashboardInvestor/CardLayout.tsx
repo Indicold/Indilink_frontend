@@ -159,7 +159,7 @@ const CardLayout = ({title}:any) => {
             <div className="w-full flex justify-between">
                 <h2 className="text-start">{title}</h2>
             </div>
-    <section className="grid gap-6 my-6 md:grid-cols-3">
+    <section className="grid gap-6 my-6 md:grid-cols-2 lg:grid-cols-3">
         {['Assets Registered This Week','No of Total Store Assets','Revenue Generating Assets'].map((item:any,index:any)=>(
             <div className="p-6 bg-white shadow rounded-0" key={index}>
       <dl className="space-y-2">
@@ -179,7 +179,7 @@ const CardLayout = ({title}:any) => {
     
     
   </section>
-  <div className='flex grid gap-6 my-6 md:grid-cols-3'>
+  <div className='grid gap-6 my-6 lg:grid-cols-3'>
     {dataList?.map((item:any,index:any)=>(
   <section className="grid gap-6 my-6 shadow rounded-2xl bg-white">
   <h3 className='ml-4 mt-4'>{item?.title}</h3>

@@ -104,9 +104,9 @@ if(fetchDetails?.data?.store){
                 </div>
  
  
-                <div className='w-[100%]  flex'>
+                <div className='w-[100%] lg:flex'>
                     <div className='w-[75%]'>
-                        <div className='flex'>
+                        <div className='lg:flex'>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Asset Type :</h2>
@@ -138,7 +138,7 @@ if(fetchDetails?.data?.store){
                                 </div>
                             </div>
                         </div>
-                        <div className='flex'>
+                        <div className=' lg:flex'>
                             <div className='m-auto'>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Total office space</h2>
@@ -170,7 +170,7 @@ if(fetchDetails?.data?.store){
                                 </div>
                             </div>
                         </div>
-                        <div className='flex justify-start'>
+                        <div className='lg:flex justify-start'>
                             <div className=''>
                                 <div className="w-[100%] pl-4 mt-10 mb-10">
                                     <h2 className="text-sm">Facility Manager Name</h2>
@@ -188,8 +188,8 @@ if(fetchDetails?.data?.store){
  
  
                     </div>
-                    <div className='w-[25%] p-10'>
-                        <div className='m-auto'>
+                    <div className='lg:w-[25%] w-[100%] p-10'>
+                        <div className='m-auto text-center'>
                         <button type="button" onClick={handleAccept} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Accept
                             </button>

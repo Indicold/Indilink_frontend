@@ -218,11 +218,11 @@ const StoreSearch = () => {
                             <FormContainer className='gap-4'>
                                 <div className='bg-gray-100 p-2 rounded-md'>
                                 <p className='pl-3'><b>{t("Location")} </b></p>
-                                <div className="md:flex lg:flex ">
+                                <div className=" lg:flex ">
                                    
                                     <FormItem
                                         label= {t("Country")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto "
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto "
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -240,7 +240,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("City*")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -260,10 +260,10 @@ const StoreSearch = () => {
                                 </div>
 
 
-                                <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex md:flex">
+                                <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex ">
                                     <FormItem
                                         label= {t("Product Type*")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -281,7 +281,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Temperature*")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -309,10 +309,10 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.temperature}</p>
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 mt-4 rounded-md p-2">
+                                <div className=" lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
                                         label={t("Unit*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                        <Field
                                             disabled={isDisabled}
@@ -342,7 +342,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Certification")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
@@ -359,10 +359,10 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.certification_id}</p>
                                     </FormItem>
                                 </div>
-                                <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label= {t("Date Of Storage")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
@@ -379,7 +379,7 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t("Storage Duration*")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}

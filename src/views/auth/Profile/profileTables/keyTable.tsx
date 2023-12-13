@@ -213,7 +213,7 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 />
             </div>
             <div className='overflow-auto'>
-            <table className="w-full">
+            <table className="w-screen">
                 <thead>
                     <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
                         {headRow()}

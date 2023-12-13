@@ -44,9 +44,9 @@ const KeyManagement = () => {
         navigate('/account-details')
     }
   return (
-    <div className='lg:flex md:flex'>
+    <div className='lg:flex '>
         {/* stepper start */}
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
+            <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  

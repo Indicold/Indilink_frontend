@@ -7,7 +7,7 @@ import SignUpForm from './SignUpForm'
 
 const SignUp = () => {
     return (
-        <div className='w-[100%] md-[100%]'>
+        <div className='w-[100%] md:p-4 md-[100%]'>
             <div className="mb-4 "> 
                 <img className="lg:w-[130px] md:w-[25%] w-[140px] mb-4 object-cover object-center rounded-[3%]" alt="hero" src="./img/images/logimg.png" />
                 <h4 className="font-bold sm:text-head-title">Sign Up!</h4>

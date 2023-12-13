@@ -513,11 +513,11 @@ console.log("GGGGGGGGGG",formData);
                                     max="35"
                                 />
                             </FormItem>
-                        <div className="flex">
+                        <div className="lg:flex">
                             <FormItem
                                 label="Firm Type"
 
-                                className='w-1/2 text-label-title'
+                                className='lg:w-1/2 text-label-title'
                                 asterisk={true}
                             >
                                   
@@ -538,7 +538,7 @@ console.log("GGGGGGGGGG",formData);
                             <FormItem
                                 label="Firm Name"
 
-                                className='w-1/2 text-label-title'
+                                className='lg:w-1/2 text-label-title'
                                 asterisk={true}
                             >
                                 

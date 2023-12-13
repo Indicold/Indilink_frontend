@@ -28,7 +28,7 @@ const Header = (props: HeaderProps) => {
                     container && 'container mx-auto'
                 )}
             >
-                <div className="header-action header-action-start">
+                <div className="header-action  header-action-start">
                     {headerStart}
                 </div>
                 {headerMiddle && (
