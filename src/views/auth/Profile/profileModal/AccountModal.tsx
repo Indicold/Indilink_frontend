@@ -183,6 +183,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Account Name"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -201,6 +202,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Account Number"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -222,6 +224,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Bank Name"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -240,6 +243,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Bank IFSC Code"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -261,6 +265,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Branch Name"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -279,6 +284,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 <FormItem
                                                     label="Cancel Cheque"
                                                     className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                    asterisk={true}
                                                 >
                                                     <Field
                                                    disabled={data?.isdisabled}
