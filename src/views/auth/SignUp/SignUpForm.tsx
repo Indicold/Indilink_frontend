@@ -78,9 +78,9 @@ const SignUpForm = (props: SignUpFormProps) => {
         const pattern = /\.\@/;
         
         if (e.target.name === 'email') {
-            if(pattern.test(formData?.email)){
-        console.log("tryui",pattern.test(formData?.email));
-        setError({...error,email:'Email not allow .@'})
+            if(pattern.test(newData?.email)){
+        console.log("tryui",error?.email);
+        // setError({...error,email:'Email not allow .@'})
             }else{
                 if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newData?.email)) {
                     console.log("TTTTTTTTT",error?.email);
@@ -90,7 +90,7 @@ const SignUpForm = (props: SignUpFormProps) => {
           
    
         } else if (e.target.name === 'phone_number') {
-            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0 && e.target.value?.length===10)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         newData[e.target.name] = e.target.value

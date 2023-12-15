@@ -60,7 +60,7 @@ const SignInForm = (props: SignInFormProps) => {
     const [formData, setFormData] = useState<any>({
         email: '',
         password: '',
-        rememberMe:false
+        rememberMe: false
     })
     const [error, setError] = useState<any>({
         email: '',
@@ -100,13 +100,13 @@ const SignInForm = (props: SignInFormProps) => {
         e.preventDefault()
 
         if (validateFormLogin(formData)) {
-            
-        setSubmitting(true)
-        if(formData?.rememberMe){
-            localStorage.setItem('RememberMe',JSON.stringify(formData));
-        }else{
-            localStorage.removeItem('RememberMe')
-        }
+
+            setSubmitting(true)
+            if (formData?.rememberMe) {
+                localStorage.setItem('RememberMe', JSON.stringify(formData));
+            } else {
+                localStorage.removeItem('RememberMe')
+            }
             fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -123,27 +123,27 @@ const SignInForm = (props: SignInFormProps) => {
                     setSubmitting(false)
                     if (data.message.accessToken) {
                         localStorage.setItem('access_token', data.message.accessToken);
-                    messageView("Login Successfully")
-                    setTimeout(()=>{
-                        const {default_user_type}:any= jwt_decode(data.message.accessToken)
-                        if(default_user_type===1){
-                            localStorage.setItem('user_type','Partner')
-                            navigate('/partner-dashbord')
-                        }else if(default_user_type===3){
-                            localStorage.setItem('user_type','Investor')
-                            navigate('/investor-dashbord')
-                        }else{
-                            navigate('/home')
-                        }
-                    },2000)
-                  
+                        messageView("Login Successfully")
+                        setTimeout(() => {
+                            const { default_user_type }: any = jwt_decode(data.message.accessToken)
+                            if (default_user_type === 1) {
+                                localStorage.setItem('user_type', 'Partner')
+                                navigate('/partner-dashbord')
+                            } else if (default_user_type === 3) {
+                                localStorage.setItem('user_type', 'Investor')
+                                navigate('/investor-dashbord')
+                            } else {
+                                navigate('/home')
+                            }
+                        }, 2000)
 
-                    }else{
+
+                    } else {
 
                         messageView(data?.message)
 
                     }
-      
+
                 })
                 .catch((err) => {
                     setSubmitting(false)
@@ -166,9 +166,11 @@ const SignInForm = (props: SignInFormProps) => {
         if (formD.email) {
             if (!/\S+@\S+\.\S+/.test(formData?.email)) {
                 errors.email = 'Invalid email address';
-              }
+            }
         }
-
+        if (/\.\@/.test(formD?.email)) {
+            errors.email = 'Email not allow .@'
+        }
 
         if (!formD.password) {
             errors.password = "Password can't be Empty !"
@@ -184,8 +186,9 @@ const SignInForm = (props: SignInFormProps) => {
     const handlechange = (e: any) => {
         const newData: any = { ...formData }
         newData[e.target.name] = e.target.value
+        validateFormLogin(newData);
         setFormData(newData)
-        if(error[e.target.name])validateFormLogin(newData);
+        if (error[e.target.name]) validateFormLogin(newData);
     }
     /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
         `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`
@@ -196,66 +199,66 @@ const SignInForm = (props: SignInFormProps) => {
         //     LoginResponse?.responseData?.message?.accessToken
         // )
     }, [LoginResponse?.responseData?.message])
-    const handleRememberMeChange = (e:any) => {
+    const handleRememberMeChange = (e: any) => {
         const newData = { ...formData };
         newData.rememberMe = e.target.checked; // Update rememberMe state
         setFormData(newData);
     };
-    useEffect(()=>{
-        if(localStorage.getItem('RememberMe')){
-            const dataVal:any=localStorage.getItem('RememberMe');
+    useEffect(() => {
+        if (localStorage.getItem('RememberMe')) {
+            const dataVal: any = localStorage.getItem('RememberMe');
             setFormData(JSON.parse(dataVal))
         }
-    },[])
+    }, [])
     return (
         <>
             <ToastContainer />
 
-        <div className={className}>
-            {LoginResponse?.responseData?.message &&
-                typeof LoginResponse?.responseData?.message === 'string' &&
-                false && (
-                    <Alert showIcon className="mb-4" type="danger">
-                        <>{LoginResponse?.responseData?.message}</>
-                    </Alert>
-                )}
-            <Formik >
-                <Form className='md:m-auto ' onSubmit={handlesubmit}>
-                    <FormContainer className="">
-                        <FormItem
-                            className="!text-[#103492]"
-                            label="Registered Email ID*"
-                        >
-                            <Field
-                                type="text"
-                                autoComplete="off"
-                                className="rounded-[13px]"
-                                name="email"
-                                value={formData?.email}
-                                placeholder="your@email.com"
-                                onChange={handlechange}
-                                component={Input}
-                            />
-                            <p className="text-[red]">
-                                {error && error.email}
-                            </p>
-                        </FormItem>
-                        <FormItem className="text-field" label="Password*">
-                            <Field
-                                style={{ borderRadius: '13px' }}
-                                autoComplete="off"
-                                name="password"
-                                value={formData?.password}
-                                placeholder="Password"
-                                onChange={handlechange}
-                                component={PasswordInput}
-                            />
-                            <p className="text-[red]">
-                                {error && error.password}
-                            </p>
-                        </FormItem>
-                        <div className="flex justify-between">
-                        <div className="flex items-center mb-4">
+            <div className={className}>
+                {LoginResponse?.responseData?.message &&
+                    typeof LoginResponse?.responseData?.message === 'string' &&
+                    false && (
+                        <Alert showIcon className="mb-4" type="danger">
+                            <>{LoginResponse?.responseData?.message}</>
+                        </Alert>
+                    )}
+                <Formik >
+                    <Form className='md:m-auto ' onSubmit={handlesubmit}>
+                        <FormContainer className="">
+                            <FormItem
+                                className="!text-[#103492]"
+                                label="Registered Email ID*"
+                            >
+                                <Field
+                                    type="text"
+                                    autoComplete="off"
+                                    className="rounded-[13px]"
+                                    name="email"
+                                    value={formData?.email}
+                                    placeholder="your@email.com"
+                                    onChange={handlechange}
+                                    component={Input}
+                                />
+                                <p className="text-[red]">
+                                    {error && error.email}
+                                </p>
+                            </FormItem>
+                            <FormItem className="text-field" label="Password*">
+                                <Field
+                                    style={{ borderRadius: '13px' }}
+                                    autoComplete="off"
+                                    name="password"
+                                    value={formData?.password}
+                                    placeholder="Password"
+                                    onChange={handlechange}
+                                    component={PasswordInput}
+                                />
+                                <p className="text-[red]">
+                                    {error && error.password}
+                                </p>
+                            </FormItem>
+                            <div className="flex justify-between">
+                                <div className="flex items-center mb-4">
                                     <input
                                         id="rememberMeCheckbox"
                                         type="checkbox"
@@ -271,25 +274,25 @@ const SignInForm = (props: SignInFormProps) => {
                                         Remember me
                                     </label>
                                 </div>
-                            <ActionLink
-                                to={forgotPasswordUrl}
-                                className="text-link"
-                            >
-                                Forgot Password?
-                            </ActionLink>
-                        </div>
-                        <div className=" mx-auto flex mt-5">
-                            <Button
-                                block
-                                loading={isSubmitting}
-                                variant="solid"
-                                type="submit"
-                                className="indigo-btn  mx-auto "
-                            >
-                                {isSubmitting ? 'Signing in...' : 'Log in'}
-                            </Button>
-                        </div>
-                        {/* <div className="w-full flex">
+                                <ActionLink
+                                    to={forgotPasswordUrl}
+                                    className="text-link"
+                                >
+                                    Forgot Password?
+                                </ActionLink>
+                            </div>
+                            <div className=" mx-auto flex mt-5">
+                                <Button
+                                    block
+                                    loading={isSubmitting}
+                                    variant="solid"
+                                    type="submit"
+                                    className="indigo-btn  mx-auto "
+                                >
+                                    {isSubmitting ? 'Signing in...' : 'Log in'}
+                                </Button>
+                            </div>
+                            {/* <div className="w-full flex">
                             <NavLink
                                 to="/sign-in-otp"
                                 role="button"
@@ -304,45 +307,45 @@ const SignInForm = (props: SignInFormProps) => {
                                     : 'Log in with Phone number'}
                             </NavLink>
                         </div> */}
-                        <div className="text-center">
-                            <span className='text-field'>{`Don't have an account?`} </span>
-                            <ActionLink
-                                className="text-link"
-                                to={signUpUrl}
-                            >
-                                Sign up
-                            </ActionLink>
-                        </div>
-                        <div className="flex mt-5">
-                            <hr className='w-[50%] my-auto mx-1' />
-                            Or
-                            <hr className='w-[50%] my-auto mx-1' />
-                        </div>
-                        <div className=" mx-auto flex mt-5">
-                            <Button
-                                block
-                                variant="solid"
-                                type='button'
-                                onClick={()=>navigate('/sign-in-otp')}
-                                className="indigo-btn !bg-black mx-auto !hover:bg-gray-900"
-                            >
-                                <NavLink
-                                to="/sign-in-otp"
-                                role="button"
-                                style={{
-                                    borderRadius: '13px',
-                                    textDecoration: 'auto',
-                                }}
-                                className=""
-                            >
-                                Login with Phone number
-                            </NavLink>
-                            </Button>
-                        </div>
-                    </FormContainer>
-                </Form>
-            </Formik>
-        </div>
+                            <div className="text-center">
+                                <span className='text-field'>{`Don't have an account?`} </span>
+                                <ActionLink
+                                    className="text-link"
+                                    to={signUpUrl}
+                                >
+                                    Sign up
+                                </ActionLink>
+                            </div>
+                            <div className="flex mt-5">
+                                <hr className='w-[50%] my-auto mx-1' />
+                                Or
+                                <hr className='w-[50%] my-auto mx-1' />
+                            </div>
+                            <div className=" mx-auto flex mt-5">
+                                <Button
+                                    block
+                                    variant="solid"
+                                    type='button'
+                                    onClick={() => navigate('/sign-in-otp')}
+                                    className="indigo-btn !bg-black mx-auto !hover:bg-gray-900"
+                                >
+                                    <NavLink
+                                        to="/sign-in-otp"
+                                        role="button"
+                                        style={{
+                                            borderRadius: '13px',
+                                            textDecoration: 'auto',
+                                        }}
+                                        className=""
+                                    >
+                                        Login with Phone number
+                                    </NavLink>
+                                </Button>
+                            </div>
+                        </FormContainer>
+                    </Form>
+                </Formik>
+            </div>
         </>
     )
 }
