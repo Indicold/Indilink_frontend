@@ -90,7 +90,7 @@ const SignUpForm = (props: SignUpFormProps) => {
           
    
         } else if (e.target.name === 'phone_number') {
-            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+            if(e.target.value.replace(/[^0-9]/g, "").length == 10)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         newData[e.target.name] = e.target.value
