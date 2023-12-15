@@ -21,6 +21,7 @@ import { updateFormData } from '@/store/slices/Authentication/userDetails'
 import { debounce } from 'lodash'
 import {
     onkeyDownOne,
+    onkeyDownforSpecialCharcter,
     validateEmail,
     validateForm,
     validateMobile,
@@ -74,9 +75,20 @@ const SignUpForm = (props: SignUpFormProps) => {
      */
     const handleChange = (e: any) => {
         const newData: any = { ...formData }
+        const pattern = /\.\@/;
         
         if (e.target.name === 'email') {
-            validateEmailDebounced(e.target.value, setIsEmailValid)
+            if(pattern.test(formData?.email)){
+        console.log("tryui",pattern.test(formData?.email));
+        setError({...error,email:'Email not allow .@'})
+            }else{
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newData?.email)) {
+                    console.log("TTTTTTTTT",error?.email);
+                    validateEmailDebounced(e.target.value, setIsEmailValid)
+                  }
+            }
+          
+   
         } else if (e.target.name === 'phone_number') {
             if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
@@ -145,6 +157,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     className="rounded-[13px]"
                                     name="first_name"
                                     placeholder="First Name"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
@@ -162,6 +175,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="last_name"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     placeholder="Last Name"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
@@ -182,6 +196,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     className="rounded-[13px]"
                                     name="email"
                                     placeholder="Email Address"
+                                    // onKeyDown={onkeyDownforSpecialCharcter}
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
