@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
+import { apiUrl, getToken } from '@/store/token';
+import { messageView } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
@@ -18,13 +20,13 @@ const tableHead = {
   // status_id:"Status",
 //   is_deletedBy: "Is Deleted By",
 // asset_type: "Asset Type",
-// Action: "Action"
+Action: "Action"
 };
 
 // The TableCustomerMoveAssets component takes a prop called AllStore, presumably for rendering data.
 
-const TableCustomerMoveAssets = ({ AllStore }: any) => {
-    
+const TableCustomerMoveAssets = ({ AllStore,fetchAgain }: any) => {
+    const {token}:any=getToken();
   let allData: any = AllStore;
   const countPerPage = 10;
   const [value, setValue] = React.useState("");
@@ -70,6 +72,11 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 
+  useEffect(()=>{
+    const to = countPerPage * currentPage;
+    const from = to - countPerPage;
+    setCollection(cloneDeep(allData.slice(from, to)));
+  },[allData])
   const navigate = useNavigate();
 
   /**
@@ -79,6 +86,58 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
    * table. It contains information about the asset being edited, such as its type, ID, and other
    * properties.
    */
+  const handleAccept=(rowData:any)=>{
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions :any= {
+  method: 'PUT',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+    if(result?.status===200){
+      messageView("Data Updated Successfully !")
+
+    }else{
+      messageView(result?.message)
+
+    }
+    fetchAgain()
+  })
+  .catch((error:any) =>{
+    messageView(error?.message)
+  });
+  }
+  const handleReject=(rowData:any)=>{
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", `Bearer ${token}`);
+
+var requestOptions :any= {
+  method: 'PUT',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
+  .then(response => response.json())
+  .then(result =>{
+    if(result?.status===200){
+      messageView("Data Updated Successfully !")
+
+    }else{
+      messageView(result?.message)
+
+    }
+    fetchAgain()
+  })
+  .catch((error:any) =>{
+    messageView(error?.message)
+  });
+  }
   const handleEdit = (rowData: any) => {
     
     // Handle edit action for different asset types.
@@ -106,13 +165,22 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
    * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is
    * used to determine the `asset_type_id` and pass it to the appropriate navigation route.
    */
+  const handleDocs = (rowData: any) => {
+  
+    if (rowData?.asset_type_id==2) {
+
+      navigate(`/customer-documents-list/${rowData?.master_query_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
+
+    }
+  
+  }
   const handleView = (rowData: any) => {
     if (rowData?.asset_type_id==3) {
-      navigate('/customer-prepare', {state:{data:rowData,disabled:true,extraForm:true} });
+      navigate(`/assetsprepare-details/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
     }
     if (rowData?.asset_type_id==2) {
 
-      navigate('/customer-move', {state:{data:rowData,disabled:true,extraForm:true} });
+      navigate(`/assetsmove-details/${rowData?.asset_id}`, {state:{data:rowData,disabled:true,extraForm:true} });
 
     }
     if (rowData?.asset_type_id==1) {
@@ -155,9 +223,11 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
       }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
-          <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button>
+          <Button className='!p-3 pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
+          <Button className='!p-2'  disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
           <Button className='!p-2' onClick={() => handleView(rowData)}>View</Button>
-          <Button className='!p-2' onClick={() => handleApproval(rowData)}>Approve</Button>
+          <Button className='!p-2' onClick={() => handleDocs(rowData)}>Docs</Button>
+
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -168,8 +238,10 @@ const TableCustomerMoveAssets = ({ AllStore }: any) => {
 
   const tableData = () => {
     // Generates table data rows.
-    return collection.map((rowData: any, index: any) => tableRows(rowData, index));
-  };
+    return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
+    <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
+  </tr>;
+    };
 
   const headRow = () => {
     // Generates the header row.

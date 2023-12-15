@@ -71,6 +71,23 @@ const PartnerBussinessTypeMove = () => {
         pucc_validity: '',
         chassis_no: '',
         fitness_validity: '',
+        mfg_month_year:'',
+        vehicle_class:'',
+        emission_norms:'',
+        actual_payload:'',
+        create_capacity:'',
+        length: '',
+width: '',
+hight: '',
+gv_weight: '',
+unladen_weight_in_rc: '',
+engine_no: '',
+side_door: '',
+hatch_window: '',
+dual_temp_bulkhead: '',
+rc_no: '',
+rc_image: '',
+vehicle_no:''
     }
 
     // Define state variables for form data and errors
@@ -79,6 +96,8 @@ const PartnerBussinessTypeMove = () => {
 
     const [makeCustom, setMakeCustom] = useState<any>(false)
     const [modelCustom, setModelCustom] = useState<any>(false)
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
 
     // Get the navigate function from the routing hook
     const navigate = useNavigate()
@@ -145,6 +164,8 @@ const PartnerBussinessTypeMove = () => {
             formdata.append('dual_temp_bulkhead', data?.dual_temp_bulkhead)
             formdata.append('rc_no', data?.rc_no)
             formdata.append('rc_image', data?.rc_image)
+            formdata.append("addr_longitude",longitude);
+            formdata.append("addr_latitude",latitude);
 
             // Prepare request options for the POST request
             var requestOptions: any = {
@@ -202,7 +223,29 @@ const PartnerBussinessTypeMove = () => {
     }
     const { t, i18n }:any = useTranslation();
 
-    
+    useEffect(()=>{
+        function showPosition(position:any) {
+            console.log("TTTTTT",position.coords.latitude,position.coords.longitude);
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude)
+           
+          }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else { 
+            console.log("Geolocation is not supported by this browser.");
+            
+          }
+    },[])
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Add padding if necessary
+
+    // Calculate the minimum allowed date (one year ago)
+    const minDate = `${currentYear - 20}-${currentMonth}`;
+
+    // Format the current month and year as 'YYYY-MM'
+    const maxDate = `${currentYear}-${currentMonth}`;
     return (
         <div className='lg:flex md:flex'>
             <ToastContainer />
@@ -258,7 +301,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_make_id"
-                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border pl-2 flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Make</option>
                                             {vehicalMake &&
@@ -305,7 +348,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_model_id"
-                                            className="border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="pl-2 border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select Model</option>
                                             {vehicalModal &&
@@ -398,7 +441,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="chassis_no"
-                                            value={data?.chassis_no}
+                                            value={data?.chassis_no !=undefined ? data?.chassis_no :""}
                                             placeholder="Get Chassis No from RC"
                                             component={Input}
                                         />
@@ -418,7 +461,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="emission_norms"
-                                            value={data?.emission_norms !=="undefined" ? data?.emission_norms :null}
+                                            value={data?.emission_norms !=="undefined" ? data?.emission_norms :""}
                                             placeholder="Emission norms"
                                             component={Input}
                                         />
@@ -443,6 +486,9 @@ const PartnerBussinessTypeMove = () => {
                                             value={data?.mfg_month_year || '2023-05'}
                                             placeholder="MFG Month/Year"
                                             component={Input}
+                                            min={minDate} // Set the minimum allowed date to one year ago
+                                            max={maxDate} 
+                                            
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.mfg_month_year}
@@ -456,7 +502,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            value={data?.vehicle_class !=="undefined" ? data?.vehicle_class :null}
+                                            value={data?.vehicle_class !=="undefined" ? data?.vehicle_class :""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -471,7 +517,7 @@ const PartnerBussinessTypeMove = () => {
                                 </div>
                                 <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Vehicle number"
+                                        label="Vehicle number*"
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -482,7 +528,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="vehicle_no"
-                                            value={data?.vehicle_no}
+                                            value={!(data?.vehicle_no =="undefined" || data?.vehicle_no ==undefined) ? data?.vehicle_no :""}
                                             placeholder="Vehicle number"
                                             component={Input}
                                         />
@@ -499,7 +545,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.actual_payload}
+                                            value={data?.actual_payload  || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -526,7 +572,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="create_capacity"
-                                            value={data?.create_capacity}
+                                            value={data?.create_capacity || ""}
                                             placeholder="Crate Capacity"
                                             component={Input}
                                         />
@@ -543,7 +589,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.length}                          
+                                            value={data?.length || ""}                          
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -570,7 +616,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="width"
-                                            value={data?.width}
+                                            value={data?.width || ""}
                                             placeholder="Width"
                                             component={Input}
                                         />
@@ -587,7 +633,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.hight}
+                                            value={data?.hight || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -614,7 +660,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="gv_weight"
-                                            value={data?.gv_weight}
+                                            value={data?.gv_weight || ""}
                                             placeholder="GV Weight"
                                             component={Input}
                                         />
@@ -632,7 +678,7 @@ const PartnerBussinessTypeMove = () => {
                                             type="number"
                                             min="0"
                                             autoComplete="off"
-                                            value={data?.unladen_weight_in_rc}
+                                            value={data?.unladen_weight_in_rc || ""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
@@ -659,7 +705,7 @@ const PartnerBussinessTypeMove = () => {
                                                 handleChange(e)
                                             }
                                             name="engine_no"
-                                            value={data?.engine_no}
+                                            value={!(data?.engine_no ==undefined) ? data?.engine_no :""}
                                             placeholder="Get Engine No"
                                             component={Input}
                                         />
@@ -787,7 +833,7 @@ const PartnerBussinessTypeMove = () => {
                                             disabled={isDisabled}
                                             type="text"
                                             autoComplete="off"
-                                            value={data?.rc_no}
+                                            value={!(data?.rc_no=="undefined" || data?.rc_no==undefined) ? data?.rc_no :""}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }

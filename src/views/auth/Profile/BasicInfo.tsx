@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -209,10 +209,10 @@ useEffect(()=>{
 },[BasicInfo?.data])
 
     return (
-        <div className='flex'>
+        <div className='lg:flex md:flex'>
             <ToastContainer />
             {/* stepper start */}
-            <div className='w-1/6'>
+            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
                 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -264,7 +264,7 @@ useEffect(()=>{
             {/* stepper end */}
 
             {/* main component */}
-            <div className="mb-4 w-5/6 bg-white">
+            <div className="bg-white w-[100%] mb-5 lg:w-5/6">
                 <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} />
                 <h4 className="text-head-title text-center">Basic Information</h4>
                 {/* pre filled common form */}
@@ -277,10 +277,10 @@ useEffect(()=>{
                     <Form className="py-2 multistep-form-step">
                         <FormContainer>
 
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                 <FormItem
                                     label="Firm Registered Country"
-                                    className="mx-auto w-1/2 rounded-lg pl-[22px]"
+                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <select
@@ -301,7 +301,7 @@ useEffect(()=>{
                                 </FormItem>
                                 <FormItem
                                     label="Firm Registered State"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <select
@@ -322,10 +322,10 @@ useEffect(()=>{
                                 </FormItem>
 
                             </div>
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                 <FormItem
                                     label="Firm Registered Address"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <Field
@@ -346,11 +346,11 @@ useEffect(()=>{
                                 </FormItem>
                                 <FormItem
                                     label="Firm Registered PIN Code"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <Field
                                         disabled={isDisabled}
-                                        type="text"
+                                        type="number"
                                         autoComplete="off"
                                         onChange={(e: any) =>
                                             handleChange(e)
@@ -359,16 +359,17 @@ useEffect(()=>{
                                         value={data?.pin_code}
                                         placeholder="Firm Registered PIN Code"
                                         component={Input}
+                                        onKeyDown={onkeyDownPincode}
                                     />
                                     <p className="text-[red]">
                                         {error && error.pin_code}
                                     </p>
                                 </FormItem>
                             </div>
-                            <div className="flex">
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                 <FormItem
                                     label="GST Number"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                 >
                                     <Field
                                         disabled={isDisabled}
@@ -414,7 +415,7 @@ useEffect(()=>{
 
                                 <FormItem
                                     label="Pan Number"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     asterisk={true}
                                 >
                                     <Field
@@ -466,24 +467,27 @@ useEffect(()=>{
 
                 {/* share holder details */}
                 {firmType === 'Private Limited' &&
-                    <>
+                    <div className='pt-10 '>
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
                         {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {formDataShare({});setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
+                        {SareList?.data?.length < 1 ? <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className='w-full bg-gray-400 rounded-lg py-2 mb-4' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
                         {error && error.shareholder_ids}
-                    </>}
+                    </div>}
 
 
                 {/* branch details */}
-                <div>
+                <div className='mt-6'>
                     {!branch && <>
                         <h4 className="text-head-title text-center">Branch Information</h4>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
                         <p className="text-[red]">{error && error.branch_ids}</p>
                     </>}
-                    <button className='w-full bg-gray-400 rounded-lg py-2' onClick={() =>{setformDataBranch({}); setBranchModal(true)}}>+ Add Branch Details</button>
+                        <div className='text-center'>
+                        <button className=' p-4 text-white bg-gray-400 rounded-lg py-2' onClick={() =>{setformDataBranch({}); setBranchModal(true)}}>+ Add Branch Details</button>
+
+                        </div>
                 </div>
 
                 {/* final submit button */}

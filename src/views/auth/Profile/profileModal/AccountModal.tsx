@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownBankacNum, onkeyDownBankifscCode, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -179,10 +179,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                     <Form className="py-2 multistep-form-step">
                                         <FormContainer>
 
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Account Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -200,7 +200,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 </FormItem>
                                                 <FormItem
                                                     label="Account Number"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -213,14 +213,15 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.account_number}
                                                         placeholder="Account Number"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownBankacNum}
                                                     />
                                                     <p className='text-[red]'>{error && error.account_number}</p>
                                                 </FormItem>
                                             </div>
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Bank Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -238,7 +239,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 </FormItem>
                                                 <FormItem
                                                     label="Bank IFSC Code"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -251,14 +252,15 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownBankifscCode}
                                                     />
                                                     <p className='text-[red]'>{error && error.bank_ifsc}</p>
                                                 </FormItem>
                                             </div>
-                                            <div className="flex">
+                                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Branch Name"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
@@ -276,12 +278,13 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 </FormItem>
                                                 <FormItem
                                                     label="Cancel Cheque"
-                                                    className="rounded-lg pl-[22px] w-1/2"
+                                                    className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                                 >
                                                     <Field
                                                    disabled={data?.isdisabled}
                                                         multiple
                                                         type="file"
+                                                        accept="image/png, image/jpeg"
                                                         className="w-full"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
@@ -294,11 +297,11 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
 
 
                                                     <p className="text-[red]">
-                                                        {error && error.gst_file}
+                                                        {error && error.cancelled_cheque}
                                                     </p>
                                                 </FormItem>
                                             </div>
-                                            <div className='flex'>
+                                            <div className='flex gap-8 pl-10 pr-10'>
                                                 <Button
                                                     style={{ borderRadius: '13px' }}
                                                     block
@@ -306,7 +309,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     type="button"
                                                     role='button'
                                                     onClick={() => setModal(false)}
-                                                    className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                                    className="indigo-btn !bg-gray-500 m-4 mx-auto rounded-[30px]"
                                                 >
                                                     Cancel
                                                 </Button>
@@ -317,7 +320,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     disabled={data?.isdisabled}
                                                     variant="solid"
                                                     onClick={handlesubmit}
-                                                    className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                                    className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
                                                 >
                                                     Save
 

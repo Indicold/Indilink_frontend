@@ -13,7 +13,7 @@ const SuccessScreen = () => {
     const navigate = useNavigate(); // For handling navigation
     useEffect(() => {
         setTimeout(()=>{
-            navigate('/sign-in')
+            navigate('/partner-dashbord')
         }, 5000)
     })
   return (

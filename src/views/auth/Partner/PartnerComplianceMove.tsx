@@ -137,7 +137,7 @@ const PartnerComplianceMove = () => {
                     ...item,
                     valid_till: e.target.value,
                     messageText: null,
-                    licenseNo:"Licence No is required"
+                    // licenseNo:"Licence No is required"
                 };
             } else {
                 return item; // Keep the other items unchanged
@@ -241,7 +241,7 @@ const PartnerComplianceMove = () => {
     const handleRoute = () => {
         const validData:any = array?.find((item:any)=>{
             
-            if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null)){
+            if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !item?.licenseNoVal || !item?.valid_till || item?.valid_till==null)){
                 console.log("UUUUUUUUU",item);
             
                return item
@@ -479,7 +479,7 @@ const PartnerComplianceMove = () => {
                                                <input type='text'
                                                 disabled={isDisabled}
                                                placeholder='Licence No' name={`${item?.key_lic}`}
-                                                   defaultValue={item?.licenseNoVal}
+                                               defaultValue={!(item?.licenseNoVal=='null' || item?.licenseNoVal==null) ? item?.licenseNoVal :"" }
                                                    className="h-11 pl-3 block w-full border border-gray-200 
                                                    shadow-sm rounded-md text-sm 
                                                    focus:z-10 focus:border-blue-500 focus:ring-blue-500
@@ -516,7 +516,9 @@ const PartnerComplianceMove = () => {
                                                     Approved
                                                    </option>
                                            
-                                       <option value={0}  selected={item?.doc_status===0}>Not Approved</option>
+      
+                                                   <option value={0} selected={item?.doc_status === 2}>{t("Not Approved")}</option>
+                                                        <option value={0} selected={item?.doc_status === 0}>{t("Pending")}</option>
                                    </select>
                                  
                                </FormItem>

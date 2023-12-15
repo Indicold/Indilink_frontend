@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
-import { messageView, validateMoveCustomerForm } from '@/store/customeHook/validate';
+import { messageView, validateMoveCustomerForm, onkeyDownPincode } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
@@ -34,9 +34,10 @@ const MoveSearch = () => {
     // Define a state variable for the this component
     const [errors, setErrors] = useState<any>({});
     const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps});
+    const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps,unit_id:2});
     const [message, setMessage] = useState<any>('')
     const [isDisabled, setIsDisabled] = useState<any>(false)
+    const [addressUpdateCount, setAddressUpdateCount] = useState(0);
 
     // Fetch a list of countries using a custom hook
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
@@ -46,7 +47,7 @@ const MoveSearch = () => {
     const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
         useApiFetch<any>(`master/get-city-by-countryId/${formData?.origin_country_id}`, token);
 
-        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
         useApiFetch<any>(`customer/get-responses/2/${location?.state?.data?.id}`, token);
 
     // Fetch a list of cities based on the selected country
@@ -75,7 +76,7 @@ const MoveSearch = () => {
     const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerMoveDetails }: any =
         usePostApi(`customer/move/search`);
 
-
+        const today = new Date().toISOString().split('T')[0];
         function formatDate(inputDate:any) {
             
                 const parts = inputDate.split('-'); // Split the input date into parts
@@ -156,6 +157,7 @@ const MoveSearch = () => {
         }
         
         setFormData(newData);
+        if(errors[e.target.name])validateMoveCustomerForm(newData, setErrors)
     }
     const navigate: any = useNavigate();
 
@@ -166,6 +168,7 @@ const MoveSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
+            console.log("TTTT6666TTTT",location?.state?.data);
             setFormData(location?.state?.data);
             setIsDisabled(location?.state?.disabled)
         }
@@ -174,6 +177,8 @@ const MoveSearch = () => {
 
     useEffect(() => {
         if (location?.state?.data) {
+            console.log("65765765",location?.state?.data);
+            
             setFormData(location?.state?.data);
             setIsDisabled(location?.state?.disabled)
         }
@@ -197,6 +202,21 @@ useEffect(()=>{
 localStorage.removeItem('dest_gps');
 localStorage.removeItem('origin_gps');
 },[])
+
+// useEffect(() => {
+//     const newData = {...formData};
+//     var formValuesUpdated = false;
+//     if (localStorage.getItem('dest_gps') !== null) {
+//         newData['dest_gps'] = localStorage.getItem('dest_gps');
+//         formValuesUpdated = true;
+//     }
+//     if (localStorage.getItem('origin_gps') !== null) {
+//         newData['origin_gps'] = localStorage.getItem('origin_gps');
+//         formValuesUpdated = true;
+//     }
+//     if (formValuesUpdated) setFormData(newData)
+// }, [addressUpdateCount])
+console.log("wertyuio", new Date(formData?.arrival_date));
 
     return (
         <div>
@@ -276,6 +296,7 @@ localStorage.removeItem('origin_gps');
                                             value={formData?.origin_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
+                                            onKeyDown={onkeyDownPincode}
                                         />
                                     </FormItem>
                                     <FormItem
@@ -284,19 +305,20 @@ localStorage.removeItem('origin_gps');
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
-                                            aria-disabled={isDisabled}
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="origin_gps"
-                                            value={formData?.origin_gps || origin_gps}
+                                            defaultValue={formData?.origin_gps || origin_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("origin_gps",place?.formatted_address)
+                                                // setAddressUpdateCount((val) => val + 1);
                                             }}
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location*")} </h6>
+                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location")} </h6>
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
                                         label=  {t("Country*")}
@@ -349,6 +371,7 @@ localStorage.removeItem('origin_gps');
                                             value={formData?.dest_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
+                                            onKeyDown={onkeyDownPincode}
                                         />
                                     </FormItem>
                                     <FormItem
@@ -357,14 +380,15 @@ localStorage.removeItem('origin_gps');
                                     >
                                         <Autocomplete
                                             className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
-                                            aria-disabled={isDisabled}
+                                            disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             name="dest_gps"
-                                            value={formData?.dest_gps || dest_gps}
+                                            defaultValue={formData?.dest_gps || dest_gps}
                                             placeholder="Location"
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("dest_gps",place?.formatted_address)
+                                                // setAddressUpdateCount((val) => val + 1);
                                                 // const newData = {...formData}
                                                 // newData['dest_gps'] = place?.formatted_address
                                                 // setFormData({...formData,dest_gps:place?.formatted_address})
@@ -423,7 +447,7 @@ localStorage.removeItem('origin_gps');
                                 </div>
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type")}
+                                        label= {t("Product Type*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
@@ -434,7 +458,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id}>{item?.type}</option>
+                                                <option value={item?.id} selected={item?.id===formData?.product_type_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -451,11 +475,13 @@ localStorage.removeItem('origin_gps');
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
+                                            min={today}
+                                            
                                             autoComplete="off"
                                             name="dispatch_date"
                                             // onFocus={(e:any) => (e.target.type = "date")}
                                             // onBlur={(e:any) => (e.target.type = "text")}
-                                            value={formData?.dispatch_date}
+                                            value={new Date(formData?.dispatch_date).toISOString().split('T')[0]}
                                             placeholder="Date of Dispatch"
                                             component={Input}
                                         />
@@ -468,11 +494,14 @@ localStorage.removeItem('origin_gps');
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
+                                            min={today}
                                             autoComplete="off"
-                                            value={formData?.arrival_date}
                                             name="arrival_date"
-                                            // onFocus={(e:any) => (e.target.type = "date")}
-                                            // onBlur={(e:any) => (e.target.type = "text")}
+                                            value={
+    (formData?.arrival_date && new Date(formData?.arrival_date) !='Invalid Date')
+      ? new Date(formData?.arrival_date).toISOString().split('T')[0]
+      : '' // Set a default value if formData.arrival_date is undefined/null
+  }
                                             placeholder="Arrival Dtate"
                                             component={Input}
                                         />
@@ -482,7 +511,7 @@ localStorage.removeItem('origin_gps');
 
                                 <div className="md:flex lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label="Status Id"
+                                        label="Status"
                                         className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
 
@@ -521,42 +550,7 @@ localStorage.removeItem('origin_gps');
                                 </div>
 
 
-                                <div className="md:flex lg:flex">
-                                    <FormItem
-                                        label= {t("Dispatch Date")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-                                            name="dispatch_date"
-                                            value={formData?.contract_name}
-                                            placeholder="Dispatch Date"
-                                            component={Input}
-                                        />
-                                        <p className='text-[red]'>{errors && errors.dispatch_date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label= {t("Arrival Date")}
-                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="date"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-
-                                            name="arrival_date"
-                                            value={formData?.contract_type}
-                                            placeholder="Arrival Date"
-                                            component={Input}
-                                        />
-
-                                        <p className='text-[red]'>{errors && errors.arrival_date}</p>
-                                    </FormItem>
-                                </div>
+                               
                                 </>}
                                 <div className="flex justify-center w-[310px] mx-auto">
 
@@ -590,7 +584,7 @@ localStorage.removeItem('origin_gps');
                     </Formik>
                 </div>
                 {isDisabled? 
-                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} />:<></>}
+                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
             </div>
         </div>
     )

@@ -335,9 +335,30 @@ export const protectedRoutes = [
     },
     {
 
+        key: 'customereditdocumentlist',
+        path: `/customer-documents-list/:id`,
+        component: lazy(() => import('@/views/auth/Partner/AssetsDocumentsTable/CustomerDocumentEditTable')),
+        authority: [],
+    },
+    {
+
         key: 'assetsdetails',
         path: `/assets-details/:id`,
         component: lazy(() => import('@/views/auth/Partner/Details/StoreDetails')),
+        authority: [],
+    },
+    {
+
+        key: 'movedetails',
+        path: `/assetsmove-details/:id`,
+        component: lazy(() => import('@/views/auth/Partner/Details/MoveDetails')),
+        authority: [],
+    },
+    {
+
+        key: 'preparedetails',
+        path: `/assetsprepare-details/:id`,
+        component: lazy(() => import('@/views/auth/Partner/Details/PrepareDetails')),
         authority: [],
     },
 ]

@@ -249,3 +249,8 @@ rect{
   .carousel .control-dots .dot.selected {
     background-color: #f00; /* Customize active dot color */
   }
+
+
+  .leaflet-control-attribution, .leaflet-control{
+    display: none !important;
+  }

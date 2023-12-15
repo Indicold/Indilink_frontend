@@ -5,18 +5,21 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, onkeyDownAadhar, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
+import { debounce } from 'lodash'
 const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     const navigate:any=useNavigate();
     const [error,setErrors]=useState<any>({})
+    const [isEmailValid, setIsEmailValid] = useState<any>(false)
+    const [isMobileValid, setIsMobileValid] = useState<any>(false)
     const {token}:any=getToken();
     const { data: ListOfCountry, loading: LCloading, error: LCerror } =
     useApiFetch<any>(`master/get-countries`, token);
     const { data: ListOfState, loading: LSloading, error: LSerror } =
-    useApiFetch<any>(`master/get-state-by-Id/${data?.country_id}`, token);
+    useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id}`, token);
 
     const { data: ListOfcity, loading: Lcloading, error: Lcerror } =
     useApiFetch<any>(`master/get-city-by-countryId/${data?.country_id}`, token);
@@ -26,13 +29,22 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     let { result: Keyesponse, loading: KeyLoading, sendPostRequest: KeyPostDetails }: any = usePostApi(`auth/key-mgmt`);
     let { result: KeyUpdateesponse, loading: KeyUpdateLoading, sendPostRequest: KeyUpdatePost }: any = usePutApi(`auth/key-mgmt/${data?.id}`);
     
+    const validateEmailDebounced = debounce(validateEmail, 300)
+    const validateMobileDebounced = debounce(validateMobile, 300)
+    
     const handleChange = (e:any) => {
         const newdata:any={...data};
         newdata[e.target.name]=e.target.value;
+        if(e.target.name==='contact_number') {
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+        }
+        if(e.target.name==='person_email') {
+            validateEmailDebounced(e.target.value, setIsEmailValid)
+        }
         setData(newdata)
     }
     const handlesubmit=()=>{
-        if(validateKeyForm(data,setErrors)){
+        if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){
             if(data?.type==='Edit'){
                 KeyUpdatePost(data)
             }else{
@@ -110,10 +122,12 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                 <Form className="py-2 multistep-form-step">
                     <FormContainer>
                         
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Name"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                            //  className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -133,7 +147,9 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Email Address"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -148,14 +164,16 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     component={Input}
                                 />
                                  <p className="text-[red]">
-                                        {error && error.person_email}
+                                        {isEmailValid ? isEmailValid : error?.person_email}
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Designation"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -175,7 +193,9 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Address"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -194,62 +214,19 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]">
                         
-                            <div className="flex">
-                            <FormItem
-                                    label="City"
-                                    className="rounded-lg pl-[22px] !w-1/2"
-                                >
-
-                                            <select
-                                        disabled={data?.isdisabled}
-                                        onChange={(e: any) => handleChange(e)}
-                                        name="city_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                    >
-                                        <option>Select</option>
-                                        {ListOfcity && ListOfcity?.data?.map((item: any, index: any) => (
-                                            <option value={item?.id} selected={item?.id === data?.city_id}>{item?.name}</option>
-
-                                        ))}
-                                    </select>
-                                    <p className="text-[red]">
-                                        {error && error.city_id}
-                                    </p>
-                                </FormItem>
-                                <FormItem
-                                    label="State"
-                                    className="rounded-lg pl-[22px] w-1/2"
-                                >
-                                         <select
-                                        disabled={data?.isdisabled}
-                                        onChange={(e: any) => handleChange(e)}
-                                        name="state_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                    >
-                                        <option>Select</option>
-                                        {ListOfState && ListOfState?.data?.map((item: any, index: any) => (
-                                            <option value={item?.id} selected={item?.id === data?.state_id}>{item?.name}</option>
-
-                                        ))}
-                                    </select>
-                                    <p className="text-[red]">
-                                        {error && error.state_id}
-                                    </p>
-                                </FormItem>
-                            </div>
-                            
-                            <div className="flex">
+                        <div className="w-[100%] lg:flex">
                             <FormItem
                                     label="Country"
-                                    className="rounded-lg pl-[22px]"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
                                 >
                                         <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="country_id"
-                                        className="h-11 border w-[175px] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
@@ -262,12 +239,61 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                                 </FormItem>
                                 <FormItem
+                                    label="State"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
+                                >
+                                         <select
+                                        disabled={data?.isdisabled}
+                                        onChange={(e: any) => handleChange(e)}
+                                        name="state_id"
+                                        className="h-11 border input input-md  focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                    >
+                                        <option>Select</option>
+                                        {ListOfState && ListOfState?.data?.map((item: any, index: any) => (
+                                            <option value={item?.id} selected={item?.id === data?.state_id}>{item?.name}</option>
+
+                                        ))}
+                                    </select>
+                                    <p className="text-[red]">
+                                        {error && error.state_id}
+                                    </p>
+                                </FormItem>
+                               
+                            </div>        
+
+                            <div className="lg:flex w-[100%]">
+                            <FormItem
+                                    label="City"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
+                                    asterisk={true}
+                                >
+
+                                            <select
+                                        disabled={data?.isdisabled}
+                                        onChange={(e: any) => handleChange(e)}
+                                        name="city_id"
+                                        className="h-11 border input input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                    >
+                                        <option>Select</option>
+                                        {ListOfcity && ListOfcity?.data?.map((item: any, index: any) => (
+                                            <option value={item?.id} selected={item?.id === data?.city_id}>{item?.name}</option>
+
+                                        ))}
+                                    </select>
+                                    <p className="text-[red]">
+                                        {error && error.city_id}
+                                    </p>
+                                </FormItem>
+                                <FormItem
                                     label="PIN Code"
-                                    className="rounded-lg pl-[22px] w-1/2"
+                                    className="pl-3 w-[100%] text-label-title m-auto"
+                                    // className="rounded-lg pl-[22px] w-1/2"
+                                    asterisk={true}
                                 >
                                     <Field
                                         disabled={data?.isdisabled}
-                                        type="text"
+                                        type="number"
                                         autoComplete="off"
                                         onChange={(e: any) =>
                                             handleChange(e)
@@ -276,17 +302,23 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         value={data?.pin_code}
                                         placeholder="PIN Code"
                                         component={Input}
+                                        onKeyDown={onkeyDownPincode}
                                     />
                                       <p className="text-[red]">
                                         {error && error.pin_code}
                                     </p>
                                 </FormItem>
+                               
                             </div>
+                            
+                           
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                         <FormItem
                                 label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -299,6 +331,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     value={data?.aadhar}
                                     placeholder="Aadhar Card"
                                     component={Input}
+                                    onKeyDown={onkeyDownAadhar}
                                 />
                                  <p className="text-[red]">
                                         {error && error.aadhar}
@@ -306,7 +339,9 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                             <FormItem
                                 label="Contact no."
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -319,16 +354,17 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     value={data?.contact_number}
                                     placeholder="Contact no."
                                     component={Input}
+                                    maxLength={10}
                                 />
                                  <p className="text-[red]">
-                                        {error && error.contact_number}
+                                        {isMobileValid ? isMobileValid : error?.contact_number}
                                     </p>
                             </FormItem>
                         </div>
-                        <div className="flex">
+                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                             {/* <FormItem
                                 label="Aadhar Card"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
@@ -346,13 +382,15 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem> */}
                             <FormItem
                                 label="Platform Role"
-                                className="rounded-lg pl-[22px] w-1/2"
+                                className="pl-3 w-[100%] text-label-title m-auto"
+                                // className="rounded-lg pl-[22px] w-1/2"
+                                asterisk={true}
                             >
                                        <select
                                         disabled={data?.isdisabled}
                                         onChange={(e: any) => handleChange(e)}
                                         name="platform_role_id"
-                                        className="h-11 border input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        className=" border input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                     >
                                         <option>Select</option>
                                         {ListOfRole && ListOfRole?.data?.map((item: any, index: any) => (
@@ -365,7 +403,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     </p>
                             </FormItem>
                         </div>
-                        <div className='flex'>
+                        <div className='flex gap-8 p-8'>
                             <Button
                                 style={{ borderRadius: '13px' }}
                                 block
@@ -373,7 +411,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 type="button"
                                 role='button'
                                 onClick={()=>setModal(false)}
-                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                className="indigo-btn  !bg-gray-500 m-4 mx-auto rounded-[30px]"
                             >
                                 Cancel
                             </Button>
@@ -384,7 +422,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                 disabled={data?.type==='View'}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
                             >
                                
                                 Submit

@@ -93,6 +93,10 @@ const DocumentTableList = ({ AllStore }: any) => {
   
   }
   const handleEdit=(rowData:any)=>{
+    if(rowData?.master_query_id){
+      localStorage.setItem('master_query_id',rowData?.master_query_id);
+      localStorage.setItem('assets_list_id',rowData?.asset_id);
+    }
     setModalEdit(true)
     setData(rowData)
   }
@@ -123,8 +127,10 @@ const DocumentTableList = ({ AllStore }: any) => {
 
   const tableData = () => {
     // Generates table data rows.
-    return collection.map((rowData: any, index: any) => tableRows(rowData, index));
-  };
+    return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
+    <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
+  </tr>;
+    };
 
   const headRow = () => {
     // Generates the header row.

@@ -101,16 +101,19 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
             setLength(e.target.value);
+            validateChamberForm(newData, setErrors)
             const area:any=e.target.value*breadth;
             newData['floor_area']=area;
             updateFormattedString(e.target.value, breadth, height);
         } else if (e.target.name === 'ch-b') {
             setBreadth(e.target.value);
+            validateChamberForm(newData, setErrors)
             const area:any=e.target.value*length;
             newData['floor_area']=area;
             updateFormattedString(length, e.target.value, height);
         } else if (e.target.name === 'ch-h') {
             setHeight(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedString(length, breadth, e.target.value);
         } 
         else if (e.target.name === 'chamber_number') {
@@ -123,18 +126,21 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             // data['chamber_size']?data['chamber_size'].concat(e.target.value.toString()):data['chamber_size'] = e.target.value.toString()
             // data['chamber_size'].concat('x')
             setLengthP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(e.target.value, breadthP, heightP);
         } else if (e.target.name === 'pl-b') {
             setBreadthP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(lengthP, e.target.value, heightP);
         } else if (e.target.name === 'pl-h') {
             setHeightP(e.target.value);
+            validateChamberForm(newData, setErrors)
             updateFormattedStringP(lengthP, breadthP, e.target.value);
         }else
         if(e.target.name==='staircase'){
           
             // setData({...data,staircase:e.target.checked})
-            newData[e.target.name]=e.target.checked ? true :false;
+            newData[e.target.name]=e.target.checked ? 1 :0;
         }
         else {
             newData[e.target.name] = e.target.value
@@ -143,6 +149,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
             validateChamberForm(newData, setErrors)
 
         }
+        console.log("fhgfhf",newData);
+        
         setData(newData)
         
     }
@@ -154,6 +162,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const handlesave = async () => {
         var myHeaders = new Headers()
         myHeaders.append('Authorization', `Bearer ${token}`)
+
+        if(commanData?.type === 'View') {
+            setModal(false);
+            return;
+        }
 
         var formdata = new FormData()
         formdata.append('asset_id', data?.asset_id)
@@ -523,7 +536,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                          
                                         >
-                                            <option>Select</option>
+                                            <option disabled selected>Select</option>
                                             {RackingType &&
                                                 RackingType?.data?.map(
                                                     (item: any, index: any) => (
@@ -609,7 +622,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of chamber from gate *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of chamber from gate *
+                                          Photo of chamber from gate
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -631,16 +644,16 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        {/* <p className="text-[red]">
+                                        <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
-                                        </p> */}
+                                        </p>
                                     </FormItem>
 
                                     <FormItem
                                         // label="Photo of the chamber from one corner *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of the chamber from one corner *
+                                          Photo of the chamber from one corner
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -661,9 +674,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        {/* <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
-                                        </p>
+                                        </p> */}
                                     </FormItem>
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
@@ -803,7 +816,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     className="indigo-btn !w-[40%] mx-auto rounded-[30px]"
                                    
                                 >
-                                    Save
+                                    {commanData?.type === "View" ? "Close" : "Save"}
                                 </Button>
                                 </div>
                             </div>

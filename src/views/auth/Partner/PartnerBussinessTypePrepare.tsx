@@ -84,7 +84,7 @@ const PartnerBussinessTypePrepare = () => {
         loading: MLLoading,
         // error: PTLError,
         refetch:fetchMachineList
-    } = useApiFetch<any>(`partner/prepare/components-all/${id}`, token)
+    }:any = useApiFetch<any>(`partner/prepare/components-all/${id}`, token)
 
     const {
         data: DockTypeList,
@@ -116,6 +116,10 @@ const PartnerBussinessTypePrepare = () => {
     const fixedOptions1: any = [];
     const [value1, setValue1] = React.useState([...fixedOptions1]);
     const [addressUpdateCount, setAddressUpdateCount] = useState(0);
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
+    const [selectedOptions, setSelectedOptions] = useState<any>([]);
+    const [selectedOptions1, setSelectedOptions1] = useState<any>([]);
     // Define state variable and function for form data
     const [formData, setFormData] = useState<any>({
         asset_id:id,
@@ -123,42 +127,80 @@ const PartnerBussinessTypePrepare = () => {
         address: address,
         hourly_throughput: '',
         prepare_type_id: '',
-        product_category_ids: '',
-        product_type: value || [],
+        product_category_ids: selectedOptions1 || [],
+        product_type: selectedOptions || [],
         throughput: '',
         avg_case_size: '',
         temperature: '',
-        no_of_docks: '',
+        no_of_docks: '2',
         type_of_dock_id: '',
         batch_size: '',
         machine_ids: '',
         area: '',
+        addr_longitude:longitude,
+        addr_latitude:latitude
     })
-
+    const [machineData,setMachineData]=useState<any>({})
+    const [multiOption,setMultiOption]=useState<any>(false)
+    const [multiOption1,setMultiOption1]=useState<any>(false)
+    
     // Define state variable for form validation errors
     const [errors, setErrors] = useState<any>({})
 
     // Get the navigate function from the routing hook
     const navigate = useNavigate()
 
+    
+    const handleOptionToggle = (optionId:any) => {
+        const index = selectedOptions.indexOf(optionId);
+        if (index > -1) {
+          setSelectedOptions((prevSelected:any) =>
+            prevSelected.filter((item:any) => item !== optionId)
+          );
+        } else {
+          setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
+          validatePrepareForm(formData, setErrors)
+        }
+      };
+
+      const handleOptionToggle1 = (optionId:any) => {
+        const index = selectedOptions1?.indexOf(optionId);
+        if (index > -1) {
+          setSelectedOptions1((prevSelected:any) =>
+            prevSelected.filter((item:any) => item !== optionId)
+          );
+        } else {
+          setSelectedOptions1((prevSelected:any) => [...prevSelected, optionId]);
+          validatePrepareForm(formData, setErrors)
+        }
+      };
     // Define a function to handle form input changes
-    const handleChange = (e: any) => {
+    const handleChange = (e: any,key:any,arr:any) => {
         const newData = { ...formData }
 
         if (e.target.name === "address" && (localStorage.getItem('partnerPrepareAddress') !== null)) {
             newData[e.target.name] = localStorage.getItem('partnerPrepareAddress')
+            
+
+        }else if(key==='product_category_ids'){
+            newData['product_category_ids']=arr;
         }
         else {
             newData[e.target.name] = e.target.value
         }
         setFormData(newData)
+        console.log("tyui",newData,e.target,key);
+        if(errors[key]) validatePrepareForm(newData, setErrors)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
     }
+console.log("7687686786",formData?.product_category_ids);
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
-        formData.product_category_ids=value1?.map((item:any)=>item?.id);
-        formData.product_type=value?.map((item:any)=>item?.id);
+        formData.product_category_ids=selectedOptions1 || [];
+        formData.product_type=selectedOptions || [];
+        formData.addr_longitude=longitude
+        formData.addr_latitude=latitude
         let isValid = validatePrepareForm(formData, setErrors)
         if (isValid) {
             PostPrepareRegisterDetails({...formData,asset_id:id})
@@ -211,9 +253,11 @@ const PartnerBussinessTypePrepare = () => {
     /* The above code is a useEffect hook in a TypeScript React component. It is used to perform some
     logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
-        const foundItems: any = itemsToFind1.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
-        setValue1(foundItems)
-    }, [ProductType?.data])
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(typeof item?.id === 'string' ? `${item?.id}` :item?.id))?.map((item:any)=>item?.id) : targetArray1?.filter((item: any) => item?.id === itemsToFind1)?.map((item:any)=>item?.id);
+       console.log("TTT6677TT1",foundItems);
+       
+        setSelectedOptions1(foundItems)
+    }, [ProductType?.data,itemsToFind1?.length])
     const targetArray: any = ProductTypeList?.data || [];
     const itemsToFind = formData?.product_type;
 
@@ -221,11 +265,12 @@ const PartnerBussinessTypePrepare = () => {
     `ProductTypeList.data` changes. */
     useEffect(() => {
         if(ProductTypeList?.data!==null){
-            const foundItems: any = itemsToFind.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes(item?.id)) : targetArray?.filter((item: any) => item?.id === itemsToFind);
-            setValue(foundItems)
+            const foundItems: any = itemsToFind?.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes( typeof item?.id === 'string' ? `${item?.id}` :item?.id ))?.map((item:any)=>item.id) : targetArray?.filter((item: any) => item?.id === itemsToFind)?.map((item:any)=>item?.id);
+            setSelectedOptions(foundItems)
+            console.log("TTT6677TT2",foundItems);
         }
        
-    }, [ProductTypeList?.data])
+    }, [ProductTypeList?.data,itemsToFind?.length])
 
     /* The above code is using the useEffect hook in a TypeScript React component. It is calling the
     fetchMachineList function when the machineModal or MachineList variables change. */
@@ -239,8 +284,9 @@ const PartnerBussinessTypePrepare = () => {
             newData['address'] = localStorage.getItem('partnerPrepareAddress');
             setFormData(newData)
         }
-    }, [localStorage, localStorage.getItem('partnerPrepareAddress'), addressUpdateCount])
+    }, [localStorage, localStorage.getItem('partnerPrepareAddress')])
     const { t, i18n }:any = useTranslation();
+console.log("TYTYTYTYYU7878",selectedOptions,selectedOptions1);
 
     return (
         <div className='flexlg:flex md:flex'>
@@ -295,9 +341,9 @@ const PartnerBussinessTypePrepare = () => {
                                     <MachineModal
                                         modal={machineModal}
                                         setModal={setMachineModal}
-                                        formD={formData}
+                                        formD={machineData}
                                         fetchMachineList={fetchMachineList}
-                                        update={setFormData}
+                                        update={setMachineData}
                                     />
                                 )}
                                 <FormContainer>
@@ -312,7 +358,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-full focus:outline-0"
                                                     name="city_id"
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'city_id',[])
                                                     }
                                                 >
                                                     <option>Select City</option>
@@ -350,14 +396,17 @@ const PartnerBussinessTypePrepare = () => {
                                                 className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
                                             name="address"
                                             onChange={(e: any) =>
-                                                handleChange(e)
+                                                handleChange(e,'address',[])
                                             }
                                             placeholder="Address"
-                                            value={formData?.address}
+                                            defaultValue={formData?.address}
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("partnerPrepareAddress",place?.formatted_address);
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
+                                                setLatitude(place?.geometry?.location?.lat());
+                                                setLongitude(place?.geometry?.location?.lng());
+                                          
                                             }}
                                         />
 <p className="text-[red]">
@@ -379,7 +428,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 autoComplete="off"
                                                 name="hourly_throughput"
                                                 onChange={(e: any) =>
-                                                    handleChange(e)
+                                                    handleChange(e,'hourly_throughput',[])
                                                 }
                                                 placeholder="Enter value"
                                                 value={formData?.hourly_throughput}
@@ -401,7 +450,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-full focus:outline-0"
                                                     name="prepare_type_id"
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'prepare_type_id',[])
                                                     }
                                                 >
                                                     <option>
@@ -439,72 +488,50 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Product Category*"
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <Autocomplete
-                                                multiple
-                                                limitTags={1}
-                                                disabled={isDisabled}
-                                                id="fixed-tags-demo"
-                                                value={value1}
-                                                onChange={(event, newValue) => {
-                                                    setValue1([
-                                                        ...fixedOptions1,
-                                                        ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
-                                                    ]);
-                                                    handleChange(event)
-                                                }}
-                                                options={ProductType ? ProductType?.data : []}
-                                                getOptionLabel={(option: any) => option?.name}
-                                                renderTags={(tagValue, getTagProps) =>
-                                                    tagValue.map((option, index) => (
-                                                        <Chip
-                                                            label={option?.name}
-                                                            {...getTagProps({ index })}
-                                                            disabled={fixedOptions.indexOf(option) !== -1}
-                                                        />
-                                                    ))
-                                                }
-                                                renderInput={(params) => (
-                                                    <TextField {...params}
-                                                        name="product_category_ids"
-                                                        placeholder="Product Category"
-                                                       
-                                                     />
-                                                    
-                                                )}
-                                            />
-                                            {/* <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
-                                                <select
-                                                    disabled={isDisabled}
-                                                    className="w-full focus:outline-0"
-                                                    name="product_category_ids"
-                                                    onChange={(e: any) =>
-                                                        handleChange(e)
-                                                    }
-                                                >
-                                                    <option>
-                                                        Product Category
-                                                    </option>
-                                                    {ProductType &&
-                                                        ProductType?.data?.map(
-                                                            (
-                                                                item: any,
-                                                                index: any
-                                                            ) => (
-                                                                <option
-                                                                    value={
-                                                                        item?.id
-                                                                    }
-                                                                    selected={
-                                                                        item?.id ===
-                                                                        formData?.product_category_ids[0]
-                                                                    }
-                                                                >
-                                                                    {item?.name}
-                                                                </option>
-                                                            )
-                                                        )}
-                                                </select>
-                                            </div> */}
+                                                                              <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption(!multiOption)}>
+      <div className="relative inline-block w-full text-left">
+        <div className="flex flex-wrap items-center justify-start w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300">
+          {selectedOptions.length === 0 && (
+            <span className="text-gray-400">Select options</span>
+          )}
+          {selectedOptions?.length>0 && selectedOptions.map((optionId:any) => {
+            const option :any= ProductTypeList?.data?.find((opt:any) => opt?.id === optionId) || [];
+            console.log("TTT666TTTTT",option);
+            
+            return (
+              <span
+                key={option.id}
+                className="inline-block px-2 py-1 mr-1 mb-1 text-sm font-semibold text-white bg-blue-500 rounded-full"
+              >
+                {option?.type}
+                <button
+                  type="button"
+                  className="ml-1 font-normal focus:outline-none"
+                  onClick={() => handleOptionToggle(option?.id)}
+                >
+                  &times;
+                </button>
+              </span>
+            );
+          })}
+        </div>
+       {multiOption && <ul className="z-50 absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+          {ProductTypeList?.data?.length>0 && ProductTypeList?.data?.map((option:any) => (
+            <li
+            key={option.id}
+            className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${
+              selectedOptions.includes(option.id) ? 'opacity-50' : ''
+            }`}
+            onClick={() => handleOptionToggle(option.id)}
+            disabled={selectedOptions?.includes(option.id)}
+            >
+              {option.type}
+            </li>
+          ))}
+        </ul>}
+      </div>
+    </div>
+              
                                             <p className="text-[red]">
                                                 {errors &&
                                                     errors.product_category_ids}
@@ -514,36 +541,49 @@ const PartnerBussinessTypePrepare = () => {
                                             label="Product Type"
                                             className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
-                                            <Autocomplete
-                                                multiple
-                                                limitTags={1}
-                                                id="fixed-tags-demo"
-                                                disabled={isDisabled}
-                                                value={value}
-                                                onChange={(event, newValue) => {
-                                                    setValue([
-                                                        ...fixedOptions,
-                                                        ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
-                                                    ]);
-                                                    handleChange(event)
-                                                }}
-                                                options={ProductTypeList ? ProductTypeList?.data : []}
-                                                getOptionLabel={(option: any) => option?.type}
-                                                renderTags={(tagValue, getTagProps) =>
-                                                    tagValue.map((option, index) => (
-                                                        <Chip
-                                                            label={option?.type}
-                                                            {...getTagProps({ index })}
-                                                            disabled={fixedOptions.indexOf(option) !== -1}
-                                                        />
-                                                    ))
-                                                }
-                                                renderInput={(params) => (
-                                                    <TextField {...params}
-                                                        name="product_type"
-                                                        placeholder="Product Type" />
-                                                )}
-                                            />
+                                                                                                                 <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption1(!multiOption1)}>
+      <div className="relative inline-block w-full text-left">
+        <div className="flex flex-wrap items-center justify-start w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300">
+          {selectedOptions1.length === 0 && (
+            <span className="text-gray-400">Select options</span>
+          )}
+          {selectedOptions1?.length>0 && selectedOptions1.map((optionId:any) => {
+            const option :any= ProductType?.data?.find((opt:any) => opt?.id === optionId) || [];
+            console.log("TTT666TTTTT",option);
+            
+            return (
+              <span
+                key={option.id}
+                className="inline-block px-2 py-1 mr-1 mb-1 text-sm font-semibold text-white bg-blue-500 rounded-full"
+              >
+                {option?.name}
+                <button
+                  type="button"
+                  className="ml-1 font-normal focus:outline-none"
+                  onClick={() => handleOptionToggle1(option?.id)}
+                >
+                  &times;
+                </button>
+              </span>
+            );
+          })}
+        </div>
+       {multiOption1 && <ul className="z-50 absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+          {ProductType?.data?.length>0 && ProductType?.data?.map((option:any) => (
+            <li
+            key={option.id}
+            className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${
+              selectedOptions1.includes(option.id) ? 'opacity-50' : ''
+            }`}
+            onClick={() => handleOptionToggle1(option.id)}
+            disabled={selectedOptions1?.includes(option.id)}
+            >
+              {option.name}
+            </li>
+          ))}
+        </ul>}
+      </div>
+    </div>
                                             {/*                                             
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 
@@ -597,7 +637,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'throughput',[])
                                                     }
                                                     name="throughput"
                                                     value={formData?.throughput}
@@ -605,7 +645,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'throughput_unit_id',[])}
                                                     name="throughput_unit_id"
                                                     className=" w-[20%]  input-md right-0 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
@@ -632,7 +672,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'avg_case_size',[])
                                                     }
                                                     name="avg_case_size"
                                                     value={formData?.avg_case_size}
@@ -640,7 +680,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'avg_case_size_unit_id',[])}
                                                     name="avg_case_size_unit_id"
                                                     className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
@@ -668,10 +708,10 @@ const PartnerBussinessTypePrepare = () => {
                                                 min={0}
                                                 onKeyDown={onkeyDown}
                                                 onChange={(e: any) =>
-                                                    handleChange(e)
+                                                    handleChange(e,'no_of_docks',[])
                                                 }
                                                 name="no_of_docks"
-                                                defaultValue={formData?.no_of_docks || 2}
+                                                defaultValue={formData?.no_of_docks}
                                                 // value={formData?.no_of_docks}
                                                 placeholder="Enter Value"
                                                 component={Input}
@@ -691,7 +731,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'area',[])
                                                     }
                                                     name="area"
                                                     value={formData?.area}
@@ -758,8 +798,8 @@ const PartnerBussinessTypePrepare = () => {
                                             className=" pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e)} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}
@@ -789,7 +829,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     min={0}
                                                     onKeyDown={onkeyDown}
                                                     onChange={(e: any) =>
-                                                        handleChange(e)
+                                                        handleChange(e,'batch_size',[])
                                                     }
                                                     name="batch_size"
                                                     value={formData?.batch_size}
@@ -797,7 +837,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 />
                                                 <select
                                                     disabled={isDisabled}
-                                                    onChange={(e: any) => handleChange(e)}
+                                                    onChange={(e: any) => handleChange(e,'batch_size_unit_id',[])}
                                                     name="batch_size_unit_id"
                                                     className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                                 >
@@ -825,7 +865,7 @@ const PartnerBussinessTypePrepare = () => {
                                             {MachineList?.data?.machines?.length > 0 &&
                                                     <MachineTable AllStore={MachineList?.data?.machines} tableHead={tableHead}
                                                         modal={machineModal}
-                                                        setFormData={setFormData}
+                                                        setFormData={setMachineData}
                                                         setModal={setMachineModal} />
                                                 }
                                     <div className="flex">
@@ -839,7 +879,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 disabled={isDisabled}
                                                 type="button"
                                                 onClick={() =>{
-                                                    setFormData({});
+                                                    // setFormData({asset_id:id});
                                                     setMachineModal(true)
                                                 }}
                                                 className="text-white indigo-btn mx-auto rounded-[30px] px-[65px] py-4 my-2"

@@ -31,9 +31,9 @@ export const payloadSearchCustomer: any = {
     temperature_type_id: 1,
     unit_id: 1,
     certification_id: '',
-    date: `${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()}`,
+    date:`${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()+1}`,
     storage_duration: '',
-    storage_duration_type: 1,
+    storage_duration_type: 4,
     quantity: ''
 }
 
@@ -63,7 +63,7 @@ const StoreSearch = () => {
     const { data: ListOfTemp, loading: LTloading, error: Lterror } =
         useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
         
-    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror } =
+    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
     useApiFetch<any>(`customer/get-responses/1/${location?.state?.data?.id}`, token);
 
     // Fetch a list of certification types using a custom hook
@@ -86,7 +86,7 @@ const StoreSearch = () => {
     const [modal, setModal] = useState<any>(!false);
     const [message,setMessage]=useState<any>('')
     const [errors, setErrors] = useState<any>({});
-
+    const today = new Date().toISOString().split('T')[0];
     // Define a function to handle form submission
     const handleRoute = () => {
 
@@ -109,6 +109,7 @@ const StoreSearch = () => {
             newData[e.target.name] = e.target.value;
         }
         setFormData(newData);
+        if(errors[e.target.name])validateStoreCustomerForm(newData, setErrors)
     }
     /**
      * The `handleRouteUpdate` function sends a PUT request to update a customer store search and then
@@ -238,7 +239,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("City")} 
+                                        label={t("City*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -261,7 +262,7 @@ const StoreSearch = () => {
 
                                 <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex md:flex">
                                     <FormItem
-                                        label= {t("Product Type")} 
+                                        label= {t("Product Type*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -279,7 +280,7 @@ const StoreSearch = () => {
                                         <p className='text-[red]'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Temperature")} 
+                                        label={t("Temperature*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -365,18 +366,19 @@ const StoreSearch = () => {
                                     >
                                         <Field
                                             disabled={isDisabled}
+                                            min={today}
                                             type="date"
                                             onChange={(e: any) => handlechange(e)}
                                             autoComplete="off"
                                             name="date"
-                                            value={formData?.date}
+                                            value={new Date(formData?.date) !='Invalid Date' ?  new Date(formData?.date).toISOString().split('T')[0] :''}
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
                                         <p className='text-[red]' >{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Storage Duration")}
+                                        label={t("Storage Duration*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -538,7 +540,7 @@ const StoreSearch = () => {
                     </Formik>
                 </div>
                 {isDisabled?
-                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} />:<></>}
+                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
             </div>
         </div>
     )

@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 const PartnerBusinessTypeSuccess = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        setTimeout(()=>{
-            navigate('/admin-assets')
+        setTimeout(()=>{    
+            navigate('/partner-dashbord')
         }, 7000)
     })
     const { t, i18n }:any = useTranslation();

@@ -3,7 +3,7 @@ sets up a form with multiple steps and modals for each step. It also includes fu
 fetching data from an API, handling form validation, and displaying error messages. The code also
 includes various UI components and libraries such as react-router-dom, react-toastify, and
 react-accessible-accordion. */
-import { Button, FormContainer, FormItem, Input, Tooltip } from '@/components/ui'
+import { Button, FormContainer, FormItem, Input } from '@/components/ui'
 import { Field, Form, Formik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
@@ -37,26 +37,25 @@ import {
 } from 'react-accessible-accordion'
 import 'react-accessible-accordion/dist/fancy-example.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
-import { payload, payload1 } from '@/store/Payload'
 import usePostApi from '@/store/customeHook/postApi'
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import { Chip } from '@mui/material';
 import { t } from 'i18next'
 import Autocompletem from "react-google-autocomplete"
 // import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
 // Define the StoreRegistration component
 const StoreRegistration = () => {
     // Fetch the user's token
-    const { token }: any = getToken()
+    const { t, i18n }:any = useTranslation();
 
+    const { token }: any = getToken()
+ // Fetch the current location
+ const location = useLocation();
+     // Access the navigate function from React Router
+     const navigate = useNavigate()
     // Get the assets list ID from local storage
-    const AssetsId: any = localStorage.getItem('assets_list_id')
     const { id }: any = useParams()
-    const fixedOptions1: any = [];
-    const [value1, setValue1] = useState<any>([...fixedOptions1]);
     // Fetch various data from APIs using custom hooks
+    const address:any = localStorage.getItem('Address') || "";
+
     const {
         data: ColdStorageType,
         loading: CSLoading,
@@ -124,17 +123,15 @@ const StoreRegistration = () => {
     const [CAData, setCAData] = useState<any>([])
     const [isChecked,setIsChecked]=useState<any>(false)
     let [commanData, setCommanData] = useState<any>({})
-
-
-    // Fetch the current location
-    const location = useLocation()
-
-    const address:any = localStorage.getItem('Address') || "";
+    const [multiOption,setMultiOption]=useState<any>(false)
     const [addressUpdateCount, setAddressUpdateCount] = useState(0);
+    const [loaderPost,setPostLoader]=useState(false)
+    const [selectedOptions, setSelectedOptions] = useState<any>([]);
+    const [phone, setPhone] = useState<any>('')
 
     // Initialize state variables for form data and errors
     const [dataa, setData] = useState<any>({
-        store_type_id: value1,
+        store_type_id: selectedOptions || [],
         three_d_view_of_asset: [],
         photos_of_asset: [],
         total_tonnage: '',
@@ -151,27 +148,38 @@ const StoreRegistration = () => {
         temp_range_min: 0,
         temp_range_max: 0,
         each_floor_hight: '',
-        address: address
+        address: address,
+        photos_of_asset_type:false,
+        three_d_view_of_asset_type:false
     })
-
+    const [longitude,setLongitude]=useState<any>(null)
+    const [latitude,setLatitude]=useState<any>(null)
     const [errors, setErrors] = useState<any>({})
+ 
 
-    // Access the navigate function from React Router
-    const navigate = useNavigate()
-
-
-
+      const handleOptionToggle = (optionId:any) => {
+        const index = selectedOptions.indexOf(optionId);
+        if (index > -1) {
+          setSelectedOptions((prevSelected:any) =>
+            prevSelected.filter((item:any) => item !== optionId)
+          );
+        } else {
+          setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
+          validateStorePartnerForm(dataa, setErrors)
+        }
+      };
+    
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        dataa.store_type_id = value1?.map((item: any) => item?.id)
+        dataa['store_type_id'] = selectedOptions || []
         
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
         formdata.append("city_id", dataa?.city_id);
         formdata.append("address", dataa?.address);
         formdata.append("total_tonnage", dataa?.total_tonnage);
-        if (dataa?.store_type_id) for (const value of value1?.map((item: any) => item?.id)) {
+        if (dataa?.store_type_id) for (const value of selectedOptions?.map((item: any) => item)) {
             formdata.append("store_type_id", value);
         }
         formdata.append("cold_storage_type_id", dataa?.cold_storage_type_id);
@@ -196,14 +204,16 @@ const StoreRegistration = () => {
         formdata.append("driver_area_food_resting", dataa?.driver_area_food_resting);
         formdata.append("weight_bridge_id", dataa?.weight_bridge_id);
         formdata.append("road_condition_id", dataa?.road_condition_id);
+        formdata.append("addr_longitude",longitude);
+        formdata.append("addr_latitude",latitude);
 
-        if (dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
+        if (dataa?.three_d_view_of_asset_type && dataa?.three_d_view_of_asset) for (const value of dataa?.three_d_view_of_asset) {
             formdata.append(
                 'three_d_view_of_asset',
                 value
             )
         }
-        if (dataa?.photos_of_asset) for (const value of dataa?.photos_of_asset) {
+        if (dataa?.photos_of_asset_type &&  dataa?.photos_of_asset) for (const value of dataa?.photos_of_asset) {
             formdata.append(
                 'photos_of_asset',
                 value
@@ -245,7 +255,7 @@ const StoreRegistration = () => {
                 // Set the asset_id based on local storage
                 dataa.asset_id = id
 
-
+                setPostLoader(true)
                 // Define the HTTP request configuration
                 const config = {
                     method: 'post',
@@ -265,6 +275,7 @@ const StoreRegistration = () => {
                 const result = await response.json()
 
                 if (result?.status) {
+                    setPostLoader(false)
                     // Display a success message and navigate to a new page
                     messageView(result.message)
                     navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
@@ -279,6 +290,7 @@ const StoreRegistration = () => {
                     messageView(result?.message)
                 }
             } catch (error: any) {
+                setPostLoader(false)
                 // Handle any errors that occur during the request
                 messageView(error.message)
             }
@@ -288,15 +300,11 @@ const StoreRegistration = () => {
         }
     }
 
-    const [phone, setPhone] = useState<any>('')
     // Handle changes to form input fields
     const handlechange = (e: any) => {
 
         const newData: any = { ...dataa }
-        if (e.target.name === 'store_type_id') {
-            // console.log("TTTTTT6565656", e.target.value);
-
-        }
+     
         if (e.target.name === "address" && (localStorage.getItem('Address') !== null)) {
             newData[e.target.name] = localStorage.getItem('Address')
         }
@@ -312,6 +320,7 @@ const StoreRegistration = () => {
             const fileArray = Array.from(fileInput.files);
             newData['three_d_view_of_asset'] = fileArray;
             newData['filetype'] = "file";
+            newData['three_d_view_of_asset_type']=true;
 
         } else
             if (e.target.name === 'photos_of_asset') {
@@ -325,26 +334,16 @@ const StoreRegistration = () => {
                 }
                 newData[e.target.name] = fileArray;
                 newData['filetype1'] = "file1";
-
+                newData['photos_of_asset_type']=true;
             }
             else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
-        
+        console.log("TTTTTTTTT566",newData);
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
 
-    const [value, setValue] = useState([])
-
-    const handleStoreChange = (e: any, newValue: any) => {
-        const newData: any = { ...dataa }
-        newData['store_type_id'] = newValue?.map((item: any, index: any) => item?.id)
-        setData(newData)
-        if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
-    }
-
-   
 
     // Use useEffect to update form data when fetchDetails changes
 
@@ -355,7 +354,6 @@ const StoreRegistration = () => {
         newState.no_of_chambers = dataa?.chamber_ids?.length || '0'
         
         setData(newState)
-        setValue(dataa?.store_type_id)
         
         if (localStorage.getItem('chamber_ids')) {
             const arr: any = JSON.parse(localStorage.getItem('chamber_ids')) || [];
@@ -407,8 +405,8 @@ const StoreRegistration = () => {
     const itemsToFind1 = dataa?.store_type_id;
 
     useEffect(() => {
-        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(item?.id)) : targetArray1?.filter((item: any) => item?.id === itemsToFind1);
-        setValue1(foundItems)
+        const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(`${item?.id}`))?.map((item:any)=>item?.id) : targetArray1?.filter((item: any) => item?.id === itemsToFind1)?.map((item:any)=>item?.id);
+        setSelectedOptions(foundItems)
     }, [StorageType?.data, dataa?.store_type_id])
 
     useEffect(() => {
@@ -559,11 +557,10 @@ const StoreRegistration = () => {
         }
     }, [fetchDetails?.data?.store])
 
-    const { t, i18n }:any = useTranslation();
-    console.log("YFGHFFHFH",fetchDetails?.data,profileData?.data);
     
     return (
         <div className='lg:flex md:flex'>  
+       {loaderPost && <LoaderSpinner />}
             <div className= 'md:w-1/6 w-[100%] pl-[10%] md:pl-[0] lg:pl-0 lg:w-1/6'>
 
 
@@ -876,6 +873,8 @@ const StoreRegistration = () => {
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("Address",place?.formatted_address);
                                                 setAddressUpdateCount((val) => val + 1);
+                                                setLatitude(place?.geometry?.location?.lat());
+                                                setLongitude(place?.geometry?.location?.lng());
                                             }}
                                         />
 <p className="text-[red]">
@@ -919,64 +918,50 @@ const StoreRegistration = () => {
                                         label= {t("Type Of Store*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
-                                        {/* <select
-                                            disabled={location?.state}
-                                            id="countries"
-                                            name="store_type_id"
-                                            onChange={(e: any) =>
-                                                handlechange(e)
-                                            }
-                                            className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        >
-                                            <option selected disabled value="">
-                                                Type of Store
-                                            </option>
-                                            {StorageType &&
-                                                StorageType?.data?.map(
-                                                    (item: any, index: any) => (
-                                                        <option
-                                                            value={item?.id}
-                                                            selected={
-                                                                item?.id ===
-                                                                dataa?.store_type_id
-                                                            }
-                                                        >
-                                                            {item?.type}
-                                                        </option>
-                                                    )
-                                                )}
-                                        </select> */}
-                                        <Autocomplete
-                                            multiple
-                                            limitTags={1}
-                                            id="fixed-tags-demo"
-                                            value={value1}
-                                            onChange={(event, newValue) => {
-                                                setValue1([
-                                                    ...fixedOptions1,
-                                                    ...newValue.filter((option) => fixedOptions1.indexOf(option) === -1),
-                                                ]);
-                                                handlechange(event)
-                                            }}
-                                            options={StorageType ? StorageType?.data : []}
-                                            getOptionLabel={(option: any) => option?.type}
-                                            renderTags={(tagValue, getTagProps) =>
-                                                tagValue.map((option, index) => (
-                                                    <Chip
-                                                        label={option?.type}
-                                                        {...getTagProps({ index })}
-                                                        disabled={fixedOptions1.indexOf(option) !== -1}
-                                                    />
-                                                ))
-                                            }
-                                            renderInput={(params) => (
-                                                <TextField {...params}
-                                                    name="store_type_id"
-                                                    placeholder="Store Category" />
-                                            )}
-                                            disabled={location?.state}
-                                        />
-
+                                         <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption(!multiOption)}>
+      <div className="relative inline-block w-full text-left">
+        <div className="flex flex-wrap items-center justify-start w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300">
+          {selectedOptions.length === 0 && (
+            <span className="text-gray-400">Select options</span>
+          )}
+          {selectedOptions?.length>0 && selectedOptions.map((optionId:any) => {
+            const option :any= StorageType?.data?.find((opt:any) => opt?.id === optionId) || [];
+            console.log("TTT666TTTTT",option);
+            
+            return (
+              <span
+                key={option.id}
+                className="inline-block px-2 py-1 mr-1 mb-1 text-sm font-semibold text-white bg-blue-500 rounded-full"
+              >
+                {option.type}
+                <button
+                  type="button"
+                  className="ml-1 font-normal focus:outline-none"
+                  onClick={() => handleOptionToggle(option?.id)}
+                >
+                  &times;
+                </button>
+              </span>
+            );
+          })}
+        </div>
+       {multiOption && <ul className="z-50 absolute w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+          {StorageType?.data?.length>0 && StorageType?.data.map((option:any) => (
+            <li
+            key={option.id}
+            className={`px-3 py-2 cursor-pointer hover:bg-gray-100 ${
+              selectedOptions.includes(option.id) ? 'opacity-50' : ''
+            }`}
+            onClick={() => handleOptionToggle(option.id)}
+            disabled={selectedOptions?.includes(option.id)}
+            >
+              {option.type}
+            </li>
+          ))}
+        </ul>}
+      </div>
+    </div>
+                                      
                                         <p className="text-[red]">
                                             {errors && errors.store_type_id}
                                         </p>
@@ -1664,7 +1649,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center">{t("Currently there are no chambers.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>
                                                         {
@@ -1733,7 +1718,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no CA Equipments.")} </p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCAModal(true)
@@ -1795,12 +1780,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[25%] mx-auto flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'Compressors')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'Compressors')}
                                                             >
@@ -1812,7 +1799,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no Compressors.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -1892,7 +1879,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no ACUs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -1965,7 +1952,7 @@ const StoreRegistration = () => {
 
                                             </div> : <p className="text-center"> {t("Currently there are no Condenser.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2042,7 +2029,7 @@ const StoreRegistration = () => {
                                                 })}
                                             </div> : <p className="text-center">{t("Currently there are no AMCs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2112,7 +2099,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no IOT Devices.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2182,7 +2169,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no IT Devices.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({})
@@ -2252,7 +2239,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center"> {t("Currently there are no generators.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2316,7 +2303,7 @@ const StoreRegistration = () => {
                                                 </div>))}
                                             </div> : <p className="text-center">{t("Currently there are no MHEs.")}</p>}
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setCommanData({});
@@ -2382,7 +2369,7 @@ const StoreRegistration = () => {
                                             </div> : <p className="text-center">{t("Currently there are no solar inverters.")} </p>}
 
                                             <div className="flex">
-                                                <button
+                                                <button type='button'
                                                     className="mx-auto indigo-btn text-white px-[65px] py-2 rounded-[13px] my-2 border"
                                                     onClick={() =>{
                                                         setSEModal(true)

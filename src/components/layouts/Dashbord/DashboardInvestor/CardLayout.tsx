@@ -5,6 +5,7 @@ import GeoChart from './GeoBubbleMap';
 import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
+import GeoMapChart from '../DashboardPartner/GeoMapChart';
 const CardLayout = ({title}:any) => {
     /* The `options` object is used to configure the appearance and behavior of a bar chart. It
     contains various properties that define the chart's settings, such as the series data, chart
@@ -307,9 +308,12 @@ const CardLayout = ({title}:any) => {
   
 
 
+  <div className=' rounded-2xl shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'>
+             <GeoMapChart />
+        </div>
 
 
-  <GeoChart />
+  {/* <GeoChart /> */}
   </div>
   </>
   )

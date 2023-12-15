@@ -57,7 +57,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(10);
-    const [formData, setFormData] = useState(selector?.details?.data); // State variable for formData management
+    const [formData, setFormData] = useState({...selector?.details?.data,designation:""}); // State variable for formData management
     const [GSTRes, setGSTRes] = useState({});
     const [Address,setAddress]=useState<any>("")
     const [latitude, setLatitude] = useState(null);
@@ -160,23 +160,31 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         // }
 
         // else {
-            if (newGst.length == 10 && re.test(newGst)) {
+            if(key==='panNo'){
+                if (newData?.panNo?.length == 10 && re.test(newGst)) {
+            console.log("4565768",newData,formData);
             
-                (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
-                showInvalidPanMessage(false);
-                return;
+                    (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
+                    showInvalidPanMessage(false);
+                    return;
+                }
+                // else {
+                //     setDisabled(true);
+                //     showInvalidPanMessage(true);
+                // }
+                
+                if (formData?.panNo?.length != 0) {
+                    setPanValidationMessage("Invalid Pan Number");
+                }else if(!formData?.panNo){
+                    setPanValidationMessage('')
+                }
+                else {
+                    setPanValidationMessage("Pan Number is required");
+                }
             }
-            else {
-                setDisabled(true);
-                showInvalidPanMessage(true);
-            }
-            
-            if (newGst.length != 0) {
-                setPanValidationMessage("Invalid Pan Number");
-            }
-            else {
-                setPanValidationMessage("Pan Number is required");
-            }
+          if(key==='designation' && newData?.designation?.length>0){
+            setDisabled(false)
+          }
         // }
 
       };
@@ -188,7 +196,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         setFormData(newData);
 
         newData?.gst && newData?.gst.length == 15 && newData?.panNo && newData?.panNo.length == 10 && e.target.value !== '' ? setDisabled(false) : setDisabled(true)
-      }
+        if(key==='designation' && newData?.designation?.length>0){
+            setDisabled(false)
+          } 
+    }
 
       
       const handledfChange = (e: any,key:any) => {
@@ -196,6 +207,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
       }
+console.log("GGGGGGGGGG",formData);
 
       const handledfnChange = (e: any,key:any) => {
         const newGst = e.target.value;

@@ -8,14 +8,14 @@ import { getToken } from '@/store/token'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-const AssetsDocumentsTable = () => {
+const CustomerDocumentsEditTable = () => {
     const {token}:any=getToken(); // Extracting token to define payload for API call
     const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
     const {
         data: AllStore,
         loading: StoreRLoad,
         error: allerr,
-    }: any = useApiFetch<any>(`legal/document-final/${id}`, token)
+    }: any = useApiFetch<any>(`legal/document-final-by-master-query-id/${id}`, token)
   return (
     <div>
       <h2>Document List</h2>
@@ -34,4 +34,4 @@ const AssetsDocumentsTable = () => {
   )
 }
 
-export default AssetsDocumentsTable
+export default CustomerDocumentsEditTable

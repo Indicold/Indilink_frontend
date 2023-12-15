@@ -5,16 +5,21 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateBranchForm } from '@/store/customeHook/validate';
+import { messageView, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
+import { debounce } from 'lodash'
 const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetchBranch }: any) => {
 
     const [error, setErrors] = useState<any>({})
     let { result: BranchResponse, loading: SHLoading, sendPostRequest: SHPostDetails }: any = usePostApi(`auth/branch`);
     const { result: BranchUpadteResponse, loading: BULoading, sendPostRequest: PostBranchUpdateDetails }: any = usePutApi(`auth/branch/${formData?.id}`);
     const [phone, setPhone] = useState(formData?.branch_phone || '')
+    const [isEmailValid, setIsEmailValid] = useState<any>(false)
+    const [isMobileValid, setIsMobileValid] = useState<any>(false)
+    const validateEmailDebounced = debounce(validateEmail, 300)
+    const validateMobileDebounced = debounce(validateMobile, 300)
 
     const isDisabled: any = false;
     const handleChange = (e: any) => {
@@ -22,15 +27,20 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
         if(e.target.name === 'branch_phone') {
             if(e.target.value.length<=10)  {
                 newdata[e.target.name] = e.target.value
-                setPhone(e.target.value);
+                if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+                setPhone(e.target.value.replace(/[^0-9]/g, ""));
             }
         } else {
             newdata[e.target.name] = e.target.value;
+            if(e.target.name === 'branch_head'){
+                validateEmailDebounced(e.target.value, setIsEmailValid)
+            }
         }
         setformData(newdata)
+        if(error[e.target.name])validateBranchForm(newdata, setErrors)
     }
     const handlesubmit = () => {
-        if (validateBranchForm(formData, setErrors)) {
+        if (validateBranchForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
             if (formData?.type === 'Edit') {
                 PostBranchUpdateDetails(formData)
             }else{
@@ -97,7 +107,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                             </svg>
                             <span className="sr-only">Close modal</span>
                         </button>
-                        <div>
+                        <div className='pb-4 pt-4'>
                             <h4 className="text-head-title text-center">Branch Information</h4>
                             <Formik
                                 initialValues={{ field: true }}
@@ -108,10 +118,11 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                 <Form className="py-2 multistep-form-step">
                                     <FormContainer>
 
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch Name"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -132,6 +143,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             <FormItem
                                                 label="Branch Address"
                                                 className="rounded-lg pl-[22px] w-1/2"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -150,10 +162,12 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch GST"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                               
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -173,7 +187,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Head"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -192,10 +207,12 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className="flex">
+                                        <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                             <FormItem
                                                 label="Branch Email Address"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                          
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -210,12 +227,14 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.branch_head}
+                                                    {isEmailValid ? isEmailValid : error?.branch_head}
                                                 </p>
                                             </FormItem>
                                             <FormItem
                                                 label="Branch Phone Number"
-                                                className="rounded-lg pl-[22px] w-1/2"
+                                                className="pl-3  w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
+                                              
+                                                asterisk={true}
                                             >
                                                 <Field
                                                     disabled={formData?.isdisabled}
@@ -231,11 +250,11 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.branch_phone}
+                                                    {isMobileValid ? isMobileValid : error?.branch_phone}
                                                 </p>
                                             </FormItem>
                                         </div>
-                                        <div className='flex'>
+                                        <div className='flex pl-4 pr-8'>
                                             <Button
                                                 style={{ borderRadius: '13px' }}
                                                 block
@@ -243,7 +262,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 type="button"
                                                 role='button'
                                                 onClick={() => setModal(false)}
-                                                className="indigo-btn !w-[200px] !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                                className="indigo-btn !bg-gray-500 m-4 rounded-[30px]"
                                             >
                                                 Cancel
                                             </Button>
@@ -254,7 +273,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 disabled={formData?.isdisabled}
                                                 variant="solid"
                                                 onClick={handlesubmit}
-                                                className='indigo-btn mt-4 !w-[30%] mx-auto rounded-xl shadow-lg'
+                                                className='indigo-btn mt-4 rounded-xl shadow-lg'
                                             >
                                                 Save & Next
                                             </Button>
