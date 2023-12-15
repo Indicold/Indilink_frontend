@@ -24,6 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
+import { onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -78,8 +79,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const autoFilldata:any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false) // Initially the OTP modal will be closed when the component mounts
     const [invalidPanMessage, showInvalidPanMessage] = useState(false);
-    const [panValidationMessage, setPanValidationMessage] = useState("Pan Number is required");
-    const [gstValidationMessage, setGstValidationMessage] = useState("GST Number is required");
+    const [panValidationMessage, setPanValidationMessage] = useState("");
+    const [gstValidationMessage, setGstValidationMessage] = useState("");
     const [invalidGSTMessage, showInvalidGSTMessage] = useState(false);
 
 
@@ -138,7 +139,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-        const reGST = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;        
+        const reGST =  /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;   
+        const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;     
+console.log("TYTYTUTU",newGst,key);
+if(key==='gst' && !reGST.test(newGst)){
+    setGstValidationMessage('Enter a valid GST Number')
+    
+}else{
+    setGstValidationMessage('')
+}
+if (key==='panNo' && !panRegex.test(newGst)) {
+    setPanValidationMessage('Valid PAN number')
+  } else {
+    setPanValidationMessage('')
+  }
 
         // if (key === 'gst') {
         //     if (newGst.length == 15 && reGST.test(newGst)) {
@@ -446,13 +460,14 @@ console.log("GGGGGGGGGG",formData);
                                 autoComplete="off"
                                 name="gst"
                                 placeholder="GST No"
+                                onKeyDown={onkeyDownforSpecialCharcter}
                                 onChange={(e: any) => handleChange(e,'gst')}
                                 component={Input}
                                 className=''
                                 max="15"
                                 maxLength={15}
                             />
-                            {invalidGSTMessage && (
+                            {gstValidationMessage && (
                                     <div className='text-[red]'>{gstValidationMessage}</div>
                                 )}
                         </FormItem>
@@ -467,6 +482,7 @@ console.log("GGGGGGGGGG",formData);
                                     type="text"
                                     autoComplete="off"
                                     name="panNo"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     placeholder="Pan Card No."
                                     onChange={(e: any) => handleChange(e,'panNo')}
                                     component={Input}
@@ -474,7 +490,7 @@ console.log("GGGGGGGGGG",formData);
                                     max="10"
                                     maxLength={10}
                                 />
-                                {invalidPanMessage && (
+                                {panValidationMessage && (
                                     <div className='text-[red]'>{panValidationMessage}</div>
                                 )}
                             </FormItem>
@@ -490,6 +506,7 @@ console.log("GGGGGGGGGG",formData);
                                     autoComplete="off"
                                     name="country"
                                     placeholder="Country"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     component={Input}
                                     className=''
                                 />
@@ -507,6 +524,7 @@ console.log("GGGGGGGGGG",formData);
                                     autoComplete="off"
                                     name="designation"
                                     placeholder="User Designation"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     onChange={(e: any) => handledChange(e,'designation')}
                                     component={Input}
                                     className=''
@@ -524,6 +542,7 @@ console.log("GGGGGGGGGG",formData);
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     name="firm"
                                     placeholder="Firm Type"
                                     onChange={(e: any) => handledfChange(e,'firm')}
@@ -545,6 +564,7 @@ console.log("GGGGGGGGGG",formData);
                                 <Field
                                     type="text"
                                     autoComplete="off"
+                                    onKeyDown={onkeyDownforSpecialCharcter}
                                     name="firmName"
                                     placeholder="Firm Name"
                                     onChange={(e: any) => handledfnChange(e,'firmName')}

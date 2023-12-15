@@ -165,6 +165,7 @@ const StoreRegistration = () => {
           );
         } else {
           setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
+          dataa['store_type_valid']=false
           validateStorePartnerForm(dataa, setErrors)
         }
       };
@@ -173,6 +174,7 @@ const StoreRegistration = () => {
     const handleRoute = async () => {
         const { token }: any = getToken()
         dataa['store_type_id'] = selectedOptions || []
+        dataa['store_type_valid'] = selectedOptions?.length<1
         
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
@@ -964,7 +966,7 @@ const StoreRegistration = () => {
     </div>
                                       
                                         <p className="text-[red]">
-                                            {errors && errors.store_type_id}
+                                            {dataa?.store_type_valid && "This is required !"}
                                         </p>
                                     </FormItem>
                                 </div>

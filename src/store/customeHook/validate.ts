@@ -33,16 +33,23 @@ export const validateEmail = async (email: any, setIsEmailValid: any) => {
         console.error('Error validating email:', error)
     }
 }
+export const onkeyDownforSpecialCharcter=(e:any)=>{
+    if ( e.key === '-' || e.key === '+' || e.key === '#' || e.key === '%' || e.key === '&' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' || e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' || e.key =='"' || e.key =="'" ) {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
+
 
 export const validateForm = (formData: any, setError: any) => {
     const errorss: any = {}
+    const strongPasswordRegex :any= /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (formData?.password !== formData?.confirm_password) {
 
         errorss.password = 'Passwords do not match'
     }
     if (formData?.password?.length < 8) {
-        errorss.password = 'Password too short.'
+        errorss.password = 'Password too short'
     }
     if (!formData?.password) {
         errorss.password = 'Password is required'
@@ -51,7 +58,9 @@ export const validateForm = (formData: any, setError: any) => {
     if (formData?.term_condition === "off" || !formData?.term_condition) {
         errorss.term_condition = 'Please Accept Terms & Conditions'
     }
-
+if(!strongPasswordRegex.test(formData?.password)){
+    errorss.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
+}
 
     if (formData?.first_name?.length < 3) {
         errorss.first_name = 'First name too short'
@@ -69,7 +78,7 @@ export const validateForm = (formData: any, setError: any) => {
     if (!formData?.email) {
         errorss.email = 'Email is required'
     }
-
+   
     
     if (formData?.email) {
       if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(formData?.email)) {
