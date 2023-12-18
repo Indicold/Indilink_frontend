@@ -365,6 +365,9 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if (!formData?.address) {
         newErrors.address = 'Address is required'
     }
+    if (formData?.address?.length<4) {
+        newErrors.address = 'Address should be atleast 5 character'
+    }
 
     if (!formData?.total_tonnage || formData?.total_tonnage==='' || formData?.total_tonnage<=0) {
         // if (formData?.total_tonnage==='') {

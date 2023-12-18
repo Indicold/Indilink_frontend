@@ -175,7 +175,7 @@ const StoreRegistration = () => {
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        dataa['store_type_id'] = selectedOptions || []
+        // dataa['store_type_id'] = selectedOptions || []
         dataa['store_type_valid'] = selectedOptions?.length<1
         
         let formdata: any = new FormData();
@@ -183,7 +183,7 @@ const StoreRegistration = () => {
         formdata.append("city_id", dataa?.city_id);
         formdata.append("address", dataa?.address);
         formdata.append("total_tonnage", dataa?.total_tonnage);
-        if (dataa?.store_type_id) for (const value of selectedOptions?.map((item: any) => item)) {
+        if (selectedOptions?.length>0) for (const value of selectedOptions?.map((item: any) => item)) {
             formdata.append("store_type_id", value);
         }
         formdata.append("cold_storage_type_id", dataa?.cold_storage_type_id);
@@ -252,6 +252,7 @@ const StoreRegistration = () => {
             formdata.append("solar_invertor_ids", value);
         }
 
+        console.log("TTTTTTTTT",dataa?.store_type_id,selectedOptions);
 
         // Validate the form data
         if (validateStorePartnerForm(dataa, setErrors)) {
@@ -920,7 +921,7 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Type Of Store*")}
+                                        label= {t("Store Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                          <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption(!multiOption)}>
