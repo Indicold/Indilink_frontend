@@ -104,7 +104,13 @@ const validate=()=>{
     const handleChange = (e: any) => {
         const newData: any = { ...formdata };
         newData[e.target.name] = e.target.value;
-        setFormData(newData)
+        if(e.target.name==='phone_number'){
+            const sanitizedValue = e.target.value.replace(/\D/g, '');
+            setFormData({...newData,phone_number:sanitizedValue})
+        }else{
+            setFormData(newData)
+
+        }
     }
 
     /* The `useEffect` hook in the code snippet is used to perform side effects in a React
@@ -135,6 +141,8 @@ const validate=()=>{
     }, [a, postMobileNumberResponse])
     /* The `useEffect` hook in the code snippet is used to handle the response from a PUT request
     made to the server. */
+    console.log("verifyResponse",verifyResponse);
+    
     useEffect(() => {
 
         if (verifyResponse?.message) {
@@ -171,17 +179,25 @@ const validate=()=>{
                 });
             }
            const {default_user_type}:any= jwt_decode(verifyResponse.message.accessToken)
-if(default_user_type===1){
+           console.log("default_user_type",default_user_type);
+           
+           if(verifyResponse?.status==200){
+            if(default_user_type===1){
+                localStorage.setItem('user_type','Partner')
+                navigate('/partner-dashbord')
+            }else if(default_user_type===2){
+                localStorage.setItem('user_type','Customer')
+                navigate('/home')
+            }else{
+                localStorage.setItem('user_type','Investor')                
+                navigate('/investor-dashbord')
+            }
+           }
 
-}else if(default_user_type===2){
-
-}else{
-    navigate('/home')
-}
          
         }
 
-    }, [verifyResponse?.message])
+    }, [verifyResponse?.message,verifyResponse?.status])
 
     useEffect(() => {
         // Decrease the timer every second

@@ -42,7 +42,8 @@ export const onkeyDownforSpecialCharcter=(e:any)=>{
 
 export const validateForm = (formData: any, setError: any) => {
     const errorss: any = {}
-    const strongPasswordRegex :any= /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&.#^+_-]{8,}$/;
+
 
     if (formData?.password !== formData?.confirm_password) {
 
