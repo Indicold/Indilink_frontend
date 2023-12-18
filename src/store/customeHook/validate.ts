@@ -223,7 +223,6 @@ if (!existingChamberIdsJSON) {
 
 export const validatePrepareForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
-console.log("dfghjk",formData);
 
     if (!formData?.city_id) {
         newErrors.city_id = 'City is required'
@@ -454,7 +453,6 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
         newErrors.photos_of_asset = 'This Field is required'
     }
-console.log("TTTTTT7767867",newErrors);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
@@ -539,7 +537,6 @@ if(!formData?.chassis_no){
 
 export const validateChamberForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
-console.log("TTTTTTTTTT77777",formData['ch-l'],formData['ch-b'],formData['ch-h'],formData?.chamber_size?.length);
 
     if (!formData?.chamber_number) {
         newErrors.chamber_number = 'This Field is required'

@@ -9,7 +9,6 @@ const PrepareDetails = () => {
     const location:any=useLocation();
     const [assetDetails,setAssetsDetails]=useState<any>({})
     let state:any=location?.state?.type;
-    console.log("yyyyyyy",state);
     
     const {
         data: fetchDetails,

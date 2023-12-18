@@ -168,7 +168,6 @@ const MoveSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
-            console.log("TTTT6666TTTT",location?.state?.data);
             setFormData(location?.state?.data);
             setIsDisabled(location?.state?.disabled)
         }
@@ -177,7 +176,6 @@ const MoveSearch = () => {
 
     useEffect(() => {
         if (location?.state?.data) {
-            console.log("65765765",location?.state?.data);
             
             setFormData(location?.state?.data);
             setIsDisabled(location?.state?.disabled)
@@ -216,7 +214,6 @@ localStorage.removeItem('origin_gps');
 //     }
 //     if (formValuesUpdated) setFormData(newData)
 // }, [addressUpdateCount])
-console.log("wertyuio", new Date(formData?.arrival_date));
 
     return (
         <div>

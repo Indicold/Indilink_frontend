@@ -341,7 +341,6 @@ const StoreRegistration = () => {
             else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
-        console.log("TTTTTTTTT566",newData);
         if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
@@ -929,7 +928,6 @@ const StoreRegistration = () => {
           )}
           {selectedOptions?.length>0 && selectedOptions.map((optionId:any) => {
             const option :any= StorageType?.data?.find((opt:any) => opt?.id === optionId) || [];
-            console.log("TTT666TTTTT",option);
             
             return (
               <span

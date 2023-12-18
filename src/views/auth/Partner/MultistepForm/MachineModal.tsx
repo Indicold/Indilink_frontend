@@ -68,7 +68,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                     power_requirement: data?.power_requirement,
                     asset_id: id
                 }
-                console.log("TY77777", object, data);
 
                 handleStoreTable(
                     'partner/prepare/machine',
@@ -96,7 +95,6 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
         }
 
     }
-    console.log("TTTTTTTTTTTT",data);
     
     const isDisabled = formD?.type === 'View';
 

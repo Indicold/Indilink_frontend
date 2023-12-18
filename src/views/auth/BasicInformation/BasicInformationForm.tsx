@@ -141,7 +141,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         const reGST =  /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;   
         const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;     
-console.log("TYTYTUTU",newGst,key);
 if(key==='gst' && !reGST.test(newGst)){
     setGstValidationMessage('Enter a valid GST Number')
     
@@ -176,7 +175,6 @@ if (key==='panNo' && !panRegex.test(newGst)) {
         // else {
             if(key==='panNo'){
                 if (newData?.panNo?.length == 10 && re.test(newGst)) {
-            console.log("4565768",newData,formData);
             
                     (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
                     showInvalidPanMessage(false);
@@ -221,7 +219,6 @@ if (key==='panNo' && !panRegex.test(newGst)) {
         const newData = { ...formData, [key]: newGst };
         setFormData(newData);
       }
-console.log("GGGGGGGGGG",formData);
 
       const handledfnChange = (e: any,key:any) => {
         const newGst = e.target.value;

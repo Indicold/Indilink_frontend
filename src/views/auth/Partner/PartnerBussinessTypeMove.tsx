@@ -225,7 +225,6 @@ vehicle_no:''
 
     useEffect(()=>{
         function showPosition(position:any) {
-            console.log("TTTTTT",position.coords.latitude,position.coords.longitude);
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude)
            

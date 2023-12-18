@@ -482,7 +482,6 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
                 asset_owner:aud,
                 doc_id:data?.doc_id
             }
-            console.log("454545",body);
             setTimeout(()=>{
                 postNegotiation(body)
 

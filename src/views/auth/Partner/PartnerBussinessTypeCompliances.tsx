@@ -305,7 +305,6 @@ const PartnerBussinessTypeCompliances = () => {
         });
         setArray(updatedArray);
     };
-    console.log("TTTTTTTTT",array[0]);
     
 
     // Handle the file upload
@@ -384,8 +383,6 @@ const PartnerBussinessTypeCompliances = () => {
         const validData:any = array?.find((item:any)=>{
             
 if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !item?.licenseNoVal || !item?.valid_till || item?.valid_till==null)){
-    console.log("UUUUUUUUU",item);
-
    return item
 }
         })

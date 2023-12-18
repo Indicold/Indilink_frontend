@@ -189,11 +189,9 @@ const PartnerBussinessTypePrepare = () => {
             newData[e.target.name] = e.target.value
         }
         setFormData(newData)
-        console.log("tyui",newData,e.target,key);
         if(errors[key]) validatePrepareForm(newData, setErrors)
         if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
     }
-console.log("7687686786",formData?.product_category_ids);
 
     // Define a function to handle form submission and POST request
     const handleRoute = () => {
@@ -257,7 +255,6 @@ console.log("7687686786",formData?.product_category_ids);
     logic when the dependency `ProductType?.data` changes. */
     useEffect(() => {
         const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(typeof item?.id === 'string' ? `${item?.id}` :item?.id))?.map((item:any)=>item?.id) : targetArray1?.filter((item: any) => item?.id === itemsToFind1)?.map((item:any)=>item?.id);
-       console.log("TTT6677TT1",foundItems);
        
         setSelectedOptions1(foundItems)
     }, [ProductType?.data,itemsToFind1?.length])
@@ -270,7 +267,6 @@ console.log("7687686786",formData?.product_category_ids);
         if(ProductTypeList?.data!==null){
             const foundItems: any = itemsToFind?.length > 0 ? targetArray?.filter((item: any) => itemsToFind?.includes( typeof item?.id === 'string' ? `${item?.id}` :item?.id ))?.map((item:any)=>item.id) : targetArray?.filter((item: any) => item?.id === itemsToFind)?.map((item:any)=>item?.id);
             setSelectedOptions(foundItems)
-            console.log("TTT6677TT2",foundItems);
         }
        
     }, [ProductTypeList?.data,itemsToFind?.length])
@@ -289,7 +285,6 @@ console.log("7687686786",formData?.product_category_ids);
         }
     }, [localStorage, localStorage.getItem('partnerPrepareAddress')])
     const { t, i18n }:any = useTranslation();
-console.log("TYTYTYTYYU7878",selectedOptions,selectedOptions1);
 
     return (
         <div className='lg:flex '>
@@ -499,7 +494,6 @@ console.log("TYTYTYTYYU7878",selectedOptions,selectedOptions1);
           )}
           {selectedOptions?.length>0 && selectedOptions.map((optionId:any) => {
             const option :any= ProductTypeList?.data?.find((opt:any) => opt?.id === optionId) || [];
-            console.log("TTT666TTTTT",option);
             
             return (
               <span
@@ -552,7 +546,6 @@ console.log("TYTYTYTYYU7878",selectedOptions,selectedOptions1);
           )}
           {selectedOptions1?.length>0 && selectedOptions1.map((optionId:any) => {
             const option :any= ProductType?.data?.find((opt:any) => opt?.id === optionId) || [];
-            console.log("TTT666TTTTT",option);
             
             return (
               <span
