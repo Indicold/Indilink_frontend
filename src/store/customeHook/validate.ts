@@ -69,8 +69,9 @@ if(!strongPasswordRegex.test(formData?.password)){
     if (!formData?.first_name) {
         errorss.first_name = 'First name is required'
     }
-
-
+    if(/\.\@/.test(formData?.email)){
+        errorss.email='Email not allow .@'
+            }
     // if (!formData?.last_name) {
     //   errorss.last_name = 'Last name is required';
     // }
@@ -78,7 +79,10 @@ if(!strongPasswordRegex.test(formData?.password)){
     if (!formData?.email) {
         errorss.email = 'Email is required'
     }
-   
+    // const pattern = /\.\@/;
+    // if (!pattern.test(formData?.email)) {
+    //     errorss.email = 'Email not allow .@ is required'
+    // }
     
     if (formData?.email) {
       if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(formData?.email)) {
