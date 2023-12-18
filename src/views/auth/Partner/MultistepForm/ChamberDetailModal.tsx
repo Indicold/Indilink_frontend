@@ -423,6 +423,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
+                                            className=""
                                             value={data?.chamber_number}
                                         />
                                         <p className="text-[red]">
@@ -624,7 +625,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of chamber from gate *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of chamber from gate
+                                          Photo of chamber from gate*
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -646,16 +647,16 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        {/* <p className="text-[red]">
+                                        <p className="text-[red]">
                                             {errors && errors.photo_of_entrance}
-                                        </p> */}
+                                        </p>
                                     </FormItem>
 
                                     <FormItem
                                         // label="Photo of the chamber from one corner *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of the chamber from one corner
+                                          Photo of the chamber from one corner*
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -676,9 +677,9 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        {/* <p className="text-[red]">
+                                        <p className="text-[red]">
                                             {errors && errors.photo_of_chamber}
-                                        </p> */}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
