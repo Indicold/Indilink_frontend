@@ -6,7 +6,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateIOTForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, onkeyDownforNumSpecialCharcter, validateIOTForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -166,6 +166,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             value={data?.type}
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.type}
@@ -205,6 +206,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             value={data?.make}
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -222,6 +224,7 @@ if(PutApiResponse?.status===200){
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}

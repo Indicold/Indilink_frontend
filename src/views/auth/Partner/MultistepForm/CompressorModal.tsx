@@ -5,7 +5,7 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
-import { handleStoreTable, messageView, validateCompressorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -165,6 +165,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             value={data?.make}
                                             placeholder="Make"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -182,6 +183,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -212,6 +214,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
@@ -239,6 +242,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="H.P."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.hp}

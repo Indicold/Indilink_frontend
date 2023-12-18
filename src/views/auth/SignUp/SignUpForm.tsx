@@ -21,7 +21,7 @@ import { updateFormData } from '@/store/slices/Authentication/userDetails'
 import { debounce } from 'lodash'
 import {
     onkeyDownOne,
-    onkeyDownforSpecialCharcter,
+    onkeyDownforNumSpecialCharcter,
     validateEmail,
     validateForm,
     validateMobile,
@@ -155,7 +155,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     className="rounded-[13px]"
                                     name="first_name"
                                     placeholder="First Name"
-                                    onKeyDown={onkeyDownforSpecialCharcter}
+                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}
                                 />
@@ -173,7 +173,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     autoComplete="off"
                                     className="rounded-[13px]"
                                     name="last_name"
-                                    onKeyDown={onkeyDownforSpecialCharcter}
+                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                     placeholder="Last Name"
                                     component={Input}
                                     onChange={(e: any) => handleChange(e)}

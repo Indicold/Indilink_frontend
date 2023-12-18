@@ -24,6 +24,8 @@ import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
     onkeyDown,
+    onkeyDownNew,
+    onkeyDownforNumSpecialCharcter,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -790,6 +792,7 @@ const StoreRegistration = () => {
                                             placeholder="Facility Manager Name"
                                             value={dataa?.facility_manager_name}
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors &&
@@ -900,7 +903,7 @@ const StoreRegistration = () => {
                                                     handlechange(e)
                                                 }
                                                 name="total_tonnage"
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
                                             />
@@ -1041,7 +1044,7 @@ const StoreRegistration = () => {
                                                     handlechange(e)
                                                 }
                                                 name="ante_room_area"
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
                                             />
@@ -1071,7 +1074,7 @@ const StoreRegistration = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            onKeyDown={onkeyDown}
+                                            onKeyDown={onkeyDownNew}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -1096,7 +1099,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="total_office_space"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
@@ -1163,7 +1166,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
@@ -1192,7 +1195,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}

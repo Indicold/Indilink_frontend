@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateAMCForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateAMCForm, onkeyDownforNumSpecialCharcter, onkeyDownNew } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -196,6 +196,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.name_of_service}
@@ -216,6 +217,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.vendor}
@@ -259,6 +261,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.fixed_cost}

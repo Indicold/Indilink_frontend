@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateCondensorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -164,6 +164,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -181,6 +182,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -205,6 +207,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                                 handleChange(e)
                                             }
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.tr}

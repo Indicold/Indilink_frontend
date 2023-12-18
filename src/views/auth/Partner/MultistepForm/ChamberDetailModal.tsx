@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { onkeyDown, onkeyDownDimension, onkeyDownOne, validateChamberForm } from '@/store/customeHook/validate'
+import { onkeyDown, onkeyDownDimension, onkeyDownNew, onkeyDownOne, onkeyDownforNumSpecialCharcter, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -414,7 +414,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <Field
                                             type="number"
                                             min={1}
-                                            onKeyDown={onkeyDownOne}
+                                            onKeyDown={onkeyDownNew}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="chamber_number"
@@ -444,6 +444,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Chamber name"
                                             component={Input}
                                             value={data?.chamber_name}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.chamber_name}
@@ -466,11 +467,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                         <p className="text-[red]">
                                             {errors && errors.chamber_size}
@@ -490,6 +491,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="No. of pallets"
                                             component={Input}
                                             value={data?.no_of_pallets}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.no_of_pallets}
@@ -512,11 +514,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew}/>
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                      
                                         <p className="text-[red]">
@@ -694,7 +696,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 handleChange(e)
                                             }
                                             value={data?.no_of_floors}
-                                            onKeyDown={onkeyDown}
+                                            onKeyDown={onkeyDownNew}
                                             placeholder="No. of floors"
                                             component={Input}
                                         />
@@ -717,7 +719,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Enter Value"
                                             component={Input}
                                             value={data?.floor_area || formD?.floor_area}
-                                            onKeyDown={onkeyDownDimension}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                       
                                         <p className="text-[red]">
@@ -741,8 +743,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} />
-                                        <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                            
                                         <p className="text-[red]">
@@ -763,6 +765,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             value={data?.each_floor_hight}
                                             placeholder="Enter Value"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                             
                                         <p className="text-[red]">

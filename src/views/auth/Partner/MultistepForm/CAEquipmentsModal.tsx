@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
-import { handleStoreTable, messageView, validateCAEquipForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCAEquipForm, onkeyDownNew, onkeyDownforNumSpecialCharcter } from '@/store/customeHook/validate'
 import axios from 'axios'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
@@ -180,6 +180,7 @@ useEffect(()=>{
                                             value={data?.make}
                                             placeholder="Make"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -198,6 +199,7 @@ useEffect(()=>{
                                             }
                                             placeholder="Model"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -228,6 +230,7 @@ useEffect(()=>{
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
