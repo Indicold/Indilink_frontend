@@ -489,7 +489,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
       }
  }
  export const onkeyDownNew=(e:any)=>{
-    if (e.target.name === 'temp_range_min') {
+    if (e.target.name === 'temp_range_min' || e.target.name === 'temperature_min') {
         if ((e.key === 'e' || e.target.value?.length==5 || e.key === 'E' || e.key === '+') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
             e.preventDefault();
         }
@@ -498,7 +498,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         if ((e.key === 'e' || e.key === '-' || e.target.value?.length==5 || e.key === 'E' || e.key === '+') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
             e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
         }
-          if(e.target.value?.length<1 &&  e.key === '0' && e.target.name !== 'temp_range_max'){
+          if(e.target.value?.length<1 &&  e.key === '0' && e.target.name !== 'temp_range_max' && e.target.name !== 'temperature_max'){
             e.preventDefault(); 
         }
     }
@@ -559,7 +559,7 @@ if(!formData?.chassis_no){
     }
     
     if (formData?.vehicle_no && !textContainsNumber(formData?.vehicle_no)) {
-        newErrors.vehicle_no = 'Please Enter Valid Vehical No'
+        newErrors.vehicle_no = 'Please Enter Valid Vehicle No'
     }
     if(!formData?.vehicle_no){
         newErrors.vehicle_no = 'This Field is required'

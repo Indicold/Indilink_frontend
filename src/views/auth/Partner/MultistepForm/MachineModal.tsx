@@ -5,7 +5,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateMachineForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateMachineForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -170,6 +170,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             defaultValue={formD?.name}
                                             placeholder="Name"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.name && (
                                             <p className='text-[red]'>{error?.name}</p>
@@ -191,6 +192,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Type of Machine"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.type_of_machine && (
                                             <p className='text-[red]'>{error?.type_of_machine}</p>
@@ -211,6 +213,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Make"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.make && (
                                             <p className='text-[red]'>{error?.make}</p>
@@ -228,6 +231,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Model"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.model && (
                                             <p className='text-[red]'>{error?.model}</p>
@@ -251,6 +255,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Purpose"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.purpose && (
                                             <p className='text-[red]'>{error?.purpose}</p>
@@ -271,6 +276,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             placeholder="Power requirement"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         {error?.power_requirement && (
                                             <p className='text-[red]'>{error?.power_requirement}</p>

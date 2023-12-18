@@ -20,6 +20,8 @@ import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom 
 import { useLocation, useNavigate, useParams } from 'react-router-dom' // Import routing related hooks
 import {
     messageView,
+    onkeyDownNew,
+    onkeyDownforNumSpecialCharcter,
     validateMovePartnerForm,
 } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
 import { useTranslation } from 'react-i18next'
@@ -508,6 +510,7 @@ vehicle_no:''
                                             name="vehicle_class"
                                             placeholder="Vehicle Class"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.vehicle_class}
@@ -574,6 +577,7 @@ vehicle_no:''
                                             value={data?.create_capacity || ""}
                                             placeholder="Crate Capacity"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.create_capacity}
@@ -595,6 +599,7 @@ vehicle_no:''
                                             name="length"
                                             placeholder="Length"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.length}
@@ -618,6 +623,7 @@ vehicle_no:''
                                             value={data?.width || ""}
                                             placeholder="Width"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.width}
@@ -639,6 +645,7 @@ vehicle_no:''
                                             name="hight"
                                             placeholder="Height"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.hight}
@@ -662,6 +669,7 @@ vehicle_no:''
                                             value={data?.gv_weight || ""}
                                             placeholder="GV Weight"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.gv_weight}
@@ -685,6 +693,7 @@ vehicle_no:''
                                             placeholder="Unladen Weight in RC
 "
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.unladen_weight_in_rc}

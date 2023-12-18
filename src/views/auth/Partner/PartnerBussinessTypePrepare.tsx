@@ -19,7 +19,7 @@ import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom 
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
 import usePostApi from '@/store/customeHook/postApi' // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner' // Import a custom loader spinner component
-import { messageView, onkeyDown, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
+import { messageView, onkeyDown, onkeyDownNew, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import ACUModall from './MultistepForm/ACUModal' // Import a custom modal component
 import MachineModal from './MultistepForm/MachineModal' // Import another custom modal component
@@ -422,7 +422,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 disabled={isDisabled}
                                                 type="number"
                                                 min={0}
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 autoComplete="off"
                                                 name="hourly_throughput"
                                                 onChange={(e: any) =>
@@ -631,7 +631,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
                                                     min={0}
-                                                    onKeyDown={onkeyDown}
+                                                    onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
                                                         handleChange(e,'throughput',[])
                                                     }
@@ -666,7 +666,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
                                                     min={0}
-                                                    onKeyDown={onkeyDown}
+                                                    onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
                                                         handleChange(e,'avg_case_size',[])
                                                     }
@@ -702,7 +702,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 type="number"
                                                 autoComplete="off"
                                                 min={0}
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 onChange={(e: any) =>
                                                     handleChange(e,'no_of_docks',[])
                                                 }
@@ -725,7 +725,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-full border-0 focus:outline-0"
                                                     type='number'
                                                     min={0}
-                                                    onKeyDown={onkeyDown}
+                                                    onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
                                                         handleChange(e,'area',[])
                                                     }
@@ -794,8 +794,8 @@ const PartnerBussinessTypePrepare = () => {
                                             className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} disabled={isDisabled}/>
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}
@@ -823,7 +823,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
                                                     min={0}
-                                                    onKeyDown={onkeyDown}
+                                                    onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
                                                         handleChange(e,'batch_size',[])
                                                     }
