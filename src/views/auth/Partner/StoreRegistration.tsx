@@ -2182,7 +2182,7 @@ const StoreRegistration = () => {
                                                      
                                                     }
                                                 >
-                                                     {t("Add details ")}
+                                                     {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>
@@ -2252,7 +2252,7 @@ const StoreRegistration = () => {
                                                     
                                                     }
                                                 >
-                                                    {t("Add details ")}
+                                                    {t("Add details")}
                                                 </button>
                                             </div>
                                         </AccordionItemPanel>

@@ -51,7 +51,158 @@ i18n
           'ACU': 'ACU',
           'Currently there are no ACUs.': 'Currently there are no ACUs.',
           'Condenser': 'Condenser',
-          'Currently there are no Condenser.': 'Currently there are no Condenser.'
+          'Currently there are no Condenser.': 'Currently there are no Condenser.',
+
+          "Add details":"Add details",
+          "first name": "first name",
+          'Status':"Status",
+          'Save':'Save',
+          'Licence No':'Licence No',
+          "Valid Till":"Valid Till",
+           "Partner Dashboard":"Partner Dashboard",
+           "Partner":"Partner",
+           "Bussiness Type":"Bussiness Type",
+           "Type":"Type", 
+           "Choice on Business":'Choice on Business',
+           "Customer Dashboard":"Customer Dashboard",
+           "Customer":"Customer",
+           "Investor":"Investor",
+           "Investor Dashboard":"Investor Dashboard",
+           "Request for solution":"Request for solution"   ,
+           "You may also change later":"आप बाद में बदल भी सकते हैं",
+           "Select Country":"Select Country",
+           "Category":"Category",
+           "Store":"Store",
+           "Move":"Move",
+           "Prepare":"Prepare", 
+           "Next":"Next",
+           "General":"General",
+           "Location":"Location",
+           "Country":"Country",
+           "Country*":"Country*",
+           "City":"City",
+           "City*":"City*",
+           "Product Type":"Product Type",
+           "Temperature":"Temperature",
+           "Unit":"Unit",
+           "Unit*":"Unit*",
+           "Certification":"Certification",
+           "Date Of Storage":"Date Of Storage",
+           "Storage Duration":"Storage Duration",
+           "Request for Search":"Request for Search",
+           "Origin Location":"Origin Location",
+           "Storage Duration*":"Storage Duration*",
+          
+           "From*":"From*",
+           "GPS":"GPS",
+           "PIN Code":"PIN Code",
+           "Destination Location":"Destination Location",
+           "To*":"To*",
+           "Load Quantity*":"Load Quantity*",
+           "Broad Category*":"Broad Category*",
+           "Dispatch Date":"Dispatch Date",
+           "Arrival Date":"Arrival Date",
+           "Product Type*":"Product Type*",
+           "Comment":"Comment",
+           'Active':'Active',
+           'Passive':'Passive',
+           'Area Of Land':'Area Of Land',
+           'Cold Storage Name':'Cold Storage Name',
+
+
+           
+
+           //Prepare 
+            "Product Category*":"Product Category*",
+            "Broad Category":"Broad Category",
+            "Service Category*":"Service Category*",
+            "State*":"State*",
+            "Throughput*":"Throughput*",
+            "Avg. Case Size*":"Avg. Case Size*",
+            "Estimated Docks":"Estimated Docks",
+            "Estimated Dispatches":"Estimated Dispatches",
+            "Estimated Docks*":"Estimated Docks*",
+            "Estimated Dispatches*":"Estimated Dispatches*",
+          
+            "Date of Start":"Date of Start",
+            "Contract Name":"Contract Name",
+            "Contract Type":"Contract Type",
+            "Temperature*":"Temperature*",
+          
+          
+            "General Query*":"General Query*",
+            "Send Query":"Send Query",
+            "Enter your query":"Enter your query",
+            "Ticket List":"Ticket List",
+            "General Ticket List":"General Ticket List",
+
+          //Partner 
+
+
+          "Are You Facility Manager":"Are You Facility Manager",
+          "Facility Manager*":"Facility Manager*",
+          "Contact Number*":"Contact Number*",
+          "Address*": "Address*",
+          "Total Tonnage(MT)*": "Total Tonnage(MT)*",
+          "Type Of Store*":"Type Of Store*",
+          "Type of Cold Storage*":"Type of Cold Storage*",
+          "Ante Room - Area (Square feet)*":"Ante Room - Area (Square feet)*",
+          "Total number of docks*":"Total number of docks*",
+          "Total office space(Square feet)*":"Total office space(Square feet)*",
+          "Type of docks*":"Type of docks*",
+          "Processing Area(Square feet)*":"Processing Area(Square feet)*",
+          "Parking Area(Square feet)*":"Parking Area(Square feet)*",
+          "Type of Refrigeration*":"Type of Refrigeration*",
+          "Year of Installation*":"Year of Installation*",
+          "Internet":"Internet",
+          "Wifi":"Wifi",
+          "CCTV":"CCTV",
+          "Driver Area for Food and Resting": "Driver Area for Food and Resting",
+          "Weighbridge*":"Weighbridge",
+          "Road condition from main road*":"Road condition from main road*",
+          "Photo Of Assets*":"Photo Of Assets*",
+          "3D Photo*": "3D Photo*",
+          "Chambers":"Chambers",
+          "Currently there are no chambers.":"Currently there are no chambers.",
+          "Add details": "Add details",
+          "CA Equipments":"CA Equipments",
+          "Currently there are no CA Equipments.":"Currently there are no CA Equipments.",
+          "Compressors":"Compressors",
+          "Currently there are no Compressors.":"Currently there are no Compressors.",
+          "ACU":"ACU",
+          "Currently there are no ACUs.": "Currently there are no ACUs.",
+          "Condenser":"Condenser",
+          "Currently there are no Condenser.": "Currently there are no Condenser.",
+          "Annual Maintenance Contract":"Annual Maintenance Contract",
+          "Currently there are no AMCs.":"Currently there are no AMCs.",
+          "IOT Devices":"IOT Devices",
+          "Currently there are no IOT Devices.": "Currently there are no IOT Devices.",
+          "IT Devices":"IT Devices",
+          "Generator":"Generator",
+          "Currently there are no generators.":"Currently there are no generators.",
+          "MHE":"MHE",
+          "Currently there are no MHEs.": "Currently there are no MHEs.",
+          "Solar Inverters":"Solar Inverters",
+          "Currently there are no solar inverters.":"Currently there are no solar inverters.",
+          "Prev":"Prev",
+          "Currently there are no IT Devices.":"Currently there are no IT Devices.",
+          'Asset Specifications':'Asset Specifications',
+          "Compliance Details":"Compliance Details",
+          "Ammount Of Investment":"Ammount Of Investment",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
       },
       hi: {
