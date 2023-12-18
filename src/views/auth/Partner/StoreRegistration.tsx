@@ -1595,30 +1595,30 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex lg:w-full w-screen  py-2 rounded-[13px] my-2">
 
-                                                    <div className="w-[17%] text-center ellipse-text m-auto">
+                                                    <div className="w-[17%] text-center m-auto">            
                                                         Chamber name
                                                     </div>
-                                                    <div className="w-[17%] text-center ellipse-text m-auto">
+                                                    <div className="w-[17%] text-center m-auto">
                                                         Chamber no.
                                                     </div>
-                                                    <div className="w-[17%] text-center ellipse-text m-auto">
+                                                    <div className="w-[17%] text-center m-auto">
                                                         Chamber size
                                                     </div>
-                                                    <div className="w-[14%] text-center ellipse-text m-auto">
+                                                    <div className="w-[14%] text-center m-auto">
                                                         Created
                                                     </div>
-                                                    <div className="w-[17%] text-center ellipse-text m-auto">
+                                                    <div className="w-[17%] text-center m-auto">
                                                         Updated
                                                     </div>
-                                                    <div className="mx-auto">
+                                                    <div className="w-[17%] text-center m-auto">
                                                         Actions
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.chambers?.map((item: any, index: any) => (
-                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div className="listt flex lg:w-full w-screen bg-white py-4 rounded-[13px]">
                                                         <div className="w-[20%] text-center m-auto ellipse-text">
                                                             {item?.chamber_name}
                                                         </div>
