@@ -168,7 +168,7 @@ const StoreRegistration = () => {
         } else {
           setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
           dataa['store_type_valid']=false
-          validateStorePartnerForm(dataa, setErrors)
+          validateStorePartnerForm(dataa, setErrors,selectedOptions)
         }
       };
     
@@ -252,10 +252,9 @@ const StoreRegistration = () => {
             formdata.append("solar_invertor_ids", value);
         }
 
-        console.log("TTTTTTTTT",dataa?.store_type_id,selectedOptions);
 
         // Validate the form data
-        if (validateStorePartnerForm(dataa, setErrors)) {
+        if (validateStorePartnerForm(dataa, setErrors,selectedOptions)) {
             try {
                 // Set the asset_id based on local storage
                 dataa.asset_id = id
@@ -411,7 +410,7 @@ const StoreRegistration = () => {
     useEffect(() => {
         const foundItems: any = itemsToFind1?.length > 0 ? targetArray1?.filter((item: any) => itemsToFind1?.includes(`${item?.id}`))?.map((item:any)=>item?.id) : targetArray1?.filter((item: any) => item?.id === itemsToFind1)?.map((item:any)=>item?.id);
         setSelectedOptions(foundItems)
-    }, [StorageType?.data, dataa?.store_type_id])
+    }, [StorageType?.data,itemsToFind1])
 
     useEffect(() => {
         if(profileData?.data[0]?.phone_number===fetchDetails?.data?.store?.facility_manager_contact){

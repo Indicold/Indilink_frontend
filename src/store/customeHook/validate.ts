@@ -347,7 +347,8 @@ export const validateBasicInfoForm = (formData: any, setErrors: any) => {
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 
-export const validateStorePartnerForm = (formData: any, setErrors: any) => {
+export const validateStorePartnerForm = (formData: any, setErrors: any,selectedOptions:any) => {
+console.log("fggfghfh",formData);
 
     const newErrors: any = {}
 
@@ -379,7 +380,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         newErrors.total_tonnage ='Total Tonnage is required'
     }
 
-    if (formData?.store_type_id?.length == 0 || !formData?.store_type_id) {
+    if (selectedOptions?.length == 0 || !selectedOptions) {
         newErrors.store_type_id = 'Store Type is required'
     }
 
@@ -474,6 +475,7 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
         newErrors.photos_of_asset = 'This Field is required'
     }
+console.log("wertjkl",newErrors);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
