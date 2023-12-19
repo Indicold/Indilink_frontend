@@ -24,6 +24,8 @@ import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
     onkeyDown,
+    onkeyDownNew,
+    onkeyDownforNumSpecialCharcter,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -173,7 +175,7 @@ const StoreRegistration = () => {
     // Handle the form submission
     const handleRoute = async () => {
         const { token }: any = getToken()
-        dataa['store_type_id'] = selectedOptions || []
+        // dataa['store_type_id'] = selectedOptions || []
         dataa['store_type_valid'] = selectedOptions?.length<1
         
         let formdata: any = new FormData();
@@ -181,7 +183,7 @@ const StoreRegistration = () => {
         formdata.append("city_id", dataa?.city_id);
         formdata.append("address", dataa?.address);
         formdata.append("total_tonnage", dataa?.total_tonnage);
-        if (dataa?.store_type_id) for (const value of selectedOptions?.map((item: any) => item)) {
+        if (selectedOptions?.length>0) for (const value of selectedOptions?.map((item: any) => item)) {
             formdata.append("store_type_id", value);
         }
         formdata.append("cold_storage_type_id", dataa?.cold_storage_type_id);
@@ -250,6 +252,7 @@ const StoreRegistration = () => {
             formdata.append("solar_invertor_ids", value);
         }
 
+        console.log("TTTTTTTTT",dataa?.store_type_id,selectedOptions);
 
         // Validate the form data
         if (validateStorePartnerForm(dataa, setErrors)) {
@@ -790,6 +793,7 @@ const StoreRegistration = () => {
                                             placeholder="Facility Manager Name"
                                             value={dataa?.facility_manager_name}
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors &&
@@ -900,7 +904,7 @@ const StoreRegistration = () => {
                                                     handlechange(e)
                                                 }
                                                 name="total_tonnage"
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
                                             />
@@ -917,7 +921,7 @@ const StoreRegistration = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Type Of Store*")}
+                                        label= {t("Store Category*")}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                          <div className="flex flex-col w-full" role='button' onClick={()=>setMultiOption(!multiOption)}>
@@ -1041,7 +1045,7 @@ const StoreRegistration = () => {
                                                     handlechange(e)
                                                 }
                                                 name="ante_room_area"
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
                                             />
@@ -1071,7 +1075,7 @@ const StoreRegistration = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            onKeyDown={onkeyDown}
+                                            onKeyDown={onkeyDownNew}
                                             component={Input}
                                         />
                                         <p className="text-[red]">
@@ -1096,7 +1100,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="total_office_space"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
@@ -1163,7 +1167,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="processing_area"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}
@@ -1192,7 +1196,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
-                                                onKeyDown={onkeyDown}
+                                                onKeyDown={onkeyDownNew}
                                                 name="parking_area"
                                                 placeholder="Enter value"
                                                 disabled={location?.state}

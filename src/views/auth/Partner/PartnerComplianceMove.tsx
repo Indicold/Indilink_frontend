@@ -23,7 +23,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
-import { messageView } from '@/store/customeHook/validate'
+import { messageView, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate'
 import InfoIcon from '@mui/icons-material/Info';
 import usePutApi from '@/store/customeHook/putApi'
 const PartnerComplianceMove = () => {
@@ -487,7 +487,8 @@ const PartnerComplianceMove = () => {
                                                         file:bg-gray-100 file:mr-4
                                                       file:py-3 file:px-4
                                                              dark:file:bg-gray-700 dark:file:text-gray-400"
-                                                   onChange={(e: any) => handleChange(e, item)} />
+                                                   onChange={(e: any) => handleChange(e, item)}
+                                                   onKeyDown={onkeyDownforSpecialCharcter} />
 
                                                {item?.licenseNo && (
                                                    <p className="text-[red]">

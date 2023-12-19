@@ -34,7 +34,25 @@ export const validateEmail = async (email: any, setIsEmailValid: any) => {
     }
 }
 export const onkeyDownforSpecialCharcter=(e:any)=>{
-    if ( e.key === '-' || e.key === '+' || e.key === '#' || e.key === '%' || e.key === '&' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' || e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' || e.key =='"' || e.key =="'" ) {
+    if ( e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
+
+export const onkeyDownforNumSpecialCharcter=(e:any)=>{
+    if ( e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~' ||
+    e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' || e.key === '5'
+    || e.key === '6' || e.key === '7' || e.key === '8' || e.key === '9') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
 }
@@ -347,6 +365,9 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
     if (!formData?.address) {
         newErrors.address = 'Address is required'
     }
+    if (formData?.address?.length<4) {
+        newErrors.address = 'Address should be atleast 5 character'
+    }
 
     if (!formData?.total_tonnage || formData?.total_tonnage==='' || formData?.total_tonnage<=0) {
         // if (formData?.total_tonnage==='') {
@@ -470,6 +491,21 @@ export const validateStorePartnerForm = (formData: any, setErrors: any) => {
         e.preventDefault(); 
       }
  }
+ export const onkeyDownNew=(e:any)=>{
+    if (e.target.name === 'temp_range_min' || e.target.name === 'temperature_min') {
+        if ((e.key === 'e' || e.target.value?.length==5 || e.key === 'E' || e.key === '+') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+            e.preventDefault();
+        }
+    }
+    else {
+        if ((e.key === 'e' || e.key === '-' || e.target.value?.length==5 || e.key === 'E' || e.key === '+') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+            e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+        }
+          if(e.target.value?.length<1 &&  e.key === '0' && e.target.name !== 'temp_range_max' && e.target.name !== 'temperature_max'){
+            e.preventDefault(); 
+        }
+    }
+ }
  export const onkeyDownDimension=(e:any)=>{
     if (e.key === 'e' || e.key === '-' || e.key === 'E' || e.key === '+') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
@@ -526,7 +562,7 @@ if(!formData?.chassis_no){
     }
     
     if (formData?.vehicle_no && !textContainsNumber(formData?.vehicle_no)) {
-        newErrors.vehicle_no = 'Please Enter Valid Vehical No'
+        newErrors.vehicle_no = 'Please Enter Valid Vehicle No'
     }
     if(!formData?.vehicle_no){
         newErrors.vehicle_no = 'This Field is required'

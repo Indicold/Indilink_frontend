@@ -7,7 +7,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateGeneratorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateGeneratorForm, onkeyDownforNumSpecialCharcter, onkeyDownNew } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -172,6 +172,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="Make"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -189,7 +190,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="Model"
                                             component={Input}
-                                          
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}                                          
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -209,6 +210,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="KVA"
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.kva}

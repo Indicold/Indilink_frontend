@@ -23,7 +23,7 @@ i18n
           'City*': 'City*',
           'Address*': 'Address*',
           'Total Tonnage(MT)*': 'Total Tonnage(MT)*',
-          'Type Of Store*': 'Type Of Store*',
+          'Store Category*': 'Store Category*',
           'Type of Cold Storage*': 'Type of Cold Storage*',
           'Ante Room - Area (Square feet)*': 'Ante Room - Area (Square feet)*',
           'Total number of docks*': 'Total number of docks*',
@@ -144,7 +144,7 @@ i18n
           "Contact Number*":"Contact Number*",
           "Address*": "Address*",
           "Total Tonnage(MT)*": "Total Tonnage(MT)*",
-          "Type Of Store*":"Type Of Store*",
+          "Store Category*":"Store Category*",
           "Type of Cold Storage*":"Type of Cold Storage*",
           "Ante Room - Area (Square feet)*":"Ante Room - Area (Square feet)*",
           "Total number of docks*":"Total number of docks*",
@@ -189,12 +189,16 @@ i18n
           'Asset Specifications':'Asset Specifications',
           "Compliance Details":"Compliance Details",
           "Ammount Of Investment":"Ammount Of Investment",
-
-
-
-
-
-
+          "nav.partner": "Partner",
+          "nav.collapseMenu.collapseMenu": "Assets",
+          "nav.collapseMenu.item1": "Add Asset",
+          "nav.collapseMenu.item2": "Assets List",
+          "nav.collapseMenu.item3": "Invoice",
+          "nav.home": "Home",
+          "nav.CustomerMenu.groupMenu": "Customer Query",
+          "nav.CustomerMenu.item1": "Add Query",
+          "nav.CustomerMenu.item2": "Query List",
+          "nav.investor": "Investor"
 
 
 
@@ -216,12 +220,14 @@ i18n
           "Valid Till":"तक मान्य",
            "Partner Dashboard":"साथी नियंत्रण-पट्ट",
            "Partner":"साथी",
+           "nav.partner": "साथी",
            "Bussiness Type":"व्यापार के प्रकार",
            "Type":"प्रकार", 
            "Choice on Business":'व्यवसाय पर विकल्प',
            "Customer Dashboard":"ग्राहक नियंत्रण-पट्ट ",
            "Customer":"ग्राहक",
            "Investor":"निवेशक",
+           "nav.investor":"निवेशक",
            "Investor Dashboard":"निवेशक  नियंत्रण-पट्ट",
            "Request for solution":" समाधान हेतु अनुरोध"   ,
            "You may also change later":"आप बाद में बदल भी सकते हैं",
@@ -299,7 +305,7 @@ i18n
           "Contact Number*":"संपर्क संख्या*",
           "Address*":"पता*",
           "Total Tonnage(MT)*":"कुल टन भार*",
-          "Type Of Store*":"स्टोर का प्रकार*",
+          "Store Category*":"स्टोर का प्रकार*",
           "Type of Cold Storage*":"कोल्ड स्टोरेज का प्रकार*",
           "Ante Room - Area (Square feet)*":"पूर्व कक्ष - क्षेत्रफल (वर्ग फुट)*",
           "Total number of docks*":"गोदी की कुल संख्या*",
@@ -344,9 +350,14 @@ i18n
           'Asset Specifications':"संपत्ति विशिष्टताएँ",
           "Compliance Details":"अनुपालन विवरण",
           "Ammount Of Investment":"निवेश की राशि",
-            
-          
-          
+          "nav.collapseMenu.collapseMenu": "संपत्ति",
+          "nav.CustomerMenu.groupMenu": "ग्राहक प्रश्न",
+          "nav.home": "घर",
+          "nav.collapseMenu.item1": "संपत्ति जोड़ें",
+          "nav.collapseMenu.item2": "संपत्ति सूची",
+          "nav.collapseMenu.item3": "चालान",
+          "nav.CustomerMenu.item1": "प्रश्न जोड़ें",
+          "nav.CustomerMenu.item2": "प्रश्न सूची"
               
         }
       },
@@ -368,6 +379,7 @@ i18n
           "Bussiness Type":"व्यापार प्रकार",
           "Ammount Of Investment":"लगानीको रकम",
           "Partner":"साझेदार",
+          "nav.partner":"साझेदार",
           "Type":"प्रकार", 
           "Partner Dashboard":"साझेदार ड्यासबोर्ड",
           "Choice on Business":'व्यवसाय मा छनोट',
@@ -375,6 +387,7 @@ i18n
           "Customer":"ग्राहक",
           "Investor Dashboard":"लगानीकर्ता ड्यासबोर्ड",
           "Investor":"लगानीकर्ता",
+          "nav.investor":"लगानीकर्ता",
           "Request for solution":"समाधानको लागि अनुरोध",
           "You may also change later":"तपाईं पछि परिवर्तन पनि गर्न सक्नुहुन्छ",
           "Select Country":"देश चयन गर्नुहोस् ",
@@ -441,7 +454,7 @@ i18n
          "Contact Number*":"सम्पर्क नम्बर*",
          "Address*":"ठेगाना*",
          "Total Tonnage(MT)*":"कुल टनेज*",
-         "Type Of Store*":"स्टोर को प्रकार*",
+         "Store Category*":"स्टोर को प्रकार*",
          "Type of Cold Storage*":"कोल्ड स्टोरेज को प्रकार*",
          "Ante Room - Area (Square feet)*":"पूर्व कोठा - क्षेत्र (वर्ग फिट)*",
          "Total number of docks*":"डकहरूको कुल संख्या*",
@@ -485,16 +498,21 @@ i18n
          "Currently there are no IT Devices.":"हाल कुनै आईटी उपकरणहरू छैनन्",
          'Asset Specifications':"सम्पत्ति विवरणहरू",
          "Compliance Details":"अनुपालन विवरणहरू",
-
-
-
+         "nav.collapseMenu.collapseMenu": "संपत्ति",
+         "nav.CustomerMenu.groupMenu": "ग्राहक प्रश्न",
+         "nav.home": "घर",
+         "nav.collapseMenu.item1": "संपत्ति जोड़ें",
+          "nav.collapseMenu.item2": "संपत्ति सूची",
+          "nav.collapseMenu.item3": "चालान",
+          "nav.CustomerMenu.item1": "प्रश्न जोड़ें",
+          "nav.CustomerMenu.item2": "प्रश्न सूची"
 
         }
       }
 
     },
     fallbackLng: "en",
-    debug: true,
+    debug: false,
 
     // have a common namespace used around the full app
     ns: ["translations"],

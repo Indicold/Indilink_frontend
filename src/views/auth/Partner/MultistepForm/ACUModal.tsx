@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui' // Importing custom UI components
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch' // Custom hook for API call
-import { handleStoreTable, messageView, validateACUForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -197,6 +197,7 @@ if(PutApiResponse?.status===200){
                                             value={data?.make}
                                             placeholder="Make"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.make}
@@ -214,6 +215,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="Model"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.model}
@@ -244,6 +246,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="C.F.M."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.cmf}
@@ -270,6 +273,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="H.P."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.hp}
@@ -319,6 +323,7 @@ if(PutApiResponse?.status===200){
                                             }
                                             placeholder="T.R."
                                             component={Input}
+                                            onKeyDown={onkeyDownNew}
                                         />
                                         <p className="text-[red]">
                                             {errors && errors.tr}
