@@ -65,6 +65,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     const validateMobileDebounced = debounce(validateMobile, 300)
 
     const [phone, setPhone] = useState('');
+console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
 
     /**
      * The handleChange function updates the formData state based on the input value and performs
@@ -93,7 +94,7 @@ const SignUpForm = (props: SignUpFormProps) => {
         }
         newData[e.target.name] = e.target.value
         setFormData(newData)
-        if(error[e.target.name] || e.target.name === "password" || e.target.name === "confirm_password")validateForm(newData, setError)
+        if(error[e.target.name])validateForm(newData, setError,isMobileValid,isEmailValid)
     }
 
     const handleTermConditionChange = (e: any) => {
@@ -104,7 +105,7 @@ const SignUpForm = (props: SignUpFormProps) => {
         else {
             newData['term_condition'] = "off"
         }
-        validateForm(newData, setError)
+        validateForm(newData, setError,isMobileValid,isEmailValid)
         setFormData(newData)
     }
 
@@ -116,7 +117,7 @@ const SignUpForm = (props: SignUpFormProps) => {
     const handlesubmit = (e: any) => {
         e.preventDefault()
         // validateForm(formData, setError)
-        if (validateForm(formData, setError)) {
+        if (validateForm(formData, setError,isMobileValid,isEmailValid)) {
             setSubmitting(true)
             dispatch(updateFormData(formData))
             navigate('/basic-information')
@@ -262,7 +263,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     component={PasswordInput}
                                 />
                                 <p className="text-[red] normal-case">
-                                    {error && error.password}
+                                    {error && error.confirm_password}
                                 </p>
                             </FormItem>
                         </div>

@@ -58,15 +58,21 @@ export const onkeyDownforNumSpecialCharcter=(e:any)=>{
 }
 
 
-export const validateForm = (formData: any, setError: any) => {
+export const validateForm = (formData: any, setError: any,isMobileValid:any,isEmailValid:any) => {
     const errorss: any = {}
     const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&.#^+_-]{8,}$/;
 
 
     if (formData?.password !== formData?.confirm_password) {
 
-        errorss.password = 'Passwords do not match'
+        errorss.confirm_password = 'Passwords do not match'
     }
+    if(isMobileValid && isMobileValid !=='Eligible'){
+      errorss.phone_number=isMobileValid
+    }
+    if(isEmailValid && isEmailValid !=='Eligible'){
+        errorss.email=isEmailValid
+      }
     if (formData?.password?.length < 8) {
         errorss.password = 'Password too short'
     }
@@ -118,6 +124,42 @@ if(!strongPasswordRegex.test(formData?.password)){
     //   }
     // }
 
+    // Add more validation rules for other fields
+    setError(errorss)
+    return Object.keys(errorss).length == 0 // Empty string indicates no validation errors
+}
+export const validateBasicInformationForm = (formData: any, setError: any,Address:any) => {
+    const errorss: any = {}
+    const ValidGst =  /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/; 
+    const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if (formData?.gst && !ValidGst.test(formData?.gst)) {
+        errorss.gst = 'Enter a valid GST Number'
+    }
+    if (!formData?.panNo) {
+        errorss.panNo = 'Pan No is required'
+    }
+    if (formData?.panNo && !re.test(formData?.panNo) || formData?.panNo?.length !==10) {
+        errorss.panNo = 'Enter Valid PAN number'
+    }
+    if (!formData?.designation) {
+        errorss.designation = 'Designation is required'
+    }
+    if (!formData?.firm) {
+        errorss.firm = 'Firm Type is required'
+    }
+    if (!formData?.firmName) {
+        errorss.firmName = 'Firm Name is required'
+    }
+    if (!formData?.country) {
+        errorss.country = 'Country is required'
+    }
+    if(!Address){
+        errorss.dest_gps="GPS Location is required"
+    }
+
+console.log("RRRRRR",errorss);
+
+  
     // Add more validation rules for other fields
     setError(errorss)
     return Object.keys(errorss).length == 0 // Empty string indicates no validation errors
