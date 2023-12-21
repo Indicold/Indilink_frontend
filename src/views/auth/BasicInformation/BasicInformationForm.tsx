@@ -24,7 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
+import { onkeyDownforSpecialCharcter, validateBasicInformationForm } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -58,9 +58,10 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(10);
-    const [formData, setFormData] = useState({...selector?.details?.data,designation:""}); // State variable for formData management
-    const [GSTRes, setGSTRes] = useState({});
     const [Address,setAddress]=useState<any>("")
+
+    const [formData, setFormData] = useState({...selector?.details?.data,designation:"",country: "India",}); // State variable for formData management
+    const [GSTRes, setGSTRes] = useState({});
     const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
    const [postalCode,setPostalCode]=useState<any>('')
@@ -82,7 +83,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [panValidationMessage, setPanValidationMessage] = useState("");
     const [gstValidationMessage, setGstValidationMessage] = useState("");
     const [invalidGSTMessage, showInvalidGSTMessage] = useState(false);
-
+    const [error,setError]=useState<any>({})
 
 
     /**
@@ -135,100 +136,36 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      * field or selecting an option from a dropdown menu.
      */
     const handleChange = (e: any,key:any) => {
-        const newGst = e.target.value;
-        const newData = { ...formData, [key]: newGst };
+        const newData:any={...formData};
+        newData[e.target.name]=e.target.value;
         setFormData(newData);
-        const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-        const reGST =  /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;   
-        const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;     
-if(key==='gst' && !reGST.test(newGst)){
-    setGstValidationMessage('Enter a valid GST Number')
-    
-}else{
-    setGstValidationMessage('')
-}
-if (key==='panNo' && !panRegex.test(newGst)) {
-    setPanValidationMessage('Valid PAN number')
-  } else {
-    setPanValidationMessage('')
-  }
-
-        // if (key === 'gst') {
-        //     if (newGst.length == 15 && reGST.test(newGst)) {
-        //         showInvalidGSTMessage(false);
-        //         newData?.panNo && (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)
-        //         return;
-        //     }
-        //     else {
-        //         setDisabled(true);
-        //         showInvalidGSTMessage(true);
-        //     }
-
-        //     if (newGst.length != 0) {
-        //         setGstValidationMessage("Invalid GST Number");
-        //     }
-        //     else {
-        //         setGstValidationMessage("GST Number is required");
-        //     }
-        // }
-
-        // else {
-            if(key==='panNo'){
-                if (newData?.panNo?.length == 10 && re.test(newGst)) {
-            
-                    (newData?.designation || newData?.designation === '') ? setDisabled(false) : setDisabled(true)            
-                    showInvalidPanMessage(false);
-                    return;
-                }
-                // else {
-                //     setDisabled(true);
-                //     showInvalidPanMessage(true);
-                // }
-                
-                if (formData?.panNo?.length != 0) {
-                    setPanValidationMessage("Invalid Pan Number");
-                }else if(!formData?.panNo){
-                    setPanValidationMessage('')
-                }
-                else {
-                    setPanValidationMessage("Pan Number is required");
-                }
-            }
-          if(key==='designation' && newData?.designation?.length>0){
-            setDisabled(false)
-          }
-        // }
+        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
+  
 
       };
 
 
       const handledChange = (e: any,key:any) => {
-        const newGst = e.target.value;
-        const newData = { ...formData, [key]: newGst };
+        const newData = { ...formData};
+        newData[e.target.name]=e.target.value;
         setFormData(newData);
-
-        newData?.gst && newData?.gst.length == 15 && newData?.panNo && newData?.panNo.length == 10 && e.target.value !== '' ? setDisabled(false) : setDisabled(true)
-        if(key==='designation' && newData?.designation?.length>0){
-            setDisabled(false)
-          } 
+        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
+       
     }
 
       
       const handledfChange = (e: any,key:any) => {
-        const newGst = e.target.value;
-        const newData = { ...formData, [key]: newGst };
+        const newData = { ...formData};
+        newData[e.target.name]=e.target.value;
         setFormData(newData);
+        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
       }
 
       const handledfnChange = (e: any,key:any) => {
-        const newGst = e.target.value;
-        if(key==='address'){
-
-        }else{
-            const newData = { ...formData, [key]: newGst };
-            setFormData(newData); 
-        }
-  
+        const newData = {...formData};
+        newData[e.target.name]=e.target.value;
+        setFormData(newData);
+        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
       }
       const handleButtonClick = async () => {
     
@@ -250,23 +187,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
     const Add:any=Address?.split(',')
     
     const handlesubmit = () => {
-      
-        if (!postalCode || postalCode === "") {
-            toast.error("Please select GeoLocation again", {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017',fontSize:"bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
-            return;
-        }
+    
         let ObjectData:any={
             first_name:formData?.first_name,
             last_name:formData?.last_name,
@@ -289,7 +210,10 @@ if (key==='panNo' && !panRegex.test(newGst)) {
 
           
         setSubmitting(false)
-        sendPostRequest(ObjectData);
+        if(validateBasicInformationForm(formData,setError,Address)){
+            sendPostRequest(ObjectData);
+
+        }
        
         OTPPostDetails && OTPPostDetails?.status !== 400 && ObjectData && ObjectData?.firmType !== "" && ObjectData?.firmName !== "" ? setOtpModal(true) : null
         // OTPPostDetails?.message && setOtpModal(true)
@@ -417,7 +341,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                 <form className="" onSubmit={(e) => handleFinalSubmit(e)}>
                                     <div>
                                         <div className="otp mx-auto">
-                                            <input type='text' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
+                                            <input type='number' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} onKeyDown={onkeyDownforSpecialCharcter} />
                                         </div>
                                     </div>
                                     <button
@@ -438,7 +362,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
             library. It renders a form with various input fields and a submit button. */}
             <Formik
                 initialValues={{
-                    country: "india",
+                    country: "India",
 
                 }}
          
@@ -464,9 +388,8 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                 max="15"
                                 maxLength={15}
                             />
-                            {gstValidationMessage && (
-                                    <div className='text-[red]'>{gstValidationMessage}</div>
-                                )}
+                          
+                                    <p className='text-[red]'>{error && error?.gst}</p>
                         </FormItem>
 
                         <FormItem
@@ -487,9 +410,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                     max="10"
                                     maxLength={10}
                                 />
-                                {panValidationMessage && (
-                                    <div className='text-[red]'>{panValidationMessage}</div>
-                                )}
+                                <p className='text-[red]'>{error && error?.panNo}</p>
                             </FormItem>
                         <div className="">
                             <FormItem
@@ -507,6 +428,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                     component={Input}
                                     className=''
                                 />
+                                       <p className='text-[red]'>{error && error?.country}</p>
                             </FormItem>
                         </div>
 
@@ -527,6 +449,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                     className=''
                                     max="35"
                                 />
+                                 <p className='text-[red]'>{error && error?.designation}</p>
                             </FormItem>
                         <div className="lg:flex">
                             <FormItem
@@ -548,7 +471,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                     component={Input}
                                     className=''
                                 />
-                              
+                                   <p className='text-[red]'>{error && error?.firm}</p>
                             </FormItem>
 
                             <FormItem
@@ -568,7 +491,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                     component={Input}
                                     className=''
                                 />
-                              
+                                <p className='text-[red]'>{error && error?.firmName}</p>
                             </FormItem>
 
                         </div>
@@ -615,7 +538,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                             //    setFormData({...formData,dest_gps:place?.formatted_address})
                                             }}
                                         />
-                                
+                                 <p className='text-[red]'>{error && error?.dest_gps}</p>
                                 {/* <Field
                                     type="text"
                                     autoComplete="off"
@@ -681,7 +604,7 @@ if (key==='panNo' && !panRegex.test(newGst)) {
                                 block
                                 style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
-                                disabled={isDisabled}
+                                // disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
                                 className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
