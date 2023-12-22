@@ -213,6 +213,8 @@ useEffect(()=>{
                     aria-hidden="true"
                     className="my-auto bg-green-100 otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
+            {(AssetsLoading || QLoading)&& <LoaderSpinner />}
+
                     <div className={`relative w-full ${localStorage.getItem('user_type') ===
                                     'Customer' ?"max-w-[900px]" :"max-w-[800px]" }  mt-[50px] max-h-full`}>
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

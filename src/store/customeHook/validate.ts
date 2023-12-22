@@ -281,11 +281,14 @@ if (!existingChamberIdsJSON) {
     }
 }
 
-export const validatePrepareForm = (formData: any, setErrors: any) => {
+export const validatePrepareForm = (formData: any, setErrors: any,selectedOptions:any,selectedOptions1:any) => {
     const newErrors: any = {}
 
     if (!formData?.city_id) {
         newErrors.city_id = 'City is required'
+    }
+    if(selectedOptions?.length===0){
+        newErrors.product_category_ids = 'Product category is required'
     }
 
     if (!formData?.address) {
@@ -303,9 +306,9 @@ export const validatePrepareForm = (formData: any, setErrors: any) => {
     if (!formData?.prepare_type_id || formData?.prepare_type_id == 'Types Of Prepare') {
         newErrors.prepare_type_id = 'Prepare type is required'
     }
-    if (formData?.product_category_ids?.length == 0) {
-        newErrors.product_category_ids = 'Product category is required'
-    }
+    // if (formData?.product_category_ids?.length == 0) {
+    //     newErrors.product_category_ids = 'Product category is required'
+    // }
     if (!formData?.throughput) {
         if (formData?.throughput==='') {
             newErrors.throughput = 'Throughput is required'
