@@ -225,7 +225,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
                 )
             }
             return (
-                <td key={i} className="text-center">
+                <td key={i} className="text-center ellipse-text">
                     {rowData[key]}
                 </td>
             )
@@ -277,7 +277,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
                 />
             </div>
             <div className='overflow-auto'>
-                <table className="w-screen">
+                <table className="w-screen lg:w-full md:w-full">
                     <thead className=' w-[100%]'>
                         <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[45px]">
                             {headRow()}

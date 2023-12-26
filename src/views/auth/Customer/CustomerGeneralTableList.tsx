@@ -73,13 +73,13 @@ const CustomerGeneralTableList = ({ AllStore,fetchDataG }: any) => {
 
   React.useEffect(() => {
     // Update the displayed data when the AllStore prop changes.
-    if (allData) {
+    if (allData && countPerPage && currentPage) {
       const to = countPerPage * currentPage;
       const from = to - countPerPage; 
-        const newCollection = cloneDeep(allData.slice(from, to));
-        setCollection(newCollection);
+      const newCollection = cloneDeep(allData.slice(from, to));
+      setCollection(newCollection);
     }
-  }, [allData]);
+  }, [AllStore, countPerPage, currentPage]);
 
   const updatePage = (p: any) => {
     // Function to update the current page of data.

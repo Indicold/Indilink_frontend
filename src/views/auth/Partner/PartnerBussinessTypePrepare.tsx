@@ -205,7 +205,7 @@ const PartnerBussinessTypePrepare = () => {
         let isValid = validatePrepareForm(data, setErrors,selectedOptions,selectedOptions1)
         if (isValid) {
             PostPrepareRegisterDetails({...data,asset_id:id})
-            localStorage.setItem('asset_id',"2")
+            localStorage.setItem('asset_id',"3")
             navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
@@ -215,7 +215,7 @@ const PartnerBussinessTypePrepare = () => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
             messageView('Data Updated Successfully!')
             setTimeout(() => {
-                localStorage.setItem('asset_id',"2")
+                localStorage.setItem('asset_id',"3")
                 navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
             }, 2000)
         }

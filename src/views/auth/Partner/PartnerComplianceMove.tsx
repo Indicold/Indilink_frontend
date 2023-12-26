@@ -496,7 +496,7 @@ const PartnerComplianceMove = () => {
                                                    </p>
                                                )}
                                            </FormItem>
-                                           <FormItem
+                                           {/* <FormItem
                                    label="Status"
                                    className="w-[100%] pl-2 rounded-lg text-label-title"
                                >
@@ -521,7 +521,7 @@ const PartnerComplianceMove = () => {
                                                         <option value={0} selected={item?.doc_status === 0}>{t("Pending")}</option>
                                    </select>
                                  
-                               </FormItem>
+                               </FormItem> */}
                                        </div>
 
 

@@ -530,7 +530,16 @@ console.log("wertjkl",newErrors);
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
  }
+ export const onKeyDownForNumber = (e:any) => {
+    // Allow only characters (letters)
+    if (!((e.key >= 'a' && e.key <= 'z') || (e.key >= 'A' && e.key <= 'Z') || e.key === 'Backspace' || e.key === 'Delete' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'Tab')) {
+        e.preventDefault(); // Prevent the default behavior for non-character keys
+    }
+};
+
  export const onkeyDownOne=(e:any)=>{
+    console.log("TYYYYYYYYY7878");
+    
     if (e.key === 'e' || e.key === '-') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
@@ -1084,17 +1093,26 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     if (formData?.case_size && !formData?.case_size_unit_id) {
         newErrors.case_size = 'Unit is required'
     }
-    if (!formData?.temp_min && formData?.temp_max && formData?.temp_max !== '0') {
+    if (!formData?.temp_min && formData?.temp_min !== '0') {
         newErrors.temp_min = 'This Field is required'
     }
-    if (!formData?.temp_max || formData?.temp_max === '0') {
-        if (!formData?.temp_min) {
-            newErrors.temp_max = 'Minimum and Maximum Temperatures are required'
-        }
-        else {
-            newErrors.temp_max = 'Maximum Temperature is required'
+    if (!formData?.temp_max && formData?.temp_max !== '0') {
+        newErrors.temp_min = 'This Field is required'
+    }
+    if(formData?.temp_max && formData?.temp_min){
+        if(formData?.temp_max < formData?.temp_min){
+            newErrors.temp_max = 'Maximum Temperature should be greater'
         }
     }
+
+    // if (!formData?.temp_max || formData?.temp_max === '0') {
+    //     if (!formData?.temp_min) {
+    //         newErrors.temp_max = 'Minimum and Maximum Temperatures are required'
+    //     }
+    //     else {
+    //         newErrors.temp_max = 'Maximum Temperature is required'
+    //     }
+    // }
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This Field is required'
     }

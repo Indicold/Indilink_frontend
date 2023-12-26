@@ -158,7 +158,7 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 )
             }
             return (
-                <td key={i} className="text-center">
+                <td key={i} className="text-center ellipse-text">
                     {rowData[key]}
                 </td>
             )
@@ -213,7 +213,7 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                 />
             </div>
             <div className='overflow-auto'>
-            <table className="w-screen">
+            <table className="w-screen lg:w-full md:w-full">
                 <thead>
                     <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
                         {headRow()}
