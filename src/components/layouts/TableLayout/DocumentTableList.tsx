@@ -26,7 +26,7 @@ const tableHead = {
 
 // The DocumentTableList component takes a prop called AllStore, presumably for rendering data.
 
-const DocumentTableList = ({ AllStore }: any) => {
+const DocumentTableList = ({ AllStore,AllLength,setPageNo }: any) => {
   let allData: any = AllStore?.map((item:any, index:any) => ({
     ...item,
     Id: index + 1
@@ -76,9 +76,10 @@ const DocumentTableList = ({ AllStore }: any) => {
   const updatePage = (p: any) => {
     // Function to update the current page of data.
     setCurrentPage(p);
+    setPageNo(p)
     const to = countPerPage * p;
     const from = to - countPerPage;
-    setCollection(cloneDeep(allData.slice(from, to)));
+    setCollection(cloneDeep(allData));
   };
 
   const navigate = useNavigate();
@@ -165,7 +166,7 @@ const DocumentTableList = ({ AllStore }: any) => {
           pageSize={countPerPage}
           onChange={updatePage}
           current={currentPage}
-          total={allData.length}
+          total={countPerPage*AllLength?.data?.length}
         />
       </div>
     </>

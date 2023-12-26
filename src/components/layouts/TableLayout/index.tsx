@@ -29,7 +29,7 @@ const tableHead = {
 
 // The TableLayout component takes a prop called AllStore, presumably for rendering data.
 
-const TableLayout = ({ AllStore, fetchApi }: any) => {
+const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
 
   let allData: any = AllStore;
   
@@ -82,6 +82,8 @@ const TableLayout = ({ AllStore, fetchApi }: any) => {
   const updatePage = (p: any) => {
     // Function to update the current page of data.
     setCurrentPage(p);
+    setPageNo(p)
+    fetchApi()
     const to = countPerPage * p;
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
@@ -242,7 +244,7 @@ const TableLayout = ({ AllStore, fetchApi }: any) => {
     if (allData) {
       const to = countPerPage * currentPage;
       const from = to - countPerPage;
-      const newCollection = cloneDeep(allData.slice(from, to));
+      const newCollection = cloneDeep(allData);
       setCollection(newCollection);
     }
   }, [allData]);
@@ -316,7 +318,7 @@ const TableLayout = ({ AllStore, fetchApi }: any) => {
           pageSize={countPerPage}
           onChange={updatePage}
           current={currentPage}
-          total={allData.length}
+          total={AllLength?.data?.length}
         />
       </div>
     </>
