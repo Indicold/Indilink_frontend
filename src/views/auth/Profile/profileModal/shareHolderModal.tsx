@@ -26,9 +26,12 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
         const newdata: any = { ...formData };
         newdata[e.target.name] = e.target.value;
         if(e.target.name === 'shareholder_email'){
-            validateEmailDebounced(e.target.value, setIsEmailValid)
+            if(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newdata?.shareholder_email)){
+                validateEmailDebounced(e.target.value, setIsEmailValid)
+
+            }
         }else if (e.target.name === 'phone_number') {
-            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+            if(e.target.value.replace(/[^0-9]/g, "").length > 0 && e.target.value.replace(/[^0-9]/g, "").length === 10)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         setformData(newdata)
@@ -253,7 +256,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                                         handleChange(e)
                                                     }
                                                     name="phone_number"
-                                                    value={formData?.phone_number}
+                                                    value={formData?.phone_number?.slice(0,10)}
                                                     placeholder="Share Holder Phone Number"
                                                     component={Input}
                                                 />

@@ -36,6 +36,8 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
         }
 
         setData(newdata)
+        if(error[e.target.name])validateAccountForm(newdata, setErrors);
+        
     }
     const handlesubmit = () => {
         if (validateAccountForm(data, setErrors)) {

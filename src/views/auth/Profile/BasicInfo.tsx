@@ -70,6 +70,7 @@ const BasicInfo = () => {
             newdata[e.target.name] = Array.from(e.target.files);
         }
         setData(newdata);
+        if(error[e.target.name])validateBasicForm(newdata, setErrors)
     }
 
     const navigate = useNavigate()
@@ -117,6 +118,7 @@ const BasicInfo = () => {
             formdata.append("address", data?.address);
             formdata.append("pin_code", data?.pin_code);
             formdata.append("gst",data?.gst_number);
+            formdata.append("pan_number",data?.pan_number);
             
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
@@ -142,10 +144,25 @@ const BasicInfo = () => {
               body: formdata,
               redirect: "follow",
             };
+            var requestOptionsUpdate:any = {
+                method: 'PUT',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
+              };
             
             if(BasicInfo?.data[0]?.gst_file?.length>0){
-         
-                navigate('/key-management')
+                fetch(`${apiUrl}/auth/basic-detail/${data?.id}`, requestOptionsUpdate)
+                .then((response) => response.json())
+                .then((result) => {
+                  messageView(result?.message)
+                  if(result?.status==200){
+   navigate('/key-management')
+                  }
+                })
+                .catch((error) => {
+                  messageView(error?.message)
+                });
             }else{
                 fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
                 .then((response) => response.json())
@@ -186,27 +203,28 @@ const BasicInfo = () => {
 
     }, [BranchList?.data])
     
-    useEffect(() => {
-        if (companyDetails?.data?.length>0) {
-            setData(
-                {
-                    ...data,
-                    country_id: companyDetails?.data[0].country_id,
-                    state_id: companyDetails?.data[0].state_id,
-                    address: companyDetails?.data[0].address,
-                    pin_code: companyDetails?.data[0].pin_code,
-                    gst_number: companyDetails?.data[0].gst
-                })
+    // useEffect(() => {
+    //     if (companyDetails?.data?.length>0) {
+    //         setData(
+    //             {
+    //                 ...data,
+    //                 country_id: companyDetails?.data[0].country_id,
+    //                 state_id: companyDetails?.data[0].state_id,
+    //                 address: companyDetails?.data[0].address,
+    //                 pin_code: companyDetails?.data[0].pin_code,
+    //                 gst_number: companyDetails?.data[0].gst
+    //             })
 
-        }
-    }, [companyDetails?.data])
+    //     }
+    // }, [companyDetails?.data])
 
 useEffect(()=>{
     if(BasicInfo){
-        setData({...data,gst_file:BasicInfo?.data})
+        setData({...BasicInfo?.data[0],gst_file:BasicInfo?.data,gst_number:BasicInfo?.data[0]?.gst})
     }
  
 },[BasicInfo?.data])
+console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
     return (
         <div className='lg:flex'>
@@ -382,7 +400,7 @@ useEffect(()=>{
                                             handleChange(e)
                                         }
                                         name="gst_number"
-                                        value={data?.gst_number}
+                                        value={data?.gst_number !=='undefined' ? data?.gst_number :"" }
                                         placeholder="GST Number"
                                         component={Input}
                                     />

@@ -81,7 +81,7 @@ useEffect(()=>{
   const to = countPerPage * currentPage;
   const from = to - countPerPage;
   setCollection(cloneDeep(allData.slice(from, to)));
-},[allData])
+},[AllStore])
   const navigate = useNavigate();
 
   /**
@@ -259,7 +259,7 @@ return collection?.length>0 ? collection?.map((rowData: any, index: any) => tabl
         />
       </div>
       <div className='overflow-auto'>
-      <table className='w-screen'>
+      <table className='w-screen lg:w-full md:w-full'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>

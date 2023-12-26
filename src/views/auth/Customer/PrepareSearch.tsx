@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for API call
-import { formatDate, validatePrepareCustomerForm } from '@/store/customeHook/validate';
+import { formatDate, onkeyDown, onkeyDownOne, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
 import { useTranslation } from 'react-i18next' // For language translation
@@ -433,12 +433,27 @@ const PrepareSearch = () => {
                                 <div className="lg:flex  ">
 
                                 </div>
-                                <div className="bg-gray-100 p-2 mt-4 rounded-md">
+                                <div className="bg-gray-100 p-2 mt-4 rounded-md flex">
                                     <FormItem
-                                        label={t("Temperature*")}
+                                        label={t("Min Temperature*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
-                                        <div className='lg:flex gap-6 m-auto '>
+                                          <Field
+                                            disabled={isDisabled}
+                                            onKeyDown={(e:any) => {
+                                                if (e.keyCode === 69) {
+                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                                }
+                                              }}
+                                            onChange={(e: any) => handleChange(e)}
+                                            type="number"
+                                            autoComplete="off"
+                                            name="temp_min"
+                                            value={formData?.temp_min}
+                                            placeholder="Min Temperature"
+                                            component={Input}
+                                        />
+                                        {/* <div className='lg:flex gap-6 m-auto '>
                                             <div className='w-[100%] m-auto lg:w-1/2  '>
                                                 <select
                                                     disabled={isDisabled}
@@ -472,15 +487,37 @@ const PrepareSearch = () => {
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> */}
 
 
 
 
-                                        <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max : errors.temp_min}</p>
+                                        <p className='text-[red]'>{errors && errors.temp_min}</p>
 
                                     </FormItem>
-                                 
+                                    <FormItem
+                                        label={t("Max Temperature*")}
+                                        className="pl-3 w-[100%] text-label-title m-auto"
+                                    >
+                                          <Field
+                                              onKeyDown={(e:any) => {
+                                                if (e.keyCode === 69) {
+                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                                }
+                                              }}
+
+                                            disabled={isDisabled}
+                                            onChange={(e: any) => handleChange(e)}
+                                            type="number"
+                                            autoComplete="off"
+                                            name="temp_max"
+                                            value={formData?.temp_max}
+                                            placeholder="Max Temperature"
+                                            component={Input}
+                                        />
+                                         <p className='text-[red]'>{errors && errors.temp_max}</p>
+
+                                        </FormItem>
                                 </div>
 
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
