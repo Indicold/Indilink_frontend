@@ -17,7 +17,7 @@ import useApiFetch from '@/store/customeHook/useApiFetch'
 import { apiUrl, getToken } from '@/store/token'
 import { messageView } from '@/store/customeHook/validate'
 import { ToastContainer } from 'react-toastify'
-
+import PermScanWifiIcon from '@mui/icons-material/PermScanWifi';
 /**
  * The above type represents a dropdown list item in a TypeScript React application, containing a
  * label, path, and icon.
@@ -129,20 +129,14 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
                     <Dropdown.Item variant="header">
                         <div className="flex items-center">
                             <div className="mt-2 px-6  bg-white rounded-lg w-full">
-                                <div className=" inline-flex items-center justify-between w-full">
-                                    <div className="inline-flex items-center">
-                                        <img
-                                            src="https://cdn-icons-png.flaticon.com/128/763/763812.png"
-                                            alt="Training Icon"
-                                            className="w-6 h-6 mr-3"
-                                        />
-                                        <h3 className="font-bold text-base text-gray-800">{item?.name}</h3>
-                                    </div>
-                                    <p className="text-xs text-gray-500">{item?.created_at}</p>
-                                </div>
+                                <div className="flex items-center justify-between w-full">
+<PermScanWifiIcon className='text-[orange]' />
                                 <p className="mt-1 text-sm">
-                                    Hey! Do you remember about choosing your training regime?
+                                   {item?.content}
                                 </p>
+                                    <p className="text-xs text-gray-500">{getNotificationTime(item?.created_at)}</p>
+                                </div>
+                              
                             </div>
                         </div>
                     </Dropdown.Item>

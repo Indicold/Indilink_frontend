@@ -111,7 +111,7 @@ const KeyManagement = () => {
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={()=>setModal(true)}
-                                className='indigo-btn lg:!w-[40%] !w-[80%] m-auto rounded-xl shadow-lg'
+                                className='indigo-btn lg:!w-[40%] !w-[80%] m-auto rounded-xl shadow-lg me-1'
                             >
                               
                                    + Add Key Management Personnel

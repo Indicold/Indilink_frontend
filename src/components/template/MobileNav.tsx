@@ -119,7 +119,7 @@ const {default_user_type}:any=TokenInfo()
                                 <VerticalMenuContent
                                     navMode={navMode}
                                     collapsed={sideNavCollapse}
-                                    navigationTree={default_user_type===1 ? navigationPartnerConfig: default_user_type===3 ? navigationInvestorConfig : navigationConfig }
+                                    navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig: localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
                                     routeKey={currentRouteKey}
                                     userAuthority={userAuthority as string[]}
                                     direction={direction}
