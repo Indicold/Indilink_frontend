@@ -159,7 +159,7 @@ const PartnerBussinessTypePrepare = () => {
           );
         } else {
           setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
-          validatePrepareForm(formData, setErrors)
+          validatePrepareForm(formData, setErrors,selectedOptions,selectedOptions1)
         }
       };
 
@@ -171,7 +171,7 @@ const PartnerBussinessTypePrepare = () => {
           );
         } else {
           setSelectedOptions1((prevSelected:any) => [...prevSelected, optionId]);
-          validatePrepareForm(formData, setErrors)
+          validatePrepareForm(formData, setErrors,selectedOptions,selectedOptions1)
         }
       };
     // Define a function to handle form input changes
@@ -189,8 +189,8 @@ const PartnerBussinessTypePrepare = () => {
             newData[e.target.name] = e.target.value
         }
         setFormData(newData)
-        if(errors[key]) validatePrepareForm(newData, setErrors)
-        if (errors[e.target.name]) validatePrepareForm(newData, setErrors)
+        if(errors[key]) validatePrepareForm(newData, setErrors,selectedOptions,selectedOptions1)
+        if (errors[e.target.name]) validatePrepareForm(newData, setErrors,selectedOptions,selectedOptions1)
     }
 
     // Define a function to handle form submission and POST request
@@ -202,9 +202,10 @@ const PartnerBussinessTypePrepare = () => {
         data.product_type = selectedOptions1 || [];
         data.addr_longitude=longitude
         data.addr_latitude=latitude
-        let isValid = validatePrepareForm(data, setErrors)
+        let isValid = validatePrepareForm(data, setErrors,selectedOptions,selectedOptions1)
         if (isValid) {
             PostPrepareRegisterDetails({...data,asset_id:id})
+            localStorage.setItem('asset_id',"2")
             navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
         }
     }
@@ -214,6 +215,7 @@ const PartnerBussinessTypePrepare = () => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
             messageView('Data Updated Successfully!')
             setTimeout(() => {
+                localStorage.setItem('asset_id',"2")
                 navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
             }, 2000)
         }
@@ -353,7 +355,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex  w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
-                                                    className="w-full focus:outline-0"
+                                                    className="w-full focus:outline-0 mr-4"
                                                     name="city_id"
                                                     onChange={(e: any) =>
                                                         handleChange(e,'city_id',[])
@@ -445,7 +447,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex h-11 w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <select
                                                     disabled={isDisabled}
-                                                    className="w-full focus:outline-0"
+                                                    className="w-full focus:outline-0 mr-4"
                                                     name="prepare_type_id"
                                                     onChange={(e: any) =>
                                                         handleChange(e,'prepare_type_id',[])
@@ -678,7 +680,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     onChange={(e: any) => handleChange(e,'avg_case_size_unit_id',[])}
                                                     name="avg_case_size_unit_id"
-                                                    className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                    className="w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 mr-4"
                                                 >
 
                                                     {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
@@ -835,7 +837,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     onChange={(e: any) => handleChange(e,'batch_size_unit_id',[])}
                                                     name="batch_size_unit_id"
-                                                    className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                    className=" w-[20%]  input-md focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 mr-4"
                                                 >
 
                                                     {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (

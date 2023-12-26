@@ -643,7 +643,7 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
                                                 <FormItem
                                                     label={t("Licence No")}
                                                     key={index}
-                                                    className={`w-[100%] pl-2 rounded-lg text-label-title ${item?.key_text === '' ? 'invisible' : 'visible'}`}
+                                                    className={`w-[100%] rounded-lg text-label-title items-center ${item?.key_text === '' ? 'invisible' : 'visible'}`}
                                                 >
 
                                                     <input type='text'
@@ -667,13 +667,13 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
                                                         </p>
                                                     )}
                                                 </FormItem>
-                                                <FormItem
+                                            {false &&  <FormItem
                                                     label={t("Status")}
                                                     className="w-[100%] pl-2  text-label-title"
                                                 >
                                                     <select
                                                         disabled
-                                                        className="border border-gray-300 h-11 pl-2 pr-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                        className="border border-gray-300 h-11 pl-2 pr-3 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[100%] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mr-4"
                                                         name={`${item?.key_status}`}
 
                                                     >
@@ -691,7 +691,7 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
                                                         <option value={0} selected={item?.doc_status === 0}>{t("Pending")}</option>
                                                     </select>
 
-                                                </FormItem>
+                                                </FormItem>}
                                             </div>
 
 

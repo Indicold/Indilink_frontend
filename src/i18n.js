@@ -69,7 +69,7 @@ i18n
            "Investor":"Investor",
            "Investor Dashboard":"Investor Dashboard",
            "Request for solution":"Request for solution"   ,
-           "You may also change later":"आप बाद में बदल भी सकते हैं",
+           "You may also change later":"You may also change later",
            "Select Country":"Select Country",
            "Category":"Category",
            "Store":"Store",
