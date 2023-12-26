@@ -112,7 +112,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             <span className="sr-only">Close modal</span>
                         </button>
                         <div>
-                        <h4 className="text-head-title text-center">Key Management Personnel</h4>
+                        <h4 className="text-head-title text-center">Key Management Personal</h4>
             <Formik
                 initialValues={{ field: true }}
                 onSubmit={() =>

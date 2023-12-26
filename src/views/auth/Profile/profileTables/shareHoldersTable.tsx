@@ -95,6 +95,15 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                     </td>
                 )
             }
+            if (key === 'email') {
+                return (
+                    <td className="text-center ellipse-text" key={i}>
+                        {rowData.email
+                            ? rowData.email
+                            : 'Not Available'}
+                    </td>
+                )
+            }
             if (key === 'contract_download') {
 
                 return (

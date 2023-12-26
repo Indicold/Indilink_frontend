@@ -75,7 +75,7 @@ const KeyManagement = () => {
             </svg>
         </span>
         
-        <h6 className="font-medium leading-tight">Key Management Personnel</h6>
+        <h6 className="font-medium leading-tight">Key Management Personal</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
     <li className="mb-10 ml-6">
@@ -100,7 +100,7 @@ const KeyManagement = () => {
 
         <div className="bg-white w-[100%] lg:w-5/6">
             <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} />
-            <h4 className="text-head-title text-center">Key Management Personnel</h4>
+            <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
             <div className='mt-8 text-center'>
                     
@@ -114,7 +114,7 @@ const KeyManagement = () => {
                                 className='indigo-btn lg:!w-[40%] !w-[80%] m-auto rounded-xl shadow-lg me-1'
                             >
                               
-                                   + Add Key Management Personnel
+                                   + Add Key Management Personal
                                         </Button>
 
                         </div>

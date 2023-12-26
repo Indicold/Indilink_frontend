@@ -177,9 +177,10 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                                         </div>
                                         <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                        {!(formData?.type ==="Edit" || formData?.type ==="View") && <FormItem
-                                                label="Password*"
+                                                label="Password"
                                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
-                                            >
+                                                asterisk={true}
+                                           >
                                                 <Field
                                                     disabled={formData?.isdisabled}
                                                     type="password"

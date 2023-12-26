@@ -260,7 +260,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                             </svg>
                         </span>
 
-                        <h6 className="font-medium leading-tight">Key Management Personnel</h6>
+                        <h6 className="font-medium leading-tight">Key Management Personal</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
                     <li className="mb-10 ml-6">
