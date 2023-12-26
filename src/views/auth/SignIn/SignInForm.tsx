@@ -1,5 +1,5 @@
 /**
- * This is a TypeScript React component for a sign-in form with validation and submission
+ * TypeScript React sign-in form component.
  * functionality.
  * @property {string} email - The email property is a string that represents the user's email address.
  * It is required and must be a valid email format.
@@ -67,21 +67,18 @@ const SignInForm = (props: SignInFormProps) => {
         password: '',
     })
 
-    /* The below code is using the useDispatch hook from the React-Redux library to get a reference to
-    the dispatch function. The dispatch function is used to send actions to the Redux store,
-    triggering state updates. */
+
+    // Using useDispatch from React-Redux to access the dispatch function, enabling the sending of actions for state updates in the Redux store.
     const dispatch = useDispatch()
 
-    /* The below code is using the useSelector hook from the React Redux library to access the
-    `apiLoginPostReducer` state from the `auth` slice of the Redux store. The value of
-    `LoginResponse` will be the result of the selector function, which is the `apiLoginPostReducer`
-    state. */
+
+
+    // Utilizing useSelector from React Redux to retrieve the apiLoginPostReducer state from the auth slice in the Redux store, assigning the result to LoginResponse.
     const LoginResponse = useSelector(
         (state: any) => state?.auth?.apiLoginPostReducer
     )
 
-    /* The below code is a TypeScript React component that is destructuring the `props` object to
-    extract certain properties and assign them to variables. */
+    /* The below code is a TypeScript React component that is destructuring the `props` object to extract certain properties and assign them to variables. */
     const {
         disableSubmit = false,
         className,
@@ -190,9 +187,9 @@ const SignInForm = (props: SignInFormProps) => {
         setFormData(newData)
         if (error[e.target.name]) validateFormLogin(newData);
     }
-    /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
-        `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`
-        whenever the `LoginResponse?.responseData?.message?.accessToken` value changes. */
+
+    // useEffect updates the browser's localStorage with the changing access_token from LoginResponse?.responseData?.message?.accessToken.
+
     useEffect(() => {
         // localStorage.setItem(
         //     'access_token',
