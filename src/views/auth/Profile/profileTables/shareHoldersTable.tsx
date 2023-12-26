@@ -128,7 +128,7 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                 return (
                     <td className="text-center" key={i}>
                         {rowData?.admin?.first_name
-                            ? `${rowData?.admin?.first_name} ${rowData?.admin?.last_name}`
+                            ? `${rowData?.admin?.first_name} ${rowData?.admin?.last_name ? rowData?.admin?.last_name :""  }`
                             : 'Not Available'}
                     </td>
                 )

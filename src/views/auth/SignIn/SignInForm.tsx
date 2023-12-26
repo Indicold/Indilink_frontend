@@ -11,20 +11,13 @@
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
-import Alert from '@/components/ui/Alert'
 import PasswordInput from '@/components/shared/PasswordInput'
 import ActionLink from '@/components/shared/ActionLink'
-import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
-import useAuth from '@/utils/hooks/useAuth'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { userLoginApiPost } from '@/store'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { messageView, validateForm } from '@/store/customeHook/validate'
-import axios from 'axios'
 import { apiUrl } from '@/store/customeHook/token'
 import { ToastContainer } from 'react-toastify'
 import jwt_decode from "jwt-decode";
@@ -35,23 +28,6 @@ interface SignInFormProps extends CommonProps {
     forgotPasswordUrl?: string
     signUpUrl?: string
 }
-
-type SignInFormSchema = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-interface UserLoginApiPostPayload {
-    user_id: string
-    password: string
-}
-/* The `validationSchema` constant is defining the validation rules for the form fields in the
-`SignInForm` component. It is using the Yup library to create a validation schema object. */
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Please enter your email address'),
-    password: Yup.string().required('Please enter your password'),
-    rememberMe: Yup.bool(),
-})
 
 const SignInForm = (props: SignInFormProps) => {
     /* The below code is a TypeScript React component that defines a form with three state variables:
@@ -67,19 +43,9 @@ const SignInForm = (props: SignInFormProps) => {
         password: '',
     })
 
-    /* The below code is using the useDispatch hook from the React-Redux library to get a reference to
-    the dispatch function. The dispatch function is used to send actions to the Redux store,
-    triggering state updates. */
-    const dispatch = useDispatch()
 
-    /* The below code is using the useSelector hook from the React Redux library to access the
-    `apiLoginPostReducer` state from the `auth` slice of the Redux store. The value of
-    `LoginResponse` will be the result of the selector function, which is the `apiLoginPostReducer`
-    state. */
-    const LoginResponse = useSelector(
-        (state: any) => state?.auth?.apiLoginPostReducer
-    )
 
+ 
     /* The below code is a TypeScript React component that is destructuring the `props` object to
     extract certain properties and assign them to variables. */
     const {
@@ -190,20 +156,13 @@ const SignInForm = (props: SignInFormProps) => {
         setFormData(newData)
         if (error[e.target.name]) validateFormLogin(newData);
     }
-    /* The `useEffect` hook is used to perform side effects in a React component. In this case, the
-        `useEffect` hook is used to update the `access_token` value in the browser's `localStorage`
-        whenever the `LoginResponse?.responseData?.message?.accessToken` value changes. */
-    useEffect(() => {
-        // localStorage.setItem(
-        //     'access_token',
-        //     LoginResponse?.responseData?.message?.accessToken
-        // )
-    }, [LoginResponse?.responseData?.message])
+
     const handleRememberMeChange = (e: any) => {
         const newData = { ...formData };
         newData.rememberMe = e.target.checked; // Update rememberMe state
         setFormData(newData);
     };
+
     useEffect(() => {
         if (localStorage.getItem('RememberMe')) {
             const dataVal: any = localStorage.getItem('RememberMe');
@@ -213,15 +172,8 @@ const SignInForm = (props: SignInFormProps) => {
     return (
         <>
             <ToastContainer />
-
             <div className={className}>
-                {LoginResponse?.responseData?.message &&
-                    typeof LoginResponse?.responseData?.message === 'string' &&
-                    false && (
-                        <Alert showIcon className="mb-4" type="danger">
-                            <>{LoginResponse?.responseData?.message}</>
-                        </Alert>
-                    )}
+             
                 <Formik >
                     <Form className='md:m-auto ' onSubmit={handlesubmit}>
                         <FormContainer className="">
@@ -292,21 +244,7 @@ const SignInForm = (props: SignInFormProps) => {
                                     {isSubmitting ? 'Signing in...' : 'Log in'}
                                 </Button>
                             </div>
-                            {/* <div className="w-full flex">
-                            <NavLink
-                                to="/sign-in-otp"
-                                role="button"
-                                style={{
-                                    borderRadius: '13px',
-                                    textDecoration: 'auto',
-                                }}
-                                className="!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2"
-                            >
-                                {isSubmitting
-                                    ? 'Signing in...'
-                                    : 'Log in with Phone number'}
-                            </NavLink>
-                        </div> */}
+
                             <div className="text-center">
                                 <span className='text-field'>{`Don't have an account?`} </span>
                                 <ActionLink

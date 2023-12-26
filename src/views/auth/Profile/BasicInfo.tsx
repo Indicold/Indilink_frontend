@@ -150,8 +150,9 @@ const BasicInfo = () => {
                 body: formdata,
                 redirect: 'follow'
               };
+            console.log("tttuutttt",BasicInfo?.data[0]?.gst_file?.length>0);
             
-            if(BasicInfo?.data[0]?.gst_file?.length>0){
+            if(BasicInfo?.data[0]?.gst_file?.length>0 || data?.country_id){
                 fetch(`${apiUrl}/auth/basic-detail/${data?.id}`, requestOptionsUpdate)
                 .then((response) => response.json())
                 .then((result) => {

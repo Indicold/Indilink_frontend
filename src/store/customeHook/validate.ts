@@ -1151,6 +1151,9 @@ export const validateSHForm = (formData: any, setErrors: any) => {
     if (!formData?.authorized_signatory) {
         newErrors.authorized_signatory = 'This Field is required'
     }
+    if (!formData?.password) {
+        newErrors.password = 'This Field is required'
+    }
    
 
     setErrors(newErrors)
