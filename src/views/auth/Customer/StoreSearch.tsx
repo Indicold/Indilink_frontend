@@ -221,7 +221,7 @@ const StoreSearch = () => {
                                 <div className=" lg:flex ">
                                    
                                     <FormItem
-                                        label= {t("Country")} 
+                                        label= {t("Country*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto "
                                     >
                                         <select

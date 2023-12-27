@@ -31,15 +31,6 @@ type ResetPasswordFormSchema = {
     confirm_password: string
 }
 
-/* The `validationSchema` constant is defining the validation rules for the form fields in the
-`ResetPasswordForm` component. */
-const validationSchema = Yup.object().shape({
-    password: Yup.string().required('Please enter your password'),
-    confirm_password: Yup.string().oneOf(
-        [Yup.ref('password')],
-        'Your passwords do not match'
-    ),
-})
 
 const ResetPasswordForm = (props: ResetPasswordFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
@@ -47,7 +38,9 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
     const [resetComplete, setResetComplete] = useState(false)
 
     const [message, setMessage] = useTimeOutMessage()
-
+    const [error,setError]=useState<any>({})
+    const [formData,setFormData]=useState<any>({})
+    const [isSubmitting, setSubmitting] = useState(false)
     const navigate = useNavigate()
     const emailId=localStorage.getItem("email");
     /**
@@ -58,27 +51,45 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
      * @param setSubmitting - A function that takes a boolean value and updates the state of whether
      * the form is submitting or not.
      */
-    const onSubmit = async (
-        values: ResetPasswordFormSchema,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
-        const { password } = values
-        setSubmitting(true)
-        apiResetPassword({...values,email:emailId},messageView)
-        // try {
-        //     const resp = await apiResetPassword({ password })
-        //     if (resp.data) {
-        //         setSubmitting(false)
-        //         setResetComplete(true)
-        //     }
-        // } catch (errors) {
-        //     setMessage(
-        //         (errors as AxiosError<{ message: string }>)?.response?.data
-        //             ?.message || (errors as Error).toString()
-        //     )
-        //     setSubmitting(false)
-        // }
+    const validateFormPassword = (formD: any) => {
+        const strongPasswordRegex :any= /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+        const errors: any = {}
+      
+       
+        if(formD.password && !strongPasswordRegex.test(formD?.password)){
+            errors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
+        }
+        if (!formD.password) {
+            errors.password = "Password can't be Empty !"
+        }
+        if (!formD.confirm_password) {
+            errors.confirm_password = "Confirm Password can't be Empty !"
+        }
+        if(formD.password !==formD.confirm_password){
+            errors.confirm_password = "Password does not match"
+        }
+        setError(errors)
+        return Object.keys(errors).length == 0
     }
+    const handlechange = (e: any) => {
+        const newData: any = { ...formData }
+        newData[e.target.name] = e.target.value
+        setFormData(newData)
+        if (error[e.target.name]) validateFormPassword(newData);
+    }
+    const handlesubmit = (e: any) => {
+        e.preventDefault()
+        console.log("HGGGGGGGG",validateFormPassword(formData));
+        
+
+        if (validateFormPassword(formData)) {
+
+            setSubmitting(true)
+            apiResetPassword({...formData,email:emailId},messageView)
+        }
+    }
+ 
 
     const onContinue = () => {
         navigate('/sign-in')
@@ -123,61 +134,40 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                     </>
                 )}
             </div>
-            {/* {message && (
-                <Alert showIcon className="mb-4" type="danger">
-                    {message}
-                </Alert>
-            )} */}
+         
             <Formik
-                initialValues={{
-                    password: null,
-                    confirm_password: '',
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    if (!disableSubmit) {
-                        onSubmit(values, setSubmitting)
-                    } else {
-                        setSubmitting(false)
-                    }
-                }}
+            
             >
-                {({ touched, errors, isSubmitting }) => (
-                    <Form>
+                    <Form  onSubmit={(e:any)=>handlesubmit(e)}>
                       
                         <FormContainer>
                             {!resetComplete ? (
                                 <>
                                     <FormItem
                                         label="Password*"
-                                        invalid={
-                                            errors.password && touched.password
-                                        }
-                                            
-                                        errorMessage={errors.password}
-                                    >
+                                   >
                                         <Field
                                             autoComplete="off"
                                             name="password"
                                             placeholder="Password"
+                                            onChange={handlechange}
                                             component={PasswordInput}
                                         />
+                                         <p className='text-[red]'>{error && error?.password}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Confirm Password*"
-                                        invalid={
-                                            errors.confirm_password &&
-                                            touched.confirm_password
-                                        }
-                                        errorMessage={errors.confirm_password==='confirm_password cannot be null' ? 'Confirm password cannot be Empty' : errors.confirm_password}
+                                     
                                         className='mt-8'
                                     >
                                         <Field
                                             autoComplete="off"
                                             name="confirm_password"
                                             placeholder="Confirm Password"
+                                            onChange={handlechange}
                                             component={PasswordInput}
                                         />
+                                         <p className='text-[red]'>{error && error?.confirm_password}</p>
                                     </FormItem>
                                     <Button
                                         block
@@ -208,7 +198,6 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                             </div>
                         </FormContainer>
                     </Form>
-                )}
             </Formik>
         </div>
     )

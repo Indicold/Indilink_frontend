@@ -150,8 +150,9 @@ const BasicInfo = () => {
                 body: formdata,
                 redirect: 'follow'
               };
+            console.log("tttuutttt",BasicInfo?.data[0]?.gst_file?.length>0);
             
-            if(BasicInfo?.data[0]?.gst_file?.length>0){
+            if(BasicInfo?.data[0]?.gst_file?.length>0 || data?.country_id){
                 fetch(`${apiUrl}/auth/basic-detail/${data?.id}`, requestOptionsUpdate)
                 .then((response) => response.json())
                 .then((result) => {
@@ -259,7 +260,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                             </svg>
                         </span>
 
-                        <h6 className="font-medium leading-tight">Key Management Personnel</h6>
+                        <h6 className="font-medium leading-tight">Key Management Personal</h6>
                         {/* <p className="text-sm">Step details here</p> */}
                     </li>
                     <li className="mb-10 ml-6">

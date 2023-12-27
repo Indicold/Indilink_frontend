@@ -11,20 +11,13 @@
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
-import Alert from '@/components/ui/Alert'
 import PasswordInput from '@/components/shared/PasswordInput'
 import ActionLink from '@/components/shared/ActionLink'
-import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
-import useAuth from '@/utils/hooks/useAuth'
 import { Field, Form, Formik } from 'formik'
-import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { userLoginApiPost } from '@/store'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { messageView, validateForm } from '@/store/customeHook/validate'
-import axios from 'axios'
 import { apiUrl } from '@/store/customeHook/token'
 import { ToastContainer } from 'react-toastify'
 import jwt_decode from "jwt-decode";
@@ -35,23 +28,6 @@ interface SignInFormProps extends CommonProps {
     forgotPasswordUrl?: string
     signUpUrl?: string
 }
-
-type SignInFormSchema = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-interface UserLoginApiPostPayload {
-    user_id: string
-    password: string
-}
-/* The `validationSchema` constant is defining the validation rules for the form fields in the
-`SignInForm` component. It is using the Yup library to create a validation schema object. */
-const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Please enter your email address'),
-    password: Yup.string().required('Please enter your password'),
-    rememberMe: Yup.bool(),
-})
 
 const SignInForm = (props: SignInFormProps) => {
     /* The below code is a TypeScript React component that defines a form with three state variables:
@@ -68,17 +44,10 @@ const SignInForm = (props: SignInFormProps) => {
     })
 
 
-    // Using useDispatch from React-Redux to access the dispatch function, enabling the sending of actions for state updates in the Redux store.
-    const dispatch = useDispatch()
 
-
-
-    // Utilizing useSelector from React Redux to retrieve the apiLoginPostReducer state from the auth slice in the Redux store, assigning the result to LoginResponse.
-    const LoginResponse = useSelector(
-        (state: any) => state?.auth?.apiLoginPostReducer
-    )
-
-    /* The below code is a TypeScript React component that is destructuring the `props` object to extract certain properties and assign them to variables. */
+ 
+    /* The below code is a TypeScript React component that is destructuring the `props` object to
+    extract certain properties and assign them to variables. */
     const {
         disableSubmit = false,
         className,
@@ -155,6 +124,8 @@ const SignInForm = (props: SignInFormProps) => {
      * there are any errors.
      */
     const validateFormLogin = (formD: any) => {
+        const strongPasswordRegex :any= /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
         const errors: any = {}
         if (!formD.email) {
             errors.email = 'Email is required !'
@@ -168,7 +139,9 @@ const SignInForm = (props: SignInFormProps) => {
         if (/\.\@/.test(formD?.email)) {
             errors.email = 'Email not allow .@'
         }
-
+        if(formData.password && !strongPasswordRegex.test(formData?.password)){
+            errors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
+        }
         if (!formD.password) {
             errors.password = "Password can't be Empty !"
         }
@@ -183,24 +156,17 @@ const SignInForm = (props: SignInFormProps) => {
     const handlechange = (e: any) => {
         const newData: any = { ...formData }
         newData[e.target.name] = e.target.value
-        validateFormLogin(newData);
+        // validateFormLogin(newData);
         setFormData(newData)
         if (error[e.target.name]) validateFormLogin(newData);
     }
 
-    // useEffect updates the browser's localStorage with the changing access_token from LoginResponse?.responseData?.message?.accessToken.
-
-    useEffect(() => {
-        // localStorage.setItem(
-        //     'access_token',
-        //     LoginResponse?.responseData?.message?.accessToken
-        // )
-    }, [LoginResponse?.responseData?.message])
     const handleRememberMeChange = (e: any) => {
         const newData = { ...formData };
         newData.rememberMe = e.target.checked; // Update rememberMe state
         setFormData(newData);
     };
+
     useEffect(() => {
         if (localStorage.getItem('RememberMe')) {
             const dataVal: any = localStorage.getItem('RememberMe');
@@ -210,15 +176,8 @@ const SignInForm = (props: SignInFormProps) => {
     return (
         <>
             <ToastContainer />
-
             <div className={className}>
-                {LoginResponse?.responseData?.message &&
-                    typeof LoginResponse?.responseData?.message === 'string' &&
-                    false && (
-                        <Alert showIcon className="mb-4" type="danger">
-                            <>{LoginResponse?.responseData?.message}</>
-                        </Alert>
-                    )}
+             
                 <Formik >
                     <Form className='md:m-auto ' onSubmit={handlesubmit}>
                         <FormContainer className="">
@@ -289,21 +248,7 @@ const SignInForm = (props: SignInFormProps) => {
                                     {isSubmitting ? 'Signing in...' : 'Log in'}
                                 </Button>
                             </div>
-                            {/* <div className="w-full flex">
-                            <NavLink
-                                to="/sign-in-otp"
-                                role="button"
-                                style={{
-                                    borderRadius: '13px',
-                                    textDecoration: 'auto',
-                                }}
-                                className="!text-[#103492] mx-auto rounded-[30px] font-bold mx-auto py-2"
-                            >
-                                {isSubmitting
-                                    ? 'Signing in...'
-                                    : 'Log in with Phone number'}
-                            </NavLink>
-                        </div> */}
+
                             <div className="text-center">
                                 <span className='text-field'>{`Don't have an account?`} </span>
                                 <ActionLink

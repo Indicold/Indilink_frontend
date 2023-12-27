@@ -581,7 +581,7 @@ console.log("wertjkl",newErrors);
     }
  }
  export const onkeyDownPincode=(e:any)=>{
-    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==6 || e.key === '-' || e.key === '+' || e.key === 'e' || e.key === 'E') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
+    if ((e.target.value?.length<1 && e.key === '0') || ((e.target.value?.length==6 || e.key === '-' || e.key === '+' || e.key === 'e' || e.key === '.' || e.key === 'E') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')){
         e.preventDefault();
     }
  }
@@ -1085,13 +1085,13 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
         newErrors.throughput = 'This Field is required'
     }
     if (formData?.throughput && !formData?.throughput_unit_id) {
-        newErrors.throughput = 'Unit is required'
+        newErrors.throughput_unit_id = 'Unit is required'
     }
     if (!formData?.case_size) {
         newErrors.case_size = 'This Field is required'
     }
     if (formData?.case_size && !formData?.case_size_unit_id) {
-        newErrors.case_size = 'Unit is required'
+        newErrors.case_size_unit_id = 'Unit is required'
     }
     if (!formData?.temp_min && formData?.temp_min !== '0') {
         newErrors.temp_min = 'This Field is required'
@@ -1150,6 +1150,9 @@ export const validateSHForm = (formData: any, setErrors: any) => {
    
     if (!formData?.authorized_signatory) {
         newErrors.authorized_signatory = 'This Field is required'
+    }
+    if (!formData?.password) {
+        newErrors.password = 'This Field is required'
     }
    
 
