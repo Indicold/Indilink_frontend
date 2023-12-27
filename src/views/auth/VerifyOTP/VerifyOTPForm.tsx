@@ -3,7 +3,7 @@
  * Password) for password recovery.
  * @property {string} email - The email field is used to enter the user's email address.
  */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
@@ -35,9 +35,13 @@ const VerfyOtpForm = (props: ForgotPasswordFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
 
     const [emailSent, setEmailSent] = useState(false)
-    const [submitting,setSubmitting]=useState(false)
+    // const [submitting,setSubmitting]=useState(false)
     const [message, setMessage] = useTimeOutMessage()
+    
 const emailId=localStorage.getItem("email");
+const [error,setError]=useState<any>({})
+const [formData,setFormData]=useState<any>({})
+const [isSubmitting, setSubmitting] = useState(false)
     /**
      * The `onSendMail` function is used to handle the logic for sending a password reset email.
      * @param {ForgotPasswordFormSchema} values - The `values` parameter is an object that represents
@@ -46,6 +50,44 @@ const emailId=localStorage.getItem("email");
      * @param setSubmitting - A function that takes a boolean value and updates the state of whether
      * the form is submitting or not.
      */
+    const validateFormOTP = (formD: any) => {
+
+        const errors: any = {}
+        if (!formD.email) {
+            errors.email = 'Email is required !'
+        }
+
+        if (formD.email) {
+            if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+                errors.email = 'Invalid email address';
+            }
+        }
+        if (/\.\@/.test(formD?.email)) {
+            errors.email = 'Email not allow .@'
+        }
+        if(!formD?.OTP){
+            errors.OTP="OTP is required !"
+        }
+        setError(errors)
+        return Object.keys(errors).length == 0
+    }
+    const handlechange = (e: any) => {
+        const newData: any = { ...formData }
+        newData[e.target.name] = e.target.value
+        setFormData(newData)
+        if (error[e.target.name]) validateFormOTP(newData);
+    }
+    const handlesubmit = (e: any) => {
+        e.preventDefault()
+        console.log("HGGGGGGGG",validateFormOTP(formData));
+        
+
+        if (validateFormOTP(formData)) {
+            setSubmitting(true);
+    
+            apiVerifyOTP(formData,messageView)
+        }
+    }
     const onSendMail = (
         values: ForgotPasswordFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
@@ -82,6 +124,11 @@ const handleresend=()=>{
     }
     apiForgotPassword(data,messageView,setSubmitting)
 }
+useEffect(()=>{
+    if(emailId){
+        setFormData({...formData,email:emailId})
+    }
+},[])
     const newLocal = 'OTP*'
     return (
         <div className={className}>
@@ -106,53 +153,63 @@ const handleresend=()=>{
             </div>
             
             <Formik
-                initialValues={{
-                    email: emailId || null,
-                    OTP: null,
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    if (!disableSubmit) {
-                        onSendMail(values, setSubmitting)
-                    } else {
-                        setSubmitting(false)
-                    }
-                }}
+                // initialValues={{
+                //     email: emailId || null,
+                //     OTP: null,
+                // }}
+                // validationSchema={validationSchema}
+                // onSubmit={(values, { setSubmitting }) => {
+                //     if (!disableSubmit) {
+                //         onSendMail(values, setSubmitting)
+                //     } else {
+                //         setSubmitting(false)
+                //     }
+                // }}
             >
-                {({ touched, errors, isSubmitting }) => (
-                    <Form>
+                {/* {({ touched, errors, isSubmitting }) => ( */}
+                    <Form onSubmit={(e:any)=>handlesubmit(e)}>
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
                                 label='Email*'
-                                    invalid={errors.email && touched.email}
-                                    errorMessage={errors.email}
+                                    // invalid={errors.email && touched.email}
+                                    // errorMessage={errors.email}
                                 >
                                     <Field
                                         type="email"
                                         autoComplete="off"
                                         name="email"
                                         placeholder="Email"
+                                        value={formData?.email}
                                         component={Input}
+                                        onChange={handlechange}
                                     />
+                                      <p className='text-[red]'>{error && error?.email}</p>
                                 </FormItem>
                                 <FormItem
                                 label={newLocal}
-                                    invalid={errors.OTP && touched.OTP}
-                                    errorMessage={errors.OTP}
+                                    // invalid={errors.OTP && touched.OTP}
+                                    // errorMessage={errors.OTP}
                                 >
                                     <Field
-                                        type="text"
+                                        type="number"
+                                        onKeyDown={(e:any) => {
+                                            if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
+                                              e.preventDefault(); // Prevent the 'e' key from being input
+                                            }
+                                          }}
                                            autoComplete="off"
                                         name="OTP"
                                         placeholder="Enter Your OTP"
+                                        onChange={handlechange}
                                         component={Input}
                                     />
+                                      <p className='text-[red]'>{error && error?.OTP}</p>
                                 </FormItem>
                             </div>
                         
                             <div className='mt-6'></div>
-                            <span
+                            <span role='button'
                             className='border-none'
                                 
                               
@@ -175,7 +232,7 @@ const handleresend=()=>{
                             </div>
                         </FormContainer>
                     </Form>
-                )}
+                {/* )} */}
             </Formik>
         </div>
     )

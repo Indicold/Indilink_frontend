@@ -124,6 +124,8 @@ const SignInForm = (props: SignInFormProps) => {
      * there are any errors.
      */
     const validateFormLogin = (formD: any) => {
+        const strongPasswordRegex :any= /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
         const errors: any = {}
         if (!formD.email) {
             errors.email = 'Email is required !'
@@ -137,7 +139,9 @@ const SignInForm = (props: SignInFormProps) => {
         if (/\.\@/.test(formD?.email)) {
             errors.email = 'Email not allow .@'
         }
-
+        if(formData.password && !strongPasswordRegex.test(formData?.password)){
+            errors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
+        }
         if (!formD.password) {
             errors.password = "Password can't be Empty !"
         }
@@ -152,7 +156,7 @@ const SignInForm = (props: SignInFormProps) => {
     const handlechange = (e: any) => {
         const newData: any = { ...formData }
         newData[e.target.name] = e.target.value
-        validateFormLogin(newData);
+        // validateFormLogin(newData);
         setFormData(newData)
         if (error[e.target.name]) validateFormLogin(newData);
     }

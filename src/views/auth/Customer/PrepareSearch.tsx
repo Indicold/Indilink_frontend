@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for API call
-import { formatDate, onkeyDown, onkeyDownOne, validatePrepareCustomerForm } from '@/store/customeHook/validate';
+import { formatDate, onkeyDown, onkeyDownDimension, onkeyDownOne, validatePrepareCustomerForm } from '@/store/customeHook/validate';
 import LoaderSpinner from '@/components/LoaderSpinner';
 import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
 import { useTranslation } from 'react-i18next' // For language translation
@@ -88,6 +88,8 @@ const PrepareSearch = () => {
         const newData: any = { ...formData };
         newData[e.target.name] = e.target.value;
         setFormData(newData);
+        console.log("TTTTTTT",newData);
+        
         if(errors[e.target.name])validatePrepareCustomerForm(newData, setErrors)
 
     }
@@ -178,6 +180,7 @@ const PrepareSearch = () => {
     }, [CustomerResponse?.status]);
 
     const { t, i18n }: any = useTranslation();
+console.log("TTTTTTTT",ListOfProductCategory);
 
     return (
         <div>
@@ -344,7 +347,12 @@ const PrepareSearch = () => {
                                         <Field
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            type="number"
+                                            onKeyDown={(e:any) => {
+                                                if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
+                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                                }
+                                              }}
                                             autoComplete="off"
                                             name="throughput"
                                             value={formData?.throughput}
@@ -364,7 +372,7 @@ const PrepareSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.throughput}</p>
+                                        <p className='text-[red]'>{errors && !errors?.throughput_unit_id ? errors.throughput : errors?.throughput_unit_id }</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Avg. Case Size*")}
@@ -373,7 +381,12 @@ const PrepareSearch = () => {
                                         <Field
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            type="number"
+                                            onKeyDown={(e:any) => {
+                                                if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
+                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                                }
+                                              }}
                                             autoComplete="off"
                                             name="case_size"
                                             className="w-[70%]"
@@ -394,8 +407,8 @@ const PrepareSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.case_size}</p>
-
+                                        {/* <p className='text-[red]'>{errors && errors.case_size}</p> */}
+                                        <p className='text-[red]'>{errors && !errors?.case_size_unit_id ? errors.case_size : errors?.case_size_unit_id }</p>
                                     </FormItem>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -425,7 +438,7 @@ const PrepareSearch = () => {
                                             autoComplete="off"
                                             name="estimated_dispatch"
                                             value={formData?.estimated_dispatch}
-                                            placeholder="Certification"
+                                            placeholder="Estimated Dispatches"
                                             component={Input}
                                         />
                                     </FormItem>

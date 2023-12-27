@@ -401,7 +401,7 @@ localStorage.removeItem('origin_gps');
                                         <Field
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            type="number"
                                             className="w-[70%]"
                                             autoComplete="off"
                                             name="load_quantity"
@@ -478,7 +478,11 @@ localStorage.removeItem('origin_gps');
                                             name="dispatch_date"
                                             // onFocus={(e:any) => (e.target.type = "date")}
                                             // onBlur={(e:any) => (e.target.type = "text")}
-                                            value={new Date(formData?.dispatch_date).toISOString().split('T')[0]}
+                                            value={
+                                                formData?.dispatch_date
+                                                  ? new Date(formData.dispatch_date).toISOString().split('T')[0]
+                                                  : '' // If formData?.dispatch_date is not available or invalid, set an empty string
+                                              }
                                             placeholder="Date of Dispatch"
                                             component={Input}
                                         />

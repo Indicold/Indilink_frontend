@@ -48,7 +48,9 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
 
     const [emailSent, setEmailSent] = useState(false)
-
+    const [error,setError]=useState<any>({})
+    const [formData,setFormData]=useState<any>({})
+    const [isSubmitting, setSubmitting] = useState(false)
 
     /**
      * The function `onSendMail` is used to send a forgot password email and store the email in local
@@ -58,15 +60,43 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
      * @param setSubmitting - A function that takes a boolean value and updates the state of whether
      * the form is submitting or not.
      */
-    const onSendMail = (
-        values: ForgotPasswordFormSchema,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
+    const validateFormPassword = (formD: any) => {
+
+        const errors: any = {}
+        if (!formD.email) {
+            errors.email = 'Email is required !'
+        }
+
+        if (formD.email) {
+            if (!/\S+@\S+\.\S+/.test(formData?.email)) {
+                errors.email = 'Invalid email address';
+            }
+        }
+        if (/\.\@/.test(formD?.email)) {
+            errors.email = 'Email not allow .@'
+        }
+        setError(errors)
+        return Object.keys(errors).length == 0
+    }
+    const handlechange = (e: any) => {
+        const newData: any = { ...formData }
+        newData[e.target.name] = e.target.value
+        setFormData(newData)
+        if (error[e.target.name]) validateFormPassword(newData);
+    }
+    const handlesubmit = (e: any) => {
+        e.preventDefault()
+        console.log("HGGGGGGGG",validateFormPassword(formData));
         
-        const {email }=values;
-    localStorage.setItem("email",email)
-        apiForgotPassword(values,messageView,setSubmitting)
-    };
+
+        if (validateFormPassword(formData)) {
+
+            setSubmitting(true)
+            localStorage.setItem("email",formData?.email)
+            apiForgotPassword(formData,messageView,setSubmitting)
+        }
+    }
+  
     /**
      * The function `messageView` displays a success toast message with a custom style.
      * @param {any} messagevalue - The messagevalue parameter is the value of the message that you want
@@ -106,44 +136,31 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                 ) : (
                     <>
                         <h4 className="mt-2 text-head-title">Forgot Password?</h4>
-                        {/* <p className='!text-[#103492]'>
-                            Please enter your email address to receive a
-                            verification code
-                        </p> */}
+                    
                     </>
                 )}
             </div>
             <Formik
-                initialValues={{
-                    email: null,
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    if (!disableSubmit) {
-                        onSendMail(values, setSubmitting)
-                    } else {
-                        setSubmitting(false)
-                    }
-                }}
+              
             >
-                {({ touched, errors, isSubmitting }) => (
-                    <Form>
+                    <Form  onSubmit={(e:any)=>handlesubmit(e)}>
                         <FormContainer>
                             <div className={emailSent ? 'hidden' : ''}>
                                 <FormItem
                                 label='Email address*'
-                                    invalid={errors.email && touched.email}
-                                    errorMessage={errors.email}
+                             
                                     className='w-[100%]'
                                 >
                                     <Field
                                         type="email"
                                         autoComplete="off"
                                         name="email"
+                                        onChange={handlechange}
                                         placeholder="eg. johndeo@gmail.com"
                                         component={Input}
                                         className=''
                                     />
+                                     <p className='text-[red]'>{error && error?.email}</p>
                                 </FormItem>
                             </div>
                             <div className='flex'>
@@ -164,7 +181,6 @@ const ForgotPasswordForm = (props: ForgotPasswordFormProps) => {
                             </div>
                         </FormContainer>
                     </Form>
-                )}
             </Formik>
         </div>
     )
