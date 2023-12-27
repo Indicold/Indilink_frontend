@@ -4,11 +4,11 @@ import Pagination from "rc-pagination"; // Import pagination component to show t
 import "rc-pagination/assets/index.css"; // Import pagination component styles
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css";
-import { Button } from '@/components/ui'; // Imports a Button component.
+import { Button, Tooltip } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
 import { messageView } from '@/store/customeHook/validate';
-
+import InfoIcon from '@mui/icons-material/Info';
 // Defines the table header with column names.
 const tableHead = {
     id:"S.No",
@@ -211,7 +211,11 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       }
       if (key === 'comment') {
         
-        return <td className='text-center' key={i} >{rowData?.comment  ? rowData?.comment  : 'Not Available'}</td>;
+        return <td className='text-center' key={i} ><p className='ellipse-text'>{rowData?.comment}</p> 
+          <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.comment || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip>
+           </td>;
       }
       if (key === 'admin') {
         
