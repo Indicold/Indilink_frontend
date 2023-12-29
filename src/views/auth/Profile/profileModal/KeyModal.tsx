@@ -42,6 +42,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         }
         setData(newdata)
+        if(error[e.target.name])validateKeyForm(newdata,setErrors)
     }
     const handlesubmit=()=>{
         if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){

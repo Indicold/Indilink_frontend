@@ -179,15 +179,14 @@ if(fetchDetails?.data?.prepare){
  
                     </div>
                     <div className='w-[25%] p-10'>
-                        <div className='m-auto'>
-                        <button type="button" onClick={handleAccept} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    {localStorage.getItem('user_type')==='Customer' && <div className='m-auto text-center'>
+                        <button type="button" onClick={handleAccept} className="text-white bg-[green]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Accept
                             </button>
-                            <button type="button" onClick={handleReject} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            <button type="button" onClick={handleReject} className="text-white bg-[red]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Reject
                             </button>
-                         </div>
-                       
+                            </div>}
                         <div className='flex m-auto mt-4 gap-4'>
                             <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
                             <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>

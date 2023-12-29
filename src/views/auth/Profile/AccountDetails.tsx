@@ -36,7 +36,14 @@ const AccountDetails = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate();
     const handlesubmit = (e: any) => {
-      navigate('/home')
+        if(localStorage.getItem('user_type')==='Partner'){
+            navigate('/partner-dashbord')
+        }else if(localStorage.getItem('user_type')==='Customer'){
+            navigate('/home')
+        }else{
+            navigate('/investor-dashbord')
+        }
+ 
     }
     return (
         <div className='lg:flex'>

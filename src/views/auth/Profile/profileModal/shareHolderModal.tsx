@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
 import { TokenInfo } from '@/store/customeHook/token';
-const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
+const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
   const {company_id,company_name}:any=TokenInfo()
     const [isEmailValid, setIsEmailValid] = useState<any>(false)
     const [isMobileValid, setIsMobileValid] = useState<any>(false)
@@ -44,7 +44,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                     ...formData,
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
-                    full_name:`${formData?.fname} ${formData?.lname}`
+                    full_name:`${formData?.fname} ${formData?.lname}`,
+                    firm_type:companyDetails?.data[0]?.firm_type
                 }
                 PostShareUpdateDetails(object)
                 
@@ -53,7 +54,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                     ...formData,
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
-                    full_name:`${formData?.fname} ${formData?.lname}`
+                    full_name:`${formData?.fname} ${formData?.lname}`,
+                    firm_type:companyDetails?.data[0]?.firm_type
                 }
                 SHPostDetails(object)
             }

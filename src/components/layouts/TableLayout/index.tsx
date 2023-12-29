@@ -128,14 +128,14 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
       localStorage.setItem('asset_id', '3')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       // navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
-      navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
+      navigate(`/assetsprepare-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Move') {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('asset_id', '2')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       // navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
-      navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
+      navigate(`/assetsmove-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
   }
   const handleLogs = (rowData: any) => {
