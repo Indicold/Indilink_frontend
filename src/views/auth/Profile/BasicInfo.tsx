@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -156,25 +156,25 @@ const BasicInfo = () => {
                 fetch(`${apiUrl}/auth/basic-detail/${data?.id}`, requestOptionsUpdate)
                 .then((response) => response.json())
                 .then((result) => {
-                  messageView(result?.message)
+                  messageViewNew(result)
                   if(result?.status==200){
    navigate('/key-management')
                   }
                 })
                 .catch((error) => {
-                  messageView(error?.message)
+                  messageViewNew(error)
                 });
             }else{
                 fetch(`${apiUrl}/auth/basic-detail`, requestOptions)
                 .then((response) => response.json())
                 .then((result) => {
-                  messageView(result?.message)
+                  messageViewNew(result)
                   if(result?.status==200){
    navigate('/key-management')
                   }
                 })
                 .catch((error) => {
-                  messageView(error?.message)
+                  messageViewNew(error)
                 });
             }
            
@@ -283,8 +283,8 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
             {/* stepper end */}
 
             {/* main component */}
-            <div className="bg-white w-[100%] mb-5 lg:w-5/6">
-                <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} />
+            <div className="bg-white w-[100%] mb-5 lg:w-5/6  shadow-2xl">
+                {/* <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Basic Information</h4>
                 {/* pre filled common form */}
                 <Formik

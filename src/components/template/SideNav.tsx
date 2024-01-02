@@ -120,7 +120,7 @@ let val=localStorage.getItem('user_type');
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig: localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
+            navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig : localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}

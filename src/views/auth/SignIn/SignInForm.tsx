@@ -17,7 +17,7 @@ import { Field, Form, Formik } from 'formik'
 import type { CommonProps } from '@/@types/common'
 import { useEffect, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { messageView, validateForm } from '@/store/customeHook/validate'
+import { messageView, messageViewNew, validateForm } from '@/store/customeHook/validate'
 import { apiUrl } from '@/store/customeHook/token'
 import { ToastContainer } from 'react-toastify'
 import jwt_decode from "jwt-decode";
@@ -89,7 +89,7 @@ const SignInForm = (props: SignInFormProps) => {
                     setSubmitting(false)
                     if (data.message.accessToken) {
                         localStorage.setItem('access_token', data.message.accessToken);
-                        messageView("Login Successfully")
+                        messageViewNew({status:200,message:"Login Successfully"})
                         setTimeout(() => {
                             const { default_user_type }: any = jwt_decode(data.message.accessToken)
                             if (default_user_type === 1) {
@@ -106,7 +106,7 @@ const SignInForm = (props: SignInFormProps) => {
 
                     } else {
 
-                        messageView(data?.message)
+                        messageViewNew(data)
 
                     }
 

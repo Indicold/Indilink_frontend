@@ -143,7 +143,7 @@ const DocumentTableList = ({ AllStore,AllLength,setPageNo }: any) => {
   // JSX structure for rendering the table and pagination.
 
   return (
-    <>
+    <div className='shadow-2xl'>
     <DocumentEditModal modal={modalEdit} setModal={setModalEdit} data={data} />
     <DocumentViewModal modal={modal} setModal={setModal} data={data} />
       <div className="search bg-white">
@@ -169,7 +169,7 @@ const DocumentTableList = ({ AllStore,AllLength,setPageNo }: any) => {
           total={countPerPage*AllLength?.data?.length}
         />
       </div>
-    </>
+    </div>
   )
 }
 

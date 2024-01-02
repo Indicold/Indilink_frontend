@@ -1,6 +1,6 @@
 /* The code is importing three things: */
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom'
@@ -38,15 +38,15 @@ const StoreDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
-          messageView("Data Updated Successfully !")
+            messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
-          messageView(result?.message)
+          messageViewNew(result)
     
         }
       })
       .catch((error:any) =>{
-        messageView(error?.message)
+        messageViewNew(error)
       });
       }
       const handleReject=()=>{
@@ -63,15 +63,15 @@ const StoreDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
-          messageView("Data Updated Successfully !")
+            messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
-          messageView(result?.message)
+          messageViewNew(result)
     
         }
       })
       .catch((error:any) =>{
-        messageView(error?.message)
+        messageViewNew(error)
       });
       }
   useEffect(()=>{
@@ -82,7 +82,14 @@ if(fetchDetails?.data?.store){
   },[fetchDetails?.data?.store])
     return (
     <div>
-      <div className='bg-blue-100 p-4 rounded-lg mx-0'>
+           <div className='mb-4'>
+
+<h5><b>Asset Details</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
+      <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] mt-10 mb-10 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
@@ -97,7 +104,7 @@ if(fetchDetails?.data?.store){
                 </div>
  
             </div>
-            <div className='bg-white p-4 rounded-lg mx-0'>
+            <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] pl-4 mt-10 mb-2">
                     <h2 className="text-xl">Store Type Assets</h2>
                     <h2 className="text-gray-400 text-lg">{id}</h2>
@@ -191,10 +198,10 @@ if(fetchDetails?.data?.store){
                     <div className='lg:w-[25%] w-[100%] p-10'>
                        {localStorage.getItem('user_type')==='Customer' && <div className='m-auto text-center'>
                         <button type="button" onClick={handleAccept} className="text-white bg-[green]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Accept
+                         Approved
                             </button>
                             <button type="button" onClick={handleReject} className="text-white bg-[red]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Reject
+                            Disapproved
                             </button>
                             </div>}
                         <div className='flex m-auto mt-4 gap-4'>

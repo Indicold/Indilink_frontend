@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -64,7 +64,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
     }
     useEffect(() => {
         if (SHResponse) {
-            messageView(SHResponse?.message)
+            messageViewNew(SHResponse)
 
             if (SHResponse?.status === 200) {
                 fetchShare()
@@ -78,7 +78,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
     }, [SHResponse, SHResponse?.message])
     useEffect(() => {
         if (ShareUpadteResponse) {
-            messageView(ShareUpadteResponse?.message)
+            messageViewNew(ShareUpadteResponse)
 
             if (ShareUpadteResponse?.status === 200) {
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids, ShareUpadteResponse?.data?.id]))

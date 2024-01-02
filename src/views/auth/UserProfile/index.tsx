@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { TokenInfo } from '@/store/customeHook/token';
 import { apiUrl, getToken } from '@/store/token';
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 const UserProfilePage = () => {
   const {token}:any=getToken()
   const {owner_user_id,is_nda_signed}:any=TokenInfo();
@@ -33,17 +33,17 @@ var requestOptions :any= {
 fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
   .then(response => response.json())
   .then(result =>{
-    messageView(result?.message)
+    messageViewNew(result)
   })
   .catch(error =>{
-    messageView(error?.message || error?.error)
+    messageViewNew(error)
   });
     }
   return (
     <>
     <div className="container mt-20">
       <div>
-        <div className="bg-white pt-4 relative shadow rounded-lg w-[100%] xl:w-full mx-auto">
+        <div className="bg-white pt-4 relative shadow rounded-lg w-[100%] xl:w-full mx-auto  shadow-2xl">
           <div className="flex justify-center">
             <img
               src="https://avatars0.githubusercontent.com/u/35900628?v=4"

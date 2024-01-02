@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -51,7 +51,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
     }
     useEffect(() => {
         if (BranchResponse) {
-            messageView(BranchResponse?.message)
+            messageViewNew(BranchResponse)
 
             if (BranchResponse?.status === 200) {
                 localStorage.setItem("branch_ids", JSON.stringify([...data?.branch_ids, BranchResponse?.data?.id]))
@@ -63,7 +63,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
     }, [BranchResponse, BranchResponse?.message]);
     useEffect(() => {
         if (BranchUpadteResponse) {
-            messageView(BranchUpadteResponse?.message)
+            messageViewNew(BranchUpadteResponse)
 
             if (BranchUpadteResponse?.status === 200) {
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.branch_ids, BranchUpadteResponse?.data?.id]))

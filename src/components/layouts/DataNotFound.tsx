@@ -15,7 +15,7 @@ const DataNotFound = ({title,url}:any) => {
     return (
 
         <>
-            <div className='flex justify-between  h-[70px]'>
+            <div className='flex justify-between  h-[70px] '>
                 <div className=''>
                     {/* <h5><b>Asset Search</b></h5> */}
                     {/* <p>Please add the assets</p> */}
@@ -25,7 +25,7 @@ const DataNotFound = ({title,url}:any) => {
                     </div>}
             </div>
 
-            <div className=' bg-white  p-4  m-auto w-full h-full'>
+            <div className=' bg-white  p-4  m-auto w-[100%]  shadow-2xl'>
                 <img className='w-[28%]  m-auto' src={img} alt="" />
                 <h3 className='text-center p-2'>No Data Available</h3>
                 <p className='text-center m-auto p-2 w-[55%]'> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, cupiditate a quibusdam. </p>

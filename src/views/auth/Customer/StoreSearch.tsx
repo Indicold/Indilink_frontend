@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
-import { messageView, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
+import { messageView, messageViewNew, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
 import usePutApi from '@/store/customeHook/putApi'; // Import a custom hook for making PUT requests
 import { ToastContainer } from 'react-toastify'; // Import container for showing toast messages
 import TableCustomerStoreAssets from './TableCustomerStoreAssets';
@@ -181,7 +181,7 @@ const StoreSearch = () => {
                 navigate('/ticket_list_store')
             }, 2000)
         }else {
-            messageView(CustomerResponse?.message)
+            messageViewNew(CustomerResponse)
         }
     }, [CustomerResponse?.status]);
 
@@ -190,7 +190,7 @@ const StoreSearch = () => {
 
  
     return (
-        <div className='bg-white p-2 rounded-md'>
+        <div className='bg-white p-4 rounded-md shadow-2xl'>
             <ToastContainer />
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"

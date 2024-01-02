@@ -5,7 +5,7 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
-import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCompressorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -87,11 +87,11 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
     }, [commanData])
     useEffect(() => {
         if (PutApiResponse?.status === 200) {
-            messageView("Data Updated Successfully !");
+            messageViewNew({message:"Data Updated Successfully !",status:200});
             FetchAgain()
             setModal(false)
         } else {
-            messageView(PutApiResponse)
+            messageViewNew(PutApiResponse)
         }
     }, [PutApiResponse])
     return (

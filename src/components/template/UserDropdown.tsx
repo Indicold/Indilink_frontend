@@ -4,9 +4,11 @@ import Avatar from '@/components/ui/Avatar'
 import Dropdown from '@/components/ui/Dropdown'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
+import { FaUser } from "react-icons/fa";
+
 import type { CommonProps } from '@/@types/common'
 import { TokenInfo } from '@/store/customeHook/token'
 
@@ -37,7 +39,7 @@ const _UserDropdown = ({ className,UserType }:any) => {
     property from the result of the `TokenInfo()` function. The `TokenInfo()` function likely
     returns an object that contains the `aud` property. */
     const {aud}:any=TokenInfo()
-
+    const navigate:any=useNavigate();
     /* `const { signOut } = useAuth()` is using destructuring assignment to extract the `signOut`
     function from the result of the `useAuth()` hook. The `useAuth()` hook likely returns an object
     that contains the `signOut` function. By using destructuring assignment, we can directly assign
@@ -64,7 +66,6 @@ const _UserDropdown = ({ className,UserType }:any) => {
                 placement="bottom-end"
             >
                 <Dropdown.Item variant="header">
-                    <NavLink to='/profile'>
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
@@ -74,7 +75,6 @@ const _UserDropdown = ({ className,UserType }:any) => {
                             {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
                     </div>
-                    </NavLink>
                 </Dropdown.Item>
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (
@@ -96,7 +96,17 @@ const _UserDropdown = ({ className,UserType }:any) => {
                         </Link>
                     </Dropdown.Item>
                 ))}
-                {/* <Dropdown.Item variant="divider" /> */}
+                   <Dropdown.Item
+                    eventKey="Sign Out"
+                    className="gap-2"
+                    onClick={()=>navigate('/profile')}
+                >
+                    <span className="text-xl opacity-50">
+                        <FaUser />
+                    </span>
+                    <span>Profile</span>
+                </Dropdown.Item>
+                <Dropdown.Item variant="divider" />
                 <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2"

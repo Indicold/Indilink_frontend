@@ -4,7 +4,7 @@ also imports functions `messageView`, `onkeyDown`, and `onkeyDownOne` from the `
 the `customeHook` directory. It imports variables `apiUrl` and `getToken` from the `token` file in
 the `store` directory. */
 import useApiFetch from '@/store/customeHook/useApiFetch';
-import { messageView, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
@@ -86,7 +86,7 @@ const Invoice = () => {
                     if (result?.status === 200) {
                       
                         setFormData({})
-                        messageView("Invoice Uploaded Successfully !")
+                        messageViewNew({message:"Invoice Uploaded Successfully !",status:200})
                         
                         setModal(false)
                         setFormData({
@@ -95,7 +95,7 @@ const Invoice = () => {
                         })
                     } else {
                         
-                        messageView(result?.message)
+                        messageViewNew(result)
                     }
                     fetchInvoiceData()
                 })
@@ -115,13 +115,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
         }
         setErrors(errors)
     }
-    
-    /* The below code is using the useEffect hook in a React component. It is specifying a function to
-    be executed when the component mounts or when the dependencies (formData and modal) change.
-    Inside the function, it is calling the fetchInvoiceData function. */
-    useEffect(()=>{
-        fetchInvoiceData()
-    },[formData,modal])
+
 
     /* The following code is a TypeScript React component that renders an invoice form and a list of
     invoices. */
@@ -250,7 +244,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
                 </div>
             </div>}
 
-            <div className='flex justify-between  h-[70px]'>
+            <div className='flex justify-between  h-[70px] '>
 
                 <div className=''>
 
@@ -275,7 +269,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
 
             </div>
             {ListOfInvoice?.data?.length > 0 ? <InvoiceTableList AllStore={ListOfInvoice?.data} />
-                : <div className=' bg-white  p-4  m-auto w-full h-full'>
+                : <div className=' bg-white  p-4  m-auto w-full h-full shadow-2xl'>
 
                     <img className='w-[28%]  m-auto' src="./img/images/indicoldside.png" alt="" />
 

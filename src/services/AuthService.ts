@@ -10,6 +10,7 @@ import type {
     SignUpResponse,
 } from '@/@types/auth'
 import { setThemeColor } from '@/store'
+import { messageViewNew } from '@/store/customeHook/validate'
 
 /**
  * The function `apiSignIn` is an asynchronous function that sends a POST request to the '/sign-in'
@@ -116,7 +117,7 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
           setSubmitting(false)
           
           if(data?.status == true){
-            messageView(data?.message);
+            messageViewNew(data);
             if(dataa?.redirect!==3){
               setTimeout(() => {
                 window.location.href="/VerfyOtp"
@@ -124,7 +125,7 @@ export async function apiForgotPassword(dataa:any,messageView:any,setSubmitting:
             }
           
           } else {
-            messageView(data?.message);
+            messageViewNew(data);
           }
           
         })
@@ -167,10 +168,10 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
         .then(data => {
 
           if(data?.status == true){
-            messageView(data?.message)
+            messageViewNew(data)
             window.location.href="/reset-password"
           } else {
-            messageView(data?.message);
+            messageViewNew(data);
               setTimeout(() => {
                 window.location.href="/VerfyOtp"
               }, 3000);
@@ -218,7 +219,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
         .then(data => {
 
           if(data?.status == 200){
-            messageView(data?.message)
+            messageViewNew(data)
             setTimeout(()=>{
               localStorage.removeItem('RememberMe');
               localStorage.removeItem('user_type');
@@ -229,7 +230,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
             },2000)
           } else {
         
-            messageView(data?.message);
+            messageViewNew(data);
           }
      
           

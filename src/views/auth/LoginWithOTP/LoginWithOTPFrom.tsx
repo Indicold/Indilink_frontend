@@ -16,7 +16,7 @@ import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl } from '@/store/customeHook/token'
-import { onkeyDownOne } from '@/store/customeHook/validate'
+import { messageViewNew, onkeyDownOne } from '@/store/customeHook/validate'
 import jwt_decode from "jwt-decode";
 /* The below code is defining an interface called `LoginWithOTPFormProps` in TypeScript for a React
 component. This interface extends another interface called `CommonProps` and adds three optional
@@ -122,19 +122,20 @@ const validate=()=>{
                 setIsNumber(false);
                 setSeconds(20)
             }
-            toast.success(postMobileNumberResponse?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew(postMobileNumberResponse)
+            // toast.success(postMobileNumberResponse?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
             a = 'false';
         }
 
@@ -146,42 +147,32 @@ const validate=()=>{
     useEffect(() => {
 
         if (verifyResponse?.message) {
-            toast.success(verifyResponse?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew(verifyResponse)
+            // toast.success(verifyResponse?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
         }
         if (verifyResponse?.status) {
             if (verifyResponse.message.accessToken) localStorage.setItem('access_token', verifyResponse.message.accessToken);
 
             if (verifyResponse?.message) {
-                toast.success(verifyResponse?.message, {
-                    position: 'top-right', // Position of the toast
-                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    style: {
-                        background: '#FFB017', fontSize: "bold",
-                        color: "#fff"// Set the background color here
-                    },
-                });
+                messageViewNew(verifyResponse)
             }
-           const {default_user_type}:any= jwt_decode(verifyResponse.message.accessToken)
-           console.log("default_user_type",default_user_type);
+        
            
            if(verifyResponse?.status==200){
+            const {default_user_type}:any= jwt_decode(verifyResponse.message.accessToken)
+            console.log("default_user_type",default_user_type);
             if(default_user_type===1){
                 localStorage.setItem('user_type','Partner')
                 navigate('/partner-dashbord')
@@ -197,7 +188,7 @@ const validate=()=>{
          
         }
 
-    }, [verifyResponse?.message,verifyResponse?.status])
+    }, [verifyResponse?.message])
 
     useEffect(() => {
         // Decrease the timer every second

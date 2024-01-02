@@ -23,7 +23,14 @@ const CustomerDocumentsEditTable = () => {
   }: any = useApiFetch<any>(`legal/document-final-by-master-query-id-pagination/${id}/10/${pageNo}`, token)
   return (
     <div>
-      <h2>Document List</h2>
+        <div className='mb-4'>
+
+<h5><b>Document List</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
+      {/* <h2>Document List</h2> */}
 
       {AllStore?.data?.length > 0 ? (
                 <>

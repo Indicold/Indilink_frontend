@@ -23,6 +23,7 @@ import MHEDetailsModal from './MultistepForm/MHEDetails'
 import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
+    messageViewNew,
     onkeyDown,
     onkeyDownNew,
     onkeyDownforNumSpecialCharcter,
@@ -281,7 +282,7 @@ const StoreRegistration = () => {
                 if (result?.status) {
                     setPostLoader(false)
                     // Display a success message and navigate to a new page
-                    messageView(result.message)
+                    messageViewNew(result)
                     navigate(`/partner-bussiness-type-compliance/${id}`, { state: location?.state })
 
                     if (result?.status === 200) {
@@ -291,12 +292,12 @@ const StoreRegistration = () => {
                     }
                 } else {
                     // Display an error message
-                    messageView(result?.message)
+                    messageViewNew(result)
                 }
             } catch (error: any) {
                 setPostLoader(false)
                 // Handle any errors that occur during the request
-                messageView(error.message)
+                messageViewNew(error)
             }
         } else if (location?.state) {
             // Navigate to another page if there's state data
@@ -602,9 +603,9 @@ const StoreRegistration = () => {
                 RoadConditionloading ||
                 fetchDetailsloading) && <LoaderSpinner />}
             <div className="bg-white m-auto p-2 rounded w-[98%] md:[100%]
-             lg:w-5/6">
+             lg:w-5/6 shadow-2xl">
                 <ToastContainer />
-                <ArrowBackIcon onClick={() => navigate(-1)} />
+                {/* <ArrowBackIcon onClick={() => navigate(-1)} /> */}
                 <h4 className="text-center text-head-title"> {t("Store")}</h4>
                 <Formik
                     initialValues={{ field: true }}

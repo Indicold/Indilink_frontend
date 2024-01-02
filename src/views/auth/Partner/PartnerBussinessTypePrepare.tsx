@@ -19,7 +19,7 @@ import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom 
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
 import usePostApi from '@/store/customeHook/postApi' // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner' // Import a custom loader spinner component
-import { messageView, onkeyDown, onkeyDownNew, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
+import { messageView, messageViewNew, onkeyDown, onkeyDownNew, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import ACUModall from './MultistepForm/ACUModal' // Import a custom modal component
 import MachineModal from './MultistepForm/MachineModal' // Import another custom modal component
@@ -213,7 +213,7 @@ const PartnerBussinessTypePrepare = () => {
     // Handle success message display on successful POST request
     useEffect(() => {
         if (PrepareResponse?.status!==400 && PrepareResponse?.data) {
-            messageView('Data Updated Successfully!')
+            messageViewNew({message:'Data Updated Successfully!',status:200})
             setTimeout(() => {
                 localStorage.setItem('asset_id',"3")
                 navigate(`/partner-bussiness-type-compliance/${id}`,{state:isDisabled})
@@ -329,8 +329,8 @@ const PartnerBussinessTypePrepare = () => {
                 fetchDetailsloading ? (
                 <LoaderSpinner />
             ) : (
-                <div className="bg-white m-auto p-2 rounded w-[98%] md:w-[100%] lg:w-5/6">
-                    <ArrowBackIcon onClick={() => navigate(-1)} />
+                <div className="bg-white m-auto p-2 rounded w-[98%] md:w-[100%] lg:w-5/6 shadow-2xl">
+                    {/* <ArrowBackIcon onClick={() => navigate(-1)} /> */}
                     <h4 className=" mb-2 text-head-title text-center">
                         Prepare
                     </h4>

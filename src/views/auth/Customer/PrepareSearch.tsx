@@ -188,7 +188,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
             {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
-            <div className="bg-white p-4">
+            <div className="bg-white p-4 shadow-2xl">
                 <h4 className=" mb-2 text-head-title text-center"> {t("Prepare")}</h4>
                 {/* The above code is a form component written in TypeScript and React. It uses the
                 Formik library for form management. The form consists of various input fields and

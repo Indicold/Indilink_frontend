@@ -54,7 +54,7 @@ import { Button } from "@mui/material";
 import { TokenInfo, getToken } from "@/store/customeHook/token";
 import useApiFetch from "@/store/customeHook/useApiFetch";
 import usePutApi from "@/store/customeHook/putApi";
-import { messageView } from "@/store/customeHook/validate";
+import { messageView, messageViewNew } from "@/store/customeHook/validate";
 import { ToastContainer } from "react-toastify";
 // import TemporaryDrawer from "./Drawer";
 import ChatModal from "./ChatModal";
@@ -957,14 +957,14 @@ if(localStorage.getItem('user_type')==='Customer'){
                 message: "Data save Successfully !",
                 status: 200,
             }
-            messageView(obj);
+            messageViewNew(obj);
 
         } else if (PutApiResponse?.statusCode === 400 || PutApiResponse?.statusCode === 409 || PutApiResponse?.status === 413) {
             let obj: any = {
                 message: PutApiResponse?.message || "Some error occurred !",
                 status: 401,
             }
-            messageView(obj);
+            messageViewNew(obj);
         }
     }, [PutApiResponse])
 
@@ -1057,7 +1057,7 @@ if(localStorage.getItem('user_type')==='Customer'){
 
     useEffect(()=>{
         if(postNegotiationResponse){
-            messageView(postNegotiationResponse?.message)
+            messageViewNew(postNegotiationResponse)
         }
 
     },[postNegotiationResponse?.message])

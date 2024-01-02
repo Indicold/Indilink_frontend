@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl, getToken } from '@/store/token'
 import { ToastContainer } from 'react-toastify'
-import { messageView } from '@/store/customeHook/validate'
+import { messageView, messageViewNew } from '@/store/customeHook/validate'
 
 // Defines the table header with column names.
 
@@ -84,7 +84,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             .then(response => response.text())
             .then((result: any) => {
                 fetchData();
-                messageView("Deleted Successfully");
+                messageViewNew({message:"Deleted Successfully",status:200});
             })
             .catch(error => console.log('error', error));
     }
@@ -112,7 +112,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
         fetch(`${apiUrl}/auth/account-detail-default/${rowData?.id}`, requestOptions)
             .then(response => response.json())
             .then((result: any) => {
-                messageView(result?.message)
+                messageViewNew(result)
                 fetchData()
             })
             .catch((error: any) => {

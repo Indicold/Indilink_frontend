@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateAMCForm, onkeyDownforNumSpecialCharcter, onkeyDownNew } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateAMCForm, onkeyDownforNumSpecialCharcter, onkeyDownNew, messageViewNew } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -112,11 +112,11 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
             },[commanData])
             useEffect(()=>{
                 if(PutApiResponse?.status===200){
-                    messageView("Data Updated Successfully !");
+                    messageViewNew({message:"Data Updated Successfully !",status:200});
                     setModal(false)
                     FetchAgain();
                 }else{
-                    messageView(PutApiResponse)
+                    messageViewNew(PutApiResponse)
                 }
                     },[PutApiResponse])
     return (

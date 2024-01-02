@@ -24,7 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
+import { messageViewNew, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -91,19 +91,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
             PostOTPDetails(obj)
             if (OTPResponse?.message) {
-                toast.success(OTPResponse?.message, {
-                    position: 'top-right', // Position of the toast
-                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    style: {
-                        background: '#FFB017', fontSize: "bold",
-                        color: "#fff"// Set the background color here
-                    },
-                });
+                messageViewNew(OTPResponse)
+                // toast.success(OTPResponse?.message, {
+                //     position: 'top-right', // Position of the toast
+                //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                //     style: {
+                //         background: '#FFB017', fontSize: "bold",
+                //         color: "#fff"// Set the background color here
+                //     },
+                // });
             }
 
             if (OTPResponse && OTPResponse?.status != 401) {
@@ -148,6 +149,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
        
         if (key === 'panNo') {
             if (newData?.panNo?.length == 10 && re.test(newGst)) {
+console.log("AAAAAAAA",newData);
 
                 showInvalidPanMessage(false);
                 setPanValidationMessage('')
@@ -155,13 +157,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             }
          
 
-            if (formData?.panNo?.length != 0) {
+            if (newData?.panNo?.length != 0 && !re.test(newGst)) {
                 setPanValidationMessage("Invalid Pan Number");
-            } else if (!formData?.panNo) {
-                setPanValidationMessage('')
             }
-            else {
+            else if(!newData?.panNo || newData?.designation || newData?.firm || newData?.firmName  || newData?.address)  {
                 setPanValidationMessage("Pan Number is required");
+            } else if (!newData?.panNo) {
+                setPanValidationMessage('')
             }
             
         }
@@ -202,19 +204,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const handlesubmit = () => {
 
         if (!postalCode || postalCode === "") {
-            toast.error("Please select GeoLocation again", {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew({status:400,message:"Please select GeoLocation again"})
+            // toast.error("Please select GeoLocation again", {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
             return;
         }
         let ObjectData: any = {
@@ -249,19 +252,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
         if (OTPResponse?.message) {
-            toast.success(OTPResponse?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew(OTPResponse)
+            // toast.success(OTPResponse?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
         }
         if (OTPResponse && OTPResponse?.status != 401) {
             setTimeout(() => {
@@ -274,19 +278,25 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     value of `b` or `GSTResponse` changes. */
     useEffect(() => {
         if (GSTResponse?.message) {
-            toast.success(typeof GSTResponse?.message === 'string' ? GSTResponse?.message : "Details fetched successfully.", {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            if(typeof GSTResponse?.message === 'string'){
+                messageViewNew(GSTResponse)
+            }else{
+                messageViewNew({status:GSTResponse?.status,message:"Details fetched successfully"})
+            }
+         
+            // toast.success(typeof GSTResponse?.message === 'string' ? GSTResponse?.message : "Details fetched successfully.", {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
             if (GSTResponse?.message?.compliance) setDisabled(false);
             else setDisabled(true);
             // setA("false");
@@ -298,19 +308,20 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     useEffect(() => {
         if (OTPPostDetails?.message && OTPPostDetails?.message !== 'hello') {
             setSeconds(120)
-            toast.success(OTPPostDetails?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017', fontSize: "bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew(OTPPostDetails)
+            // toast.success(OTPPostDetails?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
             if (OTPPostDetails?.user_id) {
                 setOtpModal(true)
             }
@@ -387,7 +398,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                         disabled={otp === ''}
                                     >Get Started!</button>
                                     <div className="text-field text-center">
-                                        If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? seconds < 10 ? `00:0${seconds}` : `00:${seconds}` : 'Resend OTP'}</a>
+                                        If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? `${seconds}` : 'Resend OTP'}</a>
                                     </div>
                                 </form>
                             </div>

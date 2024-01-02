@@ -105,19 +105,21 @@ useEffect(()=>{
       if (key === 'id') {
         return <td className='text-center' key={i} >{index+1}</td>;
       }
-      if (key === 'createdAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.createdAt)?.toLocaleString()}</td>;
+      if (key === 'created_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.created_at)?.toLocaleString()}</td>;
       }
       if (key === 'paid_amount') {
         return <td className='text-center' key={i} >{rowData.paid_amount ? rowData.paid_amount:"Not Available" }</td>;
       }
-      if (key === 'updatedAt') {
-        return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
+      if (key === 'updated_at') {
+        return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleString()}</td>;
       }
       if (key === 'Document') {
         return <td className='text-center' key={i} >
-          {/* <Button className='!p-2' onClick={() => handleView(rowData)}><VisibilityIcon /></Button> */}
+          <Button className='!p-2' >
           <a role='button' className='!p-2' href={rowData?.invoice_doc[0]}><TextSnippetIcon /></a>
+
+          </Button>
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;
@@ -144,7 +146,7 @@ useEffect(()=>{
   // JSX structure for rendering the table and pagination.
 
   return (
-    <>
+    <div className='shadow-2xl'>
     <DocumentEditModal modal={modalEdit} setModal={setModalEdit} data={data} />
     <DocumentViewModal modal={modal} setModal={setModal} data={data} />
       <div className="search bg-white">
@@ -170,7 +172,7 @@ useEffect(()=>{
           total={allData.length}
         />
       </div>
-    </>
+    </div>
   )
 }
 

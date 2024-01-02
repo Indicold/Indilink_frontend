@@ -20,6 +20,7 @@ import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom 
 import { useLocation, useNavigate, useParams } from 'react-router-dom' // Import routing related hooks
 import {
     messageView,
+    messageViewNew,
     onkeyDownNew,
     onkeyDownforNumSpecialCharcter,
     validateMovePartnerForm,
@@ -184,7 +185,7 @@ vehicle_no:''
                     requestOptions
                 )
                 const result = await response.json()
-                messageView(result?.message)
+                messageViewNew(result)
 
                 // If the response status is 200, navigate to the specified route
                 if (result?.status == 200) {
@@ -195,7 +196,7 @@ vehicle_no:''
                 }
             } catch (error: any) {
                 // Display an error message on request failure
-                messageView(error.message)
+                messageViewNew(error)
             }
         } else if (isDisabled) {
             // If the form is disabled, navigate to the specified route with state
@@ -279,8 +280,8 @@ vehicle_no:''
 
 
             </div>
-            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-[100%] lg:w-5/6">
-            <ArrowBackIcon onClick={()=>navigate(-1)} />
+            <div className="bg-white m-auto p-2 rounded w-[98%] md:w-[100%] lg:w-5/6 shadow-2xl">
+            {/* <ArrowBackIcon onClick={()=>navigate(-1)} /> */}
                 <h4 className=" mb-2 text-head-title text-center p-4">Move</h4>
                 <div>
                     <Formik
