@@ -36,7 +36,14 @@ const AccountDetails = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const navigate = useNavigate();
     const handlesubmit = (e: any) => {
-      navigate('/home')
+        if(localStorage.getItem('user_type')==='Partner'){
+            navigate('/partner-dashbord')
+        }else if(localStorage.getItem('user_type')==='Customer'){
+            navigate('/home')
+        }else{
+            navigate('/investor-dashbord')
+        }
+ 
     }
     return (
         <div className='lg:flex'>
@@ -93,8 +100,8 @@ const AccountDetails = () => {
             {/* stepper end */}
 
 
-            <div className="bg-white w-[100%] lg:w-5/6">
-                <ArrowBackIcon role='button' className='ms-3' onClick={() => navigate(-1)} />
+            <div className="bg-white w-[100%] lg:w-5/6  shadow-2xl">
+                {/* <ArrowBackIcon role='button' className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Account Details</h4>
                 {modal && <AccountModal data={data} setModal={setModal} modal={modal} setData={setData}  fetchData={fetchData} />
                 }            <div className='flex'>

@@ -7,7 +7,7 @@ import "rc-pagination/assets/index.css"; // Importing pagination styles
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
-import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast messages
+import { messageView, messageViewNew } from '@/store/customeHook/validate'; // Importing custom function to show toast messages
 import { ToastContainer } from 'react-toastify'; // Importing container to show toast messages
 
 // Defines the table header with column names.
@@ -135,7 +135,7 @@ var requestOptions:any = {
 fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
   .then(response => response.json())
   .then((result:any)=> {
-    messageView(result?.message)
+    messageViewNew(result)
     fetchDataG()
 
 })
@@ -172,6 +172,12 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
         
         return <td className='text-center' key={i} >{rowData?.admin?.first_name  ? `${rowData?.admin?.first_name } ${rowData?.admin?.last_name}` : 'Not Available'}</td>;
       }
+      if(key==='created_at'){
+        return <td className='text-center' key={i} >{new Date(rowData?.created_at)?.toLocaleString()}</td>;
+      }
+      if(key==='updated_at'){
+        return <td className='text-center' key={i} >{new Date(rowData?.updated_at)?.toLocaleString()}</td>;
+      }
       if (key === 'Action') {
         return <td className='text-center' key={i} >
           {/* <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}>Edit</Button> */}
@@ -204,7 +210,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
   // JSX structure for rendering the table and pagination.
 
   return (
-    <>
+    <div className='shadow-2xl p-4'>
     <ToastContainer />
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
@@ -231,7 +237,7 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
           total={allData?.length}
         />
       </div>
-    </>
+    </div>
   )
 }
 

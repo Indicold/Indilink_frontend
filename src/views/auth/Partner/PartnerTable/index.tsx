@@ -26,7 +26,14 @@ const PartnerTableAssetsList = () => {
 
     return (
         <>
-                    <h4 className="text-head-title text-center">Assets List</h4>
+           <div className='mb-4'>
+
+<h5><b>Assets List</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
+                    {/* <h4 className="text-head-title text-center">Assets List</h4> */}
 
             {AllStore?.data?.length > 0 ? (
                 <>

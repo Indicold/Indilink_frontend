@@ -47,8 +47,20 @@ const navigationPartnerConfig: NavigationTree[] = [
                 type: NAV_ITEM_TYPE_ITEM,
                 authority: [],
                 subMenu: [],
-            },
-            {
+            }
+           
+        ],
+    }, 
+    {
+        key: 'collapseMenug',
+        path: '',
+        title: 'Invoice',
+        translateKey: 'nav.collapseMenu.collapseMenuInvoice',
+        icon: 'collapseMenu',
+        type: NAV_ITEM_TYPE_COLLAPSE,
+        authority: [],
+        subMenu: [
+           {
                 key: 'collapseMenu.item3',
                 path: '/invoice',
                 title: 'Invoice',
@@ -60,7 +72,6 @@ const navigationPartnerConfig: NavigationTree[] = [
             }
         ],
     }, 
-    
   
 ]
 

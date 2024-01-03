@@ -13,7 +13,7 @@ import usePostApi from '@/store/customeHook/postApi'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import LoaderSpinner from '@/components/LoaderSpinner'
-import { messageView } from '@/store/customeHook/validate'
+import { messageView, messageViewNew } from '@/store/customeHook/validate'
 import { useTranslation } from 'react-i18next'
 
 
@@ -100,9 +100,10 @@ const BussinessTypeModal = () => {
         }
     }
 useEffect(()=>{
+    console.log("AssetsResponse",AssetsResponse);
     
 if(AssetsResponse?.message || AssetsResponse?.data){
-    messageView(AssetsResponse?.message?.message)
+    messageViewNew(AssetsResponse)
     setTimeout(() => {
         if (localStorage.getItem('user_type') === 'Partner') {
             // localStorage.removeItem('assets_list_id')

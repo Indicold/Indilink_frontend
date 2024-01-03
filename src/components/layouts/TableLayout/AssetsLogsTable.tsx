@@ -10,7 +10,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'; // Importing icon to show in Table action column for viewing a record
 import EditIcon from '@mui/icons-material/Edit'; // Importing icon to show in Table action column for editing a record
 import usePutApi from '@/store/customeHook/putApi'; // Importing custom hook for API call
-import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast message
+import { messageView, messageViewNew } from '@/store/customeHook/validate'; // Importing custom function to show toast message
 import { ToastContainer } from 'react-toastify'; // Importing container to show Toast messages
 import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
@@ -218,7 +218,7 @@ const handleDocs=(rowData:any)=>{
 /* The above code is using the useEffect hook in a React component. It is triggering the effect
 whenever the value of SubmitResponse changes. */
 useEffect(()=>{
-messageView(SubmitResponse?.message)
+messageViewNew(SubmitResponse)
 if(SubmitResponse?.status===200){
   setAlert(false)
   fetchApi();

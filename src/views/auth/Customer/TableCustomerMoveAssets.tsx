@@ -7,7 +7,7 @@ import "rc-pagination/assets/index.css";
 import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 
 // Defines the table header with column names.
 const tableHead = {
@@ -100,16 +100,16 @@ fetch(`${apiUrl}/customer/accept-responses/${rowData?.id}`, requestOptions)
   .then(response => response.json())
   .then(result =>{
     if(result?.status===200){
-      messageView("Data Updated Successfully !")
+      messageViewNew({message:"Data Updated Successfully !",status:200})
 
     }else{
-      messageView(result?.message)
+      messageViewNew(result)
 
     }
     fetchAgain()
   })
   .catch((error:any) =>{
-    messageView(error?.message)
+    messageViewNew(error)
   });
   }
   const handleReject=(rowData:any)=>{
@@ -126,16 +126,16 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
   .then(response => response.json())
   .then(result =>{
     if(result?.status===200){
-      messageView("Data Updated Successfully !")
+      messageViewNew({message:"Data Updated Successfully !",status:200})
 
     }else{
-      messageView(result?.message)
+      messageViewNew(result)
 
     }
     fetchAgain()
   })
   .catch((error:any) =>{
-    messageView(error?.message)
+    messageViewNew(error)
   });
   }
   const handleEdit = (rowData: any) => {

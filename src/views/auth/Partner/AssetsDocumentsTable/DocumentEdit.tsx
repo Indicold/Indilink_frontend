@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { TokenInfo } from '@/store/customeHook/token';
 import { apiUrl } from '@/store/token';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 const DocumentEditModal = ({modal,setModal,data}:any) => {
     
@@ -49,7 +49,7 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
     /* The `useEffect` hook is used to perform side effects in a functional component. In this case,
     the `useEffect` hook is being used to handle the response from the `commentResponse` variable. */
     useEffect(()=>{
-        messageView(commentResponse?.message)
+        messageViewNew(commentResponse)
 if(commentResponse?.status===200){
     setModal(false)
     

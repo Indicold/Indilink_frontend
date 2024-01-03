@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
-import { handleStoreTable, messageView, validateCAEquipForm, onkeyDownNew, onkeyDownforNumSpecialCharcter } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCAEquipForm, onkeyDownNew, onkeyDownforNumSpecialCharcter, messageViewNew } from '@/store/customeHook/validate'
 import axios from 'axios'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
@@ -99,13 +99,13 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
     },[commanData])
 useEffect(()=>{
     if(PutApiResponse?.status===200){
-    messageView("Data Updated Successfully !")
+    messageViewNew({message:"Data Updated Successfully !",status:200})
         FetchAgain();
         if(modal){
             setModal(false)
         }
     }else{
-        messageView(PutApiResponse)
+        messageViewNew(PutApiResponse)
     }
 },[PutApiResponse])
     return (

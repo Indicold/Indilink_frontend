@@ -10,7 +10,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet'; // Importing icon
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye'; // Importing icon to show in Table action column for viewing a record
 import EditIcon from '@mui/icons-material/Edit'; // Importing icon to show in Table action column for editing a record
 import usePutApi from '@/store/customeHook/putApi'; // Importing custom hook for API call
-import { messageView } from '@/store/customeHook/validate'; // Importing custom function to show toast message
+import { messageView, messageViewNew } from '@/store/customeHook/validate'; // Importing custom function to show toast message
 import { ToastContainer } from 'react-toastify'; // Importing container to show Toast messages
 import AssetsLogsModal from './AssetsLogsModal';
 // Defines the table header with column names.
@@ -128,14 +128,14 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
       localStorage.setItem('asset_id', '3')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       // navigate(`/partner-bussiness-type-prepare/${rowData?.asset_id}`, { state: true })
-      navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
+      navigate(`/assetsprepare-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
     if (rowData?.assetType === 'Move') {
       localStorage.setItem('country_id', rowData?.country_id)
       localStorage.setItem('asset_id', '2')
       localStorage.setItem('assets_list_id', rowData?.asset_id)
       // navigate(`/partner-bussiness-type-move/${rowData?.asset_id}`, { state: true })
-      navigate(`/assets-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
+      navigate(`/assetsmove-details/${rowData?.asset_id}`, { state:{type:rowData?.assetType} })
     }
   }
   const handleLogs = (rowData: any) => {
@@ -177,13 +177,13 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
         return <td className='text-center' key={i} >{rowData.is_verified ? "Verified" : "Not Verified"}</td>;
       }
       if (key === 'created_at') {
-        return <td className='text-center' key={i} >{new Date(rowData.created_at)?.toLocaleDateString()}</td>;
+        return <td className='text-center w-[200px]' key={i} >{new Date(rowData.created_at)?.toLocaleDateString()} {new Date(rowData.created_at)?.toLocaleTimeString()}</td>;
       }
       if (key === 'updated_at') {
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center flex gap-2' key={i} >
+        return <td className='text-center flex gap-2 justify-end' key={i} >
           {rowData?.status === 'Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
@@ -215,7 +215,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
   /* The following code is using the useEffect hook in a React component. It is triggering the effect
   whenever the value of SubmitResponse changes. */
   useEffect(() => {
-    messageView(SubmitResponse?.message)
+    messageViewNew(SubmitResponse)
     if (SubmitResponse?.status === 200) {
       setAlert(false)
       fetchApi();
@@ -251,7 +251,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
 
   // JSX structure for rendering the table and pagination.
   return (
-    <>
+    <div className='p-4 shadow-2xl'>
       <ToastContainer />
       {logsModal && <AssetsLogsModal setModal={setLogsModal} RowData={RowData} />}
       {Alert &&
@@ -321,7 +321,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
           total={AllLength?.data?.length}
         />
       </div>
-    </>
+    </div>
   )
 }
 

@@ -20,6 +20,7 @@ import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { messageViewNew } from '@/store/customeHook/validate'
 
 interface ResetPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -86,7 +87,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
         if (validateFormPassword(formData)) {
 
             setSubmitting(true)
-            apiResetPassword({...formData,email:emailId},messageView)
+            apiResetPassword({...formData,email:emailId},messageViewNew)
         }
     }
  

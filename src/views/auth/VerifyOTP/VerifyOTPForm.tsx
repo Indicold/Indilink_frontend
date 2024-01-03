@@ -16,6 +16,7 @@ import * as Yup from 'yup'
 import type { CommonProps } from '@/@types/common'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { messageViewNew } from '@/store/customeHook/validate'
 
 interface ForgotPasswordFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -85,7 +86,7 @@ const [isSubmitting, setSubmitting] = useState(false)
         if (validateFormOTP(formData)) {
             setSubmitting(true);
     
-            apiVerifyOTP(formData,messageView)
+            apiVerifyOTP(formData,messageViewNew)
         }
     }
     const onSendMail = (
@@ -94,7 +95,7 @@ const [isSubmitting, setSubmitting] = useState(false)
     ) => {
         setSubmitting(true);
     
-        apiVerifyOTP(values,messageView)
+        apiVerifyOTP(values,messageViewNew)
     };
     /**
      * The function `messageView` displays a success toast message with specified options.
@@ -122,7 +123,7 @@ const handleresend=()=>{
         email:emailId,
         redirect:3
     }
-    apiForgotPassword(data,messageView,setSubmitting)
+    apiForgotPassword(data,messageViewNew,setSubmitting)
 }
 useEffect(()=>{
     if(emailId){

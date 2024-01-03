@@ -42,7 +42,7 @@ const PartnerBusinessTypeSuccess = () => {
 
 
             </div>
-            <div className="bg-white w-[100%] lg:w-5/6">
+            <div className="bg-white w-[100%] lg:w-5/6 shadow-2xl">
                 <h4 className="mb-2 text-head-title text-center p-4">
                      {t("Registration Successfull")}
                 </h4>

@@ -8,6 +8,7 @@ import View from '@/views'
 import { useNavigate } from 'react-router-dom'
 import NotificationDropdown from '../template/NotificationDropdown/NotificationDropdown'
 import { useTranslation } from 'react-i18next'
+import BackButton from './smallComponents/Backbutton'
 
 /**
  * The `HeaderActionsStart` function returns a JSX element that includes the `MobileNav` and
@@ -111,7 +112,7 @@ const HeaderActionsEnd = () => {
 layout of the application and includes various components such as `SideNav`, `Header`, and `View`. */
 const ClassicLayout = () => {
     return (
-        <div className="app-layout-classic flex flex-auto flex-col">
+        <div className="app-layout-classic bg-white flex flex-auto flex-col">
             <div className="flex flex-auto min-w-0">
                 <SideNav />
                 <div className="flex flex-col flex-auto min-h-screen min-w-0 relative w-full">
@@ -121,6 +122,7 @@ const ClassicLayout = () => {
                         headerEnd={<HeaderActionsEnd />}
                     />
                     <div className="h-full flex flex-auto flex-col">
+                    {!(location?.pathname ==='/home' || location?.pathname ==='/partner-dashbord') && <BackButton />}
                         <View />
                     </div>
                 </div>

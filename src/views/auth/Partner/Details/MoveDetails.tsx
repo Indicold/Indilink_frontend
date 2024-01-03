@@ -1,5 +1,5 @@
 import useApiFetch from '@/store/customeHook/useApiFetch';
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
@@ -30,15 +30,15 @@ const MoveDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
-          messageView("Data Updated Successfully !")
+          messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
-          messageView(result?.message)
+          messageViewNew(result)
     
         }
       })
       .catch((error:any) =>{
-        messageView(error?.message)
+        messageViewNew(error)
       });
       }
       const handleReject=()=>{
@@ -55,15 +55,15 @@ const MoveDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
-          messageView("Data Updated Successfully !")
+            messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
-          messageView(result?.message)
+          messageViewNew(result)
     
         }
       })
       .catch((error:any) =>{
-        messageView(error?.message)
+        messageViewNew(error)
       });
       }
   useEffect(()=>{
@@ -75,7 +75,14 @@ if(fetchDetails?.data?.move){
   },[fetchDetails?.data?.move])
   return (
 <div>
-      <div className='bg-blue-100 p-4 rounded-lg mx-0'>
+<div className='mb-4'>
+
+<h5><b>Asset Details</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
+      <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] mt-10 mb-10 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
@@ -218,14 +225,14 @@ if(fetchDetails?.data?.move){
  
                     </div>
                     <div className='w-[25%] p-10'>
-                        <div className='m-auto'>
-                        <button type="button" onClick={handleAccept} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Accept
+                    {localStorage.getItem('user_type')==='Customer' && <div className='m-auto text-center'>
+                        <button type="button" onClick={handleAccept} className="text-white bg-[green]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Approved
                             </button>
-                            <button type="button" onClick={handleReject} className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Reject
+                            <button type="button" onClick={handleReject} className="text-white bg-[red]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Disapproved
                             </button>
-                          </div>
+                            </div>}
                         <div className='flex m-auto mt-4 gap-4'>
                             <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
                             <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>

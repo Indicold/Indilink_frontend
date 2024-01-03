@@ -23,7 +23,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import usePostApi from '@/store/customeHook/postApi'
-import { messageView, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate'
+import { messageView, messageViewNew, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate'
 import InfoIcon from '@mui/icons-material/Info';
 import usePutApi from '@/store/customeHook/putApi'
 const PartnerComplianceMove = () => {
@@ -247,7 +247,7 @@ const PartnerComplianceMove = () => {
             }
                     })
                     if(validData){
-                        messageView(`Valid Till and License no is mandatory`);
+                        messageViewNew({message:`Valid Till and License no is mandatory`,status:200});
                     }else{
                         const newarray:any=array?.map((item:any,index:any)=>{
                             return {
@@ -384,8 +384,8 @@ const PartnerComplianceMove = () => {
             </div>
             
 
-            <div className="bg-white w-full lg-w-5/6">
-            <ArrowBackIcon role='button' onClick={()=>navigate(-1)} />
+            <div className="bg-white w-full lg-w-5/6 shadow-2xl">
+            {/* <ArrowBackIcon role='button' onClick={()=>navigate(-1)} /> */}
                 <h4 className=" mb-2 text-head-title text-center p-4">
                     Compliance Details
                 </h4>

@@ -98,8 +98,8 @@ const KeyManagement = () => {
             {/* stepper end */}
 
 
-        <div className="bg-white w-[100%] lg:w-5/6">
-            <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} />
+        <div className="bg-white w-[100%] lg:w-5/6  shadow-2xl p-4 ">
+            {/* <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} /> */}
             <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
             <div className='mt-8 text-center'>

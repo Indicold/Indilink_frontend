@@ -24,16 +24,12 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { onkeyDownforSpecialCharcter, validateBasicInformationForm } from '@/store/customeHook/validate';
+import { messageViewNew, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
     signInUrl?: string
 }
-
-
-
-
 /* The above code is defining a validation schema using Yup for a form in a TypeScript React
 application. The validation schema specifies the validation rules for each field in the form. */
 const validationSchema = Yup.object().shape({
@@ -47,7 +43,6 @@ const validationSchema = Yup.object().shape({
         'Your passwords do not match'
     ),
 })
-
 const BasicInformationForm = (props: BasicInformationFormProps) => {
     /* The above code is using the `useSelector` hook from the React Redux library to select a specific
     piece of state from the Redux store. It is passing a callback function to `useSelector` that
@@ -58,32 +53,28 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
     const [isDisabled, setDisabled] = useState(true)
     const [otp, setOtp] = useState('')
     const [seconds, setSeconds] = useState(10);
-    const [Address,setAddress]=useState<any>("")
-
-    const [formData, setFormData] = useState({...selector?.details?.data,designation:"",country: "India",}); // State variable for formData management
+    const [formData, setFormData] = useState({ ...selector?.details?.data, designation: "" }); // State variable for formData management
     const [GSTRes, setGSTRes] = useState({});
+    const [Address, setAddress] = useState<any>("")
     const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-   const [postalCode,setPostalCode]=useState<any>('')
-
+    const [longitude, setLongitude] = useState(null);
+    const [postalCode, setPostalCode] = useState<any>('')
     /* The above code is using hooks in a TypeScript React component. It is using the `usePostApi` hook
     to make a POST request to the `auth/getOTP` endpoint and storing the response in the
     `OTPPostDetails` variable. It is also tracking the loading state of the request using the
     `loading` variable. */
-    let { result: OTPPostDetails, loading, sendPostRequest }:any = usePostApi(`auth/getOTP`);
-    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }:any = usePostApi(`auth/getGstDetails`);
-    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }:any = usePutApi(`auth/verifyOTP`);
-    const { className }:any = props
+    let { result: OTPPostDetails, loading, sendPostRequest }: any = usePostApi(`auth/getOTP`);
+    let { result: GSTResponse, loading: GSTLoading, sendPostRequest: FetchGSTDetails }: any = usePostApi(`auth/getGstDetails`);
+    const { result: OTPResponse, loading: OTPLoading, sendPostRequest: PostOTPDetails }: any = usePutApi(`auth/verifyOTP`);
+    const { className }: any = props
     const dispatch = useDispatch();
     const navigate = useNavigate(); // For handling navigation
-
-    const autoFilldata:any = GSTResponse?.message;
+    const autoFilldata: any = GSTResponse?.message;
     const [otpModal, setOtpModal] = useState(false) // Initially the OTP modal will be closed when the component mounts
     const [invalidPanMessage, showInvalidPanMessage] = useState(false);
     const [panValidationMessage, setPanValidationMessage] = useState("");
     const [gstValidationMessage, setGstValidationMessage] = useState("");
     const [invalidGSTMessage, showInvalidGSTMessage] = useState(false);
-    const [error,setError]=useState<any>({})
 
 
     /**
@@ -95,39 +86,38 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      */
     const handleFinalSubmit = async (e: any) => {
         e.preventDefault();
-        
+
         if (otp) {
             let obj: any = { user_id: OTPPostDetails?.user_id, otp: otp };
             PostOTPDetails(obj)
-
             if (OTPResponse?.message) {
-                toast.success(OTPResponse?.message, {
-                    position: 'top-right', // Position of the toast
-                    autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    style: {
-                        background: '#FFB017',fontSize:"bold",
-                        color: "#fff"// Set the background color here
-                    },
-                });
+                messageViewNew(OTPResponse)
+                // toast.success(OTPResponse?.message, {
+                //     position: 'top-right', // Position of the toast
+                //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                //     style: {
+                //         background: '#FFB017', fontSize: "bold",
+                //         color: "#fff"// Set the background color here
+                //     },
+                // });
             }
-    
+
             if (OTPResponse && OTPResponse?.status != 401) {
                 setTimeout(() => {
                     navigate('/signup-success')
-    
+
                 }, 2000)
             }
         }
     }
-
     // const [a, setA] = useState('false');
     let b = "false";
-  
+
     /**
      * The handleChange function updates the formData state with a new GST value and triggers an API
      * call and Redux action when the GST value reaches a length of 15 characters.
@@ -135,172 +125,209 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
      * function. It represents the event that triggered the change, such as a user typing in an input
      * field or selecting an option from a dropdown menu.
      */
-    const handleChange = (e: any,key:any) => {
-        const newData:any={...formData};
-        newData[e.target.name]=e.target.value;
-        setFormData(newData);
-        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
-  
-
-      };
-
-
-      const handledChange = (e: any,key:any) => {
-        const newData = { ...formData};
-        newData[e.target.name]=e.target.value;
-        setFormData(newData);
-        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
-       
-    }
-
-      
-      const handledfChange = (e: any,key:any) => {
-        const newData = { ...formData};
-        newData[e.target.name]=e.target.value;
-        setFormData(newData);
-        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
-      }
-
-      const handledfnChange = (e: any,key:any) => {
-        const newData = {...formData};
-        newData[e.target.name]=e.target.value;
-        setFormData(newData);
-        if(error[e.target.name])validateBasicInformationForm(newData,setError,Address)
-      }
-      const handleButtonClick = async () => {
-    
-          const apiUrls = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
-    fetch(apiUrls)
-    .then((response) => response.json())
-      .then((data) => {
-        setPostalCode(data?.address?.postcode)
+    const handleChange = (e: any, key: any) => {
         
-      })
+        const newGst = e.target.value;
+        const newData = { ...formData, [key]: newGst };
+        setFormData(newData);
+        const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        const reGST = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
+        const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;
+        console.log("TYTYTUTU", newGst, key);
+        if (key === 'gst' && !reGST.test(newGst)) {
+            setGstValidationMessage('Enter a valid GST Number')
+
+        } else {
+            setGstValidationMessage('')
+        }
+        if (key === 'panNo' && !panRegex.test(newGst)) {
+            setPanValidationMessage('Valid PAN number')
+        } else {
+            setPanValidationMessage('')
+        }
      
-      };
+       
+        if (key === 'panNo') {
+            if (newData?.panNo?.length == 10 && re.test(newGst)) {
+console.log("AAAAAAAA",newData);
 
+                showInvalidPanMessage(false);
+                setPanValidationMessage('')
+                // return;
+            }
+         
 
+            if (newData?.panNo?.length != 0 && !re.test(newGst)) {
+                setPanValidationMessage("Invalid Pan Number");
+            }
+            else if(!newData?.panNo || newData?.designation || newData?.firm || newData?.firmName  || newData?.address)  {
+                setPanValidationMessage("Pan Number is required");
+            } else if (!newData?.panNo) {
+                setPanValidationMessage('')
+            }
+            
+        }
+        if(key==='address' && newData?.address?.length<1){
+            setDisabled(true)
+        }
+      
+        if (!newData?.panNo || !newData?.designation || !newData?.firm || !newData?.firmName  || !newData?.address || newData?.address?.length<1 || newData?.panNo?.length<10) {
+            console.log("ghhhhhhhhhhf");
+            
+            setDisabled(true)
+        } else {
+            setPanValidationMessage('')
+            setDisabled(false)
+        }
+ console.log("HHHHHHHHHH",newData);
+ 
+     
+    };
+  
+    const handleButtonClick = async () => {
+
+        const apiUrls = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+        fetch(apiUrls)
+            .then((response) => response.json())
+            .then((data) => {
+                setPostalCode(data?.address?.postcode)
+
+            })
+
+    };
     /**
      * The `handlesubmit` function is used to handle form submission in a TypeScript React application,
      * where it collects form data and sends a POST request with the data to a server.
      */
-    const Add:any=Address?.split(',')
-    
+    const Add: any = Address?.split(',')
+
     const handlesubmit = () => {
-    
-        let ObjectData:any={
-            first_name:formData?.first_name,
-            last_name:formData?.last_name,
-            email: formData?.email,
-            phone_number:formData?.phone_number,
-            password:formData?.password,
-            country: "India",
-            panNo:formData?.panNo,
-            gstNo:formData?.gstin,
-            userDesignation: formData?.designation,
-            firmType:formData?.firm,
-            firmName: formData?.firmName,
-            pincode:postalCode,
-            state:Add[1],
-            city:Add[0],
-            address: Address,
-            coordinates:[latitude,longitude]
 
-          }    
-
-          
-        setSubmitting(false)
-        if(validateBasicInformationForm(formData,setError,Address)){
-            sendPostRequest(ObjectData);
-
+        if (!postalCode || postalCode === "") {
+            messageViewNew({status:400,message:"Please select GeoLocation again"})
+            // toast.error("Please select GeoLocation again", {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
+            return;
         }
-       
-        OTPPostDetails && OTPPostDetails?.status !== 400 && ObjectData && ObjectData?.firmType !== "" && ObjectData?.firmName !== "" ? setOtpModal(true) : null
+        let ObjectData: any = {
+            first_name: formData?.first_name,
+            last_name: formData?.last_name,
+            email: formData?.email,
+            phone_number: formData?.phone_number,
+            password: formData?.password,
+            country: "India",
+            panNo: formData?.panNo,
+            gstNo: formData?.gstin,
+            userDesignation: formData?.designation,
+            firmType: formData?.firm,
+            firmName: formData?.firmName,
+            pincode: postalCode,
+            state: Add[1],
+            city: Add[0],
+            address: Address,
+            coordinates: [latitude, longitude]
+        }
+
+        setSubmitting(false)
+        sendPostRequest(ObjectData);
+
+        OTPPostDetails && OTPPostDetails?.status !== 400 && OTPPostDetails?.status !== 409 && ObjectData && ObjectData?.firmType !== "" && ObjectData?.firmName !== "" ? setOtpModal(true) : null
         // OTPPostDetails?.message && setOtpModal(true)
         setSubmitting(false)
-
     }
-    useEffect(()=>{
+    useEffect(() => {
         handleButtonClick()
-    },[longitude,latitude])
-
+    }, [longitude, latitude])
     /* The above code is a TypeScript React code snippet that uses the useEffect hook. */
     useEffect(() => {
         if (OTPResponse?.message) {
-            toast.success(OTPResponse?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017',fontSize:"bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
+            messageViewNew(OTPResponse)
+            // toast.success(OTPResponse?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
         }
-
         if (OTPResponse && OTPResponse?.status != 401) {
             setTimeout(() => {
                 navigate('/signup-success')
-
             }, 2000)
         }
-        
-    }, [OTPResponse?.message])
 
+    }, [OTPResponse?.message])
     /* The above code is a useEffect hook in a TypeScript React component. It is triggered whenever the
     value of `b` or `GSTResponse` changes. */
     useEffect(() => {
         if (GSTResponse?.message) {
-
-            toast.success(typeof GSTResponse?.message === 'string'?GSTResponse?.message:"Details fetched successfully.", {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017',fontSize:"bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
-            if(GSTResponse?.message?.compliance)setDisabled(false);
+            if(typeof GSTResponse?.message === 'string'){
+                messageViewNew(GSTResponse)
+            }else{
+                messageViewNew({status:GSTResponse?.status,message:"Details fetched successfully"})
+            }
+         
+            // toast.success(typeof GSTResponse?.message === 'string' ? GSTResponse?.message : "Details fetched successfully.", {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
+            if (GSTResponse?.message?.compliance) setDisabled(false);
             else setDisabled(true);
             // setA("false");
             b = "false";
         }
     }, [b, GSTResponse])
-
     /* The above code is a useEffect hook in a TypeScript React component. It is used to display a
     toast notification when the `OTPPostDetails` object has a `message` property. */
     useEffect(() => {
         if (OTPPostDetails?.message && OTPPostDetails?.message !== 'hello') {
             setSeconds(120)
-            toast.success(OTPPostDetails?.message, {
-                position: 'top-right', // Position of the toast
-                autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                style: {
-                    background: '#FFB017',fontSize:"bold",
-                    color: "#fff"// Set the background color here
-                },
-            });
-            if(OTPPostDetails?.user_id){
+            messageViewNew(OTPPostDetails)
+            // toast.success(OTPPostDetails?.message, {
+            //     position: 'top-right', // Position of the toast
+            //     autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+            //     hideProgressBar: false,
+            //     closeOnClick: true,
+            //     pauseOnHover: true,
+            //     draggable: true,
+            //     progress: undefined,
+            //     style: {
+            //         background: '#FFB017', fontSize: "bold",
+            //         color: "#fff"// Set the background color here
+            //     },
+            // });
+            if (OTPPostDetails?.user_id) {
                 setOtpModal(true)
             }
             OTPPostDetails.message = 'hello'
         }
     }, [OTPPostDetails?.message])
-
     useEffect(() => {
         // Decrease the timer every second
         const timer = setInterval(() => {
@@ -308,17 +335,38 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                 setSeconds(seconds - 1);
             }
         }, 1000);
-
         // Clean up the interval when the component unmounts
         return () => clearInterval(timer);
-
     }, [seconds]);
-
-
+    const FirmTypeList:any=[
+        {
+            id:1,
+            name:"Private Limited"
+        },
+        {
+            id:2,
+            name:"Public Limited"
+        },
+        {
+            id:3,
+            name:"LLP"
+        },
+        {
+            id:4,
+            name:"OPC"
+        },
+        {
+            id:5,
+            name:"Proprietorship"
+        },
+        {
+            id:6,
+            name:"Partnership"
+        }
+    ]
     return (
         <div className={className}>
             <ToastContainer />
-
             {/* The above code is rendering an OTP (One-Time Password) modal in a React component. The
             modal is displayed conditionally based on the value of the `otpModal` variable. If
             `otpModal` is true, the modal is displayed, otherwise it is not rendered. */}
@@ -341,7 +389,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 <form className="" onSubmit={(e) => handleFinalSubmit(e)}>
                                     <div>
                                         <div className="otp mx-auto">
-                                            <input type='number' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} onKeyDown={onkeyDownforSpecialCharcter} />
+                                            <input type='number' className='w-full p-3 border-2 border-indigo-800 rounded-[13px]' placeholder='Enter OTP here.' onChange={(e: any) => setOtp(e.target.value)} />
                                         </div>
                                     </div>
                                     <button
@@ -350,27 +398,22 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                         disabled={otp === ''}
                                     >Get Started!</button>
                                     <div className="text-field text-center">
-                                    If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? seconds < 10 ? `00:0${seconds}` : `00:${seconds}` : 'Resend OTP'}</a>
+                                        If you didn’t receive a code <a role='button' className="text-link" onClick={handlesubmit}>{seconds !== 0 ? `${seconds}` : 'Resend OTP'}</a>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div> : <></>}
-
             {/* The above code is a form component written in TypeScript and React using the Formik
             library. It renders a form with various input fields and a submit button. */}
             <Formik
                 initialValues={{
                     country: "India",
-
                 }}
-         
 
             >
                 <Form className='signup-form'>
-
-
                     <FormContainer>
                         <FormItem
                             label="GST Number"
@@ -382,40 +425,42 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 name="gst"
                                 placeholder="GST No"
                                 onKeyDown={onkeyDownforSpecialCharcter}
-                                onChange={(e: any) => handleChange(e,'gst')}
+                                onChange={(e: any) => handleChange(e, 'gst')}
                                 component={Input}
                                 className=''
                                 max="15"
                                 maxLength={15}
                             />
-                          
-                                    <p className='text-[red]'>{error && error?.gst}</p>
+                            {/* {invalidGSTMessage && ( */}
+                            {gstValidationMessage && (
+                                <div className='text-[red]'>{gstValidationMessage}</div>
+                            )}
                         </FormItem>
-
                         <FormItem
-                                label="Pan Number"
-
-                                className='me-auto text-label-title'
-                                asterisk={true}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="panNo"
-                                    onKeyDown={onkeyDownforSpecialCharcter}
-                                    placeholder="Pan Card No."
-                                    onChange={(e: any) => handleChange(e,'panNo')}
-                                    component={Input}
-                                    className=''
-                                    max="10"
-                                    maxLength={10}
-                                />
-                                <p className='text-[red]'>{error && error?.panNo}</p>
-                            </FormItem>
+                            label="Pan Number"
+                            className='me-auto text-label-title'
+                            asterisk={true}
+                        >
+                            <Field
+                                type="text"
+                                autoComplete="off"
+                                name="panNo"
+                                onKeyDown={onkeyDownforSpecialCharcter}
+                                placeholder="Pan Card No."
+                                onChange={(e: any) => handleChange(e, 'panNo')}
+                                component={Input}
+                                className=''
+                                max="10"
+                                maxLength={10}
+                            />
+                            {/* {invalidPanMessage && ( */}
+                            {panValidationMessage && (
+                                <div className='text-[red]'>{panValidationMessage}</div>
+                            )}
+                        </FormItem>
                         <div className="">
                             <FormItem
                                 label="Country"
-
                                 className='me-auto text-label-title'
                                 asterisk={true}
                             >
@@ -428,77 +473,87 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 />
-                                       <p className='text-[red]'>{error && error?.country}</p>
                             </FormItem>
                         </div>
-
-                            <FormItem
-                                label="User Designation"
-
-                                className='me-auto text-label-title'
-                                asterisk={true}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="designation"
-                                    placeholder="User Designation"
-                                    onKeyDown={onkeyDownforSpecialCharcter}
-                                    onChange={(e: any) => handledChange(e,'designation')}
-                                    component={Input}
-                                    className=''
-                                    max="35"
-                                />
-                                 <p className='text-[red]'>{error && error?.designation}</p>
-                            </FormItem>
+                        <FormItem
+                            label="User Designation"
+                            className='me-auto text-label-title'
+                            asterisk={true}
+                        >
+                            <Field
+                                type="text"
+                                autoComplete="off"
+                                name="designation"
+                                placeholder="User Designation"
+                                onKeyDown={onkeyDownforSpecialCharcter}
+                                onChange={(e: any) => handleChange(e, 'designation')}
+                                component={Input}
+                                className=''
+                                max="35"
+                            />
+                        </FormItem>
                         <div className="lg:flex">
                             <FormItem
                                 label="Firm Type"
-
                                 className='lg:w-1/2 text-label-title'
                                 asterisk={true}
                             >
-                                  
+{/* 
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     onKeyDown={onkeyDownforSpecialCharcter}
                                     name="firm"
                                     placeholder="Firm Type"
-                                    onChange={(e: any) => handledfChange(e,'firm')}
+                                    onChange={(e: any) => handleChange(e, 'firm')}
 
-                                    
                                     component={Input}
                                     className=''
-                                />
-                                   <p className='text-[red]'>{error && error?.firm}</p>
+                                /> */}
+<select
+                                          
+                                            onChange={(e: any) => handleChange(e, 'firm')}
+                                            name="firm"
+                                            className="pl-2 border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        >
+                                            <option>Select Model</option>
+                                            {FirmTypeList &&
+                                                FirmTypeList?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={
+                                                                item?.name
+                                                            }
+                                                          
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
+                                        </select>
                             </FormItem>
-
                             <FormItem
                                 label="Firm Name"
-
                                 className='lg:w-1/2 text-label-title'
                                 asterisk={true}
                             >
-                                
+
                                 <Field
                                     type="text"
                                     autoComplete="off"
                                     onKeyDown={onkeyDownforSpecialCharcter}
                                     name="firmName"
                                     placeholder="Firm Name"
-                                    onChange={(e: any) => handledfnChange(e,'firmName')}
+                                    onChange={(e: any) => handleChange(e, 'firmName')}
                                     component={Input}
                                     className=''
                                 />
-                                <p className='text-[red]'>{error && error?.firmName}</p>
-                            </FormItem>
 
+                            </FormItem>
                         </div>
                         <div className="flex">
                             {/* <FormItem
                                 label="Pin Code"
-
                                 className='me-auto text-label-title'
                                 asterisk={true}
                             >
@@ -509,36 +564,34 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     name="pincode"
                                     placeholder="Pin Code"
                                     onChange={(e: any) => handledfChange(e,'pincode')}
-
                                     
                                     component={Input}
                                     className=''
                                 />
                               
                             </FormItem> */}
-
                             <FormItem
                                 label="Geo Location"
-
                                 className='me-auto w-full text-label-title'
                                 asterisk={true}
                             >
-                                  <ReactGoogleAutocomplete
-                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
-                                            aria-disabled={isDisabled}
-                                            onChange={(e: any) => handledfnChange(e,'address')}
-                                            name="dest_gps"
-                                            // value={dest_gps}
-                                            placeholder="Location"
-                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
-                                            onPlaceSelected={(place) => {
-                                                setAddress(place?.formatted_address);
-                                                setLatitude(place?.geometry?.location?.lat());
-                                                setLongitude(place?.geometry?.location?.lng());
-                                            //    setFormData({...formData,dest_gps:place?.formatted_address})
-                                            }}
-                                        />
-                                 <p className='text-[red]'>{error && error?.dest_gps}</p>
+                                <ReactGoogleAutocomplete
+                                    className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                    aria-disabled={isDisabled}
+                                    onChange={(e: any) => handleChange(e, 'address')}
+                                    name="dest_gps"
+                                    // value={dest_gps}
+                                    placeholder="Location"
+                                    apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                    onPlaceSelected={(place) => {
+                                        setAddress(place?.formatted_address);
+                                        setLatitude(place?.geometry?.location?.lat());
+                                        setLongitude(place?.geometry?.location?.lng());
+                                    
+                                        //    setFormData({...formData,dest_gps:place?.formatted_address})
+                                    }}
+                                />
+
                                 {/* <Field
                                     type="text"
                                     autoComplete="off"
@@ -548,15 +601,12 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     component={Input}
                                     className=''
                                 /> */}
-                              
+
                             </FormItem>
-
                         </div>
-
                         {/* <div className="flex">
                             <FormItem
                                 label="City"
-
                                 className='me-auto text-label-title'
                                 asterisk={true}
                             >
@@ -567,17 +617,14 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                     name="city"
                                     placeholder="City"
                                     onChange={(e: any) => handledfChange(e,'city')}
-
                                     
                                     component={Input}
                                     className=''
                                 />
                               
                             </FormItem>
-
                             <FormItem
                                 label="Address"
-
                                 className='me-auto text-label-title'
                                 asterisk={true}
                             >
@@ -593,18 +640,13 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                 />
                               
                             </FormItem>
-
                         </div> */}
-
-
-
-
                         <div className='flex mt-3'>
                             <Button
                                 block
-                                style={{borderRadius:"13px"}}
+                                style={{ borderRadius: "13px" }}
                                 loading={isSubmitting}
-                                // disabled={isDisabled}
+                                disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
                                 className='indigo-btn signup-submit-btn mx-auto rounded-xl px-4 shadow-lg'
@@ -620,5 +662,4 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         </div>
     )
 }
-
 export default BasicInformationForm;

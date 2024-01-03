@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
-import { messageView, validateMoveCustomerForm, onkeyDownPincode } from '@/store/customeHook/validate';
+import { messageView, validateMoveCustomerForm, onkeyDownPincode, messageViewNew } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
@@ -191,7 +191,7 @@ const MoveSearch = () => {
                 navigate('/ticket_list_move')
             }, 2000)
         }
-        messageView(CustomerResponse?.message)
+        messageViewNew(CustomerResponse)
     }, [CustomerResponse?.status]);
 
 
@@ -229,7 +229,7 @@ localStorage.removeItem('origin_gps');
             The form also includes validation for required fields and handles form submission.
             Depending on the value of the `location.state.extraForm` prop, the form will either
             display an "Update" button or a "Request for Search" button. */}
-            <div className="bg-white p-4">
+            <div className="bg-white p-4 shadow-2xl">
                 <h4 className=" mb-2 text-head-title pl-[22px] text-center">{t("Move")} </h4>
                 <div>
                     <Formik

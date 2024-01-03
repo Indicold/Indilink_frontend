@@ -47,13 +47,27 @@ const CustomerTableTicketList = () => {
 
     return (
         <>
+        <div className='mb-4'>
+
+<h5><b>{t("Ticket List")}</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
             {AllStore?.data?.length > 0 ? (
                 <>
-                    <h4 className="text-head-title mb-4 text-center"> {t("Ticket List")}</h4>
+                    {/* <h4 className="text-head-title mb-4 text-center"> {t("Ticket List")}</h4> */}
                     <TableLayoutCustomer refetchAgain={fetchDataA}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
-                     <h4 className="text-head-title mt-6 text-center"> {t("General Ticket List")}</h4>
+                           <div className='mb-4 mt-4'>
+
+<h5><b>{t("General Ticket List")}</b></h5>
+
+{/* <p>Please add the Invoice</p> */}
+
+</div>
+                     {/* <h4 className="text-head-title mt-6 text-center"> {t("General Ticket List")}</h4> */}
                   {AllStoreGeneral?.data?.length > 0 &&    <CustomerGeneralTableList fetchDataG={fetchDataG}
                         AllStore={AllStoreGeneral?.data}
                     />}

@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { onkeyDown, onkeyDownDimension, onkeyDownNew, onkeyDownOne, onkeyDownforNumSpecialCharcter, validateChamberForm } from '@/store/customeHook/validate'
+import { messageViewNew, onkeyDown, onkeyDownDimension, onkeyDownNew, onkeyDownOne, onkeyDownforNumSpecialCharcter, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -238,7 +238,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         
                     if (result?.status) {
                         FetchAgain()
-                        messageView('Chamber Details Updated Successfully!')
+                        messageViewNew({message:'Chamber Details Updated Successfully!',status:200})
                         
                         const newD: any = { ...formD }
                         let arr: any = []
@@ -272,7 +272,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         setModal(false)
                     }
                 } catch (error: any) {
-                    messageView(error.message)
+                    messageViewNew(error)
                 }
             }else{
 
@@ -285,7 +285,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         
                     if (result?.status) {
                         FetchAgain()
-                        messageView('Chamber Details Updated Successfully!')
+                        messageViewNew({message:'Chamber Details Updated Successfully!',status:200})
                         
                         const newD: any = { ...formD }
                         let arr: any = []
@@ -318,7 +318,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                         setModal(false)
                     }
                 } catch (error: any) {
-                    messageView(error.message)
+                    messageViewNew(error)
                 }}
             }
       

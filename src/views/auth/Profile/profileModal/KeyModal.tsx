@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, onkeyDownAadhar, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -42,6 +42,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         }
         setData(newdata)
+        if(error[e.target.name])validateKeyForm(newdata,setErrors)
     }
     const handlesubmit=()=>{
         if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){
@@ -56,7 +57,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     }
     
     useEffect(()=>{
-        messageView(Keyesponse?.message)
+        messageViewNew(Keyesponse)
         if(Keyesponse?.status==200){
             setData({})
             fetchData()
@@ -67,7 +68,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
         }
     },[Keyesponse?.status])
     useEffect(()=>{
-        messageView(KeyUpdateesponse?.message)
+        messageViewNew(KeyUpdateesponse)
         if(KeyUpdateesponse?.status==200){
             fetchData()
             setTimeout(()=>{

@@ -5,7 +5,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateMachineForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateMachineForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -105,11 +105,11 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
     }, [formD])
     useEffect(() => {
         if (PutApiResponse?.status === 200) {
-            messageView("Data updated successfully !")
+            messageViewNew({message:"Data Updated Successfully !",status:200});
             setModal(false)
             fetchMachineList();
         } else {
-            messageView(PutApiResponse?.message)
+            messageViewNew(PutApiResponse?.message)
         }
         fetchMachineList();
     }, [PutApiResponse, PutApiResponse?.message])

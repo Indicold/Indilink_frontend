@@ -8,7 +8,7 @@ import { Button } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
 import { ToastContainer } from 'react-toastify'; // Import container to show toast messages in container
-import { messageView } from '@/store/customeHook/validate'; // Import custom function to show toast messages
+import { messageView, messageViewNew } from '@/store/customeHook/validate'; // Import custom function to show toast messages
 
 // Defines the table header with column names.
 const tableHead = {
@@ -124,7 +124,7 @@ const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
       .then(response => response.json())
       .then((result: any) => {
 
-        messageView(result?.message)
+        messageViewNew(result)
         refetchAgain()
 
       })
@@ -226,7 +226,7 @@ const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
   // JSX structure for rendering the table and pagination.
 
   return (
-    <>
+    <div className='shadow-2xl p-4'>
       <ToastContainer />
       <div className="search bg-white">
         <label className='font-bold m-4'>Search:</label>
@@ -254,7 +254,7 @@ const TableLayoutCustomer = ({ AllStore, refetchAgain }: any) => {
           total={allData.length}
         />
       </div>
-    </>
+    </div>
   )
 }
 

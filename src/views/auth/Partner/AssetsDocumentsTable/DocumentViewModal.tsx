@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { TokenInfo } from '@/store/customeHook/token';
 import { apiUrl } from '@/store/token';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView } from '@/store/customeHook/validate';
+import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 import ESign from './ESign';
 
@@ -29,7 +29,7 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
     }: any = usePostApi(`legal/document-comment`)
  
     useEffect(()=>{
-        messageView(commentResponse?.message)
+        messageViewNew(commentResponse)
 if(commentResponse?.status===200){
     setModal(false)
     

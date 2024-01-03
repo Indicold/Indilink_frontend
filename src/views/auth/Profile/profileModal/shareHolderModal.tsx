@@ -6,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
 import { TokenInfo } from '@/store/customeHook/token';
-const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
+const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
   const {company_id,company_name}:any=TokenInfo()
     const [isEmailValid, setIsEmailValid] = useState<any>(false)
     const [isMobileValid, setIsMobileValid] = useState<any>(false)
@@ -44,7 +44,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                     ...formData,
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
-                    full_name:`${formData?.fname} ${formData?.lname}`
+                    full_name:`${formData?.fname} ${formData?.lname}`,
+                    firm_type:companyDetails?.data[0]?.firm_type
                 }
                 PostShareUpdateDetails(object)
                 
@@ -53,7 +54,8 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
                     ...formData,
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
-                    full_name:`${formData?.fname} ${formData?.lname}`
+                    full_name:`${formData?.fname} ${formData?.lname}`,
+                    firm_type:companyDetails?.data[0]?.firm_type
                 }
                 SHPostDetails(object)
             }
@@ -62,7 +64,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
     }
     useEffect(() => {
         if (SHResponse) {
-            messageView(SHResponse?.message)
+            messageViewNew(SHResponse)
 
             if (SHResponse?.status === 200) {
                 fetchShare()
@@ -76,7 +78,7 @@ const ShareHolderModal = ({ modal, setModal, data, setData, formData, setformDat
     }, [SHResponse, SHResponse?.message])
     useEffect(() => {
         if (ShareUpadteResponse) {
-            messageView(ShareUpadteResponse?.message)
+            messageViewNew(ShareUpadteResponse)
 
             if (ShareUpadteResponse?.status === 200) {
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids, ShareUpadteResponse?.data?.id]))

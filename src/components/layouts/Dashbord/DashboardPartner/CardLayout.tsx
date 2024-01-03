@@ -141,7 +141,7 @@ const CardLayout = ({ title }: any) => {
   charts. */
   return (
     <>
-      <div className='bg-white p-4 rounded-lg mx-0'>
+      <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
         <div className="w-full flex justify-between">
           <h2 className="text-start">{title}</h2>
         </div>

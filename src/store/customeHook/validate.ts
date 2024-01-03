@@ -209,6 +209,21 @@ export const messageView = (messagevalue: any) => {
         },
     })
 }
+export const messageViewNew = (messagevalue: any) => {
+    toast.success(messagevalue?.message, {
+      position: 'bottom-center', // Position of the toast
+      autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      style: {
+        background:`${messagevalue?.status==200 ? "green": messagevalue?.status==409 ? "red": messagevalue?.status==401 ? "red":  messagevalue?.status==500 ? "red":messagevalue?.status==404 ? "red":  messagevalue?.status==400 ? "red":messagevalue?.status==404 ? "red":"#FFB017"}`, fontSize: "bold",
+        color: "#fff"// Set the background color here
+      },
+    });
+  }
 
 export const handleStoreTable = async (
     url: any,
@@ -238,7 +253,7 @@ export const handleStoreTable = async (
                 fetchAgain()
             }
           if(result?.status==200){
-            messageView('Data Updated Successfully!')
+            messageViewNew({status:200,message:'Data Updated Successfully!'})
             
           }
           
@@ -274,10 +289,10 @@ if (!existingChamberIdsJSON) {
                 setModal(false)
             }, 2000)
         } else {
-            messageView(result?.message)
+            messageViewNew(result)
         }
     } catch (error: any) {
-        messageView(error.message)
+        messageViewNew(error)
     }
 }
 

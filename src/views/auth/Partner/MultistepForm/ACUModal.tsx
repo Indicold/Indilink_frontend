@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui' // Importing custom UI components
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch' // Custom hook for API call
-import { handleStoreTable, messageView, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateACUForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -118,11 +118,11 @@ const ACUModall: React.FC<MajorityHolderModalProps> = ({
     },[commanData])
     useEffect(()=>{
 if(PutApiResponse?.status===200){
-    messageView("Data Updated Successfully !");
+    messageViewNew({message:"Data Updated Successfully !",status:200});
     setModal(false)
     FetchAgain();
 }else{
-    messageView(PutApiResponse)
+    messageViewNew(PutApiResponse)
 }
     },[PutApiResponse])
     return (

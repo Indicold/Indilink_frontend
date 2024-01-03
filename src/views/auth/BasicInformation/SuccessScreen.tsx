@@ -18,9 +18,9 @@ const SuccessScreen = () => {
     })
   return (
     <div>
-      <div className="bg-white w-5/6">
+      <div className="bg-white w-5/6 shadow-2xl">
                 <h4 className="mb-2 text-head-title text-center p-4">
-                    Registration Successfull
+                    Registration Successfullhh
                 </h4>
                 <div>
                     <p className='text-center'>Account Registration is successfull. You will be redirected to sign in page within few seconds.</p>
