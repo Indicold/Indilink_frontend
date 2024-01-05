@@ -18,6 +18,8 @@ import { apiUrl, getToken } from '@/store/token'
 import { messageView } from '@/store/customeHook/validate'
 import { ToastContainer } from 'react-toastify'
 import PermScanWifiIcon from '@mui/icons-material/PermScanWifi';
+import { IoIosNotifications } from "react-icons/io";
+
 /**
  * The above type represents a dropdown list item in a TypeScript React application, containing a
  * label, path, and icon.
@@ -52,7 +54,7 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
     const UserAvatar = (
         <Stack spacing={2} direction="row" role="button">
             <Badge badgeContent={ListOfNotification?.data?.length} className='!m-4' color="secondary">
-                <NotificationsIcon className='!text-[30px]' color="action" />
+                <IoIosNotifications className='!text-[30px]' color="action" />
             </Badge>
 
         </Stack>
@@ -125,7 +127,7 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
                     Notification
                 </Dropdown.Item>
                 <Dropdown.Item variant="divider" />
-                {ListOfNotification?.data?.slice(0, 4).map((item: any, index: any) => (
+                {ListOfNotification?.data?.length>0 ?ListOfNotification?.data?.slice(0, 4).map((item: any, index: any) => (
                     <Dropdown.Item variant="header">
                         <div className="flex items-center">
                             <div className="mt-2 px-6  bg-white rounded-lg w-full">
@@ -140,7 +142,9 @@ const _NotificationDropdown = ({ className }: CommonProps) => {
                             </div>
                         </div>
                     </Dropdown.Item>
-                ))}
+                )) :
+                <p className='text-center'>There are no any new notification</p>
+                }
 
                 <Dropdown.Item variant="divider" />
                 {dropdownItemList.map((item) => (

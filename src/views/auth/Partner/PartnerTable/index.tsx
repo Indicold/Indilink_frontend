@@ -12,7 +12,7 @@ import React, { useState } from 'react'
 
 const PartnerTableAssetsList = () => {
     const { token }: any = getToken();
-    const [pageNo,setPageNo]=useState<any>(1)
+    const [pageNo, setPageNo] = useState<any>(1)
 
     const {
         data: AllLength,
@@ -20,30 +20,24 @@ const PartnerTableAssetsList = () => {
     const {
         data: AllStore,
         loading: StoreRLoad,
-        error: allerr,
-        refetch:fetchApi
+        refetch: fetchApi
     }: any = useApiFetch<any>(`master/asset/10/${pageNo}`, token)
 
     return (
         <>
-           <div className='mb-4'>
-
-<h5><b>Assets List</b></h5>
-
-{/* <p>Please add the Invoice</p> */}
-
-</div>
-                    {/* <h4 className="text-head-title text-center">Assets List</h4> */}
+            <div className='mb-4'>
+                <h5><b>Assets List</b></h5>
+            </div>
 
             {AllStore?.data?.length > 0 ? (
                 <>
                     <TableLayout fetchApi={fetchApi}
-                    setPageNo={setPageNo}
-                    AllLength={AllLength}
+                        setPageNo={setPageNo}
+                        AllLength={AllLength}
                         AllStore={AllStore?.data?.length > 0 && AllStore?.data}
                     />
                 </>
-            ) :  <DataNotFound title="Create Assets" url="/collapse-menu-item-view-1" />}
+            ) : <DataNotFound title="Create Assets" url="/collapse-menu-item-view-1" />}
             <div>
                 {StoreRLoad && <LoaderSpinner />}
             </div>

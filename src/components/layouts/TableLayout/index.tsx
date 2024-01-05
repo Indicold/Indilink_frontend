@@ -184,11 +184,11 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
       }
       if (key === 'Action') {
         return <td className='text-center flex gap-2 justify-end' key={i} >
-          {rowData?.status === 'Final' ? null : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
+          {rowData?.status === 'Final' ? <Button className='!p-3 pt-0 pb-0' disabled><EditIcon /></Button> : <Button className='!p-3 pt-0 pb-0' onClick={() => handleEdit(rowData)}><EditIcon /></Button>}
           <Button className='!p-2' onClick={() => handleView(rowData)}><RemoveRedEyeIcon /></Button>
           <Button className='!p-2' onClick={() => handleDocs(rowData)}><TextSnippetIcon /></Button>
           <Button className='!p-2' onClick={() => handleLogs(rowData)}>Logs</Button>
-          {rowData?.status === 'Final' ? null : <Button className='!p-2' onClick={() => handleSubmit(rowData)}>Submit</Button>}
+          {rowData?.status === 'Final' ? <Button className='!p-2' disabled>Submit</Button> : <Button className='!p-2' onClick={() => handleSubmit(rowData)}>Submit</Button>}
         </td>;
       }
       return <td key={i} className='text-center'>{rowData[key]}</td>;

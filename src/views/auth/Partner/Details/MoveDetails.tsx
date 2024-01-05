@@ -1,3 +1,4 @@
+import Tags from '@/components/layouts/smallComponents/Tags';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
@@ -83,7 +84,7 @@ if(fetchDetails?.data?.move){
 
 </div>
       <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
-                <div className="w-[100%] mt-10 mb-10 flex justify-between">
+                <div className="w-[100%] mt-4 mb-4 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
  
@@ -108,111 +109,111 @@ if(fetchDetails?.data?.move){
                     <div className='w-[75%]'>
                         <div className='flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Asset Type :</h2>
                                     <h2 className="text-gray-400 text-sm">Move</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Manufacture Year</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.mfg_month_year || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.mfg_month_year || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Chassis No</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.chassis_no || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.chassis_no || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Vehical No</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.vehicle_no || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.vehicle_no || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Vehicle Class</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.vehicle_class}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.vehicle_class || 'Not Available'}</h2>
                                 </div>
                             </div>
                             
                         </div>
                         <div className='flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Emission Norms</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.emission_norms}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.emission_norms || 'Not Available'}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Actual Payload</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.actual_payload || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.actual_payload || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Create Capacity</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.create_capacity || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.create_capacity || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Length</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.length || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.length || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Width</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.width}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.width  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Height</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hight}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hight  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             
                         </div>
                         <div className='flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">G V weight</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.gv_weight}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.gv_weight  || 'Not Available'}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Weight In RC</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.unladen_weight_in_rc || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.unladen_weight_in_rc || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Engine No</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.engine_no || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.engine_no || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Side Door</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.side_door}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.side_door  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Hatch Window</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hatch_window || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hatch_window || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Temperature</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.dual_temp_bulkhead}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.dual_temp_bulkhead  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             
@@ -233,11 +234,9 @@ if(fetchDetails?.data?.move){
                             Disapproved
                             </button>
                             </div>}
-                        <div className='flex m-auto mt-4 gap-4'>
-                            <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>3<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                        </div>
+                            <div className='flex m-auto mt-4 gap-4'>
+                      <Tags/>
+                       </div>
                     </div>
                 </div>
                

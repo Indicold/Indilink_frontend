@@ -55,7 +55,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
     const [formattedString, setFormattedString] = useState('');
     const [formattedStringP, setFormattedStringP] = useState('');
     const [data, setData] = useState<any>({
-        staircase:true
+        staircase:1
     })
     const {id}:any=useParams(); // Extracting active URL endpoint to define payload for API call
     const [errors, setErrors] = useState<any>({})
