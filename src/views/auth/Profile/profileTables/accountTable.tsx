@@ -84,7 +84,7 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             .then(response => response.text())
             .then((result: any) => {
                 fetchData();
-                messageViewNew({message:"Deleted Successfully",status:200});
+                messageViewNew({ message: "Deleted Successfully", status: 200 });
             })
             .catch(error => console.log('error', error));
     }
@@ -243,14 +243,14 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
             <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
         </tr>;
     }
-    
+
 
     const headRow = () => {
         // Generates the header row.
         return Object.values(tableHead).map((title: any, index: any) => (
-            
+
             <td key={index} className="text-center ">
-                {title} 
+                {title}
             </td>
         ))
     }

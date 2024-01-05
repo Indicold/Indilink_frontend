@@ -1,4 +1,5 @@
 /* The code is importing three things: */
+import Tags from '@/components/layouts/smallComponents/Tags';
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
@@ -90,7 +91,7 @@ if(fetchDetails?.data?.store){
 
 </div>
       <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
-                <div className="w-[100%] mt-10 mb-10 flex justify-between">
+                <div className="w-[100%] mt-4 mb-4 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
  
@@ -105,7 +106,7 @@ if(fetchDetails?.data?.store){
  
             </div>
             <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
-                <div className="w-[100%] pl-4 mt-10 mb-2">
+                <div className="w-[100%] pl-4 mt-2 mb-2">
                     <h2 className="text-xl">Store Type Assets</h2>
                     <h2 className="text-gray-400 text-lg">{id}</h2>
                 </div>
@@ -115,79 +116,79 @@ if(fetchDetails?.data?.store){
                     <div className='w-[75%]'>
                         <div className='lg:flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Asset Type :</h2>
                                     <h2 className="text-gray-400 text-sm">Store</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Address</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Total Tonnage</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_tonnage}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_tonnage  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">No Of Chamber</h2>
                                     <h2 className="text-gray-400 text-sm">{assetDetails?.no_of_chambers || 0}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Ante Room Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.ante_room_area || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.ante_room_area || 'Not Available'}</h2>
                                 </div>
                             </div>
                         </div>
                         <div className=' lg:flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Total office space</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_office_space || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.total_office_space || 'Not Available'}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Type of dock</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.type_of_dock_id}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.type_of_dock_id  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Processing Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.processing_area}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.processing_area  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Parking Area</h2>
                                     <h2 className="text-gray-400 text-sm">{assetDetails?.parking_area || 0}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Installation Year</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.installation_year || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.installation_year || 'Not Available'}</h2>
                                 </div>
                             </div>
                         </div>
                         <div className='lg:flex justify-start'>
                             <div className=''>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Facility Manager Name</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_name || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_name || 'Not Available'}</h2>
                                 </div>
                             </div >
                             <div className=''>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Facility Manager Contact</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_contact || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_contact || 'Not Available'}</h2>
                                 </div>
                             </div>
                            
@@ -204,11 +205,9 @@ if(fetchDetails?.data?.store){
                             Disapproved
                             </button>
                             </div>}
-                        <div className='flex m-auto mt-4 gap-4'>
-                            <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>3<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                        </div>
+                            <div className='flex m-auto mt-4 gap-4'>
+                      <Tags/>
+                       </div>
                     </div>
                 </div>
  

@@ -1,3 +1,4 @@
+import Tags from '@/components/layouts/smallComponents/Tags';
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
@@ -82,7 +83,7 @@ if(fetchDetails?.data?.prepare){
 
 </div>
       <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
-                <div className="w-[100%] mt-10 mb-10 flex justify-between">
+                <div className="w-[100%] mt-4 mb-4 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
  
@@ -107,72 +108,72 @@ if(fetchDetails?.data?.prepare){
                     <div className='w-[75%]'>
                         <div className='flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Asset Type :</h2>
                                     <h2 className="text-gray-400 text-sm">Prepare</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Address</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.address || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Hourly Throughput</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hourly_throughput || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.hourly_throughput || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Prepare Type</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.prepare_type_id || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.prepare_type_id || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Throughput</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.throughput}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.throughput  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             
                         </div>
                         <div className='flex'>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">avg Case Size</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.avg_case_size}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.avg_case_size  || 'Not Available'}</h2>
                                 </div>
                             </div >
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">No of Docks</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.no_of_docks || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.no_of_docks || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Minimum Temperature</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_min || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_min || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Maximum Temperature</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_max || 'N/A'}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.temperature_max || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Batch Size</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.batch_size}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.batch_size  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             <div className='m-auto'>
-                                <div className="w-[100%] pl-4 mt-10 mb-10">
+                                <div className="w-[100%] pl-4 mt-4 mb-4">
                                     <h2 className="text-sm">Area</h2>
-                                    <h2 className="text-gray-400 text-sm">{assetDetails?.area}</h2>
+                                    <h2 className="text-gray-400 text-sm">{assetDetails?.area  || 'Not Available'}</h2>
                                 </div>
                             </div>
                             
@@ -195,10 +196,8 @@ if(fetchDetails?.data?.prepare){
                             </button>
                             </div>}
                         <div className='flex m-auto mt-4 gap-4'>
-                            <div m-auto>1<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>2<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                            <div m-auto>3<img src="https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/tag.png" alt="" /></div>
-                        </div>
+                      <Tags/>
+                       </div>
                     </div>
                 </div>
                
