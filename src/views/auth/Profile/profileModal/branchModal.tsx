@@ -40,9 +40,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
         if(error[e.target.name])validateBranchForm(newdata, setErrors,isEmailValid,isMobileValid)
     }
     const handlesubmit = () => {
-        console.log("TYYYYYYY",validateBranchForm(formData, setErrors,isEmailValid,isMobileValid),isEmailValid,isMobileValid);
         
-        if (validateBranchForm(formData, setErrors,isEmailValid,isMobileValid) && (isEmailValid === 'Eligible') && (isMobileValid === 'Eligible')) {
+        if (validateBranchForm(formData, setErrors,isEmailValid,isMobileValid)) {
             if (formData?.type === 'Edit') {
                 PostBranchUpdateDetails(formData)
             }else{
@@ -101,9 +100,9 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                             >
                                 <path
                                     stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
                                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                                 />
                             </svg>
@@ -278,7 +277,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 type='button'
                                                 className='indigo-btn mt-4 rounded-xl shadow-lg'
                                             >
-                                                Save & Next
+                                                Save
                                             </Button>
                                         </div>
                                     </FormContainer>
