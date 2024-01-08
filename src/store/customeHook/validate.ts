@@ -334,17 +334,10 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
     }
     if (!formData?.avg_case_size) {
         if (formData?.avg_case_size==='') {
-<<<<<<< HEAD
-            newErrors.avg_case_size = 'Avg.Case size is required'
-        }
-        if (formData?.avg_case_size<0) {
-            newErrors.avg_case_size = 'Avg.Case size is required'
-=======
             newErrors.avg_case_size = 'Avg.case size is required'
         }
         if (formData?.avg_case_size<0) {
             newErrors.avg_case_size = 'Avg.case size is required'
->>>>>>> bbd5ea3655d96bdde5fb5583748354ebb31764ae
         }
     }
     if (!formData?.no_of_docks) {
@@ -360,11 +353,7 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
         // }
     if (!formData?.temperature_min) {
         if (!formData?.temperature_max) {
-<<<<<<< HEAD
-            newErrors.temperature_min = 'Min and Max temperatures are required'
-=======
             newErrors.temperature_min = 'Min and max temperatures are required'
->>>>>>> bbd5ea3655d96bdde5fb5583748354ebb31764ae
         }
         else {
             newErrors.temperature_min = 'Min temperature is required'
