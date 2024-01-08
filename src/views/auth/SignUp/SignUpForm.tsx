@@ -126,9 +126,7 @@ console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
     }
     return (
         <div className={className}>
-            {/* The above code is a form component written in TypeScript and React using the Formik
-            library. It is a sign-up form that collects user information such as first name, last
-            name, email address, phone number, password, and confirm password. */}
+            {/* TypeScript and React form component using Formik for user sign-up with fields for first name, last name, email, phone, password, and confirm password. */}
             <Formik
                 initialValues={{
                     first_name: null,

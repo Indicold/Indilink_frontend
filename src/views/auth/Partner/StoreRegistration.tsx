@@ -1597,7 +1597,7 @@ const StoreRegistration = () => {
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
                                             {fetchDetailsAll?.data?.chambers.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex lg:w-full w-screen  py-2 rounded-[13px] my-2">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem]  py-2 rounded-[13px] my-2">
 
                                                     <div className="w-[17%] text-center m-auto">            
                                                         Chamber name
@@ -1619,7 +1619,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.chambers?.map((item: any, index: any) => (
-                                                    <div className="listt flex lg:w-full w-screen bg-white py-4 rounded-[13px]">
+                                                    <div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[20%] text-center m-auto ellipse-text">
                                                             {item?.chamber_name}
                                                         </div>
@@ -1678,8 +1678,8 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.caEquipments.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.caEquipments.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
                                                     <div className="w-[26%] text-center ellipse-text m-auto">
                                                         Make
                                                     </div>
@@ -1694,7 +1694,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.caEquipments?.map((item: any, index: any) => (
-                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center ellipse-text m-auto">
                                                             {item?.make}
                                                         </div>
@@ -1745,8 +1745,8 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.compressors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.compressors?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
                                                     <div className="w-[25%] text-center ellipse-text m-auto">
                                                         Make
                                                     </div>
@@ -1767,7 +1767,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.compressors?.map((item: any, index: any) => (
-                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center ellipse-text m-auto">
                                                             {item?.make}
                                                         </div>
@@ -1827,8 +1827,8 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.acus?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.acus?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center ellipse-text m-auto">
                                                         Make
                                                     </div>
@@ -1849,7 +1849,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.acus?.map((item: any, index: any) => (
-                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[20%] text-center ellipse-text m-auto">
                                                             {item?.make}
                                                         </div>
@@ -1906,8 +1906,8 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.condensors?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
+                                            {fetchDetailsAll?.data?.condensors?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
                                                     <div className="w-[20%] text-center ellipse-text m-auto">
                                                         Make
                                                     </div>
@@ -1925,7 +1925,7 @@ const StoreRegistration = () => {
                                                     </div>
                                                 </div>
                                                 {fetchDetailsAll?.data?.condensors?.map((item: any, index: any) => (
-                                                    <div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    <div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center ellipse-text m-auto">
                                                             {item?.make}
                                                         </div>
@@ -1981,21 +1981,21 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.amcs?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.amcs?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[20%] text-center  m-auto">
                                                         Name of Service
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Vendor
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Valid till
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Fixed Cost
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                     Actions
                                                     </div>
                                                 </div>
@@ -2003,7 +2003,7 @@ const StoreRegistration = () => {
                                                     let date: any = new Date(item?.valid_till)
                                                     date = date?.toLocaleDateString()
                                                     
-                                                    return (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    return (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center ellipse-text m-auto">
                                                             {item?.name_of_service}
                                                         </div>
@@ -2056,25 +2056,25 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.iotDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.iotDevices?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         ID
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                {fetchDetailsAll?.data?.iotDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.iotDevices?.map((item: any, index: any) => (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center ellipse-text m-auto">
                                                         {item?.type}
                                                     </div>
@@ -2126,25 +2126,25 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.itDevices?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.itDevices?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Type
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Device ID
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.itDevices?.map((item: any, index: any) => (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                     <div className="w-[20%] text-center ellipse-text m-auto">
                                                         {item?.type}
                                                     </div>
@@ -2196,25 +2196,25 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.generators?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.generators?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         KVA
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                         Year
                                                     </div>
-                                                    <div className="w-[20%] text-center ellipse-text m-auto">
+                                                    <div className="w-[20%] text-center m-auto">
                                                     Actions
                                                     </div>
                                                 </div>
-                                                {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.generators?.map((item: any, index: any) => (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                     <div className="w-[20%] text-center ellipse-text m-auto">
                                                         {item?.make}
                                                     </div>
@@ -2266,22 +2266,22 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.mhes?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.mhes?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Load
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Actions
                                                     </div>
                                                 </div>
-                                                {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                {fetchDetailsAll?.data?.mhes?.map((item: any, index: any) => (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                     <div className="w-[25%] text-center ellipse-text m-auto">
                                                         {item?.make}
                                                     </div>
@@ -2331,22 +2331,22 @@ const StoreRegistration = () => {
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
-                                            {fetchDetailsAll?.data?.solarInverters?.length > 0 ? <div className="w-full bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
-                                                <div><div className="bg-[#0f3492] text-white det-header flex w-full py-2 rounded-[13px] my-2">
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                            {fetchDetailsAll?.data?.solarInverters?.length > 0 ? <div className="w-full overflow-auto bg-[#E1EFFE] py-2 rounded-b-[13px] mb-3">
+                                                <div><div className="bg-[#0f3492] text-white det-header flex xl:w-full w-[50rem] py-2 rounded-[13px] my-2">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Make
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Model
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Capacity
                                                     </div>
-                                                    <div className="w-[25%] text-center ellipse-text m-auto">
+                                                    <div className="w-[25%] text-center m-auto">
                                                         Actions
                                                     </div>
                                                 </div>
-                                                    {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div className="listt flex w-full bg-white py-4 rounded-[13px]">
+                                                    {fetchDetailsAll?.data?.solarInverters?.map((item: any, index: any) => (<div key={index} className="listt flex xl:w-full w-[50rem] bg-white py-4 rounded-[13px]">
                                                         <div className="w-[25%] text-center ellipse-text m-auto">
                                                             {item?.make}
                                                         </div>

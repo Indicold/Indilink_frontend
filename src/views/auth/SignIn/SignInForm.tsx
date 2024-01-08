@@ -1,5 +1,5 @@
 /**
- * This is a TypeScript React component for a sign-in form with validation and submission
+ * TypeScript React sign-in form component.
  * functionality.
  * @property {string} email - The email property is a string that represents the user's email address.
  * It is required and must be a valid email format.

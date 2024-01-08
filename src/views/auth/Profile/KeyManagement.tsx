@@ -127,7 +127,7 @@ const KeyManagement = () => {
                                 type="button"
                                 role='button'
                                 onClick={()=>navigate(-1)}
-                                className="indigo-btn !bg-gray-500 m-4 mx-auto rounded-[30px]"
+                                className="indigo-btn !bg-gray-500 m-4 rounded-[30px]"
                             >
                                 Prev
                             </Button>
@@ -138,7 +138,7 @@ const KeyManagement = () => {
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
+                                className='indigo-btn mt-4 rounded-xl shadow-lg'
                             >
                                 Save 
                                         </Button>

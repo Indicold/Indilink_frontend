@@ -12,10 +12,10 @@ import SignatureCanvas from "react-signature-canvas";
  * and a `canvasProps` attribute with width and height properties.
  */
 const ESign = () => {
-    /* The line `const padRef :any= useRef(null);` is creating a reference to the SignatureCanvas
-    component using the `useRef` hook from React. The `padRef` variable is initialized with `null`
-    as its initial value. This reference can be used to access the methods and properties of the
-    SignatureCanvas component, such as `clear()` and `toDataURL()`. */
+    /* 
+const padRef: any = useRef(null); creates a padRef reference to the
+ SignatureCanvas component using the React useRef hook, initialized 
+ with null for accessing methods like clear() and toDataURL(). */
     const padRef :any= useRef(null);
 
     /* The code is using the `useState` hook from React to create two state variables: `canvas` and
@@ -32,9 +32,8 @@ const ESign = () => {
       setCanvasVisibility(false);
     }, []);
   
-    /* The `handleGetCanvas` function is a callback function created using the `useCallback` hook from
-    React. It is responsible for getting the data URL of the signature canvas and updating the
-    canvas state variables. */
+    // handleGetCanvas is a useCallback function in React for retrieving the data URL of the signature 
+    // canvas and updating associated state variables
     const handleGetCanvas = useCallback(() => {
       const canvas = padRef?.current?.toDataURL();
   
