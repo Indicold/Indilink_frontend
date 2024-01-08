@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
 import { Button } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Defines the table header with column names.
 
@@ -146,13 +148,13 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                             className="!p-3"
                             onClick={() => handleEdit(rowData)}
                         >
-                            Edit
+                             <EditIcon />
                         </Button>
                         <Button
                             className="!p-2"
                             onClick={() => handleView(rowData)}
                         >
-                            View
+                            <VisibilityIcon />
                         </Button>
                     </td>
                 )
