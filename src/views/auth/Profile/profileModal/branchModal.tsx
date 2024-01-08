@@ -252,7 +252,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {isMobileValid ? isMobileValid : error?.branch_phone}
+                                                    {error?.branch_phone}
                                                 </p>
                                             </FormItem>
                                         </div>
