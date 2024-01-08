@@ -145,7 +145,7 @@ export const validateBasicInformationForm = (formData: any, setError: any,Addres
         errorss.designation = 'Designation is required'
     }
     if (!formData?.firm) {
-        errorss.firm = 'Firm Type is required'
+        errorss.firm = 'Firm type is required'
     }
     if (!formData?.firmName) {
         errorss.firmName = 'Firm Name is required'
@@ -334,18 +334,18 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
     }
     if (!formData?.avg_case_size) {
         if (formData?.avg_case_size==='') {
-            newErrors.avg_case_size = 'Avg.Case Size is required'
+            newErrors.avg_case_size = 'Avg.Case size is required'
         }
         if (formData?.avg_case_size<0) {
-            newErrors.avg_case_size = 'Avg.Case Size is required'
+            newErrors.avg_case_size = 'Avg.Case size is required'
         }
     }
     if (!formData?.no_of_docks) {
         if (formData?.no_of_docks==='') {
-            newErrors.no_of_docks = 'No of Docks is required'
+            newErrors.no_of_docks = 'No of docks is required'
         }
         if (formData?.no_of_docks<0) {
-            newErrors.no_of_docks = 'No of Docks is required'
+            newErrors.no_of_docks = 'No of docks is required'
         }
     }
         // if (!formData?.type_of_dock_id) {
@@ -353,10 +353,10 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
         // }
     if (!formData?.temperature_min) {
         if (!formData?.temperature_max) {
-            newErrors.temperature_min = 'Min and Max Temperatures are required'
+            newErrors.temperature_min = 'Min and Max temperatures are required'
         }
         else {
-            newErrors.temperature_min = 'Min Temperature is required'
+            newErrors.temperature_min = 'Min temperature is required'
         }
     }
     if (!formData?.temperature_max && formData?.temperature_min) {
@@ -613,20 +613,20 @@ export const validateMovePartnerForm = (formData: any, setErrors: any) => {
     const newErrors: any = {}
 
     if (!formData?.vehicle_make_id) {
-        newErrors.vehicle_make_id = 'This Field is required'
+        newErrors.vehicle_make_id = 'This field is required'
     }
 
     if (!formData?.vehicle_model_id) {
-        newErrors.vehicle_model_id = 'This Field is required'
+        newErrors.vehicle_model_id = 'This field is required'
     }
 if(!formData?.chassis_no){
-    newErrors.chassis_no = 'This Field is required'
+    newErrors.chassis_no = 'This field is required'
 }
     if (formData?.chassis_no  && !textContainsNumber(formData?.chassis_no)) {
-        newErrors.chassis_no = 'Please Enter Valid Chassis No'
+        newErrors.chassis_no = 'Please enter valid chassis No'
     }
     if (formData?.engine_no  && !textContainsNumber(formData?.engine_no)) {
-        newErrors.engine_no = 'Please Enter Valid Engine No'
+        newErrors.engine_no = 'Please enter valid engine No'
     }
     if (formData?.rc_no  && !textContainsNumber(formData?.rc_no)) {
         newErrors.rc_no = 'Please Enter Valid RC No'
