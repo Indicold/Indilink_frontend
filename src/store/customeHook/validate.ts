@@ -1174,7 +1174,7 @@ export const validateSHForm = (formData: any, setErrors: any) => {
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
-export const validateBranchForm = (formData: any, setErrors: any) => {
+export const validateBranchForm = (formData: any, setErrors: any,isEmailValid:any,isMobileValid:any) => {
     const newErrors: any = {}
 
     if (!formData?.name) {
@@ -1198,10 +1198,14 @@ export const validateBranchForm = (formData: any, setErrors: any) => {
     if (!formData?.branch_phone) {
         newErrors.branch_phone = 'This field is required'
     }
-  
+  if(formData?.branch_email && isEmailValid && isEmailValid !=='Eligible'){
+    newErrors.branch_email = 'Please enter valid email'
+  }
    
 
     setErrors(newErrors)
+    console.log("YYYYYYYYYYY",newErrors,Object.keys(newErrors).length === 0);
+    
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
 export const validateBasicForm = (data: any, setErrors: any) => {

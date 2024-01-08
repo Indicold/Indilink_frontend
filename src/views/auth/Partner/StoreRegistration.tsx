@@ -177,7 +177,7 @@ const StoreRegistration = () => {
     const handleRoute = async () => {
         const { token }: any = getToken()
         // dataa['store_type_id'] = selectedOptions || []
-        dataa['store_type_valid'] = selectedOptions?.length<1
+        dataa['store_type_valid'] = selectedOptions?.length<1 ? true :false;
         
         let formdata: any = new FormData();
         formdata.append("asset_id", id);
@@ -344,7 +344,7 @@ const StoreRegistration = () => {
             else newData[e.target.name] = e.target.value
         newData.no_of_chambers = dataa.no_of_chambers ? dataa.no_of_chambers : '0';
         setData(newData)
-        if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors)
+        if (errors[e.target.name]) validateStorePartnerForm(newData, setErrors,selectedOptions)
         // if(e.target.nodeName === 'SELECT')validateStorePartnerForm(dataa, setErrors)
     }
 
