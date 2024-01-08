@@ -1201,6 +1201,9 @@ export const validateBranchForm = (formData: any, setErrors: any,isEmailValid:an
   if(formData?.branch_email && isEmailValid && isEmailValid !=='Eligible'){
     newErrors.branch_email = 'Please enter valid email'
   }
+  if(formData?.branch_phone && isMobileValid && isMobileValid !=='Eligible'){
+    newErrors.branch_phone = 'Please enter valid mobile'
+  }
    
 
     setErrors(newErrors)
