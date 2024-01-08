@@ -32,15 +32,17 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             }
         } else {
             newdata[e.target.name] = e.target.value;
-            if(e.target.name === 'branch_head'){
+            if(e.target.name === 'branch_email'){
                 validateEmailDebounced(e.target.value, setIsEmailValid)
             }
         }
         setformData(newdata)
-        if(error[e.target.name])validateBranchForm(newdata, setErrors)
+        if(error[e.target.name])validateBranchForm(newdata, setErrors,isEmailValid,isMobileValid)
     }
     const handlesubmit = () => {
-        if (validateBranchForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
+        console.log("TYYYYYYY",validateBranchForm(formData, setErrors,isEmailValid,isMobileValid),isEmailValid,isMobileValid);
+        
+        if (validateBranchForm(formData, setErrors,isEmailValid,isMobileValid) && (isEmailValid === 'Eligible') && (isMobileValid === 'Eligible')) {
             if (formData?.type === 'Edit') {
                 PostBranchUpdateDetails(formData)
             }else{
@@ -197,13 +199,13 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     onChange={(e: any) =>
                                                         handleChange(e)
                                                     }
-                                                    name="branch_email"
-                                                    value={formData?.branch_email}
+                                                    name="branch_head"
+                                                    value={formData?.branch_head}
                                                     placeholder="Branch Head"
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {error && error?.branch_email}
+                                                    {error && error?.branch_head}
                                                 </p>
                                             </FormItem>
                                         </div>
@@ -221,13 +223,13 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     onChange={(e: any) =>
                                                         handleChange(e)
                                                     }
-                                                    name="branch_head"
-                                                    value={formData?.branch_head}
+                                                    name="branch_email"
+                                                    value={formData?.branch_email}
                                                     placeholder="Branch Email Address"
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {isEmailValid ? isEmailValid : error?.branch_head}
+                                                    {error?.branch_email}
                                                 </p>
                                             </FormItem>
                                             <FormItem
@@ -273,6 +275,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 disabled={formData?.isdisabled}
                                                 variant="solid"
                                                 onClick={handlesubmit}
+                                                type='button'
                                                 className='indigo-btn mt-4 rounded-xl shadow-lg'
                                             >
                                                 Save & Next

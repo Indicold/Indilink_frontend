@@ -18,6 +18,7 @@ interface MajorityHolderModalProps {
     update: React.Dispatch<React.SetStateAction<boolean>>
     chamber: any
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    commanData:any
     FetchAgain: any,
 
 }

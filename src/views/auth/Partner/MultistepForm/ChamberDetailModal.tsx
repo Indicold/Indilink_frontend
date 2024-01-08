@@ -22,6 +22,7 @@ interface MajorityHolderModalProps {
     formD: any
     update: React.Dispatch<React.SetStateAction<boolean>>
     setModal: React.Dispatch<React.SetStateAction<boolean>>
+    commanData:any
     FetchAgain: any
 }
 const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({

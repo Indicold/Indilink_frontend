@@ -81,6 +81,11 @@ line-height: 42px; /* 150% */
     color:#103492 !important;
     text-transform:capitalize !important
 }
+.text-label-title, .form-label,div, p {
+    text-transform: math-auto;
+}
+
+
 .form-label{
     color:#103492 !important;
     text-transform:capitalize !important
@@ -156,7 +161,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type=number] {    
   -moz-appearance: textfield;
 }
 /* -----------according  to figma style and layout css start----------- */
