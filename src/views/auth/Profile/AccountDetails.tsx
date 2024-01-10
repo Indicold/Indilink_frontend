@@ -73,7 +73,7 @@ const AccountDetails = () => {
         <h6 className="font-medium leading-tight">Basic Information</h6>
         {/* <p className="text-sm">Step details here</p> */}
     </li>
-    <li className="mb-10 j ml-6">
+    <li className="mb-10 ml-6">
         <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
             <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
