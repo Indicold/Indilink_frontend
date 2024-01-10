@@ -525,8 +525,8 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
 
            
 
-            <div className="bg-white w-[100%]  p-8 flex  shadow-2xl">
-            <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
+            <div className="bg-white w-[100%]  p-8 lg:flex  shadow-2xl">
+            <div className=' w-[100%] lg:pl-0 lg:w-1/5'>
 
 
 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -555,7 +555,7 @@ if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !it
 
 
 </div>
-<div className='w-5/6'>
+<div className='w-full'>
                 {/* <ArrowBackIcon role='button' onClick={() => navigate(-1)} /> */}
                 <h4 className=" mb-2 text-head-title text-center p-4">
                     {t("Compliance Details")}
