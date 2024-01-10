@@ -1148,7 +1148,7 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
-export const validateSHForm = (formData: any, setErrors: any) => {
+export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,isMobileValid:any) => {
     const newErrors: any = {}
 
     if (!formData?.fname) {
@@ -1179,10 +1179,17 @@ export const validateSHForm = (formData: any, setErrors: any) => {
     if (!formData?.authorized_signatory) {
         newErrors.authorized_signatory = 'This field is required'
     }
-    if (!formData?.password) {
+    if (!formData?.password && formData?.type !== 'Edit' && formData?.type !== 'View') {
         newErrors.password = 'This field is required'
     }
+    if(formData?.shareholder_email && isEmailValid && isEmailValid !=='Eligible'){
+        newErrors.shareholder_email = 'Please enter valid email'
+      }
+      if(formData?.phone_number && isMobileValid && isMobileValid !=='Eligible'){
+        newErrors.phone_number = 'Please enter valid mobile'
+      }
    
+console.log("GGGGGGGGG",newErrors);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors

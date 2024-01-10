@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
 import { TokenInfo } from '@/store/customeHook/token';
+import PasswordInput from '@/components/shared/PasswordInput'
 const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
   const {company_id,company_name}:any=TokenInfo()
     const [isEmailValid, setIsEmailValid] = useState<any>(false)
@@ -35,12 +36,13 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
         }
         setformData(newdata)
-        if(error[e.target.name])validateSHForm(newdata, setErrors)
+        if(error[e.target.name])validateSHForm(newdata, setErrors,isEmailValid,isMobileValid)
     }
-console.log("companyDetails",companyDetails);
 
     const handlesubmit = () => {
-        if (validateSHForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
+        console.log("companyDetails",validateSHForm(formData, setErrors,isEmailValid,isMobileValid));
+
+        if (validateSHForm(formData, setErrors,isEmailValid,isMobileValid)) {
             if (formData?.type === 'Edit') {
                 const object:any={
                     ...formData,
@@ -195,7 +197,7 @@ console.log("companyDetails",companyDetails);
                                                     name="password"
                                                     value={formData?.password}
                                                     placeholder="Password"
-                                                    component={Input}
+                                                    component={PasswordInput}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.password}
@@ -266,7 +268,7 @@ console.log("companyDetails",companyDetails);
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
-                                                    {isMobileValid ? isMobileValid : error?.phone_number}
+                                                    {error && error?.phone_number}
                                                     {/* {error && error?.phone_number} */}
                                                 </p>
                                             </FormItem>
@@ -291,7 +293,7 @@ console.log("companyDetails",companyDetails);
                                                     component={Input}
                                                 />
                                                  <p className="text-[red] normal-case">
-                                    {isEmailValid ? isEmailValid : error?.shareholder_email}
+                                    {error &&  error?.shareholder_email}
                                 </p>
                                                
                                             </FormItem>
