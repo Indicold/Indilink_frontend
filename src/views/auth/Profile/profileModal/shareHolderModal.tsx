@@ -37,6 +37,8 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
         setformData(newdata)
         if(error[e.target.name])validateSHForm(newdata, setErrors)
     }
+console.log("companyDetails",companyDetails);
+
     const handlesubmit = () => {
         if (validateSHForm(formData, setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)) {
             if (formData?.type === 'Edit') {

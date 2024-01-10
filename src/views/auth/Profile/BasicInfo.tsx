@@ -123,18 +123,18 @@ const BasicInfo = () => {
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
             
-           if(gstFiles) gstFiles.forEach((file:any, index:any) => {
+           if(gstFiles) gstFiles?.forEach((file:any, index:any) => {
               formdata.append(`gst_file`, file);
             });
             
             var shareholderIds =data?.shareholder_ids // Replace with your dynamic data
             var branchIds =data?.branch_ids; // Replace with your dynamic data
             
-            shareholderIds.forEach((id:any, index:any) => {
+            shareholderIds?.forEach((id:any, index:any) => {
               formdata.append(`shareholder_ids`, id);
             });
             
-            branchIds.forEach((id:any, index:any) => {
+            branchIds?.forEach((id:any, index:any) => {
               formdata.append(`branch_ids`, id);
             });
             
@@ -152,7 +152,7 @@ const BasicInfo = () => {
               };
             console.log("tttuutttt",BasicInfo?.data[0]?.gst_file?.length>0);
             
-            if(BasicInfo?.data[0]?.gst_file?.length>0 || data?.country_id){
+            if(BasicInfo?.data?.length>0 && (BasicInfo?.data[0]?.gst_file?.length>0 || data?.country_id)){
                 fetch(`${apiUrl}/auth/basic-detail/${data?.id}`, requestOptionsUpdate)
                 .then((response) => response.json())
                 .then((result) => {

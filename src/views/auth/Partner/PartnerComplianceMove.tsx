@@ -245,6 +245,9 @@ const PartnerComplianceMove = () => {
             
                return item
             }
+            if(!item?.url && (item?.licenseNoVal || item?.valid_till)){
+                return item
+             }
                     })
                     if(validData){
                         messageViewNew({message:`Valid Till and License no is mandatory`,status:200});
