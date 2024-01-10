@@ -233,9 +233,9 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
          
 
             {/* main component */}
-            <div className="bg-white w-[100%] mb-5 flex p-8  shadow-2xl">
+            <div className="bg-white w-[100%] mb-5 lg:flex p-8  shadow-2xl">
                    {/* stepper start */}
-            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
+            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/5'>
 
 
 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -285,7 +285,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
 </div>
 {/* stepper end */}
-<div className='w-5/6'>
+<div className='w-full'>
                 {/* <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Basic Information</h4>
                 {/* pre filled common form */}
@@ -504,7 +504,6 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                 {/* branch details */}
                 <div className='mt-6'>
                     {!branch && <>
-                        <h4 className="text-head-title text-center">Branch Information</h4>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
                         <p className="text-[red]">{error && error.branch_ids}</p>
@@ -516,7 +515,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                 </div>
 
                 {/* final submit button */}
-                <div className='flex pl-6 pr-6'>
+                <div className='lg:flex gap-10  pl-6 pr-6'>
                     <Button
                         style={{ borderRadius: '13px' }}
                         block
@@ -525,7 +524,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                         type="button"
                         role='button'
                         onClick={() => navigate(-1)}
-                        className="indigo-btn  !bg-gray-500 m-4  rounded-[30px]"
+                        className="indigo-btn mt-4  !bg-gray-500  rounded-[30px]"
                     >
                         Prev
                     </Button>

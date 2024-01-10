@@ -48,7 +48,7 @@ const KeyManagement = () => {
     
 
 
-        <div className="bg-white w-[100%] flex shadow-2xl p-8 ">
+        <div className="bg-white w-[100%] lg:flex shadow-2xl p-8 ">
                 {/* stepper start */}
                 <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
             
