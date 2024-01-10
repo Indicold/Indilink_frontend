@@ -385,7 +385,12 @@ const PartnerBussinessTypeCompliances = () => {
 if(item?.url && (item?.licenseNoVal =='null' || item?.licenseNoVal ==null || !item?.licenseNoVal || !item?.valid_till || item?.valid_till==null)){
    return item
 }
+if(!item?.url && (item?.licenseNoVal || item?.valid_till)){
+    return item
+ }
         })
+        console.log("TTTTTTTTTT",validData,array);
+        
         if(validData){
             messageViewNew({message:`Valid Till and License no is mandatory`,status:401});
         }else{
