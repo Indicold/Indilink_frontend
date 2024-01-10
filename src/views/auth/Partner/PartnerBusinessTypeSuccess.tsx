@@ -13,8 +13,8 @@ const PartnerBusinessTypeSuccess = () => {
     return (
         <div className='lg:flex '>
            
-            <div className="bg-white w-[100%] flex p-8 shadow-2xl">
-            <div className='md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6
+            <div className="bg-white w-[100%] lg:flex p-8 shadow-2xl">
+            <div className='md:w-1/6 w-[100%] lg:pl-0 lg:w-1/5
 '>
             
 
@@ -44,7 +44,7 @@ const PartnerBusinessTypeSuccess = () => {
 
 
             </div>
-            <div className='5/6'>
+            <div className='w-full'>
                 <h4 className="mb-2 text-head-title text-center p-4">
                      {t("Registration Successfull")}
                 </h4>

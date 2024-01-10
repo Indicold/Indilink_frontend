@@ -7,6 +7,9 @@ import 'rc-pagination/assets/index.css'
 import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
 import InfoIcon from '@mui/icons-material/Info';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+
 // Defines the table header with column names.
 
 // The BranchTable component takes a prop called AllStore, presumably for rendering data.
@@ -85,7 +88,7 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             // Renders table cells for each column in the header.
             if (key === 'contract_name') {
                 return (
-                    <td key={i} className="text-center my-2 h-[35px]">
+                    <td key={i} className="text-center ellipse-text my-2 h-[35px]">
                         {rowData.contract_name
                             ? rowData.contract_name
                             : 'Not Available'}
@@ -94,12 +97,12 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             }
             if (key === 'email') {
                 return (
-                    <td key={i} className="text-center my-2 h-[35px] flex ml-4">
-                        <p className='ellipse-text'> {rowData?.email}</p>
+                    <td key={i} className="text-center my-2 h-[35px] flex">
+                        <p className='m-auto text-center'> {rowData?.email}</p>
                        
-                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+                      {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
           <InfoIcon />
-        </Tooltip>
+        </Tooltip> */}
                     </td>
                 )
             }
@@ -154,22 +157,22 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 return (
                     <td className="text-center flex gap-2" key={i}>
                         <Button
-                            className="!p-3"
+                            className="!p-3 !gap-3 m-auto"
                             onClick={() => handleEdit(rowData)}
                         >
-                            Edit
+                             <EditIcon />
                         </Button>
                         <Button
-                            className="!p-2"
+                            className="!p-3 m-auto"
                             onClick={() => handleView(rowData)}
                         >
-                            View
+                            <VisibilityIcon />
                         </Button>
                     </td>
                 )
             }
             return (
-                <td key={i} className="text-center">
+                <td key={i} className="ellipse-text pl-4 pr-4 text-center">
                     {rowData[key]}
                 </td>
             )

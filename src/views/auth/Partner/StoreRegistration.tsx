@@ -563,7 +563,7 @@ const StoreRegistration = () => {
 
     
     return (
-        <div className='lg:flex'>  
+        <div className='lg:flex'>   
        {loaderPost && <LoaderSpinner />}
          
             {(CSLoading ||
@@ -574,9 +574,8 @@ const StoreRegistration = () => {
                 WeighBridgeloading ||
                 RoadConditionloading ||
                 fetchDetailsloading) && <LoaderSpinner />}
-            <div className="bg-white m-auto flex p-8 rounded w-[100%] md:[100%]
-             lg:w-full shadow-2xl">
-                   <div className= ' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
+            <div className="bg-white m-auto lg:flex p-8 rounded w-[100%] shadow-2xl">
+                   <div className= ' w-[100%]  lg:pl-0 lg:w-1/4'>
 
 
 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
@@ -606,7 +605,7 @@ const StoreRegistration = () => {
 
 </div>
                 <ToastContainer />
-                <div className='w-5/6'>
+                <div className='w-full'>
                 {/* <ArrowBackIcon onClick={() => navigate(-1)} /> */}
                 <h4 className="text-center text-head-title"> {t("Store")}</h4>
                 <Formik

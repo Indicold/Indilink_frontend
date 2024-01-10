@@ -49,10 +49,10 @@ const AccountDetails = () => {
         <div className='lg:flex'>
         
 
-            <div className="bg-white w-[100%] flex p-8 shadow-2xl">
+            <div className="bg-white w-[100%] lg:flex p-8 shadow-2xl">
                     {/* stepper start */}
             <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
-
+                        
 
 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
     <li className="mb-10 ml-6">
@@ -101,7 +101,7 @@ const AccountDetails = () => {
 
 </div>
 {/* stepper end */}
-<div className='w-5/6'>
+<div className='lg:w-5/6 w-full'>
 
                 {/* <ArrowBackIcon role='button' className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Account Details</h4>

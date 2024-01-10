@@ -7,6 +7,8 @@ import 'rc-pagination/assets/index.css'
 import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
 import InfoIcon from '@mui/icons-material/Info';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 // Defines the table header with column names.
 
 // The ShareHolderTable component takes a prop called AllStore, presumably for rendering data.
@@ -98,11 +100,11 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             if (key === 'email') {
                 return (
                     <td key={i} className="text-center my-2 h-[35px] flex ml-4">
-                        <p className='ellipse-text'> {rowData?.email}</p>
+                        <p className='m-auto'> {rowData?.email}</p>
                        
-                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+                      {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
           <InfoIcon />
-        </Tooltip>
+        </Tooltip> */}
                     </td>
                 )
             }
@@ -146,18 +148,18 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center flex gap-2" key={i}>
+                    <td className="text-center flex" key={i}>
                         <Button
-                            className="!p-3 pt-0 pb-0"
+                            className="!p-3 m-auto my-2 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}
                         >
-                            Edit
+                            <EditIcon />
                         </Button>
                         <Button
-                            className="!p-2"
+                            className="!p-3 m-auto"
                             onClick={() => handleView(rowData)}
                         >
-                            View
+                            <VisibilityIcon />
                         </Button>
                     </td>
                 )
