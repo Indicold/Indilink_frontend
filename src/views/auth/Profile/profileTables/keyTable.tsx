@@ -4,9 +4,9 @@ import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
 import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
-import { Button } from '@/components/ui' // Imports a Button component.
+import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
-
+import InfoIcon from '@mui/icons-material/Info';
 // Defines the table header with column names.
 
 // The KeyTable component takes a prop called AllStore, presumably for rendering data.
@@ -101,6 +101,29 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                     </td>
                 )
             }
+            if (key === 'person_email') {
+                return (
+                    <td key={i} className="text-center my-2 h-[35px] flex ml-4">
+                        <p className='ellipse-text'> {rowData?.person_email}</p>
+                       
+                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.person_email || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip>
+                    </td>
+                )
+            }
+            if (key === 'aadhar') {
+                return (
+                    <td key={i} className="text-center my-2 h-[35px] flex ml-4">
+                        <p className='ellipse-text'> {rowData?.aadhar}</p>
+                       
+                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.aadhar || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip>
+                    </td>
+                )
+            }
+          
             if (key === 'contract_download') {
 
                 return (

@@ -230,60 +230,62 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
     return (
         <div className='lg:flex'>
             <ToastContainer />
-            {/* stepper start */}
+         
+
+            {/* main component */}
+            <div className="bg-white w-[100%] mb-5 flex p-8  shadow-2xl">
+                   {/* stepper start */}
             <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
 
 
-                <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
-                            </svg>
-                        </span>
-                        <h6 className="font-medium leading-tight">User Signup</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
-                        <h6 className="font-medium leading-tight">Basic Information</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
+<ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5.917 5.724 10.5 15 1.5" />
+            </svg>
+        </span>
+        <h6 className="font-medium leading-tight">User Signup</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
+            </svg>
+        </span>
+        <h6 className="font-medium leading-tight">Basic Information</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+            </svg>
+        </span>
 
-                        <h6 className="font-medium leading-tight">Key Management Personal</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
-                    <li className="mb-10 ml-6">
-                        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                            </svg>
-                        </span>
+        <h6 className="font-medium leading-tight">Key Management Personal</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+    <li className="mb-10 ml-6">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+            <svg className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+            </svg>
+        </span>
 
-                        <h6 className="font-medium leading-tight">Account Details</h6>
-                        {/* <p className="text-sm">Step details here</p> */}
-                    </li>
-                   
-                </ol>
-
-
+        <h6 className="font-medium leading-tight">Account Details</h6>
+        {/* <p className="text-sm">Step details here</p> */}
+    </li>
+   
+</ol>
 
 
-            </div>
-            {/* stepper end */}
 
-            {/* main component */}
-            <div className="bg-white w-[100%] mb-5 lg:w-5/6  shadow-2xl">
+
+</div>
+{/* stepper end */}
+<div className='w-5/6'>
                 {/* <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Basic Information</h4>
                 {/* pre filled common form */}
@@ -485,7 +487,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                 </Formik>
 
                 {/* share holder details */}
-                {firmType === 'Private Limited' &&
+                {/* {firmType === 'Private Limited' && */}
                     <div className='pt-10'>
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
                             {SHModal && <ShareHolderModal companyDetails={companyDetails} fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
@@ -495,7 +497,8 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
                      </div>
                         {error && error.shareholder_ids}
-                    </div>}
+                    </div>
+                    {/* } */}
 
 
                 {/* branch details */}
@@ -539,6 +542,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                             ? 'Saving...'
                             : 'Save & Next'}
                     </Button>
+                </div>
                 </div>
             </div>
         </div>

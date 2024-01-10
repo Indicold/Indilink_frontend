@@ -4,9 +4,9 @@ import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
 import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
-import { Button } from '@/components/ui' // Imports a Button component.
+import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
-
+import InfoIcon from '@mui/icons-material/Info';
 // Defines the table header with column names.
 
 // The BranchTable component takes a prop called AllStore, presumably for rendering data.
@@ -89,6 +89,17 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                         {rowData.contract_name
                             ? rowData.contract_name
                             : 'Not Available'}
+                    </td>
+                )
+            }
+            if (key === 'email') {
+                return (
+                    <td key={i} className="text-center my-2 h-[35px] flex ml-4">
+                        <p className='ellipse-text'> {rowData?.email}</p>
+                       
+                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip>
                     </td>
                 )
             }

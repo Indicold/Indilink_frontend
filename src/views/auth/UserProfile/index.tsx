@@ -4,6 +4,8 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { TokenInfo } from '@/store/customeHook/token';
 import { apiUrl, getToken } from '@/store/token';
 import { messageView, messageViewNew } from '@/store/customeHook/validate';
+import { SiReadthedocs } from "react-icons/si";
+
 const UserProfilePage = () => {
   const {token}:any=getToken()
   const {owner_user_id,is_nda_signed}:any=TokenInfo();
@@ -55,7 +57,8 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
             <h1 className="font-bold text-center text-3xl text-gray-900">
             {/* {data && data?.email} */}
             </h1>
-          {owner_user_id ===0  && <div className="my-5 px-6">
+          {/* {owner_user_id ===0  &&  */}
+          <div className="my-5 px-6">
               <NavLink to='/basic-info'
                 // href="/forgot-password"
                 // onClick={handleChangePassword}
@@ -63,7 +66,8 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
               >
                Profile Details
               </NavLink>
-            </div>}
+            </div>
+             {/* } */}
             <div className="my-5 px-6">
               <a
                 // href="/forgot-password"
@@ -73,7 +77,8 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
                Change Password
               </a>
             </div>
-        {is_nda_signed !==1 &&    <>
+        {is_nda_signed ==1 ?
+           <>
           {owner_user_id ===0  &&  <div className="my-5 px-6 ">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
@@ -94,6 +99,33 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
                 <input type='file'  id='file' className='hidden' onChange={(e:any)=>handleUploadNda(e)}/>
               </div>
             </div>}
+        </> : <>
+        <ul
+  role="list"
+  className="mx-auto max-w-sm divide-y divide-gray-200 dark:divide-gray-700"
+>
+  <li className="py-3 sm:py-4">
+    <div className="flex items-center justify-center space-x-3 rtl:space-x-reverse">
+      <div className="flex-shrink-0">
+      <SiReadthedocs />
+      </div>
+      <div className="flex-column !w-[150px]">
+        <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
+          NDA Status
+        </p>
+        <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+         NDA Agreement 
+        </p>
+      </div>
+      <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+        <span className="w-2 h-2 me-1 bg-green-500 rounded-full" />
+      Uploaded
+      </span>
+    </div>
+  </li>
+
+</ul>
+
         </>}
             <div className="w-full">
               <h3 className="font-medium text-gray-900 text-left px-6">

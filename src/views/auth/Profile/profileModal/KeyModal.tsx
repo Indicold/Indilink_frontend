@@ -5,11 +5,12 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownMobile, onkeyDownOne, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
+import PasswordInput from '@/components/shared/PasswordInput'
 const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     const navigate:any=useNavigate();
     const [error,setErrors]=useState<any>({})
@@ -41,6 +42,8 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
         if(e.target.name==='person_email') {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         }
+        console.log("gyyyyyyyyy",newdata);
+        
         setData(newdata)
         if(error[e.target.name])validateKeyForm(newdata,setErrors)
     }
@@ -323,7 +326,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             >
                                 <Field
                                     disabled={data?.isdisabled}
-                                    type="text"
+                                    type="number"
                                     autoComplete="off"
                                     onChange={(e: any) =>
                                         handleChange(e)
@@ -346,7 +349,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             >
                                 <Field
                                     disabled={data?.isdisabled}
-                                    type="text"
+                                    type="number"
                                     autoComplete="off"
                                     onChange={(e: any) =>
                                         handleChange(e)
@@ -356,6 +359,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Contact no."
                                     component={Input}
                                     maxLength={10}
+                                    onKeyDown={onkeyDownMobile}
                                 />
                                  <p className="text-[red]">
                                         {isMobileValid ? isMobileValid : error?.contact_number}
@@ -363,27 +367,29 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             </FormItem>
                         </div>
                         <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
-                            {/* <FormItem
-                                label="Aadhar Card"
+                          {!(data?.type=='Edit' || data?.type=='View') &&  <FormItem
+                                label="Password"
                                 className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                             >
                                 <Field
                                     disabled={data?.isdisabled}
-                                    type="text"
+                                    type="password"
                                     autoComplete="off"
                                     onChange={(e: any) =>
                                         handleChange(e)
                                     }
-                                    name="pucc_validity"
-                                    value={data?.firm_state}
-                                    placeholder="Aadhar Card"
-                                    component={Input}
+                                    name="password"
+                                    value={data?.password}
+                                    placeholder="Password"
+                                    component={PasswordInput}
                                 />
-                                  
-                            </FormItem> */}
+                                    <p className="text-[red]">
+                                        { error && error?.password}
+                                    </p>
+                            </FormItem>}
                             <FormItem
                                 label="Platform Role"
-                                className="pl-3 w-[100%] text-label-title m-auto"
+                                className={`pl-3 ${(data?.type=='Edit' || data?.type=='View') ? "w-full" :"w-1/2" }  text-label-title m-auto`}
                                 // className="rounded-lg pl-[22px] w-1/2"
                                 asterisk={true}
                             >
