@@ -10,7 +10,7 @@ import KeyTable from './profileTables/keyTable';
 
 // Defines the table header with column names.
 const tableHead = {
-    email: "Email Id",
+    person_email: "Email Id",
     full_name:"Name",
     designation:"Designation",
     aadhar:"Aadhar",
@@ -45,8 +45,12 @@ const KeyManagement = () => {
     }
   return (
     <div className='lg:flex '>
-        {/* stepper start */}
-            <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
+    
+
+
+        <div className="bg-white w-[100%] flex shadow-2xl p-8 ">
+                {/* stepper start */}
+                <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -96,9 +100,7 @@ const KeyManagement = () => {
 
             </div>
             {/* stepper end */}
-
-
-        <div className="bg-white w-[100%] lg:w-5/6  shadow-2xl p-4 ">
+            <div>
             {/* <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} /> */}
             <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
@@ -142,6 +144,7 @@ const KeyManagement = () => {
                             >
                                 Save 
                                         </Button>
+                        </div>
                         </div>
         </div>
     </div>

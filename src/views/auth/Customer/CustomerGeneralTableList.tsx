@@ -4,17 +4,18 @@ import Pagination from "rc-pagination"; // Importing pagination component to sho
 import "rc-pagination/assets/index.css";
 import { cloneDeep } from 'lodash';
 import "rc-pagination/assets/index.css"; // Importing pagination styles
-import { Button } from '@/components/ui'; // Imports a Button component.
+import { Button, Tooltip } from '@/components/ui'; // Imports a Button component.
 import { useNavigate } from 'react-router-dom';
 import { apiUrl, getToken } from '@/store/token';
 import { messageView, messageViewNew } from '@/store/customeHook/validate'; // Importing custom function to show toast messages
 import { ToastContainer } from 'react-toastify'; // Importing container to show toast messages
-
+import InfoIcon from '@mui/icons-material/Info';
 // Defines the table header with column names.
 const tableHead = {
     id:"S.No",
     // date: "Date",
     description: "Description",
+    comment:"Comment",
     status_id:"Status",
     is_deleted: "Query Status",
 created_at: "Created At",
@@ -91,37 +92,10 @@ const CustomerGeneralTableList = ({ AllStore,fetchDataG }: any) => {
 
   const navigate = useNavigate();
 
-  /**
-   * The function `handleEdit` handles the edit action for different asset types and navigates to
-   * different routes based on the asset type.
-   * @param {any} rowData - The `rowData` parameter is an object that represents a row of data in a
-   * table. It contains information about the asset being edited, such as its type, ID, and other
-   * properties.
-   */
-
+ 
   
-  /**
-   * The function `handleView` navigates to different routes based on the `asset_type_id` of the
-   * `rowData` object.
-   * @param {any} rowData - The `rowData` parameter is an object that represents a row of data. It is
-   * used to determine the `asset_type_id` and pass it to the appropriate navigation route.
-   */
-  const handleView = (rowData: any) => {
-    if (rowData?.asset_type_id==3) {
-      navigate('/customer-prepare', {state:{data:rowData,disabled:true,extraForm:true} });
-    }
-    if (rowData?.asset_type_id==2) {
 
-      navigate('/customer-move', {state:{data:rowData,disabled:true,extraForm:true} });
 
-    }
-    if (rowData?.asset_type_id==1) {
-
-      navigate('/customer-store', {state:{data:rowData,disabled:true,extraForm:true} });
-
-    }
-  
-  }
   const handleDelete=(id:any)=>{
     var myHeaders = new Headers();
 myHeaders.append("Authorization", `Bearer ${token}`);
@@ -150,6 +124,15 @@ fetch(`${apiUrl}/customer/search/${id}`, requestOptions)
       // Renders table cells for each column in the header.
       if (key === 'contract_name') {
         return <td key={i} className='text-center'>{rowData.contract_name ? rowData.contract_name : 'Not Available' }</td>;
+      }
+      if (key === 'comment') {
+        return <td key={i} className="text-center my-2 h-[35px] flex ml-4">
+        <p className='ellipse-text'> {rowData?.comment || "Not Available"}</p>
+       
+      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.comment || 'Not Available'} arrow>
+<InfoIcon />
+</Tooltip>
+    </td>
       }
       if (key === 'is_deleted') {
         return <td className='text-center' key={i} >{rowData.is_deleted==1 ? "Close" : 'Open'}</td>;

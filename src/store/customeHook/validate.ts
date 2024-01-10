@@ -562,6 +562,19 @@ console.log("wertjkl",newErrors);
         e.preventDefault(); 
       }
  }
+ export const onkeyDownMobile=(e:any)=>{
+    console.log("TYYYYYYYYY7878");
+    
+    if (e.key === 'e' || e.key === '-') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+      if(e.target.value?.length<1 &&  e.key === '0'){
+        e.preventDefault(); 
+      }
+      if(e.target.value?.length==10 && e.key !== 'Backspace'){
+        e.preventDefault(); 
+      }
+ }
  export const onkeyDownNew=(e:any)=>{
     if (e.target.name === 'temp_range_min' || e.target.name === 'temperature_min') {
         if ((e.key === 'e' || e.target.value?.length==5 || e.key === 'E' || e.key === '+') && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
@@ -1246,6 +1259,7 @@ export const validateBasicForm = (data: any, setErrors: any) => {
 }
 export const validateKeyForm = (data: any, setErrors: any) => {
     const newErrors: any = {}
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&.#^+_-]{8,}$/;
 
     if (!data?.full_name) {
         newErrors.full_name = 'This field is required'
@@ -1285,6 +1299,12 @@ export const validateKeyForm = (data: any, setErrors: any) => {
     }
     if (!data?.contact_number) {
         newErrors.contact_number = 'This field is required'
+    }
+    if (!data?.password) {
+        newErrors.password = 'This field is required'
+    }
+    if(data?.password && !strongPasswordRegex.test(data?.password)){
+        newErrors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
     }
     if (!data?.platform_role_id || data?.platform_role_id == 'Select') {
         newErrors.platform_role_id = 'This field is required'

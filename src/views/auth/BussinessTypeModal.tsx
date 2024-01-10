@@ -103,7 +103,10 @@ useEffect(()=>{
     console.log("AssetsResponse",AssetsResponse);
     
 if(AssetsResponse?.message || AssetsResponse?.data){
-    messageViewNew(AssetsResponse)
+    if(localStorage.getItem('user_type') === 'Partner' || localStorage.getItem('user_type') === 'Investor'){
+        messageViewNew(AssetsResponse)
+
+    }
     setTimeout(() => {
         if (localStorage.getItem('user_type') === 'Partner') {
             // localStorage.removeItem('assets_list_id')
@@ -212,7 +215,7 @@ useEffect(()=>{
                     id="authentication-modal"
                     tabIndex={-1}
                     aria-hidden="true"
-                    className="my-auto bg-green-100 otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
+                    className="my-auto !bg-[#e5dfd600] otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
                 >
             {(AssetsLoading || QLoading)&& <LoaderSpinner />}
 

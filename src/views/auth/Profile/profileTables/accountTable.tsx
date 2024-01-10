@@ -4,13 +4,13 @@ import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
 import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
-import { Button } from '@/components/ui' // Imports a Button component.
+import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
 import usePutApi from '@/store/customeHook/putApi'
 import { apiUrl, getToken } from '@/store/token'
 import { ToastContainer } from 'react-toastify'
 import { messageView, messageViewNew } from '@/store/customeHook/validate'
-
+import InfoIcon from '@mui/icons-material/Info';
 // Defines the table header with column names.
 
 // The AccountTable component takes a prop called AllStore, presumably for rendering data.
@@ -131,6 +131,17 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
                         {rowData.contract_name
                             ? rowData.contract_name
                             : 'Not Available'}
+                    </td>
+                )
+            }
+            if (key === 'email') {
+                return (
+                    <td key={i} className="text-center my-2 h-[35px] flex ml-4">
+                        <p className='ellipse-text'> {rowData?.email}</p>
+                       
+                      <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip>
                     </td>
                 )
             }
