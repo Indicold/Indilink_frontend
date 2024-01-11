@@ -1592,7 +1592,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                  {t("Chambers")}
-                                                <p className='text-[red]'>{errors?.chamber_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.chamber_ids}</p> */}
 
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
@@ -1675,7 +1675,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 {t("CA Equipments")}
-                                                <p className='text-[red]'>{errors?.ca_equipment_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.ca_equipment_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1742,7 +1742,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                   {t("Compressors")}
-                                                <p className='text-[red]'>{errors?.compressor_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.compressor_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1824,7 +1824,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 {t("ACU")}
-                                                <p className='text-[red]'>{errors?.acu_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.acu_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1903,7 +1903,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 {t("Condenser")}
-                                                <p className='text-[red]'>{errors?.condensor_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.condensor_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -1978,7 +1978,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                  {t("Annual Maintenance Contract")}
-                                                <p className='text-[red]'>{errors?.amc_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.amc_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -2053,7 +2053,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                  {t("IOT Devices")}
-                                                <p className='text-[red]'>{errors?.iot_devices_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.iot_devices_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -2123,7 +2123,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                  {t("IT Devices")}
-                                                <p className='text-[red]'>{errors?.it_devices_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.it_devices_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -2193,7 +2193,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                  {t("Generator")}
-                                                <p className='text-[red]'>{errors?.generator_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.generator_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -2263,7 +2263,7 @@ const StoreRegistration = () => {
                                         <AccordionItemHeading>
                                             <AccordionItemButton>
                                                 MHE
-                                                <p className='text-[red]'>{errors?.mhe_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.mhe_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>
@@ -2328,7 +2328,7 @@ const StoreRegistration = () => {
                                             <AccordionItemButton>
                                             {t("Solar Inverters")}
                                                
-                                                <p className='text-[red]'>{errors?.solar_invertor_ids}</p>
+                                                {/* <p className='text-[red]'>{errors?.solar_invertor_ids}</p> */}
                                             </AccordionItemButton>
                                         </AccordionItemHeading>
                                         <AccordionItemPanel>

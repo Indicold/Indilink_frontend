@@ -100,7 +100,7 @@ const KeyManagement = () => {
 
             </div>
             {/* stepper end */}
-            <div>
+            <div className='p-4 ml-4 w-full'>
             {/* <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} /> */}
             <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
