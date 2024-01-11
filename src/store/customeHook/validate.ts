@@ -1019,9 +1019,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
         newErrors.city_id = 'This field is required'
     }
 
-    if (!formData?.temperature) {
-        newErrors.temperature = 'This field is required'
-    }
+    // if (!formData?.temperature) {
+    //     newErrors.temperature = 'This field is required'
+    // }
 
     if (!formData?.temperature_type_id) {
         newErrors.temperature_type_id = 'This field is required'
@@ -1045,6 +1045,17 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This field is required'
     }
+    if (!formData?.tempMin && formData?.tempMin!==0 ) {
+        newErrors.temperature = 'This field is required'
+    }
+    if (!formData?.tempMax) {
+        newErrors.temperature = 'This field is required'
+    }
+    if (formData?.tempMin  && formData?.tempMin>formData?.tempMax) {
+        newErrors.temperature = 'Max temperature should be greater then min temperature'
+    }
+
+
     
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
