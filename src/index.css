@@ -259,4 +259,6 @@ rect{
   .leaflet-control-attribution, .leaflet-control{
     display: none !important;
   }
-  
+  p,.text[red]{
+    height: 20px !important;
+  }
