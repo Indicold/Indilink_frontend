@@ -1,10 +1,13 @@
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import Chart from "react-apexcharts";
-import GeoChart from './GeoBubbleMap';
+// import GeoChart from './GeoBubbleMap';
 import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
-import GeoMapChart from './DashboardPartner/GeoMapChart';
+// import GeoMapChart from './DashboardPartner/GeoMapChart';
+
+import GoogleMapComp from './DashboardPartner/GoogleMapCom';
+import { locations } from '@/store/customeHook/validate';
 const CardLayout = ({ title }: any) => {
   const options: any = {
     series: [{
@@ -290,7 +293,8 @@ const CardLayout = ({ title }: any) => {
 
 
         <div className=' rounded-2xl shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'>
-             <GeoMapChart />
+             {/* <GeoMapChart /> */}
+             {locations?.length>0 && <GoogleMapComp locations={locations} />}
         </div>
         {/* <GeoChart /> */}
       </div>

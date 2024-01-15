@@ -879,7 +879,7 @@ const StoreRegistration = () => {
                                             apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
                                             onPlaceSelected={(place) => {
                                                 localStorage.setItem("Address",place?.formatted_address);
-                                                setAddressUpdateCount((val) => val + 1);
+                                                // setAddressUpdateCount((val) => val + 1);
                                                 setLatitude(place?.geometry?.location?.lat());
                                                 setLongitude(place?.geometry?.location?.lng());
                                             }}
@@ -1637,13 +1637,13 @@ const StoreRegistration = () => {
                                                             {new Date(item?.updated_at)?.toLocaleDateString()}
                                                         </div>
                                                         <div className="mx-2 flex">
-                                                            <Button
+                                                            <Button type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-1"
                                                                 onClick={() => handleEdit(item, 'Chamber')}
                                                             >
                                                                 Edit
                                                             </Button>
-                                                            <Button
+                                                            <Button type='button'
                                                                 className="!p-1 mx-1"
                                                                 onClick={() => handleView(item, 'Chamber')}
                                                             >
@@ -1706,13 +1706,14 @@ const StoreRegistration = () => {
                                                             {item?.cmf}
                                                         </div>
                                                         <div className="w-[25%] mx-auto ellipse-text flex">
-                                                            <Button
+                                                            <Button type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'CA')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'CA')}
                                                             >
@@ -1868,12 +1869,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[20%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'ACU')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'ACU')}
                                                             >
@@ -1941,12 +1944,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'Condenser')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'Condenser')}
                                                             >
@@ -2019,12 +2024,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'AMC')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'AMC')}
                                                             >
@@ -2090,12 +2097,14 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'IOT')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'IOT')}
                                                             >
@@ -2160,12 +2169,14 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'IT')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'IT')}
                                                             >
@@ -2230,12 +2241,14 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'Generator')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'Generator')}
                                                             >
@@ -2294,12 +2307,14 @@ const StoreRegistration = () => {
                                                     </div>
                                                     <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'MHE')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'MHE')}
                                                             >
@@ -2359,12 +2374,14 @@ const StoreRegistration = () => {
                                                         </div>
                                                         <div className="w-[25%] mx-auto ellipse-text flex">
                                                             <Button
+                                                            type='button'
                                                                 className="!p-2 pt-0 pb-0 mx-auto"
                                                                 onClick={() => handleEdit(item, 'Solar')}
                                                             >
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                            type='button'
                                                                 className="!p-1 mx-auto"
                                                                 onClick={() => handleView(item, 'Solar')}
                                                             >

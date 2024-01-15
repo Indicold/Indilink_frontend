@@ -24,6 +24,7 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.10",
     "@mui/styled-engine": "^5.14.10",
+    "@react-google-maps/api": "^2.19.2",
     "@reduxjs/toolkit": "^1.9.3",
     "@tanstack/match-sorter-utils": "^8.8.4",
     "@tanstack/react-table": "^8.8.5",

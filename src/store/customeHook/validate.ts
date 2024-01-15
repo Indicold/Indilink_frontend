@@ -1430,3 +1430,9 @@ export const formatDate = (inputDate: any) => {
     }
     return inputDate // Return the input date if it's not in the expected format
 }
+
+export const locations = [
+    { lat: 28.466590, lng: 80.033310 },
+    { lat: 28.466590, lng: 77.033310 },
+    { lat: 28.466590, lng: 40.033310 }
+  ];

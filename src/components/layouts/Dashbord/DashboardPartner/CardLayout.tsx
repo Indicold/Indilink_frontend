@@ -6,6 +6,8 @@ import CircularChart from './CircularChart';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ForumIcon from '@mui/icons-material/Forum';
 import GeoMapChart from './GeoMapChart';
+import GoogleMapComp from './GoogleMapCom';
+import { locations } from '@/store/customeHook/validate';
 const CardLayout = ({ title }: any) => {
   /* The `options` object is used to configure the appearance and behavior of a bar chart. */
   const options: any = {
@@ -298,7 +300,8 @@ const CardLayout = ({ title }: any) => {
 
         {/* <GeoChart /> */}
         <div className=' rounded-2xl shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]'>
-             <GeoMapChart />
+              {/* <GeoMapChart /> */}
+              {locations && <GoogleMapComp locations={locations} />}
         </div>
       </div>
     </>
