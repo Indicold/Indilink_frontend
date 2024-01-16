@@ -142,7 +142,7 @@ const KeyManagement = () => {
                                 onClick={handlesubmit}
                                 className='indigo-btn mt-4 rounded-xl shadow-lg'
                             >
-                                Save 
+                                Save & Next
                                         </Button>
                         </div>
                         </div>

@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -34,6 +34,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             newdata[e.target.name] = e.target.value;
             if(e.target.name === 'branch_email'){
                 validateEmailDebounced(e.target.value, setIsEmailValid)
+                if(error[e.target.name])validateBranchForm(newdata, setErrors,isEmailValid,isMobileValid)
+  
             }
         }
         setformData(newdata)
@@ -133,9 +135,11 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                         handleChange(e)
                                                     }
                                                     name="name"
+                                              
                                                     value={formData?.name}
                                                     placeholder="Branch Name"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.name}
@@ -180,6 +184,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     name="branch_gst"
                                                     value={formData?.branch_gst}
                                                     placeholder="Branch GST"
+                                                    onKeyDown={onkeyDownforSpecialCharcter}
                                                     component={Input}
                                                 />
                                                 <p className='text-[red]'>
@@ -202,6 +207,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     value={formData?.branch_head}
                                                     placeholder="Branch Head"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.branch_head}
@@ -249,6 +255,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     value={phone}
                                                     placeholder="Branch Phone Number"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error?.branch_phone}

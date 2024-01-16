@@ -1180,6 +1180,13 @@ export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,is
     if (!formData?.shareholder_email) {
         newErrors.shareholder_email = 'This field is required'
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(formData?.shareholder_email && !emailRegex.test(formData?.shareholder_email)){
+        newErrors.shareholder_email = 'Please enter a valid email'
+    }
+    if (formData?.shareholder_email && /\.\@/.test(formData?.shareholder_email)) {
+        newErrors.shareholder_email = 'Email not allow .@'
+    }
     if (!formData?.designation) {
         newErrors.designation = 'This field is required'
     }
@@ -1219,9 +1226,19 @@ export const validateBranchForm = (formData: any, setErrors: any,isEmailValid:an
     if (!formData?.branch_gst) {
         newErrors.branch_gst = 'This field is required'
     }
-
+    const reGST = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
+    if(formData?.branch_gst && !reGST.test(formData?.branch_gst)) {
+        newErrors.branch_gst = 'Please enter a valid gst number'
+    }
     if (!formData?.branch_email) {
         newErrors.branch_email = 'This field is required'
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(formData?.branch_email && !emailRegex.test(formData?.branch_email)){
+        newErrors.branch_email = 'Please enter a valid email'
+    }
+    if (formData?.branch_email && /\.\@/.test(formData?.branch_email)) {
+        newErrors.branch_email = 'Email not allow .@'
     }
     if (!formData?.branch_head) {
         newErrors.branch_head = 'This field is required'
@@ -1260,6 +1277,10 @@ export const validateBasicForm = (data: any, setErrors: any) => {
     if (typeof(data?.gst_number)==='string' && data?.gst_number!=='' && data?.gst_file?.length<1) {
         newErrors.gst_file = 'GST file is required'
     }
+    const reGST = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
+    if(data?.gst_number && !reGST.test(data?.gst_number)) {
+        newErrors.gst_file = 'Please enter a valid gst number'
+    }
     if (data?.shareholder_ids?.length<1) {
         newErrors.shareholder_ids = 'This field is required'
     }
@@ -1269,13 +1290,15 @@ export const validateBasicForm = (data: any, setErrors: any) => {
     if(!data?.pan_number) {
         newErrors.pan_number = 'This field is required'
     }
-  
-   
+    const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;
+    if(data?.pan_number && !panRegex.test(data?.pan_number)) {
+        newErrors.pan_number = 'Please enter a valid pan number'
+    }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
-export const validateKeyForm = (data: any, setErrors: any) => {
+export const validateKeyForm = (data: any, setErrors: any,isEmailValid:any,isMobileValid:any) => {
     const newErrors: any = {}
     const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&.#^+_-]{8,}$/;
 
@@ -1285,6 +1308,16 @@ export const validateKeyForm = (data: any, setErrors: any) => {
 
     if (!data?.person_email) {
         newErrors.person_email = 'This field is required'
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(data?.person_email && !emailRegex.test(data?.person_email)){
+        newErrors.person_email = 'Please enter a valid email'
+    }
+    if(isEmailValid !=='Eligible'){
+        newErrors.person_email = 'Please enter a valid email'
+    }
+    if (data?.person_email && /\.\@/.test(data?.person_email)) {
+        newErrors.person_email = 'Email not allow .@'
     }
 
     if (!data?.designation) {
@@ -1444,6 +1477,6 @@ export const formatDate = (inputDate: any) => {
 
 export const locations = [
     { lat: 28.466590, lng: 80.033310 },
-    { lat: 28.466590, lng: 77.033310 },
-    { lat: 28.466590, lng: 40.033310 }
+    { lat: 28.468590, lng: 77.033310 },
+    { lat: 28.469890, lng: 40.033310 }
   ];

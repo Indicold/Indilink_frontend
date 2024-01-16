@@ -45,7 +45,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
         console.log("gyyyyyyyyy",newdata);
         
         setData(newdata)
-        if(error[e.target.name])validateKeyForm(newdata,setErrors)
+        if(error[e.target.name])validateKeyForm(newdata,setErrors,isEmailValid,isMobileValid)
     }
     const handlesubmit=()=>{
         if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){
@@ -168,7 +168,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     component={Input}
                                 />
                                  <p className="text-[red]">
-                                        {isEmailValid ? isEmailValid : error?.person_email}
+                                        {error?.person_email}
                                     </p>
                             </FormItem>
                         </div>
