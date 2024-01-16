@@ -1162,6 +1162,7 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
 }
 export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,isMobileValid:any) => {
     const newErrors: any = {}
+    const strongPasswordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&.#^+_-]{8,}$/;
 
     if (!formData?.fname) {
         newErrors.fname = 'This field is required'
@@ -1175,7 +1176,7 @@ export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,is
         newErrors.address = 'This field is required'
     }
 
-    if (!formData?.phone_number) {
+    if (!formData?.phone_number || formData?.phone_number?.length<10) {
         newErrors.phone_number = 'This field is required'
     }
     if (!formData?.shareholder_email) {
@@ -1200,6 +1201,9 @@ export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,is
     }
     if (!formData?.password && formData?.type !== 'Edit' && formData?.type !== 'View') {
         newErrors.password = 'This field is required'
+    }
+    if(formData?.password && !strongPasswordRegex.test(formData?.password) && formData?.type !== 'Edit' && formData?.type !== 'View'){
+        newErrors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
     }
     if(formData?.shareholder_email && isEmailValid && isEmailValid !=='Eligible'){
         newErrors.shareholder_email = 'Please enter valid email'
