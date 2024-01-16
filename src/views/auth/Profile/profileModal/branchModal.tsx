@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -30,6 +30,12 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                 if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
                 setPhone(e.target.value.replace(/[^0-9]/g, ""));
             }
+        }else if(e.target.name==='branch_gst'){
+            if(e.target.value.length<=15){
+                newdata[e.target.name] = e.target.value
+            }
+          
+
         } else {
             newdata[e.target.name] = e.target.value;
             if(e.target.name === 'branch_email'){
@@ -255,7 +261,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     value={phone}
                                                     placeholder="Branch Phone Number"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforSpecialCharcter}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error?.branch_phone}

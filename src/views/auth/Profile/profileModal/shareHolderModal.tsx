@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -220,6 +220,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.percentage_holding}
                                                     placeholder="Share Holder Percentage"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.percentage_holding}
@@ -266,6 +267,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.phone_number?.slice(0,10)}
                                                     placeholder="Share Holder Phone Number"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.phone_number}
@@ -338,6 +340,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.din_number}
                                                     placeholder="DIN Number"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
                                                 <p className='text-[red]'>
                                                     {error && error?.din_number}

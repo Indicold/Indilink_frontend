@@ -14,7 +14,7 @@ import { messageView, messageViewNew, onkeyDownPincode, validateBasicForm } from
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
-    email: "Email ID",
+    shareholder_email: "Email ID",
     full_name: "Name",
     percentage_holding: "% Holding",
     authorized_signatory: "Signatory",

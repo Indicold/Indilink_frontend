@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownMobile, onkeyDownOne, onkeyDownPincode, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownMobile, onkeyDownOne, onkeyDownPincode, onkeyDownforNumMobSpecialCharcter, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -35,21 +35,34 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     
     const handleChange = (e:any) => {
         const newdata:any={...data};
-        newdata[e.target.name]=e.target.value;
-        if(e.target.name==='contact_number') {
-            if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+        if(e.target.name==='aadhar'){
+            if(e.target.value?.length<13){
+                newdata[e.target.name]=e.target.value;
+                setData(newdata)
+                if(error[e.target.name])validateKeyForm(newdata,setErrors,isEmailValid,isMobileValid)
+           
+            }
+        }else{
+            newdata[e.target.name]=e.target.value;
+            if(e.target.name==='contact_number') {
+                if(e.target.value.replace(/[^0-9]/g, "").length > 0)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
+            }
+      
+            if(e.target.name==='person_email') {
+                validateEmailDebounced(e.target.value, setIsEmailValid)
+            }
+            console.log("gyyyyyyyyy",newdata,isEmailValid);
+            setData(newdata)
+            if(error[e.target.name])validateKeyForm(newdata,setErrors,isEmailValid,isMobileValid)
+       
         }
-        if(e.target.name==='person_email') {
-            validateEmailDebounced(e.target.value, setIsEmailValid)
-        }
-        console.log("gyyyyyyyyy",newdata,isEmailValid);
-        
-        setData(newdata)
-        if(error[e.target.name])validateKeyForm(newdata,setErrors,isEmailValid,isMobileValid)
-    }
+      
+ }
     console.log("T\TYYYYY9999",isEmailValid);
 
     const handlesubmit=()=>{
+        console.log("TYYYYYYYYRR",validateKeyForm(data,setErrors,isEmailValid,isMobileValid),error);
+        
         if(validateKeyForm(data,setErrors,isEmailValid,isMobileValid)){
             if(data?.type==='Edit'){
                 KeyUpdatePost(data)
@@ -337,7 +350,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     value={data?.aadhar}
                                     placeholder="Aadhar Card"
                                     component={Input}
-                                    onKeyDown={onkeyDownAadhar}
+                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                 />
                                  <p className="text-[red]">
                                         {error && error.aadhar}
@@ -361,7 +374,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Contact no."
                                     component={Input}
                                     maxLength={10}
-                                    onKeyDown={onkeyDownMobile}
+                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                 />
                                  <p className="text-[red]">
                                         {isMobileValid ? isMobileValid : error?.contact_number}

@@ -255,7 +255,7 @@ const StoreRegistration = () => {
 
 
         // Validate the form data
-        if (validateStorePartnerForm(dataa, setErrors,selectedOptions)) {
+        if (validateStorePartnerForm({...dataa,store_type_valid:true}, setErrors,selectedOptions)) {
             try {
                 // Set the asset_id based on local storage
                 dataa.asset_id = id

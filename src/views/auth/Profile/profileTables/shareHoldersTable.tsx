@@ -97,10 +97,10 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                     </td>
                 )
             }
-            if (key === 'email') {
+            if (key === 'shareholder_email') {
                 return (
                     <td key={i} className="text-center my-2 h-[35px] flex ml-4">
-                        <p className='m-auto'> {rowData?.email}</p>
+                        <p className='m-auto'> {rowData?.shareholder_email}</p>
                        
                       {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
           <InfoIcon />
