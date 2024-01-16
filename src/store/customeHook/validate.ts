@@ -24,6 +24,7 @@ export const validateEmail = async (email: any, setIsEmailValid: any) => {
         })
 
         const data = await response.json()
+console.log("TYYYYY9999",data);
 
         // Check if data.isValid is defined before using it
         if (data) {
@@ -1313,14 +1314,14 @@ export const validateKeyForm = (data: any, setErrors: any,isEmailValid:any,isMob
     if(data?.person_email && !emailRegex.test(data?.person_email)){
         newErrors.person_email = 'Please enter a valid email'
     }
-    console.log("TTTTTTTTT",isEmailValid);
-    
-    if(data?.person_email && isEmailValid !='Eligible'){
-        newErrors.person_email = 'Please enter a valid emailyyy'
+    if(isEmailValid !=='Eligible'){
+        newErrors.person_email = isEmailValid
     }
     if (data?.person_email && /\.\@/.test(data?.person_email)) {
         newErrors.person_email = 'Email not allow .@'
     }
+    console.log("TYYYYYYYYY",isEmailValid);
+    
 
     if (!data?.designation) {
         newErrors.designation = 'This field is required'

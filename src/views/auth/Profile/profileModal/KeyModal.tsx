@@ -42,13 +42,15 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
         if(e.target.name==='person_email') {
             validateEmailDebounced(e.target.value, setIsEmailValid)
         }
-        console.log("gyyyyyyyyy",newdata);
+        console.log("gyyyyyyyyy",newdata,isEmailValid);
         
         setData(newdata)
         if(error[e.target.name])validateKeyForm(newdata,setErrors,isEmailValid,isMobileValid)
     }
+    console.log("T\TYYYYY9999",isEmailValid);
+
     const handlesubmit=()=>{
-        if(validateKeyForm(data,setErrors) && (isEmailValid === 'Eligible' || isEmailValid === false) && (isMobileValid === 'Eligible' || isMobileValid === false)){
+        if(validateKeyForm(data,setErrors,isEmailValid,isMobileValid)){
             if(data?.type==='Edit'){
                 KeyUpdatePost(data)
             }else{
