@@ -1313,8 +1313,10 @@ export const validateKeyForm = (data: any, setErrors: any,isEmailValid:any,isMob
     if(data?.person_email && !emailRegex.test(data?.person_email)){
         newErrors.person_email = 'Please enter a valid email'
     }
-    if(isEmailValid !=='Eligible'){
-        newErrors.person_email = 'Please enter a valid email'
+    console.log("TTTTTTTTT",isEmailValid);
+    
+    if(data?.person_email && isEmailValid !='Eligible'){
+        newErrors.person_email = 'Please enter a valid emailyyy'
     }
     if (data?.person_email && /\.\@/.test(data?.person_email)) {
         newErrors.person_email = 'Email not allow .@'

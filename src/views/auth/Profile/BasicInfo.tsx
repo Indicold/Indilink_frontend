@@ -460,6 +460,9 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     <p className="text-[red]">
                                         {error && error.pan_number}
                                     </p>
+                                    <p className="text-[red]">
+                                        
+                                    </p>
                                     {/* <Field
                                         disabled={isDisabled}
                                         multiple
