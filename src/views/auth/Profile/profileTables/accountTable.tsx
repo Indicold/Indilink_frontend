@@ -11,6 +11,9 @@ import { apiUrl, getToken } from '@/store/token'
 import { ToastContainer } from 'react-toastify'
 import { messageView, messageViewNew } from '@/store/customeHook/validate'
 import InfoIcon from '@mui/icons-material/Info';
+import EditIcon from '@mui/icons-material/Edit';
+import { MdDelete } from "react-icons/md";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 // Defines the table header with column names.
 
 // The AccountTable component takes a prop called AllStore, presumably for rendering data.
@@ -218,19 +221,19 @@ const AccountTable = ({ AllStore, tableHead, setformData, formData, setModal, mo
                             className="!p-3 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}
                         >
-                            Edit
+                            <EditIcon />
                         </Button>
                         <Button
                             className="!p-2"
                             onClick={() => handleView(rowData)}
                         >
-                            View
+                            <VisibilityIcon />
                         </Button>
                         <Button
                             className="!p-2"
                             onClick={() => handleDelete(rowData?.id)}
                         >
-                            Delete
+                            <MdDelete className='text-2xl'/>
                         </Button>
                     </td>
                 )

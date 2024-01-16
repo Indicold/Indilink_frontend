@@ -4,6 +4,8 @@ import Pagination from 'rc-pagination'
 import 'rc-pagination/assets/index.css'
 import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
 import InfoIcon from '@mui/icons-material/Info';
@@ -169,13 +171,13 @@ const KeyTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: a
                             className="!p-3 pt-0 pb-0"
                             onClick={() => handleEdit(rowData)}
                         >
-                            Edit
+                            <EditIcon />
                         </Button>
                         <Button
                             className="!p-2"
                             onClick={() => handleView(rowData)}
                         >
-                            View
+                           <VisibilityIcon />
                         </Button>
                     </td>
                 )
