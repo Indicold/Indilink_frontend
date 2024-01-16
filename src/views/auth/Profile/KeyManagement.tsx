@@ -48,9 +48,9 @@ const KeyManagement = () => {
     
 
 
-        <div className="bg-white w-[100%] lg:flex shadow-2xl p-8 ">
+        <div className="bg-white w-[100%] lg:flex shadow-2xl lg:p-8 ">
                 {/* stepper start */}
-                <div className=' w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/6'>
+                <div className=' w-[100%] p-8 lg:pl-0 lg:w-1/6'>
             
 
             <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">                  
@@ -100,28 +100,32 @@ const KeyManagement = () => {
 
             </div>
             {/* stepper end */}
-            <div className='p-4 ml-4 w-full'>
+            <div className='p-2 lg:ml-4 w-full'>
             {/* <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} /> */}
             <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
-            <div className='mt-8 text-center'>
+            <div className='mt-8 text-end'>
                     
-                            <Button
+                            {/* <Button
                                 block
-                                style={{borderRadius:"13px"}}
+                                // style={{borderRadius:"13px"}}
                                 loading={isSubmitting}
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={()=>setModal(true)}
-                                className='indigo-btn lg:!w-[40%] !w-[80%] m-auto rounded-xl shadow-lg me-1'
+                                className='m-auto rounded-xl p-2 shadow-lg '
                             >
                               
-                                   + Add Key Management Personal
-                                        </Button>
+                                   + Add Key <br/> Management<br/> Personal
+                                        </Button> */}
+                                        {<button block loading={isSubmitting} variant="solid" onClick={()=>setModal(true)}  type="button" className="text-white  bg-[#23c94f] hover:bg-green-600 focus:ring-4 focus:ring-[#2557D6]/50 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#2557D6]/50 me-2 mb-2">
+                                            + Add Key Management Personal
+                                            </button>}
 
                         </div>
                         {ListOfKey?.data && <KeyTable modal={modal} setModal={setModal} formData={data} setformData={setData} AllStore={ListOfKey?.data} tableHead={tableHead} />}
-                <div className='flex gap-6 pl-8 pr-8'>
+                
+                <div className='lg:flex w-[100%] px-8 py-4 m-auto gap-4'>
                             <Button
                                 style={{ borderRadius: '13px' }}
                                 block
@@ -129,10 +133,11 @@ const KeyManagement = () => {
                                 type="button"
                                 role='button'
                                 onClick={()=>navigate(-1)}
-                                className="indigo-btn !bg-gray-500 m-4 rounded-[30px]"
+                                className="indigo-btn !bg-gray-500 rounded-[30px]"
                             >
                                 Prev
                             </Button>
+                            <br />
                             <Button
                                 block
                                 style={{borderRadius:"13px"}}
@@ -140,7 +145,7 @@ const KeyManagement = () => {
                                 // disabled={isDisabled}
                                 variant="solid"
                                 onClick={handlesubmit}
-                                className='indigo-btn mt-4 rounded-xl shadow-lg'
+                                className='indigo-btn rounded-xl shadow-lg'
                             >
                                 Save & Next
                                         </Button>

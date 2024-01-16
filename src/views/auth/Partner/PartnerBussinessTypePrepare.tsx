@@ -620,8 +620,9 @@ const PartnerBussinessTypePrepare = () => {
                                               
 
                                             </div> */}
-
+   <p className='text-[red]'></p>
                                         </FormItem>
+                                     
                                     </div>
                                     <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                         <FormItem

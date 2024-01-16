@@ -165,7 +165,7 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                 )
             }
             return (
-                <td key={i} className="text-center">
+                <td key={i} className="ellipse-text text-center">
                     {rowData[key]}
                 </td>
             )
