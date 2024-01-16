@@ -57,6 +57,16 @@ export const onkeyDownforNumSpecialCharcter=(e:any)=>{
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
 }
+export const onkeyDownforNumMobSpecialCharcter=(e:any)=>{
+    if ( e.key === 'e' || e.key === 'E' || e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~' ) {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
 
 
 export const validateForm = (formData: any, setError: any,isMobileValid:any,isEmailValid:any) => {
@@ -300,18 +310,18 @@ if (!existingChamberIdsJSON) {
 export const validatePrepareForm = (formData: any, setErrors: any,selectedOptions:any,selectedOptions1:any) => {
     const newErrors: any = {}
 
-    if (!formData?.city_id) {
+    if (!formData?.city_id && formData?.product_Category_valid !=false) {
         newErrors.city_id = 'City is required'
     }
-    if(selectedOptions?.length===0){
+    if(selectedOptions?.length===0 && formData?.product_Category_valid !=false){
         newErrors.product_category_ids = 'Product category is required'
     }
 
-    if (!formData?.address) {
+    if (!formData?.address && formData?.product_Category_valid !=false) {
         newErrors.address = 'Address is required'
     }
 
-    if (!formData?.hourly_throughput) {
+    if (!formData?.hourly_throughput && formData?.product_Category_valid !=false) {
         if (formData?.hourly_throughput==='') {
             newErrors.hourly_throughput = 'Hourly throughput is required'
         }
@@ -319,13 +329,13 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
             newErrors.hourly_throughput = 'Hourly throughput is required'
         }
     }
-    if (!formData?.prepare_type_id || formData?.prepare_type_id == 'Types of prepare') {
+    if ((!formData?.prepare_type_id || formData?.prepare_type_id == 'Types of prepare') && formData?.product_Category_valid !=false) {
         newErrors.prepare_type_id = 'Prepare type is required'
     }
     // if (formData?.product_category_ids?.length == 0) {
     //     newErrors.product_category_ids = 'Product category is required'
     // }
-    if (!formData?.throughput) {
+    if (!formData?.throughput && formData?.product_Category_valid !=false) {
         if (formData?.throughput==='') {
             newErrors.throughput = 'Throughput is required'
         }
@@ -333,7 +343,7 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
             newErrors.throughput = 'Throughput is required'
         }
     }
-    if (!formData?.avg_case_size) {
+    if (!formData?.avg_case_size && formData?.product_Category_valid !=false) {
         if (formData?.avg_case_size==='') {
             newErrors.avg_case_size = 'Avg.case size is required'
         }
@@ -341,7 +351,7 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
             newErrors.avg_case_size = 'Avg.case size is required'
         }
     }
-    if (!formData?.no_of_docks) {
+    if (!formData?.no_of_docks && formData?.product_Category_valid !=false) {
         if (formData?.no_of_docks==='') {
             newErrors.no_of_docks = 'No of docks is required'
         }
@@ -352,7 +362,7 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
         // if (!formData?.type_of_dock_id) {
         //     newErrors.type_of_dock_id = 'Type of Dock id is required'
         // }
-    if (!formData?.temperature_min) {
+    if (!formData?.temperature_min && formData?.product_Category_valid !=false) {
         if (!formData?.temperature_max) {
             newErrors.temperature_min = 'Min and max temperatures are required'
         }
@@ -360,16 +370,16 @@ export const validatePrepareForm = (formData: any, setErrors: any,selectedOption
             newErrors.temperature_min = 'Min temperature is required'
         }
     }
-    if (!formData?.temperature_max && formData?.temperature_min) {
+    if ((!formData?.temperature_max && formData?.temperature_min) && formData?.product_Category_valid !=false) {
         newErrors.temperature_min = 'Max temperature is required'
     }
-    if (formData?.temperature_max < formData?.temperature_min) {
+    if ((formData?.temperature_max < formData?.temperature_min) && formData?.product_Category_valid !=false) {
         newErrors.temperature_min = 'Max temperature should be greater then min temperature'
     }
-    if (formData?.temperature_max && formData?.temperature_min && formData?.temperature_max===formData?.temperature_min) {
+    if (formData?.temperature_max && formData?.temperature_min && formData?.temperature_max===formData?.temperature_min && formData?.product_Category_valid !=false) {
         newErrors.temperature_min = 'Max temperature should greater then min temperature'
     }
-    if (!formData?.batch_size) {
+    if (!formData?.batch_size && formData?.product_Category_valid !=false) {
         if (formData?.batch_size==='') {
             newErrors.batch_size = 'Batch size is required'
         }
@@ -413,25 +423,25 @@ console.log("fggfghfh",formData);
 
     const newErrors: any = {}
 
-    if (!formData?.weight_bridge_id) {
+    if (!formData?.weight_bridge_id && formData?.store_type_valid !=false) {
         newErrors.weight_bridge_id = 'Weigh bridge is required'
     }
-    if (!formData?.road_condition_id || formData?.road_condition_id === '') {
+    if ((!formData?.road_condition_id || formData?.road_condition_id === '') && formData?.store_type_valid !=false) {
         newErrors.road_condition_id = 'Please select road condition'
     }
 
-    if (!formData?.city_id) {
+    if (!formData?.city_id && formData?.store_type_valid !=false) {
         newErrors.city_id = 'City is required'
     }
 
-    if (!formData?.address) {
+    if (!formData?.address && formData?.store_type_valid !=false) {
         newErrors.address = 'Address is required'
     }
     if (formData?.address?.length<4) {
         newErrors.address = 'Address should be atleast 5 character'
     }
 
-    if (!formData?.total_tonnage || formData?.total_tonnage==='' || formData?.total_tonnage<=0) {
+    if ((!formData?.total_tonnage || formData?.total_tonnage==='' || formData?.total_tonnage<=0) && formData?.store_type_valid !=false) {
         // if (formData?.total_tonnage==='') {
         //     newErrors.total_tonnage = 'Total Tonnage is required'
         // }
@@ -441,11 +451,11 @@ console.log("fggfghfh",formData);
         newErrors.total_tonnage ='Total tonnage is required'
     }
 
-    if (selectedOptions?.length == 0 || !selectedOptions) {
+    if ((selectedOptions?.length == 0 || !selectedOptions) && formData?.store_type_valid !=false ) {
         newErrors.store_type_id = 'Store type is required'
     }
 
-    if (!formData?.cold_storage_type_id) {
+    if (!formData?.cold_storage_type_id && formData?.store_type_valid !=false) {
         newErrors.cold_storage_type_id = 'Cold storage type is required'
     }
 
@@ -453,7 +463,7 @@ console.log("fggfghfh",formData);
     //     newErrors.no_of_chambers = 'Number of Chambers is required'
     // }
 
-    if (!formData?.ante_room_area || formData?.ante_room_area==='' || formData?.ante_room_area<=0) {
+    if ((!formData?.ante_room_area || formData?.ante_room_area==='' || formData?.ante_room_area<=0)&& formData?.store_type_valid !=false) {
         // if (formData?.ante_room_area==='') {
         //     newErrors.ante_room_area = 'Ante Room Area is required'
         // }
@@ -464,7 +474,7 @@ console.log("fggfghfh",formData);
     }
    
 
-    if (!formData?.total_number_of_docks || formData?.total_number_of_docks==='' || formData?.total_number_of_docks<0) {
+    if ((!formData?.total_number_of_docks || formData?.total_number_of_docks==='' || formData?.total_number_of_docks<0) && formData?.store_type_valid !=false) {
         // if (formData?.total_number_of_docks==='') {
         //     newErrors.total_number_of_docks = 'Total Number of Docks is required'
         // }
@@ -474,7 +484,7 @@ console.log("fggfghfh",formData);
         newErrors.total_number_of_docks = 'Total number of docks is required'
     }
 
-    if (!formData?.total_office_space || formData?.total_office_space==='' || formData?.total_office_space<=0 ) {
+    if ((!formData?.total_office_space || formData?.total_office_space==='' || formData?.total_office_space<=0) && formData?.store_type_valid !=false ) {
         // if (formData?.total_office_space==='') {
         //     newErrors.total_office_space = 'Total Office Space is required'
         // }
@@ -484,11 +494,11 @@ console.log("fggfghfh",formData);
         newErrors.total_office_space = 'Total office space is required'
     }
 
-    if (!formData?.type_of_dock_id) {
+    if ((!formData?.type_of_dock_id) && formData?.store_type_valid !=false) {
         newErrors.type_of_dock_id = 'Type of dock is required'
     }
 
-    if (!formData?.processing_area || formData?.processing_area==='' || formData?.processing_area<=0) {
+    if ((!formData?.processing_area || formData?.processing_area==='' || formData?.processing_area<=0) && formData?.store_type_valid !=false) {
         // if (formData?.processing_area==='') {
         //     newErrors.processing_area = 'Processing Area is required'
         // }
@@ -498,7 +508,7 @@ console.log("fggfghfh",formData);
         newErrors.processing_area = 'Processing area is required'
     }
 
-    if (!formData?.parking_area || formData?.parking_area==='' || formData?.parking_area<=0) {
+    if ((!formData?.parking_area || formData?.parking_area==='' || formData?.parking_area<=0) && formData?.store_type_valid !=false) {
         // if (formData?.parking_area==='') {
         //     newErrors.parking_area = 'Parking Area is required'
         // }
@@ -508,35 +518,35 @@ console.log("fggfghfh",formData);
         newErrors.parking_area = 'Parking area is required'
     }
 
-    if (!formData?.type_of_refrigeration_id) {
+    if (!formData?.type_of_refrigeration_id && formData?.store_type_valid !=false) {
         newErrors.type_of_refrigeration_id = 'Type of refrigeration is required'
     }
 
-    if (!formData?.installation_year) {
+    if (!formData?.installation_year && formData?.store_type_valid !=false) {
         newErrors.installation_year = 'Installation year is required'
     }
 
-    if (!formData?.facility_manager_name) {
+    if (!formData?.facility_manager_name && formData?.store_type_valid !=false) {
         newErrors.facility_manager_name = 'Facility manager name is required'
     }
 
-    if (!formData?.facility_manager_contact || formData?.facility_manager_contact?.length<10) {
+    if ((!formData?.facility_manager_contact || formData?.facility_manager_contact?.length<10) && formData?.store_type_valid !=false) {
         newErrors.facility_manager_contact =
             'Facility manager contact is required'
     }
 
-    if (!formData?.road_condition_id) {
+    if (!formData?.road_condition_id && formData?.store_type_valid !=false) {
         newErrors.road_condition_id = 'Road condition is required'
     }
 
-    if(!formData?.three_d_view_of_asset || formData?.three_d_view_of_asset?.length === 0) {
+    if((!formData?.three_d_view_of_asset || formData?.three_d_view_of_asset?.length === 0) && formData?.store_type_valid !=false) {
         newErrors.three_d_view_of_asset = 'This field is required'
     }
 
-    if(!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) {
+    if((!formData?.photos_of_asset || formData?.photos_of_asset?.length === 0) && formData?.store_type_valid !=false) {
         newErrors.photos_of_asset = 'This field is required'
     }
-console.log("wertjkl",newErrors);
+console.log("wertjkl",newErrors,formData);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
@@ -1212,7 +1222,7 @@ export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,is
         newErrors.phone_number = 'Please enter valid mobile'
       }
    
-console.log("GGGGGGGGG",newErrors);
+console.log("GGGGGGGGG",newErrors,formData);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
@@ -1318,13 +1328,13 @@ export const validateKeyForm = (data: any, setErrors: any,isEmailValid:any,isMob
     if(data?.person_email && !emailRegex.test(data?.person_email)){
         newErrors.person_email = 'Please enter a valid email'
     }
-    if(isEmailValid !=='Eligible'){
+    if(isEmailValid !=='Eligible' && data?.type !=='Edit' && data?.type !=='View' ){
         newErrors.person_email = isEmailValid
     }
     if (data?.person_email && /\.\@/.test(data?.person_email)) {
         newErrors.person_email = 'Email not allow .@'
     }
-    console.log("TYYYYYYYYY",isEmailValid);
+    console.log("TYYYYYYYYY",data);
     
 
     if (!data?.designation) {
@@ -1358,7 +1368,7 @@ export const validateKeyForm = (data: any, setErrors: any,isEmailValid:any,isMob
     if (!data?.contact_number) {
         newErrors.contact_number = 'This field is required'
     }
-    if (!data?.password) {
+    if (!data?.password && data?.type !=='Edit' && data?.type!=='View') {
         newErrors.password = 'This field is required'
     }
     if(data?.password && !strongPasswordRegex.test(data?.password)){

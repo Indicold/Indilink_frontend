@@ -98,11 +98,23 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             if (key === 'email') {
                 return (
                     <td key={i} className="text-center my-2 h-[35px] flex">
-                        <p className='m-auto text-center'> {rowData?.email}</p>
-                       
-                      {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+                        <p className='m-auto text-center'> {rowData?.email?.length>25 ? <div className='flex h-[35px] text-center justify-center'><p className='ellipse-text text-center '><Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
           <InfoIcon />
-        </Tooltip> */}
+        </Tooltip>
+        </p></div>: rowData?.email }</p>
+                       
+                 
+                    </td>
+                )
+            }
+            if (key === 'branch_head') {
+                return (
+                    <td key={i} >
+                        <p className='m-auto text-center'> {rowData?.branch_head?.length>25 ? <div className='flex h-[35px] text-center justify-center'><p className='ellipse-text text-center '>{rowData?.branch_head}</p> <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.branch_head || 'Not Available'} arrow>
+          <InfoIcon />
+        </Tooltip></div>: rowData?.branch_head }</p>
+                       
+                 
                     </td>
                 )
             }

@@ -159,6 +159,7 @@ const PartnerBussinessTypePrepare = () => {
           );
         } else {
           setSelectedOptions((prevSelected:any) => [...prevSelected, optionId]);
+          formData['product_Category_valid']=false
           validatePrepareForm(formData, setErrors,selectedOptions,selectedOptions1)
         }
       };
@@ -202,7 +203,7 @@ const PartnerBussinessTypePrepare = () => {
         data.product_type = selectedOptions1 || [];
         data.addr_longitude=longitude
         data.addr_latitude=latitude
-        let isValid = validatePrepareForm(data, setErrors,selectedOptions,selectedOptions1)
+        let isValid = validatePrepareForm({...data,product_Category_valid:true}, setErrors,selectedOptions,selectedOptions1)
         if (isValid) {
             PostPrepareRegisterDetails({...data,asset_id:id})
             localStorage.setItem('asset_id',"3")
