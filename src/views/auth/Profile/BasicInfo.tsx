@@ -233,7 +233,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
          
 
             {/* main component */}
-            <div className="bg-white w-[100%] mb-5 lg:flex p-8  shadow-2xl">
+            <div className="bg-white w-[100%] mb-5 lg:flex lg:p-8 py-3 shadow-2xl">
                    {/* stepper start */}
             <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/5'>
 
@@ -285,7 +285,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
 </div>
 {/* stepper end */}
-<div className='w-full'>
+<div className='w-full p-2'>
                 {/* <ArrowBackIcon className='ms-3' onClick={() => navigate(-1)} /> */}
                 <h4 className="text-head-title text-center">Basic Information</h4>
                 {/* pre filled common form */}
