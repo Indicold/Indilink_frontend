@@ -259,6 +259,13 @@ rect{
   .leaflet-control-attribution, .leaflet-control{
     display: none !important;
   }
-  p,.text[red]{
+  /* p,.text[red]{
     height: 20px !important;
+  } */
+
+  .autoscrollable-wrapper {
+    /* overflow: auto; */
+    max-height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
   }
