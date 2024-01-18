@@ -639,7 +639,7 @@ if(!item?.url && (item?.licenseNoVal || item?.valid_till)){
                                                         onChange={handleDateChange} />
 
                                                     {item?.messageText && (
-                                                        <p className="text-[red]">
+                                                        <p className="text-[red] text-p-error-hight">
                                                             {item?.messageText}
                                                         </p>
                                                     )}
@@ -669,7 +669,7 @@ if(!item?.url && (item?.licenseNoVal || item?.valid_till)){
                                                         onKeyDown={onkeyDownforSpecialCharcter} />
 
                                                     {item?.licenseNo && (
-                                                        <p className="text-[red]">
+                                                        <p className="text-[red] text-p-error-hight">
                                                             {item?.licenseNo}
                                                         </p>
                                                     )}

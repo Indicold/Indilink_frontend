@@ -263,9 +263,14 @@ rect{
     height: 20px !important;
   } */
 
+  
   .autoscrollable-wrapper {
     /* overflow: auto; */
     max-height: 100%;
     display: flex;
     flex-direction: column-reverse;
+  }
+
+  .text-p-error-hight{
+    height: 10px;
   }

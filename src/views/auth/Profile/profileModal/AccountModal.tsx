@@ -199,7 +199,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         placeholder="Account Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red]'>{error && error.account_name}</p>
+                                                    <p className='text-[red] text-p-error-hight'>{error && error.account_name}</p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Account Number"
@@ -219,7 +219,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         component={Input}
                                                         onKeyDown={onkeyDownBankacNum}
                                                     />
-                                                    <p className='text-[red]'>{error && error.account_number}</p>
+                                                    <p className='text-[red] text-p-error-hight'>{error && error.account_number}</p>
                                                 </FormItem>
                                             </div>
                                             <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
@@ -240,7 +240,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         placeholder="Bank Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red]'>{error && error.bank_name}</p>
+                                                    <p className='text-[red] text-p-error-hight'>{error && error.bank_name}</p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Bank IFSC Code"
@@ -260,7 +260,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         component={Input}
                                                         onKeyDown={onkeyDownBankifscCode}
                                                     />
-                                                    <p className='text-[red]'>{error && error.bank_ifsc}</p>
+                                                    <p className='text-[red] text-p-error-hight'>{error && error.bank_ifsc}</p>
                                                 </FormItem>
                                             </div>
                                             <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
@@ -281,7 +281,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         placeholder="Branch Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red]'>{error && error.branch_name}</p>
+                                                    <p className='text-[red] text-p-error-hight'>{error && error.branch_name}</p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Cancel Cheque"
@@ -304,7 +304,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     />
 
 
-                                                    <p className="text-[red]">
+                                                    <p className="text-[red]  text-p-error-hight">
                                                         {error && error.cancelled_cheque}
                                                     </p>
                                                 </FormItem>

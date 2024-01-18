@@ -173,7 +173,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.name && (
-                                            <p className='text-[red]'>{error?.name}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.name}</p>
                                         )}
                                     </FormItem>
 
@@ -195,7 +195,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.type_of_machine && (
-                                            <p className='text-[red]'>{error?.type_of_machine}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.type_of_machine}</p>
                                         )}
                                     </FormItem>
                                 </div>
@@ -216,7 +216,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.make && (
-                                            <p className='text-[red]'>{error?.make}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.make}</p>
                                         )}
                                     </FormItem>
                                     <FormItem label="Model*" className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
@@ -234,7 +234,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.model && (
-                                            <p className='text-[red]'>{error?.model}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.model}</p>
                                         )}
                                     </FormItem>
                                 </div>
@@ -258,7 +258,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
                                         {error?.purpose && (
-                                            <p className='text-[red]'>{error?.purpose}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.purpose}</p>
                                         )}
                                     </FormItem>
                                     <FormItem
@@ -279,7 +279,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownNew}
                                         />
                                         {error?.power_requirement && (
-                                            <p className='text-[red]'>{error?.power_requirement}</p>
+                                            <p className='text-[red] text-p-error-hight'>{error?.power_requirement}</p>
                                         )}
                                     </FormItem>
                                 </div>

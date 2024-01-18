@@ -147,7 +147,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             }
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -166,7 +166,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
@@ -184,7 +184,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
@@ -209,7 +209,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.tr}
                                         </p>
                                     </FormItem>
@@ -236,7 +236,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             <option selected={data?.amc == "Yes"}>Yes</option>
                                             <option selected={data?.amc == "No"}>No</option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem>

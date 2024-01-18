@@ -149,7 +149,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -168,7 +168,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
@@ -186,7 +186,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
@@ -217,7 +217,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
@@ -245,7 +245,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.hp}
                                         </p>
                                     </FormItem>
@@ -278,7 +278,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                             <option value="Yes" selected={data?.amc == "Yes"}>Yes</option>
                                             <option value="No" selected={data?.amc == "No"}>No</option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight h-[10px]">
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem>

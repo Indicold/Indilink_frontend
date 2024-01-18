@@ -176,7 +176,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -198,7 +198,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.name_of_service}
                                         </p>
                                     </FormItem>
@@ -219,7 +219,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.vendor}
                                         </p>
                                     </FormItem>
@@ -242,7 +242,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.valid_till}
                                         </p>
                                     </FormItem>
@@ -263,7 +263,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.fixed_cost}
                                         </p>
                                     </FormItem>

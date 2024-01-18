@@ -100,7 +100,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.product_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Broad Category"
@@ -118,7 +118,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.broad_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -156,7 +156,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.service_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.service_category_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className="flex">
@@ -176,7 +176,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.country_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <div className="flex mx-auto w-1/2 rounded-lg pl-[22px]">
                                         <FormItem
@@ -195,7 +195,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
                                                 ))}
                                             </select>
-                                            <p className='text-[red]'>{errors && errors.state_id}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.state_id}</p>
                                         </FormItem>
                                         <FormItem
                                             label="City"
@@ -213,7 +213,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
                                                 ))}
                                             </select>
-                                            <p className='text-[red]'>{errors && errors.city_id}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.city_id}</p>
                                         </FormItem>
                                     </div>
                                 </div>
@@ -245,7 +245,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.throughput}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.throughput}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Avg. Case Size"
@@ -275,7 +275,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.case_size}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.case_size}</p>
 
                                     </FormItem>
                                 </div>
@@ -346,7 +346,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.temp_max ? errors.temp_max:errors.temp_min}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.temp_max ? errors.temp_max:errors.temp_min}</p>
 
                                     </FormItem>
                                     <FormItem

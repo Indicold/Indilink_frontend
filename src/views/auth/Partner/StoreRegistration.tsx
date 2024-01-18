@@ -796,7 +796,7 @@ const StoreRegistration = () => {
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.facility_manager_name}
                                         </p>{' '}
@@ -823,7 +823,7 @@ const StoreRegistration = () => {
                                         />
 
 
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.facility_manager_contact}
                                         </p>{' '}
@@ -859,7 +859,7 @@ const StoreRegistration = () => {
                                                 )}
                                             <option>Other</option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.city_id}
                                         </p>
                                     </FormItem>
@@ -884,7 +884,7 @@ const StoreRegistration = () => {
                                                 setLongitude(place?.geometry?.location?.lng());
                                             }}
                                         />
-<p className="text-[red]">
+<p className="text-[red] text-p-error-hight">
                                             {errors && errors.address}
                                         </p>
                                     </FormItem>
@@ -917,7 +917,7 @@ const StoreRegistration = () => {
                                             </select> */}
                                         </div>
 
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.total_tonnage}
                                         </p>
                                     </FormItem>
@@ -968,7 +968,7 @@ const StoreRegistration = () => {
       </div>
     </div>
                                       
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {dataa?.store_type_valid && "This is required !"}
                                         </p>
                                     </FormItem>
@@ -1005,7 +1005,7 @@ const StoreRegistration = () => {
                                                     )
                                                 )}
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.cold_storage_type_id}
                                         </p>
@@ -1026,7 +1026,7 @@ const StoreRegistration = () => {
                                             value={fetchDetailsAll?.data?.chambers?.length || 0}
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.no_of_chambers}
                                         </p>
                                     </FormItem> */}
@@ -1057,7 +1057,7 @@ const StoreRegistration = () => {
                                                 <option>Square feet</option>
                                             </select> */}
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.ante_room_area}
                                         </p>
                                     </FormItem>
@@ -1079,7 +1079,7 @@ const StoreRegistration = () => {
                                             onKeyDown={onkeyDownNew}
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.total_number_of_docks}
                                         </p>
@@ -1113,7 +1113,7 @@ const StoreRegistration = () => {
                                                 <option>Square feet</option>
                                             </select> */}
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.total_office_space}
                                         </p>{' '}
@@ -1149,7 +1149,7 @@ const StoreRegistration = () => {
                                                     )
                                                 )}
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.type_of_dock_id}
                                         </p>
                                     </FormItem>
@@ -1180,7 +1180,7 @@ const StoreRegistration = () => {
                                                 <option>Square feet</option>
                                             </select> */}
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.processing_area}
                                         </p>{' '}
                                     </FormItem>
@@ -1209,7 +1209,7 @@ const StoreRegistration = () => {
                                                 <option>Square feet</option>
                                             </select> */}
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.parking_area}
                                         </p>{' '}
                                     </FormItem>
@@ -1246,7 +1246,7 @@ const StoreRegistration = () => {
                                                     )
                                                 )}
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.type_of_refrigeration_id}
                                         </p>{' '}
@@ -1295,7 +1295,7 @@ const StoreRegistration = () => {
                                             placeholder="Year of Installation"
                                             component={Input}
                                         /> */}
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.installation_year}
                                         </p>{' '}
                                     </FormItem>
@@ -1329,7 +1329,7 @@ const StoreRegistration = () => {
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.internet}
                                         </p>{' '}
                                     </FormItem>
@@ -1359,7 +1359,7 @@ const StoreRegistration = () => {
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.wifi}
                                         </p>{' '}
                                     </FormItem>
@@ -1391,7 +1391,7 @@ const StoreRegistration = () => {
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.cctv}
                                         </p>{' '}
                                     </FormItem>
@@ -1425,7 +1425,7 @@ const StoreRegistration = () => {
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors &&
                                                 errors.driver_area_food_resting}
                                         </p>{' '}
@@ -1465,7 +1465,7 @@ const StoreRegistration = () => {
                                                         )
                                                     )}
                                             </select>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.weight_bridge_id}
                                             </p>{' '}
                                         </div>
@@ -1502,7 +1502,7 @@ const StoreRegistration = () => {
                                                     )
                                                 )}
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.road_condition_id}
                                         </p>{' '}
                                     </FormItem>
@@ -1529,7 +1529,7 @@ const StoreRegistration = () => {
                                             />
 
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.three_d_view_of_asset}
                                         </p>{' '}
                                         <div className='flex'>
@@ -1571,7 +1571,7 @@ const StoreRegistration = () => {
                                                 <option>Square feet</option>
                                             </select> */}
                                         </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.photos_of_asset}
                                         </p>{' '}
                                         <div className='flex'>

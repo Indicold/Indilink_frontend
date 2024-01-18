@@ -336,7 +336,7 @@ vehicle_no:''
                                             component={Input}
                                         />} */}
 
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.vehicle_make_id}
                                         </p>
                                     </FormItem>
@@ -382,7 +382,7 @@ vehicle_no:''
                                         placeholder="Model"
                                         component={Input}
                                     /> */}
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.vehicle_model_id}
                                         </p>
                                     </FormItem>
@@ -404,7 +404,7 @@ vehicle_no:''
                                             placeholder="Permit Validity Date"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.permit_validity}
                                         </p>
                                     </FormItem>
@@ -425,7 +425,7 @@ vehicle_no:''
                                             component={Input}
                                         />
 
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.pucc_validity}
                                         </p>
                                     </FormItem>
@@ -447,7 +447,7 @@ vehicle_no:''
                                             placeholder="Get Chassis No from RC"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.chassis_no}
                                         </p>
                                     </FormItem>
@@ -467,7 +467,7 @@ vehicle_no:''
                                             placeholder="Emission norms"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.emission_norms}
                                         </p>
                                     </FormItem>
@@ -492,7 +492,7 @@ vehicle_no:''
                                             max={maxDate} 
                                             
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.mfg_month_year}
                                         </p>
                                     </FormItem>
@@ -513,7 +513,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.vehicle_class}
                                         </p>
                                     </FormItem>
@@ -535,7 +535,7 @@ vehicle_no:''
                                             placeholder="Vehicle number"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.vehicle_no}
                                         </p>
                                     </FormItem>
@@ -556,7 +556,7 @@ vehicle_no:''
                                             placeholder="Actual Payload (in kg)"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.actual_payload}
                                         </p>
                                     </FormItem>
@@ -580,7 +580,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.create_capacity}
                                         </p>
                                     </FormItem>
@@ -602,7 +602,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.length}
                                         </p>
                                     </FormItem>
@@ -626,7 +626,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.width}
                                         </p>
                                     </FormItem>
@@ -648,7 +648,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.hight}
                                         </p>
                                     </FormItem>
@@ -672,7 +672,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.gv_weight}
                                         </p>
                                     </FormItem>
@@ -696,7 +696,7 @@ vehicle_no:''
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.unladen_weight_in_rc}
                                         </p>
                                     </FormItem>
@@ -718,7 +718,7 @@ vehicle_no:''
                                             placeholder="Get Engine No"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.engine_no}
                                         </p>
                                     </FormItem>
@@ -748,7 +748,7 @@ vehicle_no:''
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.side_door}
                                         </p>
                                     </FormItem>
@@ -780,7 +780,7 @@ vehicle_no:''
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.hatch_window}
                                         </p>
                                     </FormItem>
@@ -810,7 +810,7 @@ vehicle_no:''
                                                 No
                                             </option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.dual_temp_bulkhead}
                                         </p>
                                     </FormItem>
@@ -830,7 +830,7 @@ vehicle_no:''
                                                 handleChange(e)
                                             }
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.rc_image}
                                         </p>
                                     </FormItem>
@@ -850,7 +850,7 @@ vehicle_no:''
                                             placeholder="RC Number from RC"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.rc_no}
                                         </p>
                                     </FormItem>
@@ -874,7 +874,7 @@ vehicle_no:''
                                             placeholder="Fitness Certificate Valid Till"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.fitness_validity}
                                         </p>
                                     </FormItem> */}
