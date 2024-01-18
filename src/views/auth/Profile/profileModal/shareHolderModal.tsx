@@ -156,7 +156,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder First Name"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.fname}
                                                 </p>
                                             </FormItem>
@@ -176,7 +176,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder Last Name"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.lname}
                                                 </p>
                                             </FormItem>
@@ -199,7 +199,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Password"
                                                     component={PasswordInput}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.password}
                                                 </p>
                                             </FormItem>}
@@ -222,7 +222,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     component={Input}
                                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.percentage_holding}
                                                 </p>
                                             </FormItem>
@@ -246,7 +246,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder Address"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.address}
                                                 </p>
                                             </FormItem>
@@ -269,7 +269,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     component={Input}
                                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.phone_number}
                                                     {/* {error && error?.phone_number} */}
                                                 </p>
@@ -317,7 +317,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder Designation"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.designation}
                                                 </p>
                                             </FormItem>
@@ -342,7 +342,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     component={Input}
                                                     onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.din_number}
                                                 </p>
                                             </FormItem>
@@ -364,7 +364,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Authorised Signatory"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.authorized_signatory}
                                                 </p>
                                             </FormItem>
@@ -386,7 +386,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Password"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.password}
                                                 </p>
                                             </FormItem>

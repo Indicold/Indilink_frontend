@@ -99,11 +99,11 @@ useEffect(()=>{
                             <div className="border mx-auto flex h-11 w-1/2 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                             <input type="text" placeholder='Enter Make*' name="make" className="w-2/3 border-0 focus:outline-0" onChange={handleChange} onKeyDown={onkeyDownforSpecialCharcter} />
                             </div>
-                            <p className='mx-auto text-center text-[red]'>{error && error?.make}</p>
+                            <p className='mx-auto text-center text-[red] text-p-error-hight'>{error && error?.make}</p>
                             <div className="border mt-3 mx-auto flex h-11 w-1/2 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                             <input type="text" placeholder='Enter Model*' name="model" className="w-2/3 border-0 focus:outline-0" onChange={handleChange} onKeyDown={onkeyDownforSpecialCharcter} />
                             </div>
-                            <p className='mx-auto text-center text-[red]'>{error && error?.model}</p>
+                            <p className='mx-auto text-center text-[red] text-p-error-hight'>{error && error?.model}</p>
                             <button onClick={handleSave} className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-11 px-8 py-2 indigo-btn m-4 !w-[200px] mx-auto rounded-[30px] w-full">Add</button>
                         </div>
                     </div>

@@ -118,18 +118,21 @@ useEffect(()=>{
                                    <Form className="py-2">
                                    <FormContainer>
                                        <div className="flex flex-col">
-                                        
-                                          <div className="w-full border-2 flex justify-between flex-col overflow-scroll overflow-x-hidden	 h-[200px]">
+                                        <div>
+                                            
+                                        <div id="scrolltobottom" className="autoscrollable-wrapper w-full border-2 flex justify-between flex-col overflow-scroll overflow-x-hidden h-[200px]">
+
+                                        < div className="">
                                             {newfilterArray.length>0 && newfilterArray?.map((item:any,index:any)=>(
                                                 <div className="w-full" key={index}>
-                                                      <p className={`w-full m-4 text-left `}>
-                                                    <span className="text-chat-message-style">{item?.replyfor}</span><br/>
+                                                        <p className={` w-[80%] flex h-auto m-4 text-left `}>
+                                                        <span className="text-chat-message-style p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replyfor}</span><br/>
                                                 </p>
-                                                <p className={`w-full p-4 text-right`}>
+                                                <p className={`w-[80%] ml-14 flex justify-end`}>
                                                     
-                                                    <span className="text-chat-message-style">{item?.replytext}</span>
-                                                   <br/>
-                                                   <br/>
+                                                    <span className=" p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replytext}</span>
+                                                   </p>
+                                                   <p  className={`w-full pr-4 pb-4 text-right`}>
                                                    <span className="bg-gray mt-4">{TimeString(item?.time)}</span>
 
                                                     <br/>
@@ -140,6 +143,9 @@ useEffect(()=>{
                                             )) 
                                             }
                                           </div>
+                                            </div>
+                                        </div>
+                                         
                                            <FormItem
                                                label="Add Comment"
                                                className='mx-auto w-full'
@@ -149,7 +155,7 @@ useEffect(()=>{
                                                    autoComplete="off"
                                                 
                                                    name="text"
-                                                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                   className="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    onChange={(e:any)=>handleChange(e)}
                                                    placeholder="message"
                                                    value={formData?.text}

@@ -222,7 +222,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.product_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_category_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Broad Category*")}
@@ -240,7 +240,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.broad_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -260,7 +260,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Service Category*")}
@@ -278,7 +278,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.service_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.service_category_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100 p-2 mt-4 rounded-md">
@@ -298,7 +298,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.country_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <div className="  lg:flex pl-3 w-[100%] text-label-title m-auto">
                                         <FormItem
@@ -317,7 +317,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                                 ))}
                                             </select>
-                                            <p className='text-[red]'>{errors && errors.state_id}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.state_id}</p>
                                         </FormItem>
                                         <FormItem
                                             label={t("City*")}
@@ -335,7 +335,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                                 ))}
                                             </select>
-                                            <p className='text-[red]'>{errors && errors.city_id}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.city_id}</p>
                                         </FormItem>
                                     </div>
                                 </div>
@@ -372,7 +372,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && !errors?.throughput_unit_id ? errors.throughput : errors?.throughput_unit_id }</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && !errors?.throughput_unit_id ? errors.throughput : errors?.throughput_unit_id }</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Avg. Case Size*")}
@@ -407,8 +407,8 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                             ))}
                                         </select>
-                                        {/* <p className='text-[red]'>{errors && errors.case_size}</p> */}
-                                        <p className='text-[red]'>{errors && !errors?.case_size_unit_id ? errors.case_size : errors?.case_size_unit_id }</p>
+                                        {/* <p className='text-[red] text-p-error-hight'>{errors && errors.case_size}</p> */}
+                                        <p className='text-[red] text-p-error-hight'>{errors && !errors?.case_size_unit_id ? errors.case_size : errors?.case_size_unit_id }</p>
                                     </FormItem>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -505,7 +505,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
 
 
-                                        <p className='text-[red]'>{errors && errors.temp_min}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.temp_min}</p>
 
                                     </FormItem>
                                     <FormItem
@@ -528,7 +528,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             placeholder="Max Temperature"
                                             component={Input}
                                         />
-                                         <p className='text-[red]'>{errors && errors.temp_max}</p>
+                                         <p className='text-[red] text-p-error-hight'>{errors && errors.temp_max}</p>
 
                                         </FormItem>
                                 </div>
@@ -570,7 +570,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                                 ))}
                                             </select>
-                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                         </FormItem>
                                         <FormItem
                                             label={t("Comment")}
@@ -588,7 +588,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 component={Input}
                                             />
 
-                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div>
                                     <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -606,7 +606,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 placeholder="Contract name"
                                                 component={Input}
                                             />
-                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                         </FormItem>
                                         <FormItem
                                             label={t("Contract Type")}
@@ -624,7 +624,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 component={Input}
                                             />
 
-                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div>
                                     {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -642,7 +642,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 placeholder="Arrival Date"
                                                 component={Input}
                                             />
-                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                         </FormItem>
                                         <FormItem
                                             label={t("Dispatch Date")}
@@ -660,7 +660,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 component={Input}
                                             />
 
-                                            <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div> */}
                                     {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
@@ -681,7 +681,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                 onChange={(e: any) => handleChange(e)}
                                             />
 
-                                            <p className='text-[red]'>{errors && errors.date}</p>
+                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                         </FormItem>
 
                                     </div> */}

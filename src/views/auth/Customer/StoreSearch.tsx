@@ -239,7 +239,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.country_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.country_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("City*")} 
@@ -257,7 +257,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.city_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.city_id}</p>
                                     </FormItem>
                                 </div>
                                 </div>
@@ -280,7 +280,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Min and Max Temperature*")} 
@@ -320,7 +320,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.temperature}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.temperature}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 mt-4 rounded-md p-2">
@@ -352,7 +352,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.quantity}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Certification")}
@@ -370,7 +370,7 @@ const StoreSearch = () => {
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.certification_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.certification_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
@@ -389,7 +389,7 @@ const StoreSearch = () => {
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
-                                        <p className='text-[red]' >{errors && errors.date}</p>
+                                        <p className='text-[red] text-p-error-hight' >{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label={t("Storage Duration*")}
@@ -420,7 +420,7 @@ const StoreSearch = () => {
                                                 <option className='' value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>)
                                             }})}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
                           {/* {location?.state?.extraForm &&      <>
@@ -439,7 +439,7 @@ const StoreSearch = () => {
                                             placeholder="Enter Value"
                                             component={Input}
                                         />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Comment"
@@ -457,7 +457,7 @@ const StoreSearch = () => {
                                             component={Input}
                                         />
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
                                 <div className="flex bg-gray-100 mt-4 rounded-md p-2">
@@ -475,7 +475,7 @@ const StoreSearch = () => {
                                             placeholder="Contract name"
                                             component={Input}
                                         />
-                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label="Contract Type"
@@ -493,7 +493,7 @@ const StoreSearch = () => {
                                             component={Input}
                                         />
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
                                 <div className="flex bg-gray-100 mt-4 rounded-md p-2">
@@ -514,7 +514,7 @@ const StoreSearch = () => {
                                         onChange={(e: any) => handlechange(e)}
                                       />
 
-                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                     </FormItem>
                                    
                                 </div>

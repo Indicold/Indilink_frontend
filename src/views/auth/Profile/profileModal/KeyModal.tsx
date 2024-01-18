@@ -160,7 +160,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Name"
                                     component={Input}
                                 />
-                                   <p className="text-[red]">
+                                   <p className="text-[red] text-p-error-hight">
                                         {error && error.full_name}
                                     </p>
                             </FormItem>
@@ -182,7 +182,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Email Address"
                                     component={Input}
                                 />
-                                 <p className="text-[red]">
+                                 <p className="text-[red] text-p-error-hight">
                                         {error?.person_email}
                                     </p>
                             </FormItem>
@@ -206,7 +206,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Designation"
                                     component={Input}
                                 />
-                                <p className="text-[red]">
+                                <p className="text-[red] text-p-error-hight">
                                         {error && error.designation}
                                     </p>
                             </FormItem>
@@ -228,7 +228,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Address"
                                     component={Input}
                                 />
-                                  <p className="text-[red]">
+                                  <p className="text-[red] text-p-error-hight">
                                         {error && error.address}
                                     </p>
                             </FormItem>
@@ -253,7 +253,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.country_id}
                                     </p>
                                 </FormItem>
@@ -274,7 +274,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.state_id}
                                     </p>
                                 </FormItem>
@@ -300,7 +300,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.city_id}
                                     </p>
                                 </FormItem>
@@ -323,7 +323,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                         component={Input}
                                         onKeyDown={onkeyDownPincode}
                                     />
-                                      <p className="text-[red]">
+                                      <p className="text-[red] text-p-error-hight">
                                         {error && error.pin_code}
                                     </p>
                                 </FormItem>
@@ -352,7 +352,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     component={Input}
                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                 />
-                                 <p className="text-[red]">
+                                 <p className="text-[red] text-p-error-hight">
                                         {error && error.aadhar}
                                     </p>
                             </FormItem>
@@ -376,7 +376,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     maxLength={10}
                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                 />
-                                 <p className="text-[red]">
+                                 <p className="text-[red] text-p-error-hight">
                                         {isMobileValid ? isMobileValid : error?.contact_number}
                                     </p>
                             </FormItem>
@@ -398,7 +398,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Password"
                                     component={PasswordInput}
                                 />
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         { error && error?.password}
                                     </p>
                             </FormItem>}
@@ -420,7 +420,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.platform_role_id}
                                     </p>
                             </FormItem>

@@ -427,7 +427,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             className=""
                                             value={data?.chamber_number}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.chamber_number}
                                         </p>
                                     </FormItem>
@@ -448,7 +448,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             value={data?.chamber_name}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.chamber_name}
                                         </p>
                                     </FormItem>
@@ -475,7 +475,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <span className='h-fit my-auto'>X</span>
                                         <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.chamber_size}
                                         </p>
                                     </FormItem>
@@ -495,7 +495,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             value={data?.no_of_pallets}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.no_of_pallets}
                                         </p>
                                     </FormItem>
@@ -523,7 +523,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                      
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.pallet_size}
                                         </p>
                                     </FormItem>
@@ -553,7 +553,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                     )
                                                 )}
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.racking_type_id}
                                         </p>
                                     </FormItem>
@@ -586,7 +586,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                            
                                         />
                                         
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.photo_of_entrance}
                                         </p>
                                     </FormItem>
@@ -616,7 +616,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.photo_of_chamber}
                                         </p>
                                     </FormItem>
@@ -648,7 +648,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.photo_of_entrance}
                                         </p>
                                     </FormItem>
@@ -678,7 +678,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             }
                                            
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.photo_of_chamber}
                                         </p>
                                     </FormItem>
@@ -702,7 +702,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             placeholder="No. of floors"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.no_of_floors}
                                         </p>
                                     </FormItem>
@@ -724,7 +724,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownNew}
                                         />
                                       
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.floor_area}
                                         </p>
                                     </FormItem>
@@ -749,7 +749,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                            
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.temp_range}
                                         </p>
                                     </FormItem>
@@ -770,7 +770,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             onKeyDown={onkeyDownNew}
                                         />
                             
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.each_floor_hight}
                                         </p>
                                     </FormItem>
@@ -806,7 +806,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             <option value="true">Yes</option>
                                             <option value="false">No</option>
                                         </select> */}
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.staircase}
                                         </p>
                                     </FormItem>

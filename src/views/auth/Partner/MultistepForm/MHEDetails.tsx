@@ -152,7 +152,7 @@ if(PutApiResponse?.status===200){
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -171,7 +171,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
@@ -189,7 +189,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
@@ -209,7 +209,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.load}
                                         </p>
                                     </FormItem>

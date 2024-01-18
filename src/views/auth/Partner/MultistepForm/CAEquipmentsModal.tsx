@@ -162,7 +162,7 @@ useEffect(()=>{
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -182,7 +182,7 @@ useEffect(()=>{
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
@@ -201,7 +201,7 @@ useEffect(()=>{
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
@@ -232,7 +232,7 @@ useEffect(()=>{
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>

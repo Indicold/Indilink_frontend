@@ -384,7 +384,7 @@ const PartnerBussinessTypePrepare = () => {
                                                         )}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.city_id}
                                             </p>
                                         </FormItem>
@@ -410,7 +410,7 @@ const PartnerBussinessTypePrepare = () => {
                                           
                                             }}
                                         />
-<p className="text-[red]">
+<p className="text-[red] text-p-error-hight">
                                                 {errors && errors.address}
                                             </p>
                                         </FormItem>
@@ -436,7 +436,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 component={Input}
                                             />
 
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors &&
                                                     errors.hourly_throughput}
                                             </p>
@@ -478,7 +478,7 @@ const PartnerBussinessTypePrepare = () => {
                                                         )}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors &&
                                                     errors.prepare_type_id}
                                             </p>
@@ -532,7 +532,7 @@ const PartnerBussinessTypePrepare = () => {
       </div>
     </div>
               
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors &&
                                                     errors.product_category_ids}
                                             </p>
@@ -620,7 +620,7 @@ const PartnerBussinessTypePrepare = () => {
                                               
 
                                             </div> */}
-   <p className='text-[red]'></p>
+   <p className='text-[red] text-p-error-hight'></p>
                                         </FormItem>
                                      
                                     </div>
@@ -656,7 +656,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     ))}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.throughput}
                                             </p>
                                         </FormItem>
@@ -691,7 +691,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     ))}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.avg_case_size}
                                             </p>
                                         </FormItem>
@@ -716,7 +716,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 placeholder="Enter Value"
                                                 component={Input}
                                             />
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.no_of_docks}
                                             </p>
                                         </FormItem>
@@ -745,7 +745,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 <option className='text-end'>Square feet</option>
                                             </select> */}
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.area}
                                             </p>
                                         </FormItem>
@@ -786,7 +786,7 @@ const PartnerBussinessTypePrepare = () => {
                                                         )}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors &&
                                                     errors.type_of_dock_id}
                                             </p>
@@ -813,7 +813,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 placeholder="Enter Value"
                                                 component={Input}
                                             /> */}
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.temperature_min}
                                             </p>
                                         </FormItem>
@@ -848,7 +848,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     ))}
                                                 </select>
                                             </div>
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.batch_size}
                                             </p>
                                         </FormItem>
@@ -894,7 +894,7 @@ const PartnerBussinessTypePrepare = () => {
                                 placeholder="Machines"
                                 component={Input}
                             /> */}
-                                            <p className="text-[red]">
+                                            <p className="text-[red] text-p-error-hight">
                                                 {errors && errors.machine_ids}
                                             </p>
                                         </FormItem>

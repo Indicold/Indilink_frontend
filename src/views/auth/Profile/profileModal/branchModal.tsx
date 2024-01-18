@@ -147,7 +147,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                     onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.name}
                                                 </p>
                                             </FormItem>
@@ -168,7 +168,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Address"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.address}
                                                 </p>
                                             </FormItem>
@@ -193,7 +193,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     onKeyDown={onkeyDownforSpecialCharcter}
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.branch_gst}
                                                 </p>
                                             </FormItem>
@@ -215,7 +215,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                     onKeyDown={onkeyDownforSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.branch_head}
                                                 </p>
                                             </FormItem>
@@ -239,7 +239,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     placeholder="Branch Email Address"
                                                     component={Input}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error?.branch_email}
                                                 </p>
                                             </FormItem>
@@ -263,7 +263,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     component={Input}
                                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                                 />
-                                                <p className='text-[red]'>
+                                                <p className='text-[red] text-p-error-hight'>
                                                     {error?.branch_phone}
                                                 </p>
                                             </FormItem>

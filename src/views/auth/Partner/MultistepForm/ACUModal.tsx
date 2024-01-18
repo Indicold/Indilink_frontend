@@ -180,7 +180,7 @@ if(PutApiResponse?.status===200){
                                             placeholder="Asset ID"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.asset_id}
                                         </p>
                                     </FormItem> */}
@@ -199,7 +199,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
@@ -217,7 +217,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownforNumSpecialCharcter}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.model}
                                         </p>
                                     </FormItem>
@@ -248,7 +248,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.cmf}
                                         </p>
                                     </FormItem>
@@ -275,7 +275,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.hp}
                                         </p>
                                     </FormItem>
@@ -297,7 +297,7 @@ if(PutApiResponse?.status===200){
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.amc}
                                         </p>
                                     </FormItem> */}
@@ -325,7 +325,7 @@ if(PutApiResponse?.status===200){
                                             component={Input}
                                             onKeyDown={onkeyDownNew}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.tr}
                                         </p>
                                     </FormItem>
@@ -358,7 +358,7 @@ if(PutApiResponse?.status===200){
                                             ))}
                                           
                                         </select>
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.defrosting_id}
                                         </p>
                                     </FormItem>
@@ -379,7 +379,7 @@ if(PutApiResponse?.status===200){
                                             placeholder="Defrosting ID"
                                             component={Input}
                                         />
-                                        <p className="text-[red]">
+                                        <p className="text-[red] text-p-error-hight">
                                             {errors && errors.defrosting_id}
                                         </p>
                                     </FormItem> */}

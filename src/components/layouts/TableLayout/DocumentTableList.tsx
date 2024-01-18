@@ -115,7 +115,7 @@ const DocumentTableList = ({ AllStore,AllLength,setPageNo }: any) => {
         return <td className='text-center' key={i} >{new Date(rowData.updatedAt)?.toLocaleString()}</td>;
       }
       if (key === 'Action') {
-        return <td className='text-center' key={i} >
+        return <td className='text-center flex gap-3 py-2 px-2' key={i} >
           <Button className='!p-2' onClick={() => handleView(rowData)}><VisibilityIcon /></Button>
           <Button className='!p-2' onClick={() => handleEdit(rowData)}><TextSnippetIcon /></Button>
         </td>;
@@ -155,12 +155,14 @@ const DocumentTableList = ({ AllStore,AllLength,setPageNo }: any) => {
           onChange={e => setValue(e.target.value)}
         />
       </div>
+      <div className='overflow-auto'>
       <table className='w-full'>
         <thead>
           <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
         </thead>
         <tbody className="trhover bg-white">{tableData()}</tbody>
       </table>
+      </div>
       <div className='flex justify-center bg-white p-4'>
         <Pagination
           pageSize={countPerPage}

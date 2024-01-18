@@ -258,7 +258,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.origin_country_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.origin_country_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label= {t("From*")}
@@ -276,7 +276,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.origin_city_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.origin_city_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
@@ -333,7 +333,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.dest_country_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.dest_country_id}</p>
                                     </FormItem>
                                     <FormItem
                                         label=  {t("To*")}
@@ -351,7 +351,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.dest_city_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.dest_city_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
@@ -421,7 +421,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.load_quantity}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.load_quantity}</p>
                                     </FormItem>
                                     <FormItem
                                         label= {t("Broad Category*")}
@@ -439,7 +439,7 @@ localStorage.removeItem('origin_gps');
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.broad_category_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.broad_category_id}</p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
@@ -459,7 +459,7 @@ localStorage.removeItem('origin_gps');
                                             ))}
 
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.product_type_id}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
                                    
                                     </FormItem>
                                 </div>
@@ -528,7 +528,7 @@ localStorage.removeItem('origin_gps');
 
                                             ))}
                                         </select>
-                                        <p className='text-[red]'>{errors && errors.date}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
                                     </FormItem>
                                     <FormItem
                                         label= {t("Comment")}
@@ -546,7 +546,7 @@ localStorage.removeItem('origin_gps');
                                             component={Input}
                                         />
 
-                                        <p className='text-[red]'>{errors && errors.storage_duration}</p>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                     </FormItem>
                                 </div>
 

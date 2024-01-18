@@ -464,7 +464,7 @@ const PartnerComplianceMove = () => {
                                                    onChange={handleDateChange} />
 
                                                {item?.messageText && (
-                                                   <p className="text-[red]">
+                                                   <p className="text-[red] text-p-error-hight">
                                                        {item?.messageText}
                                                    </p>
                                                )}
@@ -494,7 +494,7 @@ const PartnerComplianceMove = () => {
                                                    onKeyDown={onkeyDownforSpecialCharcter} />
 
                                                {item?.licenseNo && (
-                                                   <p className="text-[red]">
+                                                   <p className="text-[red] text-p-error-hight">
                                                        {item?.licenseNo}
                                                    </p>
                                                )}

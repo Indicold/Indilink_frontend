@@ -212,7 +212,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
                                     </div>
                                     <p>{formData?.invoice_doc?.name}</p>
 
-                                    <p className='text-[red]'>{error?.invoice_doc}</p>
+                                    <p className='text-[red] text-p-error-hight'>{error?.invoice_doc}</p>
 
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium

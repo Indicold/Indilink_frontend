@@ -316,7 +316,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.country_id}
                                     </p>
                                 </FormItem>
@@ -337,7 +337,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
                                         ))}
                                     </select>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.state_id}
                                     </p>
                                 </FormItem>
@@ -361,7 +361,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         placeholder="Firm Registered Address"
                                         component={Input}
                                     />
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.address}
                                     </p>
                                 </FormItem>
@@ -382,7 +382,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         component={Input}
                                         onKeyDown={onkeyDownPincode}
                                     />
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.pin_code}
                                     </p>
                                 </FormItem>
@@ -410,7 +410,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.gst}
                                     </p>
                                     <Field
@@ -429,7 +429,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         placeholder="GST Number"
                                         component={Input}
                                     />
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.gst_file}
                                     </p>
                                 </FormItem>
@@ -457,10 +457,10 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     {/* <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label> */}
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.pan_number}
                                     </p>
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         
                                     </p>
                                     {/* <Field
@@ -479,7 +479,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         placeholder="GST Number"
                                         component={Input}
                                     />
-                                    <p className="text-[red]">
+                                    <p className="text-[red] text-p-error-hight">
                                         {error && error.gst_file}
                                     </p> */}
                                 </FormItem>
@@ -516,7 +516,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                         </div>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
-                        <p className="text-[red]">{error && error.branch_ids}</p>
+                        <p className="text-[red] text-p-error-hight" >{error && error.branch_ids}</p>
                     </>}
             
                 </div>
