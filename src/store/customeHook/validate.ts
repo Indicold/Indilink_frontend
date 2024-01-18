@@ -1216,13 +1216,13 @@ export const validateSHForm = (formData: any, setErrors: any,isEmailValid:any,is
         newErrors.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
     }
     if(formData?.shareholder_email && isEmailValid && isEmailValid !=='Eligible'){
-        newErrors.shareholder_email = 'Please enter valid email'
+        newErrors.shareholder_email = isEmailValid || 'Please enter valid email'
       }
       if(formData?.phone_number && isMobileValid && isMobileValid !=='Eligible'){
-        newErrors.phone_number = 'Please enter valid mobile'
+        newErrors.phone_number = isMobileValid || 'Please enter valid mobile'
       }
    
-console.log("GGGGGGGGG",newErrors,formData);
+console.log("GGGGGGGGG",newErrors,isMobileValid,isEmailValid);
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
@@ -1262,13 +1262,13 @@ export const validateBranchForm = (formData: any, setErrors: any,isEmailValid:an
         newErrors.branch_phone = 'This field is required'
     }
   if(formData?.branch_email && isEmailValid && isEmailValid !=='Eligible'){
-    newErrors.branch_email = 'Please enter valid email'
+    newErrors.branch_email =isEmailValid || 'Please enter valid email'
   }
   if(formData?.branch_phone && isMobileValid && isMobileValid !=='Eligible'){
-    newErrors.branch_phone = 'Please enter valid mobile'
+    newErrors.branch_phone =isMobileValid || 'Please enter valid mobile'
   }
    
-
+  console.log("GGGGGGGGG",newErrors,isMobileValid,isEmailValid);
     setErrors(newErrors)
     console.log("YYYYYYYYYYY",newErrors,Object.keys(newErrors).length === 0);
     

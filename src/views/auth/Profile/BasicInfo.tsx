@@ -493,12 +493,13 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                 {/* {firmType === 'Private Limited' && */}
                     <div className='pt-10'>
                         {Array.from({ length: shareHolder }, (_, index) => (<><h4 className="text-head-title text-center">Share Holder Information</h4>
-                            {SHModal && <ShareHolderModal companyDetails={companyDetails} fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
-                        {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
-                     <div className='text-center'>
-                     {SareList?.data?.length < 1 ? <button className=' bg-gray-400 rounded-lg p-4 text-white m-auto' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className=' bg-gray-400 text-white rounded-lg p-4 m-auto' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
+                        <div className='text-center flex justify-end'>
+                     {SareList?.data?.length < 1 ? <button className=' bg-gray-400 rounded-lg p-2 text-white' onClick={() => {setSHModal(true)}}>+ Add  Share Holder</button> : <button className=' bg-gray-400 text-white rounded-lg p-2' onClick={() => {setformDataShare({}); setSHModal(true)}}>+ Add Another Share Holder</button>}
 
                      </div>
+                            {SHModal && <ShareHolderModal companyDetails={companyDetails} fetchShare={fetchShare} formData={formDataShare} setformData={setformDataShare} data={data} setData={setData} modal={SHModal} setModal={setSHModal} />}</>))}
+                        {SareList?.data && <ShareHolderTable modal={SHModal} setModal={setSHModal} formData={formDataShare} setformData={setformDataShare} AllStore={SareList?.data} tableHead={tableShareHead} />}
+                  
                         {error && error.shareholder_ids}
                     </div>
                     {/* } */}
@@ -506,15 +507,18 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
 
                 {/* branch details */}
                 <div className='mt-6'>
+             
                     {!branch && <>
+                       <h4 className="text-head-title text-center">Branch Information</h4>
+                       <div className='text-center flex justify-end'>
+                        <button className=' p-4 text-white bg-gray-400 rounded-lg py-2' onClick={() =>{setformDataBranch({}); setBranchModal(true)}}>+ Add Branch Details</button>
+
+                        </div>
                         {BranchModal && <BranchsModal fetchBranch={fetchBranch} data={data} setData={setData} modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} />}
                         {BranchList?.data && <BranchTable modal={BranchModal} setModal={setBranchModal} formData={formDataBranch} setformData={setformDataBranch} AllStore={BranchList?.data} tableHead={tableBranchHead} />}
                         <p className="text-[red]">{error && error.branch_ids}</p>
                     </>}
-                        <div className='text-center'>
-                        <button className=' p-4 text-white bg-gray-400 rounded-lg py-2' onClick={() =>{setformDataBranch({}); setBranchModal(true)}}>+ Add Branch Details</button>
-
-                        </div>
+            
                 </div>
 
                 {/* final submit button */}
