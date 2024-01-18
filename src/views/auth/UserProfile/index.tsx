@@ -80,15 +80,18 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
             </div>
         {is_nda_signed ==1 ?
            <>
-          {owner_user_id ===0  &&  <div className="my-5 px-6 ">
+          {/* {owner_user_id ===0  &&  */}
+           <div className="my-5 px-6 ">
               <a
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf" target='_blank'
                 className="border-dashed border-2 border-indigo-600 mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 "
               >
             <DownloadingIcon /> Download NDA
               </a>
-            </div>}
-          {owner_user_id ===0  &&  <div className="my-5 px-6">
+            </div>
+            {/* // } */}
+          {/* {owner_user_id ===0  && */}
+            <div className="my-5 px-6">
               <div role='button'
                 className="border-dashed border-2 border-indigo-600  mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3"
               >
@@ -99,7 +102,8 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
                 </label>
                 <input type='file'  id='file' className='hidden' onChange={(e:any)=>handleUploadNda(e)}/>
               </div>
-            </div>}
+            </div>
+            {/* } */}
         </> : <>
         <ul
   role="list"
@@ -108,7 +112,6 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
   <li className="py-3 sm:py-4 flex">
   <button type="button" className="mx-auto relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
   <SiReadthedocs />
-<span className="sr-only">Notifications</span>
 NDA Agreement 
   <div className="absolute inline-flex items-center justify-center w-20 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-4 -end-8  dark:border-gray-900">Uploaded</div>
 </button>
