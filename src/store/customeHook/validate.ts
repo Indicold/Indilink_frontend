@@ -68,6 +68,16 @@ export const onkeyDownforNumMobSpecialCharcter=(e:any)=>{
       }
 }
 
+export const onkeyDownforNumMobSpecialCharcterOnly=(e:any)=>{
+    if ( e.key === 'e' || e.key === 'E' || e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~'|| e.key==='A' ) {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
 
 export const onkeyDownforNumMobSpecialCharcterwithPercentage=(e:any)=>{
     if ( e.key === 'e' || e.key === 'E' || e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
