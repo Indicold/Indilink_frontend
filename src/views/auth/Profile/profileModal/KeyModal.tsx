@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownMobile, onkeyDownOne, onkeyDownPincode, onkeyDownforNumMobSpecialCharcter, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownAadhar, onkeyDownMobile, onkeyDownOne, onkeyDownPincode, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, validateBranchForm, validateEmail, validateKeyForm, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -364,7 +364,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                             >
                                 <Field
                                     disabled={data?.isdisabled}
-                                    type="number"
+                                    type="tel"
                                     autoComplete="off"
                                     onChange={(e: any) =>
                                         handleChange(e)
@@ -374,7 +374,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Contact no."
                                     component={Input}
                                     maxLength={10}
-                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
+                                    onKeyDown={onkeyDownforNumMobSpecialCharcterOnly}
                                 />
                                  <p className="text-[red] text-p-error-hight">
                                         {isMobileValid ? isMobileValid : error?.contact_number}
