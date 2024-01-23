@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -220,7 +220,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.percentage_holding}
                                                     placeholder="Share Holder Percentage"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforNumMobSpecialCharcter}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcterwithPercentage}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.percentage_holding}
@@ -294,7 +294,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder Email address"
                                                     component={Input}
                                                 />
-                                                 <p className="text-[red] normal-case">
+                                                 <p className="text-[red] text-p-error-hight">
                                     {error &&  error?.shareholder_email}
                                 </p>
                                                

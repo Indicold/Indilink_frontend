@@ -27,6 +27,10 @@ const PrepareSearch = () => {
     const { token }: any = getToken();
     const location: any = useLocation();
 
+
+    const today = new Date().toISOString().split('T')[0];
+    
+
     // Define a state variable for the  modal
     const [errors, setErrors] = useState<any>({});
     const [modal, setModal] = useState(false);
@@ -561,6 +565,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
+                                            min={today}
                                             autoComplete="off"
                                             value={new Date(formData?.date_of_start).toISOString().split('T')[0]}
                                             name="date_of_start"
