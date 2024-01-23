@@ -1066,15 +1066,10 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This field is required'
     }
-    if (!formData?.tempMin && formData?.tempMin!==0 ) {
+    if (!formData?.temperature && formData?.temperature!==0 ) {
         newErrors.temperature = 'This field is required'
     }
-    if (!formData?.tempMax) {
-        newErrors.temperature = 'This field is required'
-    }
-    if (formData?.tempMin  && formData?.tempMin>formData?.tempMax) {
-        newErrors.temperature = 'Max temperature should be greater then min temperature'
-    }
+   
 
 
     
@@ -1163,6 +1158,9 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
         if(formData?.temp_max < formData?.temp_min){
             newErrors.temp_max = 'Maximum temperature should be greater'
         }
+    }
+    if(formData?.temp_max && formData?.temp_min && !formData?.temp_unit_id){
+            newErrors.temp_unit_id = 'Unit is required'
     }
 
     // if (!formData?.temp_max || formData?.temp_max === '0') {

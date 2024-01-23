@@ -95,7 +95,7 @@ const StoreSearch = () => {
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
       
-            PostCustomerRegisterDetails({...formData,temperature:`${formData?.tempMin}#${formData?.tempMax}`});
+            PostCustomerRegisterDetails(formData);
         }
     }
 
@@ -105,6 +105,13 @@ const StoreSearch = () => {
         if (e.target.name === 'contract_download') {
     
             newData[e.target.name] = e.target.files[0];
+        }else if(e.target.name==='temperature'){
+            if(e.target.value?.length<4){
+                newData[e.target.name] = e.target.value;
+            }else{
+                e.preventDefault();
+            }
+           
         } else {
             newData[e.target.name] = e.target.value;
         }
@@ -124,7 +131,7 @@ const StoreSearch = () => {
         formdata.append("country_id", formData?.country_id);
         formdata.append("city_id", formData?.city_id);
         formdata.append("product_type_id", formData?.product_type_id);
-        formdata.append("temperature", `${formData?.tempMin}#${formData?.tempMax}`);
+        formdata.append("temperature", formData?.temperature);
         formdata.append("temperature_type_id",formData?.temperature_type_id);
         formdata.append("unit_id", formData?.unit_id);
         formdata.append("certification_id", formData?.certification_id);
@@ -283,7 +290,7 @@ const StoreSearch = () => {
                                         <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Min and Max Temperature*")} 
+                                        label={t("Temperature*")} 
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -291,23 +298,13 @@ const StoreSearch = () => {
                                             type="number"
                                             autoComplete="off"
                                             onChange={(e: any) => handlechange(e)}
-                                            className="w-[30%] pl-2"
-                                            name="tempMin"
-                                            value={formData?.tempMin}
-                                            placeholder="Min Temp"
+                                            className="w-1/2 pl-2"
+                                            name="temperature"
+                                            value={formData?.temperature}
+                                            placeholder="Temperature"
                                             component={Input}
                                         />
-                                          <Field
-                                            disabled={isDisabled}
-                                            type="number"
-                                            autoComplete="off"
-                                            onChange={(e: any) => handlechange(e)}
-                                            className="w-[30%] ml-2 pl-2"
-                                            name="tempMax"
-                                            value={formData?.tempMax}
-                                            placeholder="Max Temp"
-                                            component={Input}
-                                        />
+                                       
                                         <select
                                             disabled={isDisabled}
                                             onChange={(e: any) => handlechange(e)}

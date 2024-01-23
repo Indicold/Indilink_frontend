@@ -58,7 +58,9 @@ const PrepareSearch = () => {
         useApiFetch<any>(`master/get-city-by-stateId/${formData?.state_id}`, token);
 
 
-
+        const { data: ListOfTemp, loading: LTloading, error: Lterror } =
+        useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
+        
 
     // Fetch a list of category based on the selected category
     const { data: ListOfServiceCategory, loading: LOCSloading, error: LOCSerror } =
@@ -446,7 +448,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                 <div className="lg:flex  ">
 
                                 </div>
-                                <div className="bg-gray-100 p-2 mt-4 rounded-md flex">
+                                <div className="bg-gray-100 p-2 mt-4 rounded-md flex items-center">
                                     <FormItem
                                         label={t("Min Temperature*")}
                                         className="pl-3 w-[100%] text-label-title m-auto"
@@ -531,6 +533,22 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                          <p className='text-[red] text-p-error-hight'>{errors && errors.temp_max}</p>
 
                                         </FormItem>
+                                        <div className=' pl-3 w-[50%] mt-7 text-label-title m-auto rounded-lg pl-2'>
+                                            <label htmlFor="" className='text-label-title'></label>
+                                        <select
+                                            disabled={isDisabled}
+                                            onChange={(e: any) => handleChange(e)}
+                                            name="temp_unit_id"
+                                            className="rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                        >
+                                            <option selected value="">Unit</option>
+                                            {ListOfTemp && ListOfTemp?.data?.filter((item: any) => [1, 2].includes(item?.id)).map((item: any, index: any) => (
+                                                <option value={item?.id} selected={item?.id === formData?.temp_unit_id}>{item?.type}</option>
+
+                                            ))}
+                                        </select>
+                                        <p className='text-[red] text-p-error-hight'>{errors && errors?.temp_unit_id}</p>
+                                        </div>
                                 </div>
 
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
