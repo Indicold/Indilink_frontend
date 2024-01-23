@@ -235,7 +235,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
             {/* main component */}
             <div className="bg-white w-[100%] mb-5 lg:flex lg:p-8 py-3 shadow-2xl">
                    {/* stepper start */}
-            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-3 lg:pl-0 lg:w-1/5'>
+            <div className=' md:w-1/6 w-[100%] pl-[10%] md:pl-10 lg:pl-0 lg:w-1/5'>
 
 
 <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
