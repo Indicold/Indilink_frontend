@@ -16,6 +16,8 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
  const {token}:any=getToken()
   const [formData,setFormdata]=useState<any>({});
   const [errors, setErrors] = useState<any>({});
+
+  const today = new Date().toISOString().split('T')[0];
   
     // Fetch a list of categories using a custom hook
     const { data: ListOfProductCategory, loading: PCloading, error: PCerror } =
@@ -358,6 +360,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                         onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
+                                            min={today}
                                             value={formData?.date_of_start}
                                             name="date_of_start"
                                             placeholder="Date of Start"
