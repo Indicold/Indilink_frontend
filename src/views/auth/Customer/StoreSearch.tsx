@@ -106,7 +106,7 @@ const StoreSearch = () => {
     
             newData[e.target.name] = e.target.files[0];
         }else if(e.target.name==='temperature'){
-            if(e.target.value?.length<4){
+            if(e.target.value?.length<5){
                 newData[e.target.name] = e.target.value;
             }else{
                 e.preventDefault();
