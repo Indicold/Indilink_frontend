@@ -144,7 +144,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
         }
         localStorage.setItem('asset_id', asset_type_id)
         localStorage.setItem('AssetId', AssetsResponse?.message?.asset_id)
-    }, 2000)
+    }, 200)
 }
 },[AssetsResponse?.message,AssetsResponse?.data])
     /**
