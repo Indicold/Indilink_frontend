@@ -169,11 +169,11 @@ const CardLayout = ({ title }: any) => {
         </section>
         <div className='grid gap-6 my-6 md:grid-cols-1 lg:grid-cols-3'>
           {dataList?.map((item: any, index: any) => (
-            <section className="grid gap-6 my-6 shadow rounded-2xl bg-white">
+            <section key={index} className="grid gap-6 my-6 shadow rounded-2xl bg-white">
               <h3 className='ml-4 mt-4'>{item?.title}</h3>
               <div className="p-6   flex flex-col" >
                 {[1, 2, 3]?.map((item: any, index: any) => (
-                  <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                  <div key={index} className="relative flex flex-col min-w-0 mb-6 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
 
                     <div className="flex-auto">
                       <div className="flex flex-wrap -mx-3">
@@ -256,7 +256,7 @@ const CardLayout = ({ title }: any) => {
 
             <div className="p-6 pt-0  flex flex-col">
               {[1, 2, 3, 4]?.map((item: any, index: any) => (
-                <div className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                <div key={index} className="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
                   <div className="flex-auto p-4">
                     <div className="flex flex-wrap ">
                       <div className="w-4/12 max-w-full px-6 ml-auto text-right flex-0">

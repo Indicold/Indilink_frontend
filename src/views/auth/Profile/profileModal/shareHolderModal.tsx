@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -25,15 +25,29 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
     const isDisabled: any = false
     const handleChange = (e: any) => {
         const newdata: any = { ...formData };
-        newdata[e.target.name] = e.target.value;
+        // newdata[e.target.name] = e.target.value;
         if(e.target.name === 'shareholder_email'){
+            newdata[e.target.name] = e.target.value;
             if(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newdata?.shareholder_email)){
                 validateEmailDebounced(e.target.value, setIsEmailValid)
 
             }
-        }else if (e.target.name === 'phone_number') {
+        }else if(e.target.name==="percentage_holding"){
+            console.log("hj55555",e.target.name,e.target.value<101);
+            
+            if(e.target.value<101){
+                newdata[e.target.name] = e.target.value;
+            }else{
+                e.preventDefault()
+            }
+         
+        }
+        else if (e.target.name === 'phone_number') {
+            newdata[e.target.name] = e.target.value;
             if(e.target.value.replace(/[^0-9]/g, "").length > 0 && e.target.value.replace(/[^0-9]/g, "").length === 10)validateMobileDebounced(e.target.value.replace(/[^0-9]/g, ""), setIsMobileValid)
              setPhone(e.target.value.replace(/[^0-9]/g, ""))
+        }else{
+            newdata[e.target.name] = e.target.value;
         }
         setformData(newdata)
         if(error[e.target.name])validateSHForm(newdata, setErrors,isEmailValid,isMobileValid)
@@ -222,7 +236,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.percentage_holding}
                                                     placeholder="Share Holder Percentage"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforNumMobSpecialCharcterwithPercentage}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcterOnly}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.percentage_holding}

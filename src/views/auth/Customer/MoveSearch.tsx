@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import routing r
 import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
 import { CustomerMovePayload1 } from '@/store/Payload';
 import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
-import { messageView, validateMoveCustomerForm, onkeyDownPincode, messageViewNew } from '@/store/customeHook/validate';
+import { messageView, validateMoveCustomerForm, onkeyDownPincode, messageViewNew, onkeyDownforSpecialCharcter, onkeyDownforNumMobSpecialCharcter } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import TableCustomerMoveAssets from './TableCustomerMoveAssets';
 import { useTranslation } from 'react-i18next'
@@ -408,6 +408,7 @@ localStorage.removeItem('origin_gps');
                                             value={formData?.load_quantity}
                                             placeholder="Load Quantity"
                                             component={Input}
+                                            onKeyDown={onkeyDownforNumMobSpecialCharcter}
                                         />
                                         <select
                                             disabled={isDisabled}
