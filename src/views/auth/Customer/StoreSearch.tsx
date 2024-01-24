@@ -227,7 +227,7 @@ const StoreSearch = () => {
                         <Form className="py-2 multistep-form-step">
                             <FormContainer className='gap-4'>
                                 <div className='bg-gray-100 p-2 rounded-md'>
-                                <p className='pl-3'><b>{t("Location")} </b></p>
+                                {/* <p className='pl-3'><b>{t("Location")} </b></p> */}
                                 <div className=" lg:flex ">
                                    
                                     <FormItem
