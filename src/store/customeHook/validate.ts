@@ -1126,8 +1126,8 @@ export const validateMoveCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.product_type_id) {
         newErrors.product_type_id = 'This field is required'
     }
-    if (formData?.unit_id && !formData?.unit_id) {
-        newErrors.unit_id = 'Unit is required'
+    if (formData?.load_quantity && !formData?.unit_id) {
+        newErrors.load_quantity = 'Unit is required'
     }
     
     setErrors(newErrors)

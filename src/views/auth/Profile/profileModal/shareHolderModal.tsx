@@ -59,13 +59,15 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
                     full_name:`${formData?.fname} ${formData?.lname}`,
-                    firm_type:companyDetails?.data[0]?.firm_type
+                    firm_type:companyDetails?.data[0]?.firm_type || ""
                 }
                 SHPostDetails(object)
             }
 
         }
     }
+    console.log("companyDetails",companyDetails);
+    
     useEffect(() => {
         if (SHResponse) {
             messageViewNew(SHResponse)
