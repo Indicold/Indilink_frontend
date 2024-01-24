@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, messageViewNew, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownOne, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -64,10 +64,22 @@ const BasicInfo = () => {
     })
     const handleChange = (e: any) => {
         const newdata: any = { ...data };
-        newdata[e.target.name] = e.target.value;
         if (e.target.name === 'gst_file') {
-
             newdata[e.target.name] = Array.from(e.target.files);
+            
+        }else if(e.target.name==='vehicle_count'){
+            if(e.target.value=='e' || e.target.value=='-' || e.target.value=='+' || e.target.value=='E' || e.target.value=='=' ){
+                e.preventDefault()
+            }else{
+                newdata[e.target.name] = e.target.value;
+            }
+
+        }else if(e.target.name==='doc_for_vehicle'){
+            newdata[e.target.name] = Array.from(e.target.files);
+        }
+        else{
+            newdata[e.target.name] = e.target.value;
+
         }
         setData(newdata);
         if(error[e.target.name])validateBasicForm(newdata, setErrors)
@@ -119,13 +131,19 @@ const BasicInfo = () => {
             formdata.append("pin_code", data?.pin_code);
             formdata.append("gst",data?.gst_number);
             formdata.append("pan_number",data?.pan_number);
-            
+            formdata.append("vehicle_count",data?.vehicle_count);
             // Assuming you have an array of File objects for gst_files
             var gstFiles = data?.gst_file; // Add more files as needed
             
            if(gstFiles) gstFiles?.forEach((file:any, index:any) => {
               formdata.append(`gst_file`, file);
             });
+            var vehicleFiles = data?.doc_for_vehicle; // Add more files as needed
+            console.log("TRRRRRRRR",vehicleFiles);
+            
+            if(vehicleFiles) vehicleFiles?.forEach((file:any, index:any) => {
+               formdata.append(`doc_for_vehicle`, file);
+             });
             
             var shareholderIds =data?.shareholder_ids // Replace with your dynamic data
             var branchIds =data?.branch_ids; // Replace with your dynamic data
@@ -483,6 +501,63 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         {error && error.gst_file}
                                     </p> */}
                                 </FormItem>
+                                
+                            </div>
+                            <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
+                                <FormItem
+                                    label="No Of Vehicle"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                >
+                                    <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        type="text"
+                                        maxLength={15}
+                                        className="w-full"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="vehicle_count"
+                                        value={data?.vehicle_count !=='undefined' ? data?.vehicle_count :"" }
+                                        placeholder="No Of Vehicle"
+                                        component={Input}
+                                        onkeyDown={onkeyDownOne}
+                                    />
+                                  
+                                    <p className="text-[red] text-p-error-hight">
+                                        {error && error.gst}
+                                    </p>
+                                  
+                                </FormItem>
+            {data?.vehicle_count>10 ?     <FormItem
+                                    label="Document for vehicle"
+                                    className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                    asterisk={true}
+                                >
+                                   
+                                    <Field
+                                        disabled={isDisabled}
+                                        multiple
+                                        id="doc_for_vehicle"
+                                        // style={{ display: "none" }}
+                                        type="file"
+                                        // className="!hidden"
+                                        autoComplete="off"
+                                        onChange={(e: any) =>
+                                            handleChange(e)
+                                        }
+                                        name="doc_for_vehicle"
+                                        value={data?.firm_state}
+                                        
+                                        component={Input}
+                                    />
+                                    <p className="text-[red] text-p-error-hight">
+                                        {error && error.doc_for_vehicle}
+                                    </p>
+                                </FormItem> :
+                                <div className='w-1/2'></div>
+                                }
                                 
                             </div>
                         </FormContainer>

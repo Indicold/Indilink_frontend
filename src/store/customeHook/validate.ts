@@ -596,7 +596,7 @@ console.log("wertjkl",newErrors,formData);
 };
 
  export const onkeyDownOne=(e:any)=>{
-    console.log("TYYYYYYYYY7878");
+    console.log("TYYYYYYYYY7878",e.key);
     
     if (e.key === 'e' || e.key === '-') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
@@ -1339,7 +1339,9 @@ export const validateBasicForm = (data: any, setErrors: any) => {
     if(data?.pan_number && !panRegex.test(data?.pan_number)) {
         newErrors.pan_number = 'Please enter a valid pan number'
     }
-
+ if(data?.vehicle_count> 10 && !data?.doc_for_vehicle){
+    newErrors.doc_for_vehicle="This field is rquired"
+ }
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0 // Empty object indicates no validation errors
 }
