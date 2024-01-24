@@ -147,68 +147,64 @@ function findLinkEntities(
     }, callback);
 }
 
-let modal1: any = false;
+// let modal1: any = false;
 let url1: any = ''
 const Link: React.FC<any> = (props) => {
-
+    const { modal,setModal } = props;
     const { url, user } = props.contentState.getEntity(props.entityKey).getData();
-    // State variable for managing whether the tooltip will be displayed or not. Initially the tooltip will be hidden
     const [showTooltip, setShowTooltip] = useState(false);
-
-    // Function for handling the mouseEnter event to show the tooltip
+  
     const handleMouseEnter = () => {
-        setShowTooltip(true);
+      setShowTooltip(true);
     };
-
-    // Function for handling the mouseLeave event to hide the tooltip
+  
     const handleMouseLeave = () => {
-        setShowTooltip(false);
+      setShowTooltip(false);
     };
-
-    /* The following code is a TypeScript React component that renders a span element with an underline,
-    cursor pointer, and other styling properties. It also includes event handlers for mouse enter
-    and mouse leave events. */
+  
+  console.log("YYYYYYYYYYY",props.contentState.getEntity(props.entityKey).getData());
+  
     return (
-        <span
+      <span
+        style={{
+          textDecoration: "underline",
+          cursor: "pointer",
+          fontSize: "16px",
+          fontFamily: "Arial, sans-serif",
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "black",
+          position: "relative", // Make the parent element relative
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {props.children}
+        {showTooltip && (
+          <div
             style={{
-                textDecoration: "underline",
-                cursor: "pointer",
-                fontSize: "16px",
-                fontFamily: "Arial, sans-serif",
-                fontWeight: "bold",
-                textAlign: "center",
-                color: "black",
-                position: "relative", // Make the parent element relative
+              position: "absolute", // Make the tooltip absolute
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              color: "white",
+              padding: "2px 8px",
+              borderRadius: "4px",
+              // transform: "translateX(30%)",
+              zIndex: 999,
+              top: "100%", // Position the tooltip below the parent
+              left: "50%", // Center the tooltip horizontally
+              transform: "translateX(-50%)", // Center the tooltip horizontally
             }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
-            {props.children}
-            {showTooltip && (
-                <div
-                    style={{
-                        position: "absolute", // Make the tooltip absolute
-                        backgroundColor: "rgba(0, 0, 0, 0.8)",
-                        color: "white",
-                        padding: "2px 8px",
-                        borderRadius: "4px",
-                        // transform: "translateX(30%)",
-                        zIndex: 999,
-                        top: "100%", // Position the tooltip below the parent
-                        left: "50%", // Center the tooltip horizontally
-                        transform: "translateX(-50%)", // Center the tooltip horizontally
-                    }}
-                >
-                    {user ? user : "You"}:{url}
-                    <Button onClick={() => { modal1 = !modal1; url1 = url }}>
-                        <ReplyIcon />
-                    </Button>
-                </div>
-            )}
-        </span>
-
+          >
+            {user ? user : "User"}:{url}
+            <Button onClick={() => { setModal(true); url1 = url }}>
+              <ReplyIcon />
+            </Button>
+          </div>
+        )}
+      </span>
+  
     );
-};
+  };
 
 const Toolbar: React.FC<{
     onBoldClick: () => void;
@@ -365,7 +361,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const { data: EditorData, loading, refetch: ReFatchApi }: any = useApiFetch<any>(`legal/documents-by-id/${data?.doc_id}`, token);
     const { result: PutApiResponse, loading: PutApiLoading, sendPostRequest: updateData }: any = usePutApi(`legal/document/${data?.doc_id}`)
     const [commentList, setCommentList] = useState<any>([]); // State variable for managing comment list. Initally, comment list will be empty on component mount
-    const [modal, setModal] = useState<any>(true) // State variable for managing opening and closing of modal. Initially, the modal will be closed on component mount
+    const [modal, setModal] = useState<any>(false) // State variable for managing opening and closing of modal. Initially, the modal will be closed on component mount
 
     /* The following code is creating a decorator for a text editor in a TypeScript React application. The
     decorator is used to apply different styles or components to specific portions of the text. In
@@ -374,7 +370,7 @@ export const LinkEditorExample: React.FC = ({ data, setText, handlesubmitComment
     const decorator = new CompositeDecorator([
         {
             strategy: findLinkEntities,
-            component: Link,
+            component: (props:any) => <Link {...props} modal={modal} setModal={setModal} />,
         },
     ]);
     const initialContentState = convertFromRaw(defaultData);
@@ -1123,7 +1119,7 @@ if(localStorage.getItem('user_type')==='Customer'){
                     <button onMouseDown={confirmLink}><CheckIcon /></button>
                 </div>
             )}
-            <ChatModal modal={modal1} convertToRaw={convertToRaw} EditorData={EditorData} editorState={editorState} contentHistory={contentHistory} user={EditorData?.data?.author?.user_id?.toString() || user_id?.toString()} setModal={setModal} url={url1} setCommentList={setCommentList} commentList={commentList} data={data} />
+            <ChatModal modal={modal} convertToRaw={convertToRaw} EditorData={EditorData} editorState={editorState} contentHistory={contentHistory} user={EditorData?.data?.author?.user_id?.toString() || user_id?.toString()} setModal={setModal} url={url1} setCommentList={setCommentList} commentList={commentList} data={data} />
 
             <div id="editor" className="bg-white !min-h-[400px]"
                 style={{
