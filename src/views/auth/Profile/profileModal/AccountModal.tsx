@@ -260,7 +260,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
                                                         component={Input}
-                                                        onKeyDown={onkeyDownBankifscCode}
+                                                        onKeyDown={onkeyDownforSpecialCharcter}
                                                     />
                                                     <p className='text-[red] text-p-error-hight'>{error && error.bank_ifsc}</p>
                                                 </FormItem>

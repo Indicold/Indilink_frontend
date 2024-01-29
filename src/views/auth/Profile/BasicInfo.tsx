@@ -449,6 +449,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         value={data?.firm_state}
                                         placeholder="GST Number"
                                         component={Input}
+                                        accept=".jpg, .jpeg, .png, .gif, .pdf" 
                                     />
                                     <p className="text-[red] text-p-error-hight">
                                         {error && error.gst_file}
