@@ -398,7 +398,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
                                     placeholder="Password"
                                     component={PasswordInput}
                                 />
-                                    <p className="text-[red] text-p-error-hight">
+                                    <p className="text-[red] h-[30px]">
                                         { error && error?.password}
                                     </p>
                             </FormItem>}
@@ -420,7 +420,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
 
                                         ))}
                                     </select>
-                                    <p className="text-[red] text-p-error-hight">
+                                    <p className="text-[red] h-[30px]">
                                         {error && error.platform_role_id}
                                     </p>
                             </FormItem>

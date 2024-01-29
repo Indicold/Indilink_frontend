@@ -1,17 +1,19 @@
-import { Button, FormContainer, FormItem, Input } from '@/components/ui'
+import { Button, FormContainer, FormItem, Input,Tooltip } from '@/components/ui'
 import useApiFetch from '@/store/customeHook/useApiFetch';
 import { apiUrl, getToken } from '@/store/token';
 import { Field, Form, Formik } from 'formik'
+import InfoIcon from '@mui/icons-material/Info';
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndPercentage, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
 import { TokenInfo } from '@/store/customeHook/token';
 import PasswordInput from '@/components/shared/PasswordInput'
+
 const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formData, setformData,fetchShare }: any) => {
   const {company_id,company_name}:any=TokenInfo()
     const [isEmailValid, setIsEmailValid] = useState<any>(false)
@@ -35,10 +37,15 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
         }else if(e.target.name==="percentage_holding"){
             console.log("hj55555",e.target.name,e.target.value<101);
             
-            if(e.target.value<101 && e.target.value>-1){
-                newdata[e.target.name] = e.target.value;
-            }else{
-                e.preventDefault()
+            // if(e.target.value<101 && e.target.value>-1){
+            //     newdata[e.target.name] = e.target.value;
+            // }else{
+            //     e.preventDefault()
+            // }
+            if (/^0*$|^0*[1-9][0-9]?$|^100$/.test(e.target.value)) {
+                newdata[e.target.name] = e.target.value.replace(/^0+/, ''); // Remove leading zeros
+            } else {
+                e.preventDefault();
             }
          
         }
@@ -118,7 +125,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                 aria-hidden="true"
                 className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
             >
-                <div className="my-auto relative w-full max-w-[600px] max-h-full rounded-[13px]">
+                <div className="my-auto relative w-full max-w-[750px] max-h-full rounded-[13px]">
                     <div className="relative bg-white rounded-lg pt-4 pb-4 shadow dark:bg-gray-700">
                         <button
                             onClick={() => setModal(false)}
@@ -211,13 +218,17 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                         handleChange(e)
                                                     }
                                                     name="password"
+                                                    className="flex"
                                                     value={formData?.password}
                                                     placeholder="Password"
                                                     component={PasswordInput}
                                                 />
-                                                <p className='text-[red] text-p-error-hight'>
+                                                <p className='text-[red] leading-4 h-[18px]'>
                                                     {error && error?.password}
                                                 </p>
+                                                {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={error && error?.password} arrow>
+                                        <InfoIcon />
+                                        </Tooltip> */}
                                             </FormItem>}
                                             <FormItem
                                                 label="Share Holder Percentage"
@@ -236,9 +247,9 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.percentage_holding}
                                                     placeholder="Share Holder Percentage"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforNumMobSpecialCharcterOnly}
+                                                    onKeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndPercentage}
                                                 />
-                                                <p className='text-[red] text-p-error-hight'>
+                                                <p className='text-[red]  h-[18px]'>
                                                     {error && error?.percentage_holding}
                                                 </p>
                                             </FormItem>

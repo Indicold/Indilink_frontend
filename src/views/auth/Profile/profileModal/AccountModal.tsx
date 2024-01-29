@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -196,6 +196,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         }
                                                         name="account_name"
                                                         value={data?.account_name}
+                                                        onKeyDown={onkeyDownforSpecialCharcter}
                                                         placeholder="Account Name"
                                                         component={Input}
                                                     />
@@ -235,6 +236,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
+                                                        onKeyDown={onkeyDownforSpecialCharcter}
                                                         name="bank_name"
                                                         value={data?.bank_name}
                                                         placeholder="Bank Name"
@@ -276,6 +278,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
+                                                        onKeyDown={onkeyDownforSpecialCharcter}
                                                         name="branch_name"
                                                         value={data?.branch_name}
                                                         placeholder="Branch Name"
