@@ -295,7 +295,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                    disabled={data?.isdisabled}
                                                         multiple
                                                         type="file"
-                                                        accept="image/png, image/jpeg"
                                                         className="w-full"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
@@ -305,6 +304,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         placeholder="GST Number"
                                                         onkeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
                                                         component={Input}
+                                                        accept=".jpg, .jpeg, .png, .gif, .pdf" 
                                                     />
 
 
