@@ -24,7 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { messageViewNew, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
+import { messageViewNew, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -424,7 +424,8 @@ console.log("AAAAAAAA",newData);
                                 autoComplete="off"
                                 name="gst"
                                 placeholder="GST No"
-                                onKeyDown={onkeyDownforSpecialCharcter}
+                                onkeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
+
                                 onChange={(e: any) => handleChange(e, 'gst')}
                                 component={Input}
                                 className=''

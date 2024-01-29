@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -303,6 +303,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         }
                                                         name="cancelled_cheque"
                                                         placeholder="GST Number"
+                                                        onkeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
                                                         component={Input}
                                                     />
 

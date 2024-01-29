@@ -10,7 +10,7 @@ import BranchsModal from './profileModal/branchModal';
 import ShareHolderTable from './profileTables/shareHoldersTable';
 import BranchTable from './profileTables/branchTable';
 import PublishIcon from '@mui/icons-material/Publish';
-import { messageView, messageViewNew, onkeyDownOne, onkeyDownPincode, validateBasicForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownOne, onkeyDownPincode, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, validateBasicForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 const tableShareHead: any = {
@@ -425,6 +425,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         value={data?.gst_number !=='undefined' ? data?.gst_number :"" }
                                         placeholder="GST Number"
                                         component={Input}
+                                        onKeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
                                     />
                                     <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
@@ -477,6 +478,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         value={data?.pan_number}
                                         placeholder="Pan Card No."
                                         component={Input}
+                                        onKeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
                                     />
                                     {/* <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
