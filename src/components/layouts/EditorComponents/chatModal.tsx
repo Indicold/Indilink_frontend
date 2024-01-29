@@ -95,13 +95,11 @@ useEffect(()=>{
   /* The below code is a TypeScript React component that renders a modal for adding comments. */
   return (
     <div>
-    {open &&  <>
-    
+    {modal &&  <>
        <div id="authentication-modal" tabIndex={-1} aria-hidden="true" className="otp-modal fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                      
                        <div className="relative w-full max-w-[400px] max-h-full rounded-[13px] my-auto">
-                           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                               <button onClick={()=>{setOpen(false);modal=false}} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                           <div className="relative bg-white rounded-lg shadow dark:bg-white">
+                               <button onClick={()=>{setModal(false);}} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                    </svg>
@@ -118,34 +116,50 @@ useEffect(()=>{
                                    <Form className="py-2">
                                    <FormContainer>
                                        <div className="flex flex-col">
-                                        <div>
-                                            
-                                        <div id="scrolltobottom" className="autoscrollable-wrapper w-full border-2 flex justify-between flex-col overflow-scroll overflow-x-hidden h-[200px]">
-
-                                        < div className="">
-                                            {newfilterArray.length>0 && newfilterArray?.map((item:any,index:any)=>(
+                                        <div className="">
+                                          <div id="scrolltobottom" className="autoscrollable-wrapper w-full border-2 flex justify-between flex-col overflow-scroll overflow-x-hidden h-[200px]">
+                                          < div className="">
+                                            {newfilterArray.length>0 ? newfilterArray?.map((item:any,index:any)=>(
                                                 <div className="w-full" key={index}>
-                                                        <p className={` w-[80%] flex h-auto m-4 text-left `}>
-                                                        <span className="text-chat-message-style p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replyfor}</span><br/>
+                                                      <p className={` w-[80%] flex h-auto m-4 text-left `}>
+                                                    <span className="text-chat-message-style p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replyfor}</span><br/>
+                                                   
                                                 </p>
                                                 <p className={`w-[80%] ml-14 flex justify-end`}>
-                                                    
-                                                    <span className=" p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replytext}</span>
-                                                   </p>
-                                                   <p  className={`w-full pr-4 pb-4 text-right`}>
+                                                   
+                                                    <span className=" p-3 bg-gray-400 rounded-xl text-white max-w-md" >{item?.replytext}</span>
+                                                   
+                                                 
+                                                </p>
+                                                <p  className={`w-full pr-4 pb-4 text-right`}>
+                                           
                                                    <span className="bg-gray mt-4">{TimeString(item?.time)}</span>
-
+ 
                                                     <br/>
                                                     <span className="bg-gray mt-2">User{item?.user}</span>
                                                 </p>
-                                              
+                                             
                                                 </div>
-                                            )) 
+                                            )):
+                                            [{
+                                                user: user,
+                                                replyfor: url,
+                                                replytext: "",
+                                                time: new Date()
+                                            }]?.map((item:any,index:any)=>(
+                                                <div className="w-full" key={index}>
+                                                      <p className={` w-[80%] flex h-auto m-4 text-left `}>
+                                                    <span className="text-chat-message-style p-3 bg-gray-400 rounded-xl text-white max-w-md">{item?.replyfor}</span><br/>
+                                                   
+                                                </p>
+                                
+                                             
+                                                </div>
+                                            ))
                                             }
                                           </div>
-                                            </div>
-                                        </div>
-                                         
+                                          </div>
+                                          </div>
                                            <FormItem
                                                label="Add Comment"
                                                className='mx-auto w-full'
@@ -153,9 +167,9 @@ useEffect(()=>{
                                                <Field
                                                    type="text"
                                                    autoComplete="off"
-                                                
+                                               
                                                    name="text"
-                                                   className="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                   className="bg-gray-50 ml-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                    onChange={(e:any)=>handleChange(e)}
                                                    placeholder="message"
                                                    value={formData?.text}
@@ -164,7 +178,7 @@ useEffect(()=>{
                                            </FormItem>
                                        
                                        </div>
-                                    
+                                   
                                        
                                        <div className="w-full flex">
                                        <Button

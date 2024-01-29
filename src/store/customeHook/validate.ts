@@ -89,6 +89,28 @@ export const onkeyDownforNumMobSpecialCharcterOnly=(e:any)=>{
       }
 }
 
+
+export const onkeyDownforNumMobSpecialCharcterOnlyAndPercentage=(e:any)=>{
+    if ( e.key==='' ||e.key === 'e' || e.key === 'E' || e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~'|| e.key==='A' || e.key==='B' || e.key==='C'|| e.key==='D'|| e.key==='E'
+    || e.key==='F'|| e.key==='G'|| e.key==='H'|| e.key==='I'|| e.key==='J'
+    || e.key==='K'|| e.key==='L'|| e.key==='M'|| e.key==='N'|| e.key==='O'
+    || e.key==='P'|| e.key==='Q'|| e.key==='R'|| e.key==='S'|| e.key==='T'
+    || e.key==='U'|| e.key==='V'|| e.key==='W'|| e.key==='X'|| e.key==='Y'||
+     e.key==='Z' || e.key==='a' || e.key==='b' || e.key==='c'|| e.key==='d'|| e.key==='e'
+     || e.key==='f'|| e.key==='g'|| e.key==='h'|| e.key==='i'|| e.key==='j'
+     || e.key==='k'|| e.key==='l'|| e.key==='m'|| e.key==='n'|| e.key==='o'
+     || e.key==='p'|| e.key==='q'|| e.key==='r'|| e.key==='s'|| e.key==='t'
+     || e.key==='u'|| e.key==='v'|| e.key==='w'|| e.key==='x'|| e.key==='y'||
+      e.key==='z' ) {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
+
 export const onkeyDownforNumMobSpecialCharcterwithPercentage=(e:any)=>{
     if ( e.key === 'e' || e.key === 'E' || e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
     e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
