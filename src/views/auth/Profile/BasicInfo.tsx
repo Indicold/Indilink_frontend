@@ -429,11 +429,13 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label>
-                           {   data?.gst_file?.length>0 &&      <a href={data?.gst_file[0]?.gst_file[0]} target='_blank'>view</a>
+                           <div className='flex'>
+                           {   data?.gst_file?.length>0 &&      <a className='' href={data?.gst_file[0]?.gst_file[0]} target='_blank'>view</a>
 }
-                                    <p className="text-[red] text-p-error-hight">
+                                    <p className="text-[red] bg-black text-p-error-hight">
                                         {error && error.gst}
                                     </p>
+                           </div>
                                     <Field
                                         disabled={isDisabled}
                                         multiple
@@ -478,7 +480,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     {/* <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label> */}
-                                    <p className="text-[red] text-p-error-hight">
+                                    <p className="text-[red] h-[20px]">
                                         {error && error.pan_number}
                                     </p>
                                     <p className="text-[red] text-p-error-hight">
