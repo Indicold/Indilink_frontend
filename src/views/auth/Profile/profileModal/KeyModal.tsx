@@ -23,7 +23,7 @@ const KeyModal = ({data,setData,modal,setModal,fetchData}:any) => {
     useApiFetch<any>(`master/get-state-by-countryId/${data?.country_id}`, token);
 
     const { data: ListOfcity, loading: Lcloading, error: Lcerror } =
-    useApiFetch<any>(`master/get-city-by-countryId/${data?.country_id}`, token);
+    useApiFetch<any>(`master/get-city-by-stateId/${data?.state_id}`, token);
 
     const { data: ListOfRole, loading: LORloading, error: LORerror } =
     useApiFetch<any>(`master/profile/get-platform-roles`, token);

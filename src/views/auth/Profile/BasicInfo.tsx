@@ -114,6 +114,7 @@ const BasicInfo = () => {
 
     const [shareHolder, setShareHolder] = useState(1)
     const firmType = companyDetails?.data[0]?.firm_type;
+console.log("RTYRTYRYTR",data);
 
     const handlesubmit = (e: any) => {
   
@@ -428,6 +429,8 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                     <label htmlFor='gstfile'>
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label>
+                           {   data?.gst_file?.length>0 &&      <a href={data?.gst_file[0]?.gst_file[0]} target='_blank'>view</a>
+}
                                     <p className="text-[red] text-p-error-hight">
                                         {error && error.gst}
                                     </p>
