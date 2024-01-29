@@ -35,7 +35,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
         }else if(e.target.name==="percentage_holding"){
             console.log("hj55555",e.target.name,e.target.value<101);
             
-            if(e.target.value<101){
+            if(e.target.value<101 && e.target.value>-1){
                 newdata[e.target.name] = e.target.value;
             }else{
                 e.preventDefault()
@@ -73,13 +73,15 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                     company_id:company_id?.toString(),
                     company_name:company_name || "indicold",
                     full_name:`${formData?.fname} ${formData?.lname}`,
-                    firm_type:companyDetails?.data[0]?.firm_type
+                    firm_type:companyDetails?.data[0]?.firm_type || ""
                 }
                 SHPostDetails(object)
             }
 
         }
     }
+    console.log("companyDetails",companyDetails);
+    
     useEffect(() => {
         if (SHResponse) {
             messageViewNew(SHResponse)

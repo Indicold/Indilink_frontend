@@ -416,7 +416,7 @@ localStorage.removeItem('origin_gps');
                                             name="unit_id"
                                             className="w-[20%] ml-4 p-2 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Unit</option>
+                                            <option value="">Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
                                                 <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
 
