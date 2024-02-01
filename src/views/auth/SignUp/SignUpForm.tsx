@@ -82,7 +82,7 @@ console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
             if(pattern.test(newData?.email)){
         // setError({...error,email:'Email not allow .@'})
             }else{
-                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newData?.email)) {
+                if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.co$/.test(newData?.email)) {
                     validateEmailDebounced(e.target.value, setIsEmailValid)
                   }
             }

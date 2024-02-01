@@ -34,7 +34,7 @@ console.log("TYYYYY9999",data);
         console.error('Error validating email:', error)
     }
 }
-export const onkeyDownforSpecialCharcter=(e:any)=>{
+export const onkeyDownforSpecialCharcterGSTPAN=(e:any)=>{
     if ( e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
     e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
     || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
@@ -44,8 +44,18 @@ export const onkeyDownforSpecialCharcter=(e:any)=>{
     || e.key==='f'|| e.key==='g'|| e.key==='h'|| e.key==='i'|| e.key==='j'
     || e.key==='k'|| e.key==='l'|| e.key==='m'|| e.key==='n'|| e.key==='o'
     || e.key==='p'|| e.key==='q'|| e.key==='r'|| e.key==='s'|| e.key==='t'
-    || e.key==='u'|| e.key==='v'|| e.key==='w'|| e.key==='x'|| e.key==='y'||
+    || e.key==='u'|| e.key!=='v'|| e.key==='w'|| e.key==='x'|| e.key==='y'||
      e.key==='z') {
+        e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
+      }
+}
+export const onkeyDownforSpecialCharcter=(e:any)=>{
+    if ( e.key === '-' || e.key === '+' || e.key === '!' || e.key === '@' || e.key === '#' ||
+    e.key === '$' || e.key === '%' || e.key === '^' || e.key === '&' || e.key === '*' || e.key === '('
+    || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
+    e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
+    e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
 }
@@ -167,7 +177,7 @@ export const validateForm = (formData: any, setError: any,isMobileValid:any,isEm
     }
 
     if (formData?.term_condition === "off" || !formData?.term_condition) {
-        errorss.term_condition = 'Please accept yerms & conditions'
+        errorss.term_condition = 'Please accept terms & conditions'
     }
 if(!strongPasswordRegex.test(formData?.password)){
     errorss.password = 'Minimum 8 characters, at least one number, one symbol and one uppercase letter'
@@ -1219,8 +1229,10 @@ export const validatePrepareCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.temp_max && formData?.temp_max !== '0') {
         newErrors.temp_min = 'This field is required'
     }
+    console.log("YRTEREERE",formData,formData?.temp_max,formData?.temp_min,formData?.temp_max<formData?.temp_min );
+    
     if(formData?.temp_max && formData?.temp_min){
-        if(formData?.temp_max < formData?.temp_min){
+        if(parseInt(formData?.temp_max) < parseInt(formData?.temp_min)){
             newErrors.temp_max = 'Maximum temperature should be greater'
         }
     }

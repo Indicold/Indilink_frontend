@@ -17,6 +17,7 @@ const StoreDetails = () => {
     const {token}:any=getToken(); // Extracting token info to define payload for API call
     const location:any=useLocation();
     const [assetDetails,setAssetsDetails]=useState<any>({})
+    const [status,setStatus]=useState<any>("")
     let state:any=location?.state?.type;
     console.log("yyyyyyy",state);
     
@@ -39,6 +40,7 @@ const StoreDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
+            setStatus("Approved")
             messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
@@ -64,6 +66,7 @@ const StoreDetails = () => {
       .then(response => response.json())
       .then(result =>{
         if(result?.status===200){
+            setStatus("DisApproved")
             messageViewNew({message:"Data Updated Successfully !",status:200})
     
         }else{
@@ -191,13 +194,21 @@ if(fetchDetails?.data?.store){
                                     <h2 className="text-gray-400 text-sm">{assetDetails?.facility_manager_contact || 'Not Available'}</h2>
                                 </div>
                             </div>
+                    
                            
                         </div>
  
  
                     </div>
                     <div className='lg:w-[25%] w-[100%] p-10'>
+
                        {localStorage.getItem('user_type')==='Customer' && <div className='m-auto text-center'>
+                       {status &&     <div className=''>
+                                <div className="w-[100%] pl-4  mb-4">
+                                    <h2 className="text-sm">Status</h2>
+                                    <h2 className="text-gray-400 text-sm">{status}</h2>
+                                </div>
+                            </div>}
                         <button type="button" onClick={handleAccept} className="text-white bg-[green]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                          Approved
                             </button>

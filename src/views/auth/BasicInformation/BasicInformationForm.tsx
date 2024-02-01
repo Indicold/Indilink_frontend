@@ -24,7 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { messageViewNew, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
+import { messageViewNew, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter, onkeyDownforSpecialCharcterGSTPAN } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -446,7 +446,7 @@ console.log("AAAAAAAA",newData);
                                 type="text"
                                 autoComplete="off"
                                 name="panNo"
-                                onKeyDown={onkeyDownforSpecialCharcter}
+                                onKeyDown={onkeyDownforSpecialCharcterGSTPAN}
                                 placeholder="Pan Card No."
                                 onChange={(e: any) => handleChange(e, 'panNo')}
                                 component={Input}
