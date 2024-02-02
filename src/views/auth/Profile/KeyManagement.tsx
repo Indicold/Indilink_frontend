@@ -44,7 +44,7 @@ const KeyManagement = () => {
         navigate('/account-details')
     }
   return (
-    <div className='lg:flex '>
+    <div className='lg:flex'>
     
 
 
@@ -100,7 +100,7 @@ const KeyManagement = () => {
 
             </div>
             {/* stepper end */}
-            <div className='p-2 lg:ml-4 w-full'>
+            <div className='p-2 lg:ml-4 w-full lg:w-5/6'>
             {/* <ArrowBackIcon role='button' className='ms-3' onClick={()=>navigate(-1)} /> */}
             <h4 className="text-head-title text-center">Key Management Personal</h4>
         {modal && <KeyModal data={data} fetchData={fetchData} setModal={setModal} modal={modal} setData={setData} />}
