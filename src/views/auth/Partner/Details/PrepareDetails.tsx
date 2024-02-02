@@ -4,6 +4,9 @@ import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+
+
 const PrepareDetails = () => {
     const {id}:any=useParams(); // Extracting endpoint of active URL to define payload for API call
     const {token}:any=getToken(); // Extracting token info to define payload for API call
@@ -82,7 +85,7 @@ if(fetchDetails?.data?.prepare){
 {/* <p>Please add the Invoice</p> */}
 
 </div>
-      <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
+      {/* <div className='bg-blue-100 p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] mt-4 mb-4 flex justify-between">
                     <h2 className="m-auto">Asset Detail</h2>
                 </div>
@@ -96,7 +99,79 @@ if(fetchDetails?.data?.prepare){
  
                 </div>
  
-            </div>
+            </div> */}
+
+<div className='p-4 rounded-lg mx-0 shadow-2xl'>
+                
+
+                <div className="flex gap-4">
+                    <div className='w-[70%]'>
+                        <img className="h-[19rem] w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="" />
+                    </div>
+                    <div className="grid  grid-cols-2 w-[40%] gap-4">
+                        <div>
+                            <img className=" h-[9rem] w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" />
+                        </div>
+                        <div>
+                            <img className="h-[9rem] max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="" />
+                        </div>
+                        <div>
+                            <img className="h-[9rem] max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="" />
+                        </div>
+                        <div>
+                            <img className="h-[9rem] max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="" />
+                        </div>
+                    
+                    </div>
+                </div>
+
+        <div className='grid mt-10 gap-4 my-6 lg:grid-cols-4'>
+                {[1,2,3,4,5,6,7].map((item:any , index:any)=>{
+                    return <div key={index} className='flex'>
+                    <div className='bg-green-50 mx-2'><AnnouncementIcon className='mx-2 my-2'/></div>
+                    <div>
+                        <p className='font font-semibold text-black'>Asset Type</p>
+                        <p>Cold Storage</p>
+                    </div>
+                </div>
+                })}
+        </div>
+
+
+        <div>
+
+            <h1 className='text-lg text-blue-800 my-10'>
+                Facilities
+            </h1>
+            
+
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    
+                    {[1,2,3,4,5,6,7,8,9,0].map((item:any ,index:any)=>{
+                        return <div key={index} className='relative'>
+                        <img className="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="" />
+                        <div className='pl-4 pb-2 absolute font-bold text-white bottom-0 left-0'>
+                            <p>Cold</p>
+                            <p>Storage</p>
+                        </div>
+                    </div>
+                    })}
+                
+                
+                </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
             <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] pl-4 mt-10 mb-2">
                     <h2 className="text-xl">Prepare Type Assets</h2>
@@ -205,6 +280,28 @@ if(fetchDetails?.data?.prepare){
  
  
             </div>
+
+
+
+                <div className='p-4 bg-white rounded-lg mx-0 shadow-2xl'>
+                    <div className='ml-4'>
+                    <h1 className='text-lg text-blue-800 mt-10 mb-4'>
+                            Asset Rules
+                        </h1>
+                        <p className='font-light'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius unde cumque nisi dolorum atque quas corporis, molestias maxime possimus officiis minima natus sit quasi mollitia accusantium voluptatem fuga blanditiis illum?</p>
+                    </div>
+                    <div className='grid px-6 gap-4 grid-cols-4'>
+                    {[1,2,3,4,5,6,7,8].map((item:any , index:any)=>{
+                                return <div key={index} className='pt-6 '>
+                                <div className='w-12 h-12 bg-orange-100 rounded-full'><AnnouncementIcon className='mx-3 my-3 '/></div>
+                                <div className='py-4'>
+                                    <p className='font font-semibold text-black'>Asset Type</p>
+                                    <p className='w-full font-light'>Lorem ipsum dm quas cupas repellendus ea tenetur.</p>
+                                </div>
+                            </div>
+                            })}
+                    </div>
+                </div>
     </div>
   )
 }
