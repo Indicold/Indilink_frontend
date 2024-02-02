@@ -78,7 +78,7 @@ fetch(`${apiUrl}/auth/upload-nda`, requestOptions)
                Change Password
               </a>
             </div>
-        {is_nda_signed ==1 ?
+        {is_nda_signed ==0 ?
            <>
           {/* {owner_user_id ===0  &&  */}
            <div className="my-5 px-6 ">

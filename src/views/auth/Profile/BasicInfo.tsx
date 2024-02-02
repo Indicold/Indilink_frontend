@@ -65,7 +65,10 @@ const BasicInfo = () => {
     const handleChange = (e: any) => {
         const newdata: any = { ...data };
         if (e.target.name === 'gst_file') {
+            console.log("TTTTTTTTT",e.target);
+            
             newdata[e.target.name] = Array.from(e.target.files);
+            
             
         }else if(e.target.name==='vehicle_count'){
             if(e.target.value=='e' || e.target.value=='-' || e.target.value=='+' || e.target.value=='E' || e.target.value=='=' ){
@@ -244,7 +247,7 @@ useEffect(()=>{
     }
  
 },[BasicInfo?.data])
-console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
+console.log("TTTTYYYTT",data?.gst_file[0]);
 
     return (
         <div className='lg:flex'>
@@ -431,7 +434,7 @@ console.log("TTTTYYYTT",data,BasicInfo?.data[0]);
                                         <PublishIcon className='text-center !mx-auto' />
                                     </label>
                            <div className='flex'>
-                           {   data?.gst_file?.length>0 &&      <a className='' href={data?.gst_file[0]?.gst_file[0]} target='_blank'>view</a>
+                           {   data?.gst_file?.length>0 &&      <a className='' href={data?.gst_file[0] || ""} target='_blank'>view</a>
 }
                                     <p className="text-[red] bg-black text-p-error-hight">
                                         {error && error.gst}

@@ -40,12 +40,7 @@ export const onkeyDownforSpecialCharcterGSTPAN=(e:any)=>{
     || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
     e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
     e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
-    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~' || e.key==='a' || e.key==='b' || e.key==='c'|| e.key==='d'|| e.key==='e'
-    || e.key==='f'|| e.key==='g'|| e.key==='h'|| e.key==='i'|| e.key==='j'
-    || e.key==='k'|| e.key==='l'|| e.key==='m'|| e.key==='n'|| e.key==='o'
-    || e.key==='p'|| e.key==='q'|| e.key==='r'|| e.key==='s'|| e.key==='t'
-    || e.key==='u'|| e.key!=='v'|| e.key==='w'|| e.key==='x'|| e.key==='y'||
-     e.key==='z') {
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
 }
@@ -89,12 +84,7 @@ export const onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber=(e:any
     || e.key === ')' || e.key === '_' || e.key === '' || e.key === '-' || e.key === '.' || e.key === '<' ||
     e.key === '>' || e.key === '/' || e.key ==',' || e.key =='=' || e.key ==':' || e.key ==';' ||
     e.key =='"' || e.key =="'" || e.key === '[' || e.key === ']' || e.key === '{' || e.key === '}'
-    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~'|| e.key==='a' || e.key==='b' || e.key==='c'|| e.key==='d'|| e.key==='e'
-     || e.key==='f'|| e.key==='g'|| e.key==='h'|| e.key==='i'|| e.key==='j'
-     || e.key==='k'|| e.key==='l'|| e.key==='m'|| e.key==='n'|| e.key==='o'
-     || e.key==='p'|| e.key==='q'|| e.key==='r'|| e.key==='s'|| e.key==='t'
-     || e.key==='u'|| e.key==='v'|| e.key==='w'|| e.key==='x'|| e.key==='y'||
-      e.key==='z' ) {
+    || e.key === '?' || e.key === '|' || e.key === '\\' || e.key === '`' || e.key === '~' ) {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
 }
@@ -306,7 +296,9 @@ export const messageView = (messagevalue: any) => {
     })
 }
 export const messageViewNew = (messagevalue: any) => {
-    toast.success(messagevalue?.message, {
+    console.log("REEEEEEE",messagevalue);
+    // debugger
+    toast?.success(messagevalue?.message || "", {
       position: 'bottom-center', // Position of the toast
       autoClose: 3000,       // Auto-close after 3000ms (3 seconds)
       hideProgressBar: false,

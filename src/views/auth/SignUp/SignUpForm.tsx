@@ -65,7 +65,6 @@ const SignUpForm = (props: SignUpFormProps) => {
     const validateMobileDebounced = debounce(validateMobile, 300)
 
     const [phone, setPhone] = useState('');
-console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
 
     /**
      * The handleChange function updates the formData state based on the input value and performs
@@ -84,7 +83,12 @@ console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
             }else{
                 if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.co$/.test(newData?.email)) {
                     validateEmailDebounced(e.target.value, setIsEmailValid)
+                  }else if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@gmail\.com$/.test(newData?.email)) {
+                    validateEmailDebounced(e.target.value, setIsEmailValid)
+                  }else if(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value)){
+                    validateEmailDebounced(e.target.value, setIsEmailValid)
                   }
+                  
             }
           
    
@@ -117,6 +121,7 @@ console.log("TTTUUUTTTTT",isMobileValid,isEmailValid);
     const handlesubmit = (e: any) => {
         e.preventDefault()
         // validateForm(formData, setError)
+        validateEmailDebounced(formData?.email, setIsEmailValid)
         if (validateForm(formData, setError,isMobileValid,isEmailValid)) {
             setSubmitting(true)
             dispatch(updateFormData(formData))
