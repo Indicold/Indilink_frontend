@@ -216,7 +216,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
   /* The following code is using the useEffect hook in a React component. It is triggering the effect
   whenever the value of SubmitResponse changes. */
   useEffect(() => {
-    messageViewNew(SubmitResponse)
+    // messageViewNew(SubmitResponse)
     if (SubmitResponse?.status === 200) {
       setAlert(false)
       fetchApi();

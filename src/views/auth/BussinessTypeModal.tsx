@@ -104,7 +104,12 @@ useEffect(()=>{
     
 if(AssetsResponse?.message || AssetsResponse?.data){
     if(localStorage.getItem('user_type') === 'Partner' || localStorage.getItem('user_type') === 'Investor'){
+     if(!AssetsResponse?.message && AssetsResponse?.status==200){
+        messageViewNew({...AssetsResponse,message:"Asset Created Successfully"})
+     }else{
         messageViewNew(AssetsResponse)
+     }
+       
 
     }
     setTimeout(() => {

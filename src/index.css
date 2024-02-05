@@ -233,6 +233,10 @@ background: var(--surface-surface-black, #1C1C1C);
 rect{
     width: 1000px !important;
 }
+.bg-table-column{
+    background: #0f3492;
+    /* var(--surface-surface-green, #1AAD64); */
+  }
 
 .ellipse-text{
     white-space: nowrap;

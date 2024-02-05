@@ -218,7 +218,9 @@ const handleDocs=(rowData:any)=>{
 /* The above code is using the useEffect hook in a React component. It is triggering the effect
 whenever the value of SubmitResponse changes. */
 useEffect(()=>{
-messageViewNew(SubmitResponse)
+if(SubmitResponse){
+  messageViewNew(SubmitResponse)
+}
 if(SubmitResponse?.status===200){
   setAlert(false)
   fetchApi();
@@ -226,7 +228,7 @@ if(SubmitResponse?.status===200){
   const from = to - countPerPage; 
   setCollection(cloneDeep(allData.slice(from, to)));
 }
-SubmitResponse=7676;
+// SubmitResponse=7676;
 fetchApi();
 },[SubmitResponse])
 

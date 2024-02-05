@@ -49,11 +49,14 @@ const DocumentEditModal = ({modal,setModal,data}:any) => {
     /* The `useEffect` hook is used to perform side effects in a functional component. In this case,
     the `useEffect` hook is being used to handle the response from the `commentResponse` variable. */
     useEffect(()=>{
-        messageViewNew(commentResponse)
-if(commentResponse?.status===200){
-    setModal(false)
-    
-}
+        if(commentResponse){
+            messageViewNew(commentResponse)
+            if(commentResponse?.status===200){
+                setModal(false)
+                
+            }
+        }
+
     },[commentResponse])
   return (
     <div>

@@ -29,11 +29,15 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
     }: any = usePostApi(`legal/document-comment`)
  
     useEffect(()=>{
-        messageViewNew(commentResponse)
-if(commentResponse?.status===200){
-    setModal(false)
-    
-}
+        if(commentResponse){
+            messageViewNew(commentResponse)
+            if(commentResponse?.status===200){
+                setModal(false)
+                
+            }
+        }
+
+
     },[commentResponse])
   return (
     <div>

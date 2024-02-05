@@ -15,3 +15,4 @@ export const TokenInfo=()=>{
 return jwt_decode(token)
 }
 export const apiUrl = process?.VITE_API_URL
+export const apiUrl2 = process?.VITE_API_URL2

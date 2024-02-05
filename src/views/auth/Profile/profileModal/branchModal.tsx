@@ -63,8 +63,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             messageViewNew(BranchResponse)
 
             if (BranchResponse?.status === 200) {
-                localStorage.setItem("branch_ids", JSON.stringify([...data?.branch_ids, BranchResponse?.data?.id]))
-                setData({ ...data, branch_ids: [...data?.branch_ids, BranchResponse?.data?.id] })
+                localStorage.setItem("branch_ids", JSON.stringify([...data?.branch_ids || [], BranchResponse?.data?.id]))
+                setData({ ...data, branch_ids: [...data?.branch_ids || [], BranchResponse?.data?.id] })
                 setModal(false)
             }
             fetchBranch()
@@ -75,8 +75,8 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
             messageViewNew(BranchUpadteResponse)
 
             if (BranchUpadteResponse?.status === 200) {
-                localStorage.setItem("shareholder_ids", JSON.stringify([...data?.branch_ids, BranchUpadteResponse?.data?.id]))
-                setData({ ...data, branch_ids: [...data?.branch_ids, BranchUpadteResponse?.data?.id] })
+                localStorage.setItem("shareholder_ids", JSON.stringify([...data?.branch_ids || [], BranchUpadteResponse?.data?.id]))
+                setData({ ...data, branch_ids: [...data?.branch_ids || [], BranchUpadteResponse?.data?.id] })
                 setModal(false)
             }
             fetchBranch()

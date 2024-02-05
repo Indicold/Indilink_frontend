@@ -97,10 +97,10 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                 console.log("rERETRETR",data?.shareholder_ids);
                 
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids || [], SHResponse?.data?.id]))
-                setData({ ...data, shareholder_ids: [...data?.shareholder_ids, SHResponse?.data?.id] })
+                setData({ ...data, shareholder_ids: [...data?.shareholder_ids || [], SHResponse?.data?.id] })
                 setModal(false)
             }
-            fetchShare()
+            // fetchShare()
 
         }
     }, [SHResponse, SHResponse?.message])
@@ -110,10 +110,10 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
 
             if (ShareUpadteResponse?.status === 200) {
                 localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids, ShareUpadteResponse?.data?.id]))
-                setData({ ...data, shareholder_ids: [...data?.shareholder_ids, ShareUpadteResponse?.data?.id] })
+                setData({ ...data, shareholder_ids: [...data?.shareholder_ids || [], ShareUpadteResponse?.data?.id] })
                 setModal(false)
             }
-            fetchShare()
+            // fetchShare()
         }
     }, [ShareUpadteResponse, ShareUpadteResponse?.message])
     

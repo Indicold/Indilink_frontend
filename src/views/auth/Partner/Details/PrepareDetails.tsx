@@ -5,6 +5,7 @@ import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import AuditAssignListModal from '../../Audit/AuditAssignListModal';
 
 
 const PrepareDetails = () => {
@@ -12,6 +13,7 @@ const PrepareDetails = () => {
     const {token}:any=getToken(); // Extracting token info to define payload for API call
     const location:any=useLocation();
     const [assetDetails,setAssetsDetails]=useState<any>({})
+    const [modalList, setModalList] = useState<any>(false)
     const [status,setStatus]=useState<any>("")
     let state:any=location?.state?.type;
     
@@ -79,8 +81,67 @@ if(fetchDetails?.data?.prepare){
 }
 
   },[fetchDetails?.data?.prepare])
+  const prepareTypeArray = [
+    {
+      id: 0,
+      title: "Asset Type",
+      value: "Prepare",
+    },
+    {
+      id: 1,
+      title: "Address",
+      value: assetDetails?.address || 'Not Available',
+    },
+    {
+      id: 2,
+      title: "Hourly Throughput",
+      value: assetDetails?.hourly_throughput || 'Not Available',
+    },
+    {
+      id: 3,
+      title: "Prepare Type",
+      value: assetDetails?.prepare_type_id || 'Not Available',
+    },
+    {
+      id: 4,
+      title: "Throughput",
+      value: assetDetails?.throughput || 'Not Available',
+    },
+    {
+      id: 5,
+      title: "Avg Case Size",
+      value: assetDetails?.avg_case_size || 'Not Available',
+    },
+    {
+      id: 6,
+      title: "No of Docks",
+      value: assetDetails?.no_of_docks || 'Not Available',
+    },
+    {
+      id: 7,
+      title: "Minimum Temperature",
+      value: assetDetails?.temperature_min || 'Not Available',
+    },
+    {
+      id: 8,
+      title: "Maximum Temperature",
+      value: assetDetails?.temperature_max || 'Not Available',
+    },
+    {
+      id: 9,
+      title: "Batch Size",
+      value: assetDetails?.batch_size || 'Not Available',
+    },
+    {
+      id: 10,
+      title: "Area",
+      value: assetDetails?.area || 'Not Available',
+    },
+    // Add more fields as needed
+  ];
   return (
 <div>
+{modalList && <AuditAssignListModal setModal={setModalList} />}
 <div className='mb-4'>
 
 <h5><b>Asset Details</b></h5>
@@ -106,7 +167,9 @@ if(fetchDetails?.data?.prepare){
 
 <div className='p-4 rounded-lg mx-0 shadow-2xl'>
                 
+<h5><b className='flex'>Asset ID: <h2 className="text-gray-400 text-lg">{id}</h2></b></h5>
 
+           
                 <div className="flex gap-4">
                     <div className='w-[70%]'>
                         <img className="h-[19rem] w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="" />
@@ -129,16 +192,37 @@ if(fetchDetails?.data?.prepare){
                 </div>
 
         <div className='grid mt-10 gap-4 my-6 lg:grid-cols-4'>
-                {[1,2,3,4,5,6,7].map((item:any , index:any)=>{
+                {prepareTypeArray?.map((item:any , index:any)=>{
                     return <div key={index} className='flex'>
                     <div className='bg-green-50 mx-2'><AnnouncementIcon className='mx-2 my-2'/></div>
                     <div>
-                        <p className='font font-semibold text-black'>Asset Type</p>
-                        <p>Cold Storage</p>
+                        <p className='font font-semibold text-black'>{item?.title}</p>
+                        <p>{item?.value}</p>
                     </div>
                 </div>
                 })}
         </div>
+        <div className='w-[25%]'>
+                    {localStorage.getItem('user_type')==='Customer' ? <div className='m-auto text-center'>
+                    {status &&     <div className=''>
+                                <div className="w-[100%] pl-4  mb-4">
+                                    <h2 className="text-sm">Status</h2>
+                                    <h2 className="text-gray-400 text-sm">{status}</h2>
+                                </div>
+                            </div>}
+                        <button type="button" onClick={handleAccept} className="text-white bg-[green]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Approved
+                            </button>
+                            <button type="button" onClick={handleReject} className="text-white bg-[red]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Disapproved
+                            </button>
+                            </div> :
+                                  <button type="button"  onClick={() =>setModalList(true)} className="w-full text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 me-2 mb-2">
+                                  Audit
+                                   </button>
+                            }
+                   
+                    </div>
 
 
         <div>
@@ -164,7 +248,25 @@ if(fetchDetails?.data?.prepare){
                 </div>
 
         </div>
-
+        <div className='p-4 bg-white rounded-lg mx-0'>
+                    <div className='ml-4'>
+                    <h1 className='text-lg text-blue-800 mt-10 mb-4'>
+                            Asset Rules
+                        </h1>
+                        <p className='font-light'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius unde cumque nisi dolorum atque quas corporis, molestias maxime possimus officiis minima natus sit quasi mollitia accusantium voluptatem fuga blanditiis illum?</p>
+                    </div>
+                    <div className='grid px-6 gap-4 grid-cols-4'>
+                    {[1,2,3,4,5,6,7,8].map((item:any , index:any)=>{
+                                return <div key={index} className='pt-6 '>
+                                <div className='w-12 h-12 bg-orange-100 rounded-full'><AnnouncementIcon className='mx-3 my-3 '/></div>
+                                <div className='py-4'>
+                                    <p className='font font-semibold text-black'>Asset Type</p>
+                                    <p className='w-full font-light'>Lorem ipsum dm quas cupas repellendus ea tenetur.</p>
+                                </div>
+                            </div>
+                            })}
+                    </div>
+                </div>
 
     </div>
 
@@ -175,7 +277,7 @@ if(fetchDetails?.data?.prepare){
 
 
 
-            <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
+            {/* <div className='bg-white p-4 rounded-lg mx-0 shadow-2xl'>
                 <div className="w-[100%] pl-4 mt-10 mb-2">
                     <h2 className="text-xl">Prepare Type Assets</h2>
                     <h2 className="text-gray-400 text-lg">{id}</h2>
@@ -265,7 +367,7 @@ if(fetchDetails?.data?.prepare){
  
                     </div>
                     <div className='w-[25%] p-10'>
-                    {localStorage.getItem('user_type')==='Customer' && <div className='m-auto text-center'>
+                    {localStorage.getItem('user_type')==='Customer' ? <div className='m-auto text-center'>
                     {status &&     <div className=''>
                                 <div className="w-[100%] pl-4  mb-4">
                                     <h2 className="text-sm">Status</h2>
@@ -278,7 +380,11 @@ if(fetchDetails?.data?.prepare){
                             <button type="button" onClick={handleReject} className="text-white bg-[red]  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                             Disapproved
                             </button>
-                            </div>}
+                            </div> :
+                                  <button type="button"  onClick={() =>setModalList(true)} className="w-full text-white bg-[#FF9119] hover:bg-[#FF9119]/80 focus:ring-4 focus:outline-none focus:ring-[#FF9119]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:hover:bg-[#FF9119]/80 dark:focus:ring-[#FF9119]/40 me-2 mb-2">
+                                  Audit
+                                   </button>
+                            }
                         <div className='flex m-auto mt-4 gap-4'>
                       <Tags/>
                        </div>
@@ -288,29 +394,11 @@ if(fetchDetails?.data?.prepare){
  
  
  
-            </div>
+            </div> */}
 
 
 
-                <div className='p-4 bg-white rounded-lg mx-0 shadow-2xl'>
-                    <div className='ml-4'>
-                    <h1 className='text-lg text-blue-800 mt-10 mb-4'>
-                            Asset Rules
-                        </h1>
-                        <p className='font-light'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius unde cumque nisi dolorum atque quas corporis, molestias maxime possimus officiis minima natus sit quasi mollitia accusantium voluptatem fuga blanditiis illum?</p>
-                    </div>
-                    <div className='grid px-6 gap-4 grid-cols-4'>
-                    {[1,2,3,4,5,6,7,8].map((item:any , index:any)=>{
-                                return <div key={index} className='pt-6 '>
-                                <div className='w-12 h-12 bg-orange-100 rounded-full'><AnnouncementIcon className='mx-3 my-3 '/></div>
-                                <div className='py-4'>
-                                    <p className='font font-semibold text-black'>Asset Type</p>
-                                    <p className='w-full font-light'>Lorem ipsum dm quas cupas repellendus ea tenetur.</p>
-                                </div>
-                            </div>
-                            })}
-                    </div>
-                </div>
+           
     </div>
   )
 }
