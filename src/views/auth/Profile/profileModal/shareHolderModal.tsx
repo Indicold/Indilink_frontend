@@ -100,7 +100,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                 setData({ ...data, shareholder_ids: [...data?.shareholder_ids || [], SHResponse?.data?.id] })
                 setModal(false)
             }
-            // fetchShare()
+            fetchShare()
 
         }
     }, [SHResponse, SHResponse?.message])
@@ -113,7 +113,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                 setData({ ...data, shareholder_ids: [...data?.shareholder_ids || [], ShareUpadteResponse?.data?.id] })
                 setModal(false)
             }
-            // fetchShare()
+            fetchShare()
         }
     }, [ShareUpadteResponse, ShareUpadteResponse?.message])
     
