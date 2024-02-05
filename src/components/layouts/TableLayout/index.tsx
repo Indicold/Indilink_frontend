@@ -305,7 +305,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
         />
       </div>
 
-      <div className='overflow-auto'>
+      <div className='table-container overflow-auto'>
         <table className='w-[100%]'>
           <thead>
             <tr className='bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]'>{headRow()}</tr>
