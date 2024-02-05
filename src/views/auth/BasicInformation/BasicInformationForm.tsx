@@ -24,7 +24,7 @@ import { apiUrl } from '@/store/customeHook/token';
 import Tooltip from '@mui/material/Tooltip';
 import ReactGoogleAutocomplete from 'react-google-autocomplete';
 import axios from 'axios';
-import { messageViewNew, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter } from '@/store/customeHook/validate';
+import { messageViewNew, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter, onkeyDownforSpecialCharcterGSTPAN } from '@/store/customeHook/validate';
 
 interface BasicInformationFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -133,7 +133,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
         const re = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
         const reGST = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
         const panRegex = /^[A-Z]{5}\d{4}[A-Z]$/;
-        console.log("TYTYTUTU", newGst, key);
         if (key === 'gst' && !reGST.test(newGst)) {
             setGstValidationMessage('Enter a valid GST Number')
 
@@ -149,7 +148,6 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
        
         if (key === 'panNo') {
             if (newData?.panNo?.length == 10 && re.test(newGst)) {
-console.log("AAAAAAAA",newData);
 
                 showInvalidPanMessage(false);
                 setPanValidationMessage('')
@@ -172,14 +170,12 @@ console.log("AAAAAAAA",newData);
         }
       
         if (!newData?.panNo || !newData?.designation || !newData?.firm || !newData?.firmName  || !newData?.address || newData?.address?.length<1 || newData?.panNo?.length<10) {
-            console.log("ghhhhhhhhhhf");
             
             setDisabled(true)
         } else {
             setPanValidationMessage('')
             setDisabled(false)
         }
- console.log("HHHHHHHHHH",newData);
  
      
     };
@@ -424,11 +420,11 @@ console.log("AAAAAAAA",newData);
                                 autoComplete="off"
                                 name="gst"
                                 placeholder="GST No"
-                                onkeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
+                                onKeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
 
                                 onChange={(e: any) => handleChange(e, 'gst')}
                                 component={Input}
-                                className=''
+                                className='uppercase'
                                 max="15"
                                 maxLength={15}
                             />
@@ -446,11 +442,11 @@ console.log("AAAAAAAA",newData);
                                 type="text"
                                 autoComplete="off"
                                 name="panNo"
-                                onKeyDown={onkeyDownforSpecialCharcter}
+                                onKeyDown={onkeyDownforSpecialCharcterGSTPAN}
                                 placeholder="Pan Card No."
                                 onChange={(e: any) => handleChange(e, 'panNo')}
                                 component={Input}
-                                className=''
+                                className='uppercase'
                                 max="10"
                                 maxLength={10}
                             />
@@ -466,6 +462,7 @@ console.log("AAAAAAAA",newData);
                                 asterisk={true}
                             >
                                 <Field
+                                disabled
                                     type="text"
                                     autoComplete="off"
                                     name="country"
@@ -517,7 +514,7 @@ console.log("AAAAAAAA",newData);
                                             name="firm"
                                             className="pl-2 border flex w-full input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Select Model</option>
+                                            <option value="">Select Model</option>
                                             {FirmTypeList &&
                                                 FirmTypeList?.map(
                                                     (item: any, index: any) => (

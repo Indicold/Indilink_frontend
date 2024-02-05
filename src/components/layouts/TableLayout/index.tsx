@@ -32,6 +32,7 @@ const tableHead = {
 const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
 
   let allData: any = AllStore;
+  console.log("RRRRRRR",AllStore.reverse(),AllStore);
   
   // Sort by ID For Latest Date
    allData.sort((b:any,a:any)=>a.id-b.id)
@@ -180,7 +181,7 @@ const TableLayout = ({ AllStore, fetchApi,setPageNo,AllLength }: any) => {
         return <td className='text-center w-[200px]' key={i} >{new Date(rowData.created_at)?.toLocaleDateString()} {new Date(rowData.created_at)?.toLocaleTimeString()}</td>;
       }
       if (key === 'updated_at') {
-        return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()}</td>;
+        return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleDateString()} {new Date(rowData.updated_at)?.toLocaleTimeString()}</td>;
       }
       if (key === 'Action') {
         return <td className='text-center flex gap-2 justify-end' key={i} >

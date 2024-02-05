@@ -94,8 +94,9 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
             messageViewNew(SHResponse)
 
             if (SHResponse?.status === 200) {
-                fetchShare()
-                localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids, SHResponse?.data?.id]))
+                console.log("rERETRETR",data?.shareholder_ids);
+                
+                localStorage.setItem("shareholder_ids", JSON.stringify([...data?.shareholder_ids || [], SHResponse?.data?.id]))
                 setData({ ...data, shareholder_ids: [...data?.shareholder_ids, SHResponse?.data?.id] })
                 setModal(false)
             }

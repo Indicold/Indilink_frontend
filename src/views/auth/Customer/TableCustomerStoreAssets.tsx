@@ -223,8 +223,8 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       }
       if (key === 'Action') {
         return <td className='text-center flex gap-2 p-1' key={i} >
-        <Button className='!p-3 m-auto pt-0 pb-0' disabled={rowData?.is_accepted===1} onClick={() => handleAccept(rowData)}>Accept</Button>
-        <Button className='!p-2 m-auto' disabled={rowData?.is_accepted===2} onClick={() => handleReject(rowData)}>Reject</Button>
+        <Button className='!p-3 m-auto pt-0 pb-0' disabled={rowData?.is_accepted===1 || rowData?.is_accepted===2} onClick={() => handleAccept(rowData)}>Accept</Button>
+        <Button className='!p-2 m-auto' disabled={rowData?.is_accepted===2 || rowData?.is_accepted===1} onClick={() => handleReject(rowData)}>Reject</Button>
         <Button className='!p-2 m-auto' onClick={() => handleView(rowData)}>View</Button>
         <Button className='!p-2 m-auto' onClick={() => handleDocs(rowData)}>Docs</Button>
       </td>;
