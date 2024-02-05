@@ -296,6 +296,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     placeholder="Share Holder Phone Number"
                                                     component={Input}
                                                     onKeyDown={onkeyDownforNumMobSpecialCharcter}
+                                                    min={0}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.phone_number}
