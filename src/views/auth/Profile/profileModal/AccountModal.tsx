@@ -11,6 +11,7 @@ import {
     onkeyDownBankacNum,
     onkeyDownBankifscCode,
     onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber,
+    onkeyDownforNumSpecialCharcter,
     onkeyDownforSpecialCharcter,
     validateAccountForm,
     validateBranchForm,
@@ -143,7 +144,9 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
     }
 
     useEffect(() => {
-        messageViewNew(Accountesponse)
+        if (Accountesponse) {
+            messageViewNew(Accountesponse)
+        }
         if (Accountesponse?.status == 200) {
             fetchData()
             setTimeout(() => {
@@ -153,7 +156,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
         }
     }, [Accountesponse?.status])
     useEffect(() => {
-        messageViewNew(AccountUpdateesponse)
+        if (AccountUpdateesponse) {
+            messageViewNew(AccountUpdateesponse)
+        }
+
         if (AccountUpdateesponse?.status == 200) {
             fetchData()
             setTimeout(() => {
@@ -232,7 +238,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                             data?.account_name
                                                         }
                                                         onKeyDown={
-                                                            onkeyDownforSpecialCharcter
+                                                            onkeyDownforNumSpecialCharcter
                                                         }
                                                         placeholder="Account Name"
                                                         component={Input}
@@ -288,7 +294,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                             handleChange(e)
                                                         }
                                                         onKeyDown={
-                                                            onkeyDownforSpecialCharcter
+                                                            onkeyDownforNumSpecialCharcter
                                                         }
                                                         name="bank_name"
                                                         value={data?.bank_name}
@@ -309,11 +315,12 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         disabled={
                                                             data?.isdisabled
                                                         }
-                                                        type="text"
+                                                        type="tel"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
+                                                        maxLength={11}
                                                         name="bank_ifsc"
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
@@ -321,6 +328,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         onKeyDown={
                                                             onkeyDownforSpecialCharcter
                                                         }
+                                                        className="uppercase"
                                                     />
                                                     <p className="text-[red] text-p-error-hight">
                                                         {error &&
@@ -344,7 +352,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                             handleChange(e)
                                                         }
                                                         onKeyDown={
-                                                            onkeyDownforSpecialCharcter
+                                                            onkeyDownforNumSpecialCharcter
                                                         }
                                                         name="branch_name"
                                                         value={

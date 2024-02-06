@@ -14,6 +14,7 @@ import {
     onkeyDownPincode,
     onkeyDownforNumMobSpecialCharcter,
     onkeyDownforNumMobSpecialCharcterOnly,
+    onkeyDownforNumSpecialCharcter,
     validateBranchForm,
     validateEmail,
     validateKeyForm,
@@ -213,6 +214,7 @@ const KeyModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.full_name}
                                                         placeholder="Name"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownforNumSpecialCharcter}
                                                     />
                                                     <p className="text-[red] text-p-error-hight">
                                                         {error &&
@@ -268,6 +270,7 @@ const KeyModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         }
                                                         placeholder="Designation"
                                                         component={Input}
+                                                        onKeyDown={onkeyDownforNumSpecialCharcter}
                                                     />
                                                     <p className="text-[red] text-p-error-hight">
                                                         {error &&

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndPercentage, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndPercentage, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -179,6 +179,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.fname}
                                                     placeholder="Share Holder First Name"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.fname}
@@ -199,6 +200,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                     value={formData?.lname}
                                                     placeholder="Share Holder Last Name"
                                                     component={Input}
+                                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.lname}
