@@ -6,15 +6,22 @@ import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
 import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
-import InfoIcon from '@mui/icons-material/Info';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
+import InfoIcon from '@mui/icons-material/Info'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import EditIcon from '@mui/icons-material/Edit'
 
 // Defines the table header with column names.
 
 // The BranchTable component takes a prop called AllStore, presumably for rendering data.
 
-const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}: any) => {
+const BranchTable = ({
+    AllStore,
+    tableHead,
+    setformData,
+    formData,
+    setModal,
+    modal,
+}: any) => {
     let allData: any = AllStore
     const countPerPage = 5
     const [value, setValue] = React.useState('')
@@ -71,13 +78,12 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
 
     const handleEdit = (rowData: any) => {
         // Handle edit action for different asset types.
-        setformData({...rowData,isdisabled:false,type:"Edit"})
+        setformData({ ...rowData, isdisabled: false, type: 'Edit' })
         setModal(true)
-
     }
 
     const handleView = (rowData: any) => {
-        setformData({...rowData,isdisabled:true,type:"View"})
+        setformData({ ...rowData, isdisabled: true, type: 'View' })
         setModal(true)
     }
 
@@ -88,7 +94,10 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             // Renders table cells for each column in the header.
             if (key === 'contract_name') {
                 return (
-                    <td key={i} className="text-center ellipse-text my-2 h-[35px]">
+                    <td
+                        key={i}
+                        className="text-center ellipse-text my-2 h-[35px]"
+                    >
                         {rowData.contract_name
                             ? rowData.contract_name
                             : 'Not Available'}
@@ -98,21 +107,83 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             if (key === 'email') {
                 return (
                     <td key={i} className="text-center my-2 h-[35px] flex">
-                        <p className='m-auto text-center'> {rowData?.email?.length>25 ? <div className='flex h-[35px] text-center justify-center'><p className='ellipse-text text-center '>{rowData?.email}</p> <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
-          <InfoIcon />
-        </Tooltip></div>: rowData?.branch_head }</p>
-                 
+                        <p className="m-auto text-center">
+                            {' '}
+                            {rowData?.email?.length > 25 ? (
+                                <div className="flex h-[35px] text-center justify-center">
+                                    <p className="ellipse-text text-center ">
+                                        {rowData?.email}
+                                    </p>{' '}
+                                    <Tooltip
+                                        className="bg-[#000000] w-[100%] break-words"
+                                        title={
+                                            rowData?.email || 'Not Available'
+                                        }
+                                        arrow
+                                    >
+                                        <InfoIcon />
+                                    </Tooltip>
+                                </div>
+                            ) : (
+                                rowData?.branch_head
+                            )}
+                        </p>
+                    </td>
+                )
+            }
+            if (key === 'branch_email') {
+                return (
+                    <td key={i} className="text-center my-2 h-[35px] flex">
+                        <p className="m-auto text-center">
+                            {' '}
+                            {rowData?.branch_email?.length > 25 ? (
+                                <div className="flex h-[35px] text-center justify-center">
+                                    <p className="ellipse-text text-center ">
+                                        {rowData?.branch_email}
+                                    </p>{' '}
+                                    <Tooltip
+                                        className="bg-[#000000] w-[100%] break-words"
+                                        title={
+                                            rowData?.branch_email ||
+                                            'Not Available'
+                                        }
+                                        arrow
+                                    >
+                                        <InfoIcon />
+                                    </Tooltip>
+                                </div>
+                            ) : (
+                                rowData?.branch_email
+                            )}
+                        </p>
                     </td>
                 )
             }
             if (key === 'branch_head') {
                 return (
-                    <td key={i} >
-                        <p className='m-auto text-center'> {rowData?.branch_head?.length>25 ? <div className='flex h-[35px] text-center justify-center'><p className='ellipse-text text-center '>{rowData?.branch_head}</p> <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.branch_head || 'Not Available'} arrow>
-          <InfoIcon />
-        </Tooltip></div>: rowData?.branch_head }</p>
-                       
-                 
+                    <td key={i}>
+                        <p className="m-auto text-center">
+                            {' '}
+                            {rowData?.branch_head?.length > 25 ? (
+                                <div className="flex h-[35px] text-center justify-center">
+                                    <p className="ellipse-text text-center ">
+                                        {rowData?.branch_head}
+                                    </p>{' '}
+                                    <Tooltip
+                                        className="bg-[#000000] w-[100%] break-words"
+                                        title={
+                                            rowData?.branch_head ||
+                                            'Not Available'
+                                        }
+                                        arrow
+                                    >
+                                        <InfoIcon />
+                                    </Tooltip>
+                                </div>
+                            ) : (
+                                rowData?.branch_head
+                            )}
+                        </p>
                     </td>
                 )
             }
@@ -126,7 +197,6 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 )
             }
             if (key === 'contract_download') {
-
                 return (
                     <td className="text-center" key={i}>
                         {rowData?.contract_download ? (
@@ -146,7 +216,6 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 )
             }
             if (key === 'comment') {
-
                 return (
                     <td className="text-center my-2 h-[35px]" key={i}>
                         {rowData?.comment ? rowData?.comment : 'Not Available'}
@@ -154,7 +223,6 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 )
             }
             if (key === 'admin') {
-
                 return (
                     <td className="text-center my-2 h-[35px]" key={i}>
                         {rowData?.admin?.first_name
@@ -165,12 +233,12 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center flex gap-2" key={i}>
+                    <td className="text-center flex justify-center" key={i}>
                         <Button
                             className="!p-3 !gap-3 m-auto"
                             onClick={() => handleEdit(rowData)}
                         >
-                             <EditIcon />
+                            <EditIcon />
                         </Button>
                         <Button
                             className="!p-3 m-auto"
@@ -182,13 +250,20 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                 )
             }
             return (
-                <td key={i} className="ellipse-text pl-4 pr-4 text-center">
+                <td key={i} className=" pl-4 pr-4 text-center">
                     {rowData[key]}
                 </td>
             )
         })
 
-        return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>
+        return (
+            <tr
+                key={index}
+                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+            >
+                {columnData}
+            </tr>
+        )
     }
 
     const tableData = () => {
@@ -196,14 +271,22 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
         // return collection.map((rowData: any, index: any) =>
         //     tableRows(rowData, index)
         // )
-        return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
-      <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
-    </tr>;
+        return collection?.length > 0 ? (
+            collection?.map((rowData: any, index: any) =>
+                tableRows(rowData, index)
+            )
+        ) : (
+            <tr>
+                <td colSpan={12}>
+                    <h4 className="text-center">Data Not Found</h4>
+                </td>
+            </tr>
+        )
     }
 
     const headRow = () => {
         // Generates the header row.
-        return Object.values(tableHead).map((title:any, index:any) => (
+        return Object.values(tableHead).map((title: any, index: any) => (
             <td key={index} className="text-center">
                 {title}
             </td>
@@ -212,10 +295,10 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
     React.useEffect(() => {
         // Update the displayed data when the AllStore prop changes.
         if (AllStore) {
-            const newCollection = cloneDeep(AllStore.slice(0, countPerPage));
-            setCollection(newCollection);
+            const newCollection = cloneDeep(AllStore.slice(0, countPerPage))
+            setCollection(newCollection)
         }
-    }, [AllStore]);
+    }, [AllStore])
 
     // JSX structure for rendering the table and pagination.
 
@@ -230,15 +313,15 @@ const BranchTable = ({  AllStore, tableHead,setformData,formData,setModal,modal}
                     onChange={(e) => setValue(e.target.value)}
                 />
             </div>
-            <div className='overflow-auto'>
-            <table className="w-screen lg:w-full md:w-full">
-                <thead>
-                    <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[45px]">
-                        {headRow()}
-                    </tr>
-                </thead>
-                <tbody className="trhover bg-white">{tableData()}</tbody>
-            </table>
+            <div className="overflow-auto">
+                <table className="w-screen lg:w-full md:w-full">
+                    <thead>
+                        <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[45px]">
+                            {headRow()}
+                        </tr>
+                    </thead>
+                    <tbody className="trhover bg-white">{tableData()}</tbody>
+                </table>
             </div>
             <div className="flex justify-center bg-white p-4">
                 <Pagination

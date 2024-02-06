@@ -30,7 +30,7 @@ const tableShareHead: any = {
     Action: 'Action',
 }
 const tableBranchHead: any = {
-    email: 'Email ID',
+    branch_email: 'Email ID',
     name: 'Name',
     branch_gst: 'GST Number',
     branch_head: 'Head',
@@ -280,7 +280,14 @@ const BasicInfo = () => {
             setData({
                 ...BasicInfo?.data[0],
                 gst_file: BasicInfo?.data,
-                gst_number: BasicInfo?.data[0]?.gst,
+                country_id: companyDetails?.data[0].country_id,
+                state_id: companyDetails?.data[0].state_id,
+                address: companyDetails?.data[0].address || '',
+                pin_code: companyDetails?.data[0].pin_code || '',
+                gst_number:
+                    BasicInfo?.data[0]?.gst ||
+                    companyDetails?.data[0].gst ||
+                    '',
             })
         }
     }, [BasicInfo?.data])
@@ -479,7 +486,7 @@ const BasicInfo = () => {
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Firm Registered PIN Code"
+                                        label="Firm Registered PIN Code*"
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
@@ -737,8 +744,9 @@ const BasicInfo = () => {
                                 tableHead={tableShareHead}
                             />
                         )}
-
-                        {error && error.shareholder_ids}
+                        <p className="text-[red] text-p-error-hight">
+                            {error && error.shareholder_ids}
+                        </p>
                     </div>
                     {/* } */}
 

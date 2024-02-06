@@ -1,117 +1,147 @@
 import { Button, FormContainer, FormItem, Input } from '@/components/ui'
-import useApiFetch from '@/store/customeHook/useApiFetch';
-import { apiUrl, getToken } from '@/store/token';
+import useApiFetch from '@/store/customeHook/useApiFetch'
+import { apiUrl, getToken } from '@/store/token'
 import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
-import usePostApi from '@/store/customeHook/postApi';
-import { ToastContainer } from 'react-toastify';
-import usePutApi from '@/store/customeHook/putApi';
-import axios from 'axios';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { useNavigate } from 'react-router-dom'
+import {
+    messageView,
+    messageViewNew,
+    onkeyDownBankacNum,
+    onkeyDownBankifscCode,
+    onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber,
+    onkeyDownforSpecialCharcter,
+    validateAccountForm,
+    validateBranchForm,
+    validateKeyForm,
+} from '@/store/customeHook/validate'
+import usePostApi from '@/store/customeHook/postApi'
+import { ToastContainer } from 'react-toastify'
+import usePutApi from '@/store/customeHook/putApi'
+import axios from 'axios'
 const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
-    const navigate: any = useNavigate();
+    const navigate: any = useNavigate()
     const [error, setErrors] = useState<any>({})
-    const { token }: any = getToken();
-    const { data: ListOfCountry, loading: LCloading, error: LCerror } =
-        useApiFetch<any>(`master/get-countries`, token);
-    const { data: ListOfState, loading: LSloading, error: LSerror } =
-        useApiFetch<any>(`master/get-state-by-Id/${data?.country_id}`, token);
+    const { token }: any = getToken()
+    const {
+        data: ListOfCountry,
+        loading: LCloading,
+        error: LCerror,
+    } = useApiFetch<any>(`master/get-countries`, token)
+    const {
+        data: ListOfState,
+        loading: LSloading,
+        error: LSerror,
+    } = useApiFetch<any>(`master/get-state-by-Id/${data?.country_id}`, token)
 
-    const { data: ListOfcity, loading: Lcloading, error: Lcerror } =
-        useApiFetch<any>(`master/get-city-by-countryId/${data?.country_id}`, token);
+    const {
+        data: ListOfcity,
+        loading: Lcloading,
+        error: Lcerror,
+    } = useApiFetch<any>(
+        `master/get-city-by-countryId/${data?.country_id}`,
+        token
+    )
 
-    const { data: ListOfRole, loading: LORloading, error: LORerror } =
-        useApiFetch<any>(`master/profile/get-platform-roles`, token);
-    let { result: Accountesponse, loading: AccountLoading, sendPostRequest: AccountPostDetails }: any = usePostApi(`auth/account-detail`);
-    let { result: AccountUpdateesponse, loading: AccountUpdateLoading, sendPostRequest: AccountUpdatePost }: any = usePutApi(`auth/account-detail/${data?.id}`);
+    const {
+        data: ListOfRole,
+        loading: LORloading,
+        error: LORerror,
+    } = useApiFetch<any>(`master/profile/get-platform-roles`, token)
+    let {
+        result: Accountesponse,
+        loading: AccountLoading,
+        sendPostRequest: AccountPostDetails,
+    }: any = usePostApi(`auth/account-detail`)
+    let {
+        result: AccountUpdateesponse,
+        loading: AccountUpdateLoading,
+        sendPostRequest: AccountUpdatePost,
+    }: any = usePutApi(`auth/account-detail/${data?.id}`)
 
     const handleChange = (e: any) => {
-        const newdata: any = { ...data };
+        const newdata: any = { ...data }
         if (e.target.name === 'cancelled_cheque') {
-            newdata[e.target.name] = e.target.files[0];
+            newdata[e.target.name] = e.target.files[0]
         } else {
-            newdata[e.target.name] = e.target.value;
+            newdata[e.target.name] = e.target.value
         }
 
         setData(newdata)
-        if(error[e.target.name])validateAccountForm(newdata, setErrors);
-        
+        if (error[e.target.name]) validateAccountForm(newdata, setErrors)
     }
     const handlesubmit = () => {
         if (validateAccountForm(data, setErrors)) {
-            let formdata = new FormData();
-            formdata.append("account_name", data?.account_name);
-            formdata.append("account_number", data?.account_number);
-            formdata.append("bank_name", data?.bank_name);
-            formdata.append("bank_ifsc", data?.bank_ifsc);
-            formdata.append("branch_name", data?.branch_name);
-            formdata.append("is_default", "0");
-            formdata.append("cancelled_cheque", data?.cancelled_cheque);
+            let formdata = new FormData()
+            formdata.append('account_name', data?.account_name)
+            formdata.append('account_number', data?.account_number)
+            formdata.append('bank_name', data?.bank_name)
+            formdata.append('bank_ifsc', data?.bank_ifsc)
+            formdata.append('branch_name', data?.branch_name)
+            formdata.append('is_default', '0')
+            formdata.append('cancelled_cheque', data?.cancelled_cheque)
             if (data?.type === 'Edit') {
                 fetch(`${apiUrl}/auth/account-detail/${data?.id}`, {
                     method: 'PUT',
                     headers: {
-                      'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                     },
                     body: formdata,
-                  })
+                })
                     .then((response) => {
-                      if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                      }
-                      return response.json(); // or response.text() depending on the response content type
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok')
+                        }
+                        return response.json() // or response.text() depending on the response content type
                     })
                     .then((data) => {
                         messageViewNew(data)
-                        if(data?.status==200){
+                        if (data?.status == 200) {
                             fetchData()
                             setModal(false)
                         }
                         fetchData()
-                      // Handle the response data here
+                        // Handle the response data here
                     })
                     .catch((error) => {
-                      // Handle any errors here
-                      console.error('Error:', error);
-                    });
+                        // Handle any errors here
+                        console.error('Error:', error)
+                    })
                 // AccountUpdatePost(data)
-
             } else {
                 fetch(`${apiUrl}/auth/account-detail`, {
                     method: 'POST',
                     headers: {
-                      'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                     },
                     body: formdata,
-                  })
+                })
                     .then((response) => {
-                      if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                      }
-                      return response.json(); // or response.text() depending on the response content type
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok')
+                        }
+                        return response.json() // or response.text() depending on the response content type
                     })
                     .then((data) => {
                         messageViewNew(data)
-                        if(data?.status==200){
+                        if (data?.status == 200) {
                             fetchData()
                             setModal(false)
                         }
                         fetchData()
-                      // Handle the response data here
+                        // Handle the response data here
                     })
                     .catch((error) => {
-                      // Handle any errors here
-                      console.error('Error:', error);
-                    });
-                  
+                        // Handle any errors here
+                        console.error('Error:', error)
+                    })
+
                 // AccountPostDetails(formdata)
             }
-
         }
     }
-  
+
     useEffect(() => {
         messageViewNew(Accountesponse)
         if (Accountesponse?.status == 200) {
@@ -119,7 +149,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
             setTimeout(() => {
                 setModal(false)
                 fetchData()
-
             }, 2000)
         }
     }, [Accountesponse?.status])
@@ -130,7 +159,6 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
             setTimeout(() => {
                 setModal(false)
                 fetchData()
-
             }, 2000)
         }
     }, [AccountUpdateesponse?.status])
@@ -171,16 +199,19 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div>
-                                <h4 className="text-head-title pt-4 text-center">Account Details</h4>
+                                <h4 className="text-head-title pt-4 text-center">
+                                    Account Details
+                                </h4>
                                 <Formik
                                     initialValues={{ field: true }}
                                     onSubmit={() =>
-                                        console.log('Submited via my onSubmit function')
+                                        console.log(
+                                            'Submited via my onSubmit function'
+                                        )
                                     }
                                 >
                                     <Form className="py-2 multistep-form-step">
                                         <FormContainer>
-
                                             <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
                                                 <FormItem
                                                     label="Account Name"
@@ -188,19 +219,28 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                        disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         type="text"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
                                                         name="account_name"
-                                                        value={data?.account_name}
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        value={
+                                                            data?.account_name
+                                                        }
+                                                        onKeyDown={
+                                                            onkeyDownforSpecialCharcter
+                                                        }
                                                         placeholder="Account Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red] text-p-error-hight'>{error && error.account_name}</p>
+                                                    <p className="text-[red] text-p-error-hight">
+                                                        {error &&
+                                                            error.account_name}
+                                                    </p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Account Number"
@@ -208,19 +248,28 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                        disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         type="number"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
                                                         name="account_number"
-                                                        value={data?.account_number}
+                                                        value={
+                                                            data?.account_number
+                                                        }
                                                         placeholder="Account Number"
                                                         component={Input}
-                                                        onKeyDown={onkeyDownBankacNum}
+                                                        onKeyDown={
+                                                            onkeyDownBankacNum
+                                                        }
                                                     />
-                                                    <p className='text-[red] text-p-error-hight'>{error && error.account_number}</p>
+                                                    <p className="text-[red] text-p-error-hight">
+                                                        {error &&
+                                                            error.account_number}
+                                                    </p>
                                                 </FormItem>
                                             </div>
                                             <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
@@ -230,19 +279,26 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                        disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         type="text"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={
+                                                            onkeyDownforSpecialCharcter
+                                                        }
                                                         name="bank_name"
                                                         value={data?.bank_name}
                                                         placeholder="Bank Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red] text-p-error-hight'>{error && error.bank_name}</p>
+                                                    <p className="text-[red] text-p-error-hight">
+                                                        {error &&
+                                                            error.bank_name}
+                                                    </p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Bank IFSC Code"
@@ -250,7 +306,9 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                        disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         type="text"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
@@ -260,9 +318,14 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
                                                         component={Input}
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={
+                                                            onkeyDownforSpecialCharcter
+                                                        }
                                                     />
-                                                    <p className='text-[red] text-p-error-hight'>{error && error.bank_ifsc}</p>
+                                                    <p className="text-[red] text-p-error-hight">
+                                                        {error &&
+                                                            error.bank_ifsc}
+                                                    </p>
                                                 </FormItem>
                                             </div>
                                             <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%] md:flex lg:flex">
@@ -272,19 +335,28 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                        disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         type="text"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={
+                                                            onkeyDownforSpecialCharcter
+                                                        }
                                                         name="branch_name"
-                                                        value={data?.branch_name}
+                                                        value={
+                                                            data?.branch_name
+                                                        }
                                                         placeholder="Branch Name"
                                                         component={Input}
                                                     />
-                                                    <p className='text-[red] text-p-error-hight'>{error && error.branch_name}</p>
+                                                    <p className="text-[red] t-hight h-[20px]">
+                                                        {error &&
+                                                            error.branch_name}
+                                                    </p>
                                                 </FormItem>
                                                 <FormItem
                                                     label="Cancel Cheque"
@@ -292,7 +364,9 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                     asterisk={true}
                                                 >
                                                     <Field
-                                                   disabled={data?.isdisabled}
+                                                        disabled={
+                                                            data?.isdisabled
+                                                        }
                                                         multiple
                                                         type="file"
                                                         className="w-full"
@@ -302,40 +376,67 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         }
                                                         name="cancelled_cheque"
                                                         placeholder="GST Number"
-                                                        onkeyDown={onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber}
+                                                        onkeyDown={
+                                                            onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber
+                                                        }
                                                         component={Input}
-                                                        accept=".jpg, .jpeg, .png, .gif, .pdf" 
+                                                        accept=".jpg, .jpeg, .png, .gif, .pdf"
                                                     />
+                                                    {data?.cancelled_cheque &&
+                                                        data
+                                                            ?.cancelled_cheque[0] && (
+                                                            <a
+                                                                className=""
+                                                                href={data?.cancelled_cheque[0]?.toString()}
+                                                                rel="noopener noreferrer"
+                                                                target="_blank"
+                                                            >
+                                                                View
+                                                            </a>
+                                                        )}
 
-
-                                                    <p className="text-[red]  text-p-error-hight">
-                                                        {error && error.cancelled_cheque}
+                                                    <p
+                                                        className={`text-[red] ${
+                                                            data?.cancelled_cheque &&
+                                                            data
+                                                                ?.cancelled_cheque[0]
+                                                                ? ''
+                                                                : 'h-[20px]'
+                                                        }  `}
+                                                    >
+                                                        {error &&
+                                                            error.cancelled_cheque}
                                                     </p>
                                                 </FormItem>
                                             </div>
-                                            <div className='flex gap-8 lg:pl-20 lg:pr-20 pl-10 pr-10'>
+                                            <div className="flex gap-8 lg:pl-20 lg:pr-20 pl-10 pr-10">
                                                 <Button
-                                                    style={{ borderRadius: '13px' }}
+                                                    style={{
+                                                        borderRadius: '13px',
+                                                    }}
                                                     block
                                                     variant="solid"
                                                     type="button"
-                                                    role='button'
-                                                    onClick={() => setModal(false)}
+                                                    role="button"
+                                                    onClick={() =>
+                                                        setModal(false)
+                                                    }
                                                     className="indigo-btn !bg-gray-500 m-4 mx-auto rounded-[30px]"
                                                 >
                                                     Cancel
                                                 </Button>
                                                 <Button
                                                     block
-                                                    style={{ borderRadius: "13px" }}
+                                                    style={{
+                                                        borderRadius: '13px',
+                                                    }}
                                                     // loading={isSubmitting}
                                                     disabled={data?.isdisabled}
                                                     variant="solid"
                                                     onClick={handlesubmit}
-                                                    className='indigo-btn mt-4 mx-auto rounded-xl shadow-lg'
+                                                    className="indigo-btn mt-4 mx-auto rounded-xl shadow-lg"
                                                 >
                                                     Save
-
                                                 </Button>
                                             </div>
                                         </FormContainer>

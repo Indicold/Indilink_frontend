@@ -6,16 +6,23 @@ import { cloneDeep } from 'lodash'
 import 'rc-pagination/assets/index.css'
 import { Button, Tooltip } from '@/components/ui' // Imports a Button component.
 import { useNavigate } from 'react-router-dom'
-import InfoIcon from '@mui/icons-material/Info';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import InfoIcon from '@mui/icons-material/Info'
+import EditIcon from '@mui/icons-material/Edit'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 // Defines the table header with column names.
 
 // The ShareHolderTable component takes a prop called AllStore, presumably for rendering data.
 
-const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,modal }: any) => {
-    let allData: any = AllStore || [];
-    
+const ShareHolderTable = ({
+    AllStore,
+    tableHead,
+    setformData,
+    formData,
+    setModal,
+    modal,
+}: any) => {
+    let allData: any = AllStore || []
+
     const countPerPage = 5
     const [value, setValue] = React.useState('')
 
@@ -50,8 +57,6 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
         }, 400)
     )
 
- 
-
     const updatePage = (p: any) => {
         // Function to update the current page of data.
         setCurrentPage(p)
@@ -64,13 +69,12 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
 
     const handleEdit = (rowData: any) => {
         // Handle edit action for different asset types.
-        setformData({...rowData,isdisabled:false,type:"Edit"})
+        setformData({ ...rowData, isdisabled: false, type: 'Edit' })
         setModal(true)
-
     }
 
     const handleView = (rowData: any) => {
-        setformData({...rowData,isdisabled:true,type:"View"})
+        setformData({ ...rowData, isdisabled: true, type: 'View' })
         setModal(true)
     }
 
@@ -100,16 +104,15 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             if (key === 'shareholder_email') {
                 return (
                     <td key={i} className="text-center my-2 h-[35px] flex ml-4">
-                        <p className='m-auto'> {rowData?.shareholder_email}</p>
-                       
-                      {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
+                        <p className="m-auto"> {rowData?.shareholder_email}</p>
+
+                        {/* <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.email || 'Not Available'} arrow>
           <InfoIcon />
         </Tooltip> */}
                     </td>
                 )
             }
             if (key === 'contract_download') {
-
                 return (
                     <td className="text-center" key={i}>
                         {rowData?.contract_download ? (
@@ -129,7 +132,6 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                 )
             }
             if (key === 'comment') {
-
                 return (
                     <td className="text-center" key={i}>
                         {rowData?.comment ? rowData?.comment : 'Not Available'}
@@ -137,26 +139,29 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                 )
             }
             if (key === 'admin') {
-
                 return (
                     <td className="text-center" key={i}>
                         {rowData?.admin?.first_name
-                            ? `${rowData?.admin?.first_name} ${rowData?.admin?.last_name ? rowData?.admin?.last_name :""  }`
+                            ? `${rowData?.admin?.first_name} ${
+                                  rowData?.admin?.last_name
+                                      ? rowData?.admin?.last_name
+                                      : ''
+                              }`
                             : 'Not Available'}
                     </td>
                 )
             }
             if (key === 'Action') {
                 return (
-                    <td className="text-center flex" key={i}>
+                    <td className="text-center justify-center flex" key={i}>
                         <Button
-                            className="!p-3 m-auto my-2 pt-0 pb-0"
+                            className="!p-3 !gap-3 m-2"
                             onClick={() => handleEdit(rowData)}
                         >
                             <EditIcon />
                         </Button>
                         <Button
-                            className="!p-3 m-auto"
+                            className="!p-3 !gap-3 m-2"
                             onClick={() => handleView(rowData)}
                         >
                             <VisibilityIcon />
@@ -171,7 +176,14 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
             )
         })
 
-        return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">{columnData}</tr>
+        return (
+            <tr
+                key={index}
+                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+            >
+                {columnData}
+            </tr>
+        )
     }
 
     const tableData = () => {
@@ -179,14 +191,22 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
         // return collection.map((rowData: any, index: any) =>
         //     tableRows(rowData, index)
         // )
-        return collection?.length>0 ? collection?.map((rowData: any, index: any) => tableRows(rowData, index)) :<tr>
-      <td colSpan={12}><h4 className='text-center'>Data Not Found</h4></td>
-    </tr>;
+        return collection?.length > 0 ? (
+            collection?.map((rowData: any, index: any) =>
+                tableRows(rowData, index)
+            )
+        ) : (
+            <tr>
+                <td colSpan={12}>
+                    <h4 className="text-center">Data Not Found</h4>
+                </td>
+            </tr>
+        )
     }
 
     const headRow = () => {
         // Generates the header row.
-        return Object.values(tableHead).map((title:any, index:any) => (
+        return Object.values(tableHead).map((title: any, index: any) => (
             <td key={index} className="text-center">
                 {title}
             </td>
@@ -204,10 +224,10 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
     React.useEffect(() => {
         // Update the displayed data when the AllStore prop changes.
         if (AllStore) {
-            const newCollection = cloneDeep(AllStore.slice(0, countPerPage));
-            setCollection(newCollection);
+            const newCollection = cloneDeep(AllStore.slice(0, countPerPage))
+            setCollection(newCollection)
         }
-    }, [AllStore]);
+    }, [AllStore])
     // JSX structure for rendering the table and pagination.
 
     return (
@@ -221,16 +241,16 @@ const ShareHolderTable = ({ AllStore, tableHead,setformData,formData,setModal,mo
                     onChange={(e) => setValue(e.target.value)}
                 />
             </div>
-           <div className='overflow-auto'>
-           <table className="w-screen lg:w-full md:w-full">
-                <thead>
-                    <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
-                        {headRow()}
-                    </tr>
-                </thead>
-                <tbody className="trhover bg-white">{tableData()}</tbody>
-            </table>
-           </div>
+            <div className="overflow-auto">
+                <table className="w-screen lg:w-full md:w-full">
+                    <thead>
+                        <tr className="bg-[#0f3492] text-white det-header rounded-[13px] my-2 h-[40px]">
+                            {headRow()}
+                        </tr>
+                    </thead>
+                    <tbody className="trhover bg-white">{tableData()}</tbody>
+                </table>
+            </div>
             <div className="flex justify-center bg-white p-4">
                 <Pagination
                     pageSize={countPerPage}
