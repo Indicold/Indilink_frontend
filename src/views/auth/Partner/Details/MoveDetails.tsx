@@ -352,43 +352,6 @@ const MoveDetails = () => {
                         )
                     })}
                 </div>
-
-                <div className="p-4 bg-white rounded-lg mx-0">
-                    <div className="ml-4">
-                        <h1 className="text-lg text-blue-800 mt-10 mb-4">
-                            Asset Rules
-                        </h1>
-                        <p className="font-light">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing
-                            elit. Eius unde cumque nisi dolorum atque quas
-                            corporis, molestias maxime possimus officiis minima
-                            natus sit quasi mollitia accusantium voluptatem fuga
-                            blanditiis illum?
-                        </p>
-                    </div>
-                    <div className="grid px-6 gap-4 grid-cols-4">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map(
-                            (item: any, index: any) => {
-                                return (
-                                    <div key={index} className="pt-6 ">
-                                        <div className="w-12 h-12 bg-orange-100 rounded-full">
-                                            <AnnouncementIcon className="mx-3 my-3 " />
-                                        </div>
-                                        <div className="py-4">
-                                            <p className="font font-semibold text-black">
-                                                Asset Type
-                                            </p>
-                                            <p className="w-full font-light">
-                                                Lorem ipsum dm quas cupas
-                                                repellendus ea tenetur.
-                                            </p>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        )}
-                    </div>
-                </div>
             </div>
         </div>
     )
