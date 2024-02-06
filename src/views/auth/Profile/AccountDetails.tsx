@@ -117,7 +117,7 @@ const AccountDetails = () => {
                             setModal(true);
                             setData({})
                         }}
-                        className="indigo-btn !w-[200px] !bg-gray-500 m-4 ml-auto rounded-[30px]"
+                        className="indigo-btn !w-[200px] m-4 ml-auto rounded-[30px]"
                     >
                         + Add Account
                     </Button>

@@ -145,7 +145,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     value={formData?.name}
                                                     placeholder="Branch Name"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforSpecialCharcter}
+                                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.name}
@@ -213,7 +213,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                     value={formData?.branch_head}
                                                     placeholder="Branch Head"
                                                     component={Input}
-                                                    onKeyDown={onkeyDownforSpecialCharcter}
+                                                    onKeyDown={onkeyDownforNumSpecialCharcter}
                                                 />
                                                 <p className='text-[red] text-p-error-hight'>
                                                     {error && error?.branch_head}

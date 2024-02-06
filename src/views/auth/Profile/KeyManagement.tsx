@@ -15,7 +15,7 @@ const tableHead = {
     designation:"Designation",
     aadhar:"Aadhar",
 contact_number: "Mob. No.",
-contract_name: "Contract Name",
+// contract_name: "Contract Name",
   Action: "Action"
 };
 const KeyManagement = () => {

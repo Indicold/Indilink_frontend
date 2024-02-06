@@ -643,7 +643,7 @@ console.log("wertjkl",newErrors,formData);
  export const onkeyDownOne=(e:any)=>{
     console.log("TYYYYYYYYY7878",e.key);
     
-    if (e.key === 'e' || e.key === 'E'  || e.key === '-') {
+    if (e.key === 'e' || e.key === 'E'  || e.key === '-' || e.key == '.') {
         e.preventDefault(); // Prevent the default behavior (i.e., typing 'e' or '-')
       }
       if(e.target.value?.length<1 &&  e.key === '0'){

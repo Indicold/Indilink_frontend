@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onkeyDownBankacNum, onkeyDownBankifscCode, onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateAccountForm, validateBranchForm, validateKeyForm } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -113,7 +113,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
     }
   
     useEffect(() => {
-        messageViewNew(Accountesponse)
+        if(Accountesponse){
+            messageViewNew(Accountesponse)
+
+        }
         if (Accountesponse?.status == 200) {
             fetchData()
             setTimeout(() => {
@@ -124,7 +127,10 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
         }
     }, [Accountesponse?.status])
     useEffect(() => {
-        messageViewNew(AccountUpdateesponse)
+        if(AccountUpdateesponse){
+            messageViewNew(AccountUpdateesponse)
+        }
+
         if (AccountUpdateesponse?.status == 200) {
             fetchData()
             setTimeout(() => {
@@ -196,7 +202,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         }
                                                         name="account_name"
                                                         value={data?.account_name}
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={onkeyDownforNumSpecialCharcter}
                                                         placeholder="Account Name"
                                                         component={Input}
                                                     />
@@ -236,7 +242,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={onkeyDownforNumSpecialCharcter}
                                                         name="bank_name"
                                                         value={data?.bank_name}
                                                         placeholder="Bank Name"
@@ -251,16 +257,18 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                 >
                                                     <Field
                                                         disabled={data?.isdisabled}
-                                                        type="text"
+                                                        type="tel"
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
+                                                        maxLength={11}
                                                         name="bank_ifsc"
                                                         value={data?.bank_ifsc}
                                                         placeholder="Bank IFSC Code"
                                                         component={Input}
                                                         onKeyDown={onkeyDownforSpecialCharcter}
+                                                        className='uppercase'
                                                     />
                                                     <p className='text-[red] text-p-error-hight'>{error && error.bank_ifsc}</p>
                                                 </FormItem>
@@ -278,7 +286,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                         onChange={(e: any) =>
                                                             handleChange(e)
                                                         }
-                                                        onKeyDown={onkeyDownforSpecialCharcter}
+                                                        onKeyDown={onkeyDownforNumSpecialCharcter}
                                                         name="branch_name"
                                                         value={data?.branch_name}
                                                         placeholder="Branch Name"

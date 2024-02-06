@@ -621,14 +621,14 @@ const BasicInfo = () => {
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
                                     <FormItem
-                                        label="No Of Vehicle"
+                                        label="No. of Vehicle"
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             multiple
-                                            type="number"
-                                            maxLength={15}
+                                            type="tel"
+                                            maxLength={4}
                                             className="w-full"
                                             autoComplete="off"
                                             onChange={(e: any) =>
@@ -641,9 +641,10 @@ const BasicInfo = () => {
                                                     ? data?.vehicle_count
                                                     : ''
                                             }
-                                            placeholder="No Of Vehicle"
+                                            placeholder="No. of Vehicle"
                                             component={Input}
-                                            onkeyDown={onkeyDownOne}
+                                            // onkeyDown={onkeyDownOne}
+                                            onKeyDown={onkeyDownforNumMobSpecialCharcterOnly}
                                         />
 
                                         <p className="text-[red] text-p-error-hight">
@@ -694,7 +695,7 @@ const BasicInfo = () => {
                                 <div className="text-center flex justify-end">
                                     {SareList?.data?.length < 1 ? (
                                         <button
-                                            className=" bg-gray-400 rounded-lg p-2 text-white"
+                                            className=" bg-green-600 hover:bg-green-500 rounded-lg p-2 text-white"
                                             onClick={() => {
                                                 setSHModal(true)
                                             }}
@@ -703,7 +704,7 @@ const BasicInfo = () => {
                                         </button>
                                     ) : (
                                         <button
-                                            className=" bg-gray-400 text-white rounded-lg p-2"
+                                            className=" bg-green-600 hover:bg-green-500 text-white rounded-lg p-2"
                                             onClick={() => {
                                                 setformDataShare({})
                                                 setSHModal(true)
@@ -751,7 +752,7 @@ const BasicInfo = () => {
                                 </h4>
                                 <div className="text-center flex justify-end">
                                     <button
-                                        className=" p-4 text-white bg-gray-400 rounded-lg py-2"
+                                        className=" p-4 text-white bg-green-600 hover:bg-green-500 rounded-lg py-2"
                                         onClick={() => {
                                             setformDataBranch({})
                                             setBranchModal(true)
@@ -798,7 +799,7 @@ const BasicInfo = () => {
                             type="button"
                             role="button"
                             onClick={() => navigate(-1)}
-                            className="indigo-btn mt-4  !bg-gray-500  rounded-[30px]"
+                            className="indigo-btn mt-4  bg-green-600 hover:bg-green-500  rounded-[30px]"
                         >
                             Prev
                         </Button>
@@ -809,7 +810,7 @@ const BasicInfo = () => {
                             // disabled={isDisabled}
                             variant="solid"
                             onClick={handlesubmit}
-                            className="indigo-btn mt-4 rounded-xl shadow-lg"
+                            className="indigo-btn bg-green-600 hover:bg-green-500 mt-4 rounded-xl shadow-lg"
                         >
                             {isSubmitting ? 'Saving...' : 'Save & Next'}
                         </Button>
