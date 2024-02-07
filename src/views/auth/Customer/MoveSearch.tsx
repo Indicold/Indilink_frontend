@@ -191,7 +191,9 @@ const MoveSearch = () => {
                 navigate('/ticket_list_move')
             }, 2000)
         }
-        messageViewNew(CustomerResponse)
+        if(CustomerResponse) {
+            messageViewNew(CustomerResponse)
+        }
     }, [CustomerResponse?.status]);
 
 

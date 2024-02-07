@@ -12,6 +12,7 @@ import usePostApi from '@/store/customeHook/postApi';
 import { messageView, messageViewNew } from '@/store/customeHook/validate';
 import LinkEditorExample from '@/components/layouts/EditorComponents';
 import ESign from './ESign';
+import DataNotFound, { DataNotFound2 } from '@/components/layouts/DataNotFound';
 
 /* The code defines a functional component called `DocumentViewModal`. It takes three props as input:
 `modal`, `setModal`, and `data`. */
@@ -59,18 +60,19 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
                     </button>
 
                     <div className="px-6 py-6 lg:px-8">
-                        <h6 className="text-head-title text-center  mb-4">
-                           Document View
-                        </h6>
-<iframe
+                        
+                        <h5 className='flex justify-center mb-4'>
+                    <b>Document View</b>
+                </h5>
+{data?.base64 ? <iframe
   src={`data:application/pdf;base64,${data?.base64}`}
   width="100%"
   height="500px"
-></iframe>   
+></iframe> :<DataNotFound2 title="No Title" />  }
 {eSign && <div className='border-2'>
     <ESign />
 </div>}
-<div className="flex justify-end">
+{data?.base64  && <div className="flex justify-end">
                        
                        <Button
                            block
@@ -85,7 +87,7 @@ const DocumentViewModal = ({modal,setModal,data}:any) => {
                               
                                    </Button>
             
-                   </div>
+                   </div>}
                  
                     </div>
                 </div>

@@ -190,7 +190,7 @@ const StoreSearch = () => {
             setTimeout(() => {
                 navigate('/ticket_list_store')
             }, 2000)
-        }else {
+        }else if(CustomerResponse) {
             messageViewNew(CustomerResponse)
         }
     }, [CustomerResponse?.status]);
