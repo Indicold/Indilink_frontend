@@ -40,7 +40,7 @@ const AuthResponse=useSelector((state:any)=>state?.auth)
   autoPlay={true}
   stopOnHover={true}>
                 {[1,2,3,4].map((item:any,index:any)=>(
-            <div className='bg-[#F3F4F6] rounded-lg px-[45px] py-10'>
+            <div key={index} className='bg-[#F3F4F6] rounded-lg px-[45px] py-10'>
             <section className="text-gray-600 body-font">
               <div className="container mx-auto flex px-5  items-center justify-center flex-col">
                 
