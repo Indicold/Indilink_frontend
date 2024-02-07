@@ -274,13 +274,14 @@ const BasicInfo = () => {
 
     //     }
     // }, [companyDetails?.data])
+console.log("TRRT",companyDetails);
 
     useEffect(() => {
         if (BasicInfo) {
             setData({
                 ...BasicInfo?.data[0],
                 gst_file: BasicInfo?.data,
-                country_id: companyDetails?.data[0].country_id,
+                country_id: companyDetails?.data[0]?.country_id ||101,
                 state_id: companyDetails?.data[0].state_id,
                 address: companyDetails?.data[0].address || '',
                 pin_code: companyDetails?.data[0].pin_code || '',
@@ -413,7 +414,8 @@ const BasicInfo = () => {
                                             {ListOfCountry &&
                                                 ListOfCountry?.data?.map(
                                                     (item: any, index: any) => (
-                                                        <option
+                                                        <option 
+                                                            key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
@@ -447,6 +449,7 @@ const BasicInfo = () => {
                                                 ListOfState?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
+                                                        key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
