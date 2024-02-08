@@ -9,8 +9,10 @@ import TableLayout from '@/components/layouts/TableLayout'
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const PartnerTableAssetsList = () => {
+    const { t, i18n }:any = useTranslation();
     const { token }: any = getToken();
     const [pageNo, setPageNo] = useState<any>(1)
 
@@ -26,7 +28,7 @@ const PartnerTableAssetsList = () => {
     return (
         <>
             <div className='mb-4'>
-                <h5><b>Assets List</b></h5>
+                <h5><b> {t("Assets List")}</b></h5>
             </div>
 
             {AllStore?.data?.length > 0 ? (
