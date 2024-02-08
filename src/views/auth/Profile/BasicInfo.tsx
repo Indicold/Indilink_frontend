@@ -277,7 +277,7 @@ const BasicInfo = () => {
 console.log("TRRT",companyDetails);
 
     useEffect(() => {
-        if (BasicInfo) {
+        if (BasicInfo && companyDetails?.data[0]) {
             setData({
                 ...BasicInfo?.data[0],
                 gst_file: BasicInfo?.data,
@@ -489,7 +489,8 @@ console.log("TRRT",companyDetails);
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Firm Registered PIN Code*"
+                                        label="Firm Registered PIN Code"
+                                        asterisk={true}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
@@ -654,7 +655,9 @@ console.log("TRRT",companyDetails);
                                             placeholder="No. of Vehicle"
                                             component={Input}
                                             // onkeyDown={onkeyDownOne}
-                                            onKeyDown={onkeyDownforNumMobSpecialCharcterOnly}
+                                            onKeyDown={
+                                                onkeyDownforNumMobSpecialCharcterOnly
+                                            }
                                         />
 
                                         <p className="text-[red] text-p-error-hight">
