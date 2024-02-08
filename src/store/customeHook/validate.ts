@@ -1980,10 +1980,10 @@ export const validateBasicForm = (data: any, setErrors: any) => {
     if (data?.gst_number && !reGST.test(data?.gst_number)) {
         newErrors.gst_file = 'Please enter a valid gst number'
     }
-    if (data?.shareholder_ids?.length < 1) {
+    if (!data?.shareholder_ids || data?.shareholder_ids?.length < 1) {
         newErrors.shareholder_ids = 'This field is required'
     }
-    if (data?.branch_ids < 1) {
+    if (!data?.branch_ids || data?.branch_ids < 1) {
         newErrors.branch_ids = 'This field is required'
     }
     if (!data?.pan_number) {
