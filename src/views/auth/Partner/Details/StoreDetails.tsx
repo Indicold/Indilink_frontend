@@ -24,7 +24,7 @@ const StoreDetails = () => {
     const [status, setStatus] = useState<any>('')
     const [modalList, setModalList] = useState<any>(false)
     let state: any = location?.state?.type
-    console.log('yyyyyyy', state)
+    console.log('yyyyyyy', state,location?.state)
 
     const {
         data: fetchDetails,
@@ -41,7 +41,7 @@ const StoreDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/accept-responses/${id}`, requestOptions)
+        fetch(`${apiUrl}/customer/accept-responses/${location?.state?.data?.id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -68,7 +68,7 @@ const StoreDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/reject-responses/${id}`, requestOptions)
+        fetch(`${apiUrl}/customer/reject-responses/${location?.state?.data?.id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -225,7 +225,7 @@ const StoreDetails = () => {
         }
     }, [fetchDetails?.data?.store]);
 
-    
+
     const topMainImages={
         mainImg:"https://img.freepik.com/free-photo/photo-automobile-production-line-welding-car-body-modern-car-assembly-plant-auto-industry-interior-hightech-factory-modern-production_645730-185.jpg?w=826&t=st=1707127221~exp=1707127821~hmac=5e1da4cbe40d01a7461d6e550faf689a1a76a9960d4536c0336fcf1dfb40573c",
         anothorFourImage:[
@@ -274,9 +274,9 @@ const StoreDetails = () => {
                         )
                     })}
                 </div>
-                <div className="lg:w-[25%] w-[100%]">
+                <div className={`${localStorage.getItem('user_type') === 'Customer' ? 'w-full' :'w-[25%]'}`}>
                     {localStorage.getItem('user_type') === 'Customer' ? (
-                        <div className="m-auto text-center">
+                        <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
                             {status && (
                                 <div className="">
                                     <div className="w-[100%] pl-4  mb-4">
@@ -290,14 +290,14 @@ const StoreDetails = () => {
                             <button
                                 type="button"
                                 onClick={handleAccept}
-                                className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
                             >
                                 Approved
                             </button>
                             <button
                                 type="button"
                                 onClick={handleReject}
-                                className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
                             >
                                 Disapproved
                             </button>

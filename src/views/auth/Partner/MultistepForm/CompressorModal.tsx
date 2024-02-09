@@ -91,7 +91,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
             messageViewNew({message:"Data Updated Successfully !",status:200});
             FetchAgain()
             setModal(false)
-        } else {
+        } else if(PutApiResponse) {
             messageViewNew(PutApiResponse)
         }
     }, [PutApiResponse])

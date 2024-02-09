@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import InfoIcon from '@mui/icons-material/Info';
 import usePutApi from '@/store/customeHook/putApi'
+import { useTranslation } from 'react-i18next'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -57,6 +58,7 @@ const CAEquipmentsModal: React.FC<MajorityHolderModalProps> = ({
      * function. It represents the event that triggered the function, such as a change event on an
      * input field or a file input.
      */
+    const { t, i18n }:any = useTranslation();
     const handleChange = (e: any) => {
         const newData: any = { ...data }
 
@@ -104,7 +106,7 @@ useEffect(()=>{
         if(modal){
             setModal(false)
         }
-    }else{
+    }else if(PutApiResponse){
         messageViewNew(PutApiResponse)
     }
 },[PutApiResponse])
@@ -147,7 +149,7 @@ useEffect(()=>{
                                 <span className="sr-only">Close modal</span>
                             </button>
                             <div className="px-6 py-6 lg:px-8">
-                                <h6 className="text-center">CA Equipment</h6>
+                                <h6 className="text-center">{t("CA Equipment")}</h6>
                                     {/* <FormItem
                                         label="Asset ID *"
                                         className="mx-auto"
@@ -167,7 +169,7 @@ useEffect(()=>{
                                         </p>
                                     </FormItem> */}
                                 <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
-                                    <FormItem label="Make *"
+                                    <FormItem label= {t("Make *")}
                                        className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                         disabled={isDisabled}
@@ -186,7 +188,7 @@ useEffect(()=>{
                                             {errors && errors.make}
                                         </p>
                                     </FormItem>
-                                    <FormItem label="Model *" 
+                                    <FormItem label= {t("Model *")}
                                       className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                                 disabled={isDisabled}
@@ -211,7 +213,7 @@ useEffect(()=>{
                                         // label="C.F.M.*"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                           C.F.M.*
+                                           {t("C.F.M.*")}
                                               <Tooltip title="Cubic Feet Per Minute" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -248,7 +250,7 @@ useEffect(()=>{
                                     className="indigo-btn !w-[40%] mx-auto mt-2 rounded-[30px]"
                                     
                                 >
-                                    Save
+                                    {t("Save")}
                                 </Button>
                                 </div>
                             </div>

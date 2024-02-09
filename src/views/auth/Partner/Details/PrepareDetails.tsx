@@ -33,7 +33,7 @@ const PrepareDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/accept-responses/${id}`, requestOptions)
+        fetch(`${apiUrl}/customer/accept-responses/${location?.state?.data?.id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -60,7 +60,7 @@ const PrepareDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/reject-responses/${id}`, requestOptions)
+        fetch(`${apiUrl}/customer/reject-responses/${location?.state?.data?.id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -302,9 +302,9 @@ const PrepareDetails = () => {
                         )
                     })}
                 </div>
-                <div className="w-[25%]">
+                <div className={`${localStorage.getItem('user_type') === 'Customer' ? 'w-full' :'w-[25%]'}`}>
                     {localStorage.getItem('user_type') === 'Customer' ? (
-                        <div className="m-auto text-center">
+                        <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
                             {status && (
                                 <div className="">
                                     <div className="w-[100%] pl-4  mb-4">
@@ -318,14 +318,14 @@ const PrepareDetails = () => {
                             <button
                                 type="button"
                                 onClick={handleAccept}
-                                className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
                             >
                                 Approved
                             </button>
                             <button
                                 type="button"
                                 onClick={handleReject}
-                                className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
                             >
                                 Disapproved
                             </button>

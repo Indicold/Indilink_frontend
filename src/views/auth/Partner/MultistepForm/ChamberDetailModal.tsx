@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import InfoIcon from '@mui/icons-material/Info';
+import { useTranslation } from 'react-i18next'
 interface MajorityHolderModalProps {
     modal: boolean
     formD: any
@@ -73,7 +74,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
         setFormattedStringP(formatted);
         data['pallet_size'] = formatted
     };
-
+    const { t, i18n }:any = useTranslation();
     /**
      * The handleChange function updates the data object based on the input value and name, and logs
      * the updated data object.
@@ -404,12 +405,12 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                             </button>
                             <div className="px-6 py-6 lg:px-8">
                                 <h6 className="text-center text-head-title">
-                                    Chamber
+                                    {t("Chamber")}
                                 </h6>
                                 
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Chamber No*"
+                                        label={t("Chamber No*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -432,7 +433,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Chamber name *"
+                                        label={t("Chamber name *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -455,7 +456,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Chamber Size(Meter) *"
+                                        label={t("Chamber Size(Meter) *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                          {/* <Field
@@ -480,7 +481,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="No. of pallets *"
+                                        label={t("No. of pallets *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     ><Field
                                             type="number"
@@ -502,7 +503,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Pallet size(MM)*"
+                                        label={t("Pallet size(MM)*")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                           {/* <Field
@@ -528,7 +529,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Racking Type *"
+                                        label={t("Racking Type *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <select
@@ -545,6 +546,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                                 RackingType?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
+                                                        key={index}
                                                             value={item?.id}
                                                             selected={item?.id===data?.racking_type_id}
                                                         >
@@ -563,7 +565,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     <FormItem
                                      label={
                                         <div className='flex justify-center items-center'>
-                                          Photo of entrance*
+                                          {t("Photo of entrance*")}
                                           <Tooltip title="Select multiple files" arrow>
                                             <InfoIcon />
                                           </Tooltip>
@@ -595,7 +597,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of the chamber from inside*"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                            Photo of the chamber from inside*
+                                            {t("Photo of the chamber from inside*")}
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -626,7 +628,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of chamber from gate *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of chamber from gate*
+                                          {t("Photo of chamber from gate*")}
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -657,7 +659,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         // label="Photo of the chamber from one corner *"
                                         label={
                                             <div className='flex justify-center items-center'>
-                                          Photo of the chamber from one corner*
+                                          {t("Photo of the chamber from one corner*")}
                                               <Tooltip title="Select multiple files" arrow>
                                                 <InfoIcon />
                                               </Tooltip>
@@ -685,7 +687,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="No. of floors *"
+                                        label={t("No. of floors *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                    <Field
@@ -707,7 +709,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Floor area (Square Feet) *"
+                                        label={t("Floor area (Square Feet) *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                           <Field
@@ -731,7 +733,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                 </div>
                                 <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Temperature range (°C) *"
+                                        label={t("Temperature range (°C) *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                             {/* <Field
@@ -754,7 +756,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         </p>
                                     </FormItem>
                                     <FormItem
-                                        label="Height of each floor (Feet) *"
+                                        label={t("Height of each floor (Feet) *")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     ><Field
                                             type="text"
@@ -778,12 +780,12 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
 
                                 <div className=" m-auto mt-2 rounded-md p-2 w-[100%] md:flex lg:flex">
                                     <FormItem
-                                        label="Staircase (Yes/No)"
+                                        label={t("Staircase (Yes/No)")}
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     >
                                         <div className='border-2 flex justify-around p-4'>
                                          <span className=" text-center ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                         Staircase (Yes/No)
+                                         {t("Staircase (Yes/No)")}
   </span>
                                         <label className="relative inline-flex items-center cursor-pointer">
   <input     disabled={isDisabled} type="checkbox" className="sr-only peer"  checked={data?.staircase}  name="staircase"

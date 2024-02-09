@@ -8,7 +8,10 @@ import ForumIcon from '@mui/icons-material/Forum';
 import GeoMapChart from './GeoMapChart';
 import GoogleMapComp from './GoogleMapCom';
 import { locations } from '@/store/customeHook/validate';
+import { useTranslation } from 'react-i18next'
+
 const CardLayout = ({ title }: any) => {
+  const { t, i18n }:any = useTranslation();
   /* The `options` object is used to configure the appearance and behavior of a bar chart. */
   const options: any = {
     series: [{

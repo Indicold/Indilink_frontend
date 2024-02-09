@@ -95,7 +95,7 @@ if(PutApiResponse?.status===200){
     messageViewNew({message:"Data Updated Successfully !",status:200});
     setModal(false)
     FetchAgain();
-}else{
+}else if(PutApiResponse){
     messageViewNew(PutApiResponse)
 }
     },[PutApiResponse])
