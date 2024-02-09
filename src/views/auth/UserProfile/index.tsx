@@ -56,21 +56,22 @@ const UserProfilePage = () => {
                             <h1 className="font-bold text-center text-3xl text-gray-900">
                                 {/* {data && data?.email} */}
                             </h1>
-                            {/* {owner_user_id ===0  &&  */}
-                            <div className="my-5 px-6">
-                                <NavLink
-                                    to="/basic-info"
-                                    // href="/forgot-password"
-                                    // onClick={handleChangePassword}
-                                    className="text-white mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-[#103492]"
-                                >
-                                    Profile Details
-                                </NavLink>
-                            </div>
-                            {/* } */}
+                            {owner_user_id === 'USER0' && (
+                                <div className="my-5 px-6">
+                                    <NavLink
+                                        to="/basic-info"
+                                        // href="/forgot-password"
+                                        // onClick={handleChangePassword}
+                                        className="text-white mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-[#103492]"
+                                    >
+                                        Profile Details
+                                    </NavLink>
+                                </div>
+                            )}
                             <div className="my-5 px-6">
                                 <a
                                     // href="/forgot-password"
+                                    role="button"
                                     onClick={handleChangePassword}
                                     className="text-white mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 bg-[#103492]"
                                 >
@@ -79,38 +80,38 @@ const UserProfilePage = () => {
                             </div>
                             {is_nda_signed == 0 ? (
                                 <>
-                                    {/* {owner_user_id ===0  &&  */}
-                                    <div className="my-5 px-6 ">
-                                        <a
-                                            href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf"
-                                            target="_blank"
-                                            className="border-dashed border-2 border-[#103492] mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 text-[#103492]"
-                                        >
-                                            <DownloadingIcon /> Download NDA
-                                        </a>
-                                    </div>
-                                    {/* // } */}
-                                    {/* {owner_user_id ===0  && */}
-                                    <div className="my-5 px-6">
-                                        <div
-                                            role="button"
-                                            className="border-dashed border-2 border-indigo-600  mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 text-[#103492]"
-                                        >
-                                            <label htmlFor="file">
-                                                <DriveFolderUploadIcon />
-                                                Upload NDA
-                                            </label>
-                                            <input
-                                                type="file"
-                                                id="file"
-                                                className="hidden"
-                                                onChange={(e: any) =>
-                                                    handleUploadNda(e)
-                                                }
-                                            />
+                                    {owner_user_id === 'USER0' && (
+                                        <div className="my-5 px-6 ">
+                                            <a
+                                                href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf"
+                                                target="_blank"
+                                                className="border-dashed border-2 border-[#103492] mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 text-[#103492]"
+                                            >
+                                                <DownloadingIcon /> Download NDA
+                                            </a>
                                         </div>
-                                    </div>
-                                    {/* } */}
+                                    )}
+                                    {owner_user_id === 'USER0' && (
+                                        <div className="my-5 px-6">
+                                            <div
+                                                role="button"
+                                                className="border-dashed border-2 border-indigo-600  mx-auto w-[100%] lg:w-[30%] block rounded-lg text-center font-medium leading-6 px-6 py-3 text-[#103492]"
+                                            >
+                                                <label htmlFor="file">
+                                                    <DriveFolderUploadIcon />
+                                                    Upload NDA
+                                                </label>
+                                                <input
+                                                    type="file"
+                                                    id="file"
+                                                    className="hidden"
+                                                    onChange={(e: any) =>
+                                                        handleUploadNda(e)
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
                                 </>
                             ) : (
                                 <>

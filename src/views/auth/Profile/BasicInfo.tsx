@@ -277,6 +277,10 @@ const BasicInfo = () => {
 
     useEffect(() => {
         if (BasicInfo && companyDetails?.data[0]) {
+            let newarrs: any =
+                SareList?.data?.map((item: any) => item?.id) || []
+            let newarr: any =
+                BranchList?.data?.map((item: any) => item?.id) || []
             setData({
                 ...BasicInfo?.data[0],
                 gst_file: BasicInfo?.data,
@@ -288,10 +292,11 @@ const BasicInfo = () => {
                     BasicInfo?.data[0]?.gst ||
                     companyDetails?.data[0].gst ||
                     '',
+                branch_ids: newarr,
+                shareholder_ids: newarrs,
             })
         }
     }, [BasicInfo?.data])
-    console.log('TTTTYYYTT', data?.gst_file[0])
 
     return (
         <div className="lg:flex">

@@ -1983,7 +1983,9 @@ export const validateBasicForm = (data: any, setErrors: any) => {
     if (!data?.shareholder_ids || data?.shareholder_ids?.length < 1) {
         newErrors.shareholder_ids = 'This field is required'
     }
-    if (!data?.branch_ids || data?.branch_ids < 1) {
+    if (!data?.branch_ids || data?.branch_ids?.length < 1) {
+        console.log('REEEEEE', data?.branch_ids)
+
         newErrors.branch_ids = 'This field is required'
     }
     if (!data?.pan_number) {
