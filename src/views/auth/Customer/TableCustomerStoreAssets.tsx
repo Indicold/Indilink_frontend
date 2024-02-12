@@ -211,7 +211,7 @@ fetch(`${apiUrl}/customer/reject-responses/${rowData?.id}`, requestOptions)
       }
       if (key === 'comment') {
         
-        return <td className='text-center' key={i} ><p className='ellipse-text'>{rowData?.comment}</p> 
+        return <td className='text-center flex' key={i} ><p className='ellipse-text'>{rowData?.comment}</p> 
           <Tooltip className='bg-[#000000] w-[100%] break-words' title={rowData?.comment || 'Not Available'} arrow>
           <InfoIcon />
         </Tooltip>
