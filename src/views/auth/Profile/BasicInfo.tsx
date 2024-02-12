@@ -274,7 +274,7 @@ const BasicInfo = () => {
 
     //     }
     // }, [companyDetails?.data])
-console.log("TRRT",companyDetails);
+    console.log('TRRT', companyDetails)
 
     useEffect(() => {
         if (BasicInfo && companyDetails?.data[0]) {
@@ -285,10 +285,13 @@ console.log("TRRT",companyDetails);
             setData({
                 ...BasicInfo?.data[0],
                 gst_file: BasicInfo?.data,
-                country_id: companyDetails?.data[0]?.country_id ||101,
-                state_id: companyDetails?.data[0].state_id,
+                country_id: companyDetails?.data[0]?.country_id || 101,
+                state_id:
+                    companyDetails?.data[0].state_id ||
+                    BasicInfo?.data[0]?.state_id,
                 address: companyDetails?.data[0].address || '',
                 pin_code: companyDetails?.data[0].pin_code || '',
+                pan_number: companyDetails?.data[0]?.pan,
                 gst_number:
                     BasicInfo?.data[0]?.gst ||
                     companyDetails?.data[0].gst ||
@@ -297,7 +300,7 @@ console.log("TRRT",companyDetails);
                 shareholder_ids: newarrs,
             })
         }
-    }, [BasicInfo?.data])
+    }, [BasicInfo?.data, companyDetails?.data])
 
     return (
         <div className="lg:flex">
@@ -419,7 +422,7 @@ console.log("TRRT",companyDetails);
                                             {ListOfCountry &&
                                                 ListOfCountry?.data?.map(
                                                     (item: any, index: any) => (
-                                                        <option 
+                                                        <option
                                                             key={index}
                                                             value={item?.id}
                                                             selected={
@@ -454,7 +457,7 @@ console.log("TRRT",companyDetails);
                                                 ListOfState?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                        key={index}
+                                                            key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
@@ -519,14 +522,14 @@ console.log("TRRT",companyDetails);
                                 <div className="bg-gray-100 m-auto mt-2 rounded-md p-2 w-[90%]  lg:flex">
                                     <FormItem
                                         label="GST Number"
-                                        className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 p-4 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             multiple
                                             type="text"
                                             maxLength={15}
-                                            className="w-[90%]"
+                                            className="w-[80%]"
                                             autoComplete="off"
                                             onChange={(e: any) =>
                                                 handleChange(e)
@@ -543,8 +546,13 @@ console.log("TRRT",companyDetails);
                                                 onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber
                                             }
                                         />
-                                        <label htmlFor="gstfile">
-                                            <PublishIcon className="text-center !mx-auto" />
+                                        <label
+                                            htmlFor="gstfile"
+                                            className="w-[20%]"
+                                        >
+                                            <Button className=" !px-1 py-0">
+                                                <PublishIcon className="text-center !mx-auto" />
+                                            </Button>
                                         </label>
                                         <div className="flex">
                                             {data?.gst_file?.length > 0 && (
@@ -590,7 +598,7 @@ console.log("TRRT",companyDetails);
                                         asterisk={true}
                                     >
                                         <Field
-                                            disabled={isDisabled}
+                                            disabled={true}
                                             multiple
                                             type="text"
                                             maxLength={10}

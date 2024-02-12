@@ -26,32 +26,31 @@ import AddTaskIcon from '@mui/icons-material/AddTask'
 import useApiFetch from '@/store/customeHook/useApiFetch'
 import AuditLogsModal from './AuditLogsModal'
 import useApiFetch2 from '@/store/customeHook/useFetchApi2'
+import DataNotFound from '@/components/layouts/DataNotFound'
 
 /* The `tableHead` constant is an object that defines the column headers for a table. Each key-value
 pair represents a column header, where the key is the property name and the value is the display
 name for the header. In this case, the table has the following columns: */
 const tableHead = {
     id: 'S.No',
-    asset_id: 'Asset ID',
-    modulename: 'Module Name',
+    audit_id: 'Audit ID',
+    // modulename: 'Module Name',
     status: 'Status',
-    description: 'Description',
-    priority: 'Priority',
-    update_by: 'Updated By',
+    audit_temp_task_id: 'Audit Temp Task ID',
+    updated_by: 'Audited By',
     created_by: 'Created By',
-    Action: 'Action',
+    updated_at: 'updated At',
+    created_at: 'created At',
+    // Action: 'Action',
 }
 
-const AuditAssignTableList = ({
+const AuditLogsTableList = ({
     setType,
     allData,
     setModal,
     setAssetId,
     setDisabled,
     setData,
-    fetchStoreDataAgain,
-    headcolor,
-    handleRedirect,
 }: any) => {
     const { token }: any = getToken() // to fetch token using custom hook
     const permission: any = {
@@ -60,12 +59,13 @@ const AuditAssignTableList = ({
     /* The line `let { data: userList, loading: ULLoading }: any = useApiFetch(`admin/users`, token);`
     is using the `useApiFetch` custom hook to fetch data from the `admin/users` endpoint. */
     let { data: userList, loading: ULLoading }: any = useApiFetch2(
-        `admin/users`,
+        `admin/admins`,
         token
     )
 
     let allDataArray: any = allData || []
-    const countPerPage = headcolor ? 5 : 10
+    const countPerPage = 5
+    console.log('ghfghgfhg', allDataArray, allData)
 
     /* The code snippet is using the `useState` hook from React to define and initialize state
     variables. */
@@ -78,6 +78,12 @@ const AuditAssignTableList = ({
 
         // cloneDeep(allDataArray.slice(0, countPerPage))
     )
+
+    /* The line `const userPermissions :any= VerifyPermission();` is calling the `VerifyPermission`
+    function and assigning its return value to the `userPermissions` constant. The
+    `VerifyPermission` function is likely a custom hook or function that checks the user's
+    permissions and returns an array of permissions. By assigning the return value to
+    `userPermissions`, the code is storing the user's permissions for later use. */
 
     /* The `searchData` constant is using the `useRef` hook to create a mutable ref object. This ref
     object is initialized with a throttled function that is used for searching/filtering data in the
@@ -180,6 +186,7 @@ const AuditAssignTableList = ({
         setRowData(rowData)
         setAuditModal(true)
     }
+
     /* The following code is defining a function called `tableRows` that takes in two parameters `rowData`
     and `index`. It is used to render the rows in the Audit Listing */
     const tableRows = (rowData: any, index: any) => {
@@ -213,23 +220,23 @@ const AuditAssignTableList = ({
                     </td>
                 )
             }
-            if (key === 'update_by') {
+            if (key === 'updated_by') {
                 return (
                     <td key={i}>
                         {`${
                             userList?.filter(
                                 (item: any, index: any) =>
-                                    item?.id == rowData?.update_by
+                                    item?.id == rowData?.updated_by
                             )[0]?.first_name
                         } 
                    ${
                        userList?.filter(
                            (item: any, index: any) =>
-                               item?.id == rowData?.update_by
+                               item?.id == rowData?.updated_by
                        )[0]?.last_name != null
                            ? userList?.filter(
                                  (item: any, index: any) =>
-                                     item?.id == rowData?.update_by
+                                     item?.id == rowData?.updated_by
                              )[0]?.last_name
                            : ''
                    }`}
@@ -243,7 +250,7 @@ const AuditAssignTableList = ({
                             userList?.filter(
                                 (item: any, index: any) =>
                                     item?.id == rowData?.created_by
-                            )[0]?.first_name
+                            )[0]?.first_name || 'Not Available'
                         } ${
                             userList?.filter(
                                 (item: any, index: any) =>
@@ -256,38 +263,6 @@ const AuditAssignTableList = ({
                                 : ''
                         }`}
                     </td>
-                )
-            }
-            if (key == 'Action') {
-                return (
-                    <div>
-                        <td
-                            className="flex justify-center p-2 gap-3"
-                            key={rowData.id}
-                        >
-                            <Button
-                                className="!p-3 pt-0 pb-0"
-                                onClick={() => handleRedirect(rowData)}
-                            >
-                                <VisibilityIcon />
-                            </Button>
-
-                            <Button
-                                className="!p-3 pt-0 pb-0"
-                                onClick={() => handleLogs(rowData)}
-                            >
-                                Logs
-                            </Button>
-
-                            {/* {canView && (
-        <Button className='!p-2' onClick={() => handleView(rowData)}>
-          <VisibilityIcon />
-        </Button>
-      )} */}
-
-                            {/* Add more conditions for other buttons with icons */}
-                        </td>
-                    </div>
                 )
             }
 
@@ -389,11 +364,8 @@ const AuditAssignTableList = ({
                         <table className="w-[100%]">
                             <thead className=" w-[100%]">
                                 <tr
-                                    className={`${
-                                        headcolor
-                                            ? headcolor
-                                            : 'bg-table-column'
-                                    } text-white det-header rounded-[13px] my-2 h-[40px]`}
+                                    className={`
+                                      bg-table-column text-white det-header rounded-[13px] my-2 h-[40px]`}
                                 >
                                     {headRow()}
                                 </tr>
@@ -414,10 +386,10 @@ const AuditAssignTableList = ({
                     </div>
                 </>
             ) : (
-                <DoNotPermission />
+                <DataNotFound title="No Title" />
             )}
         </>
     )
 }
 
-export default AuditAssignTableList
+export default AuditLogsTableList

@@ -23,6 +23,10 @@ const PrepareDetails = () => {
         loading: fetchDetailsloading,
         error: fetchDetailsSerror,
     } = useApiFetch<any>(`partner/prepare/${id}`, token)
+    const { data: GetNdaStatusData }: any = useApiFetch(
+        `auth/get_user_nda_status`,
+        token
+    )
     const handleAccept = () => {
         var myHeaders = new Headers()
         myHeaders.append('Authorization', `Bearer ${token}`)
@@ -33,7 +37,10 @@ const PrepareDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/accept-responses/${location?.state?.data?.id}`, requestOptions)
+        fetch(
+            `${apiUrl}/customer/accept-responses/${location?.state?.data?.id}`,
+            requestOptions
+        )
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -60,7 +67,10 @@ const PrepareDetails = () => {
             redirect: 'follow',
         }
 
-        fetch(`${apiUrl}/customer/reject-responses/${location?.state?.data?.id}`, requestOptions)
+        fetch(
+            `${apiUrl}/customer/reject-responses/${location?.state?.data?.id}`,
+            requestOptions
+        )
             .then((response) => response.json())
             .then((result) => {
                 if (result?.status === 200) {
@@ -83,16 +93,16 @@ const PrepareDetails = () => {
         }
     }, [fetchDetails?.data?.prepare])
 
-    const topMainImages={
-        mainImg:"https://img.freepik.com/free-photo/photo-automobile-production-line-welding-car-body-modern-car-assembly-plant-auto-industry-interior-hightech-factory-modern-production_645730-185.jpg?w=826&t=st=1707127221~exp=1707127821~hmac=5e1da4cbe40d01a7461d6e550faf689a1a76a9960d4536c0336fcf1dfb40573c",
-        anothorFourImage:[
-            "https://cdn.pixabay.com/photo/2014/09/13/21/46/milling-444493_1280.jpg",
-            "https://cdn.pixabay.com/photo/2014/09/13/21/46/milling-444493_1280.jpg",
-            "https://img.freepik.com/free-photo/production-manufacture-sightseeing-excursion-interior-ceramic-tile-manufacturing-plant-ceramic-tile-manufacturing-plant-with-conveyer-belt_645730-195.jpg?t=st=1707106617~exp=1707107217~hmac=07fa02d138ae280c003f2edfe403dd8d33503dc6b01d575b57640b28e346ece8",
-            "https://img.freepik.com/free-photo/car-bodies-are-assembly-line-factory-production-cars-modern-automotive-industry-car-being-checked-before-being-painted-hightech-enterprise_645730-801.jpg?t=st=1707106617~exp=1707107217~hmac=16ad15258b9de01b1113a937a1b686e36c1fcb89eba0cd48751822361de639f1"
-        ]
+    const topMainImages = {
+        mainImg:
+            'https://img.freepik.com/free-photo/photo-automobile-production-line-welding-car-body-modern-car-assembly-plant-auto-industry-interior-hightech-factory-modern-production_645730-185.jpg?w=826&t=st=1707127221~exp=1707127821~hmac=5e1da4cbe40d01a7461d6e550faf689a1a76a9960d4536c0336fcf1dfb40573c',
+        anothorFourImage: [
+            'https://cdn.pixabay.com/photo/2014/09/13/21/46/milling-444493_1280.jpg',
+            'https://cdn.pixabay.com/photo/2014/09/13/21/46/milling-444493_1280.jpg',
+            'https://img.freepik.com/free-photo/production-manufacture-sightseeing-excursion-interior-ceramic-tile-manufacturing-plant-ceramic-tile-manufacturing-plant-with-conveyer-belt_645730-195.jpg?t=st=1707106617~exp=1707107217~hmac=07fa02d138ae280c003f2edfe403dd8d33503dc6b01d575b57640b28e346ece8',
+            'https://img.freepik.com/free-photo/car-bodies-are-assembly-line-factory-production-cars-modern-automotive-industry-car-being-checked-before-being-painted-hightech-enterprise_645730-801.jpg?t=st=1707106617~exp=1707107217~hmac=16ad15258b9de01b1113a937a1b686e36c1fcb89eba0cd48751822361de639f1',
+        ],
     }
-
 
     const partoneDetails = [
         {
@@ -283,7 +293,7 @@ const PrepareDetails = () => {
                     </div>
                 </div> */}
 
-                <TopMainImages topMainImages={topMainImages}/>
+                <TopMainImages topMainImages={topMainImages} />
 
                 <div className="grid mt-10 gap-4 my-6 lg:grid-cols-4">
                     {prepareTypeArray?.map((item: any, index: any) => {
@@ -302,88 +312,104 @@ const PrepareDetails = () => {
                         )
                     })}
                 </div>
-                <div className={`${localStorage.getItem('user_type') === 'Customer' ? 'w-full' :'w-[25%]'}`}>
-                    {localStorage.getItem('user_type') === 'Customer' ? (
-                        <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
-                            {status && (
-                                <div className="">
-                                    <div className="w-[100%] pl-4  mb-4">
-                                        <h2 className="text-sm">Status</h2>
-                                        <h2 className="text-gray-400 text-sm">
-                                            {status}
-                                        </h2>
-                                    </div>
-                                </div>
-                            )}
-                            <button
-                                type="button"
-                                onClick={handleAccept}
-                                className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
-                            >
-                                Approved
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleReject}
-                                className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
-                            >
-                                Disapproved
-                            </button>
-                        </div>
-                    ) : (
-                        <button
-                            type="button"
-                            onClick={() => setModalList(true)}
-                            className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                {GetNdaStatusData?.data[0]?.is_nda_signed == 2 && (
+                    <>
+                        <div
+                            className={`${
+                                localStorage.getItem('user_type') === 'Customer'
+                                    ? 'w-full'
+                                    : 'w-[25%]'
+                            }`}
                         >
-                            Audit
-                        </button>
-                    )}
-                </div>
-
-                <div>
-
-<h1 className='text-lg text-blue-800 my-10'>
-    Facilities
-</h1>
-
-
-<ImageGrid partoneDetails={partoneDetails}/>
-
-</div>
-
-                <div className="ml-4">
-                    <h1 className="text-lg text-blue-800 mt-10 mb-4">
-                        Asset Rules
-                    </h1>
-                    <p className="font-light">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Eius unde cumque nisi dolorum atque quas corporis,
-                        molestias maxime possimus officiis minima natus sit
-                        quasi mollitia accusantium voluptatem fuga blanditiis
-                        illum?
-                    </p>
-                </div>
-                <div className="grid px-6 gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((item: any, index: any) => {
-                        return (
-                            <div key={index} className="pt-6 ">
-                                <div className="w-12 h-12 bg-orange-100 rounded-full">
-                                    <AnnouncementIcon className="mx-3 my-3 " />
+                            {localStorage.getItem('user_type') ===
+                            'Customer' ? (
+                                <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
+                                    {status && (
+                                        <div className="">
+                                            <div className="w-[100%] pl-4  mb-4">
+                                                <h2 className="text-sm">
+                                                    Status
+                                                </h2>
+                                                <h2 className="text-gray-400 text-sm">
+                                                    {status}
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <button
+                                        type="button"
+                                        onClick={handleAccept}
+                                        className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                    >
+                                        Approved
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleReject}
+                                        className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                    >
+                                        Disapproved
+                                    </button>
                                 </div>
-                                <div className="py-4">
-                                    <p className="font font-semibold text-black">
-                                        Asset Type
-                                    </p>
-                                    <p className="w-full font-light">
-                                        Lorem ipsum dm quas cupas repellendus ea
-                                        tenetur.
-                                    </p>
-                                </div>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() => setModalList(true)}
+                                    className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                >
+                                    Audit
+                                </button>
+                            )}
+                        </div>
+
+                        <div>
+                            <h1 className="text-lg text-blue-800 my-10">
+                                Facilities
+                            </h1>
+
+                            <ImageGrid partoneDetails={partoneDetails} />
+                        </div>
+
+                        <div className="p-4 bg-white rounded-lg mx-0">
+                            <div className="ml-4">
+                                <h1 className="text-lg text-blue-800 mt-10 mb-4">
+                                    Asset Rules
+                                </h1>
+                                <p className="font-light">
+                                    Lorem ipsum dolor, sit amet consectetur
+                                    adipisicing elit. Eius unde cumque nisi
+                                    dolorum atque quas corporis, molestias
+                                    maxime possimus officiis minima natus sit
+                                    quasi mollitia accusantium voluptatem fuga
+                                    blanditiis illum?
+                                </p>
                             </div>
-                        )
-                    })}
-                </div>
+                            <div className="grid px-6 gap-4 grid-cols-4">
+                                {[1, 2, 3, 4, 5, 6, 7, 8].map(
+                                    (item: any, index: any) => {
+                                        return (
+                                            <div key={index} className="pt-6 ">
+                                                <div className="w-12 h-12 bg-orange-100 rounded-full">
+                                                    <AnnouncementIcon className="mx-3 my-3 " />
+                                                </div>
+                                                <div className="py-4">
+                                                    <p className="font font-semibold text-black">
+                                                        Asset Type
+                                                    </p>
+                                                    <p className="w-full font-light">
+                                                        Lorem ipsum dm quas
+                                                        cupas repellendus ea
+                                                        tenetur.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     )
