@@ -98,7 +98,7 @@ const SignInForm = (props: SignInFormProps) => {
                             } else if (default_user_type === 3) {
                                 localStorage.setItem('user_type', 'Investor')
                                 navigate('/investor-dashbord')
-                            } else {
+                            } else if(default_user_type === 2) {
                                 navigate('/home')
                             }
                         }, 2000)
