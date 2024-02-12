@@ -847,6 +847,7 @@ const StoreRegistration = () => {
                                                 CityById?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
+                                                            key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
