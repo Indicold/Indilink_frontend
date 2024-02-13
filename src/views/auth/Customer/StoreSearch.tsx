@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Dropdown,
     FormContainer,
     FormItem,
     Input,
-} from '@/components/ui'; // Import UI components
-import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
-import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
-import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for making POST requests
-import LoaderSpinner from '@/components/LoaderSpinner'; // Import a loader spinner component
-import { messageView, messageViewNew, onkeyDown, onkeyDownOne, validateStoreCustomerForm } from '@/store/customeHook/validate'; // Import a custom function for form validation
-import usePutApi from '@/store/customeHook/putApi'; // Import a custom hook for making PUT requests
-import { ToastContainer } from 'react-toastify'; // Import container for showing toast messages
-import TableCustomerStoreAssets from './TableCustomerStoreAssets';
+} from '@/components/ui' // Import UI components
+import { Field, Form, Formik } from 'formik' // Import Formik for form handling
+import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
+import { useLocation, useNavigate } from 'react-router-dom' // Import routing related hook
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal' // Import a custom ThankYou modal component
+import usePostApi from '@/store/customeHook/postApi' // Import a custom hook for making POST requests
+import LoaderSpinner from '@/components/LoaderSpinner' // Import a loader spinner component
+import {
+    messageView,
+    messageViewNew,
+    onkeyDown,
+    onkeyDownOne,
+    validateStoreCustomerForm,
+} from '@/store/customeHook/validate' // Import a custom function for form validation
+import usePutApi from '@/store/customeHook/putApi' // Import a custom hook for making PUT requests
+import { ToastContainer } from 'react-toastify' // Import container for showing toast messages
+import TableCustomerStoreAssets from './TableCustomerStoreAssets'
 import { useTranslation } from 'react-i18next'
-
 
 var currentDate = new Date()
 
@@ -31,141 +36,173 @@ export const payloadSearchCustomer: any = {
     temperature_type_id: 1,
     unit_id: 1,
     certification_id: '',
-    date:`${currentDate.getFullYear()}-${currentDate.getMonth()+1}-${currentDate.getDate()+1}`,
+    date: `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${
+        currentDate.getDate() + 1
+    }`,
     storage_duration: '',
     storage_duration_type: 4,
-    quantity: ''
+    quantity: '',
 }
 
 // Define the main functional component for StoreSearch
 const StoreSearch = () => {
     // Get the user's token using a custom hook
-    const { token }: any = getToken();
-    const location: any = useLocation();
+    const { token }: any = getToken()
+    const location: any = useLocation()
 
     // Initialize the form data with the payload
-    const [formData, setFormData] = useState<any>(payloadSearchCustomer);
+    const [formData, setFormData] = useState<any>(payloadSearchCustomer)
     const [isDisabled, setIsDisabled] = useState<any>(false)
 
     // Fetch a list of countries using a custom hook
-    const { data: ListOfCountry, loading: LCloading, error: LCerror } =
-        useApiFetch<any>(`master/get-countries`, token);
+    const {
+        data: ListOfCountry,
+        loading: LCloading,
+        error: LCerror,
+    } = useApiFetch<any>(`master/get-countries`, token)
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
-        useApiFetch<any>(`master/get-city-by-countryId/${formData?.country_id}`, token);
+    const {
+        data: ListOfCity,
+        loading: Lcityloading,
+        error: Lcityerror,
+    } = useApiFetch<any>(
+        `master/get-city-by-countryId/${formData?.country_id}`,
+        token
+    )
 
     // Fetch a list of product types using a custom hook
-    const { data: ListOfProduct, loading: LPloading, error: Lperror } =
-        useApiFetch<any>(`master/customer/store/get-product-type`, token);
+    const {
+        data: ListOfProduct,
+        loading: LPloading,
+        error: Lperror,
+    } = useApiFetch<any>(`master/customer/store/get-product-type`, token)
 
     // Fetch a list of temperature types using a custom hook
-    const { data: ListOfTemp, loading: LTloading, error: Lterror } =
-        useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
-        
-    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
-    useApiFetch<any>(`customer/get-responses/1/${location?.state?.data?.id}`, token);
+    const {
+        data: ListOfTemp,
+        loading: LTloading,
+        error: Lterror,
+    } = useApiFetch<any>(`master/customer/store/get-temperature-type`, token)
+
+    const {
+        data: ApprovedAssets,
+        loading: Approvedloading,
+        error: Approvederror,
+        refetch: fetchAgain,
+    } = useApiFetch<any>(
+        `customer/get-responses/1/${location?.state?.data?.id}`,
+        token
+    )
 
     // Fetch a list of certification types using a custom hook
-    const { data: ListOfCert, loading: Lctloading, error: Lcterror } =
-        useApiFetch<any>(`master/customer/store/get-certification-type`, token);
+    const {
+        data: ListOfCert,
+        loading: Lctloading,
+        error: Lcterror,
+    } = useApiFetch<any>(`master/customer/store/get-certification-type`, token)
 
     // Fetch a list of time units using a custom hook
-    const { data: ListOfTimeUnits, loading: Ltuloading, error: Ltuerror } =
-        useApiFetch<any>(`master/customer/store/get-duration`, token);
+    const {
+        data: ListOfTimeUnits,
+        loading: Ltuloading,
+        error: Ltuerror,
+    } = useApiFetch<any>(`master/customer/store/get-duration`, token)
 
     // Define a custom hook for making a POST request
-    const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerRegisterDetails }: any =
-        usePostApi(`customer/store/search`);
+    const {
+        result: CustomerResponse,
+        loading: CustomerLoading,
+        sendPostRequest: PostCustomerRegisterDetails,
+    }: any = usePostApi(`customer/store/search`)
 
-    const { result: StoreCustomerResponse, loading: OTPLoading, sendPostRequest: UpdateStoreCustomer }: any =
-        usePutApi(`customer/store/search-update/5`);
-
+    const {
+        result: StoreCustomerResponse,
+        loading: OTPLoading,
+        sendPostRequest: UpdateStoreCustomer,
+    }: any = usePutApi(`customer/store/search-update/5`)
 
     // Define state variables for the ThankYou modal and form errors
-    const [modal, setModal] = useState<any>(!false);
-    const [message,setMessage]=useState<any>('')
-    const [errors, setErrors] = useState<any>({});
-    const today = new Date().toISOString().split('T')[0];
+    const [modal, setModal] = useState<any>(!false)
+    const [message, setMessage] = useState<any>('')
+    const [errors, setErrors] = useState<any>({})
+    const today = new Date().toISOString().split('T')[0]
     // Define a function to handle form submission
     const handleRoute = () => {
-
-      
-
         // Check form validation before making a POST request
         if (validateStoreCustomerForm(formData, setErrors)) {
-      
-            PostCustomerRegisterDetails(formData);
+            PostCustomerRegisterDetails(formData)
         }
     }
 
     // Define a function to handle form input changes
     const handlechange = (e: any) => {
-        const newData: any = { ...formData };
+        const newData: any = { ...formData }
         if (e.target.name === 'contract_download') {
-    
-            newData[e.target.name] = e.target.files[0];
-        }else if(e.target.name==='temperature'){
-            if(e.target.value?.length<5){
-                newData[e.target.name] = e.target.value;
-            }else{
-                e.preventDefault();
+            newData[e.target.name] = e.target.files[0]
+        } else if (e.target.name === 'temperature') {
+            if (e.target.value?.length < 5) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
             }
-           
         } else {
-            newData[e.target.name] = e.target.value;
+            newData[e.target.name] = e.target.value
         }
-        setFormData(newData);
-        if(errors[e.target.name])validateStoreCustomerForm(newData, setErrors)
+        setFormData(newData)
+        if (errors[e.target.name]) validateStoreCustomerForm(newData, setErrors)
     }
     /**
      * The `handleRouteUpdate` function sends a PUT request to update a customer store search and then
      * redirects the user to the ticket list store page.
      */
     const handleRouteUpdate = () => {
+        var myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`)
 
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
-        
-        var formdata = new FormData();
-        formdata.append("country_id", formData?.country_id);
-        formdata.append("city_id", formData?.city_id);
-        formdata.append("product_type_id", formData?.product_type_id);
-        formdata.append("temperature", formData?.temperature);
-        formdata.append("temperature_type_id",formData?.temperature_type_id);
-        formdata.append("unit_id", formData?.unit_id);
-        formdata.append("certification_id", formData?.certification_id);
-        formdata.append("date", formData?.date);
-        formdata.append("storage_duration", formData?.storage_duration);
-        formdata.append("storage_duration_type", formData?.storage_duration_type);
-        formdata.append("contract_name", formData?.contract_name);
-        formdata.append("contract_type", formData?.contract_type);
-        formdata.append("status_id", formData?.status_id);
-        formdata.append("comment", formData?.comment);
-        formdata.append("contract_download", formData?.contract_download);
-        
-        var requestOptions:any = {
-          method: 'PUT',
-          headers: myHeaders,
-          body: formdata,
-          redirect: 'follow'
-        };
-        
-        fetch(`${apiUrl}/customer/store/search-update/${location?.state?.data?.id}`, requestOptions)
-          .then(response => response.json())
-          .then((result:any) => {
-            setMessage(result);
-            setModal(true)
-            setTimeout(() => {
-                navigate('/ticket_list_store')
-            }, 2000)
-          
-          })
-          .catch(error => console.log('error', error));
-      }
-    
-    const navigate: any = useNavigate();
-   
+        var formdata = new FormData()
+        formdata.append('country_id', formData?.country_id)
+        formdata.append('city_id', formData?.city_id)
+        formdata.append('product_type_id', formData?.product_type_id)
+        formdata.append('temperature', formData?.temperature)
+        formdata.append('temperature_type_id', formData?.temperature_type_id)
+        formdata.append('unit_id', formData?.unit_id)
+        formdata.append('certification_id', formData?.certification_id)
+        formdata.append('date', formData?.date)
+        formdata.append('storage_duration', formData?.storage_duration)
+        formdata.append(
+            'storage_duration_type',
+            formData?.storage_duration_type
+        )
+        formdata.append('contract_name', formData?.contract_name)
+        formdata.append('contract_type', formData?.contract_type)
+        formdata.append('status_id', formData?.status_id)
+        formdata.append('comment', formData?.comment)
+        formdata.append('contract_download', formData?.contract_download)
+
+        var requestOptions: any = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: formdata,
+            redirect: 'follow',
+        }
+
+        fetch(
+            `${apiUrl}/customer/store/search-update/${location?.state?.data?.id}`,
+            requestOptions
+        )
+            .then((response) => response.json())
+            .then((result: any) => {
+                setMessage(result)
+                setModal(true)
+                setTimeout(() => {
+                    navigate('/ticket_list_store')
+                }, 2000)
+            })
+            .catch((error) => console.log('error', error))
+    }
+
+    const navigate: any = useNavigate()
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -174,40 +211,50 @@ const StoreSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
-            let newTemp=location?.state?.data?.temperature?.split('#');
-            console.log("newTemp",newTemp);
-            
-            setFormData({...location?.state?.data,tempMin:newTemp[0],tempMax:newTemp[1]});
+            let newTemp = location?.state?.data?.temperature?.split('#')
+            console.log('newTemp', newTemp)
+
+            setFormData({
+                ...location?.state?.data,
+                tempMin: newTemp[0],
+                tempMax: newTemp[1],
+            })
             setIsDisabled(location?.state?.disabled)
         }
-
     }, [])
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
             setMessage(CustomerResponse)
-            setModal(true);
+            setModal(true)
             setTimeout(() => {
                 navigate('/ticket_list_store')
             }, 2000)
-        }else if(CustomerResponse) {
+        } else if (CustomerResponse) {
             messageViewNew(CustomerResponse)
         }
-    }, [CustomerResponse?.status]);
+    }, [CustomerResponse?.status])
 
-    
-    const { t, i18n }:any = useTranslation();
+    const { t, i18n }: any = useTranslation()
 
- 
     return (
-        <div className='bg-white p-4 rounded-md shadow-2xl'>
+        <div className="bg-white p-4 rounded-md shadow-2xl">
             <ToastContainer />
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
-            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
+            {modal && (
+                <ThankYouModal
+                    message={message}
+                    setModal={setModal}
+                    setFormData={setFormData}
+                />
+            )}
             <div className="">
-                <h4 className=" mb-2 text-head-title text-center"> {t("Store")} </h4>
+                <h4 className=" mb-2 text-head-title text-center">
+                    {' '}
+                    {t('Store')}{' '}
+                </h4>
                 {/* The above code is a TypeScript React component that renders a form using the Formik
                 library. The form contains several input fields and select dropdowns for the user to
                 enter data. The form is wrapped in a Formik component, which handles form state and
@@ -225,111 +272,184 @@ const StoreSearch = () => {
                         }
                     >
                         <Form className="py-2 multistep-form-step">
-                            <FormContainer className='gap-4'>
-                                <div className='bg-gray-100 p-2 rounded-md'>
-                                {/* <p className='pl-3'><b>{t("Location")} </b></p> */}
-                                <div className=" lg:flex ">
-                                   
-                                    <FormItem
-                                        label= {t("Country*")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto "
-                                    >
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
-                                            name="country_id"
-                                            className="border w-full pl-2 rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                            <FormContainer className="gap-4">
+                                <div className="bg-gray-100 p-2 rounded-md">
+                                    {/* <p className='pl-3'><b>{t("Location")} </b></p> */}
+                                    <div className=" lg:flex ">
+                                        <FormItem
+                                            label={t('Country*')}
+                                            className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto "
                                         >
-                                            <option>Select</option>
-                                            {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.country_id}>{item?.name}</option>
-
-                                            ))}
-                                        </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.country_id}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label={t("City*")} 
-                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
-                                    >
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
-                                            name="city_id"
-                                            className="border w-full rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            <select
+                                                disabled={isDisabled}
+                                                onChange={(e: any) =>
+                                                    handlechange(e)
+                                                }
+                                                name="country_id"
+                                                className="border w-full pl-2 rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            >
+                                                <option>Select</option>
+                                                {ListOfCountry &&
+                                                    ListOfCountry?.data?.map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.country_id
+                                                                }
+                                                            >
+                                                                {item?.name}
+                                                            </option>
+                                                        )
+                                                    )}
+                                            </select>
+                                            <p className="text-[red] text-p-error-hight">
+                                                {errors && errors.country_id}
+                                            </p>
+                                        </FormItem>
+                                        <FormItem
+                                            label={t('City*')}
+                                            className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                         >
-                                            <option>Select</option>
-                                            {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.city_id}>{item?.name}</option>
-
-                                            ))}
-                                        </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.city_id}</p>
-                                    </FormItem>
+                                            <select
+                                                disabled={isDisabled}
+                                                onChange={(e: any) =>
+                                                    handlechange(e)
+                                                }
+                                                name="city_id"
+                                                className="border w-full rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            >
+                                                <option>Select</option>
+                                                {ListOfCity &&
+                                                    ListOfCity?.data?.map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.city_id
+                                                                }
+                                                            >
+                                                                {item?.name}
+                                                            </option>
+                                                        )
+                                                    )}
+                                            </select>
+                                            <p className="text-[red] text-p-error-hight">
+                                                {errors && errors.city_id}
+                                            </p>
+                                        </FormItem>
+                                    </div>
                                 </div>
-                                </div>
-
 
                                 <div className="bg-gray-100 mt-4 p-3 rounded-md lg:flex ">
                                     <FormItem
-                                        label= {t("Product Type*")} 
+                                        label={t('Product Type*')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             name="product_type_id"
-                                            className= "border pl-2 w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                            className="border pl-2 w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.product_type_id}>{item?.type}</option>
-
-                                            ))}
+                                            {ListOfProduct &&
+                                                ListOfProduct?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.product_type_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.product_type_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Temperature*")} 
+                                        label={t('Temperature*')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
                                             autoComplete="off"
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             className="w-1/2 pl-2"
                                             name="temperature"
                                             value={formData?.temperature}
                                             placeholder="Temperature"
                                             component={Input}
                                         />
-                                       
+
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             name="temperature_type_id"
                                             className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            {ListOfTemp && ListOfTemp?.data?.filter((item: any) => [1, 2].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.temperature_type_id}>{item?.type}</option>
-
-                                            ))}
+                                            {ListOfTemp &&
+                                                ListOfTemp?.data
+                                                    ?.filter((item: any) =>
+                                                        [1, 2].includes(
+                                                            item?.id
+                                                        )
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.temperature_type_id
+                                                                }
+                                                            >
+                                                                {item?.type}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.temperature}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.temperature}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label={t("Unit*")}
+                                        label={t('Unit*')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
-                                       <Field
+                                        <Field
                                             disabled={isDisabled}
                                             type="number"
                                             autoComplete="off"
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             className="w-[60%]"
                                             name="quantity"
                                             value={formData?.quantity}
@@ -337,65 +457,106 @@ const StoreSearch = () => {
                                             component={Input}
                                             onKeyDown={onkeyDownOne}
                                         />
-                                            <select
+                                        <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             name="unit_id"
                                             className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            { ['Pallets', 'MT', 'Cubic Feet', 'Sq. Feet']?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item === 'MT'}>{item}</option>
-
+                                            {[
+                                                'Pallets',
+                                                'MT',
+                                                'Cubic Feet',
+                                                'Sq. Feet',
+                                            ]?.map((item: any, index: any) => (
+                                                <option
+                                                    value={item?.id}
+                                                    selected={item === 'MT'}
+                                                >
+                                                    {item}
+                                                </option>
                                             ))}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.quantity}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.quantity}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Certification")}
+                                        label={t('Certification')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             name="certification_id"
                                             className="border w-full rounded-lg p-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Select</option>
-                                            {ListOfCert && ListOfCert?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.certification_id}>{item?.type}</option>
-
-                                            ))}
+                                            {ListOfCert &&
+                                                ListOfCert?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.certification_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.certification_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.certification_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Date Of Storage")}
+                                        label={t('Date Of Storage')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             min={today}
                                             type="date"
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
+                                            onKeyDown={(e) => e.preventDefault()}
                                             autoComplete="off"
                                             name="date"
-                                            value={new Date(formData?.date) !='Invalid Date' ?  new Date(formData?.date).toISOString().split('T')[0] :''}
+                                            value={
+                                                new Date(formData?.date) !=
+                                                'Invalid Date'
+                                                    ? new Date(formData?.date)
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : ''
+                                            }
                                             placeholder="Date of Storage"
                                             component={Input}
                                         />
-                                        <p className='text-[red] text-p-error-hight' >{errors && errors.date}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.date}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Storage Duration*")}
+                                        label={t('Storage Duration*')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             autoComplete="off"
                                             className="w-[70%]"
                                             min={1}
@@ -407,20 +568,45 @@ const StoreSearch = () => {
                                         />
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handlechange(e)}
+                                            onChange={(e: any) =>
+                                                handlechange(e)
+                                            }
                                             name="storage_duration_type"
                                             className="border w-[20%] ml-4 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option selected>Unit</option>
-                                            {ListOfTimeUnits && ListOfTimeUnits?.data?.map((item: any, index: any) =>{if(item.id === 4||item.id === 6||item.id === 7){
-                                                return (
-                                                <option className='' value={item?.id} selected={item?.id === formData?.storage_duration_type}>{item?.type}</option>)
-                                            }})}
+                                            {ListOfTimeUnits &&
+                                                ListOfTimeUnits?.data?.map(
+                                                    (item: any, index: any) => {
+                                                        if (
+                                                            item.id === 4 ||
+                                                            item.id === 6 ||
+                                                            item.id === 7
+                                                        ) {
+                                                            return (
+                                                                <option
+                                                                    className=""
+                                                                    value={
+                                                                        item?.id
+                                                                    }
+                                                                    selected={
+                                                                        item?.id ===
+                                                                        formData?.storage_duration_type
+                                                                    }
+                                                                >
+                                                                    {item?.type}
+                                                                </option>
+                                                            )
+                                                        }
+                                                    }
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.storage_duration}
+                                        </p>
                                     </FormItem>
                                 </div>
-                          {/* {location?.state?.extraForm &&      <>
+                                {/* {location?.state?.extraForm &&      <>
                                 <div className="flex">
                                     <FormItem
                                         label="Status Id"
@@ -517,41 +703,49 @@ const StoreSearch = () => {
                                 </div>
                                 </>} */}
 
-
                                 <div className="flex justify-center w-[310px] mx-auto">
-                                   
-                                  {location?.state?.extraForm ?  <Button
-                                        disabled={isDisabled}
-                                        style={{ borderRadius: '13px' }}
-                                        block
-                                        variant="solid"
-                                        type="button"
-                                        onClick={handleRouteUpdate}
-                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
-                                    >
-                                     {t("Update")}
-                                    </Button> :
-                                     <Button
-                                     disabled={isDisabled}
-                                     style={{ borderRadius: '13px' }}
-                                     block
-                                     variant="solid"
-                                     type="button"
-                                     onClick={handleRoute}
-                                     className="indigo-btn w-[300px] mt-4 mx-auto rounded-[30px]"
-                                 >
-                                     {t("Request for Search")}
-                                 </Button>
-                                    }
-                                    
-
+                                    {location?.state?.extraForm ? (
+                                        <Button
+                                            disabled={isDisabled}
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            onClick={handleRouteUpdate}
+                                            className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${
+                                                isDisabled ? '!hidden' : ''
+                                            }`}
+                                        >
+                                            {t('Update')}
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            disabled={isDisabled}
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            onClick={handleRoute}
+                                            className="indigo-btn w-[300px] mt-4 mx-auto rounded-[30px]"
+                                        >
+                                            {t('Request for Search')}
+                                        </Button>
+                                    )}
                                 </div>
                             </FormContainer>
                         </Form>
                     </Formik>
                 </div>
-                {isDisabled?
-                ApprovedAssets?.data?.length>0 && <TableCustomerStoreAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
+                {isDisabled ? (
+                    ApprovedAssets?.data?.length > 0 && (
+                        <TableCustomerStoreAssets
+                            AllStore={ApprovedAssets?.data}
+                            fetchAgain={fetchAgain}
+                        />
+                    )
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )

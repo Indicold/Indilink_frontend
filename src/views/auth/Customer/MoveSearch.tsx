@@ -476,7 +476,7 @@ localStorage.removeItem('origin_gps');
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             min={today}
-                                            
+                                            onKeyDown={(e) => e.preventDefault()}
                                             autoComplete="off"
                                             name="dispatch_date"
                                             // onFocus={(e:any) => (e.target.type = "date")}
@@ -498,6 +498,7 @@ localStorage.removeItem('origin_gps');
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
+                                            onKeyDown={(e) => e.preventDefault()}
                                             min={today}
                                             autoComplete="off"
                                             name="arrival_date"

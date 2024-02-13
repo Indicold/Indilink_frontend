@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { apiUrl, getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch'
-import { messageViewNew, onkeyDown, onkeyDownDimension, onkeyDownNew, onkeyDownOne, onkeyDownforNumSpecialCharcter, validateChamberForm } from '@/store/customeHook/validate'
+import { messageViewNew, onkeyDown, onkeyDownDimension, onkeyDownNew, onkeyDownOne, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlytr, onkeyDownforNumSpecialCharcter, validateChamberForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -143,6 +143,14 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
           
             // setData({...data,staircase:e.target.checked})
             newData[e.target.name]=e.target.checked ? 1 :0;
+        }else if(e.target.name==='temp_range_min' || e.target.name==='temp_range_max'){
+            console.log("hhhhhhhh",e.target.name,e.target.value,e.key);
+            
+            if(e.target.value=='--'){
+                newData[e.target.name] = '-' 
+            }else{
+                newData[e.target.name] = e.target.value 
+            }
         }
         else {
             newData[e.target.name] = e.target.value
@@ -747,8 +755,8 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
-                                        <input     disabled={isDisabled} type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input  maxLength={6}   disabled={isDisabled} type="text" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temp_range_min' value={data?.temp_range_min} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownforNumMobSpecialCharcterOnlytr} />
+                                        <input  maxLength={6}   disabled={isDisabled} type="text" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temp_range_max' value={data?.temp_range_max} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownforNumMobSpecialCharcterOnlytr} />
                                        </div>
                                            
                                         <p className="text-[red] text-p-error-hight">

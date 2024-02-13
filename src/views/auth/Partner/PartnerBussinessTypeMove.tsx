@@ -481,6 +481,7 @@ vehicle_no:''
                                             disabled={isDisabled}
                                             type="month"
                                             autoComplete="off"
+                                            onKeyDown={(e:any) => e.preventDefault()}
                                             onChange={(e: any) =>
                                                 handleChange(e)
                                             }
