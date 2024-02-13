@@ -63,7 +63,8 @@ const UserProfilePage = () => {
                             <h1 className="font-bold text-center text-3xl text-gray-900">
                                 {/* {data && data?.email} */}
                             </h1>
-                            {owner_user_id === 'USER0' && (
+                            {(owner_user_id === 'USER0' ||
+                                owner_user_id === '0') && (
                                 <div className="my-5 px-6">
                                     <NavLink
                                         to="/basic-info"
@@ -88,7 +89,8 @@ const UserProfilePage = () => {
                             {ProfileData?.is_nda_signed == 0 &&
                             !ProfileData?.nda_doc ? (
                                 <>
-                                    {owner_user_id === 'USER0' && (
+                                    {(owner_user_id === 'USER0' ||
+                                        owner_user_id === '0') && (
                                         <div className="my-5 px-6 ">
                                             <a
                                                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf"
@@ -99,7 +101,8 @@ const UserProfilePage = () => {
                                             </a>
                                         </div>
                                     )}
-                                    {owner_user_id === 'USER0' && (
+                                    {(owner_user_id === 'USER0' ||
+                                        owner_user_id === '0') && (
                                         <div className="my-5 px-6">
                                             <div
                                                 role="button"
@@ -164,7 +167,8 @@ const UserProfilePage = () => {
                             ) : ProfileData?.is_nda_signed == 3 ? (
                                 <>
                                     <>
-                                        {owner_user_id === 'USER0' && (
+                                        {(owner_user_id === 'USER0' ||
+                                            owner_user_id === '0') && (
                                             <div className="my-5 px-6 ">
                                                 <a
                                                     href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/592212/Example-Mutual-Non-Disclosure-Agreement.pdf"
@@ -176,7 +180,8 @@ const UserProfilePage = () => {
                                                 </a>
                                             </div>
                                         )}
-                                        {owner_user_id === 'USER0' && (
+                                        {(owner_user_id === 'USER0' ||
+                                            owner_user_id === '0') && (
                                             <div className="my-5 px-6">
                                                 <div
                                                     role="button"
