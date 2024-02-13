@@ -24,6 +24,7 @@ import usePutApi from '@/store/customeHook/putApi' // Import a custom hook for m
 import { ToastContainer } from 'react-toastify' // Import container for showing toast messages
 import TableCustomerStoreAssets from './TableCustomerStoreAssets'
 import { useTranslation } from 'react-i18next'
+import _ from 'lodash'
 
 var currentDate = new Date()
 
@@ -236,6 +237,8 @@ const StoreSearch = () => {
     }, [CustomerResponse?.status])
 
     const { t, i18n }: any = useTranslation()
+    let newarray: any = _?.sortBy(ListOfCity, 'name')
+    console.log('REEEEEE', newarray)
 
     return (
         <div className="bg-white p-4 rounded-md shadow-2xl">
@@ -255,14 +258,7 @@ const StoreSearch = () => {
                     {' '}
                     {t('Store')}{' '}
                 </h4>
-                {/* The above code is a TypeScript React component that renders a form using the Formik
-                library. The form contains several input fields and select dropdowns for the user to
-                enter data. The form is wrapped in a Formik component, which handles form state and
-                validation. The form data is stored in the component's state using the useState
-                hook. The form also includes conditional rendering based on the value of the
-                `location?.state?.extraForm` variable. If this variable is truthy, additional form
-                fields are rendered. The form includes submit buttons that trigger different
-                functions depending on the form's purpose. */}
+
                 <div>
                     <Formik
                         className="gap-2 rounded-md"
@@ -394,6 +390,56 @@ const StoreSearch = () => {
                                                 handlechange(e)
                                             }
                                             className="w-1/2 pl-2"
+                                            onKeyPress={(event) => {
+                                                if (
+                                                    event?.key === 'e' ||
+                                                    event?.key === '+'
+                                                ) {
+                                                    event.preventDefault()
+                                                }
+                                                if (
+                                                    event.target.value.length ==
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.target.value = ''
+                                                }
+                                                if (
+                                                    event.target.value.length >
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.preventDefault()
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                const reg =
+                                                    '^[-]?[0-9]*\\.?[0-9]*$'
+                                                const current = e.target.value
+                                                if (!current) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !(
+                                                        current +
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    ).match(reg) &&
+                                                    e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             name="temperature"
                                             value={formData?.temperature}
                                             placeholder="Temperature"
@@ -452,6 +498,7 @@ const StoreSearch = () => {
                                             }
                                             className="w-[60%]"
                                             name="quantity"
+                                            min="0"
                                             value={formData?.quantity}
                                             placeholder="Quantity"
                                             component={Input}

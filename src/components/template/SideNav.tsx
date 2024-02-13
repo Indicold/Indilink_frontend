@@ -19,6 +19,7 @@ import { useAppSelector } from '@/store'
 import navigationPartnerConfig from '@/configs/navigationPartner.config'
 import navigationInvestorConfig from '@/configs/navigationInvestor.config'
 import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 /* The `sideNavStyle` constant is an object that defines the width and minimum width of the SideNav
 component. It sets the width to the value of the `SIDE_NAV_WIDTH` constant, which is imported from
@@ -55,7 +56,9 @@ const SideNav = () => {
     const sideNavCollapse = useAppSelector(
         (state) => state.theme.layout.sideNavCollapse
     )
-    const userAuthority = useAppSelector((state:any) => state?.auth?.user?.authority)
+    const userAuthority = useAppSelector(
+        (state: any) => state?.auth?.user?.authority
+    )
 
     /* The line `const { larger } = useResponsive()` is using the `useResponsive` hook to get the value
     of the `larger` property. The `useResponsive` hook is a custom hook that is used to determine
@@ -95,24 +98,31 @@ const SideNav = () => {
         return navMode
     }
 
-let val='';
-
-/* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
+    let val = ''
+    const location = useLocation()
+    const navigate = useNavigate()
+    /* The `useEffect` hook is used to perform side effects in a functional component. In this case, the
 `useEffect` hook is being used to retrieve the value of the `user_type` key from the `localStorage`
 object and store it in the `val` variable. */
-useEffect(()=>{
-let val=localStorage.getItem('user_type');
+    useEffect(() => {
+        let val = localStorage.getItem('user_type')
 
-    if(val==='Customer'){
-        val=val;
-    }
-    if (val == 'Partner') {
-        val=val;
-    }
-    if (val == 'Investor') {
-        val=val;
-    }
-  },[])
+        if (val === 'Customer') {
+            val = val
+        }
+        if (val == 'Partner') {
+            val = val
+        }
+        if (val == 'Investor') {
+            val = val
+        }
+        if (val == 'Partner' && location?.pathname === '/home') {
+            navigate('/partner-dashbord')
+        }
+        if (val == 'Customer' && location?.pathname === '/partner-dashbord') {
+            navigate('/home')
+        }
+    }, [])
 
     /* The `menuContent` constant is a JSX element that represents the content of the side navigation
     menu. It is a component called `VerticalMenuContent` that takes in several props: */
@@ -120,7 +130,13 @@ let val=localStorage.getItem('user_type');
         <VerticalMenuContent
             navMode={navMode}
             collapsed={sideNavCollapse}
-            navigationTree={localStorage.getItem('user_type')==='Partner' ? navigationPartnerConfig : localStorage.getItem('user_type')==='Investor' ? navigationInvestorConfig : navigationConfig }
+            navigationTree={
+                localStorage.getItem('user_type') === 'Partner'
+                    ? navigationPartnerConfig
+                    : localStorage.getItem('user_type') === 'Investor'
+                    ? navigationInvestorConfig
+                    : navigationConfig
+            }
             routeKey={currentRouteKey}
             userAuthority={userAuthority as string[]}
             direction={direction}
