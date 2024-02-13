@@ -453,6 +453,7 @@ const PartnerComplianceMove = () => {
 
                                                <input type='date'
                                                min={today}
+                                               onKeyDown={(e:any) => e.preventDefault()}
                                                 disabled={isDisabled}
                                                placeholder='Valid Till' name={item?.key_text}
                                                    defaultValue={item?.valid_till} className="h-11 pl-3 block w-[100%] pr-3 border border-gray-200 

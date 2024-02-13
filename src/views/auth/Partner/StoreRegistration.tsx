@@ -27,6 +27,8 @@ import {
     onkeyDown,
     onkeyDownNew,
     onkeyDownforNumSpecialCharcter,
+    onkeyDownforNumSpecialCharcterForContactNumber,
+    onkeyDownforSpecialCharcterGSTPAN,
     validateStorePartnerForm,
 } from '@/store/customeHook/validate'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -815,6 +817,7 @@ const StoreRegistration = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onKeyDown={onkeyDownforNumSpecialCharcterForContactNumber}
                                             placeholder="Contact Number"
                                             value={
                                                 phone || dataa?.facility_manager_contact

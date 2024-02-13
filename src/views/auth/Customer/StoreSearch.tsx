@@ -576,6 +576,7 @@ const StoreSearch = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onKeyDown={(e) => e.preventDefault()}
                                             autoComplete="off"
                                             name="date"
                                             value={

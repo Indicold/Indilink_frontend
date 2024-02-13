@@ -360,6 +360,7 @@ const CustomerDetailModal = ({message,setModal,setFormData,isDisabled}:any) => {
                                         onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             autoComplete="off"
+                                            onKeyDown={(e:any) => e.preventDefault()}
                                             min={today}
                                             value={formData?.date_of_start}
                                             name="date_of_start"

@@ -565,6 +565,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
+                                            onKeyDown={(e) => e.preventDefault()}
                                             min={today}
                                             autoComplete="off"
                                             value={new Date(formData?.date_of_start).toISOString().split('T')[0]}

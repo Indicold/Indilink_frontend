@@ -627,6 +627,7 @@ if(!item?.url && (item?.licenseNoVal || item?.valid_till)){
                                                 >
 
                                                     <input type='date'
+                                                    onKeyDown={(e:any) => e.preventDefault()}
                                                      min={today}
                                                         disabled={isDisabled}
                                                         placeholder={t("Valid Till")} name={item?.key_text}
