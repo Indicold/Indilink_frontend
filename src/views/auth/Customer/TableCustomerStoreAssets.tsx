@@ -23,9 +23,9 @@ const tableHead = {
     // asset_type: "Asset Type",
     Action: 'Action',
 }
- 
+
 // The TableCustomerStoreAssets component takes a prop called AllStore, presumably for rendering data.
- 
+
 const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
     const { token }: any = getToken()
     // let allData: any = AllStore;
@@ -38,7 +38,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
         })) || []
     const countPerPage = 10
     const [value, setValue] = React.useState('')
- 
+
     const [currentPage, setCurrentPage] = React.useState(1)
     const [collection, setCollection] = React.useState(
         cloneDeep(allData.slice(0, countPerPage))
@@ -72,7 +72,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             setCollection(filteredData)
         }, 400)
     )
- 
+
     React.useEffect(() => {
         // Update the displayed data when the search input value changes.
         if (!value) {
@@ -81,7 +81,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             searchData.current(value)
         }
     }, [value])
- 
+
     const updatePage = (p: any) => {
         // Function to update the current page of data.
         setCurrentPage(p)
@@ -95,7 +95,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
         setCollection(cloneDeep(allData.slice(from, to)))
     }, [AllStore])
     const navigate = useNavigate()
- 
+
     /**
      * The function `handleEdit` handles the edit action for different asset types and navigates to
      * different routes based on the asset type.
@@ -106,13 +106,13 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
     const handleAccept = (rowData: any) => {
         var myHeaders = new Headers()
         myHeaders.append('Authorization', `Bearer ${token}`)
- 
+
         var requestOptions: any = {
             method: 'PUT',
             headers: myHeaders,
             redirect: 'follow',
         }
- 
+
         fetch(
             `${apiUrl}/customer/accept-responses/${rowData?.id}`,
             requestOptions
@@ -136,13 +136,13 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
     const handleReject = (rowData: any) => {
         var myHeaders = new Headers()
         myHeaders.append('Authorization', `Bearer ${token}`)
- 
+
         var requestOptions: any = {
             method: 'PUT',
             headers: myHeaders,
             redirect: 'follow',
         }
- 
+
         fetch(
             `${apiUrl}/customer/reject-responses/${rowData?.id}`,
             requestOptions
@@ -181,7 +181,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             })
         }
     }
- 
+
     /**
      * The function `handleView` navigates to different routes based on the `asset_type_id` of the
      * `rowData` object.
@@ -203,7 +203,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             })
         }
     }
- 
+
     const tableRows = (rowData: any, index: any) => {
         // Generates table rows based on data.
         const tableCell = Object.keys(tableHead)
@@ -337,7 +337,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
                 </td>
             )
         })
- 
+
         return (
             <tr
                 key={index}
@@ -347,7 +347,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             </tr>
         )
     }
- 
+
     const tableData = () => {
         // Generates table data rows.
         return collection?.length > 0 ? (
@@ -362,7 +362,7 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             </tr>
         )
     }
- 
+
     const headRow = () => {
         // Generates the header row.
         return Object.values(tableHead).map((title, index) => (
@@ -371,9 +371,9 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             </td>
         ))
     }
- 
+
     // JSX structure for rendering the table and pagination.
- 
+
     return (
         <>
             <div className="search bg-white">
@@ -406,6 +406,5 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
         </>
     )
 }
- 
+
 export default TableCustomerStoreAssets
- 
