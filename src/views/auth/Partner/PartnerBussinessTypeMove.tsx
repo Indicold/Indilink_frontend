@@ -21,6 +21,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom' // Import
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDownNew,
     onkeyDownforNumSpecialCharcter,
     validateMovePartnerForm,
@@ -547,7 +548,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
-                                           
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -572,7 +573,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
-                                            
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -596,6 +597,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -621,6 +623,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -644,6 +647,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -669,6 +673,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
@@ -693,6 +698,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"

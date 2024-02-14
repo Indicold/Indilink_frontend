@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCondensorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onPasteDefault, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCondensorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -198,6 +198,7 @@ if(commanData?.type=='Edit' || commanData?.type=='View'){
                                             </div>} className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"

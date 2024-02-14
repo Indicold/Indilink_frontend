@@ -382,6 +382,7 @@ const MoveSearch = () => {
                                                 handleChange(e)
                                             }
                                             type="number"
+                                      
                                             autoComplete="off"
                                             onWheel={(e:any) => e.target.blur()}
                                             name="origin_pincode"
@@ -513,6 +514,7 @@ const MoveSearch = () => {
                                                 handleChange(e)
                                             }
                                             type="number"
+                                            
                                             autoComplete="off"
                                             min="0"
                                             onPaste={onPasteDefault}

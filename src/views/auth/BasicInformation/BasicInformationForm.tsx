@@ -26,6 +26,7 @@ import ReactGoogleAutocomplete from 'react-google-autocomplete'
 import axios from 'axios'
 import {
     messageViewNew,
+    onPasteDefault,
     onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber,
     onkeyDownforSpecialCharcter,
     onkeyDownforSpecialCharcterGSTPAN,
@@ -447,6 +448,7 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
                                         <div className="otp mx-auto">
                                             <input
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 className="w-full p-3 border-2 border-indigo-800 rounded-[13px]"
                                                 placeholder="Enter OTP here."
                                                 onChange={(e: any) =>

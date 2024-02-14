@@ -19,7 +19,7 @@ import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom 
 import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
 import usePostApi from '@/store/customeHook/postApi' // Import a custom hook for making POST requests
 import LoaderSpinner from '@/components/LoaderSpinner' // Import a custom loader spinner component
-import { messageView, messageViewNew, onkeyDown, onkeyDownNew, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
+import { messageView, messageViewNew, onPasteDefault, onkeyDown, onkeyDownNew, validatePrepareForm } from '@/store/customeHook/validate' // Import custom functions for messages and form validation
 import { ToastContainer } from 'react-toastify' // Import a toast notification container component
 import ACUModall from './MultistepForm/ACUModal' // Import a custom modal component
 import MachineModal from './MultistepForm/MachineModal' // Import another custom modal component
@@ -424,7 +424,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <Field
                                                 disabled={isDisabled}
                                                 type="number"
-                                                
+                                                onPaste={onPasteDefault}
                                                 onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onKeyDown={onkeyDownNew}
@@ -636,6 +636,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
+                                                    onPaste={onPasteDefault}
                                                     onWheel={(e:any) => e.target.blur()}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
@@ -672,6 +673,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
+                                                    onPaste={onPasteDefault}
                                                     onWheel={(e:any) => e.target.blur()}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
@@ -708,6 +710,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <Field
                                                 disabled={isDisabled}
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 onWheel={(e:any) => e.target.blur()}
                                                 autoComplete="off"
                                                 min={0}
@@ -734,6 +737,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     className="w-full border-0 focus:outline-0"
                                                     onWheel={(e:any) => e.target.blur()}
                                                     type='number'
+                                                    onPaste={onPasteDefault}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
@@ -833,6 +837,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
+                                                    onPaste={onPasteDefault}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>

@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateSolarInvertorForm, onkeyDownforNumSpecialCharcter, onkeyDownNew, messageViewNew } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateSolarInvertorForm, onkeyDownforNumSpecialCharcter, onkeyDownNew, messageViewNew, onPasteDefault } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -204,6 +204,7 @@ if(PutApiResponse?.status===200){
                                     >
                                      <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"

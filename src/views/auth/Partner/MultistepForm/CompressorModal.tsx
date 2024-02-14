@@ -5,7 +5,7 @@
  * @returns The CompressorModal component is being returned.
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
-import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCompressorForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onPasteDefault, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateCompressorForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -206,6 +206,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"
@@ -235,6 +236,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"

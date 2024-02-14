@@ -13,6 +13,7 @@ import PublishIcon from '@mui/icons-material/Publish'
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDownOne,
     onkeyDownPincode,
     onkeyDownforNumMobSpecialCharcterOnly,
@@ -504,6 +505,7 @@ const BasicInfo = () => {
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             autoComplete="off"
                                             onChange={(e: any) =>
                                                 handleChange(e)

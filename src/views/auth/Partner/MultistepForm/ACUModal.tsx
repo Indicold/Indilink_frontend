@@ -10,7 +10,7 @@
 import { Button, FormItem, Input, Tooltip } from '@/components/ui' // Importing custom UI components
 import { getToken } from '@/store/customeHook/token'
 import useApiFetch from '@/store/customeHook/useApiFetch' // Custom hook for API call
-import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateACUForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onPasteDefault, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateACUForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -237,6 +237,7 @@ if(PutApiResponse?.status===200){
                                     >
                                      <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="cmf"
@@ -265,6 +266,7 @@ if(PutApiResponse?.status===200){
                                      className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="hp"
@@ -316,6 +318,7 @@ if(PutApiResponse?.status===200){
                                     className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                    <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="tr"

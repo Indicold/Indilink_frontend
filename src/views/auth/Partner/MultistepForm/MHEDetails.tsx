@@ -6,7 +6,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, validateMHEForm, onkeyDownforNumSpecialCharcter, onkeyDownNew, messageViewNew } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateMHEForm, onkeyDownforNumSpecialCharcter, onkeyDownNew, messageViewNew, onPasteDefault } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -198,6 +198,7 @@ if(PutApiResponse?.status===200){
                                     <FormItem label="Load*" className="pl-3 w-[100%] text-label-title m-auto">
                                        <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="load"

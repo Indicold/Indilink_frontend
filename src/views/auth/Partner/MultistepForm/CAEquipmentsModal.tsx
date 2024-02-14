@@ -8,7 +8,7 @@
  */
 import { Button, FormItem, Input, Tooltip } from '@/components/ui'
 import { getToken } from '@/store/customeHook/token'
-import { handleStoreTable, messageView, validateCAEquipForm, onkeyDownNew, onkeyDownforNumSpecialCharcter, messageViewNew } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, validateCAEquipForm, onkeyDownNew, onkeyDownforNumSpecialCharcter, messageViewNew, onPasteDefault } from '@/store/customeHook/validate'
 import axios from 'axios'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
@@ -224,6 +224,7 @@ useEffect(()=>{
                                         <Field
                                                 disabled={isDisabled}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="cmf"
