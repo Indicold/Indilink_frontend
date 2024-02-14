@@ -224,6 +224,7 @@ useEffect(()=>{
                                         <Field
                                                 disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="cmf"
                                             value={data?.cmf}

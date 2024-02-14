@@ -252,6 +252,7 @@ const AMCDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                        <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             disabled={isDisabled}
                                             name="fixed_cost"

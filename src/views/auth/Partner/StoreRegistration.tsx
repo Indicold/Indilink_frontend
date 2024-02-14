@@ -808,6 +808,7 @@ const StoreRegistration = () => {
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
+                                            onWheel={(e:any) => e.target.blur()}
                                             disabled={location?.state}
                                             type="number"
                                             autoComplete="off"
@@ -904,6 +905,7 @@ const StoreRegistration = () => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.total_tonnage}
                                                 type="number"
+                                                onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1050,6 +1052,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onWheel={(e:any) => e.target.blur()}
                                                 name="ante_room_area"
                                                 onKeyDown={onkeyDownNew}
                                                 placeholder="Enter value"
@@ -1074,6 +1077,7 @@ const StoreRegistration = () => {
                                             disabled={location?.state}
                                             type="number"
                                             min="0"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="total_number_of_docks"
                                             placeholder="Total number of docks"
@@ -1101,6 +1105,7 @@ const StoreRegistration = () => {
                                                 value={
                                                     dataa?.total_office_space
                                                 }
+                                                onWheel={(e:any) => e.target.blur()}
                                                 min="0"
                                                 type="number"
                                                 onChange={(e: any) =>
@@ -1143,6 +1148,7 @@ const StoreRegistration = () => {
                                                 DocksType?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
+                                                        key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
@@ -1169,6 +1175,7 @@ const StoreRegistration = () => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.processing_area}
                                                 type="number"
+                                                onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1202,6 +1209,7 @@ const StoreRegistration = () => {
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
+                                                onWheel={(e:any) => e.target.blur()}
                                                 onKeyDown={onkeyDownNew}
                                                 name="parking_area"
                                                 placeholder="Enter value"

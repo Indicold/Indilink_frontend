@@ -552,6 +552,7 @@ const PrepareSearch = () => {
                                             }
                                             type="number"
                                             onPaste={onPasteDefault}
+                                            onWheel={(e:any) => e.target.blur()}
                                             onKeyDown={(e: any) => {
                                                 if (
                                                     e.keyCode === 69 ||
@@ -622,6 +623,7 @@ const PrepareSearch = () => {
                                                 handleChange(e)
                                             }
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             onPaste={onPasteDefault}
                                             onKeyDown={(e: any) => {
                                                 if (
@@ -766,6 +768,7 @@ const PrepareSearch = () => {
                                                     e.preventDefault() // Prevent the 'e' key from being input
                                                 }
                                             }}
+                                              onWheel={(e:any) => e.target.blur()}
                                             onKeyPress={(event) => {
                                                 if (
                                                     event?.key === 'e' ||

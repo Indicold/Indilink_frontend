@@ -547,6 +547,8 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                           
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             value={data?.actual_payload  || ""}
@@ -570,6 +572,8 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             onChange={(e: any) =>
@@ -592,6 +596,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             value={data?.length || ""}                          
@@ -616,6 +621,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             onChange={(e: any) =>
@@ -638,6 +644,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             value={data?.hight || ""}
@@ -662,6 +669,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             onChange={(e: any) =>
@@ -685,6 +693,7 @@ vehicle_no:''
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min="0"
                                             autoComplete="off"
                                             value={data?.unladen_weight_in_rc || ""}

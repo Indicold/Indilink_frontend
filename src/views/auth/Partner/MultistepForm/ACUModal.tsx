@@ -237,6 +237,7 @@ if(PutApiResponse?.status===200){
                                     >
                                      <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="cmf"
                                             disabled={isDisabled}
@@ -264,6 +265,7 @@ if(PutApiResponse?.status===200){
                                      className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                       <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="hp"
                                             disabled={isDisabled}
@@ -314,6 +316,7 @@ if(PutApiResponse?.status===200){
                                     className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                    <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="tr"
                                             disabled={isDisabled}

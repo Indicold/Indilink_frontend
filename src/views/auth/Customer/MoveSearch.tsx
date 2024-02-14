@@ -323,7 +323,7 @@ const MoveSearch = () => {
                                                 ListOfCountry?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.origin_country_id
@@ -355,7 +355,7 @@ const MoveSearch = () => {
                                                 ListOfCity?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.origin_city_id
@@ -383,6 +383,7 @@ const MoveSearch = () => {
                                             }
                                             type="number"
                                             autoComplete="off"
+                                            onWheel={(e:any) => e.target.blur()}
                                             name="origin_pincode"
                                             onPaste={onPasteDefault}
                                             onKeyPress={(e: any) => {
@@ -453,7 +454,7 @@ const MoveSearch = () => {
                                                 ListOfCountry?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.dest_country_id
@@ -485,7 +486,7 @@ const MoveSearch = () => {
                                                 ListOfCityDest?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.dest_city_id
@@ -516,6 +517,7 @@ const MoveSearch = () => {
                                             min="0"
                                             onPaste={onPasteDefault}
                                             name="dest_pincode"
+                                            onWheel={(e:any) => e.target.blur()}
                                             value={formData?.dest_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
@@ -566,6 +568,7 @@ const MoveSearch = () => {
                                             autoComplete="off"
                                             min="0"
                                             onPaste={onPasteDefault}
+                                            onWheel={(e:any) => e.target.blur()}
                                             name="load_quantity"
                                             value={formData?.load_quantity}
                                             placeholder="Load Quantity"
@@ -628,7 +631,7 @@ const MoveSearch = () => {
                                                 ListOfBroad?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.broad_category_id
@@ -662,7 +665,7 @@ const MoveSearch = () => {
                                                 ListOfProduct?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
-                                                            value={item?.id}
+                                                            key={index} value={item?.id}
                                                             selected={
                                                                 item?.id ===
                                                                 formData?.product_type_id
@@ -690,7 +693,7 @@ const MoveSearch = () => {
                                             }
                                             type="date"
                                             min={today}
-                                            onKeyDown={(e) =>
+                                            onKeyDown={(e:any) =>
                                                 e.preventDefault()
                                             }
                                             autoComplete="off"
@@ -720,7 +723,7 @@ const MoveSearch = () => {
                                                 handleChange(e)
                                             }
                                             type="date"
-                                            onKeyDown={(e) =>
+                                            onKeyDown={(e:any) =>
                                                 e.preventDefault()
                                             }
                                             min={formData?.dispatch_date}
