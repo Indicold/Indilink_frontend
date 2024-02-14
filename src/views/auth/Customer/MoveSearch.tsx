@@ -1,99 +1,145 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Dropdown,
     FormContainer,
     FormItem,
     Input,
-} from '@/components/ui'; // Import UI components
-import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
-import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
-import { CustomerMovePayload1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi'; // Custom hook for API call
-import { messageView, validateMoveCustomerForm, onkeyDownPincode, messageViewNew, onkeyDownforSpecialCharcter, onkeyDownforNumMobSpecialCharcter } from '@/store/customeHook/validate';
-import { ToastContainer } from 'react-toastify';
-import TableCustomerMoveAssets from './TableCustomerMoveAssets';
+} from '@/components/ui' // Import UI components
+import { Field, Form, Formik } from 'formik' // Import Formik for form handling
+import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
+import { useLocation, useNavigate } from 'react-router-dom' // Import routing related hook
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal' // Import a custom ThankYou modal component
+import { CustomerMovePayload1 } from '@/store/Payload'
+import usePostApi from '@/store/customeHook/postApi' // Custom hook for API call
+import {
+    messageView,
+    validateMoveCustomerForm,
+    onkeyDownPincode,
+    messageViewNew,
+    onkeyDownforSpecialCharcter,
+    onkeyDownforNumMobSpecialCharcter,
+    onPasteDefault,
+} from '@/store/customeHook/validate'
+import { ToastContainer } from 'react-toastify'
+import TableCustomerMoveAssets from './TableCustomerMoveAssets'
 import { useTranslation } from 'react-i18next'
-import Autocomplete from "react-google-autocomplete"
+import Autocomplete from 'react-google-autocomplete'
 
 // Define the functional component for MoveSearch
 const MoveSearch = () => {
-    const dest_gps:any=localStorage.getItem('dest_gps') || "";
-    const origin_gps:any=localStorage.getItem('origin_gps') || "";
+    const dest_gps: any = localStorage.getItem('dest_gps') || ''
+    const origin_gps: any = localStorage.getItem('origin_gps') || ''
     // Get the user's token using a custom hook
-    const { token }: any = getToken();
+    const { token }: any = getToken()
 
     /* The above code is declaring a constant variable named "location" and assigning it the value
     returned by the "useLocation()" function. The type of the "location" variable is set to "any",
     meaning it can hold any type of value. */
-    const location: any = useLocation();
+    const location: any = useLocation()
 
     // Define a state variable for the this component
-    const [errors, setErrors] = useState<any>({});
-    const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>({...CustomerMovePayload1,dest_gps:dest_gps,origin_gps:origin_gps,unit_id:2});
+    const [errors, setErrors] = useState<any>({})
+    const [modal, setModal] = useState(false)
+    const [formData, setFormData] = useState<any>({
+        ...CustomerMovePayload1,
+        dest_gps: dest_gps,
+        origin_gps: origin_gps,
+        unit_id: 2,
+    })
     const [message, setMessage] = useState<any>('')
     const [isDisabled, setIsDisabled] = useState<any>(false)
-    const [addressUpdateCount, setAddressUpdateCount] = useState(0);
+    const [addressUpdateCount, setAddressUpdateCount] = useState(0)
 
     // Fetch a list of countries using a custom hook
-    const { data: ListOfCountry, loading: LCloading, error: LCerror } =
-        useApiFetch<any>(`master/get-countries`, token);
+    const {
+        data: ListOfCountry,
+        loading: LCloading,
+        error: LCerror,
+    } = useApiFetch<any>(`master/get-countries`, token)
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
-        useApiFetch<any>(`master/get-city-by-countryId/${formData?.origin_country_id}`, token);
+    const {
+        data: ListOfCity,
+        loading: Lcityloading,
+        error: Lcityerror,
+    } = useApiFetch<any>(
+        `master/get-city-by-countryId/${formData?.origin_country_id}`,
+        token
+    )
 
-        const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
-        useApiFetch<any>(`customer/get-responses/2/${location?.state?.data?.id}`, token);
+    const {
+        data: ApprovedAssets,
+        loading: Approvedloading,
+        error: Approvederror,
+        refetch: fetchAgain,
+    } = useApiFetch<any>(
+        `customer/get-responses/2/${location?.state?.data?.id}`,
+        token
+    )
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfCityDest, loading: LcityDestloading, error: LcityDesterror } =
-        useApiFetch<any>(`master/get-city-by-countryId/${formData?.dest_country_id}`, token);
+    const {
+        data: ListOfCityDest,
+        loading: LcityDestloading,
+        error: LcityDesterror,
+    } = useApiFetch<any>(
+        `master/get-city-by-countryId/${formData?.dest_country_id}`,
+        token
+    )
 
     // Fetch a list of status based on it
-    const { data: ListOfstatus, loading: Lstatusloading, error: Lstatuserror } =
-        useApiFetch<any>(`master/customer/store/get-status`, token);
-
+    const {
+        data: ListOfstatus,
+        loading: Lstatusloading,
+        error: Lstatuserror,
+    } = useApiFetch<any>(`master/customer/store/get-status`, token)
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfBroad, loading: LOBloading, error: LOBerror } =
-        useApiFetch<any>(`master/customer/store/get-broad-category`, token);
+    const {
+        data: ListOfBroad,
+        loading: LOBloading,
+        error: LOBerror,
+    } = useApiFetch<any>(`master/customer/store/get-broad-category`, token)
 
     // Fetch a list of cities based on the selected Product
-    const { data: ListOfProduct, loading: LOPloading, error: LOPerror } =
-        useApiFetch<any>(`master/customer/store/get-product-type`, token);
-
+    const {
+        data: ListOfProduct,
+        loading: LOPloading,
+        error: LOPerror,
+    } = useApiFetch<any>(`master/customer/store/get-product-type`, token)
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
-        useApiFetch<any>(`master/customer/store/get-unit-type`, token);
+    const {
+        data: ListOfUnit,
+        loading: LOUloading,
+        error: LOUerror,
+    } = useApiFetch<any>(`master/customer/store/get-unit-type`, token)
 
     // Define a custom hook for making a POST request
-    const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerMoveDetails }: any =
-        usePostApi(`customer/move/search`);
+    const {
+        result: CustomerResponse,
+        loading: CustomerLoading,
+        sendPostRequest: PostCustomerMoveDetails,
+    }: any = usePostApi(`customer/move/search`)
 
-        const today = new Date().toISOString().split('T')[0];
-        function formatDate(inputDate:any) {
-            
-                const parts = inputDate.split('-'); // Split the input date into parts
-                if (parts.length === 3) {
-                  const [year, month, day] = parts;
-                  return `${day}-${month}-${year}`;
-                }
-                return inputDate; // Return the input date if it's not in the expected format
-              }
+    const today = new Date().toISOString().split('T')[0]
+    function formatDate(inputDate: any) {
+        const parts = inputDate.split('-') // Split the input date into parts
+        if (parts.length === 3) {
+            const [year, month, day] = parts
+            return `${day}-${month}-${year}`
+        }
+        return inputDate // Return the input date if it's not in the expected format
+    }
 
-              
     // Define a function to handle a button click
     const handleRoute = () => {
         // Check form validation before making a POST request
 
         if (validateMoveCustomerForm(formData, setErrors)) {
-            PostCustomerMoveDetails(formData);
+            PostCustomerMoveDetails(formData)
         }
     }
     /**
@@ -101,65 +147,75 @@ const MoveSearch = () => {
      * authorization headers, and then displays a success message and redirects the user to a ticket
      * list page after a delay.
      */
-   
-    const handleRouteUpdate = () => {
-  
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
 
-        var formdata = new FormData();
-        formdata.append("origin_country_id", formData?.origin_country_id);
-        formdata.append("origin_city_id", formData?.origin_city_id);
-        formdata.append("origin_pincode", formData?.origin_pincode);
-        formdata.append("origin_gps", origin_gps);
-        formdata.append("dest_country_id", formData?.dest_country_id);
-        formdata.append("dest_city_id", formData?.dest_city_id);
-        formdata.append("dest_pincode", formData?.dest_pincode);
-        formdata.append("dest_gps", dest_gps);
-        formdata.append("load_quantity", formData?.load_quantity);
-        formdata.append("unit_id", formData?.unit_id);
-        formdata.append("broad_category_id", formData?.broad_category_id);
-        formdata.append("product_type_id", formData?.product_type_id);
-        formdata.append("contract_name", formData?.contract_name);
-        formdata.append("dispatch_date", formData?.dispatch_date);
-        formdata.append("arrival_date", formData?.arrival_date);
-        formdata.append("contract_type", formData?.contract_type);
-        formdata.append("status_id", formData?.status_id);
-        formdata.append("comment", formData?.comment);
-        formdata.append("contract_download", formData?.contract_download);
+    const handleRouteUpdate = () => {
+        var myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`)
+
+        var formdata = new FormData()
+        formdata.append('origin_country_id', formData?.origin_country_id)
+        formdata.append('origin_city_id', formData?.origin_city_id)
+        formdata.append('origin_pincode', formData?.origin_pincode)
+        formdata.append('origin_gps', origin_gps)
+        formdata.append('dest_country_id', formData?.dest_country_id)
+        formdata.append('dest_city_id', formData?.dest_city_id)
+        formdata.append('dest_pincode', formData?.dest_pincode)
+        formdata.append('dest_gps', dest_gps)
+        formdata.append('load_quantity', formData?.load_quantity)
+        formdata.append('unit_id', formData?.unit_id)
+        formdata.append('broad_category_id', formData?.broad_category_id)
+        formdata.append('product_type_id', formData?.product_type_id)
+        formdata.append('contract_name', formData?.contract_name)
+        formdata.append('dispatch_date', formData?.dispatch_date)
+        formdata.append('arrival_date', formData?.arrival_date)
+        formdata.append('contract_type', formData?.contract_type)
+        formdata.append('status_id', formData?.status_id)
+        formdata.append('comment', formData?.comment)
+        formdata.append('contract_download', formData?.contract_download)
 
         var requestOptions: any = {
             method: 'PUT',
             headers: myHeaders,
             body: formdata,
-            redirect: 'follow'
-        };
+            redirect: 'follow',
+        }
 
-        fetch(`${apiUrl}/customer/move/search-update/${location?.state?.data?.id}`, requestOptions)
-            .then(response => response.json())
+        fetch(
+            `${apiUrl}/customer/move/search-update/${location?.state?.data?.id}`,
+            requestOptions
+        )
+            .then((response) => response.json())
             .then((result: any) => {
-                setMessage(result);
+                setMessage(result)
                 setModal(true)
                 setTimeout(() => {
                     navigate('/ticket_list_move')
                 }, 2000)
             })
-            .catch(error => console.log('error', error));
+            .catch((error) => console.log('error', error))
     }
     // Define a function to handle a button click
     const handleChange = (e: any) => {
-        const newData: any = { ...formData };
+        const newData: any = { ...formData }
         if (e.target.name === 'contract_download') {
-
-            newData[e.target.name] = e.target.files[0];
+            newData[e.target.name] = e.target.files[0]
+        } else if (e.target.name === 'load_quantity') {
+            if (e.target.value?.length < 6) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
+            }
+        } else if (e.target.name === 'dispatch_date') {
+            newData[e.target.name] = e.target.value
+            newData['arrival_date'] = null
         } else {
-            newData[e.target.name] = e.target.value;
+            newData[e.target.name] = e.target.value
         }
-        
-        setFormData(newData);
-        if(errors[e.target.name])validateMoveCustomerForm(newData, setErrors)
+
+        setFormData(newData)
+        if (errors[e.target.name]) validateMoveCustomerForm(newData, setErrors)
     }
-    const navigate: any = useNavigate();
+    const navigate: any = useNavigate()
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -168,54 +224,50 @@ const MoveSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
-            setFormData(location?.state?.data);
+            setFormData(location?.state?.data)
             setIsDisabled(location?.state?.disabled)
         }
-
     }, [])
 
     useEffect(() => {
         if (location?.state?.data) {
-            
-            setFormData(location?.state?.data);
+            setFormData(location?.state?.data)
             setIsDisabled(location?.state?.disabled)
         }
-
     }, [])
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
             setMessage(CustomerResponse)
-            setModal(true);
+            setModal(true)
             setTimeout(() => {
                 navigate('/ticket_list_move')
             }, 2000)
         }
-        if(CustomerResponse) {
+        if (CustomerResponse) {
             messageViewNew(CustomerResponse)
         }
-    }, [CustomerResponse?.status]);
+    }, [CustomerResponse?.status])
 
+    const { t, i18n }: any = useTranslation()
+    useEffect(() => {
+        localStorage.removeItem('dest_gps')
+        localStorage.removeItem('origin_gps')
+    }, [])
 
-    const { t, i18n }:any = useTranslation();
-useEffect(()=>{
-localStorage.removeItem('dest_gps');
-localStorage.removeItem('origin_gps');
-},[])
-
-// useEffect(() => {
-//     const newData = {...formData};
-//     var formValuesUpdated = false;
-//     if (localStorage.getItem('dest_gps') !== null) {
-//         newData['dest_gps'] = localStorage.getItem('dest_gps');
-//         formValuesUpdated = true;
-//     }
-//     if (localStorage.getItem('origin_gps') !== null) {
-//         newData['origin_gps'] = localStorage.getItem('origin_gps');
-//         formValuesUpdated = true;
-//     }
-//     if (formValuesUpdated) setFormData(newData)
-// }, [addressUpdateCount])
+    // useEffect(() => {
+    //     const newData = {...formData};
+    //     var formValuesUpdated = false;
+    //     if (localStorage.getItem('dest_gps') !== null) {
+    //         newData['dest_gps'] = localStorage.getItem('dest_gps');
+    //         formValuesUpdated = true;
+    //     }
+    //     if (localStorage.getItem('origin_gps') !== null) {
+    //         newData['origin_gps'] = localStorage.getItem('origin_gps');
+    //         formValuesUpdated = true;
+    //     }
+    //     if (formValuesUpdated) setFormData(newData)
+    // }, [addressUpdateCount])
 
     return (
         <div>
@@ -223,7 +275,13 @@ localStorage.removeItem('origin_gps');
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
-            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
+            {modal && (
+                <ThankYouModal
+                    message={message}
+                    setModal={setModal}
+                    setFormData={setFormData}
+                />
+            )}
             {/* The above code is a TypeScript React component that renders a form for moving items. It
             uses the Formik library for form management. The form includes fields for origin and
             destination locations, load quantity, broad category, product type, dispatch date/time,
@@ -232,7 +290,9 @@ localStorage.removeItem('origin_gps');
             Depending on the value of the `location.state.extraForm` prop, the form will either
             display an "Update" button or a "Request for Search" button. */}
             <div className="bg-white p-4 shadow-2xl">
-                <h4 className=" mb-2 text-head-title pl-[22px] text-center">{t("Move")} </h4>
+                <h4 className=" mb-2 text-head-title pl-[22px] text-center">
+                    {t('Move')}{' '}
+                </h4>
                 <div>
                     <Formik
                         initialValues={{ field: true }}
@@ -242,130 +302,219 @@ localStorage.removeItem('origin_gps');
                     >
                         <Form className="py-2 multistep-form-step">
                             <FormContainer>
-                                <h6 className=" mb-2 pl-[22px] text-head-title text-start">{t("Origin Location")}</h6>
+                                <h6 className=" mb-2 pl-[22px] text-head-title text-start">
+                                    {t('Origin Location')}
+                                </h6>
                                 <div className=" lg:flex bg-gray-100 p-2 rounded-md">
                                     <FormItem
-                                        label= {t("Country*")}
+                                        label={t('Country*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="origin_country_id"
                                             className=" border w-full p-2 rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.origin_country_id}>{item?.name}</option>
-
-                                            ))}
+                                            {ListOfCountry &&
+                                                ListOfCountry?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.origin_country_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.origin_country_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.origin_country_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("From*")}
+                                        label={t('From*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="origin_city_id"
                                             className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.origin_city_id}>{item?.name}</option>
-
-                                            ))}
+                                            {ListOfCity &&
+                                                ListOfCity?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.origin_city_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.origin_city_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.origin_city_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label=  {t("PIN Code")}
+                                        label={t('PIN Code')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
                                             autoComplete="off"
                                             name="origin_pincode"
+                                            onPaste={onPasteDefault}
+                                            onKeyPress={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             value={formData?.origin_pincode}
                                             placeholder="PIN Code"
+                                            min="0"
                                             component={Input}
                                             onKeyDown={onkeyDownPincode}
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label={t("GPS")}
+                                        label={t('GPS')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Autocomplete
-                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="origin_gps"
-                                            defaultValue={formData?.origin_gps || origin_gps}
+                                            defaultValue={
+                                                formData?.origin_gps ||
+                                                origin_gps
+                                            }
                                             placeholder="Location"
-                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            apiKey="AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww"
                                             onPlaceSelected={(place) => {
-                                                localStorage.setItem("origin_gps",place?.formatted_address)
+                                                localStorage.setItem(
+                                                    'origin_gps',
+                                                    place?.formatted_address
+                                                )
                                                 // setAddressUpdateCount((val) => val + 1);
                                             }}
                                         />
                                     </FormItem>
                                 </div>
-                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start"> {t("Destination Location")} </h6>
+                                <h6 className=" mb-2 mt-4 text-head-title pl-[22px] text-start">
+                                    {' '}
+                                    {t('Destination Location')}{' '}
+                                </h6>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label=  {t("Country*")}
+                                        label={t('Country*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="dest_country_id"
                                             className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.dest_country_id}>{item?.name}</option>
-
-                                            ))}
+                                            {ListOfCountry &&
+                                                ListOfCountry?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.dest_country_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.dest_country_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.dest_country_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label=  {t("To*")}
+                                        label={t('To*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="dest_city_id"
                                             className="p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfCityDest && ListOfCityDest?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.dest_city_id}>{item?.name}</option>
-
-                                            ))}
+                                            {ListOfCityDest &&
+                                                ListOfCityDest?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.dest_city_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.dest_city_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.dest_city_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("PIN Code")}
+                                        label={t('PIN Code')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
                                             autoComplete="off"
+                                            min="0"
+                                            onPaste={onPasteDefault}
                                             name="dest_pincode"
                                             value={formData?.dest_pincode}
                                             placeholder="PIN Code"
@@ -374,19 +523,26 @@ localStorage.removeItem('origin_gps');
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label={t("GPS")}
+                                        label={t('GPS')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Autocomplete
-                                            className='input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'
+                                            className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="dest_gps"
-                                            defaultValue={formData?.dest_gps || dest_gps}
+                                            defaultValue={
+                                                formData?.dest_gps || dest_gps
+                                            }
                                             placeholder="Location"
-                                            apiKey='AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww'
+                                            apiKey="AIzaSyB7dJWdsmX6mdklhTss1GM9Gy6qdOk6pww"
                                             onPlaceSelected={(place) => {
-                                                localStorage.setItem("dest_gps",place?.formatted_address)
+                                                localStorage.setItem(
+                                                    'dest_gps',
+                                                    place?.formatted_address
+                                                )
                                                 // setAddressUpdateCount((val) => val + 1);
                                                 // const newData = {...formData}
                                                 // newData['dest_gps'] = place?.formatted_address
@@ -397,180 +553,278 @@ localStorage.removeItem('origin_gps');
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Load Quantity*")}
+                                        label={t('Load Quantity*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
                                             className="w-[70%]"
                                             autoComplete="off"
+                                            min="0"
+                                            onPaste={onPasteDefault}
                                             name="load_quantity"
                                             value={formData?.load_quantity}
                                             placeholder="Load Quantity"
                                             component={Input}
-                                            onKeyDown={onkeyDownforNumMobSpecialCharcter}
+                                            onKeyDown={
+                                                onkeyDownforNumMobSpecialCharcter
+                                            }
                                         />
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="unit_id"
                                             className="w-[20%] ml-4 p-2 border input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option value="">Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
-
-                                            ))}
+                                            {/* <option value="">Unit</option> */}
+                                            {ListOfUnit &&
+                                                ListOfUnit?.data
+                                                    ?.filter((item: any) =>
+                                                        [1, 2, 3, 5].includes(
+                                                            item?.id
+                                                        )
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.unit_id
+                                                                }
+                                                            >
+                                                                {item?.type}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.load_quantity}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.load_quantity}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Broad Category*")}
+                                        label={t('Broad Category*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="broad_category_id"
                                             className="border p-2 w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfBroad && ListOfBroad?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
-                                            ))}
-
+                                            {ListOfBroad &&
+                                                ListOfBroad?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.broad_category_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.broad_category_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.broad_category_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Product Type*")}
+                                        label={t('Product Type*')}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="product_type_id"
                                             className=" p-2 border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id===formData?.product_type_id}>{item?.type}</option>
-                                            ))}
-
+                                            {ListOfProduct &&
+                                                ListOfProduct?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.product_type_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
-                                   
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.product_type_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label= {t("Dispatch Date")}
+                                        label={t('Dispatch Date')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="date"
                                             min={today}
-                                            onKeyDown={(e) => e.preventDefault()}
+                                            onKeyDown={(e) =>
+                                                e.preventDefault()
+                                            }
                                             autoComplete="off"
                                             name="dispatch_date"
                                             // onFocus={(e:any) => (e.target.type = "date")}
                                             // onBlur={(e:any) => (e.target.type = "text")}
                                             value={
                                                 formData?.dispatch_date
-                                                  ? new Date(formData.dispatch_date).toISOString().split('T')[0]
-                                                  : '' // If formData?.dispatch_date is not available or invalid, set an empty string
-                                              }
+                                                    ? new Date(
+                                                          formData.dispatch_date
+                                                      )
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : '' // If formData?.dispatch_date is not available or invalid, set an empty string
+                                            }
                                             placeholder="Date of Dispatch"
                                             component={Input}
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label= {t("Arrival Date")}
+                                        label={t('Arrival Date')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="date"
-                                            onKeyDown={(e) => e.preventDefault()}
-                                            min={today}
+                                            onKeyDown={(e) =>
+                                                e.preventDefault()
+                                            }
+                                            min={formData?.dispatch_date}
                                             autoComplete="off"
                                             name="arrival_date"
                                             value={
-    (formData?.arrival_date && new Date(formData?.arrival_date) !='Invalid Date')
-      ? new Date(formData?.arrival_date).toISOString().split('T')[0]
-      : '' // Set a default value if formData.arrival_date is undefined/null
-  }
+                                                formData?.arrival_date &&
+                                                new Date(
+                                                    formData?.arrival_date
+                                                ) != 'Invalid Date'
+                                                    ? new Date(
+                                                          formData?.arrival_date
+                                                      )
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : '' // Set a default value if formData.arrival_date is undefined/null
+                                            }
                                             placeholder="Arrival Dtate"
                                             component={Input}
                                         />
                                     </FormItem>
                                 </div>
-                      {location?.state?.extraForm &&    <>
+                                {location?.state?.extraForm && (
+                                    <>
+                                        <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
+                                            <FormItem
+                                                label="Status"
+                                                className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                            >
+                                                <select
+                                                    disabled={isDisabled}
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    name="status_id"
+                                                    className="border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                >
+                                                    <option>Select</option>
+                                                    {ListOfstatus &&
+                                                        ListOfstatus?.data?.map(
+                                                            (
+                                                                item: any,
+                                                                index: any
+                                                            ) => (
+                                                                <option
+                                                                    value={
+                                                                        item?.id
+                                                                    }
+                                                                    selected={
+                                                                        item?.id ===
+                                                                        formData?.status_id
+                                                                    }
+                                                                >
+                                                                    {item?.name}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                </select>
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors && errors.date}
+                                                </p>
+                                            </FormItem>
+                                            <FormItem
+                                                label={t('Comment')}
+                                                className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                            >
+                                                <Field
+                                                    disabled={isDisabled}
+                                                    type="text"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    autoComplete="off"
+                                                    name="comment"
+                                                    value={formData?.comment}
+                                                    placeholder="comment"
+                                                    component={Input}
+                                                />
 
-                                <div className=" lg:flex bg-gray-100 p-2 mt-4 rounded-md">
-                                    <FormItem
-                                        label="Status"
-                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                    >
-
-                                        <select
-                                            disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            name="status_id"
-                                            className="border w-full rounded-lg h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                                        >
-                                            <option>Select</option>
-                                            {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
-
-                                            ))}
-                                        </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
-                                    </FormItem>
-                                    <FormItem
-                                        label= {t("Comment")}
-                                        className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                    >
-                                        <Field
-                                            disabled={isDisabled}
-                                            type="text"
-                                            onChange={(e: any) => handleChange(e)}
-                                            autoComplete="off"
-
-                                            name="comment"
-                                            value={formData?.comment}
-                                            placeholder="comment"
-                                            component={Input}
-                                        />
-
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
-                                    </FormItem>
-                                </div>
-
-
-                               
-                                </>}
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors &&
+                                                        errors.storage_duration}
+                                                </p>
+                                            </FormItem>
+                                        </div>
+                                    </>
+                                )}
                                 <div className="flex justify-center w-[310px] mx-auto">
-
-                                    {location?.state?.extraForm ? <Button
-                                        disabled={isDisabled}
-                                        style={{ borderRadius: '13px' }}
-                                        block
-                                        variant="solid"
-                                        type="button"
-                                        onClick={handleRouteUpdate}
-                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled?'!hidden': ''}`}
-                                    >
-                                          {/* {t("Update")} */}
-                                          Update
-                                    </Button> :
+                                    {location?.state?.extraForm ? (
+                                        <Button
+                                            disabled={isDisabled}
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            onClick={handleRouteUpdate}
+                                            className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${
+                                                isDisabled ? '!hidden' : ''
+                                            }`}
+                                        >
+                                            {/* {t("Update")} */}
+                                            Update
+                                        </Button>
+                                    ) : (
                                         <Button
                                             disabled={isDisabled}
                                             style={{ borderRadius: '13px' }}
@@ -580,16 +834,24 @@ localStorage.removeItem('origin_gps');
                                             onClick={handleRoute}
                                             className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
-                                            {t("Request for Search")} 
+                                            {t('Request for Search')}
                                         </Button>
-                                    }
+                                    )}
                                 </div>
                             </FormContainer>
                         </Form>
                     </Formik>
                 </div>
-                {isDisabled? 
-                ApprovedAssets?.data?.length>0 && <TableCustomerMoveAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} />:<></>}
+                {isDisabled ? (
+                    ApprovedAssets?.data?.length > 0 && (
+                        <TableCustomerMoveAssets
+                            AllStore={ApprovedAssets?.data}
+                            fetchAgain={fetchAgain}
+                        />
+                    )
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )

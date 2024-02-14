@@ -1,165 +1,237 @@
 // Import necessary React and custom components and libraries
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Dropdown,
     FormContainer,
     FormItem,
     Input,
-} from '@/components/ui'; // Import UI components
-import { Field, Form, Formik } from 'formik'; // Import Formik for form handling
-import { apiUrl, getToken } from '@/store/customeHook/token'; // Import a custom hook for handling tokens
-import useApiFetch from '@/store/customeHook/useApiFetch'; // Import a custom hook for API fetching
-import { useLocation, useNavigate } from 'react-router-dom'; // Import routing related hook
-import ThankYouModal from '@/components/layouts/Customer/ThankYouModal'; // Import a custom ThankYou modal component
-import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload';
-import usePostApi from '@/store/customeHook/postApi'; // Import a custom hook for API call
-import { formatDate, onkeyDown, onkeyDownDimension, onkeyDownOne, validatePrepareCustomerForm } from '@/store/customeHook/validate';
-import LoaderSpinner from '@/components/LoaderSpinner';
-import TableCustomerPrepareAssets from './TableCustomerPrepareAssets';
+} from '@/components/ui' // Import UI components
+import { Field, Form, Formik } from 'formik' // Import Formik for form handling
+import { apiUrl, getToken } from '@/store/customeHook/token' // Import a custom hook for handling tokens
+import useApiFetch from '@/store/customeHook/useApiFetch' // Import a custom hook for API fetching
+import { useLocation, useNavigate } from 'react-router-dom' // Import routing related hook
+import ThankYouModal from '@/components/layouts/Customer/ThankYouModal' // Import a custom ThankYou modal component
+import { CustomerPrepare, CustomerPrepare1 } from '@/store/Payload'
+import usePostApi from '@/store/customeHook/postApi' // Import a custom hook for API call
+import {
+    formatDate,
+    onPasteDefault,
+    onkeyDown,
+    onkeyDownDimension,
+    onkeyDownOne,
+    validatePrepareCustomerForm,
+} from '@/store/customeHook/validate'
+import LoaderSpinner from '@/components/LoaderSpinner'
+import TableCustomerPrepareAssets from './TableCustomerPrepareAssets'
 import { useTranslation } from 'react-i18next' // For language translation
-
 
 // Define the functional component for PrepareSearch
 const PrepareSearch = () => {
-
     // Get the user's token using a custom hook
-    const { token }: any = getToken();
-    const location: any = useLocation();
+    const { token }: any = getToken()
+    const location: any = useLocation()
 
-
-    const today = new Date().toISOString().split('T')[0];
-    
+    const today = new Date().toISOString().split('T')[0]
 
     // Define a state variable for the  modal
-    const [errors, setErrors] = useState<any>({});
-    const [modal, setModal] = useState(false);
-    const [formData, setFormData] = useState<any>(CustomerPrepare1);
-    const [isDisabled, setIsDisabled] = useState<any>(false);
+    const [errors, setErrors] = useState<any>({})
+    const [modal, setModal] = useState(false)
+    const [formData, setFormData] = useState<any>(CustomerPrepare1)
+    const [isDisabled, setIsDisabled] = useState<any>(false)
     const [message, setMessage] = useState<any>('')
 
     // Fetch a list of categories using a custom hook
-    const { data: ListOfProductCategory, loading: PCloading, error: PCerror } =
-        useApiFetch<any>(`master/partner/prepare/get-product-category`, token);
+    const {
+        data: ListOfProductCategory,
+        loading: PCloading,
+        error: PCerror,
+    } = useApiFetch<any>(`master/partner/prepare/get-product-category`, token)
 
     // Fetch a list of countries using a custom hook
-    const { data: ListOfBroadCategory, loading: BCloading, error: BCerror } =
-        useApiFetch<any>(`master/customer/store/get-broad-category`, token);
+    const {
+        data: ListOfBroadCategory,
+        loading: BCloading,
+        error: BCerror,
+    } = useApiFetch<any>(`master/customer/store/get-broad-category`, token)
 
-    const { data: ApprovedAssets, loading: Approvedloading, error: Approvederror,refetch:fetchAgain } =
-        useApiFetch<any>(`customer/get-responses/3/${location?.state?.data?.id}`, token);
+    const {
+        data: ApprovedAssets,
+        loading: Approvedloading,
+        error: Approvederror,
+        refetch: fetchAgain,
+    } = useApiFetch<any>(
+        `customer/get-responses/3/${location?.state?.data?.id}`,
+        token
+    )
 
     // Fetch a list of countries using a custom hook
-    const { data: ListOfCountry, loading: LCloading, error: LCerror } =
-        useApiFetch<any>(`master/get-countries`, token);
+    const {
+        data: ListOfCountry,
+        loading: LCloading,
+        error: LCerror,
+    } = useApiFetch<any>(`master/get-countries`, token)
 
     // Fetch a list of countries using a custom hook
-    const { data: ListOfState, loading: LOSloading, error: LOSerror } =
-        useApiFetch<any>(`master/get-state-by-countryId/${formData?.country_id}`, token);
+    const {
+        data: ListOfState,
+        loading: LOSloading,
+        error: LOSerror,
+    } = useApiFetch<any>(
+        `master/get-state-by-countryId/${formData?.country_id}`,
+        token
+    )
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfCity, loading: Lcityloading, error: Lcityerror } =
-        useApiFetch<any>(`master/get-city-by-stateId/${formData?.state_id}`, token);
+    const {
+        data: ListOfCity,
+        loading: Lcityloading,
+        error: Lcityerror,
+    } = useApiFetch<any>(
+        `master/get-city-by-stateId/${formData?.state_id}`,
+        token
+    )
 
-
-        const { data: ListOfTemp, loading: LTloading, error: Lterror } =
-        useApiFetch<any>(`master/customer/store/get-temperature-type`, token);
-        
+    const {
+        data: ListOfTemp,
+        loading: LTloading,
+        error: Lterror,
+    } = useApiFetch<any>(`master/customer/store/get-temperature-type`, token)
 
     // Fetch a list of category based on the selected category
-    const { data: ListOfServiceCategory, loading: LOCSloading, error: LOCSerror } =
-        useApiFetch<any>(`master/get-categories`, token);
-
-
-
+    const {
+        data: ListOfServiceCategory,
+        loading: LOCSloading,
+        error: LOCSerror,
+    } = useApiFetch<any>(`master/get-categories`, token)
 
     // Fetch a list of cities based on the selected Product
-    const { data: ListOfProduct, loading: LOPloading, error: LOPerror } =
-        useApiFetch<any>(`master/customer/store/get-product-type`, token);
+    const {
+        data: ListOfProduct,
+        loading: LOPloading,
+        error: LOPerror,
+    } = useApiFetch<any>(`master/customer/store/get-product-type`, token)
 
     // Fetch a list of status based on it
-    const { data: ListOfstatus, loading: Lstatusloading, error: Lstatuserror } =
-        useApiFetch<any>(`master/customer/store/get-status`, token);
+    const {
+        data: ListOfstatus,
+        loading: Lstatusloading,
+        error: Lstatuserror,
+    } = useApiFetch<any>(`master/customer/store/get-status`, token)
 
     // Fetch a list of cities based on the selected country
-    const { data: ListOfUnit, loading: LOUloading, error: LOUerror } =
-        useApiFetch<any>(`master/customer/store/get-unit-type`, token);
+    const {
+        data: ListOfUnit,
+        loading: LOUloading,
+        error: LOUerror,
+    } = useApiFetch<any>(`master/customer/store/get-unit-type`, token)
 
     // Define a custom hook for making a POST request
-    const { result: CustomerResponse, loading: CustomerLoading, sendPostRequest: PostCustomerPrepareDetails }: any =
-        usePostApi(`customer/prepare/search`);
+    const {
+        result: CustomerResponse,
+        loading: CustomerLoading,
+        sendPostRequest: PostCustomerPrepareDetails,
+    }: any = usePostApi(`customer/prepare/search`)
 
     // Define a function to handle a button click
     const handleChange = (e: any) => {
-        const newData: any = { ...formData };
-        newData[e.target.name] = e.target.value;
-        setFormData(newData);
-        console.log("TTTTTTT",newData);
-        
-        if(errors[e.target.name])validatePrepareCustomerForm(newData, setErrors)
+        const newData: any = { ...formData }
+        if (e.target.name === 'throughput') {
+            if (e.target.value?.length < 6) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
+            }
+        } else if (
+            e.target.name === 'estimated_docks' ||
+            e.target.name === 'temp_min' ||
+            e.target.name === 'temp_max'
+        ) {
+            if (e.target.value?.length < 6) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
+            }
+        } else if (e.target.name === 'estimated_dispatch') {
+            if (e.target.value?.length < 6) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
+            }
+        } else {
+            newData[e.target.name] = e.target.value
+        }
 
+        setFormData(newData)
+        console.log('TTTTTTT', newData)
+
+        if (errors[e.target.name])
+            validatePrepareCustomerForm(newData, setErrors)
     }
 
     // Define a function to handle a button click
     const handleRoute = () => {
         // Check form validation before making a POST request
         if (validatePrepareCustomerForm(formData, setErrors)) {
-            PostCustomerPrepareDetails(formData);
+            PostCustomerPrepareDetails(formData)
         }
-    };
+    }
     /**
      * The `handleRouteUpdate` function sends a PUT request to update a customer's search data and
      * redirects to the ticket list page after a successful response.
      */
     const handleRouteUpdate = () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${token}`);
+        var myHeaders = new Headers()
+        myHeaders.append('Authorization', `Bearer ${token}`)
 
-        var formdata = new FormData();
-        formdata.append("product_category_id", formData?.product_category_id);
-        formdata.append("broad_category_id", formData?.broad_category_id);
-        formdata.append("product_type_id", formData?.product_type_id);
-        formdata.append("service_category_id", formData?.service_category_id);
-        formdata.append("country_id", formData?.country_id);
-        formdata.append("state_id", formData?.state_id);
-        formdata.append("city_id", formData?.city_id);
-        formdata.append("throughput", formData?.throughput);
-        formdata.append("throughput_unit_id", formData?.throughput_unit_id);
-        formdata.append("case_size", formData?.case_size);
-        formdata.append("case_size_unit_id", formData?.case_size_unit_id);
-        formdata.append("estimated_docks", formData?.estimated_docks);
-        formdata.append("estimated_dispatch", formData?.estimated_dispatch);
-        formdata.append("temp_min", formData?.temp_min);
-        formdata.append("temp_max", formData?.temp_max);
-        formdata.append("temp_unit_id", formData?.temp_unit_id);
-        formdata.append("date_of_start", formData?.date_of_start);
-        formdata.append("dispatch_date", formData?.dispatch_date);
-        formdata.append("arrival_date", formData?.arrival_date);
-        formdata.append("contract_type", formData?.contract_type);
-        formdata.append("contract_name", formData?.contract_name);
-        formdata.append("status_id", formData?.status_id);
-        formdata.append("comment", formData?.comment);
-        formdata.append("contract_download", formData?.contract_download);
+        var formdata = new FormData()
+        formdata.append('product_category_id', formData?.product_category_id)
+        formdata.append('broad_category_id', formData?.broad_category_id)
+        formdata.append('product_type_id', formData?.product_type_id)
+        formdata.append('service_category_id', formData?.service_category_id)
+        formdata.append('country_id', formData?.country_id)
+        formdata.append('state_id', formData?.state_id)
+        formdata.append('city_id', formData?.city_id)
+        formdata.append('throughput', formData?.throughput)
+        formdata.append('throughput_unit_id', formData?.throughput_unit_id)
+        formdata.append('case_size', formData?.case_size)
+        formdata.append('case_size_unit_id', formData?.case_size_unit_id)
+        formdata.append('estimated_docks', formData?.estimated_docks)
+        formdata.append('estimated_dispatch', formData?.estimated_dispatch)
+        formdata.append('temp_min', formData?.temp_min)
+        formdata.append('temp_max', formData?.temp_max)
+        formdata.append('temp_unit_id', formData?.temp_unit_id)
+        formdata.append('date_of_start', formData?.date_of_start)
+        formdata.append('dispatch_date', formData?.dispatch_date)
+        formdata.append('arrival_date', formData?.arrival_date)
+        formdata.append('contract_type', formData?.contract_type)
+        formdata.append('contract_name', formData?.contract_name)
+        formdata.append('status_id', formData?.status_id)
+        formdata.append('comment', formData?.comment)
+        formdata.append('contract_download', formData?.contract_download)
 
         var requestOptions: any = {
             method: 'PUT',
             headers: myHeaders,
             body: formdata,
-            redirect: 'follow'
-        };
+            redirect: 'follow',
+        }
 
-        fetch(`${apiUrl}/customer/prepare/search-update/${location?.state?.data?.id}`, requestOptions)
-            .then(response => response.json())
+        fetch(
+            `${apiUrl}/customer/prepare/search-update/${location?.state?.data?.id}`,
+            requestOptions
+        )
+            .then((response) => response.json())
             .then((result: any) => {
-                setMessage(result);
+                setMessage(result)
                 setModal(true)
                 setTimeout(() => {
                     navigate('/ticket_list_prepare')
                 }, 2000)
             })
-            .catch(error => console.log('error', error));
+            .catch((error) => console.log('error', error))
     }
-    const navigate: any = useNavigate();
+    const navigate: any = useNavigate()
 
     /* The above code is using the useEffect hook in a React component. It is checking if the
     `location.state.data` property exists and if it does, it sets the `formData` state variable to
@@ -168,34 +240,41 @@ const PrepareSearch = () => {
     state based on the data passed in through the `location` object. */
     useEffect(() => {
         if (location?.state?.data) {
-            
-            setFormData(location?.state?.data);
+            setFormData(location?.state?.data)
             setIsDisabled(location?.state?.disabled)
         }
-
     }, [])
     // Use useEffect to open the ThankYou modal when CustomerResponse status is 200
     useEffect(() => {
         if (CustomerResponse?.status == 200) {
             setMessage(CustomerResponse)
-            setModal(true);
+            setModal(true)
             setTimeout(() => {
                 navigate('/ticket_list_prepare')
             }, 2000)
         }
-    }, [CustomerResponse?.status]);
+    }, [CustomerResponse?.status])
 
-    const { t, i18n }: any = useTranslation();
-console.log("TTTTTTTT",ListOfProductCategory);
+    const { t, i18n }: any = useTranslation()
+    console.log('TTTTTTTT', ListOfProductCategory)
 
     return (
         <div>
             {/* The above code is rendering a ThankYouModal component if the "modal" variable is truthy.
             The ThankYouModal component is passed the "message", "setModal", and "setFormData"
             props. */}
-            {modal && <ThankYouModal message={message} setModal={setModal} setFormData={setFormData} />}
+            {modal && (
+                <ThankYouModal
+                    message={message}
+                    setModal={setModal}
+                    setFormData={setFormData}
+                />
+            )}
             <div className="bg-white p-4 shadow-2xl">
-                <h4 className=" mb-2 text-head-title text-center"> {t("Prepare")}</h4>
+                <h4 className=" mb-2 text-head-title text-center">
+                    {' '}
+                    {t('Prepare')}
+                </h4>
                 {/* The above code is a form component written in TypeScript and React. It uses the
                 Formik library for form management. The form consists of various input fields and
                 select dropdowns for selecting different categories and options. It also includes
@@ -213,152 +292,279 @@ console.log("TTTTTTTT",ListOfProductCategory);
                             <FormContainer>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Category*")}
+                                        label={t('Product Category*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="product_category_id"
                                             className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfProductCategory && ListOfProductCategory?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.product_category_id}>{item?.name}</option>
-                                            ))}
-
+                                            {ListOfProductCategory &&
+                                                ListOfProductCategory?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.product_category_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_category_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors &&
+                                                errors.product_category_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Broad Category*")}
+                                        label={t('Broad Category*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="broad_category_id"
                                             className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfBroadCategory && ListOfBroadCategory?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
-                                            ))}
-
+                                            {ListOfBroadCategory &&
+                                                ListOfBroadCategory?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.broad_category_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.broad_category_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.broad_category_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Product Type*")}
+                                        label={t('Product Type*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="product_type_id"
                                             className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.product_type_id}>{item?.type}</option>
-                                            ))}
-
+                                            {ListOfProduct &&
+                                                ListOfProduct?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.product_type_id
+                                                            }
+                                                        >
+                                                            {item?.type}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.product_type_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.product_type_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Service Category*")}
+                                        label={t('Service Category*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="service_category_id"
                                             className=" border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfServiceCategory && ListOfServiceCategory?.data?.filter((item: any) => [12, 13, 14, 15, 16, 17].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.service_category_id}>{item?.name}</option>
-                                            ))}
-
+                                            {ListOfServiceCategory &&
+                                                ListOfServiceCategory?.data
+                                                    ?.filter((item: any) =>
+                                                        [
+                                                            12, 13, 14, 15, 16,
+                                                            17,
+                                                        ].includes(item?.id)
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.service_category_id
+                                                                }
+                                                            >
+                                                                {item?.name}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.service_category_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors &&
+                                                errors.service_category_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className=" bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Country*")}
+                                        label={t('Country*')}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="country_id"
                                             className="border w-[100%] input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
                                             <option>Select</option>
-                                            {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.country_id}>{item?.name}</option>
-
-                                            ))}
+                                            {ListOfCountry &&
+                                                ListOfCountry?.data?.map(
+                                                    (item: any, index: any) => (
+                                                        <option
+                                                            value={item?.id}
+                                                            selected={
+                                                                item?.id ===
+                                                                formData?.country_id
+                                                            }
+                                                        >
+                                                            {item?.name}
+                                                        </option>
+                                                    )
+                                                )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.country_id}</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.country_id}
+                                        </p>
                                     </FormItem>
                                     <div className="  lg:flex pl-3 w-[100%] text-label-title m-auto">
                                         <FormItem
-                                            label={t("State*")}
+                                            label={t('State*')}
                                             className=" w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
-                                                onChange={(e: any) => handleChange(e)}
+                                                onChange={(e: any) =>
+                                                    handleChange(e)
+                                                }
                                                 name="state_id"
                                                 className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
                                                 <option>Select</option>
-                                                {ListOfState && ListOfState?.data?.map((item: any, index: any) => (
-                                                    <option value={item?.id} selected={item?.id === formData?.state_id}>{item?.name}</option>
-
-                                                ))}
+                                                {ListOfState &&
+                                                    ListOfState?.data?.map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.state_id
+                                                                }
+                                                            >
+                                                                {item?.name}
+                                                            </option>
+                                                        )
+                                                    )}
                                             </select>
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.state_id}</p>
+                                            <p className="text-[red] text-p-error-hight">
+                                                {errors && errors.state_id}
+                                            </p>
                                         </FormItem>
                                         <FormItem
-                                            label={t("City*")}
+                                            label={t('City*')}
                                             className="w-[100%] text-label-title m-auto"
                                         >
                                             <select
                                                 disabled={isDisabled}
-                                                onChange={(e: any) => handleChange(e)}
+                                                onChange={(e: any) =>
+                                                    handleChange(e)
+                                                }
                                                 name="city_id"
                                                 className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
                                                 <option>Select</option>
-                                                {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                    <option value={item?.id} selected={item?.id === formData?.city_id}>{item?.name}</option>
-
-                                                ))}
+                                                {ListOfCity &&
+                                                    ListOfCity?.data?.map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.city_id
+                                                                }
+                                                            >
+                                                                {item?.name}
+                                                            </option>
+                                                        )
+                                                    )}
                                             </select>
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.city_id}</p>
+                                            <p className="text-[red] text-p-error-hight">
+                                                {errors && errors.city_id}
+                                            </p>
                                         </FormItem>
                                     </div>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Throughput*")}
+                                        label={t('Throughput*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
-                                            onKeyDown={(e:any) => {
-                                                if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
-                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                            onPaste={onPasteDefault}
+                                            onKeyDown={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault() // Prevent the 'e' key from being input
                                                 }
-                                              }}
+                                            }}
+                                            min="0"
                                             autoComplete="off"
                                             name="throughput"
                                             value={formData?.throughput}
@@ -368,31 +574,68 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                         />
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="throughput_unit_id"
                                             className=" border w-[20%] ml-4 p-2 input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [2, 3, 6].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.throughput_unit_id}>{item?.type}</option>
-
-                                            ))}
+                                            {/* <option>Unit</option> */}
+                                            {ListOfUnit &&
+                                                ListOfUnit?.data
+                                                    ?.filter((item: any) =>
+                                                        [2, 3, 6].includes(
+                                                            item?.id
+                                                        )
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.throughput_unit_id
+                                                                }
+                                                            >
+                                                                {item?.type}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && !errors?.throughput_unit_id ? errors.throughput : errors?.throughput_unit_id }</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors &&
+                                            !errors?.throughput_unit_id
+                                                ? errors.throughput
+                                                : errors?.throughput_unit_id}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Avg. Case Size*")}
+                                        label={t('Avg. Case Size*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
-                                            onKeyDown={(e:any) => {
-                                                if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
-                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                            onPaste={onPasteDefault}
+                                            onKeyDown={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault() // Prevent the 'e' key from being input
                                                 }
-                                              }}
+                                            }}
+                                            min="0"
                                             autoComplete="off"
                                             name="case_size"
                                             className="w-[70%]"
@@ -403,29 +646,70 @@ console.log("TTTTTTTT",ListOfProductCategory);
 
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="case_size_unit_id"
                                             className=" border p-2 ml-4 w-[20%]  input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option>Unit</option>
-                                            {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
-
-                                            ))}
+                                            {/* <option>Unit</option> */}
+                                            {ListOfUnit &&
+                                                ListOfUnit?.data
+                                                    ?.filter((item: any) =>
+                                                        [1, 7].includes(
+                                                            item?.id
+                                                        )
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    formData?.case_size_unit_id
+                                                                }
+                                                            >
+                                                                {item?.type}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
                                         {/* <p className='text-[red] text-p-error-hight'>{errors && errors.case_size}</p> */}
-                                        <p className='text-[red] text-p-error-hight'>{errors && !errors?.case_size_unit_id ? errors.case_size : errors?.case_size_unit_id }</p>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors &&
+                                            !errors?.case_size_unit_id
+                                                ? errors.case_size
+                                                : errors?.case_size_unit_id}
+                                        </p>
                                     </FormItem>
                                 </div>
                                 <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                     <FormItem
-                                        label={t("Estimated Docks*")}
+                                        label={t('Estimated Docks*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            min="0"
+                                            onPaste={onPasteDefault}
+                                            onKeyPress={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
+                                            type="number"
                                             autoComplete="off"
                                             name="estimated_docks"
                                             value={formData?.estimated_docks}
@@ -434,13 +718,29 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                         />
                                     </FormItem>
                                     <FormItem
-                                        label={t("Estimated Dispatches*")}
+                                        label={t('Estimated Dispatches*')}
                                         className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
-                                            type="text"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            type="number"
+                                            min="0"
+                                            onPaste={onPasteDefault}
+                                            onKeyPress={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             autoComplete="off"
                                             name="estimated_dispatch"
                                             value={formData?.estimated_dispatch}
@@ -449,22 +749,73 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                         />
                                     </FormItem>
                                 </div>
-                                <div className="lg:flex  ">
-
-                                </div>
+                                <div className="lg:flex  "></div>
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md flex items-center">
                                     <FormItem
-                                        label={t("Min Temperature*")}
+                                        label={t('Min Temperature*')}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
-                                          <Field
+                                        <Field
                                             disabled={isDisabled}
-                                            onKeyDown={(e:any) => {
+                                            min="-1000"
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
+                                            onKeyDown={(e: any) => {
                                                 if (e.keyCode === 69) {
-                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                                    e.preventDefault() // Prevent the 'e' key from being input
                                                 }
-                                              }}
-                                            onChange={(e: any) => handleChange(e)}
+                                            }}
+                                            onKeyPress={(event) => {
+                                                if (
+                                                    event?.key === 'e' ||
+                                                    event?.key === '+'
+                                                ) {
+                                                    event.preventDefault()
+                                                }
+                                                if (
+                                                    event.target.value.length ==
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.target.value = ''
+                                                }
+                                                if (
+                                                    event.target.value.length >
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.preventDefault()
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                const reg =
+                                                    '^[-]?[0-9]*\\.?[0-9]*$'
+                                                const current = e.target.value
+                                                if (!current) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !(
+                                                        current +
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    ).match(reg) &&
+                                                    e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             type="number"
                                             autoComplete="off"
                                             name="temp_min"
@@ -508,150 +859,269 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             </div>
                                         </div> */}
 
-
-
-
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors.temp_min}</p>
-
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.temp_min}
+                                        </p>
                                     </FormItem>
                                     <FormItem
-                                        label={t("Max Temperature*")}
+                                        label={t('Max Temperature*')}
                                         className="pl-3 w-[100%] text-label-title m-auto"
                                     >
-                                          <Field
-                                              onKeyDown={(e:any) => {
-                                                if (e.keyCode === 69) {
-                                                  e.preventDefault(); // Prevent the 'e' key from being input
+                                        <Field
+                                            onKeyDown={onPasteDefault}
+                                            onKeyPress={(event) => {
+                                                if (
+                                                    event?.key === 'e' ||
+                                                    event?.key === '+'
+                                                ) {
+                                                    event.preventDefault()
                                                 }
-                                              }}
-
+                                                if (
+                                                    event.target.value.length ==
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.target.value = ''
+                                                }
+                                                if (
+                                                    event.target.value.length >
+                                                        0 &&
+                                                    event?.key === '-'
+                                                ) {
+                                                    event.preventDefault()
+                                                }
+                                            }}
+                                            onPaste={(e) => {
+                                                const reg =
+                                                    '^[-]?[0-9]*\\.?[0-9]*$'
+                                                const current = e.target.value
+                                                if (!current) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !(
+                                                        current +
+                                                        e.clipboardData.getData(
+                                                            'Text'
+                                                        )
+                                                    ).match(reg) &&
+                                                    e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.target.value = ''
+                                                }
+                                                if (
+                                                    !e.clipboardData
+                                                        .getData('Text')
+                                                        .match(reg)
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="number"
+                                            min="-1000"
                                             autoComplete="off"
                                             name="temp_max"
                                             value={formData?.temp_max}
                                             placeholder="Max Temperature"
                                             component={Input}
                                         />
-                                         <p className='text-[red] text-p-error-hight'>{errors && errors.temp_max}</p>
-
-                                        </FormItem>
-                                        <div className=' pl-3 w-[50%] mt-7 text-label-title m-auto rounded-lg pl-2'>
-                                            <label htmlFor="" className='text-label-title'></label>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors.temp_max}
+                                        </p>
+                                    </FormItem>
+                                    <div className=" pl-3 w-[50%] mt-7 text-label-title m-auto rounded-lg pl-2">
+                                        <label
+                                            htmlFor=""
+                                            className="text-label-title"
+                                        ></label>
                                         <select
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             name="temp_unit_id"
                                             className="rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option selected value="">Unit</option>
-                                            {ListOfTemp && ListOfTemp?.data?.filter((item: any) => [1, 2].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.temp_unit_id}>{item?.type}</option>
-
-                                            ))}
+                                            {/* <option selected value="">
+                                                Unit
+                                            </option> */}
+                                            {ListOfTemp &&
+                                                ListOfTemp?.data
+                                                    ?.filter((item: any) =>
+                                                        [1, 2].includes(
+                                                            item?.id
+                                                        )
+                                                    )
+                                                    .map(
+                                                        (
+                                                            item: any,
+                                                            index: any
+                                                        ) => (
+                                                            <option
+                                                                value={item?.id}
+                                                                selected={
+                                                                    item?.id ===
+                                                                    formData?.temp_unit_id
+                                                                }
+                                                            >
+                                                                {item?.type}
+                                                            </option>
+                                                        )
+                                                    )}
                                         </select>
-                                        <p className='text-[red] text-p-error-hight'>{errors && errors?.temp_unit_id}</p>
-                                        </div>
+                                        <p className="text-[red] text-p-error-hight">
+                                            {errors && errors?.temp_unit_id}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div className="bg-gray-100 p-2 mt-4 rounded-md">
-                                  
                                     <FormItem
-                                        label={t("Date of Start")}
+                                        label={t('Date of Start')}
                                         className="pl-3 w-[100%]  text-label-title m-auto"
                                     >
                                         <Field
                                             disabled={isDisabled}
-                                            onChange={(e: any) => handleChange(e)}
+                                            onChange={(e: any) =>
+                                                handleChange(e)
+                                            }
                                             type="date"
-                                            onKeyDown={(e) => e.preventDefault()}
+                                            onKeyDown={(e) =>
+                                                e.preventDefault()
+                                            }
                                             min={today}
                                             autoComplete="off"
-                                            value={new Date(formData?.date_of_start).toISOString().split('T')[0]}
+                                            value={
+                                                new Date(
+                                                    formData?.date_of_start
+                                                )
+                                                    .toISOString()
+                                                    .split('T')[0]
+                                            }
                                             name="date_of_start"
                                             placeholder="Date of Start"
                                             component={Input}
                                         />
                                     </FormItem>
                                 </div>
-                                {location?.state?.extraForm && <>
-                                    <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
-                                        <FormItem
-                                            label={t("Status")}
-                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                        >
-
-                                            <select
-                                                disabled={isDisabled}
-                                                onChange={(e: any) => handleChange(e)}
-                                                name="status_id"
-                                                className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                {location?.state?.extraForm && (
+                                    <>
+                                        <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
+                                            <FormItem
+                                                label={t('Status')}
+                                                className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                             >
-                                                <option>Select</option>
-                                                {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
-                                                    <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
+                                                <select
+                                                    disabled={isDisabled}
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    name="status_id"
+                                                    className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                                                >
+                                                    <option>Select</option>
+                                                    {ListOfstatus &&
+                                                        ListOfstatus?.data?.map(
+                                                            (
+                                                                item: any,
+                                                                index: any
+                                                            ) => (
+                                                                <option
+                                                                    value={
+                                                                        item?.id
+                                                                    }
+                                                                    selected={
+                                                                        item?.id ===
+                                                                        formData?.status_id
+                                                                    }
+                                                                >
+                                                                    {item?.name}
+                                                                </option>
+                                                            )
+                                                        )}
+                                                </select>
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors && errors.date}
+                                                </p>
+                                            </FormItem>
+                                            <FormItem
+                                                label={t('Comment')}
+                                                className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                            >
+                                                <Field
+                                                    disabled={isDisabled}
+                                                    type="text"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    autoComplete="off"
+                                                    name="comment"
+                                                    value={formData?.comment}
+                                                    placeholder="comment"
+                                                    component={Input}
+                                                />
 
-                                                ))}
-                                            </select>
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
-                                        </FormItem>
-                                        <FormItem
-                                            label={t("Comment")}
-                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                        >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="text"
-                                                onChange={(e: any) => handleChange(e)}
-                                                autoComplete="off"
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors &&
+                                                        errors.storage_duration}
+                                                </p>
+                                            </FormItem>
+                                        </div>
+                                        <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
+                                            <FormItem
+                                                label={t('Contract Name')}
+                                                className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                            >
+                                                <Field
+                                                    disabled={isDisabled}
+                                                    type="text"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    autoComplete="off"
+                                                    name="contract_name"
+                                                    value={
+                                                        formData?.contract_name
+                                                    }
+                                                    placeholder="Contract name"
+                                                    component={Input}
+                                                />
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors && errors.date}
+                                                </p>
+                                            </FormItem>
+                                            <FormItem
+                                                label={t('Contract Type')}
+                                                className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
+                                            >
+                                                <Field
+                                                    disabled={isDisabled}
+                                                    type="text"
+                                                    onChange={(e: any) =>
+                                                        handleChange(e)
+                                                    }
+                                                    autoComplete="off"
+                                                    name="contract_type"
+                                                    value={
+                                                        formData?.contract_type
+                                                    }
+                                                    placeholder="Contract Type"
+                                                    component={Input}
+                                                />
 
-                                                name="comment"
-                                                value={formData?.comment}
-                                                placeholder="comment"
-                                                component={Input}
-                                            />
-
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
-                                        </FormItem>
-                                    </div>
-                                    <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
-                                        <FormItem
-                                            label={t("Contract Name")}
-                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                        >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="text"
-                                                onChange={(e: any) => handleChange(e)}
-                                                autoComplete="off"
-                                                name="contract_name"
-                                                value={formData?.contract_name}
-                                                placeholder="Contract name"
-                                                component={Input}
-                                            />
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.date}</p>
-                                        </FormItem>
-                                        <FormItem
-                                            label={t("Contract Type")}
-                                            className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
-                                        >
-                                            <Field
-                                                disabled={isDisabled}
-                                                type="text"
-                                                onChange={(e: any) => handleChange(e)}
-                                                autoComplete="off"
-
-                                                name="contract_type"
-                                                value={formData?.contract_type}
-                                                placeholder="Contract Type"
-                                                component={Input}
-                                            />
-
-                                            <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
-                                        </FormItem>
-                                    </div>
-                                    {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
+                                                <p className="text-[red] text-p-error-hight">
+                                                    {errors &&
+                                                        errors.storage_duration}
+                                                </p>
+                                            </FormItem>
+                                        </div>
+                                        {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Arrival Date")}
                                             className="pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
@@ -687,7 +1157,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             <p className='text-[red] text-p-error-hight'>{errors && errors.storage_duration}</p>
                                         </FormItem>
                                     </div> */}
-                                    {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
+                                        {/* <div className="lg:flex  bg-gray-100 p-2 mt-4 rounded-md">
                                         <FormItem
                                             label={t("Contract Upload")}
                                             className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
@@ -709,20 +1179,25 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                         </FormItem>
 
                                     </div> */}
-                                </>}
+                                    </>
+                                )}
 
                                 <div className="lg:flex  mt-4 justify-center w-[310px] mx-auto">
-                                    {location?.state?.extraForm ? <Button
-                                        disabled={isDisabled}
-                                        style={{ borderRadius: '13px' }}
-                                        block
-                                        variant="solid"
-                                        type="button"
-                                        onClick={handleRouteUpdate}
-                                        className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${isDisabled ? '!hidden' : ''}`}
-                                    >
-                                        {t("Update")}
-                                    </Button> :
+                                    {location?.state?.extraForm ? (
+                                        <Button
+                                            disabled={isDisabled}
+                                            style={{ borderRadius: '13px' }}
+                                            block
+                                            variant="solid"
+                                            type="button"
+                                            onClick={handleRouteUpdate}
+                                            className={`indigo-btn w-[300px] mx-auto rounded-[30px] ${
+                                                isDisabled ? '!hidden' : ''
+                                            }`}
+                                        >
+                                            {t('Update')}
+                                        </Button>
+                                    ) : (
                                         <Button
                                             disabled={isDisabled}
                                             style={{ borderRadius: '13px' }}
@@ -732,16 +1207,24 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             onClick={handleRoute}
                                             className="indigo-btn mt-4 w-[300px] mx-auto rounded-[30px]"
                                         >
-                                            {t("Request for Search")}
+                                            {t('Request for Search')}
                                         </Button>
-                                    }
+                                    )}
                                 </div>
                             </FormContainer>
                         </Form>
                     </Formik>
                 </div>
-                {isDisabled ?
-                    ApprovedAssets?.data?.length > 0 && <TableCustomerPrepareAssets AllStore={ApprovedAssets?.data} fetchAgain={fetchAgain} /> : <></>}
+                {isDisabled ? (
+                    ApprovedAssets?.data?.length > 0 && (
+                        <TableCustomerPrepareAssets
+                            AllStore={ApprovedAssets?.data}
+                            fetchAgain={fetchAgain}
+                        />
+                    )
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )

@@ -16,6 +16,7 @@ import LoaderSpinner from '@/components/LoaderSpinner' // Import a loader spinne
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDown,
     onkeyDownOne,
     validateStoreCustomerForm,
@@ -143,6 +144,16 @@ const StoreSearch = () => {
             newData[e.target.name] = e.target.files[0]
         } else if (e.target.name === 'temperature') {
             if (e.target.value?.length < 5) {
+                newData[e.target.name] = e.target.value
+            } else {
+                e.preventDefault()
+            }
+        } else if (
+            e.target.name === 'no' ||
+            e.target.name === 'quantity' ||
+            e.target.name === 'storage_duration'
+        ) {
+            if (e.target.value?.length < 6) {
                 newData[e.target.name] = e.target.value
             } else {
                 e.preventDefault()
@@ -454,7 +465,9 @@ const StoreSearch = () => {
                                             name="temperature_type_id"
                                             className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option selected>Unit</option>
+                                            {/* <option selected value="">
+                                                Unit
+                                            </option> */}
                                             {ListOfTemp &&
                                                 ListOfTemp?.data
                                                     ?.filter((item: any) =>
@@ -486,7 +499,7 @@ const StoreSearch = () => {
                                 </div>
                                 <div className=" lg:flex bg-gray-100 mt-4 rounded-md p-2">
                                     <FormItem
-                                        label={t('Unit*')}
+                                        label={t('Quantity*')}
                                         className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
                                     >
                                         <Field
@@ -502,6 +515,19 @@ const StoreSearch = () => {
                                             value={formData?.quantity}
                                             placeholder="Quantity"
                                             component={Input}
+                                            onPaste={onPasteDefault}
+                                            onKeyPress={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             onKeyDown={onkeyDownOne}
                                         />
                                         <select
@@ -512,7 +538,9 @@ const StoreSearch = () => {
                                             name="unit_id"
                                             className="border ml-10 w-[25%] rounded-lg pl-2 h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option selected>Unit</option>
+                                            {/* <option selected value="">
+                                                Select Unit
+                                            </option> */}
                                             {[
                                                 'Pallets',
                                                 'MT',
@@ -576,7 +604,9 @@ const StoreSearch = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            onKeyDown={(e) => e.preventDefault()}
+                                            onKeyDown={(e) =>
+                                                e.preventDefault()
+                                            }
                                             autoComplete="off"
                                             name="date"
                                             value={
@@ -607,6 +637,19 @@ const StoreSearch = () => {
                                             autoComplete="off"
                                             className="w-[70%]"
                                             min={1}
+                                            onPaste={onPasteDefault}
+                                            onKeyPress={(e: any) => {
+                                                if (
+                                                    e.keyCode === 69 ||
+                                                    e.key === '-' ||
+                                                    e.key === 'E' ||
+                                                    e.key === 'e' ||
+                                                    e.key === '.' ||
+                                                    e.key === '+'
+                                                ) {
+                                                    e.preventDefault()
+                                                }
+                                            }}
                                             onKeyDown={onkeyDownOne}
                                             name="storage_duration"
                                             value={formData?.storage_duration}
@@ -621,7 +664,9 @@ const StoreSearch = () => {
                                             name="storage_duration_type"
                                             className="border w-[20%] ml-4 input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                         >
-                                            <option selected>Unit</option>
+                                            {/* <option selected value="">
+                                                Unit
+                                            </option> */}
                                             {ListOfTimeUnits &&
                                                 ListOfTimeUnits?.data?.map(
                                                     (item: any, index: any) => {
