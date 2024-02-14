@@ -193,7 +193,7 @@ export async function apiVerifyOTP(dataa:any,messageView:any) {
  * message to the user. It takes a string as an argument and can be used to show success or error
  * messages after the API call is made.
  */
-export async function apiResetPassword(dataa:any,messageView:any) {
+export async function apiResetPassword(dataa:any,messageView:any,setSubmitting:any) {
     
     const data = JSON.stringify({
         email: dataa?.email,
@@ -217,7 +217,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
           return response.json();
         })
         .then(data => {
-
+          setSubmitting(false)
           if(data?.status == 200){
             messageViewNew(data)
             setTimeout(()=>{
@@ -236,6 +236,7 @@ export async function apiResetPassword(dataa:any,messageView:any) {
           
         })
         .catch(error => {
+          setSubmitting(false)
           console.log(error);
         });
       

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDownBankacNum,
     onkeyDownBankifscCode,
     onkeyDownforNumMobSpecialCharcterOnlyAndFormPanCardGSTNumber,
@@ -258,6 +259,7 @@ const AccountModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                             data?.isdisabled
                                                         }
                                                         type="number"
+                                                        onPaste={onPasteDefault}
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)

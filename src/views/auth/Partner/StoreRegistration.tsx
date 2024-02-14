@@ -24,6 +24,7 @@ import SolarInverterModal from './MultistepForm/SolarInverterModal'
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDown,
     onkeyDownNew,
     onkeyDownforNumSpecialCharcter,
@@ -811,6 +812,7 @@ const StoreRegistration = () => {
                                             onWheel={(e:any) => e.target.blur()}
                                             disabled={location?.state}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             autoComplete="off"
                                             minLength={10}
                                             maxLength={10}
@@ -905,6 +907,7 @@ const StoreRegistration = () => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.total_tonnage}
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -1048,6 +1051,7 @@ const StoreRegistration = () => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.ante_room_area}
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 min={0}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
@@ -1076,6 +1080,7 @@ const StoreRegistration = () => {
                                         <Field
                                             disabled={location?.state}
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             min="0"
                                             onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
@@ -1108,6 +1113,7 @@ const StoreRegistration = () => {
                                                 onWheel={(e:any) => e.target.blur()}
                                                 min="0"
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 onChange={(e: any) =>
                                                     handlechange(e)
                                                 }
@@ -1175,6 +1181,7 @@ const StoreRegistration = () => {
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 value={dataa?.processing_area}
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onChange={(e: any) =>
@@ -1204,6 +1211,7 @@ const StoreRegistration = () => {
                                             <input
                                                 className="w-2/3 border-0 focus:outline-0"
                                                 type="number"
+                                                onPaste={onPasteDefault}
                                                 min={0}
                                                 value={dataa?.parking_area}
                                                 onChange={(e: any) =>

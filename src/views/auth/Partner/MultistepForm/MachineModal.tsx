@@ -5,7 +5,7 @@
  */
 import { Button, FormItem, Input } from '@/components/ui'
 import usePutApi from '@/store/customeHook/putApi'
-import { handleStoreTable, messageView, messageViewNew, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateMachineForm } from '@/store/customeHook/validate'
+import { handleStoreTable, messageView, messageViewNew, onPasteDefault, onkeyDownNew, onkeyDownforNumSpecialCharcter, validateMachineForm } from '@/store/customeHook/validate'
 import { Field } from 'formik'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -267,6 +267,7 @@ const MachineModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            onPaste={onPasteDefault}
                                             autoComplete="off"
                                             disabled={isDisabled}
                                             name="power_requirement"

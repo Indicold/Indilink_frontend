@@ -4,7 +4,7 @@ also imports functions `messageView`, `onkeyDown`, and `onkeyDownOne` from the `
 the `customeHook` directory. It imports variables `apiUrl` and `getToken` from the `token` file in
 the `store` directory. */
 import useApiFetch from '@/store/customeHook/useApiFetch';
-import { messageView, messageViewNew, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onPasteDefault, onkeyDown, onkeyDownOne } from '@/store/customeHook/validate';
 import { apiUrl, getToken } from '@/store/token';
 import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
@@ -217,7 +217,7 @@ errors.invoice_amount="Please Enter Invoice Amount";
                                     <div>
                                         <label htmlFor="amount" className="block mb-2 text-sm font-medium
                                          text-gray-900 dark:text-white text-start mt-4">Amount</label>
-                                        <input type="number" onKeyDown={onkeyDownOne} name='invoice_amount' onChange={(e: any) => handleChange(e)} id="amount"
+                                        <input type="number" onPaste={onPasteDefault} onKeyDown={onkeyDownOne} name='invoice_amount' onChange={(e: any) => handleChange(e)} id="amount"
                                             className="bg-gray-50 border border-gray-300 text-gray-900
              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
               block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600

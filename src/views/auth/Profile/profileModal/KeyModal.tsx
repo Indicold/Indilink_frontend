@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import {
     messageView,
     messageViewNew,
+    onPasteDefault,
     onkeyDownAadhar,
     onkeyDownMobile,
     onkeyDownOne,
@@ -459,6 +460,7 @@ const KeyModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                                 data?.isdisabled
                                                             }
                                                             type="number"
+                                                            onPaste={onPasteDefault}
                                                             autoComplete="off"
                                                             onChange={(
                                                                 e: any
@@ -494,6 +496,7 @@ const KeyModal = ({ data, setData, modal, setModal, fetchData }: any) => {
                                                             data?.isdisabled
                                                         }
                                                         type="number"
+                                                        onPaste={onPasteDefault}
                                                         autoComplete="off"
                                                         onChange={(e: any) =>
                                                             handleChange(e)

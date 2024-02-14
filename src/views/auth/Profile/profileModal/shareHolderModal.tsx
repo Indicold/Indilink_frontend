@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import usePostApi from '@/store/customeHook/postApi';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndPercentage, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onPasteDefault, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumMobSpecialCharcterOnly, onkeyDownforNumMobSpecialCharcterOnlyAndPercentage, onkeyDownforNumMobSpecialCharcterwithPercentage, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateEmail, validateMobile, validateSHForm } from '@/store/customeHook/validate';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
 import { debounce } from 'lodash'
@@ -242,6 +242,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                 <Field
                                                     disabled={formData?.isdisabled}
                                                     type="number"
+                                                    onPaste={onPasteDefault}
                                                     autoComplete="off"
                                                     onChange={(e: any) =>
                                                         handleChange(e)
@@ -289,6 +290,7 @@ const ShareHolderModal = ({companyDetails, modal, setModal, data, setData, formD
                                                 <Field
                                                     disabled={formData?.isdisabled}
                                                     type="number"
+                                                    onPaste={onPasteDefault}
                                                     autoComplete="off"
                                                     onChange={(e: any) =>
                                                         handleChange(e)

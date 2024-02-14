@@ -5,7 +5,7 @@ import { Field, Form, Formik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import { messageView, messageViewNew, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
+import { messageView, messageViewNew, onPasteDefault, onkeyDownforNumMobSpecialCharcter, onkeyDownforNumSpecialCharcter, onkeyDownforSpecialCharcter, validateBranchForm, validateEmail, validateMobile } from '@/store/customeHook/validate';
 import usePostApi from '@/store/customeHook/postApi';
 import { ToastContainer } from 'react-toastify';
 import usePutApi from '@/store/customeHook/putApi';
@@ -252,6 +252,7 @@ const BranchsModal = ({ modal, setModal, data, setData,formData,setformData,fetc
                                                 <Field
                                                     disabled={formData?.isdisabled}
                                                     type="number"
+                                                    onPaste={onPasteDefault}
                                                     maxLength={10}
                                                     autoComplete="off"
                                                     onChange={(e: any) =>

@@ -8,6 +8,7 @@ import MajorityHolderModal from "./MajorityHolderModal";
 import KeyTeamModal from "./KeyTeamModal";
 import useApiFetch from "@/store/customeHook/useApiFetch";
 import { getToken } from "@/store/customeHook/token";
+import { onPasteDefault } from "@/store/customeHook/validate";
 interface Props {
     additionalLocations: number;
   }
@@ -218,6 +219,7 @@ setFormData(newData);
                         >
                             <Field
                                 type="number"
+                                onPaste={onPasteDefault}
                                 // onChange={handleAdditionalLocations}
                                 value={additionalLocations}
                                 autoComplete="off"
