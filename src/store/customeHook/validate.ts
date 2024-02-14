@@ -150,13 +150,11 @@ export const onkeyDownforNumSpecialCharcterForContactNumber = (e: any) => {
         e.key === '|' ||
         e.key === '\\' ||
         e.key === '`' ||
-        e.key === '~' 
-     
+        e.key === '~'
     ) {
         e.preventDefault() // Prevent the default behavior (i.e., typing 'e' or '-')
     }
 }
-
 
 export const onkeyDownforNumSpecialCharcter = (e: any) => {
     if (
@@ -312,8 +310,6 @@ export const onkeyDownforNumMobSpecialCharcterOnlytr = (e: any) => {
         e.key === ')' ||
         e.key === '_' ||
         e.key === '' ||
-        
-      
         e.key === '<' ||
         e.key === '>' ||
         e.key === '/' ||
@@ -1328,14 +1324,15 @@ export const onkeyDownNew = (e: any) => {
 }
 
 export const onkeyDownNewUpdate = (e: any) => {
-    console.log("PASS",e,e.target.value);
-    
+    console.log('PASS', e, e.target.value)
+
     if (
         e.target.name === 'temp_range_min' ||
         e.target.name === 'temperature_min'
     ) {
         if (
-            (e.key === '--' ||e.key === 'e' ||
+            (e.key === '--' ||
+                e.key === 'e' ||
                 e.target.value?.length == 5 ||
                 e.key === 'E' ||
                 e.key === '+') &&
@@ -1862,8 +1859,8 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     if (!formData?.quantity) {
         newErrors.quantity = 'This field is required'
     }
-    if (!formData?.unit_id) {
-        newErrors.unit_id = 'This field is required'
+    if (formData?.quantity && !formData?.unit_id) {
+        newErrors.quantity = 'Please select unit'
     }
 
     if (!formData?.date) {
@@ -1880,6 +1877,9 @@ export const validateStoreCustomerForm = (formData: any, setErrors: any) => {
     }
     if (!formData?.temperature && formData?.temperature !== 0) {
         newErrors.temperature = 'This field is required'
+    }
+    if (formData?.temperature && !formData?.temperature_type_id) {
+        newErrors.temperature = 'Please select unit'
     }
 
     setErrors(newErrors)
@@ -2374,6 +2374,13 @@ export const formatDate = (inputDate: any) => {
     return inputDate // Return the input date if it's not in the expected format
 }
 
+export const onPasteDefault = (e: any) => {
+    const regex = /[e.,\-\+]/gi
+    const pastedText = e.clipboardData.getData('text')
+    if (regex?.test(pastedText)) {
+        e.preventDefault()
+    }
+}
 export const locations = [
     { lat: 28.46659, lng: 80.03331 },
     { lat: 28.46859, lng: 77.03331 },
