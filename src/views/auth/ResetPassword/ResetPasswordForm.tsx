@@ -87,7 +87,7 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
         if (validateFormPassword(formData)) {
 
             setSubmitting(true)
-            apiResetPassword({...formData,email:emailId},messageViewNew)
+            apiResetPassword({...formData,email:emailId},messageViewNew,setSubmitting)
         }
     }
  

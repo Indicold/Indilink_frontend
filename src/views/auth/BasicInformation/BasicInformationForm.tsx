@@ -238,6 +238,8 @@ const BasicInformationForm = (props: BasicInformationFormProps) => {
             // });
             return
         }
+
+        console.log("ajsfjdf",ReactGoogleAutocomplete)
         let ObjectData: any = {
             first_name: formData?.first_name,
             last_name: formData?.last_name,
