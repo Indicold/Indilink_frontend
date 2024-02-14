@@ -212,7 +212,7 @@ const StoreSearch = () => {
                 setMessage(result)
                 setModal(true)
                 setTimeout(() => {
-                    navigate('/ticket_list_store')
+                    // navigate('/ticket_list_store')
                 }, 2000)
             })
             .catch((error) => console.log('error', error))
@@ -244,7 +244,7 @@ const StoreSearch = () => {
             setMessage(CustomerResponse)
             setModal(true)
             setTimeout(() => {
-                navigate('/ticket_list_store')
+                // navigate('/ticket_list_store')
             }, 2000)
         } else if (CustomerResponse) {
             messageViewNew(CustomerResponse)
