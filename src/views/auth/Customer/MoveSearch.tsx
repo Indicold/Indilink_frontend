@@ -256,7 +256,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.origin_country_id}>{item?.name}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.origin_country_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -274,7 +274,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfCity && ListOfCity?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.origin_city_id}>{item?.name}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.origin_city_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -331,7 +331,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfCountry && ListOfCountry?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.dest_country_id}>{item?.name}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.dest_country_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -349,7 +349,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfCityDest && ListOfCityDest?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.dest_city_id}>{item?.name}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.dest_city_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
@@ -420,7 +420,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option value="">Unit</option>
                                             {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 2, 3, 5].includes(item?.id)).map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.unit_id}>{item?.type}</option>
 
                                             ))}
                                         </select>
@@ -438,7 +438,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfBroad && ListOfBroad?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.broad_category_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -458,7 +458,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfProduct && ListOfProduct?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id===formData?.product_type_id}>{item?.type}</option>
+                                                <option key={index} value={item?.id} selected={item?.id===formData?.product_type_id}>{item?.type}</option>
                                             ))}
 
                                         </select>
@@ -476,7 +476,7 @@ localStorage.removeItem('origin_gps');
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
                                             min={today}
-                                            onKeyDown={(e) => e.preventDefault()}
+                                            onKeyDown={(e:any) => e.preventDefault()}
                                             autoComplete="off"
                                             name="dispatch_date"
                                             // onFocus={(e:any) => (e.target.type = "date")}
@@ -498,7 +498,7 @@ localStorage.removeItem('origin_gps');
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="date"
-                                            onKeyDown={(e) => e.preventDefault()}
+                                            onKeyDown={(e:any) => e.preventDefault()}
                                             min={today}
                                             autoComplete="off"
                                             name="arrival_date"
@@ -528,7 +528,7 @@ localStorage.removeItem('origin_gps');
                                         >
                                             <option>Select</option>
                                             {ListOfstatus && ListOfstatus?.data?.map((item: any, index: any) => (
-                                                <option value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
+                                                <option key={index} value={item?.id} selected={item?.id === formData?.status_id}>{item?.name}</option>
 
                                             ))}
                                         </select>
