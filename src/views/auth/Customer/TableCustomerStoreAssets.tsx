@@ -221,7 +221,11 @@ const TableCustomerStoreAssets = ({ AllStore, fetchAgain }: any) => {
             if (key === 'is_accepted') {
                 return (
                     <td key={i} className="text-center">
-                        {rowData.is_accepted == 1 ? 'Accepted' : 'Rejected'}
+                        {rowData.is_accepted == 1
+                            ? 'Accepted'
+                            : rowData.is_accepted == 2
+                            ? 'Rejected'
+                            : 'Pending'}
                     </td>
                 )
             }

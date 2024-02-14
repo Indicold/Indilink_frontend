@@ -998,11 +998,13 @@ const PrepareSearch = () => {
                                             min={today}
                                             autoComplete="off"
                                             value={
-                                                new Date(
-                                                    formData?.date_of_start
-                                                )
-                                                    .toISOString()
-                                                    .split('T')[0]
+                                                formData?.date_of_start
+                                                    ? new Date(
+                                                          formData?.date_of_start
+                                                      )
+                                                          .toISOString()
+                                                          .split('T')[0]
+                                                    : ''
                                             }
                                             name="date_of_start"
                                             placeholder="Date of Start"
