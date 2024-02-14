@@ -198,6 +198,7 @@ if(PutApiResponse?.status===200){
                                     <FormItem label="Load*" className="pl-3 w-[100%] text-label-title m-auto">
                                        <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="load"
                                             disabled={isDisabled}

@@ -204,6 +204,7 @@ if(PutApiResponse?.status===200){
                                     >
                                      <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="capacity"

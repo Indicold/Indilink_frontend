@@ -153,6 +153,10 @@ const StoreSearch = () => {
         setFormData(newData)
         if (errors[e.target.name]) validateStoreCustomerForm(newData, setErrors)
     }
+
+    // const handleWheel = (e) => {
+    //     e.preventDefault();
+    //   };
     /**
      * The `handleRouteUpdate` function sends a PUT request to update a customer store search and then
      * redirects the user to the ticket list store page.
@@ -363,6 +367,7 @@ const StoreSearch = () => {
                                                 ListOfProduct?.data?.map(
                                                     (item: any, index: any) => (
                                                         <option
+                                                        key={index}
                                                             value={item?.id}
                                                             selected={
                                                                 item?.id ===
@@ -380,17 +385,20 @@ const StoreSearch = () => {
                                     </FormItem>
                                     <FormItem
                                         label={t('Temperature*')}
-                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto"
+                                        className="pl-3 w-[100%] lg:w-1/2 text-label-title m-auto "
                                     >
                                         <Field
                                             disabled={isDisabled}
                                             type="number"
                                             autoComplete="off"
+                                          
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
-                                            className="w-1/2 pl-2"
-                                            onKeyPress={(event) => {
+                                            className="w-1/2 pl-2 no-scroll overflow-hidden touch-action-none"
+                                            // onWheel={handleWheel}
+                                            onWheel={(e:any) => e.target.blur()} 
+                                            onKeyPress={(event:any) => {
                                                 if (
                                                     event?.key === 'e' ||
                                                     event?.key === '+'
@@ -412,7 +420,7 @@ const StoreSearch = () => {
                                                     event.preventDefault()
                                                 }
                                             }}
-                                            onPaste={(e) => {
+                                            onPaste={(e:any) => {
                                                 const reg =
                                                     '^[-]?[0-9]*\\.?[0-9]*$'
                                                 const current = e.target.value
@@ -468,6 +476,7 @@ const StoreSearch = () => {
                                                             index: any
                                                         ) => (
                                                             <option
+                                                            key={index}
                                                                 value={item?.id}
                                                                 selected={
                                                                     item?.id ===
@@ -496,6 +505,7 @@ const StoreSearch = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onWheel={(e:any) => e.target.blur()}
                                             className="w-[60%]"
                                             name="quantity"
                                             min="0"
@@ -604,6 +614,7 @@ const StoreSearch = () => {
                                             onChange={(e: any) =>
                                                 handlechange(e)
                                             }
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             className="w-[70%]"
                                             min={1}

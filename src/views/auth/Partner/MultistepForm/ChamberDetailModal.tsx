@@ -423,6 +423,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             min={1}
                                             onKeyDown={onkeyDownNew}
                                             disabled={isDisabled}
@@ -478,11 +479,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='ch-l' value={length} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='ch-b' value={breadth} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='ch-h' value={height} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                         <p className="text-[red] text-p-error-hight">
                                             {errors && errors.chamber_size}
@@ -493,6 +494,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto"
                                     ><Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             disabled={isDisabled}
                                             name="no_of_pallets"
@@ -525,11 +527,11 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                             component={Input}
                                         /> */}
                                         <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                        <input     disabled={isDisabled} type="number" placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew}/>
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Length' className='w-1/3 text-center focus:outline-0' min={1} name='pl-l' value={lengthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew}/>
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Breadth' className='w-1/3 text-center focus:outline-0' min={1} name='pl-b' value={breadthP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                         <span className='h-fit my-auto'>X</span>
-                                        <input     disabled={isDisabled} type="number" placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
+                                        <input     disabled={isDisabled} type="number" onWheel={(e:any) => e.target.blur()} placeholder='Height' className='w-1/3 text-center focus:outline-0' min={1} name='pl-h' value={heightP} onChange={(e: any) => handleChange(e)} onKeyDown={onkeyDownNew} />
                                        </div>
                                      
                                         <p className="text-[red] text-p-error-hight">
@@ -700,6 +702,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                    <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             min={1}
                                             name="no_of_floors"
@@ -723,6 +726,7 @@ const ChamberDetailModal: React.FC<MajorityHolderModalProps> = ({
                                           <Field
                                               disabled={isDisabled}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             autoComplete="off"
                                             name="floor_area"
                                             onChange={(e: any) =>

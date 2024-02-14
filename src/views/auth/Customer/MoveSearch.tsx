@@ -291,6 +291,7 @@ localStorage.removeItem('origin_gps');
                                             onChange={(e: any) => handleChange(e)}
                                             type="number"
                                             autoComplete="off"
+                                            onWheel={(e:any) => e.target.blur()}
                                             name="origin_pincode"
                                             value={formData?.origin_pincode}
                                             placeholder="PIN Code"
@@ -367,6 +368,7 @@ localStorage.removeItem('origin_gps');
                                             type="number"
                                             autoComplete="off"
                                             name="dest_pincode"
+                                            onWheel={(e:any) => e.target.blur()}
                                             value={formData?.dest_pincode}
                                             placeholder="PIN Code"
                                             component={Input}
@@ -406,6 +408,7 @@ localStorage.removeItem('origin_gps');
                                             type="number"
                                             className="w-[70%]"
                                             autoComplete="off"
+                                            onWheel={(e:any) => e.target.blur()}
                                             name="load_quantity"
                                             value={formData?.load_quantity}
                                             placeholder="Load Quantity"

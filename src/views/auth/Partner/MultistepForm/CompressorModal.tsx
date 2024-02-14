@@ -206,6 +206,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                     >
                                         <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="cmf"
@@ -234,6 +235,7 @@ const CompressorModal: React.FC<MajorityHolderModalProps> = ({
                                         className="pl-3 w-[100%] lg:w-1/2 md:w-1/2 text-label-title m-auto">
                                         <Field
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             autoComplete="off"
                                             name="hp"

@@ -424,6 +424,8 @@ const PartnerBussinessTypePrepare = () => {
                                             <Field
                                                 disabled={isDisabled}
                                                 type="number"
+                                                
+                                                onWheel={(e:any) => e.target.blur()}
                                                 min={0}
                                                 onKeyDown={onkeyDownNew}
                                                 autoComplete="off"
@@ -634,6 +636,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
+                                                    onWheel={(e:any) => e.target.blur()}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
@@ -669,6 +672,7 @@ const PartnerBussinessTypePrepare = () => {
                                                     disabled={isDisabled}
                                                     className="w-2/3 border-0 focus:outline-0"
                                                     type='number'
+                                                    onWheel={(e:any) => e.target.blur()}
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
                                                     onChange={(e: any) =>
@@ -686,7 +690,7 @@ const PartnerBussinessTypePrepare = () => {
                                                 >
 
                                                     {ListOfUnit && ListOfUnit?.data?.filter((item: any) => [1, 7].includes(item?.id)).map((item: any, index: any) => (
-                                                        <option value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
+                                                        <option key={index} value={item?.id} selected={formData?.case_size_unit_id}>{item?.type}</option>
 
                                                     ))}
                                                 </select>
@@ -704,6 +708,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <Field
                                                 disabled={isDisabled}
                                                 type="number"
+                                                onWheel={(e:any) => e.target.blur()}
                                                 autoComplete="off"
                                                 min={0}
                                                 onKeyDown={onkeyDownNew}
@@ -727,6 +732,7 @@ const PartnerBussinessTypePrepare = () => {
                                             <div className="border flex w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600">
                                                 <input
                                                     className="w-full border-0 focus:outline-0"
+                                                    onWheel={(e:any) => e.target.blur()}
                                                     type='number'
                                                     min={0}
                                                     onKeyDown={onkeyDownNew}
@@ -795,11 +801,12 @@ const PartnerBussinessTypePrepare = () => {
                                     <div className="bg-gray-100  m-auto mt-2 rounded-md p-2 w-[100%]  lg:flex">
                                         <FormItem
                                             label="Temperature*"
+                                            
                                             className=" pl-3 w-[100%] lg:w-1/2  text-label-title m-auto"
                                         >
                                             <div className='flex input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600'>
-                                                <input type="number" placeholder='Min' className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
-                                                <input type="number" placeholder='Max' className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Min' onWheel={(e:any) => e.target.blur()} className='w-1/2 text-center focus:outline-0' name='temperature_min' value={formData?.temperature_min} onChange={(e: any) => handleChange(e,'temperature_min',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
+                                                <input type="number" placeholder='Max' onWheel={(e:any) => e.target.blur()} className='w-1/2 text-center focus:outline-0' name='temperature_max' value={formData?.temperature_max} onChange={(e: any) => handleChange(e,'temperature_max',[])} onKeyDown={onkeyDownNew} disabled={isDisabled}/>
                                             </div>
                                             {/* <Field
                                                 disabled={isDisabled}

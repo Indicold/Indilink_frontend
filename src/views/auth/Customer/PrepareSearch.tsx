@@ -354,6 +354,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             onKeyDown={(e:any) => {
                                                 if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
                                                   e.preventDefault(); // Prevent the 'e' key from being input
@@ -388,6 +389,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="number"
+                                            onWheel={(e:any) => e.target.blur()}
                                             onKeyDown={(e:any) => {
                                                 if (e.keyCode === 69 || e.key==='-' || e.key==='+') {
                                                   e.preventDefault(); // Prevent the 'e' key from being input
@@ -464,6 +466,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                   e.preventDefault(); // Prevent the 'e' key from being input
                                                 }
                                               }}
+                                              onWheel={(e:any) => e.target.blur()}
                                             onChange={(e: any) => handleChange(e)}
                                             type="number"
                                             autoComplete="off"
@@ -524,7 +527,7 @@ console.log("TTTTTTTT",ListOfProductCategory);
                                                   e.preventDefault(); // Prevent the 'e' key from being input
                                                 }
                                               }}
-
+                                              onWheel={(e:any) => e.target.blur()}
                                             disabled={isDisabled}
                                             onChange={(e: any) => handleChange(e)}
                                             type="number"
