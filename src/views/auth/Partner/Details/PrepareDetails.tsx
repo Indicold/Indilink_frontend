@@ -17,7 +17,8 @@ const PrepareDetails = () => {
     const [modalList, setModalList] = useState<any>(false)
     const [status, setStatus] = useState<any>('')
     let state: any = location?.state?.type
-
+    let isAcceptedOrRejected: any =
+    (location?.state?.data?.is_accepted == 1 || location?.state?.data?.is_accepted == 2) ? true:false;
     const {
         data: fetchDetails,
         loading: fetchDetailsloading,
@@ -314,53 +315,7 @@ const PrepareDetails = () => {
                 </div>
                 {GetNdaStatusData?.data[0]?.is_nda_signed == 2 && (
                     <>
-                        <div
-                            className={`${
-                                localStorage.getItem('user_type') === 'Customer'
-                                    ? 'w-full'
-                                    : 'w-[25%]'
-                            }`}
-                        >
-                            {localStorage.getItem('user_type') ===
-                            'Customer' ? (
-                                <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
-                                    {status && (
-                                        <div className="">
-                                            <div className="w-[100%] pl-4  mb-4">
-                                                <h2 className="text-sm">
-                                                    Status
-                                                </h2>
-                                                <h2 className="text-gray-400 text-sm">
-                                                    {status}
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    )}
-                                    <button
-                                        type="button"
-                                        onClick={handleAccept}
-                                        className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
-                                    >
-                                        Approved
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={handleReject}
-                                        className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
-                                    >
-                                        Disapproved
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={() => setModalList(true)}
-                                    className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
-                                >
-                                    Audit
-                                </button>
-                            )}
-                        </div>
+                  
 
                         <div>
                             <h1 className="text-lg text-blue-800 my-10">
@@ -407,6 +362,56 @@ const PrepareDetails = () => {
                                     }
                                 )}
                             </div>
+                        </div>
+                        <div
+                            className={`${
+                                localStorage.getItem('user_type') === 'Customer'
+                                    ? 'w-full'
+                                    : 'w-[25%]'
+                            }`}
+                        >
+                            {localStorage.getItem('user_type') ===
+                            'Customer' ? (
+                                <div className="m-auto grid grid-cols-3 lg:grid-cols-3 text-center">
+                                    {status && (
+                                        <div className="">
+                                            <div className="w-[100%] pl-4  mb-4">
+                                                <h2 className="text-sm">
+                                                    Status
+                                                </h2>
+                                                <h2 className="text-gray-400 text-sm">
+                                                    {status}
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    )}
+                                    <button
+                                        type="button"
+                                        disabled={isAcceptedOrRejected}
+                                        onClick={handleAccept}
+                                        className="text-white w-2/3 bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                    >
+                                        Approved
+                                    </button>
+                                    <button
+                                        type="button"
+                                        disabled={isAcceptedOrRejected}
+                                        onClick={handleReject}
+                                        className="text-white w-2/3  bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                    >
+                                        Disapproved
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    type="button"
+                                    disabled={isAcceptedOrRejected}
+                                    onClick={() => setModalList(true)}
+                                    className="text-white w-full bg-[#103492] hover:bg-[#103492]/80 focus:ring-4 focus:outline-none focus:ring-[#103492]/50 font-medium rounded-lg text-sm px-14 m-auto py-2.5  dark:hover:bg-[#103492]/80 dark:focus:ring-[#103492]/40 "
+                                >
+                                    Audit
+                                </button>
+                            )}
                         </div>
                     </>
                 )}
