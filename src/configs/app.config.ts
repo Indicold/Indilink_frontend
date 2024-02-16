@@ -23,6 +23,7 @@ export type AppConfig = {
     locale: string
     enableMock: boolean
 }
+let val = localStorage.getItem('user_type')
 
 /* The `const appConfig: AppConfig = { ... }` statement is creating a constant variable named
 `appConfig` and assigning it an object value. The object has properties that match the structure
@@ -31,7 +32,7 @@ defined by the `AppConfig` type. Each property is assigned a specific value, suc
 for an application, with each property specifying a different setting or path. */
 const appConfig: AppConfig = {
     apiPrefix: '/api',
-    authenticatedEntryPath: '/home',
+    authenticatedEntryPath:val == 'Partner' ? '/partner-dashbord' : val == 'Investor' ? '/investor-dashbord' : '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'en',

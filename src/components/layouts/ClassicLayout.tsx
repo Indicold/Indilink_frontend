@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import NotificationDropdown from '../template/NotificationDropdown/NotificationDropdown'
 import { useTranslation } from 'react-i18next'
 import BackButton from './smallComponents/Backbutton'
+import useApiFetch from '@/store/customeHook/useApiFetch'
+import { getToken } from '@/store/token'
 
 /**
  * The `HeaderActionsStart` function returns a JSX element that includes the `MobileNav` and
@@ -111,6 +113,12 @@ const HeaderActionsEnd = () => {
 /* The `ClassicLayout` function is a React component that returns a JSX element. It represents the
 layout of the application and includes various components such as `SideNav`, `Header`, and `View`. */
 const ClassicLayout = () => {
+    const { token }: any = getToken()
+    const { data: GetNdaStatusData }: any = useApiFetch(
+        `auth/get_user_nda_status`,
+        token
+    )
+    const ProfileData: any = GetNdaStatusData?.data[0]
     return (
         <div className="app-layout-classic bg-white flex flex-auto flex-col">
             <div className="flex flex-auto min-w-0">
@@ -121,10 +129,15 @@ const ClassicLayout = () => {
                         headerStart={<HeaderActionsStart />}
                         headerEnd={<HeaderActionsEnd />}
                     />
+                   {(ProfileData?.is_nda_signed == 0 || ProfileData?.is_nda_signed == 3) && <div className='p-2 text-[red]'>
+                        <marquee>
+                        Uploading NDA will enable additional features.
+                        </marquee>
+                        </div>}
                     <div className="h-full flex flex-auto flex-col">
                     {!(location?.pathname ==='/home' || location?.pathname ==='/partner-dashbord') && <BackButton />}
                         <View />
-                    </div>
+                    d</div>
                 </div>
             </div>
         </div>
