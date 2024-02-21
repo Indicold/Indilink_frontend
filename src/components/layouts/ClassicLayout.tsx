@@ -137,7 +137,7 @@ const ClassicLayout = () => {
                     <div className="h-full flex flex-auto flex-col">
                     {!(location?.pathname ==='/home' || location?.pathname ==='/partner-dashbord') && <BackButton />}
                         <View />
-                    d</div>
+                    </div>
                 </div>
             </div>
         </div>

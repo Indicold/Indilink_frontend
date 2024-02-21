@@ -16,6 +16,7 @@ const tableHead = {
     id: "S.No",
     invoice_amount: "Invoice Amount",
     paid_amount: "Paid Amount",
+    comment:"Comment",
   // is_deleted: "Is Deleted",
   // is_deletedBy: "Is Deleted By",
   created_at: "Created",
@@ -113,6 +114,9 @@ useEffect(()=>{
       }
       if (key === 'updated_at') {
         return <td className='text-center' key={i} >{new Date(rowData.updated_at)?.toLocaleString()}</td>;
+      }
+      if (key === 'comment') {
+        return <td className='text-center' key={i} >{rowData.comment || "Not Available"}</td>;
       }
       if (key === 'Document') {
         return <td className='text-center' key={i} >

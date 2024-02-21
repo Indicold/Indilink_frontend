@@ -152,13 +152,7 @@ if(AssetsResponse?.message || AssetsResponse?.data){
     }, 200)
 }
 },[AssetsResponse?.message,AssetsResponse?.data])
-    /**
-     * The handleChange function updates the formData state with the new value from the input field and
-     * logs the countryId.
-     * @param {any} e - The parameter `e` is an event object that is passed to the `handleChange`
-     * function. It is typically an event object that is triggered by a user interaction, such as a
-     * button click or input change.
-     */
+ 
     const handleChange = (e: any) => {
         const newData = { ...formData }
         newData[e.target.name] = e.target.value
@@ -325,7 +319,7 @@ useEffect(()=>{
                                                 }
                                                 className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
-                                                <option>{t("Select Country")}</option>
+                                                <option value="">{t("Select Country")}</option>
                                                 {countryId &&
                                                     countryId?.data?.map(
                                                         (
@@ -352,7 +346,7 @@ useEffect(()=>{
                                                 }
                                                 className="border w-full input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                                             >
-                                                <option>{t("Category")}</option>
+                                                <option value="">{t("Category")}</option>
                                                 {CategoryId &&
                                                     CategoryId?.data
                                                         ?.filter(
